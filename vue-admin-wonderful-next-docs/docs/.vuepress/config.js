@@ -33,6 +33,7 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
+	smoothScroll: true,
     repo: '',
     editLinks: false,
     docsDir: '',
@@ -49,15 +50,11 @@ module.exports = {
       },
       {
         text: '主题',
-        link: '/vsCode/'
+        link: '/theme/'
       },
       {
         text: '更新记录',
-        link: '/config/'
-      },
-      {
-        text: '问题与处理',
-        link: '/config/'
+        link: '/update/'
       },
       {
         text: 'vsCode',
@@ -71,11 +68,11 @@ module.exports = {
             items: [
               {
                 text: 'vue-admin-wonderful（2.x版本）',
-                link: ''
+                link: '11'
               },
               {
                 text: 'vue-admin-wonderful-next（3.x版本）',
-                link: ''
+                link: '12'
               }
             ]
           },
@@ -84,11 +81,11 @@ module.exports = {
             items: [
               {
                 text: 'vue-admin-wonderful（2.x版本）',
-                link: ''
+                link: '13'
               },
               {
                 text: 'vue-admin-wonderful-next（3.x版本）',
-                link: ''
+                link: '14'
               }
             ]
           }
@@ -98,7 +95,7 @@ module.exports = {
     sidebar: {
       '/guide/': [
         {
-          title: 'Guide',
+          title: '指南',
           collapsable: false,
           children: [
             '',
@@ -106,6 +103,15 @@ module.exports = {
           ]
         }
       ],
+	  '/config/': [
+	    {
+	      title: '配置',
+	      collapsable: false,
+	      children: [
+			''
+	      ]
+	    }
+	  ],
     }
   },
 

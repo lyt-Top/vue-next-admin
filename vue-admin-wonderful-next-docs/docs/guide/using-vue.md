@@ -6,4 +6,3 @@ Because VuePress applications are server-rendered in Node.js when generating sta
 
 If you are using or demoing components that are not SSR friendly (for example containing custom directives), you can wrap them inside the built-in `<ClientOnly>` component:
 
-##

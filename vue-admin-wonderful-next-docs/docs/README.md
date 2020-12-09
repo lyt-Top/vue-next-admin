@@ -2,7 +2,7 @@
 home: true
 heroImage: https://v1.vuepress.vuejs.org/hero.png
 heroText: vue-admin-wonderful
-tagline: 这是 vue3.x + vite + element plus + typeScript 的开发文档
+tagline: 这是 vue3.x + vite + element plus + typescript 的开发文档
 actionText: 快速上手 →
 actionLink: /guide/
 features:
