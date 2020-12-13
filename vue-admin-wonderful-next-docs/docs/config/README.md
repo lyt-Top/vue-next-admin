@@ -179,13 +179,28 @@ Element Plus 的 theme-chalk 使用 SCSS 编写，如果你的项目也使用了
 #### 1、element-variables.scss
 注意没有 `~` 符号，`@import '~element-plus/packages/theme-chalk/src/index';`
 
+`404问题`：[在vite当中使用主题，字体路径的 ~ 无法正常解析，build和dev均报错](https://github.com/element-plus/element-plus/issues/958)临时处理：把字体文件复制到src下了，用相对路径引入。
+
+1.1、element-variables.scss
+
 ```scss
 /* 改变主题色变量 */
 $--color-primary: teal;
 
-/* 改变 icon 字体路径变量，必需 */
-$--font-path: 'element-plus/lib/theme-chalk/fonts';
 @import 'element-plus/packages/theme-chalk/src/index';
+```
+
+1.2、页面引入下载的 fonts `（注意路径）`：
+
+```scss
+@font-face {
+  font-family: 'element-icons';
+  src: url('../fonts/element-icons.woff') format('woff'), /* chrome, firefox */
+     url('../fonts/element-icons.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  font-weight: normal;
+  font-display: $--font-display;
+  font-style: normal;
+}
 ```
 
 #### 2、配置目录别名 `@`，方便引用
