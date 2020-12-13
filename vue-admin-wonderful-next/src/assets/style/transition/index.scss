@@ -1,0 +1,31 @@
+/* 页面切换动画 */
+.fade-transform-enter-active,
+.fade-transform-leave-active {
+  will-change: transform;
+  transition: all 0.3s;
+}
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-active {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* Breadcrumb 面包屑过渡动画 */
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.3s;
+}
+.breadcrumb-enter,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.breadcrumb-move {
+  transition: all 0.3s;
+}
+.breadcrumb-leave-active {
+  position: absolute;
+}
