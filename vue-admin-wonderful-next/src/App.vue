@@ -13,6 +13,7 @@
     <div class="red">44</div>
   </div>
   <el-color-picker v-model="color" @change="colorChange"></el-color-picker>
+  <img src="/src/assets/images/logo/11.png" />
 </template>
 
 <script lang="ts">
@@ -21,7 +22,7 @@ export default {
   name: "App",
   setup() {
     const state = reactive({
-      color: "",
+      color: ""
     });
     function colorChange() {
       console.log(state.color);

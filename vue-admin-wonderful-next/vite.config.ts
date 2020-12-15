@@ -4,7 +4,8 @@ const path = require('path')
 const viteConfig: UserConfig = {
     port: 8080,
     hostname: 'localhost',
-    open: true,
+    open: false,
+    base: "./",
     alias: {
         '/@/': path.resolve(__dirname, './src'),
         '/@assets/': path.resolve(__dirname, './src/assets'),
