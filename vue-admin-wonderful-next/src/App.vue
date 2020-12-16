@@ -13,7 +13,7 @@
     <div class="red">44</div>
   </div>
   <el-color-picker v-model="color" @change="colorChange"></el-color-picker>
-  <img src="/src/assets/11.png" />
+  <img src="/@/assets/11.png" />
 </template>
 
 <script lang="ts">
