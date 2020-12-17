@@ -1,0 +1,69 @@
+/* 定义初始颜色
+------------------------------- */
+$root: (
+  primary: #409eff,
+  success: #67c23a,
+  warning: #e6a23c,
+  danger: #f56c6c,
+  info: #909399,
+);
+
+:root {
+  --grayscales: 0;
+}
+
+/* 循环赋值给:root
+------------------------------- */
+:root {
+  @each $key, $value in $root {
+    --color-#{$key}: #{$value};
+  }
+}
+
+/* 颜色调用函数
+------------------------------- */
+@function setColor($key) {
+  @return var(--color-#{$key});
+}
+
+/* 文本不换行
+------------------------------- */
+@mixin text-no-wrap() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 多行文本溢出
+------------------------------- */
+@mixin text-ellipsis($line: 2) {
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}
+
+// 使用方式:
+// .text{
+//     @include multiEllipsis(3)  // 表示只显示三行,多出来的显示省略号
+// }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.aaa {
+  color: setColor(primary);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  border: 1px solid red;
+  filter: grayscale(red);
+}

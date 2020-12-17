@@ -1,4 +1,5 @@
-/* 页面切换动画 */
+/* 页面切换动画
+------------------------------- */
 .fade-transform-enter-active,
 .fade-transform-leave-active {
   will-change: transform;
@@ -13,7 +14,8 @@
   transform: translateX(30px);
 }
 
-/* Breadcrumb 面包屑过渡动画 */
+/* Breadcrumb 面包屑过渡动画
+------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
   transition: all 0.3s;

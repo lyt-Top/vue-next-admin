@@ -7,8 +7,9 @@
     <el-button type="warning">警告按钮</el-button>
     <el-button type="danger">危险按钮</el-button>
   </el-row>
-  <div class="aa">
+  <div class="Selector1">
     22
+    <div class="aaa">66</div>
     <div class="bb">33</div>
     <div class="red">44</div>
   </div>
@@ -61,8 +62,8 @@ export default {
     }
     function onSwitchChange1() {
       document.documentElement.style.setProperty(
-        "--grey-model",
-        state.value1 ? "100%" : "0%"
+        "--color-grayscale",
+        state.value1 ? 1 : 0
       );
     }
     return {
