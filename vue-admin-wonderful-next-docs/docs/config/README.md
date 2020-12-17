@@ -175,32 +175,53 @@ cnpm install sass sass-loader --save-dev
 
 ## 自定义 Element Plus 主题
 Element Plus 的 theme-chalk 使用 SCSS 编写，如果你的项目也使用了 SCSS，那么可以直接在项目中改变 Element Plus 的样式变量。新建一个样式文件，例如 `element-variables.scss`，写入以下内容：
-
 #### 1、element-variables.scss
-注意没有 `~` 符号，`@import '~element-plus/packages/theme-chalk/src/index';`
-
 `404问题`：[在vite当中使用主题，字体路径的 ~ 无法正常解析，build和dev均报错](https://github.com/element-plus/element-plus/issues/958)临时处理：把字体文件复制到src下了，用相对路径引入。
 
-1.1、element-variables.scss
+::: warning 提示
+由于 vite 目前（2020.12.17）不支持 [自定义主题 Element Plus](https://element-plus.org/#/zh-CN/component/custom-theme) 文档中的写法，若强行使用打包会出现问题：
+:::
 
-```scss
+```ts
 /* 改变主题色变量 */
 $--color-primary: teal;
 
-@import 'element-plus/packages/theme-chalk/src/index';
+/* 改变 icon 字体路径变量，必需 */
+$--font-path: '~element-plus/lib/theme-chalk/fonts';
+
+@import "~element-plus/packages/theme-chalk/src/index";
 ```
 
-1.2、页面引入下载的 fonts `（注意路径）`：
+::: tip 提示
+所以采用 CSS3 `:root`（:root 选择器选取文档的根元素） 写法，具体方法我会在顶部导航 `主题` 中进行说明：
+:::
 
-```scss
-@font-face {
-  font-family: 'element-icons';
-  src: url('../fonts/element-icons.woff') format('woff'), /* chrome, firefox */
-     url('../fonts/element-icons.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  font-weight: normal;
-  font-display: $--font-display;
-  font-style: normal;
+```css
+/* 定义一个名为 "--main-bg-color" 的属性，然后使用 var() 函数调用该属性： */
+:root {
+  --main-bg-color: red;
 }
+ 
+#div1 {
+  background-color: var(--main-bg-color);
+}
+ 
+#div2 {
+  background-color: var(--main-bg-color);
+}
+```
+
+改变变量的颜色：
+
+- 1.1、当有内联样式或者 js 设置的值时：`document.documentElement.style.getPropertyValue` 获取到的是实际的值
+- 2.2、当只有 :root 选择器或者 html 选择器时，`document.documentElement.style.getPropertyValue` 获取到的值为空
+
+```ts
+// 获取值
+document.documentElement.style.getPropertyValue('--main-bg-color');
+
+// 设置值
+document.documentElement.style.setProperty('--main-bg-color', 'blue');
 ```
 
 #### 2、配置目录别名 `@`，方便引用
@@ -227,18 +248,17 @@ export default viteConfig
 ```
 
 #### 3、页面中使用
-注意 `/@assets` 写法，一定要以 `/` 开头，否则报 `404`
+注意 `/@` 写法，一定要以 `/` 开头，否则报 `404`
 
 ```ts
 import { createApp } from 'vue'
 import App from './App.vue'
 
 import ElementPlus from 'element-plus';
-import '/@assets/style/base/index.scss';
+import 'element-plus/lib/theme-chalk/index.css';
+import '/@/style/index.css';
 
-const app = createApp(App)
-app.use(ElementPlus)
-app.mount('#app')
+createApp(App).use(ElementPlus).mount('#app')
 ```
 
 #### 4、动态换肤功能
