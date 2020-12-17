@@ -56,14 +56,14 @@ export default {
     });
     function colorChange() {
       document.documentElement.style.setProperty(
-        "--primary-color",
+        "--color-primary",
         state.color
       );
     }
     function onSwitchChange1() {
-      document.documentElement.style.setProperty(
-        "--color-grayscale",
-        state.value1 ? 1 : 0
+      document.body.setAttribute(
+        "style",
+        `filter:grayscale(${state.value1 ? 1 : 0})`
       );
     }
     return {

@@ -8,10 +8,6 @@ $root: (
   info: #909399,
 );
 
-:root {
-  --grayscales: 0;
-}
-
 /* 循环赋值给:root
 ------------------------------- */
 :root {
@@ -65,5 +61,4 @@ body {
   width: 100%;
   height: 100%;
   border: 1px solid red;
-  filter: grayscale(red);
 }
