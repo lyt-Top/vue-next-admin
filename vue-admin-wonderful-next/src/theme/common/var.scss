@@ -1,0 +1,39 @@
+/* 定义初始颜色
+------------------------------- */
+// $root: (
+//   primary: #409eff,
+//   success: #67c23a,
+//   warning: #e6a23c,
+//   danger: #f56c6c,
+//   info: #909399,
+//   whites: #ffffff,
+//   blacks: #000000,
+// );
+
+/* 循环赋值给:root
+------------------------------- */
+// :root {
+//   @each $key, $value in $root {
+//     --color-#{$key}: #{$value};
+//   }
+// }
+
+$--color-primary: #409eff !default;
+$--color-white: #ffffff !default;
+$--color-black: #000000 !default;
+$--color-primary-light-1: mix($--color-white, $--color-primary, 10%) !default;
+// $--color-primary-light-2: mix($--color-white, $--color-primary, 20%) !default;
+// $--color-primary-light-3: mix($--color-white, $--color-primary, 30%) !default;
+// $--color-primary-light-4: mix($--color-white, $--color-primary, 40%) !default;
+// $--color-primary-light-5: mix($--color-white, $--color-primary, 50%) !default;
+// $--color-primary-light-6: mix($--color-white, $--color-primary, 60%) !default;
+// $--color-primary-light-7: mix($--color-white, $--color-primary, 70%) !default;
+// $--color-primary-light-8: mix($--color-white, $--color-primary, 80%) !default;
+// $--color-primary-light-9: mix($--color-white, $--color-primary, 90%) !default;
+
+:root {
+  --color-primary: #{$--color-primary};
+  --color-white: #{$--color-white};
+  --color-black: #{$--color-black};
+  --color-primary-light-1: #{$--color-primary-light-1};
+}

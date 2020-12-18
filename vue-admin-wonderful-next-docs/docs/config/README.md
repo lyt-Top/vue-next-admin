@@ -217,11 +217,14 @@ $--font-path: '~element-plus/lib/theme-chalk/fonts';
 - 2.2、当只有 :root 选择器或者 html 选择器时，`document.documentElement.style.getPropertyValue` 获取到的值为空
 
 ```ts
-// 获取值
-document.documentElement.style.getPropertyValue('--main-bg-color');
+// 读取变量
+document.documentElement.style.getPropertyValue('--main-bg-color').trim();
 
-// 设置值
+// 设置变量
 document.documentElement.style.setProperty('--main-bg-color', 'blue');
+
+// 删除变量
+document.body.style.removeProperty('--main-bg-color');
 ```
 
 #### 2、配置目录别名 `@`，方便引用

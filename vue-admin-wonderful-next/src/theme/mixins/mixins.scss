@@ -1,0 +1,18 @@
+/* 文本不换行
+------------------------------- */
+@mixin text-no-wrap() {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* 多行文本溢出
+  ------------------------------- */
+@mixin text-ellipsis($line: 2) {
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}

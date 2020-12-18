@@ -1,0 +1,13 @@
+@import 'mixins/function.scss';
+
+/* Button 按钮
+------------------------------- */
+.el-button--primary {
+  background-color: set-color(primary);
+  border-color: set-color(primary);
+  &:hover,
+  &:focus {
+    background: set-color(primary-light-1);
+    border-color: set-color(primary-light-1);
+  }
+}

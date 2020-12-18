@@ -1,32 +1,40 @@
+/* 定义重用混入指令
+------------------------------- */
+@mixin transition($second: 0.3) {
+  transition: all #{$second}s;
+}
+
+@mixin translateX($opacity: 0, $offsetX: 0) {
+  opacity: $opacity;
+  transform: translateX(#{$offsetX}px);
+}
+
 /* 页面切换动画
 ------------------------------- */
 .fade-transform-enter-active,
 .fade-transform-leave-active {
   will-change: transform;
-  transition: all 0.3s;
+  @include transition();
 }
 .fade-transform-enter {
-  opacity: 0;
-  transform: translateX(-30px);
+  @include translateX(-30);
 }
 .fade-transform-leave-active {
-  opacity: 0;
-  transform: translateX(30px);
+  @include translateX(30);
 }
 
 /* Breadcrumb 面包屑过渡动画
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all 0.3s;
+  @include transition();
 }
 .breadcrumb-enter,
 .breadcrumb-leave-active {
-  opacity: 0;
-  transform: translateX(20px);
+  @include translateX(20);
 }
 .breadcrumb-move {
-  transition: all 0.3s;
+  @include transition();
 }
 .breadcrumb-leave-active {
   position: absolute;

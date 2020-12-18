@@ -3,7 +3,7 @@ import App from './App.vue'
 
 import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
-import '/@/style/index.scss';
+import '/@/theme/index.scss';
 
-createApp(App).use(ElementPlus).mount('#app')
+createApp(App).use(ElementPlus, { size: 'small' }).mount('#app')
 
