@@ -266,3 +266,7 @@ createApp(App).use(ElementPlus).mount('#app')
 
 #### 4、动态换肤功能
 使用 `ColorPicker 颜色选择器`：[https://element-plus.gitee.io/#/zh-CN/component/color-picker](https://element-plus.gitee.io/#/zh-CN/component/color-picker)，实现动态换肤功能
+
+::: tip 提示
+请移步顶部导航 `主题` 中查看详细内容
+:::

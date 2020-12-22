@@ -5,7 +5,7 @@ sidebar: auto
 
 [官网：https://code.visualstudio.com/](https://code.visualstudio.com/)
 
-## 一、首选项 - 设置 - settings.json
+## 首选项 - 设置 - settings.json
 
 ```json
 {
@@ -44,7 +44,7 @@ sidebar: auto
 }
 ```
 
-## 二、vsCode 插件
+## vsCode 插件
 1. Auto Close Tag
 1. Auto Rename Tag
 1. background-cover
@@ -70,7 +70,7 @@ sidebar: auto
 1. Prettier - Code formatter
 1. Vetur
 
-## 三、图文步骤
+## 图文步骤
 
 #### 1、打开设置
 <p></p><img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/doc/vs-code1.png"/>
