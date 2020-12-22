@@ -21,6 +21,9 @@
     <span>灰色模式</span>
     <el-switch v-model="value1" @change="onSwitchChange1"></el-switch>
     <el-divider></el-divider>
+    <span>开启水印</span>
+    <el-switch v-model="wart" @change="onSwitchChange2"></el-switch>
+    <el-divider></el-divider>
     <div>Button 按钮</div>
     <el-row>
       <el-button>默认按钮</el-button>
@@ -627,12 +630,16 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs, getCurrentInstance } from "vue";
 import { getLightColor } from "/@/utils/theme.ts";
+import Watermark from "/@/utils/wartermark.ts";
 import { ElMessage, ElMessageBox, ElNotification } from "element-plus";
 export default {
   name: "App",
   setup() {
+    const { proxy } = getCurrentInstance();
+    // proxy.$message("mesage")
+
     const generateData = (_) => {
       const data = [];
       for (let i = 1; i <= 15; i++) {
@@ -905,6 +912,7 @@ export default {
           })(),
         },
       ],
+      wart: false,
     });
     function colorChange1() {
       document.documentElement.style.setProperty(
@@ -1116,11 +1124,16 @@ export default {
     function onSwitchChange1() {
       document.body.setAttribute(
         "style",
-        `filter:grayscale(${state.value1 ? 1 : 0})`
+        state.value1 ? `filter:grayscale(1);overflow:hidden;` : ""
       );
     }
+    function onSwitchChange2() {
+      state.wart
+        ? Watermark.set("small@小柒")
+        : Watermark.del();
+    }
     function open1() {
-      ElMessage.success({
+      proxy.$message.success({
         message: "恭喜你，这是一条成功消息",
         type: "success",
       });
@@ -1208,6 +1221,7 @@ export default {
       open9,
       next,
       onSwitchChange1,
+      onSwitchChange2,
       ...toRefs(state),
     };
   },

@@ -757,6 +757,10 @@
 
 /* Timeline 时间线
 ------------------------------- */
+// primary
+.el-timeline-item__node--primary {
+  background-color: set-color(primary);
+}
 // success
 .el-timeline-item__node--success {
   background-color: set-color(success);
