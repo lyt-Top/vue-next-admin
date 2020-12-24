@@ -1128,9 +1128,7 @@ export default {
       );
     }
     function onSwitchChange2() {
-      state.wart
-        ? Watermark.set("small@小柒")
-        : Watermark.del();
+      state.wart ? Watermark.set("small@小柒") : Watermark.del();
     }
     function open1() {
       proxy.$message.success({
