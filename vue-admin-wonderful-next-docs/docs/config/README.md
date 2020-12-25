@@ -270,3 +270,86 @@ createApp(App).use(ElementPlus).mount('#app')
 ::: tip 提示
 请移步顶部导航 `主题` 中查看详细内容
 :::
+
+## 安装 vue-router-next
+#### 1、cmd 安装
+
+- [vue-router-next 代码仓库（github）](https://github.com/vuejs/vue-router-next)
+- [vue-router-next 文档地址](https://next.router.vuejs.org/)
+
+```bash
+cnpm install vue-router@4 --save
+```
+
+#### 2、页面中使用
+
+- 2.1、页面下新增文件夹 `src/router/index.ts`
+
+index.ts 中写入：
+
+```ts
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
+
+const staticRoutes: Array<RouteRecordRaw> = [
+    {
+        path: '/',
+        name: 'home',
+        component: () => import('/@/views/layout/index.vue'),
+        redirect: '/home',
+        meta: {
+            title: '首页'
+        },
+        children: [{
+            path: '/home',
+            name: 'home',
+            component: () => import('/@/views/home/index.vue'),
+            meta: {
+                title: '首页'
+            }
+        }]
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('/@/views/login/index.vue'),
+        meta: {
+            title: '登陆'
+        }
+    },
+    {
+        path: '/:pathMatch(.*)',
+        redirect: '/'
+    }
+]
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes: staticRoutes
+})
+
+export default router
+```
+
+- 2.2、main.ts 中引入 `src/router/index.ts`
+
+```ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+
+import ElementPlus from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
+import '/@/theme/index.scss'
+import { locale } from 'element-plus'
+
+createApp(App).use(router).use(ElementPlus, { locale }).mount('#app')
+```
+
+- 2.3、页面测试
+地址栏输入 2.1 中的路由地址 `http://localhost:8080/#/login`，出现 `login` 中的文字就证明配置成功了。
+
+::: tip 提示
+地址栏带 `#号` 与不带 `#号` ，参考：[next.router history-mode.html](https://next.router.vuejs.org/guide/essentials/history-mode.html)
+
+访问路由器和内部的当前路由 setup：[Vue路由器和Composition API](https://next.router.vuejs.org/guide/advanced/composition-api.html#accessing-the-router-and-current-route-inside-setup)
+:::

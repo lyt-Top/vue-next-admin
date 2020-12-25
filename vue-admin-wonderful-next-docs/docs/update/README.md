@@ -2,6 +2,9 @@
 sidebar: auto
 ---
 # 更新日志
+## 2020-12-25
+- 新增 路由配置及编写对应开发文档
+
 ## 2020-12-22
 - 处理 [element-plus](https://element-plus.gitee.io/#/zh-CN/component/icon) 打包后字体图标 404 问题
 - 编写 对应 `3.x` 主题文档编写
