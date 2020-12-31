@@ -1,6 +1,6 @@
 <template>
   <el-main>
-    <el-scrollbar class="layout-scrollbar">
+    <el-scrollbar class="layout-scrollbar" style="min-height: calc(100vh - 84px);">
       <router-view v-slot="{ Component }">
         <transition appear :name="transitionName" mode="out-in">
           <div :key="key">

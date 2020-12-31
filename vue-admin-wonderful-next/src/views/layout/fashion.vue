@@ -3,8 +3,10 @@
     <Aside />
     <el-container>
       <el-scrollbar>
-        <Header />
-        <Main />
+        <div class="layout-container-header-main">
+          <Header />
+          <Main />
+        </div>
       </el-scrollbar>
     </el-container>
   </el-container>

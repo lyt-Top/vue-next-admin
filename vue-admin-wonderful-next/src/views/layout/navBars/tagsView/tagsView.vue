@@ -130,7 +130,7 @@ export default {
     list-style: none;
     margin: 0;
     padding: 0;
-    height: 100%;
+    height: 34px;
     display: flex;
     align-items: center;
     color: #606266;

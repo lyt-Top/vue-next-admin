@@ -47,8 +47,7 @@ body,
     @extend .el-scrollbar;
     padding: 15px;
   }
-  .el-scrollbar__view {
-    height: 100%;
+  .layout-container-header-main {
     display: flex;
     flex-direction: column;
   }
@@ -61,6 +60,15 @@ body,
 }
 .h100 {
   height: 100% !important;
+}
+.vh100 {
+  height: 100vh !important;
+}
+.max100vh {
+  max-height: 100vh !important;
+}
+.min100vh {
+  min-height: 100vh !important;
 }
 
 /* 字体大小全局样式
