@@ -23,8 +23,8 @@
       </div>
     </div>
     <div class="login-copyright">
-      <div class="mb5">版权所有：深圳市xxx软件科技有限公司</div>
-      <div>Copyright: Shenzhen XXX Software Technology Co. Ltd 粤ICP备05010000号</div>
+      <div class="mb5 login-copyright-company">版权所有：深圳市xxx软件科技有限公司</div>
+      <div class="login-copyright-msg">Copyright: Shenzhen XXX Software Technology 粤ICP备05010000号</div>
     </div>
   </div>
 </template>
@@ -32,12 +32,11 @@
 <script lang="ts">
 import Account from "/@/views/login/component/account.vue";
 import Mobile from "/@/views/login/component/mobile.vue";
-import { toRefs, reactive, getCurrentInstance } from "vue";
+import { toRefs, reactive } from "vue";
 export default {
   name: "login",
   components: { Account, Mobile },
   setup() {
-    const { proxy } = getCurrentInstance();
     const state = reactive({
       tabsActiveName: "account",
       isTabPaneShow: false,
@@ -46,8 +45,8 @@ export default {
       state.isTabPaneShow = !state.isTabPaneShow;
     };
     return {
-      ...toRefs(state),
       onTabsClick,
+      ...toRefs(state),
     };
   },
 };
@@ -57,7 +56,7 @@ export default {
 .login-container {
   width: 100%;
   height: 100%;
-  background: url("/@/assets/bg-login.png") no-repeat;
+  background: url("/src/assets/bg-login.png") no-repeat;
   background-size: 100% 100%;
   .login-logo {
     position: absolute;
@@ -73,13 +72,14 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) translate3d(0, 0, 0);
     background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 12px 0 var(--color-primary-light-1);
     border-radius: 4px;
     transition: height 0.2s linear;
     height: 480px;
     overflow: hidden;
+    z-index: 1;
     .login-content-main {
       margin: 0 auto;
       width: 80%;
@@ -90,6 +90,7 @@ export default {
         text-align: center;
         letter-spacing: 4px;
         margin: 15px 0 30px;
+        white-space: nowrap;
       }
     }
   }
@@ -105,6 +106,12 @@ export default {
     color: white;
     font-size: 12px;
     opacity: 0.8;
+    .login-copyright-company {
+      white-space: nowrap;
+    }
+    .login-copyright-msg {
+      @extend .login-copyright-company;
+    }
   }
 }
 </style>

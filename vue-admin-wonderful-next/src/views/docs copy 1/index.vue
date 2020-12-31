@@ -1,3 +1,3 @@
 <template>
-dd
+  docs
 </template>

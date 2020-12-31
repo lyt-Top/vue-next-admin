@@ -12,7 +12,7 @@
             v-model="ruleForm.code" clearable autocomplete="off"></el-input>
         </el-col>
         <el-col :span="8">
-          <el-button>获取验证码</el-button>
+          <el-button class="login-content-form-btn">获取验证码</el-button>
         </el-col>
       </el-row>
     </el-form-item>

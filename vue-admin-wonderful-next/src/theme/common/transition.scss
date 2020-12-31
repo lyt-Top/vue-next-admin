@@ -1,41 +1,37 @@
-/* 定义重用混入指令
-------------------------------- */
-@mixin transition($second: 0.3) {
-  transition: all #{$second}s;
-}
-
-@mixin translateX($opacity: 0, $offsetX: 0) {
-  opacity: $opacity;
-  transform: translateX(#{$offsetX}px);
-}
-
 /* 页面切换动画
 ------------------------------- */
-.fade-transform-enter-active,
-.fade-transform-leave-active {
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
   will-change: transform;
-  @include transition();
+  transition: all 0.3s ease;
+  position: absolute;
 }
-.fade-transform-enter {
-  @include translateX(-30);
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
 }
-.fade-transform-leave-active {
-  @include translateX(30);
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-left-enter-from {
+  @extend .slide-right-leave-to;
+}
+.slide-left-leave-to {
+  @extend .slide-right-enter-from;
 }
 
 /* Breadcrumb 面包屑过渡动画
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  @include transition();
-}
-.breadcrumb-enter,
-.breadcrumb-leave-active {
-  @include translateX(20);
-}
-.breadcrumb-move {
-  @include transition();
-}
-.breadcrumb-leave-active {
+  transition: all 0.3s ease;
   position: absolute;
+}
+.breadcrumb-enter-from,
+.breadcrumb-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
 }

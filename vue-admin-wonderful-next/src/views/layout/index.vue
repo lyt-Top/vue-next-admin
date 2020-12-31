@@ -1,10 +1,11 @@
 <template>
-  layout
-  <router-view></router-view>
+  <Fashion />
 </template>
 
 <script lang="ts">
+import Fashion from "/@/views/layout/fashion.vue";
 export default {
   name: "layout",
+  components: { Fashion },
 };
 </script>

@@ -6,11 +6,13 @@
     "build": "vite build"
   },
   "dependencies": {
-    "element-plus": "^v1.0.1-beta.14",
+    "element-plus": "^v1.0.1-beta.17",
+    "sortablejs": "^1.10.2",
     "vue": "^3.0.4",
     "vue-router": "^4.0.1"
   },
   "devDependencies": {
+    "@types/sortablejs": "^1.10.6",
     "@vue/compiler-sfc": "^3.0.4",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
