@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  outline: none !important;
 }
 
 html,
@@ -50,6 +51,22 @@ body,
   .layout-container-header-main {
     display: flex;
     flex-direction: column;
+  }
+}
+
+/* element plus 全局样式
+------------------------------- */
+.layout-breadcrumb-seting {
+  .el-drawer__header {
+    padding: 0 15px !important;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0 !important;
+    border-bottom: 1px solid rgb(230, 230, 230);
+  }
+  .el-divider {
+    background-color: rgb(230, 230, 230);
   }
 }
 

@@ -5,7 +5,6 @@ import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 import '/@/theme/index.scss'
-import { locale } from 'element-plus'
+import lang from 'element-plus/lib/locale/lang/zh-cn'
 
-createApp(App).use(router).use(ElementPlus, { locale }).mount('#app')
-
+createApp(App).use(router).use(ElementPlus, { locale: lang }).mount('#app')

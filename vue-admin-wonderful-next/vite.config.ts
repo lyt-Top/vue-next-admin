@@ -22,6 +22,9 @@ const viteConfig: UserConfig = {
     port: VITE_PORT,
     open: VITE_OPEN,
     base: process.env.NODE_ENV === "production" ? "./" : VITE_PUBLIC_PATH,
+    optimizeDeps: {
+        include: ['element-plus/lib/locale/lang/zh-cn']
+    }
 }
 
 export default viteConfig

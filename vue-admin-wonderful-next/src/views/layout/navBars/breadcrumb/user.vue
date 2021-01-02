@@ -1,7 +1,7 @@
 <template>
   <div class="layout-navbars-breadcrumb-user">
     <i class="el-icon-search layout-navbars-breadcrumb-user-icon" title="菜单搜索"></i>
-    <i class="el-icon-setting layout-navbars-breadcrumb-user-icon" title="布局配置"></i>
+    <i class="el-icon-setting layout-navbars-breadcrumb-user-icon" title="布局配置" @click="onLayoutSetingClick"></i>
     <i class="el-icon-bell layout-navbars-breadcrumb-user-icon" title="消息"></i>
     <i class="icon-fullscreen iconfont layout-navbars-breadcrumb-user-icon mr10" title="开全屏"></i>
     <el-dropdown :show-timeout="70" :hide-timeout="50">
@@ -22,11 +22,25 @@
       </template>
     </el-dropdown>
   </div>
+  <Setings ref="setingsRef" />
 </template>
 
 <script lang="ts">
+import { ref } from "vue";
+import Setings from "/@/views/layout/navBars/breadcrumb/setings.vue";
 export default {
   name: "layoutBreadcrumbUser",
+  components: { Setings },
+  setup() {
+    const setingsRef = ref();
+    const onLayoutSetingClick = () => {
+      setingsRef.value.openDrawer();
+    };
+    return {
+      setingsRef,
+      onLayoutSetingClick,
+    };
+  },
 };
 </script>
 

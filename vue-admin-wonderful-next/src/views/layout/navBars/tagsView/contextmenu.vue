@@ -1,7 +1,8 @@
 <template>
   <transition name="el-zoom-in-center">
     <div aria-hidden="true" class="el-dropdown__popper el-popper is-light is-pure custom-contextmenu" role="tooltip"
-      data-popper-placement="bottom" :style="`top: ${dropdown.y + 5}px;left: ${dropdown.x}px;`" v-show="isShow">
+      data-popper-placement="bottom" :style="`top: ${dropdown.y + 5}px;left: ${dropdown.x}px;`" :key="Math.random()"
+      v-show="isShow">
       <ul class="el-dropdown-menu">
         <li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" v-for="(v,k) in dropdownList" :key="k">
           <i :class="v.icon"></i>
