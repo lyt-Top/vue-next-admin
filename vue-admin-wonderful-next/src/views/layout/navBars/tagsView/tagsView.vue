@@ -50,23 +50,10 @@ export default {
       tagsRefsIndex: 0,
       arr2: [
         { id: 11, name: "微软", path: "/home" },
-        { id: 12, name: "亚马逊", path: "/docs" },
-        { id: 13, name: "京东1", path: "/docs1" },
-        { id: 15, name: "谷歌2", path: "/docs2" },
-        { id: 1, name: "苹果3", path: "/docs3" },
-        { id: 14, name: "苹果4", path: "/docs4" },
-        { id: 14, name: "苹果5", path: "/docs5" },
-        { id: 14, name: "苹果6", path: "/docs6" },
-        { id: 14, name: "苹果7", path: "/docs7" },
-        { id: 14, name: "苹果8", path: "/docs8" },
-        { id: 14, name: "苹果9", path: "/docs9" },
-        { id: 14, name: "苹果10", path: "/docs10" },
-        { id: 14, name: "苹果11", path: "/docs11" },
-        { id: 14, name: "苹果12", path: "/docs12" },
-        { id: 14, name: "苹果13", path: "/docs13" },
-        { id: 14, name: "苹果14", path: "/docs14" },
-        { id: 14, name: "苹果15", path: "/docs15" },
-        { id: 14, name: "苹果16", path: "/docs16" },
+        { id: 12, name: "文档", path: "/docs" },
+        { id: 13, name: "文档1", path: "/docs1" },
+        { id: 15, name: "文档2", path: "/docs2" },
+        { id: 1, name: "文档3", path: "/docs3" },
       ],
     });
     const initSortable = () => {
@@ -126,6 +113,7 @@ export default {
 <style scoped lang="scss">
 .layout-navbars-tagsview {
   flex: 1;
+  background-color: #ffffff;
   &-ul {
     list-style: none;
     margin: 0;
@@ -149,8 +137,9 @@ export default {
       cursor: pointer;
       justify-content: space-between;
       &:hover {
-        background: #f6f6f6;
+        background-color: var(--color-primary-light-9);
         color: var(--color-primary);
+        border-color: var(--color-primary-light-6);
       }
       &-iconfont {
         position: relative;

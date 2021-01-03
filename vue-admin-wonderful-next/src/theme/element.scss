@@ -666,37 +666,55 @@
 
 /* NavMenu 导航菜单
 ------------------------------- */
+// 默认样式修改
 .el-menu {
   border-right: none !important;
 }
-.el-menu-item.is-active,
-.el-submenu.is-active .el-submenu__title {
+.el-menu-item,
+.el-submenu__title {
+  height: 50px !important;
+  line-height: 50px !important;
+  color: var(--bg-menuBarColor);
+}
+// horizontal 水平方向时
+.el-menu--horizontal > .el-menu-item.is-active,
+.el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
   border-bottom-color: set-color(primary);
   color: set-color(primary);
 }
-.el-menu-item:not(.is-disabled):focus,
-.el-menu-item:not(.is-disabled):hover,
-.el-submenu:focus .el-submenu__title,
-.el-submenu:hover .el-submenu__title,
-.el-menu .el-menu-item.is-active,
-.el-menu .el-submenu.is-active > .el-submenu__title {
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
+.el-menu--horizontal .el-menu-item:not(.is-disabled):hover,
+.el-menu--horizontal > .el-submenu:focus .el-submenu__title,
+.el-menu--horizontal > .el-submenu:hover .el-submenu__title,
+.el-menu--horizontal .el-menu .el-menu-item.is-active,
+.el-menu--horizontal .el-menu .el-submenu.is-active > .el-submenu__title {
   color: set-color(primary);
 }
+// 外部链接时
 .el-menu-item a,
-.el-menu-item a:hover {
+.el-menu-item a:hover,
+.el-menu-item i,
+.el-submenu__title i {
   color: inherit;
   text-decoration: none;
 }
-// default
-.el-menu-item.is-active {
-  color: set-color(primary);
-  background-color: set-color(primary-light-9);
-}
-.el-menu-item:focus,
+
+// 默认 hover 时
 .el-menu-item:hover,
-.el-submenu__title:focus,
 .el-submenu__title:hover {
-  background-color: set-color(primary-light-9);
+  color: set-color(primary) !important;
+  background-color: transparent !important;
+  i {
+    color: set-color(primary);
+  }
+}
+// 高亮时
+.el-menu-item.is-active {
+  color: #ffffff !important;
+  background-color: set-color(primary) !important;
+  i {
+    color: #ffffff !important;
+  }
 }
 
 /* Tabs 标签页
@@ -721,7 +739,7 @@
 }
 .el-breadcrumb__inner a,
 .el-breadcrumb__inner.is-link {
-  color: #303133;
+  color: var(--bg-topBarColor);
   font-weight: normal;
 }
 

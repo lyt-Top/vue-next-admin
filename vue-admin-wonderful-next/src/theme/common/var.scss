@@ -58,6 +58,10 @@ $--color-danger-light-6: mix($--color-whites, $--color-danger, 60%) !default;
 $--color-danger-light-7: mix($--color-whites, $--color-danger, 70%) !default;
 $--color-danger-light-8: mix($--color-whites, $--color-danger, 80%) !default;
 $--color-danger-light-9: mix($--color-whites, $--color-danger, 90%) !default;
+$--bg-topBar: #ffffff;
+$--bg-menuBar: #29384d;
+$--bg-topBarColor: #606266;
+$--bg-menuBarColor: #e6e6e6;
 
 /* 赋值给:root
 ------------------------------- */
@@ -114,4 +118,8 @@ $--color-danger-light-9: mix($--color-whites, $--color-danger, 90%) !default;
   --color-danger-light-7: #{$--color-danger-light-7};
   --color-danger-light-8: #{$--color-danger-light-8};
   --color-danger-light-9: #{$--color-danger-light-9};
+  --bg-topBar: #{$--bg-topBar};
+  --bg-menuBar: #{$--bg-menuBar};
+  --bg-topBarColor: #{$--bg-topBarColor};
+  --bg-menuBarColor: #{$--bg-menuBarColor};
 }

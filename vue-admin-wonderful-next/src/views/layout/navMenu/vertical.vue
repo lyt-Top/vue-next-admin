@@ -1,5 +1,5 @@
 <template>
-  <el-menu router :default-active="defaultActive" background-color="#29384D" text-color="#e6e6e6">
+  <el-menu router :default-active="defaultActive" background-color="transparent">
     <template v-for="val in menuList">
       <el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
         <template #title>

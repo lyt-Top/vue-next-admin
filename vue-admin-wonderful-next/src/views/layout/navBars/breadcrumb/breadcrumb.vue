@@ -55,9 +55,14 @@ export default {
     cursor: pointer;
     font-size: 18px;
     margin-right: 15px;
+    color: var(--bg-topBarColor);
   }
   .layout-navbars-breadcrumb-span {
-    opacity: 0.8;
+    opacity: 0.7;
+    color: var(--bg-topBarColor);
+  }
+  :deep .el-breadcrumb__separator {
+    @extend .layout-navbars-breadcrumb-span;
   }
 }
 </style>

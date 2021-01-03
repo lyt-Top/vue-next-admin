@@ -1,11 +1,11 @@
 <template>
-  <Fashion />
+  <Defaults />
 </template>
 
 <script lang="ts">
-import Fashion from "/@/views/layout/fashion.vue";
+import Defaults from "/@/views/layout/defaults.vue";
 export default {
   name: "layout",
-  components: { Fashion },
+  components: { Defaults },
 };
 </script>

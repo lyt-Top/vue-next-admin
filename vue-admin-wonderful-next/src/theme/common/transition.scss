@@ -10,11 +10,11 @@
 }
 .slide-right-enter-from {
   opacity: 0;
-  transform: translateX(-30px);
+  transform: translateX(-20px);
 }
 .slide-right-leave-to {
   opacity: 0;
-  transform: translateX(30px);
+  transform: translateX(20px);
 }
 .slide-left-enter-from {
   @extend .slide-right-leave-to;
@@ -27,7 +27,7 @@
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   position: absolute;
 }
 .breadcrumb-enter-from,

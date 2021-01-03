@@ -7,43 +7,77 @@
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">primary</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="primary" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="primary" size="small" @change="onColorPickerChange('primary')">
+            </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">success</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="success" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="success" size="small" @change="onColorPickerChange('success')">
+            </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">info</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="info" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="info" size="small" @change="onColorPickerChange('info')">
+            </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">warning</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="warning" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="warning" size="small" @change="onColorPickerChange('warning')">
+            </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">danger</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="danger" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="danger" size="small" @change="onColorPickerChange('danger')">
+            </el-color-picker>
           </div>
         </div>
+        <el-divider content-position="left">菜单 / 顶栏</el-divider>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="topBar" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="topBar" size="small" @change="onBgColorPickerChange('topBar')">
+            </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单背景</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="menuBar" show-alpha size="small"></el-color-picker>
+            <el-color-picker v-model="menuBar" size="small" @change="onBgColorPickerChange('menuBar')">
+            </el-color-picker>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex">
+          <div class="layout-breadcrumb-seting-bar-flex-label">顶栏默认字体颜色</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-color-picker v-model="topBarColor" size="small" @change="onBgColorPickerChange('topBarColor')">
+            </el-color-picker>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex">
+          <div class="layout-breadcrumb-seting-bar-flex-label">菜单默认字体颜色</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-color-picker v-model="menuBarColor" size="small" @change="onBgColorPickerChange('menuBarColor')">
+            </el-color-picker>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt10">
+          <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景渐变</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="isCollapse"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt14">
+          <div class="layout-breadcrumb-seting-bar-flex-label">菜单背景渐变</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="isCollapse"></el-switch>
           </div>
         </div>
 
@@ -134,7 +168,7 @@
             <el-switch v-model="isCollapse"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt14">
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-input v-model="menuWidth" size="mini" style="width:90px;"></el-input>
@@ -143,9 +177,9 @@
 
         <!-- 布局切换 -->
         <el-divider content-position="left">布局切换</el-divider>
-        <div class="drawer-layout-content-flex">
-          <!-- fashion 布局 -->
-          <div class="drawer-layout-content-item">
+        <div class="layout-drawer-content-flex">
+          <!-- defaults 布局 -->
+          <div class="layout-drawer-content-item">
             <section class="el-container drawer-layout-active el-circular">
               <aside class="el-aside" style="width: 20px"></aside>
               <section class="el-container is-vertical">
@@ -155,12 +189,12 @@
             </section>
             <div class="layout-tips-warp-active layout-tips-warp">
               <div class="layout-tips-box">
-                <p class="layout-tips-txt">时尚</p>
+                <p class="layout-tips-txt">默认</p>
               </div>
             </div>
           </div>
           <!-- classic 布局 -->
-          <div class="drawer-layout-content-item">
+          <div class="layout-drawer-content-item">
             <section class="el-container is-vertical el-circular">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
@@ -176,8 +210,8 @@
               </div>
             </div>
           </div>
-          <!-- elegant 布局 -->
-          <div class="drawer-layout-content-item">
+          <!-- transverse 布局 -->
+          <div class="layout-drawer-content-item">
             <section class="el-container is-vertical el-circular">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
@@ -188,12 +222,12 @@
             </section>
             <div class="layout-tips-warp">
               <div class="layout-tips-box">
-                <p class="layout-tips-txt">典雅</p>
+                <p class="layout-tips-txt">横向</p>
               </div>
             </div>
           </div>
-          <!-- scitech 布局 -->
-          <div class="drawer-layout-content-item">
+          <!-- columns 布局 -->
+          <div class="layout-drawer-content-item">
             <section class="el-container el-circular">
               <aside class="el-aside-dark" style="width: 10px"></aside>
               <aside class="el-aside" style="width: 20px"></aside>
@@ -204,7 +238,7 @@
             </section>
             <div class="layout-tips-warp">
               <div class="layout-tips-box">
-                <p class="layout-tips-txt">科技</p>
+                <p class="layout-tips-txt">分栏</p>
               </div>
             </div>
           </div>
@@ -224,6 +258,7 @@
 
 <script lang="ts">
 import { toRefs, reactive } from "vue";
+import { getLightColor } from "/@/utils/theme.ts";
 export default {
   name: "layoutBreadcrumbSeting",
   setup() {
@@ -236,6 +271,8 @@ export default {
       danger: "#f56c6c",
       topBar: "#ffffff",
       menuBar: "#29384d",
+      topBarColor: "#606266",
+      menuBarColor: "#e6e6e6",
       isCollapse: false,
       menuWidth: 240,
     });
@@ -245,9 +282,26 @@ export default {
     const closeDrawer = () => {
       state.isDrawer = false;
     };
+    const onColorPickerChange = (color: string) => {
+      setPropertyFun(`--color-${color}`, state[color]);
+    };
+    const setPropertyFun = (color: string, targetVal: any) => {
+      document.documentElement.style.setProperty(color, targetVal);
+      for (let i = 1; i <= 9; i++) {
+        document.documentElement.style.setProperty(
+          `${color}-light-${i}`,
+          getLightColor(targetVal, i / 10)
+        );
+      }
+    };
+    const onBgColorPickerChange = (bg: string) => {
+      document.documentElement.style.setProperty(`--bg-${bg}`, state[bg]);
+    };
     return {
       openDrawer,
       closeDrawer,
+      onColorPickerChange,
+      onBgColorPickerChange,
       ...toRefs(state),
     };
   },
@@ -258,7 +312,9 @@ export default {
 .layout-breadcrumb-seting-bar {
   height: calc(100vh - 50px);
   padding: 0 15px;
-  overflow-x: hidden !important;
+  :deep .el-scrollbar__view {
+    overflow-x: hidden !important;
+  }
   .layout-breadcrumb-seting-bar-flex {
     display: flex;
     align-items: center;
@@ -267,13 +323,13 @@ export default {
       color: #666666;
     }
   }
-  .drawer-layout-content-flex {
+  .layout-drawer-content-flex {
     overflow: hidden;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
     margin: 0 -5px;
-    .drawer-layout-content-item {
+    .layout-drawer-content-item {
       width: 50%;
       height: 70px;
       cursor: pointer;
@@ -311,14 +367,14 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border: 1px solid var(--color-primary-light-6);
+        border: 1px solid var(--color-primary-light-4);
         border-radius: 100%;
         padding: 4px;
         .layout-tips-box {
           width: 30px;
           height: 30px;
           z-index: 9;
-          border: 1px solid var(--color-primary-light-6);
+          border: 1px solid var(--color-primary-light-4);
           border-radius: 100%;
           .layout-tips-txt {
             position: relative;
@@ -327,7 +383,7 @@ export default {
             line-height: 1;
             letter-spacing: 2px;
             white-space: nowrap;
-            color: var(--color-primary-light-6);
+            color: var(--color-primary-light-4);
             text-align: center;
             transform: rotate(30deg);
             left: -1px;

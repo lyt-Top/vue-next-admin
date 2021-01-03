@@ -63,12 +63,15 @@ export default {
     padding: 0 10px;
     cursor: pointer;
     transition: all 0.3s;
-    color: #000000;
+    color: var(--bg-topBarColor);
     height: 50px;
     line-height: 50px;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
     }
+  }
+  :deep .el-dropdown {
+    color: var(--bg-topBarColor);
   }
 }
 </style>

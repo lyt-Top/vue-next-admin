@@ -29,9 +29,11 @@ body,
   width: 100%;
   height: 100%;
   .el-aside {
-    background: #29384d;
-    border-right: 1px solid rgb(230, 230, 230);
+    background: var(--bg-menuBar);
+    box-shadow: 2px 0 6px rgb(0 21 41 / 1%);
     height: inherit;
+    position: relative;
+    z-index: 1;
   }
   .el-header {
     box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
