@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 // hex颜色转rgb颜色
 export function hexToRgb(str: any) {
     let hexs: any = ''
-    let reg = /^\#?[0-9A-F]{6}$/
+    let reg = /^\#?[0-9A-Fa-f]{6}$/
     if (!reg.test(str)) return ElMessage({ type: 'warning', message: "输入错误的hex" })
     str = str.replace("#", "")
     hexs = str.match(/../g)
@@ -22,7 +22,7 @@ export function rgbToHex(r: any, g: any, b: any) {
 
 // 加深颜色值，level为加深的程度，限0-1之间
 export function getDarkColor(color: any, level: number) {
-    let reg = /^\#?[0-9A-F]{6}$/
+    let reg = /^\#?[0-9A-Fa-f]{6}$/
     if (!reg.test(color)) return ElMessage({ type: 'warning', message: "输入错误的hex颜色值" })
     let rgb = hexToRgb(color)
     for (let i = 0; i < 3; i++) rgb[i] = Math.floor(rgb[i] * (1 - level))
@@ -31,7 +31,7 @@ export function getDarkColor(color: any, level: number) {
 
 // 变浅颜色值，level为加深的程度，限0-1之间
 export function getLightColor(color: any, level: number) {
-    let reg = /^\#?[0-9A-F]{6}$/
+    let reg = /^\#?[0-9A-Fa-f]{6}$/
     if (!reg.test(color)) return ElMessage({ type: 'warning', message: "输入错误的hex颜色值" })
     let rgb = hexToRgb(color)
     for (let i = 0; i < 3; i++) rgb[i] = Math.floor((255 - rgb[i]) * level + rgb[i])

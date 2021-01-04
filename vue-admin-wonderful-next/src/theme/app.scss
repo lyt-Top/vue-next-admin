@@ -46,6 +46,9 @@ body,
   .el-scrollbar {
     width: 100%;
   }
+  .layout-aside-width {
+    width: 240px !important;
+  }
   .layout-scrollbar {
     @extend .el-scrollbar;
     padding: 15px;

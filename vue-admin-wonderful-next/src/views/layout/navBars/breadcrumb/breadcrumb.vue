@@ -61,8 +61,9 @@ export default {
     opacity: 0.7;
     color: var(--bg-topBarColor);
   }
-  :deep .el-breadcrumb__separator {
-    @extend .layout-navbars-breadcrumb-span;
+  ::v-deep(.el-breadcrumb__separator) {
+    opacity: 0.7;
+    color: var(--bg-topBarColor);
   }
 }
 </style>

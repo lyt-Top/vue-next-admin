@@ -71,13 +71,19 @@
         <div class="layout-breadcrumb-seting-bar-flex mt10">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景渐变</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="isTopBarColorGradual" @change="onTopBarGradualChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt14">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单背景渐变</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="isMenuBarColorGradual" @change="onMenuBarGradualChange"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt14">
+          <div class="layout-breadcrumb-seting-bar-flex-label">菜单字体背景高亮</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
           </div>
         </div>
 
@@ -146,6 +152,12 @@
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="isCollapse"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="isCollapse"></el-switch>
           </div>
@@ -257,11 +269,19 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from "vue";
+import {
+  toRefs,
+  reactive,
+  nextTick,
+  onBeforeMount,
+  onUnmounted,
+  getCurrentInstance,
+} from "vue";
 import { getLightColor } from "/@/utils/theme.ts";
 export default {
   name: "layoutBreadcrumbSeting",
   setup() {
+    const { proxy } = getCurrentInstance();
     const state = reactive({
       isDrawer: false,
       primary: "#409eff",
@@ -273,6 +293,9 @@ export default {
       menuBar: "#29384d",
       topBarColor: "#606266",
       menuBarColor: "#e6e6e6",
+      isTopBarColorGradual: false,
+      isMenuBarColorGradual: false,
+      isMenuBarColorHighlight: false,
       isCollapse: false,
       menuWidth: 240,
     });
@@ -296,12 +319,62 @@ export default {
     };
     const onBgColorPickerChange = (bg: string) => {
       document.documentElement.style.setProperty(`--bg-${bg}`, state[bg]);
+      onTopBarGradualChange();
+      onMenuBarGradualChange();
     };
+    const onTopBarGradualChange = () => {
+      setGraduaFun(
+        ".layout-navbars-breadcrumb-index",
+        state.isTopBarColorGradual,
+        state.topBar
+      );
+    };
+    const onMenuBarGradualChange = () => {
+      setGraduaFun(
+        ".layout-container .el-aside",
+        state.isMenuBarColorGradual,
+        state.menuBar
+      );
+    };
+    const setGraduaFun = (el: string, bool: boolean, color: string) => {
+      nextTick(() => {
+        let els = document.querySelector(el);
+        if (bool)
+          els.setAttribute(
+            "style",
+            `background-image:linear-gradient(to bottom left , ${color}, ${getLightColor(
+              color,
+              0.6
+            )})`
+          );
+        else els.setAttribute("style", `background-image:${color}`);
+      });
+    };
+    const onMenuBarHighlightChange = () => {
+      nextTick(() => {
+        let els = document.querySelector(".el-menu-item.is-active");
+        let attr = "el-menu-item is-active";
+        if (state.isMenuBarColorHighlight)
+          els.setAttribute("class", `${attr} add-is-active`);
+        else els.setAttribute("class", `${attr}`);
+      });
+    };
+    onBeforeMount(() => {
+      proxy.mittBus.on("onMenuClick", () => {
+        onMenuBarHighlightChange();
+      });
+    });
+    onUnmounted(() => {
+      proxy.mittBus.off("onMenuClick", () => {});
+    });
     return {
       openDrawer,
       closeDrawer,
       onColorPickerChange,
       onBgColorPickerChange,
+      onTopBarGradualChange,
+      onMenuBarGradualChange,
+      onMenuBarHighlightChange,
       ...toRefs(state),
     };
   },
@@ -312,7 +385,7 @@ export default {
 .layout-breadcrumb-seting-bar {
   height: calc(100vh - 50px);
   padding: 0 15px;
-  :deep .el-scrollbar__view {
+  ::v-deep(.el-scrollbar__view) {
     overflow-x: hidden !important;
   }
   .layout-breadcrumb-seting-bar-flex {
@@ -351,15 +424,13 @@ export default {
           background-color: #e9eef3;
         }
       }
-      .border-color-09f {
-        border: 1px solid var(--color-primary) !important;
-      }
       .el-circular {
         border-radius: 2px;
         overflow: hidden;
       }
       .drawer-layout-active {
-        @extend .border-color-09f;
+        border: 1px solid;
+        border-color: var(--color-primary);
       }
       .layout-tips-warp,
       .layout-tips-warp-active {
@@ -367,14 +438,16 @@ export default {
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        border: 1px solid var(--color-primary-light-4);
+        border: 1px solid;
+        border-color: var(--color-primary-light-4);
         border-radius: 100%;
         padding: 4px;
         .layout-tips-box {
           width: 30px;
           height: 30px;
           z-index: 9;
-          border: 1px solid var(--color-primary-light-4);
+          border: 1px solid;
+          border-color: var(--color-primary-light-4);
           border-radius: 100%;
           .layout-tips-txt {
             position: relative;
@@ -395,9 +468,11 @@ export default {
         }
       }
       .layout-tips-warp-active {
-        @extend .border-color-09f;
+        border: 1px solid;
+        border-color: var(--color-primary);
         .layout-tips-box {
-          @extend .border-color-09f;
+          border: 1px solid;
+          border-color: var(--color-primary);
           .layout-tips-txt {
             color: var(--color-primary) !important;
             background-color: #e9eef3 !important;

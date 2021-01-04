@@ -675,6 +675,7 @@
   height: 50px !important;
   line-height: 50px !important;
   color: var(--bg-menuBarColor);
+  transition: none !important;
 }
 // horizontal 水平方向时
 .el-menu--horizontal > .el-menu-item.is-active,
@@ -698,7 +699,6 @@
   color: inherit;
   text-decoration: none;
 }
-
 // 默认 hover 时
 .el-menu-item:hover,
 .el-submenu__title:hover {
@@ -710,10 +710,19 @@
 }
 // 高亮时
 .el-menu-item.is-active {
+  color: set-color(primary);
+}
+.el-active-extend {
   color: #ffffff !important;
   background-color: set-color(primary) !important;
   i {
     color: #ffffff !important;
+  }
+}
+.add-is-active {
+  @extend .el-active-extend;
+  &:hover {
+    @extend .el-active-extend;
   }
 }
 

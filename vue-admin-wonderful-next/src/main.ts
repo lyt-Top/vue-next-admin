@@ -6,5 +6,8 @@ import ElementPlus from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 import '/@/theme/index.scss'
 import lang from 'element-plus/lib/locale/lang/zh-cn'
+import mitt from "mitt"
 
-createApp(App).use(router).use(ElementPlus, { locale: lang }).mount('#app')
+const app = createApp(App)
+app.use(router).use(ElementPlus, { locale: lang }).mount('#app')
+app.config.globalProperties.mittBus = mitt()

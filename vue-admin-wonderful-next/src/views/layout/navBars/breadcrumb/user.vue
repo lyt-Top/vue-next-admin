@@ -70,7 +70,7 @@ export default {
       background: rgba(0, 0, 0, 0.04);
     }
   }
-  :deep .el-dropdown {
+  ::v-deep(.el-dropdown) {
     color: var(--bg-topBarColor);
   }
 }

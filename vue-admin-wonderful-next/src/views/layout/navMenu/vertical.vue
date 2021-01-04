@@ -1,5 +1,5 @@
 <template>
-  <el-menu router :default-active="defaultActive" background-color="transparent">
+  <el-menu router :default-active="defaultActive" background-color="transparent" @select="onMenuClick">
     <template v-for="val in menuList">
       <el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
         <template #title>
@@ -18,7 +18,13 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent } from "vue";
+import {
+  toRefs,
+  reactive,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+} from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import SubItem from "/@/views/layout/navMenu/subItem.vue";
 export default defineComponent({
@@ -33,6 +39,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { proxy } = getCurrentInstance();
     const route = useRoute();
     const state = reactive({
       defaultActive: route.path,
@@ -43,8 +50,12 @@ export default defineComponent({
     onBeforeRouteUpdate((to) => {
       state.defaultActive = to.path;
     });
+    const onMenuClick = (index, path) => {
+      proxy.mittBus.emit("onMenuClick");
+    };
     return {
       menuList,
+      onMenuClick,
       ...toRefs(state),
     };
   },

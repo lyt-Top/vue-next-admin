@@ -74,7 +74,7 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%) translate3d(0, 0, 0);
     background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 12px 0 var(--color-primary-light-1);
+    box-shadow: 0 2px 12px 0 var(--color-primary-light-7);
     border-radius: 4px;
     transition: height 0.2s linear;
     height: 480px;

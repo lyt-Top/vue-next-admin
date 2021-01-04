@@ -1,5 +1,5 @@
 <template>
-  <el-aside width="240px">
+  <el-aside class="layout-aside-width">
     <el-scrollbar>
       <Vertical :menuList="menuList" />
     </el-scrollbar>
