@@ -17,5 +17,6 @@ export default {
     isUniqueOpened: false,
     isFixedHeader: false,
     isCollapse1: false,
-    menuWidth: 240,
+    menuWidth1: 200,
+    isShowLogo: false
 }

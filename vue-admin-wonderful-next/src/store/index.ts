@@ -20,7 +20,8 @@ export interface RootStateTypes {
         isUniqueOpened: boolean,
         isFixedHeader: boolean,
         isCollapse1: boolean,
-        menuWidth: number,
+        menuWidth1: number,
+        isShowLogo: boolean
     }
 }
 

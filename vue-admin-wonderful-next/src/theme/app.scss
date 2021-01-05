@@ -34,6 +34,8 @@ body,
     height: inherit;
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
   }
   .el-header {
     box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
@@ -51,7 +53,7 @@ body,
   .el-scrollbar {
     width: 100%;
   }
-  .layout-aside-width240 {
+  .layout-aside-width-default {
     width: 240px !important;
     transition: width 0.3s ease;
   }
@@ -83,6 +85,15 @@ body,
   .el-divider {
     background-color: rgb(230, 230, 230);
   }
+}
+
+/* flex 弹性布局
+------------------------------- */
+.flex {
+  display: flex;
+}
+.flex-auto {
+  flex: 1;
 }
 
 /* 宽高 100%

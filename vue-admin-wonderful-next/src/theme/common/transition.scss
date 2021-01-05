@@ -35,3 +35,17 @@
   opacity: 0;
   transform: translateX(20px);
 }
+
+/* logo 过渡动画
+------------------------------- */
+@keyframes logoAnimation {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

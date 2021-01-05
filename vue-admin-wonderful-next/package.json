@@ -6,7 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "element-plus": "^v1.0.1-beta.19",
+    "element-plus": "^v1.0.1-beta.20",
     "mitt": "^2.1.0",
     "sortablejs": "^1.10.2",
     "vue": "^3.0.5",

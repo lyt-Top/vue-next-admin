@@ -1,6 +1,5 @@
 <template>
   <el-main :class="getThemeConfig.isFixedHeader ? 'el-main-overflow-auto' : 'el-main-overflow-unset'">
-    <!-- <el-main> -->
     <el-scrollbar class="layout-scrollbar" style="min-height: calc(100vh - 84px);" ref="layoutScrollbarRef">
       <router-view v-slot="{ Component }">
         <transition :name="transitionName" mode="out-in">

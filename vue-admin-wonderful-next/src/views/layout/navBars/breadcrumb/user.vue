@@ -1,9 +1,13 @@
 <template>
   <div class="layout-navbars-breadcrumb-user">
-    <i class="el-icon-search layout-navbars-breadcrumb-user-icon" title="菜单搜索"></i>
-    <i class="el-icon-setting layout-navbars-breadcrumb-user-icon" title="布局配置" @click="onLayoutSetingClick"></i>
-    <i class="el-icon-bell layout-navbars-breadcrumb-user-icon" title="消息"></i>
-    <i class="icon-fullscreen iconfont layout-navbars-breadcrumb-user-icon mr10" title="开全屏"></i>
+    <div class="layout-navbars-breadcrumb-user-icon">
+      <i class="el-icon-search" title="菜单搜索"></i>
+    </div>
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
+      <i class="el-icon-setting" title="布局配置"></i>
+    </div>
+    <div class="layout-navbars-breadcrumb-user-icon"><i class="el-icon-bell" title="消息"></i></div>
+    <div class="layout-navbars-breadcrumb-user-icon mr10"><i class="icon-fullscreen iconfont" title="开全屏"></i></div>
     <el-dropdown :show-timeout="70" :hide-timeout="50">
       <span class="layout-navbars-breadcrumb-user-link">
         <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
@@ -59,15 +63,17 @@ export default {
     }
   }
   &-icon {
-    display: inline-block;
     padding: 0 10px;
     cursor: pointer;
-    transition: all 0.3s;
     color: var(--bg-topBarColor);
     height: 50px;
     line-height: 50px;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
+      i {
+        display: inline-block;
+        animation: logoAnimation 0.3s ease-in-out;
+      }
     }
   }
   ::v-deep(.el-dropdown) {

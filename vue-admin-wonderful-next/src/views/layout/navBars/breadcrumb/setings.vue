@@ -115,18 +115,10 @@
             <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">菜单展开宽度</div>
-          <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input-number v-model="getThemeConfig.menuWidth" controls-position="right" :min="1" :max="999"
-              size="mini" style="width:90px;">
-            </el-input-number>
-          </div>
-        </div>
         <div class="layout-breadcrumb-seting-bar-flex mt11">
           <div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input-number v-model="getThemeConfig.menuWidth" controls-position="right" :min="1" :max="999"
+            <el-input-number v-model="getThemeConfig.menuWidth1" controls-position="right" :min="1" :max="999"
               size="mini" style="width:90px;">
             </el-input-number>
           </div>
@@ -137,7 +129,7 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">侧边栏 Logo</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isShowLogo" @change="onsetThemeConfigChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -179,7 +171,7 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input v-model="getThemeConfig.menuWidth" size="mini" style="width:90px;"></el-input>
+            <el-input v-model="getThemeConfig.menuWidth1" size="mini" style="width:90px;"></el-input>
           </div>
         </div>
 

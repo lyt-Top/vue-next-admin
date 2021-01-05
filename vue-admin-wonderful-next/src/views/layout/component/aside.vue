@@ -1,19 +1,22 @@
 <template>
-  <el-aside :class="isCollapse ? 'layout-aside-width64' : 'layout-aside-width240'">
-    <el-scrollbar>
+  <el-aside :class="getThemeConfig.isCollapse ? 'layout-aside-width64' : 'layout-aside-width-default'">
+    <Logo v-if="getThemeConfig.isShowLogo" />
+    <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
       <Vertical :menuList="menuList" />
     </el-scrollbar>
   </el-aside>
 </template>
 
 <script lang="ts">
+import Logo from "/@/views/layout/logo/index.vue";
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
-import { toRefs, reactive, computed } from "vue";
+import { toRefs, reactive, computed, watch, getCurrentInstance } from "vue";
 import { useStore } from "/@/store/index.ts";
 export default {
   name: "layoutAside",
-  components: { Vertical },
+  components: { Logo, Vertical },
   setup() {
+    const { proxy } = getCurrentInstance();
     const store = useStore();
     const state = reactive({
       menuList: [
@@ -64,11 +67,14 @@ export default {
         },
       ],
     });
-    const isCollapse = computed(() => {
-      return store.state.themeConfig.isCollapse;
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
+    });
+    watch(store.state.themeConfig, (val) => {
+      proxy.$refs.layoutAsideScrollbarRef.update();
     });
     return {
-      isCollapse,
+      getThemeConfig,
       ...toRefs(state),
     };
   },
