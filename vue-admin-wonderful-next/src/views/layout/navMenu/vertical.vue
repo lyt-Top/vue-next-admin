@@ -1,5 +1,6 @@
 <template>
-  <el-menu router :default-active="defaultActive" background-color="transparent" @select="onMenuClick">
+  <el-menu router :default-active="defaultActive" background-color="transparent" :collapse="getThemeConfig.isCollapse"
+    :unique-opened="getThemeConfig.isUniqueOpened" :collapse-transition="false">
     <template v-for="val in menuList">
       <el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
         <template #title>
@@ -26,6 +27,7 @@ import {
   getCurrentInstance,
 } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useStore } from "/@/store/index.ts";
 import SubItem from "/@/views/layout/navMenu/subItem.vue";
 export default defineComponent({
   name: "navMenuVertical",
@@ -40,6 +42,7 @@ export default defineComponent({
   },
   setup(props) {
     const { proxy } = getCurrentInstance();
+    const store = useStore();
     const route = useRoute();
     const state = reactive({
       defaultActive: route.path,
@@ -47,15 +50,16 @@ export default defineComponent({
     const menuList = computed(() => {
       return props.menuList;
     });
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
+    });
     onBeforeRouteUpdate((to) => {
       state.defaultActive = to.path;
-    });
-    const onMenuClick = (index, path) => {
       proxy.mittBus.emit("onMenuClick");
-    };
+    });
     return {
       menuList,
-      onMenuClick,
+      getThemeConfig,
       ...toRefs(state),
     };
   },

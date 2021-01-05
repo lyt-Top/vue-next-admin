@@ -1,6 +1,7 @@
 <template>
   <div class="layout-navbars-breadcrumb">
-    <i class="el-icon-s-fold layout-navbars-breadcrumb-icon"></i>
+    <i class="layout-navbars-breadcrumb-icon" :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+      @click="onThemeConfigChange"></i>
     <el-breadcrumb>
       <transition-group name="breadcrumb" mode="out-in">
         <el-breadcrumb-item v-for="(v,k) in breadcrumbList" :key="v.meta.title">
@@ -13,11 +14,20 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onBeforeMount } from "vue";
+import {
+  toRefs,
+  reactive,
+  onBeforeMount,
+  computed,
+  getCurrentInstance,
+} from "vue";
 import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
+import { useStore } from "/@/store/index.ts";
 export default {
   name: "layoutBreadcrumb",
   setup() {
+    const { proxy } = getCurrentInstance();
+    const store = useStore();
     const route = useRoute();
     const router = useRouter();
     const state = reactive({
@@ -31,6 +41,14 @@ export default {
       if (redirect) router.push(redirect);
       else router.push(path);
     };
+    const onThemeConfigChange = () => {
+      proxy.mittBus.emit("onMenuClick");
+      store.state.themeConfig.isCollapse = !store.state.themeConfig.isCollapse;
+      store.dispatch("setThemeConfig", store.state.themeConfig);
+    };
+    const isCollapse = computed(() => {
+      return store.state.themeConfig.isCollapse;
+    });
     onBeforeMount(() => {
       state.breadcrumbList = route.matched;
     });
@@ -38,6 +56,8 @@ export default {
       getBreadcrumbList(to.matched);
     });
     return {
+      onThemeConfigChange,
+      isCollapse,
       onBreadcrumbClick,
       ...toRefs(state),
     };

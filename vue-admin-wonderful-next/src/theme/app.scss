@@ -41,13 +41,23 @@ body,
   }
   .el-main {
     padding: 0 !important;
+  }
+  .el-main-overflow-unset {
     overflow: unset !important;
+  }
+  .el-main-overflow-auto {
+    overflow: auto !important;
   }
   .el-scrollbar {
     width: 100%;
   }
-  .layout-aside-width {
+  .layout-aside-width240 {
     width: 240px !important;
+    transition: width 0.3s ease;
+  }
+  .layout-aside-width64 {
+    width: 64px !important;
+    transition: width 0.3s ease;
   }
   .layout-scrollbar {
     @extend .el-scrollbar;

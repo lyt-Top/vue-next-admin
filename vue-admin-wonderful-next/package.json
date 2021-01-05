@@ -10,7 +10,8 @@
     "mitt": "^2.1.0",
     "sortablejs": "^1.10.2",
     "vue": "^3.0.5",
-    "vue-router": "^4.0.2"
+    "vue-router": "^4.0.2",
+    "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
     "@types/sortablejs": "^1.10.6",

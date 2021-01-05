@@ -1,5 +1,5 @@
 <template>
-  <el-aside class="layout-aside-width">
+  <el-aside :class="isCollapse ? 'layout-aside-width64' : 'layout-aside-width240'">
     <el-scrollbar>
       <Vertical :menuList="menuList" />
     </el-scrollbar>
@@ -8,11 +8,13 @@
 
 <script lang="ts">
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
-import { toRefs, reactive } from "vue";
+import { toRefs, reactive, computed } from "vue";
+import { useStore } from "/@/store/index.ts";
 export default {
   name: "layoutAside",
   components: { Vertical },
   setup() {
+    const store = useStore();
     const state = reactive({
       menuList: [
         {
@@ -62,7 +64,11 @@ export default {
         },
       ],
     });
+    const isCollapse = computed(() => {
+      return store.state.themeConfig.isCollapse;
+    });
     return {
+      isCollapse,
       ...toRefs(state),
     };
   },

@@ -1,41 +1,41 @@
 <template>
   <div class="layout-breadcrumb-seting">
-    <el-drawer title="布局配置" v-model="isDrawer" direction="rtl" destroy-on-close size="240px">
+    <el-drawer title="布局配置" v-model="getThemeConfig.isDrawer" direction="rtl" destroy-on-close size="240px">
       <el-scrollbar class="layout-breadcrumb-seting-bar">
         <!-- 全局主题 -->
         <el-divider content-position="left">全局主题</el-divider>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">primary</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="primary" size="small" @change="onColorPickerChange('primary')">
+            <el-color-picker v-model="getThemeConfig.primary" size="small" @change="onColorPickerChange('primary')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">success</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="success" size="small" @change="onColorPickerChange('success')">
+            <el-color-picker v-model="getThemeConfig.success" size="small" @change="onColorPickerChange('success')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">info</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="info" size="small" @change="onColorPickerChange('info')">
+            <el-color-picker v-model="getThemeConfig.info" size="small" @change="onColorPickerChange('info')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">warning</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="warning" size="small" @change="onColorPickerChange('warning')">
+            <el-color-picker v-model="getThemeConfig.warning" size="small" @change="onColorPickerChange('warning')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">danger</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="danger" size="small" @change="onColorPickerChange('danger')">
+            <el-color-picker v-model="getThemeConfig.danger" size="small" @change="onColorPickerChange('danger')">
             </el-color-picker>
           </div>
         </div>
@@ -43,47 +43,49 @@
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="topBar" size="small" @change="onBgColorPickerChange('topBar')">
+            <el-color-picker v-model="getThemeConfig.topBar" size="small" @change="onBgColorPickerChange('topBar')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单背景</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="menuBar" size="small" @change="onBgColorPickerChange('menuBar')">
+            <el-color-picker v-model="getThemeConfig.menuBar" size="small" @change="onBgColorPickerChange('menuBar')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏默认字体颜色</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="topBarColor" size="small" @change="onBgColorPickerChange('topBarColor')">
+            <el-color-picker v-model="getThemeConfig.topBarColor" size="small"
+              @change="onBgColorPickerChange('topBarColor')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单默认字体颜色</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-color-picker v-model="menuBarColor" size="small" @change="onBgColorPickerChange('menuBarColor')">
+            <el-color-picker v-model="getThemeConfig.menuBarColor" size="small"
+              @change="onBgColorPickerChange('menuBarColor')">
             </el-color-picker>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt10">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景渐变</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isTopBarColorGradual" @change="onTopBarGradualChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isTopBarColorGradual" @change="onTopBarGradualChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt14">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单背景渐变</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isMenuBarColorGradual" @change="onMenuBarGradualChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isMenuBarColorGradual" @change="onMenuBarGradualChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt14">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单字体背景高亮</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
           </div>
         </div>
 
@@ -92,46 +94,40 @@
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单水平折叠</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse" @change="onThemeConfigChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单手风琴</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
-          </div>
-        </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">菜单折叠动画</div>
-          <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isUniqueOpened" @change="onsetThemeConfigChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">固定 Header</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isFixedHeader"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">自动分割菜单</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单展开宽度</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input-number v-model="menuWidth" controls-position="right" :min="1" :max="999" size="mini"
-              style="width:90px;">
+            <el-input-number v-model="getThemeConfig.menuWidth" controls-position="right" :min="1" :max="999"
+              size="mini" style="width:90px;">
             </el-input-number>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt11">
           <div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input-number v-model="menuWidth" controls-position="right" :min="1" :max="999" size="mini"
-              style="width:90px;">
+            <el-input-number v-model="getThemeConfig.menuWidth" controls-position="right" :min="1" :max="999"
+              size="mini" style="width:90px;">
             </el-input-number>
           </div>
         </div>
@@ -141,49 +137,49 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">侧边栏 Logo</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">面包屑 Breadcrumb</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">灰色模式</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">色弱模式</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启水印</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="isCollapse"></el-switch>
+            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input v-model="menuWidth" size="mini" style="width:90px;"></el-input>
+            <el-input v-model="getThemeConfig.menuWidth" size="mini" style="width:90px;"></el-input>
           </div>
         </div>
 
@@ -270,43 +266,31 @@
 
 <script lang="ts">
 import {
-  toRefs,
-  reactive,
   nextTick,
   onBeforeMount,
   onUnmounted,
   getCurrentInstance,
+  defineComponent,
+  computed,
 } from "vue";
+import { useStore } from "/@/store/index.ts";
 import { getLightColor } from "/@/utils/theme.ts";
-export default {
+export default defineComponent({
   name: "layoutBreadcrumbSeting",
   setup() {
     const { proxy } = getCurrentInstance();
-    const state = reactive({
-      isDrawer: false,
-      primary: "#409eff",
-      success: "#67c23a",
-      info: "#909399",
-      warning: "#e6a23c",
-      danger: "#f56c6c",
-      topBar: "#ffffff",
-      menuBar: "#29384d",
-      topBarColor: "#606266",
-      menuBarColor: "#e6e6e6",
-      isTopBarColorGradual: false,
-      isMenuBarColorGradual: false,
-      isMenuBarColorHighlight: false,
-      isCollapse: false,
-      menuWidth: 240,
+    const store = useStore();
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
     });
     const openDrawer = () => {
-      state.isDrawer = true;
+      getThemeConfig.value.isDrawer = true;
     };
     const closeDrawer = () => {
-      state.isDrawer = false;
+      getThemeConfig.value.isDrawer = false;
     };
     const onColorPickerChange = (color: string) => {
-      setPropertyFun(`--color-${color}`, state[color]);
+      setPropertyFun(`--color-${color}`, getThemeConfig.value[color]);
     };
     const setPropertyFun = (color: string, targetVal: any) => {
       document.documentElement.style.setProperty(color, targetVal);
@@ -318,22 +302,25 @@ export default {
       }
     };
     const onBgColorPickerChange = (bg: string) => {
-      document.documentElement.style.setProperty(`--bg-${bg}`, state[bg]);
+      document.documentElement.style.setProperty(
+        `--bg-${bg}`,
+        getThemeConfig.value[bg]
+      );
       onTopBarGradualChange();
       onMenuBarGradualChange();
     };
     const onTopBarGradualChange = () => {
       setGraduaFun(
         ".layout-navbars-breadcrumb-index",
-        state.isTopBarColorGradual,
-        state.topBar
+        getThemeConfig.value.isTopBarColorGradual,
+        getThemeConfig.value.topBar
       );
     };
     const onMenuBarGradualChange = () => {
       setGraduaFun(
         ".layout-container .el-aside",
-        state.isMenuBarColorGradual,
-        state.menuBar
+        getThemeConfig.value.isMenuBarColorGradual,
+        getThemeConfig.value.menuBar
       );
     };
     const setGraduaFun = (el: string, bool: boolean, color: string) => {
@@ -352,12 +339,21 @@ export default {
     };
     const onMenuBarHighlightChange = () => {
       nextTick(() => {
-        let els = document.querySelector(".el-menu-item.is-active");
-        let attr = "el-menu-item is-active";
-        if (state.isMenuBarColorHighlight)
-          els.setAttribute("class", `${attr} add-is-active`);
-        else els.setAttribute("class", `${attr}`);
+        setTimeout(() => {
+          let els = document.querySelector(".el-menu-item.is-active");
+          let attr = "el-menu-item is-active";
+          if (getThemeConfig.value.isMenuBarColorHighlight)
+            els.setAttribute("class", `${attr} add-is-active`);
+          else els.setAttribute("class", `${attr}`);
+        }, 0);
       });
+    };
+    const onThemeConfigChange = () => {
+      store.dispatch("setThemeConfig", getThemeConfig.value);
+      onMenuBarHighlightChange();
+    };
+    const onsetThemeConfigChange = () => {
+      store.dispatch("setThemeConfig", getThemeConfig.value);
     };
     onBeforeMount(() => {
       proxy.mittBus.on("onMenuClick", () => {
@@ -375,10 +371,12 @@ export default {
       onTopBarGradualChange,
       onMenuBarGradualChange,
       onMenuBarHighlightChange,
-      ...toRefs(state),
+      onThemeConfigChange,
+      onsetThemeConfigChange,
+      getThemeConfig,
     };
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
