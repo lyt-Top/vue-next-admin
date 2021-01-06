@@ -16,7 +16,9 @@ export default {
     isCollapse: false,
     isUniqueOpened: false,
     isFixedHeader: false,
+    isFixedHeaderChange: false,
     isCollapse1: false,
     menuWidth1: 200,
-    isShowLogo: false
+    isShowLogo: false,
+    isShowLogoChange: false
 }

@@ -1,6 +1,7 @@
 <template>
   <div class="layout-breadcrumb-seting">
-    <el-drawer title="布局配置" v-model="getThemeConfig.isDrawer" direction="rtl" destroy-on-close size="240px">
+    <el-drawer title="布局配置" v-model="getThemeConfig.isDrawer" direction="rtl" destroy-on-close size="240px"
+      @close="onDrawerClose">
       <el-scrollbar class="layout-breadcrumb-seting-bar">
         <!-- 全局主题 -->
         <el-divider content-position="left">全局主题</el-divider>
@@ -100,13 +101,13 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单手风琴</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isUniqueOpened" @change="onsetThemeConfigChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isUniqueOpened"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">固定 Header</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isFixedHeader"></el-switch>
+            <el-switch v-model="getThemeConfig.isFixedHeader" @change="onIsFixedHeaderChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -129,7 +130,7 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">侧边栏 Logo</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isShowLogo" @change="onsetThemeConfigChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isShowLogo" @change="onIsShowLogoChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -341,11 +342,23 @@ export default defineComponent({
       });
     };
     const onThemeConfigChange = () => {
-      store.dispatch("setThemeConfig", getThemeConfig.value);
       onMenuBarHighlightChange();
     };
-    const onsetThemeConfigChange = () => {
-      store.dispatch("setThemeConfig", getThemeConfig.value);
+    const onIsFixedHeaderChange = () => {
+      getThemeConfig.value.isFixedHeaderChange = getThemeConfig.value
+        .isFixedHeader
+        ? false
+        : true;
+    };
+    const onIsShowLogoChange = () => {
+      getThemeConfig.value.isShowLogoChange = getThemeConfig.value.isShowLogo
+        ? false
+        : true;
+    };
+    const onDrawerClose = () => {
+      // 关闭弹窗时，初始化变量。变量用于处理 proxy.$refs.layoutScrollbarRef.update()
+      getThemeConfig.value.isFixedHeaderChange = false;
+      getThemeConfig.value.isShowLogoChange = false;
     };
     onBeforeMount(() => {
       proxy.mittBus.on("onMenuClick", () => {
@@ -364,8 +377,10 @@ export default defineComponent({
       onMenuBarGradualChange,
       onMenuBarHighlightChange,
       onThemeConfigChange,
-      onsetThemeConfigChange,
+      onIsFixedHeaderChange,
+      onIsShowLogoChange,
       getThemeConfig,
+      onDrawerClose,
     };
   },
 });

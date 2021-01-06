@@ -36,6 +36,7 @@ body,
     z-index: 1;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden !important;
   }
   .el-header {
     box-shadow: 0 1px 4px rgb(0 21 41 / 8%);

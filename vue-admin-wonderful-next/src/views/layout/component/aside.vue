@@ -71,7 +71,9 @@ export default {
       return store.state.themeConfig;
     });
     watch(store.state.themeConfig, (val) => {
-      proxy.$refs.layoutAsideScrollbarRef.update();
+      if (val.isShowLogoChange !== val.isShowLogo) {
+        proxy.$refs.layoutAsideScrollbarRef.update();
+      }
     });
     return {
       getThemeConfig,

@@ -43,7 +43,9 @@ export default defineComponent({
         to.meta.index > from.meta.index ? "slide-right" : "slide-left";
     });
     watch(store.state.themeConfig, (val) => {
-      proxy.$refs.layoutScrollbarRef.update();
+      if (val.isFixedHeaderChange !== val.isFixedHeader) {
+        proxy.$refs.layoutScrollbarRef.update();
+      }
     });
     return {
       getThemeConfig,
