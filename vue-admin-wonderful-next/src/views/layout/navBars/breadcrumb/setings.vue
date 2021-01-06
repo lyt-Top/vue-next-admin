@@ -375,7 +375,9 @@ export default defineComponent({
         attr === "grayscale"
           ? `grayscale(${getThemeConfig.value.isGrayscale ? 1 : 0})`
           : `invert(${getThemeConfig.value.isInvert ? "80%" : "0%"})`;
-      document.body.setAttribute("style", `filter: ${cssAttr}`);
+      document
+        .getElementById("app")
+        .setAttribute("style", `filter: ${cssAttr}`);
     };
     const onWartermarkChange = () => {
       getThemeConfig.value.isWartermark
