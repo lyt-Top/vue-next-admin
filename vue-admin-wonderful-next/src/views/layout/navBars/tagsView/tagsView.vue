@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-navbars-tagsview">
+  <div class="layout-navbars-tagsview" v-show="getThemeConfig.isTagsview">
     <Scroll ref="scrollRef">
       <ul class="layout-navbars-tagsview-ul">
         <li v-for="(v,k) in arr2" :key="k" class="layout-navbars-tagsview-ul-li" :class="{'is-active':isActive(v.path)}"
@@ -29,6 +29,7 @@ import {
   onBeforeUpdate,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
+import { useStore } from "/@/store/index.ts";
 import Sortable from "sortablejs";
 import Contextmenu from "/@/views/layout/navBars/tagsView/contextmenu.vue";
 import Scroll from "/@/views/layout/navBars/tagsView/scroll.vue";
@@ -39,6 +40,7 @@ export default {
     const tagsRefs = ref([]);
     const scrollRef = ref();
     const contextmenuRef = ref();
+    const store = useStore();
     const route = useRoute();
     const router = useRouter();
     const state = reactive({
@@ -55,6 +57,9 @@ export default {
         { id: 15, name: "文档2", path: "/docs2" },
         { id: 1, name: "文档3", path: "/docs3" },
       ],
+    });
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
     });
     const initSortable = () => {
       const el = document.querySelector(".layout-navbars-tagsview-ul");
@@ -104,6 +109,7 @@ export default {
       tagsRefs,
       contextmenuRef,
       scrollRef,
+      getThemeConfig,
       ...toRefs(state),
     };
   },
@@ -114,6 +120,7 @@ export default {
 .layout-navbars-tagsview {
   flex: 1;
   background-color: #ffffff;
+  border-top: 1px solid rgb(238, 238, 238);
   &-ul {
     list-style: none;
     margin: 0;

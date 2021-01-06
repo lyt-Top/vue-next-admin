@@ -1,6 +1,7 @@
 <template>
-  <el-main :class="getThemeConfig.isFixedHeader ? 'el-main-overflow-auto' : 'el-main-overflow-unset'">
-    <el-scrollbar class="layout-scrollbar" style="min-height: calc(100vh - 84px);" ref="layoutScrollbarRef">
+  <el-main>
+    <el-scrollbar class="layout-scrollbar" :style="{minHeight: `calc(100vh - ${headerHeight}`}"
+      ref="layoutScrollbarRef">
       <router-view v-slot="{ Component }">
         <transition :name="transitionName" mode="out-in">
           <div :key="key">
@@ -10,6 +11,7 @@
           </div>
         </transition>
       </router-view>
+      <Footer v-if="getThemeConfig.isFooter" />
     </el-scrollbar>
   </el-main>
 </template>
@@ -25,14 +27,17 @@ import {
 } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
+import Footer from "/@/views/layout/footer/index.vue";
 export default defineComponent({
   name: "layoutMain",
+  components: { Footer },
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
     const route = useRoute();
     const state = reactive({
       transitionName: "slide-right",
+      headerHeight: "84px",
     });
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
@@ -43,6 +48,7 @@ export default defineComponent({
         to.meta.index > from.meta.index ? "slide-right" : "slide-left";
     });
     watch(store.state.themeConfig, (val) => {
+      state.headerHeight = val.isTagsview ? "84px" : "50px";
       if (val.isFixedHeaderChange !== val.isFixedHeader) {
         proxy.$refs.layoutScrollbarRef.update();
       }

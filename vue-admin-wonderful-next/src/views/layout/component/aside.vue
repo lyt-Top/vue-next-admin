@@ -8,10 +8,10 @@
 </template>
 
 <script lang="ts">
-import Logo from "/@/views/layout/logo/index.vue";
-import Vertical from "/@/views/layout/navMenu/vertical.vue";
 import { toRefs, reactive, computed, watch, getCurrentInstance } from "vue";
 import { useStore } from "/@/store/index.ts";
+import Logo from "/@/views/layout/logo/index.vue";
+import Vertical from "/@/views/layout/navMenu/vertical.vue";
 export default {
   name: "layoutAside",
   components: { Logo, Vertical },

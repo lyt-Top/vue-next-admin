@@ -28,7 +28,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
+  box-shadow: rgb(0 21 41 / 3%) 0px 1px 4px;
   color: var(--color-primary);
   font-size: 16px;
   animation: logoAnimation 0.3s ease-in-out;

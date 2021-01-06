@@ -26,22 +26,18 @@
       </template>
     </el-dropdown>
   </div>
-  <Setings ref="setingsRef" />
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-import Setings from "/@/views/layout/navBars/breadcrumb/setings.vue";
+import { ref, getCurrentInstance } from "vue";
 export default {
   name: "layoutBreadcrumbUser",
-  components: { Setings },
   setup() {
-    const setingsRef = ref();
+    const { proxy } = getCurrentInstance();
     const onLayoutSetingClick = () => {
-      setingsRef.value.openDrawer();
+      proxy.mittBus.emit("openSetingsDrawer");
     };
     return {
-      setingsRef,
       onLayoutSetingClick,
     };
   },

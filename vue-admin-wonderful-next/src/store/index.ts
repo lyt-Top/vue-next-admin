@@ -23,7 +23,10 @@ export interface RootStateTypes {
         isCollapse1: boolean,
         menuWidth1: number,
         isShowLogo: boolean,
-        isShowLogoChange: boolean
+        isShowLogoChange: boolean,
+        isBreadcrumb: boolean,
+        isTagsview: boolean,
+        isFooter: boolean
     }
 }
 

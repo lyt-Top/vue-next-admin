@@ -1,8 +1,8 @@
 <template>
   <div class="layout-navbars-breadcrumb">
-    <i class="layout-navbars-breadcrumb-icon" :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+    <i class="layout-navbars-breadcrumb-icon" :class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
       @click="onThemeConfigChange"></i>
-    <el-breadcrumb>
+    <el-breadcrumb v-show="getThemeConfig.isBreadcrumb">
       <transition-group name="breadcrumb" mode="out-in">
         <el-breadcrumb-item v-for="(v,k) in breadcrumbList" :key="v.meta.title">
           <span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">{{v.meta.title}}</span>
@@ -44,10 +44,9 @@ export default {
     const onThemeConfigChange = () => {
       proxy.mittBus.emit("onMenuClick");
       store.state.themeConfig.isCollapse = !store.state.themeConfig.isCollapse;
-      store.dispatch("setThemeConfig", store.state.themeConfig);
     };
-    const isCollapse = computed(() => {
-      return store.state.themeConfig.isCollapse;
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
     });
     onBeforeMount(() => {
       state.breadcrumbList = route.matched;
@@ -57,7 +56,7 @@ export default {
     });
     return {
       onThemeConfigChange,
-      isCollapse,
+      getThemeConfig,
       onBreadcrumbClick,
       ...toRefs(state),
     };

@@ -136,19 +136,19 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">面包屑 Breadcrumb</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isBreadcrumb"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isTagsview"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isFooter"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">

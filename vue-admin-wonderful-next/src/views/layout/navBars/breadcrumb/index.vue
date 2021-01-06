@@ -19,7 +19,6 @@ export default {
   height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgb(230, 230, 230);
   padding: 0 15px;
   background: var(--bg-topBar);
 }

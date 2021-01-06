@@ -20,5 +20,8 @@ export default {
     isCollapse1: false,
     menuWidth1: 200,
     isShowLogo: false,
-    isShowLogoChange: false
+    isShowLogoChange: false,
+    isBreadcrumb: true,
+    isTagsview: true,
+    isFooter: false
 }
