@@ -23,5 +23,9 @@ export default {
     isShowLogoChange: false,
     isBreadcrumb: true,
     isTagsview: true,
-    isFooter: false
+    isFooter: false,
+    isGrayscale: false,
+    isInvert: false,
+    isWartermark: false,
+    wartermarkText: 'small@小柒'
 }

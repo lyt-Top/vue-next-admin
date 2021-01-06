@@ -154,25 +154,26 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">灰色模式</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isGrayscale" @change="onAddFilterChange('grayscale')"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">色弱模式</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isInvert" @change="onAddFilterChange('invert')"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启水印</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isWartermark" @change="onWartermarkChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input v-model="getThemeConfig.menuWidth1" size="mini" style="width:90px;"></el-input>
+            <el-input v-model="getThemeConfig.wartermarkText" size="mini" style="width:90px;"
+              @input="onWartermarkTextInput($event)"></el-input>
           </div>
         </div>
 
@@ -268,6 +269,8 @@ import {
 } from "vue";
 import { useStore } from "/@/store/index.ts";
 import { getLightColor } from "/@/utils/theme.ts";
+import Watermark from "/@/utils/wartermark.ts";
+import { verifyAndSpace } from "/@/utils/toolsValidate.js";
 export default defineComponent({
   name: "layoutBreadcrumbSeting",
   setup() {
@@ -360,6 +363,31 @@ export default defineComponent({
       getThemeConfig.value.isFixedHeaderChange = false;
       getThemeConfig.value.isShowLogoChange = false;
     };
+    const onAddFilterChange = (attr: string) => {
+      if (attr === "grayscale") {
+        if (getThemeConfig.value.isGrayscale)
+          getThemeConfig.value.isInvert = false;
+      } else {
+        if (getThemeConfig.value.isInvert)
+          getThemeConfig.value.isGrayscale = false;
+      }
+      const cssAttr =
+        attr === "grayscale"
+          ? `grayscale(${getThemeConfig.value.isGrayscale ? 1 : 0})`
+          : `invert(${getThemeConfig.value.isInvert ? "80%" : "0%"})`;
+      document.body.setAttribute("style", `filter: ${cssAttr}`);
+    };
+    const onWartermarkChange = () => {
+      getThemeConfig.value.isWartermark
+        ? Watermark.set(getThemeConfig.value.wartermarkText)
+        : Watermark.del();
+    };
+    const onWartermarkTextInput = (val: string) => {
+      getThemeConfig.value.wartermarkText = verifyAndSpace(val);
+      if (getThemeConfig.value.wartermarkText === "") return false;
+      if (getThemeConfig.value.isWartermark)
+        Watermark.set(getThemeConfig.value.wartermarkText);
+    };
     onBeforeMount(() => {
       proxy.mittBus.on("onMenuClick", () => {
         onMenuBarHighlightChange();
@@ -381,6 +409,9 @@ export default defineComponent({
       onIsShowLogoChange,
       getThemeConfig,
       onDrawerClose,
+      onAddFilterChange,
+      onWartermarkChange,
+      onWartermarkTextInput,
     };
   },
 });
