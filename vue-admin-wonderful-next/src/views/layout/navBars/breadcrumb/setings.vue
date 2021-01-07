@@ -169,11 +169,34 @@
             <el-switch v-model="getThemeConfig.isWartermark" @change="onWartermarkChange"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
+        <div class="layout-breadcrumb-seting-bar-flex mt14">
           <div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-input v-model="getThemeConfig.wartermarkText" size="mini" style="width:90px;"
               @input="onWartermarkTextInput($event)"></el-input>
+          </div>
+        </div>
+
+        <!-- 其它设置 -->
+        <el-divider content-position="left">其它设置</el-divider>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">Tagsview 风格</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-select placeholder="请选择" size="mini" style="width:90px;">
+              <el-option label="风格1" value="风格1"></el-option>
+              <el-option label="风格2" value="风格2"></el-option>
+              <el-option label="风格3" value="风格3"></el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15 mb26">
+          <div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-select placeholder="请选择" size="mini" style="width:90px;">
+              <el-option label="slide-right" value="slide-right"></el-option>
+              <el-option label="slide-right" value="slide-right"></el-option>
+              <el-option label="slide-right" value="slide-right"></el-option>
+            </el-select>
           </div>
         </div>
 
