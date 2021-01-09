@@ -11,6 +11,9 @@
     color: set-color(primary-light-3);
   }
 }
+.el-button--text:active {
+  color: set-color(primary-light-3);
+}
 // default
 .el-button--default:hover,
 .el-button--default:focus {
@@ -18,6 +21,9 @@
 }
 .el-button--default.is-plain:hover,
 .el-button--default.is-plain:focus {
+  @include Button(primary, whites, primary-light-1);
+}
+.el-button--default:active {
   @include Button(primary, whites, primary-light-1);
 }
 // primary
@@ -41,6 +47,10 @@
 .el-button--primary.is-disabled:hover {
   @include Button(whites, primary-light-7, primary-light-7);
 }
+.el-button--primary.is-active,
+.el-button--primary:active {
+  @include Button(whites, primary, primary);
+}
 // success
 .el-button--success {
   @include Button(whites, success, success);
@@ -55,6 +65,10 @@
   &:focus {
     @include Button(whites, success, success);
   }
+}
+.el-button--success.is-active,
+.el-button--success:active {
+  @include Button(whites, success, success);
 }
 // info
 .el-button--info {
@@ -71,6 +85,10 @@
     @include Button(whites, info, info);
   }
 }
+.el-button--info.is-active,
+.el-button--info:active {
+  @include Button(whites, info, info);
+}
 // warning
 .el-button--warning {
   @include Button(whites, warning, warning);
@@ -86,6 +104,10 @@
     @include Button(whites, warning, warning);
   }
 }
+.el-button--warning.is-active,
+.el-button--warning:active {
+  @include Button(whites, warning, warning);
+}
 // danger
 .el-button--danger {
   @include Button(whites, danger, danger);
@@ -100,6 +122,10 @@
   &:focus {
     @include Button(whites, danger, danger);
   }
+}
+.el-button--danger.is-active,
+.el-button--danger:active {
+  @include Button(whites, danger, danger);
 }
 
 /* Link 文字链接

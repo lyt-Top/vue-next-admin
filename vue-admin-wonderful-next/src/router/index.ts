@@ -7,16 +7,14 @@ const staticRoutes: Array<RouteRecordRaw> = [
         component: () => import('/@/views/layout/index.vue'),
         redirect: '/home',
         meta: {
-            title: '首页',
-            index: 0
+            title: '首页'
         },
         children: [{
             path: '/home',
             name: 'home',
             component: () => import('/@/views/home/index.vue'),
             meta: {
-                title: '首页',
-                index: 0
+                title: '首页'
             }
         },
         {
@@ -24,8 +22,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
             name: 'docs',
             component: () => import('/@/views/docs/index.vue'),
             meta: {
-                title: '文档',
-                index: 1
+                title: '文档'
             }
         },
         {
@@ -33,8 +30,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
             name: 'docs1',
             component: () => import('/@/views/docs copy 1/index.vue'),
             meta: {
-                title: '文档1',
-                index: 2
+                title: '文档1'
             }
         },
         {
@@ -42,8 +38,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
             name: 'docs2',
             component: () => import('/@/views/docs copy 2/index.vue'),
             meta: {
-                title: '文档2',
-                index: 3
+                title: '文档2'
             }
         },
         {
@@ -51,8 +46,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
             name: 'docs3',
             component: () => import('/@/views/docs copy 3/index.vue'),
             meta: {
-                title: '文档3',
-                index: 4
+                title: '文档3'
             }
         }]
     },

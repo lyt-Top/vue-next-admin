@@ -27,5 +27,7 @@ export default {
     isGrayscale: false,
     isInvert: false,
     isWartermark: false,
-    wartermarkText: 'small@小柒'
+    wartermarkText: 'small@小柒',
+    tagsStyle: 'tagsStyleOne',
+    animation: 'slideRight'
 }

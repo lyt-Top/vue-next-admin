@@ -182,20 +182,21 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">Tagsview 风格</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-select placeholder="请选择" size="mini" style="width:90px;">
-              <el-option label="风格1" value="风格1"></el-option>
-              <el-option label="风格2" value="风格2"></el-option>
-              <el-option label="风格3" value="风格3"></el-option>
+            <el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="mini" style="width:90px;">
+              <el-option label="风格1" value="tagsStyleOne"></el-option>
+              <el-option label="风格2" value="tagsStyleTwo"></el-option>
+              <el-option label="风格3" value="tagsStyleThree"></el-option>
+              <el-option label="风格4" value="tagsStyleFour"></el-option>
             </el-select>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15 mb26">
           <div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-select placeholder="请选择" size="mini" style="width:90px;">
-              <el-option label="slide-right" value="slide-right"></el-option>
-              <el-option label="slide-right" value="slide-right"></el-option>
-              <el-option label="slide-right" value="slide-right"></el-option>
+            <el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width:90px;">
+              <el-option label="slideRight" value="slideRight"></el-option>
+              <el-option label="slideLeft" value="slideLeft"></el-option>
+              <el-option label="opacitys" value="opacitys"></el-option>
             </el-select>
           </div>
         </div>
@@ -488,6 +489,8 @@ export default defineComponent({
       .el-circular {
         border-radius: 2px;
         overflow: hidden;
+        border: 1px solid transparent;
+        transition: all 0.3s ease-in-out;
       }
       .drawer-layout-active {
         border: 1px solid;
@@ -495,6 +498,7 @@ export default defineComponent({
       }
       .layout-tips-warp,
       .layout-tips-warp-active {
+        transition: all 0.3s ease-in-out;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -504,6 +508,7 @@ export default defineComponent({
         border-radius: 100%;
         padding: 4px;
         .layout-tips-box {
+          transition: inherit;
           width: 30px;
           height: 30px;
           z-index: 9;
@@ -511,6 +516,7 @@ export default defineComponent({
           border-color: var(--color-primary-light-4);
           border-radius: 100%;
           .layout-tips-txt {
+            transition: inherit;
             position: relative;
             top: 5px;
             font-size: 12px;
@@ -537,6 +543,26 @@ export default defineComponent({
           .layout-tips-txt {
             color: var(--color-primary) !important;
             background-color: #e9eef3 !important;
+          }
+        }
+      }
+      &:hover {
+        .el-circular {
+          transition: all 0.3s ease-in-out;
+          border: 1px solid;
+          border-color: var(--color-primary);
+        }
+        .layout-tips-warp {
+          transition: all 0.3s ease-in-out;
+          border-color: var(--color-primary);
+          .layout-tips-box {
+            transition: inherit;
+            border-color: var(--color-primary);
+            .layout-tips-txt {
+              transition: inherit;
+              color: var(--color-primary) !important;
+              background-color: #e9eef3 !important;
+            }
           }
         }
       }

@@ -3,7 +3,7 @@
     <el-scrollbar class="layout-scrollbar" :style="{minHeight: `calc(100vh - ${headerHeight}`}"
       ref="layoutScrollbarRef">
       <router-view v-slot="{ Component }">
-        <transition :name="transitionName" mode="out-in">
+        <transition :name="setTransitionName" mode="out-in">
           <div :key="key">
             <keep-alive>
               <component :is="Component" />
@@ -25,7 +25,7 @@ import {
   getCurrentInstance,
   watch,
 } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 import Footer from "/@/views/layout/footer/index.vue";
 export default defineComponent({
@@ -39,14 +39,19 @@ export default defineComponent({
       transitionName: "slide-right",
       headerHeight: "84px",
     });
+    const setTransitionName = computed(() => {
+      let { animation } = store.state.themeConfig;
+      if (animation === "slideRight")
+        return (state.transitionName = "slide-right");
+      else if (animation === "slideLeft")
+        return (state.transitionName = "slide-left");
+      else if (animation === "opacitys")
+        return (state.transitionName = "opacitys");
+    });
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
     const key = computed(() => route.path);
-    onBeforeRouteUpdate((to, from) => {
-      state.transitionName =
-        to.meta.index > from.meta.index ? "slide-right" : "slide-left";
-    });
     watch(store.state.themeConfig, (val) => {
       state.headerHeight = val.isTagsview ? "84px" : "50px";
       if (val.isFixedHeaderChange !== val.isFixedHeader) {
@@ -55,6 +60,7 @@ export default defineComponent({
     });
     return {
       getThemeConfig,
+      setTransitionName,
       key,
       ...toRefs(state),
     };

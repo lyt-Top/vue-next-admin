@@ -4,7 +4,7 @@
       <i class="el-icon-search" title="菜单搜索"></i>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
-      <i class="el-icon-setting" title="布局配置"></i>
+      <i class="icon-skin iconfont" title="布局配置"></i>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon"><i class="el-icon-bell" title="消息"></i></div>
     <div class="layout-navbars-breadcrumb-user-icon mr10"><i class="icon-fullscreen iconfont" title="开全屏"></i></div>

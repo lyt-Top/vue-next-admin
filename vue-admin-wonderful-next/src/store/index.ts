@@ -30,7 +30,9 @@ export interface RootStateTypes {
         isGrayscale: boolean,
         isInvert: boolean,
         isWartermark: boolean,
-        wartermarkText: string
+        wartermarkText: string,
+        tagsStyle: string,
+        animation: string
     }
 }
 
