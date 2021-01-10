@@ -8,8 +8,10 @@ export default {
     danger: "#f56c6c",
     topBar: "#ffffff",
     menuBar: "#29384d",
+    columnsMenuBar: '#6BB4FF',
     topBarColor: "#606266",
     menuBarColor: "#e6e6e6",
+    columnsMenuBarColor: '#e6e6e6',
     isTopBarColorGradual: false,
     isMenuBarColorGradual: false,
     isMenuBarColorHighlight: false,
@@ -29,5 +31,6 @@ export default {
     isWartermark: false,
     wartermarkText: 'small@小柒',
     tagsStyle: 'tagsStyleOne',
-    animation: 'slideRight'
+    animation: 'slideRight',
+    layout: 'defaults'
 }

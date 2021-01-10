@@ -11,8 +11,10 @@ export interface RootStateTypes {
         danger: string,
         topBar: string,
         menuBar: string,
+        columnsMenuBar: string,
         topBarColor: string,
         menuBarColor: string,
+        columnsMenuBarColor: string,
         isTopBarColorGradual: boolean,
         isMenuBarColorGradual: boolean,
         isMenuBarColorHighlight: boolean,
@@ -32,7 +34,8 @@ export interface RootStateTypes {
         isWartermark: boolean,
         wartermarkText: string,
         tagsStyle: string,
-        animation: string
+        animation: string,
+        layout: string
     }
 }
 

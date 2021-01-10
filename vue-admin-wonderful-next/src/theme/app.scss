@@ -45,21 +45,33 @@ body,
   }
   .el-main {
     padding: 0 !important;
+    overflow: hidden;
   }
   .el-scrollbar {
     width: 100%;
   }
+  .layout-el-aside-br-color {
+    border-top: 1px solid rgb(238, 238, 238);
+    border-right: 1px solid rgb(238, 238, 238);
+  }
   .layout-aside-width-default {
-    width: 240px !important;
+    width: 220px !important;
     transition: width 0.3s ease;
   }
   .layout-aside-width64 {
     width: 64px !important;
     transition: width 0.3s ease;
   }
+  .layout-aside-width1 {
+    width: 1px !important;
+    transition: width 0.3s ease;
+  }
   .layout-scrollbar {
     @extend .el-scrollbar;
     padding: 15px;
+  }
+  .layout-mian-height-50 {
+    height: calc(100vh - 50px);
   }
 }
 

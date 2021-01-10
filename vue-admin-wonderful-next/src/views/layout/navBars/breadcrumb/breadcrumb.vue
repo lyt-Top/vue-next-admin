@@ -1,8 +1,8 @@
 <template>
-  <div class="layout-navbars-breadcrumb">
+  <div class="layout-navbars-breadcrumb" v-show="getThemeConfig.isBreadcrumb">
     <i class="layout-navbars-breadcrumb-icon" :class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
       @click="onThemeConfigChange"></i>
-    <el-breadcrumb v-show="getThemeConfig.isBreadcrumb">
+    <el-breadcrumb>
       <transition-group name="breadcrumb" mode="out-in">
         <el-breadcrumb-item v-for="(v,k) in breadcrumbList" :key="v.meta.title">
           <span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">{{v.meta.title}}</span>
@@ -70,6 +70,7 @@ export default {
   height: inherit;
   display: flex;
   align-items: center;
+  padding-left: 15px;
   .layout-navbars-breadcrumb-icon {
     cursor: pointer;
     font-size: 18px;

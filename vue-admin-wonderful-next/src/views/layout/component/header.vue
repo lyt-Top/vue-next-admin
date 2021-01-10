@@ -1,5 +1,5 @@
 <template>
-  <el-header :height="getThemeConfig.isTagsview ? '84px' : '50px'">
+  <el-header :height="setHeaderHeight">
     <NavBarsIndex />
   </el-header>
 </template>
@@ -13,11 +13,14 @@ export default {
   components: { NavBarsIndex },
   setup() {
     const store = useStore();
-    const getThemeConfig = computed(() => {
-      return store.state.themeConfig;
+    // 设置 header 的高度
+    const setHeaderHeight = computed(() => {
+      let { isTagsview, layout } = store.state.themeConfig;
+      if (isTagsview && layout !== "classic") return "84px";
+      else return "50px";
     });
     return {
-      getThemeConfig,
+      setHeaderHeight,
     };
   },
 };

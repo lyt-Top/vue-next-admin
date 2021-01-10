@@ -56,6 +56,14 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex">
+          <div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单背景</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-color-picker v-model="getThemeConfig.columnsMenuBar" size="small"
+              @change="onBgColorPickerChange('columnsMenuBar')">
+            </el-color-picker>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏默认字体颜色</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-color-picker v-model="getThemeConfig.topBarColor" size="small"
@@ -68,6 +76,14 @@
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-color-picker v-model="getThemeConfig.menuBarColor" size="small"
               @change="onBgColorPickerChange('menuBarColor')">
+            </el-color-picker>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex">
+          <div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单默认字体颜色</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-color-picker v-model="getThemeConfig.columnsMenuBarColor" size="small"
+              @change="onBgColorPickerChange('columnsMenuBarColor')">
             </el-color-picker>
           </div>
         </div>
@@ -205,23 +221,25 @@
         <el-divider content-position="left">布局切换</el-divider>
         <div class="layout-drawer-content-flex">
           <!-- defaults 布局 -->
-          <div class="layout-drawer-content-item">
-            <section class="el-container drawer-layout-active el-circular">
+          <div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
+            <section class="el-container el-circular"
+              :class="{'drawer-layout-active': getThemeConfig.layout === 'defaults'}">
               <aside class="el-aside" style="width: 20px"></aside>
               <section class="el-container is-vertical">
                 <header class="el-header" style="height: 10px"></header>
                 <main class="el-main"></main>
               </section>
             </section>
-            <div class="layout-tips-warp-active layout-tips-warp">
+            <div class="layout-tips-warp" :class="{'layout-tips-warp-active': getThemeConfig.layout === 'defaults'}">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">默认</p>
               </div>
             </div>
           </div>
           <!-- classic 布局 -->
-          <div class="layout-drawer-content-item">
-            <section class="el-container is-vertical el-circular">
+          <div class="layout-drawer-content-item" @click="onSetLayout('classic')">
+            <section class="el-container is-vertical el-circular"
+              :class="{'drawer-layout-active': getThemeConfig.layout === 'classic'}">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
                 <aside class="el-aside" style="width: 20px"></aside>
@@ -230,15 +248,16 @@
                 </section>
               </section>
             </section>
-            <div class="layout-tips-warp">
+            <div class="layout-tips-warp" :class="{'layout-tips-warp-active': getThemeConfig.layout === 'classic'}">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">经典</p>
               </div>
             </div>
           </div>
           <!-- transverse 布局 -->
-          <div class="layout-drawer-content-item">
-            <section class="el-container is-vertical el-circular">
+          <div class="layout-drawer-content-item" @click="onSetLayout('transverse')">
+            <section class="el-container is-vertical el-circular"
+              :class="{'drawer-layout-active': getThemeConfig.layout === 'transverse'}">
               <header class="el-header" style="height: 10px"></header>
               <section class="el-container">
                 <section class="el-container is-vertical">
@@ -246,15 +265,16 @@
                 </section>
               </section>
             </section>
-            <div class="layout-tips-warp">
+            <div class="layout-tips-warp" :class="{'layout-tips-warp-active': getThemeConfig.layout === 'transverse'}">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">横向</p>
               </div>
             </div>
           </div>
           <!-- columns 布局 -->
-          <div class="layout-drawer-content-item">
-            <section class="el-container el-circular">
+          <div class="layout-drawer-content-item" @click="onSetLayout('columns')">
+            <section class="el-container el-circular"
+              :class="{'drawer-layout-active': getThemeConfig.layout === 'columns'}">
               <aside class="el-aside-dark" style="width: 10px"></aside>
               <aside class="el-aside" style="width: 20px"></aside>
               <section class="el-container is-vertical">
@@ -262,7 +282,7 @@
                 <main class="el-main"></main>
               </section>
             </section>
-            <div class="layout-tips-warp">
+            <div class="layout-tips-warp" :class="{'layout-tips-warp-active': getThemeConfig.layout === 'columns'}">
               <div class="layout-tips-box">
                 <p class="layout-tips-txt">分栏</p>
               </div>
@@ -346,6 +366,7 @@ export default defineComponent({
     const setGraduaFun = (el: string, bool: boolean, color: string) => {
       nextTick(() => {
         let els = document.querySelector(el);
+        if (!els) return false;
         if (bool)
           els.setAttribute(
             "style",
@@ -414,7 +435,63 @@ export default defineComponent({
       if (getThemeConfig.value.isWartermark)
         Watermark.set(getThemeConfig.value.wartermarkText);
     };
+    const onSetLayout = (layout: string) => {
+      if (getThemeConfig.value.layout === layout) return false;
+      getThemeConfig.value.layout = layout;
+      getThemeConfig.value.isDrawer = false;
+      initLayoutStyle();
+    };
+    const initLayoutStyle = () => {
+      console.log(getThemeConfig);
+      if (getThemeConfig.value.layout === "classic") {
+        getThemeConfig.value.isShowLogo = true;
+        getThemeConfig.value.isBreadcrumb = false;
+        getThemeConfig.value.menuBar = "#FFFFFF";
+        getThemeConfig.value.menuBarColor = "#606266";
+        getThemeConfig.value.topBar = "#ffffff";
+        getThemeConfig.value.topBarColor = "#606266";
+        onBgColorPickerChange("menuBar");
+        onBgColorPickerChange("menuBarColor");
+        onBgColorPickerChange("topBar");
+        onBgColorPickerChange("topBarColor");
+      } else if (getThemeConfig.value.layout === "transverse") {
+        getThemeConfig.value.isShowLogo = true;
+        getThemeConfig.value.isBreadcrumb = false;
+        getThemeConfig.value.isTagsview = false;
+        getThemeConfig.value.menuBarColor = "#FFFFFF";
+        getThemeConfig.value.topBar = "#545c64";
+        getThemeConfig.value.topBarColor = "#FFFFFF";
+        onBgColorPickerChange("topBar");
+        onBgColorPickerChange("menuBarColor");
+        onBgColorPickerChange("topBarColor");
+      } else if (getThemeConfig.value.layout === "columns") {
+        getThemeConfig.value.isShowLogo = true;
+        getThemeConfig.value.isBreadcrumb = true;
+        getThemeConfig.value.isTagsview = true;
+        getThemeConfig.value.menuBar = "#FFFFFF";
+        getThemeConfig.value.menuBarColor = "#606266";
+        getThemeConfig.value.topBar = "#ffffff";
+        getThemeConfig.value.topBarColor = "#606266";
+        onBgColorPickerChange("menuBar");
+        onBgColorPickerChange("menuBarColor");
+        onBgColorPickerChange("topBar");
+        onBgColorPickerChange("topBarColor");
+      } else {
+        getThemeConfig.value.isShowLogo = false;
+        getThemeConfig.value.isBreadcrumb = true;
+        getThemeConfig.value.isTagsview = true;
+        getThemeConfig.value.menuBar = "#545c64";
+        getThemeConfig.value.menuBarColor = "#FFFFFF";
+        getThemeConfig.value.topBar = "#FFFFFF";
+        getThemeConfig.value.topBarColor = "#606266";
+        onBgColorPickerChange("menuBar");
+        onBgColorPickerChange("menuBarColor");
+        onBgColorPickerChange("topBar");
+        onBgColorPickerChange("topBarColor");
+      }
+    };
     onBeforeMount(() => {
+      initLayoutStyle();
       proxy.mittBus.on("onMenuClick", () => {
         onMenuBarHighlightChange();
       });
@@ -438,6 +515,7 @@ export default defineComponent({
       onAddFilterChange,
       onWartermarkChange,
       onWartermarkTextInput,
+      onSetLayout,
     };
   },
 });

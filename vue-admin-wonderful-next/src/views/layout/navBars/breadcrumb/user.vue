@@ -48,10 +48,13 @@ export default {
 .layout-navbars-breadcrumb-user {
   display: flex;
   align-items: center;
+  flex: 1;
+  justify-content: flex-end;
   &-link {
     height: 100%;
     display: flex;
     align-items: center;
+    white-space: nowrap;
     &-photo {
       width: 25px;
       height: 25px;

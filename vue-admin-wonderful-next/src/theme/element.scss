@@ -717,6 +717,13 @@
 .el-menu--horizontal .el-menu .el-submenu.is-active > .el-submenu__title {
   color: set-color(primary);
 }
+.el-menu.el-menu--horizontal {
+  border-bottom: none !important;
+}
+.el-menu--horizontal > .el-menu-item,
+.el-menu--horizontal > .el-submenu .el-submenu__title {
+  color: var(--bg-menuBarColor);
+}
 // 外部链接时
 .el-menu-item a,
 .el-menu-item a:hover,

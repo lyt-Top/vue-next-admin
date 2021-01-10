@@ -1,5 +1,6 @@
 <template>
-  <div class="layout-navbars-tagsview" v-show="getThemeConfig.isTagsview">
+  <div class="layout-navbars-tagsview" :class="{'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic'}"
+    v-show="getThemeConfig.isTagsview">
     <Scroll ref="scrollRef">
       <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle">
         <li v-for="(v,k) in arr2" :key="k" class="layout-navbars-tagsview-ul-li" :class="{'is-active':isActive(v.path)}"
@@ -307,5 +308,8 @@ export default {
       }
     }
   }
+}
+.layout-navbars-tagsview-shadow {
+  box-shadow: rgb(0 21 41 / 4%) 0px 1px 4px;
 }
 </style>

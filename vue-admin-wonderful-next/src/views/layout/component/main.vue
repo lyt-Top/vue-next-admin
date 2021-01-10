@@ -1,7 +1,7 @@
 <template>
   <el-main>
-    <el-scrollbar class="layout-scrollbar" :style="{minHeight: `calc(100vh - ${headerHeight}`}"
-      ref="layoutScrollbarRef">
+    <el-scrollbar class="layout-scrollbar" ref="layoutScrollbarRef"
+      :style="{minHeight: `calc(100vh - ${headerHeight}`}">
       <router-view v-slot="{ Component }">
         <transition :name="setTransitionName" mode="out-in">
           <div :key="key">
@@ -39,6 +39,7 @@ export default defineComponent({
       transitionName: "slide-right",
       headerHeight: "84px",
     });
+    // 设置主界面切换动画
     const setTransitionName = computed(() => {
       let { animation } = store.state.themeConfig;
       if (animation === "slideRight")
@@ -48,13 +49,17 @@ export default defineComponent({
       else if (animation === "opacitys")
         return (state.transitionName = "opacitys");
     });
+    // 获取布局配置信息
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    // 设置路由唯一 key 值，防止页面切换动画不生效
     const key = computed(() => route.path);
+    // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
     watch(store.state.themeConfig, (val) => {
       state.headerHeight = val.isTagsview ? "84px" : "50px";
       if (val.isFixedHeaderChange !== val.isFixedHeader) {
+        if (!proxy.$refs.layoutScrollbarRef) return false;
         proxy.$refs.layoutScrollbarRef.update();
       }
     });
