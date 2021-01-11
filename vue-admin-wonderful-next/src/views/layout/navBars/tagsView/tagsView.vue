@@ -7,6 +7,8 @@
           @contextmenu.prevent="onContextmenu(v,$event)" @click="onTagsClick(v,k)"
           :ref="el => { if (el) tagsRefs[k] = el }">
           <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v.path)"></i>
+          <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.icon"
+            v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
           <span>{{v.name}}</span>
           <template v-if="isActive(v.path)">
             <i class="el-icon-refresh-right ml5"></i>
@@ -53,11 +55,11 @@ export default {
       },
       tagsRefsIndex: 0,
       arr2: [
-        { id: 11, name: "微软", path: "/home" },
-        { id: 12, name: "文档", path: "/docs" },
-        { id: 13, name: "文档1", path: "/docs1" },
-        { id: 15, name: "文档2", path: "/docs2" },
-        { id: 1, name: "文档3", path: "/docs3" },
+        { id: 11, name: "微软", path: "/home", icon: "el-icon-star-off" },
+        { id: 12, name: "文档", path: "/docs", icon: "el-icon-camera" },
+        { id: 13, name: "文档1", path: "/docs1", icon: "el-icon-truck" },
+        { id: 15, name: "文档2", path: "/docs2", icon: "el-icon-tableware" },
+        { id: 1, name: "文档3", path: "/docs3", icon: "el-icon-basketball" },
       ],
     });
     const setTagsStyle = computed(() => {

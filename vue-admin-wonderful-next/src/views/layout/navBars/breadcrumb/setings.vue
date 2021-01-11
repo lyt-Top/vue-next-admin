@@ -162,6 +162,12 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview 图标</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="getThemeConfig.isTagsviewIcon"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isFooter"></el-switch>
@@ -290,12 +296,12 @@
           </div>
         </div>
         <div class="copy-config">
-          <el-alert title="点击下方按钮，复制布局配置。" type="warning" :closable="false">
+          <el-alert title="点击下方按钮，复制 / 还原布局配置。" type="warning" :closable="false">
           </el-alert>
           <el-button size="small" class="copy-config-btn" icon="el-icon-document-copy" type="primary">一键复制配置
           </el-button>
           <el-button size="small" class="copy-config-btn copy-config-last-btn" icon="el-icon-refresh" type="warning">
-            一键恢复默认</el-button>
+            一键还原配置</el-button>
         </div>
       </el-scrollbar>
     </el-drawer>
@@ -439,10 +445,10 @@ export default defineComponent({
       if (getThemeConfig.value.layout === layout) return false;
       getThemeConfig.value.layout = layout;
       getThemeConfig.value.isDrawer = false;
-      initLayoutStyle();
+      initSetLayoutChange();
     };
-    const initLayoutStyle = () => {
-      console.log(getThemeConfig);
+    // 设置布局切换，重置主题样式
+    const initSetLayoutChange = () => {
       if (getThemeConfig.value.layout === "classic") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
@@ -450,10 +456,7 @@ export default defineComponent({
         getThemeConfig.value.menuBarColor = "#606266";
         getThemeConfig.value.topBar = "#ffffff";
         getThemeConfig.value.topBarColor = "#606266";
-        onBgColorPickerChange("menuBar");
-        onBgColorPickerChange("menuBarColor");
-        onBgColorPickerChange("topBar");
-        onBgColorPickerChange("topBarColor");
+        initLayoutChangeFun();
       } else if (getThemeConfig.value.layout === "transverse") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
@@ -461,9 +464,7 @@ export default defineComponent({
         getThemeConfig.value.menuBarColor = "#FFFFFF";
         getThemeConfig.value.topBar = "#545c64";
         getThemeConfig.value.topBarColor = "#FFFFFF";
-        onBgColorPickerChange("topBar");
-        onBgColorPickerChange("menuBarColor");
-        onBgColorPickerChange("topBarColor");
+        initLayoutChangeFun();
       } else if (getThemeConfig.value.layout === "columns") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = true;
@@ -472,10 +473,7 @@ export default defineComponent({
         getThemeConfig.value.menuBarColor = "#606266";
         getThemeConfig.value.topBar = "#ffffff";
         getThemeConfig.value.topBarColor = "#606266";
-        onBgColorPickerChange("menuBar");
-        onBgColorPickerChange("menuBarColor");
-        onBgColorPickerChange("topBar");
-        onBgColorPickerChange("topBarColor");
+        initLayoutChangeFun();
       } else {
         getThemeConfig.value.isShowLogo = false;
         getThemeConfig.value.isBreadcrumb = true;
@@ -484,14 +482,18 @@ export default defineComponent({
         getThemeConfig.value.menuBarColor = "#FFFFFF";
         getThemeConfig.value.topBar = "#FFFFFF";
         getThemeConfig.value.topBarColor = "#606266";
-        onBgColorPickerChange("menuBar");
-        onBgColorPickerChange("menuBarColor");
-        onBgColorPickerChange("topBar");
-        onBgColorPickerChange("topBarColor");
+        initLayoutChangeFun();
       }
     };
+    // 设置布局切换函数
+    const initLayoutChangeFun = () => {
+      onBgColorPickerChange("menuBar");
+      onBgColorPickerChange("menuBarColor");
+      onBgColorPickerChange("topBar");
+      onBgColorPickerChange("topBarColor");
+    };
     onBeforeMount(() => {
-      initLayoutStyle();
+      initSetLayoutChange();
       proxy.mittBus.on("onMenuClick", () => {
         onMenuBarHighlightChange();
       });

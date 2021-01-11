@@ -31,7 +31,6 @@ const watermark = {
     set: (str: any) => {
         let id = setWatermark(str)
         if (document.getElementById(id) === null) id = setWatermark(str)
-        window.onresize = () => { setWatermark(str) }
     },
     // 删除水印
     del: () => {

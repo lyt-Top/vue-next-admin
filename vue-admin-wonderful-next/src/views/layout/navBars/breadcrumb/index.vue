@@ -1,9 +1,8 @@
 <template>
   <div class="layout-navbars-breadcrumb-index">
-    <Logo
-      v-if="getThemeConfig.isShowLogo && getThemeConfig.layout === 'classic' || getThemeConfig.isShowLogo && getThemeConfig.layout === 'transverse'" />
+    <Logo v-if="setIsShowLogo" />
     <Breadcrumb />
-    <Horizontal :menuList="menuList" v-if="getThemeConfig.layout === 'transverse'" />
+    <Horizontal :menuList="menuList" v-if="isLayoutTransverse" />
     <User />
   </div>
 </template>
@@ -20,9 +19,6 @@ export default {
   components: { Breadcrumb, User, Logo, Horizontal },
   setup() {
     const store = useStore();
-    const getThemeConfig = computed(() => {
-      return store.state.themeConfig;
-    });
     const state = reactive({
       menuList: [
         {
@@ -72,8 +68,24 @@ export default {
         },
       ],
     });
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
+    });
+    const setIsShowLogo = computed(() => {
+      let { isShowLogo, layout } = store.state.themeConfig;
+      return (
+        (isShowLogo && layout === "classic") ||
+        (isShowLogo && layout === "transverse")
+      );
+    });
+    const isLayoutTransverse = computed(() => {
+      let { layout } = store.state.themeConfig;
+      return layout === "transverse";
+    });
     return {
       getThemeConfig,
+      setIsShowLogo,
+      isLayoutTransverse,
       ...toRefs(state),
     };
   },

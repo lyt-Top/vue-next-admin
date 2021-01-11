@@ -1,8 +1,7 @@
 <template>
   <div class="layout-navbars-container">
     <BreadcrumbIndex />
-    <TagsView
-      v-if="getThemeConfig.layout === 'defaults' || getThemeConfig.layout === 'transverse' || getThemeConfig.layout === 'columns'" />
+    <TagsView v-if="setShowTagsView" />
   </div>
 </template>
 
@@ -19,8 +18,13 @@ export default {
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    const setShowTagsView = computed(() => {
+      let { layout } = store.state.themeConfig;
+      return layout !== "classic";
+    });
     return {
       getThemeConfig,
+      setShowTagsView,
     };
   },
 };

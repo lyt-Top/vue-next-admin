@@ -12,7 +12,7 @@
               </div>
             </template>
             <template v-else>
-              <a :href="v.meta.isLink" target="_block">
+              <a :href="v.meta.isLink" target="_blank">
                 <i :class="v.meta.icon"></i>
                 <div class="layout-columns-aside-li-box-title">
                   {{v.meta.title}}

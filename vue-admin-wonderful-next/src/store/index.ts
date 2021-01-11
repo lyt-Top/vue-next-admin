@@ -28,6 +28,7 @@ export interface RootStateTypes {
         isShowLogoChange: boolean,
         isBreadcrumb: boolean,
         isTagsview: boolean,
+        isTagsviewIcon: boolean,
         isFooter: boolean,
         isGrayscale: boolean,
         isInvert: boolean,
