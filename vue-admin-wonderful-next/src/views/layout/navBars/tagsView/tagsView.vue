@@ -222,13 +222,14 @@ export default {
     .layout-navbars-tagsview-ul-li {
       height: 34px !important;
       line-height: 34px !important;
-      border: 1px solid #e6e6e6 !important;
+      border-right: 1px solid #f6f6f6 !important;
       border-top: none !important;
+      border-bottom: none !important;
       border-left: none !important;
       border-radius: 0 !important;
       margin-right: 0 !important;
       &:first-of-type {
-        border-left: 1px solid #e6e6e6 !important;
+        border-left: 1px solid #f6f6f6 !important;
       }
       .layout-icon-active {
         display: none;
@@ -240,8 +241,8 @@ export default {
     .is-active {
       background: white !important;
       color: var(--color-primary) !important;
-      border-bottom: 1px solid !important;
-      border-bottom-color: var(--color-primary) !important;
+      border-top: 1px solid !important;
+      border-top-color: var(--color-primary) !important;
     }
   }
   // 风格4
