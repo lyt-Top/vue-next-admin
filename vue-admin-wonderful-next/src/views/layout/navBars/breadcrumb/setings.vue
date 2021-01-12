@@ -132,10 +132,16 @@
             <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt11">
-          <div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏</div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启锁屏</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-input-number v-model="getThemeConfig.menuWidth1" controls-position="right" :min="1" :max="999"
+            <el-switch v-model="getThemeConfig.isLockScreen"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt11">
+          <div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏(s/秒)</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-input-number v-model="getThemeConfig.lockScreenTime" controls-position="right" :min="0" :max="9999"
               size="mini" style="width:90px;">
             </el-input-number>
           </div>
@@ -212,7 +218,7 @@
             </el-select>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15 mb26">
+        <div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
           <div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width:90px;">

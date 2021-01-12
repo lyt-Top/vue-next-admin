@@ -1,92 +1,164 @@
 <template>
-  <div class="layout-lock-screen-mask"></div>
-  <div class="layout-lock-screen-img" :class="{'layout-lock-screen-filter':isShowLoockLogin}"></div>
-  <div class="layout-lock-screen">
-    <div class="layout-lock-screen-date">
-      <div class="layout-lock-screen-date-box">
-        <div class="layout-lock-screen-date-box-time">22:14</div>
-        <div class="layout-lock-screen-date-box-info">1月11日，星期一</div>
+  <div v-show="isShowLockScreen">
+    <div class="layout-lock-screen-mask"></div>
+    <div class="layout-lock-screen-img" :class="{'layout-lock-screen-filter':isShowLoockLogin}"></div>
+    <div class="layout-lock-screen">
+      <div class="layout-lock-screen-date" @mousedown="onDown" @mousemove="onMove" @mouseup="onEnd"
+        @touchstart.stop="onDown" @touchmove.stop="onMove" @touchend.stop="onEnd">
+        <div class="layout-lock-screen-date-box">
+          <div class="layout-lock-screen-date-box-time">{{time.hm}}<span
+              class="layout-lock-screen-date-box-minutes">{{time.s}}</span></div>
+          <div class="layout-lock-screen-date-box-info">{{time.mdq}}</div>
+        </div>
       </div>
+      <transition name="el-zoom-in-center">
+        <div v-show="isShowLoockLogin" class="layout-lock-screen-login">
+          <div class="layout-lock-screen-login-box">
+            <div class="layout-lock-screen-login-box-img">
+              <img
+                src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
+            </div>
+            <div class="layout-lock-screen-login-box-name">Administrator</div>
+            <div class="layout-lock-screen-login-box-value">
+              <el-input placeholder="请输入密码" ref="layoutLockScreenInputRef">
+                <template #append>
+                  <el-button icon="el-icon-right"></el-button>
+                </template>
+              </el-input>
+            </div>
+          </div>
+          <div class="layout-lock-screen-login-icon">
+            <i class="el-icon-microphone"></i>
+            <i class="el-icon-alarm-clock"></i>
+            <i class="el-icon-switch-button"></i>
+          </div>
+        </div>
+      </transition>
     </div>
-    <transition name="el-zoom-in-center">
-      <div v-show="isShowLoockLogin" class="layout-lock-screen-login">
-        <div class="layout-lock-screen-login-box">
-          <div class="layout-lock-screen-login-box-img">
-            <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
-          </div>
-          <div class="layout-lock-screen-login-box-name">Administrator</div>
-          <div class="layout-lock-screen-login-box-value">
-            <el-input placeholder="密码">
-              <template #append>
-                <el-button icon="el-icon-right"></el-button>
-              </template>
-            </el-input>
-          </div>
-        </div>
-        <div class="layout-lock-screen-login-icon">
-          <i class="el-icon-microphone"></i>
-          <i class="el-icon-alarm-clock"></i>
-          <i class="el-icon-switch-button"></i>
-        </div>
-      </div>
-    </transition>
   </div>
 </template>
 
 <script lang="ts">
-import { nextTick, onMounted, reactive, toRefs } from "vue";
+import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted } from "vue";
+import { useStore } from "/@/store/index.ts";
+import { formatDate } from "/@/utils/formatTime.ts";
 export default {
   name: "layoutLockScreen",
   setup() {
+    const layoutLockScreenInputRef = ref();
+    const store = useStore();
     const state = reactive({
-      moveDifference: 0,
       transparency: 1,
+      downClientY: 0,
+      moveDifference: 0,
       isShowLoockLogin: false,
+      isFlags: false,
+      querySelectorEl: null,
+      time: {
+        hm: "",
+        s: "",
+        mdq: "",
+      },
+      setIntervalTime: null,
+      isShowLockScreen: false,
+      isShowLockScreenIntervalTime: null,
     });
+    // 鼠标按下
+    const onDown = (down) => {
+      state.isFlags = true;
+      state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
+    };
+    // 鼠标移动
+    const onMove = (move) => {
+      if (state.isFlags) {
+        const el = state.querySelectorEl;
+        const opacitys = (state.transparency -= 1 / 200);
+        if (move.touches) {
+          state.moveDifference = move.touches[0].clientY - state.downClientY;
+        } else {
+          state.moveDifference = move.clientY - state.downClientY;
+        }
+        if (state.moveDifference >= 0) return false;
+        el.setAttribute(
+          "style",
+          `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`
+        );
+        if (state.moveDifference < -400) {
+          el.setAttribute(
+            "style",
+            `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`
+          );
+          state.moveDifference = -el.clientHeight;
+          setTimeout(() => {
+            el.remove();
+          }, 300);
+        }
+        if (state.moveDifference === -el.clientHeight) {
+          state.isShowLoockLogin = true;
+          layoutLockScreenInputRef.value.focus();
+        }
+      }
+    };
+    // 鼠标松开
+    const onEnd = () => {
+      state.isFlags = false;
+      state.transparency = 1;
+      if (state.moveDifference >= -400) {
+        state.querySelectorEl.setAttribute(
+          "style",
+          `top:0px;opacity:1;transition:all 0.3s ease;`
+        );
+      }
+    };
+    // 获取要拖拽的初始元素
     const initGetElement = () => {
       nextTick(() => {
-        const el = document.querySelector(".layout-lock-screen-date");
-        el.onmousedown = (down) => {
-          document.onmousemove = (move) => {
-            let opacitys = (state.transparency -= 1 / 200);
-            state.moveDifference = move.clientY - down.clientY;
-            if (state.moveDifference >= 0) return false;
-            el.setAttribute(
-              "style",
-              `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`
-            );
-            if (state.moveDifference < -400) {
-              el.setAttribute(
-                "style",
-                `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`
-              );
-              state.moveDifference = -el.clientHeight;
-              setTimeout(() => {
-                el.remove();
-              }, 300);
-            }
-            if (state.moveDifference === -el.clientHeight) {
-              state.isShowLoockLogin = true;
-            }
-          };
-          document.onmouseup = (seup) => {
-            state.transparency = 1;
-            if (state.moveDifference >= -400) {
-              el.setAttribute(
-                "style",
-                `top:0px;opacity:1;transition:all 0.3s ease;`
-              );
-            }
-            document.onmousemove = null;
-            document.onmouseup = null;
-          };
-        };
+        state.querySelectorEl = document.querySelector(
+          ".layout-lock-screen-date"
+        );
       });
+    };
+    // 时间初始化
+    const initTime = () => {
+      state.time.hm = formatDate(new Date(), "HH:MM");
+      state.time.s = formatDate(new Date(), "SS");
+      state.time.mdq = formatDate(new Date(), "mm月dd日，WWW");
+    };
+    // 时间初始化定时器
+    const initSetTime = () => {
+      initTime();
+      state.setIntervalTime = setInterval(() => {
+        initTime();
+      }, 1000);
+    };
+    // 锁屏时间定时器
+    const initLockScreen = () => {
+      if (store.state.themeConfig.isLockScreen) {
+        state.isShowLockScreenIntervalTime = setInterval(() => {
+          if (store.state.themeConfig.lockScreenTime <= 0) {
+            state.isShowLockScreen = true;
+            return false;
+          }
+          store.state.themeConfig.lockScreenTime--;
+        }, 1000);
+      } else {
+        clearInterval(state.isShowLockScreenIntervalTime);
+      }
     };
     onMounted(() => {
       initGetElement();
+      initSetTime();
+      initLockScreen();
+    });
+    onUnmounted(() => {
+      clearInterval(state.setIntervalTime);
+      clearInterval(state.isShowLockScreenIntervalTime);
     });
     return {
+      layoutLockScreenInputRef,
+      onDown,
+      onMove,
+      onEnd,
       ...toRefs(state),
     };
   },
@@ -136,6 +208,9 @@ export default {
       }
       &-info {
         font-size: 40px;
+      }
+      &-minutes {
+        font-size: 16px;
       }
     }
   }
@@ -190,5 +265,8 @@ export default {
 }
 ::v-deep(.el-input__inner) {
   border-right-color: #f6f6f6;
+  &:hover {
+    border-color: #f6f6f6;
+  }
 }
 </style>
