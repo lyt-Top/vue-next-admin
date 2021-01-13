@@ -34,5 +34,6 @@ export default {
     wartermarkText: 'small@小柒',
     tagsStyle: 'tagsStyleOne',
     animation: 'slideRight',
+    columnsAsideStyle: 'columnsRound',
     layout: 'defaults'
 }

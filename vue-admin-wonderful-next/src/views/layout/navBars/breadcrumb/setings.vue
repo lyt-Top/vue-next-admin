@@ -218,13 +218,22 @@
             </el-select>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width:90px;">
               <el-option label="slideRight" value="slideRight"></el-option>
               <el-option label="slideLeft" value="slideLeft"></el-option>
               <el-option label="opacitys" value="opacitys"></el-option>
+            </el-select>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
+          <div class="layout-breadcrumb-seting-bar-flex-label">分栏高亮风格</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width:90px;">
+              <el-option label="圆角" value="columnsRound"></el-option>
+              <el-option label="卡片" value="columnsCard"></el-option>
             </el-select>
           </div>
         </div>

@@ -3,7 +3,7 @@
     <el-scrollbar>
       <ul>
         <li v-for="(v,k) in columnsAsideList" :key="k" @click="onColumnsAsideDown(v,k)"
-          :ref="el => { if (el) columnsAsideOffsetTopRefs[k] = el }" :class="{'layout-columns-active': liIndex === k}">
+          :ref="el => { if (el) columnsAsideOffsetTopRefs[k] = el }" :class="{'layout-columns-active':liIndex === k} ">
           <div class="layout-columns-aside-li-box">
             <template v-if="!v.meta.isLink">
               <i :class="v.meta.icon"></i>
@@ -21,19 +21,21 @@
             </template>
           </div>
         </li>
-        <div class="layout-columns-aside-active" ref="columnsAsideActiveRef"></div>
+        <div ref="columnsAsideActiveRef" :class="setColumnsAsideStyle"></div>
       </ul>
     </el-scrollbar>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, ref } from "vue";
+import { reactive, toRefs, ref, computed } from "vue";
+import { useStore } from "/@/store/index.ts";
 export default {
   name: "layoutColumnsAside",
   setup() {
     const columnsAsideOffsetTopRefs = ref([]);
     const columnsAsideActiveRef = ref();
+    const store = useStore();
     const state = reactive({
       columnsAsideList: [
         {
@@ -67,18 +69,31 @@ export default {
         },
       ],
       liIndex: 0,
+      difference: 0,
+    });
+    // 设置高亮样式
+    const setColumnsAsideStyle = computed(() => {
+      let { columnsAsideStyle } = store.state.themeConfig;
+      columnsAsideStyle === "columnsRound"
+        ? (state.difference = 3)
+        : (state.difference = 0);
+      if (columnsAsideStyle === "columnsRound")
+        return "layout-columns-round-active";
+      else if (columnsAsideStyle === "columnsCard")
+        return "layout-columns-card-active";
     });
     // 设置高亮动态位置
     const onColumnsAsideDown = (v: Object, k: number) => {
       state.liIndex = k;
       columnsAsideActiveRef.value.style.top = `${
-        columnsAsideOffsetTopRefs.value[k].offsetTop + 3
+        columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference
       }px`;
     };
     return {
       columnsAsideOffsetTopRefs,
       columnsAsideActiveRef,
       onColumnsAsideDown,
+      setColumnsAsideStyle,
       ...toRefs(state),
     };
   },
@@ -113,7 +128,7 @@ export default {
       color: #ffffff;
       transition: 0.3s ease-in-out;
     }
-    .layout-columns-aside-active {
+    .layout-columns-round-active {
       background: var(--color-primary);
       color: #ffffff;
       position: absolute;
@@ -125,6 +140,13 @@ export default {
       z-index: 0;
       transition: 0.3s ease-in-out;
       border-radius: 5px;
+    }
+    .layout-columns-card-active {
+      @extend .layout-columns-round-active;
+      top: 0;
+      height: 50px;
+      width: 100%;
+      border-radius: 0;
     }
   }
 }

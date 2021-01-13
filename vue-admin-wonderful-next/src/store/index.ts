@@ -37,6 +37,7 @@ export interface RootStateTypes {
         wartermarkText: string,
         tagsStyle: string,
         animation: string,
+        columnsAsideStyle: string,
         layout: string
     }
 }
