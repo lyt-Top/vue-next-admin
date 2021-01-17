@@ -22,7 +22,7 @@ export interface RootStateTypes {
         isUniqueOpened: boolean,
         isFixedHeader: boolean,
         isFixedHeaderChange: boolean,
-        isCollapse1: boolean,
+        isClassicSplitMenu: boolean,
         isLockScreen: boolean,
         lockScreenTime: number,
         isShowLogo: boolean,

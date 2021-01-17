@@ -1,7 +1,10 @@
+// 字体图标 url
+const urlArr = ["//at.alicdn.com/t/font_2298093_3atw1lxsgot.css"]
+
 // 动态设置字体图标
-export function setIconfont(url: Array<string> = []) {
-    if (url.length <= 0) return false
-    url.map(v => {
+export function setIconfont() {
+    if (urlArr.length <= 0) return false
+    urlArr.map(v => {
         let link = document.createElement('link')
         link.rel = 'stylesheet'
         link.href = v

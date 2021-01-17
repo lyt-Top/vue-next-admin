@@ -79,8 +79,10 @@ export default {
       );
     });
     const isLayoutTransverse = computed(() => {
-      let { layout } = store.state.themeConfig;
-      return layout === "transverse";
+      let { layout, isClassicSplitMenu } = store.state.themeConfig;
+      return (
+        layout === "transverse" || (isClassicSplitMenu && layout === "classic")
+      );
     });
     return {
       getThemeConfig,

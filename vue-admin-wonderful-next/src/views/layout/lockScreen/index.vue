@@ -20,9 +20,10 @@
             </div>
             <div class="layout-lock-screen-login-box-name">Administrator</div>
             <div class="layout-lock-screen-login-box-value">
-              <el-input placeholder="请输入密码" ref="layoutLockScreenInputRef">
+              <el-input placeholder="请输入密码" ref="layoutLockScreenInputRef" v-model="lockScreenPassword"
+                @keyup.enter.native.stop="onLockScreenSubmit()">
                 <template #append>
-                  <el-button icon="el-icon-right"></el-button>
+                  <el-button icon="el-icon-right" @click="onLockScreenSubmit"></el-button>
                 </template>
               </el-input>
             </div>
@@ -42,6 +43,7 @@
 import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted } from "vue";
 import { useStore } from "/@/store/index.ts";
 import { formatDate } from "/@/utils/formatTime.ts";
+import { setLocal } from "/@/utils/storage.ts";
 export default {
   name: "layoutLockScreen",
   setup() {
@@ -62,6 +64,7 @@ export default {
       setIntervalTime: null,
       isShowLockScreen: false,
       isShowLockScreenIntervalTime: null,
+      lockScreenPassword: "",
     });
     // 鼠标按下
     const onDown = (down) => {
@@ -137,6 +140,7 @@ export default {
         state.isShowLockScreenIntervalTime = setInterval(() => {
           if (store.state.themeConfig.lockScreenTime <= 0) {
             state.isShowLockScreen = true;
+            setLocalThemeConfig();
             return false;
           }
           store.state.themeConfig.lockScreenTime--;
@@ -144,6 +148,17 @@ export default {
       } else {
         clearInterval(state.isShowLockScreenIntervalTime);
       }
+    };
+    // 存储布局配置
+    const setLocalThemeConfig = () => {
+      store.state.themeConfig.isDrawer = false;
+      setLocal("themeConfig", store.state.themeConfig);
+    };
+    // 密码输入点击事件
+    const onLockScreenSubmit = () => {
+      store.state.themeConfig.isLockScreen = false;
+      store.state.themeConfig.lockScreenTime = 30;
+      setLocalThemeConfig();
     };
     onMounted(() => {
       initGetElement();
@@ -159,6 +174,7 @@ export default {
       onDown,
       onMove,
       onEnd,
+      onLockScreenSubmit,
       ...toRefs(state),
     };
   },

@@ -15,7 +15,9 @@ import {
   watch,
   getCurrentInstance,
   ref,
+  onBeforeMount,
 } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 import Logo from "/@/views/layout/logo/index.vue";
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
@@ -24,56 +26,31 @@ export default {
   components: { Logo, Vertical },
   setup() {
     const { proxy } = getCurrentInstance();
+    const router = useRouter();
     const store = useStore();
     const state = reactive({
-      menuList: [
-        {
-          path: "/home",
-          meta: {
-            title: "首页",
-            icon: "el-icon-s-home",
-          },
-          children: [
-            {
-              path: "/home",
-              meta: {
-                title: "微软",
-                icon: "el-icon-s-flag",
-              },
-            },
-            {
-              path: "/docs",
-              meta: {
-                title: "文档",
-                icon: "el-icon-s-flag",
-              },
-            },
-            {
-              path: "/docs1",
-              meta: {
-                title: "文档1",
-                icon: "el-icon-s-flag",
-              },
-            },
-          ],
-        },
-        {
-          path: "/docs2",
-          meta: {
-            title: "文档2",
-            icon: "el-icon-s-management",
-            isLink: "https://www.ele.me",
-          },
-        },
-        {
-          path: "/docs3",
-          meta: {
-            title: "文档3",
-            icon: "el-icon-s-management",
-          },
-        },
-      ],
+      menuList: [],
     });
+    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    const setFilterRoutes = () => {
+      const routesList = router.getRoutes();
+      routesList.map((route) => {
+        if (route.path === "/") {
+          state.menuList = filterRoutesFun(route.children);
+          console.log(filterRoutesFun(route.children));
+        }
+      });
+    };
+    // 路由过滤递归函数
+    const filterRoutesFun = (arr: Array<object>) => {
+      return arr
+        .filter((item) => !item.meta.isHide)
+        .map((item) => {
+          item = Object.assign({}, item);
+          if (item.children) item.children = filterRoutesFun(item.children);
+          return item;
+        });
+    };
     // 设置菜单展开/收起时的宽度
     const setCollapseWidth = computed(() => {
       let { layout, isCollapse, menuBar } = store.state.themeConfig;
@@ -114,6 +91,10 @@ export default {
         if (!proxy.$refs.layoutAsideScrollbarRef) return false;
         proxy.$refs.layoutAsideScrollbarRef.update();
       }
+    });
+    // 初始化
+    onBeforeMount(() => {
+      setFilterRoutes();
     });
     return {
       setCollapseWidth,

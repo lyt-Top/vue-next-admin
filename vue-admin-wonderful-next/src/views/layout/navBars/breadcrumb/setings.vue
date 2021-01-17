@@ -117,7 +117,7 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">菜单手风琴</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isUniqueOpened"></el-switch>
+            <el-switch v-model="getThemeConfig.isUniqueOpened" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -126,23 +126,26 @@
             <el-switch v-model="getThemeConfig.isFixedHeader" @change="onIsFixedHeaderChange"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">自动分割菜单</div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15"
+          :style="{opacity:getThemeConfig.layout !== 'classic' ? 0.5 : 1}">
+          <div class="layout-breadcrumb-seting-bar-flex-label">经典布局分割菜单</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isCollapse1"></el-switch>
+            <el-switch v-model="getThemeConfig.isClassicSplitMenu" :disabled="getThemeConfig.layout !== 'classic'"
+              @change="onClassicSplitMenuChange">
+            </el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启锁屏</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isLockScreen"></el-switch>
+            <el-switch v-model="getThemeConfig.isLockScreen" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt11">
           <div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏(s/秒)</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-input-number v-model="getThemeConfig.lockScreenTime" controls-position="right" :min="0" :max="9999"
-              size="mini" style="width:90px;">
+              @change="setLocalThemeConfig" size="mini" style="width:90px;">
             </el-input-number>
           </div>
         </div>
@@ -158,25 +161,25 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">面包屑 Breadcrumb</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isBreadcrumb"></el-switch>
+            <el-switch v-model="getThemeConfig.isBreadcrumb" @change="onIsBreadcrumbChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isTagsview"></el-switch>
+            <el-switch v-model="getThemeConfig.isTagsview" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview 图标</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isTagsviewIcon"></el-switch>
+            <el-switch v-model="getThemeConfig.isTagsviewIcon" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isFooter"></el-switch>
+            <el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -210,7 +213,8 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">Tagsview 风格</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="mini" style="width:90px;">
+            <el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="mini" style="width:90px;"
+              @change="setLocalThemeConfig">
               <el-option label="风格1" value="tagsStyleOne"></el-option>
               <el-option label="风格2" value="tagsStyleTwo"></el-option>
               <el-option label="风格3" value="tagsStyleThree"></el-option>
@@ -221,7 +225,8 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width:90px;">
+            <el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width:90px;"
+              @change="setLocalThemeConfig">
               <el-option label="slideRight" value="slideRight"></el-option>
               <el-option label="slideLeft" value="slideLeft"></el-option>
               <el-option label="opacitys" value="opacitys"></el-option>
@@ -231,7 +236,8 @@
         <div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
           <div class="layout-breadcrumb-seting-bar-flex-label">分栏高亮风格</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width:90px;">
+            <el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width:90px;"
+              @change="setLocalThemeConfig">
               <el-option label="圆角" value="columnsRound"></el-option>
               <el-option label="卡片" value="columnsCard"></el-option>
             </el-select>
@@ -326,8 +332,8 @@
 <script lang="ts">
 import {
   nextTick,
-  onBeforeMount,
   onUnmounted,
+  onMounted,
   getCurrentInstance,
   defineComponent,
   computed,
@@ -336,6 +342,7 @@ import { useStore } from "/@/store/index.ts";
 import { getLightColor } from "/@/utils/theme.ts";
 import Watermark from "/@/utils/wartermark.ts";
 import { verifyAndSpace } from "/@/utils/toolsValidate.js";
+import { setLocal, getLocal } from "/@/utils/storage.ts";
 export default defineComponent({
   name: "layoutBreadcrumbSeting",
   setup() {
@@ -344,15 +351,12 @@ export default defineComponent({
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
-    const openDrawer = () => {
-      getThemeConfig.value.isDrawer = true;
-    };
-    const closeDrawer = () => {
-      getThemeConfig.value.isDrawer = false;
-    };
+    // 1、全局主题
     const onColorPickerChange = (color: string) => {
       setPropertyFun(`--color-${color}`, getThemeConfig.value[color]);
+      setDispatchThemeConfig();
     };
+    // 1、全局主题设置函数
     const setPropertyFun = (color: string, targetVal: any) => {
       document.documentElement.style.setProperty(color, targetVal);
       for (let i = 1; i <= 9; i++) {
@@ -362,6 +366,7 @@ export default defineComponent({
         );
       }
     };
+    // 2、菜单 / 顶栏
     const onBgColorPickerChange = (bg: string) => {
       document.documentElement.style.setProperty(
         `--bg-${bg}`,
@@ -369,7 +374,9 @@ export default defineComponent({
       );
       onTopBarGradualChange();
       onMenuBarGradualChange();
+      setDispatchThemeConfig();
     };
+    // 2、菜单 / 顶栏 --> 顶栏背景渐变
     const onTopBarGradualChange = () => {
       setGraduaFun(
         ".layout-navbars-breadcrumb-index",
@@ -377,6 +384,7 @@ export default defineComponent({
         getThemeConfig.value.topBar
       );
     };
+    // 2、菜单 / 顶栏 --> 菜单背景渐变
     const onMenuBarGradualChange = () => {
       setGraduaFun(
         ".layout-container .el-aside",
@@ -384,6 +392,7 @@ export default defineComponent({
         getThemeConfig.value.menuBar
       );
     };
+    // 2、菜单 / 顶栏 --> 背景渐变函数
     const setGraduaFun = (el: string, bool: boolean, color: string) => {
       nextTick(() => {
         let els = document.querySelector(el);
@@ -397,8 +406,16 @@ export default defineComponent({
             )})`
           );
         else els.setAttribute("style", `background-image:${color}`);
+        setLocalThemeConfig();
+        const elNavbars = document.querySelector(
+          ".layout-navbars-breadcrumb-index"
+        );
+        const elAside = document.querySelector(".layout-container .el-aside");
+        if (elNavbars) setLocal("navbarsBgStyle", elNavbars.style.cssText);
+        if (elAside) setLocal("asideBgStyle", elAside.style.cssText);
       });
     };
+    // 2、菜单 / 顶栏 --> 菜单字体背景高亮
     const onMenuBarHighlightChange = () => {
       nextTick(() => {
         setTimeout(() => {
@@ -407,28 +424,44 @@ export default defineComponent({
           if (getThemeConfig.value.isMenuBarColorHighlight)
             els.setAttribute("class", `${attr} add-is-active`);
           else els.setAttribute("class", `${attr}`);
+          setLocalThemeConfig();
+          setLocal("menuBarHighlightClass", els.getAttribute("class"));
         }, 0);
       });
     };
+    // 3、界面设置 --> 菜单水平折叠
     const onThemeConfigChange = () => {
       onMenuBarHighlightChange();
+      setDispatchThemeConfig();
     };
+    // 3、界面设置 --> 固定 Header
     const onIsFixedHeaderChange = () => {
       getThemeConfig.value.isFixedHeaderChange = getThemeConfig.value
         .isFixedHeader
         ? false
         : true;
+      setLocalThemeConfig();
     };
+    // 3、界面设置 --> 经典布局分割菜单
+    const onClassicSplitMenuChange = () => {
+      getThemeConfig.value.isBreadcrumb = false;
+      setLocalThemeConfig();
+    };
+    // 4、界面显示 --> 侧边栏 Logo
     const onIsShowLogoChange = () => {
       getThemeConfig.value.isShowLogoChange = getThemeConfig.value.isShowLogo
         ? false
         : true;
+      setLocalThemeConfig();
     };
-    const onDrawerClose = () => {
-      // 关闭弹窗时，初始化变量。变量用于处理 proxy.$refs.layoutScrollbarRef.update()
-      getThemeConfig.value.isFixedHeaderChange = false;
-      getThemeConfig.value.isShowLogoChange = false;
+    // 4、界面显示 --> 面包屑 Breadcrumb
+    const onIsBreadcrumbChange = () => {
+      if (getThemeConfig.value.layout === "classic") {
+        getThemeConfig.value.isClassicSplitMenu = false;
+      }
+      setLocalThemeConfig();
     };
+    // 4、界面显示 --> 灰色模式/色弱模式
     const onAddFilterChange = (attr: string) => {
       if (attr === "grayscale") {
         if (getThemeConfig.value.isGrayscale)
@@ -444,29 +477,38 @@ export default defineComponent({
       document
         .getElementById("app")
         .setAttribute("style", `filter: ${cssAttr}`);
+      setLocalThemeConfig();
+      setLocal("appFilterStyle", document.querySelector("#app").style.cssText);
     };
+    // 4、界面显示 --> 开启水印
     const onWartermarkChange = () => {
       getThemeConfig.value.isWartermark
         ? Watermark.set(getThemeConfig.value.wartermarkText)
         : Watermark.del();
+      setLocalThemeConfig();
     };
+    // 4、界面显示 --> 水印文案
     const onWartermarkTextInput = (val: string) => {
       getThemeConfig.value.wartermarkText = verifyAndSpace(val);
       if (getThemeConfig.value.wartermarkText === "") return false;
       if (getThemeConfig.value.isWartermark)
         Watermark.set(getThemeConfig.value.wartermarkText);
+      setLocalThemeConfig();
     };
+    // 5、布局切换
     const onSetLayout = (layout: string) => {
       if (getThemeConfig.value.layout === layout) return false;
       getThemeConfig.value.layout = layout;
       getThemeConfig.value.isDrawer = false;
       initSetLayoutChange();
+      onMenuBarHighlightChange();
     };
     // 设置布局切换，重置主题样式
     const initSetLayoutChange = () => {
       if (getThemeConfig.value.layout === "classic") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
+        getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#FFFFFF";
         getThemeConfig.value.menuBarColor = "#606266";
         getThemeConfig.value.topBar = "#ffffff";
@@ -476,6 +518,7 @@ export default defineComponent({
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
         getThemeConfig.value.isTagsview = false;
+        getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBarColor = "#FFFFFF";
         getThemeConfig.value.topBar = "#545c64";
         getThemeConfig.value.topBarColor = "#FFFFFF";
@@ -484,6 +527,7 @@ export default defineComponent({
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = true;
         getThemeConfig.value.isTagsview = true;
+        getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#FFFFFF";
         getThemeConfig.value.menuBarColor = "#606266";
         getThemeConfig.value.topBar = "#ffffff";
@@ -493,8 +537,9 @@ export default defineComponent({
         getThemeConfig.value.isShowLogo = false;
         getThemeConfig.value.isBreadcrumb = true;
         getThemeConfig.value.isTagsview = true;
+        getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#545c64";
-        getThemeConfig.value.menuBarColor = "#FFFFFF";
+        getThemeConfig.value.menuBarColor = "#c4c4c4";
         getThemeConfig.value.topBar = "#FFFFFF";
         getThemeConfig.value.topBarColor = "#606266";
         initLayoutChangeFun();
@@ -507,10 +552,64 @@ export default defineComponent({
       onBgColorPickerChange("topBar");
       onBgColorPickerChange("topBarColor");
     };
-    onBeforeMount(() => {
-      initSetLayoutChange();
-      proxy.mittBus.on("onMenuClick", () => {
-        onMenuBarHighlightChange();
+    // 关闭弹窗时，初始化变量。变量用于处理 proxy.$refs.layoutScrollbarRef.update()
+    const onDrawerClose = () => {
+      getThemeConfig.value.isFixedHeaderChange = false;
+      getThemeConfig.value.isShowLogoChange = false;
+      getThemeConfig.value.isDrawer = false;
+      setLocalThemeConfig();
+    };
+    // 布局配置弹窗打开
+    const openDrawer = () => {
+      getThemeConfig.value.isDrawer = true;
+    };
+    // 触发 store 布局配置更新
+    const setDispatchThemeConfig = () => {
+      setLocalThemeConfig();
+      setLocalThemeConfigStyle();
+    };
+    // 存储布局配置
+    const setLocalThemeConfig = () => {
+      setLocal("themeConfig", getThemeConfig.value);
+    };
+    // 存储布局配置全局主题样式（html根标签）
+    const setLocalThemeConfigStyle = () => {
+      setLocal("themeConfigStyle", document.documentElement.style.cssText);
+    };
+    onMounted(() => {
+      nextTick(() => {
+        proxy.mittBus.on("onMenuClick", () => {
+          onMenuBarHighlightChange();
+        });
+        // 刷新页面时，设置了值，直接取缓存中的值进行初始化
+        setTimeout(() => {
+          // 顶栏背景渐变
+          if (getLocal("navbarsBgStyle")) {
+            document.querySelector(
+              ".layout-navbars-breadcrumb-index"
+            ).style.cssText = getLocal("navbarsBgStyle");
+          }
+          // 菜单背景渐变
+          if (getLocal("asideBgStyle")) {
+            document.querySelector(
+              ".layout-container .el-aside"
+            ).style.cssText = getLocal("asideBgStyle");
+          }
+          // 菜单字体背景高亮
+          if (getLocal("menuBarHighlightClass")) {
+            let els = document.querySelector(".el-menu-item.is-active");
+            if (!els) return false;
+            els.setAttribute("class", getLocal("menuBarHighlightClass"));
+          }
+          // 灰色模式/色弱模式
+          if (getLocal("appFilterStyle")) {
+            document.querySelector("#app").style.cssText = getLocal(
+              "appFilterStyle"
+            );
+          }
+          // 开启水印
+          onWartermarkChange();
+        }, 300);
       });
     });
     onUnmounted(() => {
@@ -518,7 +617,6 @@ export default defineComponent({
     });
     return {
       openDrawer,
-      closeDrawer,
       onColorPickerChange,
       onBgColorPickerChange,
       onTopBarGradualChange,
@@ -533,6 +631,9 @@ export default defineComponent({
       onWartermarkChange,
       onWartermarkTextInput,
       onSetLayout,
+      setLocalThemeConfig,
+      onClassicSplitMenuChange,
+      onIsBreadcrumbChange,
     };
   },
 });

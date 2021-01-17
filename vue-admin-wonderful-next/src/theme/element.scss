@@ -758,6 +758,17 @@
     @extend .el-active-extend;
   }
 }
+// 菜单收起时且是a链接
+.el-popper.is-dark a {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+// 第三方图标字体间距/大小设置
+.el-menu-item .iconfont,
+.el-submenu .iconfont {
+  font-size: 14px !important;
+  padding-right: 8px;
+}
 
 /* Tabs 标签页
 ------------------------------- */

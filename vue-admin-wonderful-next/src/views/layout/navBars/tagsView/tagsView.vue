@@ -3,13 +3,13 @@
     v-show="getThemeConfig.isTagsview">
     <Scroll ref="scrollRef">
       <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle">
-        <li v-for="(v,k) in arr2" :key="k" class="layout-navbars-tagsview-ul-li" :class="{'is-active':isActive(v.path)}"
-          @contextmenu.prevent="onContextmenu(v,$event)" @click="onTagsClick(v,k)"
-          :ref="el => { if (el) tagsRefs[k] = el }">
+        <li v-for="(v,k) in tagsViewList" :key="k" class="layout-navbars-tagsview-ul-li"
+          :class="{'is-active':isActive(v.path)}" @contextmenu.prevent="onContextmenu(v,$event)"
+          @click="onTagsClick(v,k)" :ref="el => { if (el) tagsRefs[k] = el }">
           <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v.path)"></i>
-          <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.icon"
+          <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon"
             v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
-          <span>{{v.name}}</span>
+          <span>{{v.meta.title}}</span>
           <template v-if="isActive(v.path)">
             <i class="el-icon-refresh-right ml5"></i>
             <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active"></i>
@@ -31,6 +31,7 @@ import {
   ref,
   nextTick,
   onBeforeUpdate,
+  onBeforeMount,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
@@ -54,13 +55,7 @@ export default {
         y: "",
       },
       tagsRefsIndex: 0,
-      arr2: [
-        { id: 11, name: "微软", path: "/home", icon: "el-icon-star-off" },
-        { id: 12, name: "文档", path: "/docs", icon: "el-icon-camera" },
-        { id: 13, name: "文档1", path: "/docs1", icon: "el-icon-truck" },
-        { id: 15, name: "文档2", path: "/docs2", icon: "el-icon-tableware" },
-        { id: 1, name: "文档3", path: "/docs3", icon: "el-icon-basketball" },
-      ],
+      tagsViewList: [],
     });
     const setTagsStyle = computed(() => {
       let { tagsStyle } = store.state.themeConfig;
@@ -73,6 +68,25 @@ export default {
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    const setFilterRoutes = () => {
+      const routesList = router.getRoutes();
+      routesList.map((route) => {
+        if (route.path === "/") {
+          state.tagsViewList = filterRoutesFun(route.children);
+        }
+      });
+    };
+    // 路由过滤递归函数
+    const filterRoutesFun = (arr: Array<object>) => {
+      return arr
+        .filter((item) => !item.meta.isHide)
+        .map((item) => {
+          item = Object.assign({}, item);
+          if (item.children) item.children = filterRoutesFun(item.children);
+          return item;
+        });
+    };
     const initSortable = () => {
       const el = document.querySelector(".layout-navbars-tagsview-ul");
       const sortable = Sortable.create(el, { animation: 300 });
@@ -96,14 +110,17 @@ export default {
       });
     };
     const getTagsRefsIndex = (path: string) => {
-      if (state.arr2.length > 0) {
-        state.tagsRefsIndex = state.arr2.findIndex(
+      if (state.tagsViewList.length > 0) {
+        state.tagsRefsIndex = state.tagsViewList.findIndex(
           (item) => item.path === path
         );
       }
     };
     onBeforeUpdate(() => {
       tagsRefs.value = [];
+    });
+    onBeforeMount(() => {
+      setFilterRoutes();
     });
     onMounted(() => {
       initSortable();
@@ -166,6 +183,7 @@ export default {
       &-iconfont {
         position: relative;
         left: -5px;
+        font-size: 14px;
       }
       &-icon {
         border-radius: 100%;
