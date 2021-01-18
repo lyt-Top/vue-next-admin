@@ -539,7 +539,7 @@ export default defineComponent({
         getThemeConfig.value.isTagsview = true;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#545c64";
-        getThemeConfig.value.menuBarColor = "#c4c4c4";
+        getThemeConfig.value.menuBarColor = "#eaeaea";
         getThemeConfig.value.topBar = "#FFFFFF";
         getThemeConfig.value.topBarColor = "#606266";
         initLayoutChangeFun();

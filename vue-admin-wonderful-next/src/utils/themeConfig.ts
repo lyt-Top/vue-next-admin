@@ -10,7 +10,7 @@ export default {
     menuBar: "#545c64",
     columnsMenuBar: '#4276ab',
     topBarColor: "#606266",
-    menuBarColor: "#c4c4c4",
+    menuBarColor: "#eaeaea",
     columnsMenuBarColor: '#e6e6e6',
     isTopBarColorGradual: false,
     isMenuBarColorGradual: false,

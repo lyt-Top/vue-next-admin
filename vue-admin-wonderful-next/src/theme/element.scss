@@ -722,7 +722,7 @@
 }
 .el-menu--horizontal > .el-menu-item,
 .el-menu--horizontal > .el-submenu .el-submenu__title {
-  color: var(--bg-menuBarColor);
+  color: var(--bg-topBarColor);
 }
 // 外部链接时
 .el-menu-item a,
@@ -763,11 +763,28 @@
   color: #ffffff !important;
   text-decoration: none;
 }
+// 菜单收起时鼠标经过背景颜色/字体颜色
+.el-popper.is-light {
+  .el-menu--vertical {
+    background: var(--bg-menuBar);
+  }
+  .el-menu--horizontal {
+    background: var(--bg-topBar);
+    .el-menu-item,
+    .el-submenu__title {
+      color: var(--bg-topBarColor);
+    }
+  }
+}
 // 第三方图标字体间距/大小设置
 .el-menu-item .iconfont,
 .el-submenu .iconfont {
-  font-size: 14px !important;
-  padding-right: 8px;
+  font-size: 18px !important;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+  width: 24px;
+  text-align: center;
 }
 
 /* Tabs 标签页

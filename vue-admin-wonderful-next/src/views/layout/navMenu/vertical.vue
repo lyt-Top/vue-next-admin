@@ -11,7 +11,9 @@
       </el-submenu>
       <el-menu-item :index="val.path" :key="val.path" v-else>
         <i :class="val.meta.icon ? val.meta.icon : ''"></i>
-        <template #title v-if="!val.meta.isLink">{{ val.meta.title }}</template>
+        <template #title v-if="!val.meta.isLink">
+          <span>{{ val.meta.title }}</span>
+        </template>
         <template #title v-else><a :href="val.meta.isLink" target="_blank">{{ val.meta.title }}</a></template>
       </el-menu-item>
     </template>
