@@ -1,5 +1,5 @@
 // 字体图标 url
-const urlArr = ["//at.alicdn.com/t/font_2298093_3atw1lxsgot.css"]
+const urlArr = ["//at.alicdn.com/t/font_2298093_0pyjdtieuwp.css"]
 
 // 动态设置字体图标
 export function setIconfont() {

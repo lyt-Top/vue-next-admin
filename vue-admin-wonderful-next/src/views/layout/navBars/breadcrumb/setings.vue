@@ -171,6 +171,12 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Breadcrumb 图标</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="getThemeConfig.isBreadcrumbIcon" @change="setLocalThemeConfig"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview 图标</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isTagsviewIcon" @change="setLocalThemeConfig"></el-switch>

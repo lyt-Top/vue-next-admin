@@ -26,6 +26,7 @@ export default {
     isShowLogoChange: false,
     isBreadcrumb: true,
     isTagsview: true,
+    isBreadcrumbIcon: false,
     isTagsviewIcon: false,
     isFooter: false,
     isGrayscale: false,

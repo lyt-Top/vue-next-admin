@@ -5,8 +5,14 @@
     <el-breadcrumb>
       <transition-group name="breadcrumb" mode="out-in">
         <el-breadcrumb-item v-for="(v,k) in breadcrumbList" :key="v.meta.title">
-          <span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">{{v.meta.title}}</span>
-          <a v-else @click.prevent="onBreadcrumbClick(v)">{{v.meta.title}}</a>
+          <span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
+            <i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont"
+              v-if="getThemeConfig.isBreadcrumbIcon"></i>{{v.meta.title}}
+          </span>
+          <a v-else @click.prevent="onBreadcrumbClick(v)">
+            <i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont"
+              v-if="getThemeConfig.isBreadcrumbIcon"></i>{{v.meta.title}}
+          </a>
         </el-breadcrumb-item>
       </transition-group>
     </el-breadcrumb>
@@ -31,9 +37,10 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const state = reactive({
-      breadcrumbList: [{ meta: { title: "" } }], // 定义初始值，不能为空数组，否则 v-for 报错
+      breadcrumbList: [{ meta: { title: "", icon: "" } }], // 定义初始值，不能为空数组，否则 v-for 报错
     });
     const getBreadcrumbList = (matched: any) => {
+      console.log(matched);
       state.breadcrumbList = matched;
     };
     const onBreadcrumbClick = (v: object) => {
@@ -80,6 +87,10 @@ export default {
   .layout-navbars-breadcrumb-span {
     opacity: 0.7;
     color: var(--bg-topBarColor);
+  }
+  .layout-navbars-breadcrumb-iconfont {
+    font-size: 14px;
+    margin-right: 5px;
   }
   ::v-deep(.el-breadcrumb__separator) {
     opacity: 0.7;

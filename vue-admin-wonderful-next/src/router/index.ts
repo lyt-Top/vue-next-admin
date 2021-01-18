@@ -8,7 +8,8 @@ const dynamicRoutes = [
         meta: {
             title: '首页',
             isLink: '',
-            isHide: false
+            isHide: false,
+            icon: 'iconfont icon-shouye'
         },
         children: [{
             path: '/home',
@@ -142,7 +143,7 @@ const dynamicRoutes = [
                 title: '大数据图表',
                 isLink: '',
                 isHide: false,
-                icon: 'iconfont icon-chanyedashujufuwupingtai'
+                icon: 'iconfont icon-ico_shuju'
             }
         },
         {
