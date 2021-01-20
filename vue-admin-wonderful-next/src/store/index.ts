@@ -1,6 +1,7 @@
 import { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
-import themeConfig from '../utils/themeConfig'
+import themeConfig from '/@/utils/themeConfig.ts'
+import { dynamicRoutes } from '/@/router/index.ts'
 export interface RootStateTypes {
     themeConfig: {
         isDrawer: boolean,
@@ -40,23 +41,31 @@ export interface RootStateTypes {
         animation: string,
         columnsAsideStyle: string,
         layout: string
-    }
+    },
+    routes: Array<object>
 }
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol()
 
 export const store = createStore<RootStateTypes>({
     state: {
-        themeConfig
+        themeConfig,
+        routes: []
     },
     mutations: {
         getThemeConfig(state: any, data: object) {
             state.themeConfig = Object.assign({}, data)
+        },
+        getRoutes(state: any, data: Array<object>) {
+            state.routes = data
         }
     },
     actions: {
         setThemeConfig({ commit }, data: object) {
             commit('getThemeConfig', data)
+        },
+        async setRoutes({ commit }) {
+            commit('getRoutes', dynamicRoutes)
         }
     }
 })

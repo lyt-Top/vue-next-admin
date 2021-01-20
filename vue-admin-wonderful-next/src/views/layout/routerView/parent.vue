@@ -1,11 +1,11 @@
 <template>
-  <el-main>
-    <el-scrollbar class="layout-scrollbar" ref="layoutScrollbarRef"
-      :style="{minHeight: `calc(100vh - ${headerHeight}`}">
-      <LayoutParentView />
-      <Footer v-if="getThemeConfig.isFooter" />
-    </el-scrollbar>
-  </el-main>
+  <router-view v-slot="{ Component }" :key="Math.random()">
+    <transition :name="setTransitionName" mode="out-in">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </transition>
+  </router-view>
 </template>
 
 <script lang="ts">
@@ -18,16 +18,24 @@ import {
   watch,
 } from "vue";
 import { useStore } from "/@/store/index.ts";
-import LayoutParentView from "/@/views/layout/routerView/parent.vue";
-import Footer from "/@/views/layout/footer/index.vue";
 export default defineComponent({
-  name: "layoutMain",
-  components: { LayoutParentView, Footer },
+  name: "layoutParentView",
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
     const state = reactive({
+      transitionName: "slide-right",
       headerHeight: "84px",
+    });
+    // 设置主界面切换动画
+    const setTransitionName = computed(() => {
+      let { animation } = store.state.themeConfig;
+      if (animation === "slideRight")
+        return (state.transitionName = "slide-right");
+      else if (animation === "slideLeft")
+        return (state.transitionName = "slide-left");
+      else if (animation === "opacitys")
+        return (state.transitionName = "opacitys");
     });
     // 获取布局配置信息
     const getThemeConfig = computed(() => {
@@ -43,8 +51,11 @@ export default defineComponent({
     });
     return {
       getThemeConfig,
+      setTransitionName,
       ...toRefs(state),
     };
   },
 });
 </script>
+
+  

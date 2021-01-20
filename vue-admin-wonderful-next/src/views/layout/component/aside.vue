@@ -17,7 +17,6 @@ import {
   ref,
   onBeforeMount,
 } from "vue";
-import { useRouter } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 import Logo from "/@/views/layout/logo/index.vue";
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
@@ -26,20 +25,14 @@ export default {
   components: { Logo, Vertical },
   setup() {
     const { proxy } = getCurrentInstance();
-    const router = useRouter();
     const store = useStore();
     const state = reactive({
       menuList: [],
     });
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
-      const routesList = router.getRoutes();
-      routesList.map((route) => {
-        if (route.path === "/") {
-          state.menuList = filterRoutesFun(route.children);
-          console.log(filterRoutesFun(route.children));
-        }
-      });
+      store.dispatch("setRoutes");
+      state.menuList = filterRoutesFun(store.state.routes);
     };
     // 路由过滤递归函数
     const filterRoutesFun = (arr: Array<object>) => {

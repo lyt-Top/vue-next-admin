@@ -37,14 +37,15 @@
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-  will-change: transform;
-  transition: all 0.3s ease;
-  position: absolute;
-  opacity: 0;
+  transition: all 0.3s;
 }
 .breadcrumb-enter-from,
-.breadcrumb-leave-to {
+.breadcrumb-leave-active {
+  opacity: 0;
   transform: translateX(20px);
+}
+.breadcrumb-leave-active {
+  position: absolute;
 }
 
 /* logo 过渡动画

@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 
-const dynamicRoutes = [
+export const dynamicRoutes = [
     {
         path: '/',
         component: () => import('/@/views/layout/index.vue'),
@@ -11,185 +11,187 @@ const dynamicRoutes = [
             isHide: false,
             icon: 'iconfont icon-shouye'
         },
-        children: [{
-            path: '/home',
-            component: () => import('/@/views/home/index.vue'),
-            meta: {
-                title: '首页',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-shouye'
-            }
-        },
-        {
-            path: '/system',
-            component: () => import('/@/views/docs/index.vue'),
-            redirect: '/system/menu',
-            meta: {
-                title: '系统设置',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-xitongshezhi'
-            },
-            children: [
-                {
-                    path: '/system/menu',
-                    component: () => import('/@/views/docs/index.vue'),
-                    meta: {
-                        title: '菜单管理',
-                        isLink: '',
-                        isHide: false,
-                        icon: 'iconfont icon-caidan'
-                    }
-                },
-                {
-                    path: '/system/user',
-                    component: () => import('/@/views/docs/index.vue'),
-                    meta: {
-                        title: '用户管理',
-                        isLink: '',
-                        isHide: false,
-                        icon: 'iconfont icon-icon-'
-                    }
+        children: [
+            {
+                path: '/home',
+                component: () => import('/@/views/home/index.vue'),
+                meta: {
+                    title: '首页',
+                    isLink: '',
+                    isHide: false,
+                    icon: 'iconfont icon-shouye'
                 }
-            ]
+            }
+        ]
+    },
+    {
+        path: '/system',
+        component: () => import('/@/views/layout/index.vue'),
+        redirect: '/system/menu',
+        meta: {
+            title: '系统设置',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-xitongshezhi'
         },
-        {
-            path: '/limits',
-            component: () => import('/@/views/docs/index.vue'),
-            redirect: '/limits/frontEnd',
-            meta: {
-                title: '权限管理',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-quanxian'
+        children: [
+            {
+                path: '/system/menu',
+                component: () => import('/@/views/system/menu/index.vue'),
+                meta: {
+                    title: '菜单管理',
+                    isLink: '',
+                    isHide: false,
+                    icon: 'iconfont icon-caidan'
+                }
             },
-            children: [
-                {
-                    path: '/limits/frontEnd',
-                    component: () => import('/@/views/docs/index.vue'),
-                    redirect: '/limits/frontEnd/page',
-                    meta: {
-                        title: '前端控制',
-                        isLink: '',
-                        isHide: false
-                    },
-                    children: [
-                        {
-                            path: '/limits/frontEnd/page',
-                            component: () => import('/@/views/docs/index.vue'),
-                            meta: {
-                                title: '页面权限',
-                                isLink: '',
-                                isHide: false
-                            }
-                        },
-                        {
-                            path: '/limits/frontEnd/btn',
-                            component: () => import('/@/views/docs/index.vue'),
-                            meta: {
-                                title: '按钮权限',
-                                isLink: '',
-                                isHide: false
-                            }
+            {
+                path: '/system/user',
+                component: () => import('/@/views/system/user/index.vue'),
+                meta: {
+                    title: '用户管理',
+                    isLink: '',
+                    isHide: false,
+                    icon: 'iconfont icon-icon-'
+                }
+            }
+        ]
+    },
+    {
+        path: '/limits',
+        component: () => import('/@/views/docs/index.vue'),
+        redirect: '/limits/frontEnd',
+        meta: {
+            title: '权限管理',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-quanxian'
+        },
+        children: [
+            {
+                path: '/limits/frontEnd',
+                component: () => import('/@/views/docs/index.vue'),
+                redirect: '/limits/frontEnd/page',
+                meta: {
+                    title: '前端控制',
+                    isLink: '',
+                    isHide: false
+                },
+                children: [
+                    {
+                        path: '/limits/frontEnd/page',
+                        component: () => import('/@/views/docs/index.vue'),
+                        meta: {
+                            title: '页面权限',
+                            isLink: '',
+                            isHide: false
                         }
-                    ]
-                },
-                {
-                    path: '/limits/backEnd',
-                    component: () => import('/@/views/docs/index.vue'),
-                    meta: {
-                        title: '后端控制',
-                        isLink: '',
-                        isHide: false
+                    },
+                    {
+                        path: '/limits/frontEnd/btn',
+                        component: () => import('/@/views/docs/index.vue'),
+                        meta: {
+                            title: '按钮权限',
+                            isLink: '',
+                            isHide: false
+                        }
                     }
+                ]
+            },
+            {
+                path: '/limits/backEnd',
+                component: () => import('/@/views/docs/index.vue'),
+                meta: {
+                    title: '后端控制',
+                    isLink: '',
+                    isHide: false
                 }
-            ]
-        },
-        {
-            path: '/fun',
-            component: () => import('/@/views/docs copy 1/index.vue'),
-            meta: {
-                title: '功能',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-crew_feature'
             }
-        },
-        {
-            path: '/pages',
-            component: () => import('/@/views/docs copy 1/index.vue'),
-            meta: {
-                title: '页面',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-fuzhiyemian'
-            }
-        },
-        {
-            path: '/components',
-            component: () => import('/@/views/docs copy 1/index.vue'),
-            meta: {
-                title: '组件',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-zujian'
-            }
-        },
-        {
-            path: '/chart',
-            component: () => import('/@/views/docs copy 1/index.vue'),
-            meta: {
-                title: '大数据图表',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-ico_shuju'
-            }
-        },
-        {
-            path: '/docs1',
-            component: () => import('/@/views/docs copy 1/index.vue'),
-            meta: {
-                title: '个人中心',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-gerenzhongxin'
-            }
-        },
-        {
-            path: '/docs2',
-            component: () => import('/@/views/docs copy 2/index.vue'),
-            meta: {
-                title: '工具类集合',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-gongju'
-            }
-        },
-        {
-            path: '/docs3',
-            component: () => import('/@/views/docs copy 3/index.vue'),
-            meta: {
-                title: '外链',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-caozuo-wailian'
-            }
-        },
-        {
-            path: '/iframe',
-            component: () => import('/@/views/docs copy 3/index.vue'),
-            meta: {
-                title: '内嵌 iframe',
-                isLink: '',
-                isHide: false,
-                icon: 'iconfont icon-neiqianshujuchucun'
-            }
-        }]
+        ]
+    },
+    {
+        path: '/fun',
+        component: () => import('/@/views/docs copy 1/index.vue'),
+        meta: {
+            title: '功能',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-crew_feature'
+        }
+    },
+    {
+        path: '/pages',
+        component: () => import('/@/views/docs copy 1/index.vue'),
+        meta: {
+            title: '页面',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-fuzhiyemian'
+        }
+    },
+    {
+        path: '/components',
+        component: () => import('/@/views/docs copy 1/index.vue'),
+        meta: {
+            title: '组件',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-zujian'
+        }
+    },
+    {
+        path: '/chart',
+        component: () => import('/@/views/docs copy 1/index.vue'),
+        meta: {
+            title: '大数据图表',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-ico_shuju'
+        }
+    },
+    {
+        path: '/docs1',
+        component: () => import('/@/views/docs copy 1/index.vue'),
+        meta: {
+            title: '个人中心',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-gerenzhongxin'
+        }
+    },
+    {
+        path: '/docs2',
+        component: () => import('/@/views/docs copy 2/index.vue'),
+        meta: {
+            title: '工具类集合',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-gongju'
+        }
+    },
+    {
+        path: '/docs3',
+        component: () => import('/@/views/docs copy 3/index.vue'),
+        meta: {
+            title: '外链',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-caozuo-wailian'
+        }
+    },
+    {
+        path: '/iframe',
+        component: () => import('/@/views/docs copy 3/index.vue'),
+        meta: {
+            title: '内嵌 iframe',
+            isLink: '',
+            isHide: false,
+            icon: 'iconfont icon-neiqianshujuchucun'
+        }
     }
 ]
 
-const staticRoutes: Array<RouteRecordRaw> = [
+export const staticRoutes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         component: () => import('/@/views/login/index.vue'),

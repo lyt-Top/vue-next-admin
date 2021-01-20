@@ -7,7 +7,7 @@ const pathResolve = (dir: string): any => {
 }
 
 const alias: Record<string, string> = {
-    '/@/': pathResolve('src'),
+    '/@/': pathResolve('src')
 }
 
 const { VITE_PORT, VITE_PUBLIC_PATH, VITE_OPEN } = loadEnv()
