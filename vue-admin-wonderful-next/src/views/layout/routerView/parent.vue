@@ -1,11 +1,13 @@
 <template>
-  <router-view v-slot="{ Component }" :key="Math.random()">
-    <transition :name="setTransitionName" mode="out-in">
-      <keep-alive>
-        <component :is="Component" />
-      </keep-alive>
-    </transition>
-  </router-view>
+  <div>
+    <router-view v-slot="{ Component, route }">
+      <transition :name="setTransitionName" mode="out-in">
+        <keep-alive include="home,systemMenu">
+          <component :is="Component" />
+        </keep-alive>
+      </transition>
+    </router-view>
+  </div>
 </template>
 
 <script lang="ts">
@@ -16,6 +18,7 @@ import {
   reactive,
   getCurrentInstance,
   watch,
+  onBeforeMount,
 } from "vue";
 import { useStore } from "/@/store/index.ts";
 export default defineComponent({

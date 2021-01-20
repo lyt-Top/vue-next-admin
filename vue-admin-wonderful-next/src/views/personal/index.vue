@@ -1,6 +1,6 @@
 <template>
   <div>
-    systemUser
+    personalIndex
     <el-input v-model="val"></el-input>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script lang="ts">
 import { toRefs, reactive } from "vue";
 export default {
-  name: "systemUser",
+  name: "personal",
   setup() {
     const state = reactive({
       val: "",

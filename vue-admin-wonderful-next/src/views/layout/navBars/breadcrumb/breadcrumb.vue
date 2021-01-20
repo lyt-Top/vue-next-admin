@@ -40,7 +40,6 @@ export default {
       breadcrumbList: [{ meta: { title: "", icon: "" } }], // 定义初始值，不能为空数组，否则 v-for 报错
     });
     const getBreadcrumbList = (matched: any) => {
-      console.log(matched);
       state.breadcrumbList = matched;
     };
     const onBreadcrumbClick = (v: object) => {

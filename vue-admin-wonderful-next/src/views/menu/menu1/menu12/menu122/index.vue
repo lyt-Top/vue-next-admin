@@ -1,6 +1,6 @@
 <template>
   <div>
-    systemUser
+    menuMenu122
     <el-input v-model="val"></el-input>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script lang="ts">
 import { toRefs, reactive } from "vue";
 export default {
-  name: "systemUser",
+  name: "menuMenu122",
   setup() {
     const state = reactive({
       val: "",

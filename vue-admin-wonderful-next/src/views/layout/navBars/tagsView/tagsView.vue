@@ -128,8 +128,8 @@ export default {
     });
     onBeforeRouteUpdate((to) => {
       state.routePath = to.path;
-      getTagsRefsIndex(to.path);
-      moveToCurrentTag();
+      // getTagsRefsIndex(to.path);
+      // moveToCurrentTag();
     });
     return {
       isActive,
