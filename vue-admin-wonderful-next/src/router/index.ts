@@ -13,6 +13,7 @@ export const dynamicRoutes = [
             isLink: '',
             isHide: false,
             isKeepAlive: true,
+            isAffix: true,
             icon: 'iconfont icon-shouye'
         },
         children: [{
@@ -24,6 +25,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: true,
                 icon: 'iconfont icon-shouye'
             }
         },
@@ -37,6 +39,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -49,6 +52,7 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
+                        isAffix: false,
                         icon: 'iconfont icon-caidan'
                     }
                 },
@@ -61,6 +65,7 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
+                        isAffix: false,
                         icon: 'iconfont icon-icon-',
                     }
                 }
@@ -76,6 +81,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-quanxian'
             },
             children: [
@@ -88,7 +94,8 @@ export const dynamicRoutes = [
                         title: '前端控制',
                         isLink: '',
                         isHide: false,
-                        isKeepAlive: true
+                        isKeepAlive: true,
+                        isAffix: false
                     },
                     children: [
                         {
@@ -99,7 +106,8 @@ export const dynamicRoutes = [
                                 title: '页面权限',
                                 isLink: '',
                                 isHide: false,
-                                isKeepAlive: true
+                                isKeepAlive: true,
+                                isAffix: false
                             }
                         },
                         {
@@ -110,7 +118,8 @@ export const dynamicRoutes = [
                                 title: '按钮权限',
                                 isLink: '',
                                 isHide: false,
-                                isKeepAlive: true
+                                isKeepAlive: true,
+                                isAffix: false
                             }
                         }
                     ]
@@ -123,7 +132,8 @@ export const dynamicRoutes = [
                         title: '后端控制',
                         isLink: '',
                         isHide: false,
-                        isKeepAlive: true
+                        isKeepAlive: true,
+                        isAffix: false
                     },
                     children: [
                         {
@@ -134,7 +144,8 @@ export const dynamicRoutes = [
                                 title: '页面权限',
                                 isLink: '',
                                 isHide: false,
-                                isKeepAlive: true
+                                isKeepAlive: true,
+                                isAffix: false
                             }
                         },
                         {
@@ -145,7 +156,8 @@ export const dynamicRoutes = [
                                 title: '按钮权限',
                                 isLink: '',
                                 isHide: false,
-                                isKeepAlive: true
+                                isKeepAlive: true,
+                                isAffix: false
                             }
                         }
                     ]
@@ -162,6 +174,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -175,6 +188,7 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
+                        isAffix: false,
                         icon: 'iconfont icon-caidan'
                     },
                     children: [
@@ -187,6 +201,7 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
+                                isAffix: false,
                                 icon: 'iconfont icon-caidan'
                             }
                         },
@@ -200,6 +215,7 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
+                                isAffix: false,
                                 icon: 'iconfont icon-caidan'
                             },
                             children: [
@@ -212,6 +228,7 @@ export const dynamicRoutes = [
                                         isLink: '',
                                         isHide: false,
                                         isKeepAlive: true,
+                                        isAffix: false,
                                         icon: 'iconfont icon-caidan'
                                     }
                                 },
@@ -224,6 +241,7 @@ export const dynamicRoutes = [
                                         isLink: '',
                                         isHide: false,
                                         isKeepAlive: true,
+                                        isAffix: false,
                                         icon: 'iconfont icon-caidan'
                                     }
                                 }
@@ -238,6 +256,7 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
+                                isAffix: false,
                                 icon: 'iconfont icon-caidan'
                             }
                         }
@@ -252,6 +271,7 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
+                        isAffix: false,
                         icon: 'iconfont icon-caidan'
                     }
                 }
@@ -266,6 +286,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-crew_feature'
             }
         },
@@ -278,6 +299,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-fuzhiyemian'
             }
         },
@@ -290,6 +312,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-zujian'
             }
         },
@@ -302,6 +325,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-ico_shuju'
             }
         },
@@ -314,6 +338,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-gerenzhongxin'
             }
         },
@@ -326,6 +351,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: false,
                 icon: 'iconfont icon-gongju'
             }
         },
@@ -336,8 +362,9 @@ export const dynamicRoutes = [
             meta: {
                 title: '外链',
                 isLink: '',
-                isHide: false,
+                isHide: true,
                 isKeepAlive: true,
+                isAffix: true,
                 icon: 'iconfont icon-caozuo-wailian'
             }
         },
@@ -350,6 +377,7 @@ export const dynamicRoutes = [
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
+                isAffix: true,
                 icon: 'iconfont icon-neiqianshujuchucun'
             }
         }]
@@ -426,6 +454,11 @@ export function formatTwoStageRoutes(arr: any) {
     return newArr
 }
 
+// 缓存多级嵌套数组处理后的一维数组(tagsView中使用)
+export function setCacheTagsViewRoutes() {
+    store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children)
+}
+
 // 添加动态路由
 export function setAddRoute() {
     formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes)).map((route: any) => {
@@ -443,6 +476,7 @@ export function resetRoute() {
 
 // 初始化执行函数
 setAddRoute()
+setCacheTagsViewRoutes()
 
 // router.afterEach((to, from) => {
 

@@ -42,7 +42,8 @@ export interface RootStateTypes {
         layout: string
     },
     routes: Array<object>,
-    caches: Array<string>
+    caches: Array<string>,
+    tagsViewRoutes: Array<object>
 }
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol()
@@ -51,7 +52,8 @@ export const store = createStore<RootStateTypes>({
     state: {
         themeConfig,
         routes: [],
-        caches: []
+        caches: [],
+        tagsViewRoutes: []
     },
     mutations: {
         getThemeConfig(state: any, data: object) {
@@ -62,6 +64,9 @@ export const store = createStore<RootStateTypes>({
         },
         getCacheKeepAlive(state: any, data: Array<string>) {
             state.caches = data
+        },
+        getTagsViewRoutes(state: any, data: Array<string>) {
+            state.tagsViewRoutes = data
         }
     },
     actions: {
@@ -73,6 +78,9 @@ export const store = createStore<RootStateTypes>({
         },
         async setCacheKeepAlive({ commit }, data: Array<string>) {
             commit('getCacheKeepAlive', data)
+        },
+        async setTagsViewRoutes({ commit }, data: Array<string>) {
+            commit('getTagsViewRoutes', data)
         },
     }
 })

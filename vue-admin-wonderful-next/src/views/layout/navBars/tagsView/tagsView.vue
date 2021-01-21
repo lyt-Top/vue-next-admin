@@ -70,22 +70,16 @@ export default {
     });
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
-      const routesList = router.getRoutes();
-      routesList.map((route) => {
-        if (route.path === "/") {
-          state.tagsViewList = filterRoutesFun(route.children);
-        }
+      console.log(store.state.tagsViewRoutes);
+      store.state.tagsViewRoutes.map((v) => {
+        if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
       });
     };
-    // 路由过滤递归函数
-    const filterRoutesFun = (arr: Array<object>) => {
-      return arr
-        .filter((item) => !item.meta.isHide)
-        .map((item) => {
-          item = Object.assign({}, item);
-          if (item.children) item.children = filterRoutesFun(item.children);
-          return item;
-        });
+    // 当前路由：未设置隐藏（isHide）也显示在 tagsView 中
+    const addTagsView = (path: string) => {
+      if (state.tagsViewList.some((v) => v.path === path)) return false;
+      const item = store.state.tagsViewRoutes.find((v) => v.path === path);
+      if (!item.meta.isHide) state.tagsViewList.push({ ...item });
     };
     const initSortable = () => {
       const el = document.querySelector(".layout-navbars-tagsview-ul");
@@ -121,15 +115,18 @@ export default {
     });
     onBeforeMount(() => {
       setFilterRoutes();
+      addTagsView(route.path);
     });
     onMounted(() => {
       initSortable();
       scrollRef.value.setScrollLeft(tagsRefs);
     });
+    // 路由更新时
     onBeforeRouteUpdate((to) => {
       state.routePath = to.path;
-      // getTagsRefsIndex(to.path);
-      // moveToCurrentTag();
+      addTagsView(to.path);
+      getTagsRefsIndex(to.path);
+      moveToCurrentTag();
     });
     return {
       isActive,
