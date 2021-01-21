@@ -73,6 +73,11 @@ body,
   .layout-mian-height-50 {
     height: calc(100vh - 50px);
   }
+  .layout-columns-warp {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
 }
 
 /* element plus 全局样式

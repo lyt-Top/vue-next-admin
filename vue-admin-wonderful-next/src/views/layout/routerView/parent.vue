@@ -2,8 +2,8 @@
   <div>
     <router-view v-slot="{ Component, route }">
       <transition :name="setTransitionName" mode="out-in">
-        <keep-alive include="home,systemMenu">
-          <component :is="Component" />
+        <keep-alive :include="getCaches">
+          <component :is="Component" :key="route.path" />
         </keep-alive>
       </transition>
     </router-view>
@@ -18,12 +18,13 @@ import {
   reactive,
   getCurrentInstance,
   watch,
-  onBeforeMount,
 } from "vue";
+import { useRouter, RouteRecordRaw } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 export default defineComponent({
   name: "layoutParentView",
   setup() {
+    const router = useRouter();
     const { proxy } = getCurrentInstance();
     const store = useStore();
     const state = reactive({
@@ -44,6 +45,10 @@ export default defineComponent({
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    // 获取组件缓存列表(name值)
+    const getCaches = computed(() => {
+      return store.state.caches;
+    });
     // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
     watch(store.state.themeConfig, (val) => {
       state.headerHeight = val.isTagsview ? "84px" : "50px";
@@ -54,6 +59,7 @@ export default defineComponent({
     });
     return {
       getThemeConfig,
+      getCaches,
       setTransitionName,
       ...toRefs(state),
     };

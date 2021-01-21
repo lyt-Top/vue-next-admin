@@ -1,6 +1,6 @@
 <template>
   <div>
-    iframeIndex
+    iframes
     <el-input v-model="val"></el-input>
   </div>
 </template>
@@ -8,7 +8,7 @@
 <script lang="ts">
 import { toRefs, reactive } from "vue";
 export default {
-  name: "iframeIndex",
+  name: "iframes",
   setup() {
     const state = reactive({
       val: "",

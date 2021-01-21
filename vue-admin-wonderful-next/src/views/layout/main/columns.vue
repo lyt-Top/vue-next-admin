@@ -1,7 +1,7 @@
 <template>
   <el-container class="layout-container">
     <ColumnsAside />
-    <div style="flex:1;display: flex;">
+    <div class="layout-columns-warp">
       <Aside />
       <el-container class="flex-center">
         <Header v-if="isFixedHeader" />

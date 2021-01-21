@@ -18,6 +18,7 @@ import {
   onBeforeMount,
 } from "vue";
 import { useStore } from "/@/store/index.ts";
+import { dynamicRoutes } from "/@/router/index.ts";
 import Logo from "/@/views/layout/logo/index.vue";
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
 export default {
@@ -31,8 +32,8 @@ export default {
     });
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
-      store.dispatch("setRoutes");
-      state.menuList = filterRoutesFun(store.state.routes[0].children);
+      store.dispatch("setRoutes", dynamicRoutes[0].children);
+      state.menuList = filterRoutesFun(store.state.routes);
     };
     // 路由过滤递归函数
     const filterRoutesFun = (arr: Array<object>) => {

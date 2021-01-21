@@ -172,7 +172,7 @@ export default {
       margin-right: 5px;
       border-radius: 2px;
       position: relative;
-      z-index: 3;
+      z-index: 0;
       cursor: pointer;
       justify-content: space-between;
       &:hover {
