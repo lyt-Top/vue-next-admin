@@ -28,6 +28,7 @@ export default {
     isTagsview: true,
     isBreadcrumbIcon: false,
     isTagsviewIcon: false,
+    isCacheTagsView: false,
     isFooter: false,
     isGrayscale: false,
     isInvert: false,

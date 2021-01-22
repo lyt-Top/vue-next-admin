@@ -6,15 +6,15 @@
         <li v-for="(v,k) in tagsViewList" :key="k" class="layout-navbars-tagsview-ul-li"
           :class="{'is-active':isActive(v.path)}" @contextmenu.prevent="onContextmenu(v,$event)"
           @click="onTagsClick(v,k)" :ref="el => { if (el) tagsRefs[k] = el }">
-          <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v.path)"></i>
+          <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont font14" v-if="isActive(v.path)"></i>
           <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon"
             v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
           <span>{{v.meta.title}}</span>
           <template v-if="isActive(v.path)">
             <i class="el-icon-refresh-right ml5"></i>
-            <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active"></i>
+            <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active" v-if="!v.meta.isAffix"></i>
           </template>
-          <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-three"></i>
+          <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-three" v-if="!v.meta.isAffix"></i>
         </li>
       </ul>
     </Scroll>
@@ -31,10 +31,10 @@ import {
   ref,
   nextTick,
   onBeforeUpdate,
-  onBeforeMount,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
+import { setSession, getSession } from "/@/utils/storage.ts";
 import Sortable from "sortablejs";
 import Contextmenu from "/@/views/layout/navBars/tagsView/contextmenu.vue";
 import Scroll from "/@/views/layout/navBars/tagsView/scroll.vue";
@@ -57,6 +57,7 @@ export default {
       tagsRefsIndex: 0,
       tagsViewList: [],
     });
+    // 动态设置 tagsView 风格样式
     const setTagsStyle = computed(() => {
       let { tagsStyle } = store.state.themeConfig;
       if (tagsStyle === "tagsStyleTwo") return "layout-navbars-tagsview-ul-two";
@@ -65,44 +66,63 @@ export default {
       else if (tagsStyle === "tagsStyleFour")
         return "layout-navbars-tagsview-ul-four";
     });
+    // 获取布局配置信息
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
-    // 设置/过滤路由（非静态路由/是否显示在菜单中）
-    const setFilterRoutes = () => {
-      console.log(store.state.tagsViewRoutes);
-      store.state.tagsViewRoutes.map((v) => {
-        if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
-      });
+    // 存储 tagsViewList 到浏览器临时缓存中，页面刷新时，保留记录
+    const addBrowserSetSession = () => {
+      setSession("tagsViewList", state.tagsViewList);
     };
-    // 当前路由：未设置隐藏（isHide）也显示在 tagsView 中
+    // vuex 中获取路由信息：如果是设置了固定的（isAffix），进行初始化显示
+    const initTagsView = () => {
+      if (
+        getSession("tagsViewList") &&
+        store.state.themeConfig.isCacheTagsView
+      ) {
+        state.tagsViewList = getSession("tagsViewList");
+      } else {
+        store.state.tagsViewRoutes.map((v) => {
+          if (v.meta.isAffix && !v.meta.isHide)
+            state.tagsViewList.push({ ...v });
+        });
+        addTagsView(route.path);
+      }
+      // 添加初始化横向滚动条移动到对应位置
+      scrollRef.value.setScrollLeft(tagsRefs);
+      getTagsRefsIndex(route.path);
+      moveToCurrentTag();
+    };
+    // 添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中
     const addTagsView = (path: string) => {
       if (state.tagsViewList.some((v) => v.path === path)) return false;
       const item = store.state.tagsViewRoutes.find((v) => v.path === path);
       if (!item.meta.isHide) state.tagsViewList.push({ ...item });
+      addBrowserSetSession();
     };
-    const initSortable = () => {
-      const el = document.querySelector(".layout-navbars-tagsview-ul");
-      const sortable = Sortable.create(el, { animation: 300 });
-    };
+    // 判断页面高亮
     const isActive = (path: string) => {
       return path === state.routePath;
     };
+    // 右键点击时：传 x,y 坐标值到子组件中（props）
     const onContextmenu = (v: object, e: object) => {
       const { clientX, clientY } = e;
       state.dropdown.x = clientX;
       state.dropdown.y = clientY;
-      contextmenuRef.value.openContextmenu();
+      contextmenuRef.value.openContextmenu(v.meta);
     };
+    // 当前的 tagsView 项点击时
     const onTagsClick = (v: object, k: number) => {
       state.tagsRefsIndex = k;
       router.push(v.path);
     };
+    // tagsView 横向滚动 + 鼠标滚轮滚动
     const moveToCurrentTag = () => {
       nextTick(() => {
         scrollRef.value.moveToTarget(tagsRefs.value[state.tagsRefsIndex]);
       });
     };
+    // 获取 tagsView 的下标：用于处理 tagsView 点击时的横向滚动
     const getTagsRefsIndex = (path: string) => {
       if (state.tagsViewList.length > 0) {
         state.tagsRefsIndex = state.tagsViewList.findIndex(
@@ -110,16 +130,19 @@ export default {
         );
       }
     };
+    // 设置 tagsView 可以进行拖拽
+    const initSortable = () => {
+      const el = document.querySelector(".layout-navbars-tagsview-ul");
+      const sortable = Sortable.create(el, { animation: 300 });
+    };
+    // 数据更新时
     onBeforeUpdate(() => {
       tagsRefs.value = [];
     });
-    onBeforeMount(() => {
-      setFilterRoutes();
-      addTagsView(route.path);
-    });
+    // 页面加载时
     onMounted(() => {
       initSortable();
-      scrollRef.value.setScrollLeft(tagsRefs);
+      initTagsView();
     });
     // 路由更新时
     onBeforeRouteUpdate((to) => {
@@ -180,7 +203,7 @@ export default {
       &-iconfont {
         position: relative;
         left: -5px;
-        font-size: 14px;
+        font-size: 12px;
       }
       &-icon {
         border-radius: 100%;

@@ -183,6 +183,12 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启缓存 TagsView</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="getThemeConfig.isCacheTagsView" @change="setLocalThemeConfig"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>

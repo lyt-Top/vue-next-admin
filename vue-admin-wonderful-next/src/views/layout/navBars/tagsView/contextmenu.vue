@@ -4,10 +4,12 @@
       data-popper-placement="bottom" :style="`top: ${dropdown.y + 5}px;left: ${dropdown.x}px;`" :key="Math.random()"
       v-show="isShow">
       <ul class="el-dropdown-menu">
-        <li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" v-for="(v,k) in dropdownList" :key="k">
-          <i :class="v.icon"></i>
-          <span>{{v.txt}}</span>
-        </li>
+        <template v-for="(v,k) in dropdownList" :key="k">
+          <li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" v-if="!v.affix">
+            <i :class="v.icon"></i>
+            <span>{{v.txt}}</span>
+          </li>
+        </template>
       </ul>
       <div class="el-popper__arrow" style="left:10px"></div>
     </div>
@@ -35,26 +37,34 @@ export default defineComponent({
       isShow: false,
       dropdownList: [
         { id: 0, txt: "刷新", affix: false, icon: "el-icon-refresh-right" },
-        { id: 1, txt: "关闭", affix: true, icon: "el-icon-close" },
+        { id: 1, txt: "关闭", affix: false, icon: "el-icon-close" },
         { id: 2, txt: "关闭其它", affix: false, icon: "el-icon-circle-close" },
         { id: 3, txt: "全部关闭", affix: false, icon: "el-icon-folder-delete" },
       ],
     });
+    // 父级传过来的坐标 x,y 值
     const dropdown = computed(() => {
       return props.dropdown;
     });
-    const openContextmenu = () => {
+    // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
+    const openContextmenu = (meta: object) => {
+      meta.isAffix
+        ? (state.dropdownList[1].affix = true)
+        : (state.dropdownList[1].affix = false);
       closeContextmenu();
       setTimeout(() => {
         state.isShow = true;
       }, 10);
     };
+    // 关闭右键菜单
     const closeContextmenu = () => {
       state.isShow = false;
     };
+    // 监听页面监听进行右键菜单的关闭
     onMounted(() => {
       document.body.addEventListener("click", closeContextmenu);
     });
+    // 页面卸载时，移除右键菜单监听事件
     onUnmounted(() => {
       document.body.removeEventListener("click", closeContextmenu);
     });

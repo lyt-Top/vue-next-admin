@@ -15,15 +15,12 @@ export default {
   components: { BreadcrumbIndex, TagsView },
   setup() {
     const store = useStore();
-    const getThemeConfig = computed(() => {
-      return store.state.themeConfig;
-    });
+    // 是否显示 tagsView
     const setShowTagsView = computed(() => {
       let { layout } = store.state.themeConfig;
       return layout !== "classic";
     });
     return {
-      getThemeConfig,
       setShowTagsView,
     };
   },
