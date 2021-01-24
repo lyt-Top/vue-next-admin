@@ -2,7 +2,7 @@
   <el-aside :class="setCollapseWidth">
     <Logo v-if="setShowLogo" />
     <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-      <Vertical :menuList="menuList" />
+      <Vertical :menuList="menuList" :class="setCollapseWidth" />
     </el-scrollbar>
   </el-aside>
 </template>
@@ -16,6 +16,7 @@ import {
   getCurrentInstance,
   ref,
   onBeforeMount,
+  onUnmounted,
 } from "vue";
 import { useStore } from "/@/store/index.ts";
 import { dynamicRoutes } from "/@/router/index.ts";
@@ -32,6 +33,7 @@ export default {
     });
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
+      if (store.state.themeConfig.layout === "columns") return false;
       store.dispatch("setRoutes", dynamicRoutes[0].children);
       state.menuList = filterRoutesFun(store.state.routes);
     };
@@ -86,9 +88,26 @@ export default {
         proxy.$refs.layoutAsideScrollbarRef.update();
       }
     });
-    // 初始化
+    // 页面加载前
     onBeforeMount(() => {
       setFilterRoutes();
+      proxy.mittBus.on("setSendColumnsChildren", (res) => {
+        state.menuList = res.children;
+      });
+      proxy.mittBus.on("setSendClassicChildren", (res) => {
+        let { layout, isClassicSplitMenu } = store.state.themeConfig;
+        if (layout === "classic" && isClassicSplitMenu)
+          state.menuList = res.children;
+      });
+      proxy.mittBus.on("getBreadcrumbIndexSetFilterRoutes", () => {
+        setFilterRoutes();
+      });
+    });
+    // 页面卸载时
+    onUnmounted(() => {
+      proxy.mittBus.off("setSendColumnsChildren");
+      proxy.mittBus.off("setSendClassicChildren");
+      proxy.mittBus.off("getBreadcrumbIndexSetFilterRoutes");
     });
     return {
       setCollapseWidth,

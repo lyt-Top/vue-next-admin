@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <router-view v-slot="{ Component, route }">
+  <div class="h100">
+    <router-view v-slot="{ Component }">
       <transition :name="setTransitionName" mode="out-in">
         <keep-alive :include="getCaches">
-          <component :is="Component" :key="route.path" />
+          <component :is="Component" :key="refreshRouterViewKey" />
         </keep-alive>
       </transition>
     </router-view>
@@ -18,18 +18,28 @@ import {
   reactive,
   getCurrentInstance,
   watch,
+  onBeforeMount,
+  onUnmounted,
+  nextTick,
 } from "vue";
-import { useRouter, RouteRecordRaw } from "vue-router";
+import {
+  useRoute,
+  useRouter,
+  RouteRecordRaw,
+  onBeforeRouteUpdate,
+} from "vue-router";
 import { useStore } from "/@/store/index.ts";
 export default defineComponent({
   name: "layoutParentView",
   setup() {
-    const router = useRouter();
     const { proxy } = getCurrentInstance();
+    const route = useRoute();
+    const router = useRouter();
     const store = useStore();
     const state = reactive({
       transitionName: "slide-right",
       headerHeight: "84px",
+      refreshRouterViewKey: route.path,
     });
     // 设置主界面切换动画
     const setTransitionName = computed(() => {
@@ -56,6 +66,24 @@ export default defineComponent({
         if (!proxy.$refs.layoutScrollbarRef) return false;
         proxy.$refs.layoutScrollbarRef.update();
       }
+    });
+    // 路由更新时
+    onBeforeRouteUpdate((to) => {
+      state.refreshRouterViewKey = to.path;
+    });
+    // 页面加载时
+    onBeforeMount(() => {
+      proxy.mittBus.on("onTagsViewRefreshRouterView", (path: string) => {
+        if (route.path !== path) return false;
+        state.refreshRouterViewKey = Math.random();
+        nextTick(() => {
+          state.refreshRouterViewKey = path;
+        });
+      });
+    });
+    // 页面卸载时
+    onUnmounted(() => {
+      proxy.mittBus.off("onTagsViewRefreshRouterView");
     });
     return {
       getThemeConfig,

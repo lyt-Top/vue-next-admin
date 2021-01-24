@@ -5,7 +5,8 @@
       v-show="isShow">
       <ul class="el-dropdown-menu">
         <template v-for="(v,k) in dropdownList" :key="k">
-          <li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" v-if="!v.affix">
+          <li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" v-if="!v.affix"
+            @click="onCurrentContextmenuClick(v.id)">
             <i :class="v.icon"></i>
             <span>{{v.txt}}</span>
           </li>
@@ -32,7 +33,7 @@ export default defineComponent({
       type: Object,
     },
   },
-  setup(props) {
+  setup(props, { emit }) {
     const state = reactive({
       isShow: false,
       dropdownList: [
@@ -41,14 +42,20 @@ export default defineComponent({
         { id: 2, txt: "关闭其它", affix: false, icon: "el-icon-circle-close" },
         { id: 3, txt: "全部关闭", affix: false, icon: "el-icon-folder-delete" },
       ],
+      path: {},
     });
     // 父级传过来的坐标 x,y 值
     const dropdown = computed(() => {
       return props.dropdown;
     });
+    // 当前项菜单点击
+    const onCurrentContextmenuClick = (id: number) => {
+      emit("currentContextmenuClick", { id, path: state.path });
+    };
     // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
-    const openContextmenu = (meta: object) => {
-      meta.isAffix
+    const openContextmenu = (item: object) => {
+      state.path = item.path;
+      item.meta.isAffix
         ? (state.dropdownList[1].affix = true)
         : (state.dropdownList[1].affix = false);
       closeContextmenu();
@@ -72,6 +79,7 @@ export default defineComponent({
       dropdown,
       openContextmenu,
       closeContextmenu,
+      onCurrentContextmenuClick,
       ...toRefs(state),
     };
   },

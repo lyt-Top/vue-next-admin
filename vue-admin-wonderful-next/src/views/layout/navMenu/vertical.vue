@@ -49,12 +49,15 @@ export default defineComponent({
     const state = reactive({
       defaultActive: route.path,
     });
+    // 获取父级菜单数据
     const menuList = computed(() => {
       return props.menuList;
     });
+    // 获取布局配置信息
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    // 路由更新时
     onBeforeRouteUpdate((to) => {
       state.defaultActive = to.path;
       proxy.mittBus.emit("onMenuClick");

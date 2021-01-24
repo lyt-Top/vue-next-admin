@@ -51,7 +51,6 @@ body,
     width: 100%;
   }
   .layout-el-aside-br-color {
-    border-top: 1px solid rgb(238, 238, 238);
     border-right: 1px solid rgb(238, 238, 238);
   }
   .layout-aside-width-default {
@@ -77,6 +76,9 @@ body,
     flex: 1;
     display: flex;
     overflow: hidden;
+  }
+  .layout-hide {
+    display: none;
   }
 }
 

@@ -2,20 +2,21 @@
   <div class="layout-columns-aside">
     <el-scrollbar>
       <ul>
-        <li v-for="(v,k) in columnsAsideList" :key="k" @click="onColumnsAsideDown(v,k)"
-          :ref="el => { if (el) columnsAsideOffsetTopRefs[k] = el }" :class="{'layout-columns-active':liIndex === k} ">
+        <li v-for="(v,k) in columnsAsideList" :key="k" @click="onColumnsAsideMenuClick(v,k)"
+          :ref="el => { if (el) columnsAsideOffsetTopRefs[k] = el }" :class="{'layout-columns-active':liIndex === k}"
+          :title="v.meta.title">
           <div class="layout-columns-aside-li-box">
             <template v-if="!v.meta.isLink">
               <i :class="v.meta.icon"></i>
               <div class="layout-columns-aside-li-box-title">
-                {{v.meta.title}}
+                {{v.meta.title && v.meta.title.length >= 2 ? v.meta.title.substr(0,2) : v.meta.title}}
               </div>
             </template>
             <template v-else>
               <a :href="v.meta.isLink" target="_blank">
                 <i :class="v.meta.icon"></i>
                 <div class="layout-columns-aside-li-box-title">
-                  {{v.meta.title}}
+                  {{v.meta.title && v.meta.title.length >= 2 ? v.meta.title.substr(0,2) : v.meta.title}}
                 </div>
               </a>
             </template>
@@ -28,46 +29,29 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, ref, computed } from "vue";
+import {
+  reactive,
+  toRefs,
+  ref,
+  computed,
+  onMounted,
+  nextTick,
+  getCurrentInstance,
+} from "vue";
+import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
+import { dynamicRoutes } from "/@/router/index.ts";
 export default {
   name: "layoutColumnsAside",
   setup() {
     const columnsAsideOffsetTopRefs = ref([]);
     const columnsAsideActiveRef = ref();
+    const { proxy } = getCurrentInstance();
     const store = useStore();
+    const route = useRoute();
+    const router = useRouter();
     const state = reactive({
-      columnsAsideList: [
-        {
-          path: "/home",
-          meta: {
-            title: "首页",
-            icon: "el-icon-medal-1",
-          },
-        },
-        {
-          path: "/home",
-          meta: {
-            title: "小米",
-            icon: "el-icon-trophy",
-          },
-        },
-        {
-          path: "/home",
-          meta: {
-            title: "谷歌",
-            icon: "el-icon-basketball",
-            isLink: "https://www.ele.me",
-          },
-        },
-        {
-          path: "/home",
-          meta: {
-            title: "苹果",
-            icon: "el-icon-coffee-cup",
-          },
-        },
-      ],
+      columnsAsideList: [],
       liIndex: 0,
       difference: 0,
     });
@@ -82,18 +66,72 @@ export default {
       else if (columnsAsideStyle === "columnsCard")
         return "layout-columns-card-active";
     });
-    // 设置高亮动态位置
-    const onColumnsAsideDown = (v: Object, k: number) => {
+    // 设置菜单高亮位置移动
+    const setColumnsAsideMove = (v: Object, k: number) => {
       state.liIndex = k;
       columnsAsideActiveRef.value.style.top = `${
         columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference
       }px`;
     };
+    // 菜单高亮点击事件
+    const onColumnsAsideMenuClick = (v: Object, k: number) => {
+      setColumnsAsideMove(v, k);
+      let { path, redirect } = v;
+      if (redirect) router.push(redirect);
+      else router.push(path);
+    };
+    // 设置高亮动态位置
+    const onColumnsAsideDown = (v: Object, k: number) => {
+      nextTick(() => {
+        setColumnsAsideMove(v, k);
+      });
+    };
+    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    const setFilterRoutes = () => {
+      store.dispatch("setRoutes", dynamicRoutes[0].children);
+      state.columnsAsideList = filterRoutesFun(store.state.routes);
+      const resData = setSendChildren(route.path);
+      onColumnsAsideDown(resData.item[0], resData.item[0].k);
+      proxy.mittBus.emit("setSendColumnsChildren", resData);
+    };
+    // 传送当前子级数据到菜单中
+    const setSendChildren = (path: string) => {
+      const currentPathSplit = path.split("/");
+      let currentData: object = {};
+      state.columnsAsideList.map((v, k) => {
+        if (v.path === `/${currentPathSplit[1]}`) {
+          v["k"] = k;
+          currentData["item"] = [{ ...v }];
+          currentData["children"] = [{ ...v }];
+          if (v.children) currentData["children"] = v.children;
+        }
+      });
+      return currentData;
+    };
+    // 路由过滤递归函数
+    const filterRoutesFun = (arr: Array<object>) => {
+      return arr
+        .filter((item) => !item.meta.isHide)
+        .map((item) => {
+          item = Object.assign({}, item);
+          if (item.children) item.children = filterRoutesFun(item.children);
+          return item;
+        });
+    };
+    // 页面加载时
+    onMounted(() => {
+      setFilterRoutes();
+    });
+    // 路由更新时
+    onBeforeRouteUpdate((to) => {
+      proxy.mittBus.emit("setSendColumnsChildren", setSendChildren(to.path));
+    });
     return {
       columnsAsideOffsetTopRefs,
       columnsAsideActiveRef,
       onColumnsAsideDown,
       setColumnsAsideStyle,
+      onColumnsAsideMenuClick,
       ...toRefs(state),
     };
   },
@@ -118,6 +156,9 @@ export default {
       z-index: 1;
       .layout-columns-aside-li-box {
         margin: auto;
+        .layout-columns-aside-li-box-title {
+          padding-top: 1px;
+        }
       }
       a {
         text-decoration: none;

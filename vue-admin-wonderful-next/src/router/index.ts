@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
-import { store } from "/@/store/index.ts";
+import { store } from "/@/store/index.ts"
 
 // 定义动态路由
 export const dynamicRoutes = [
@@ -280,7 +280,8 @@ export const dynamicRoutes = [
         {
             path: '/fun',
             name: 'funIndex',
-            component: () => import('/@/views/fun/index.vue'),
+            component: () => import('/@/views/layout/routerView/parent.vue'),
+            redirect: '/fun/tagsView',
             meta: {
                 title: '功能',
                 isLink: '',
@@ -288,7 +289,22 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 icon: 'iconfont icon-crew_feature'
-            }
+            },
+            children: [
+                {
+                    path: '/fun/tagsView',
+                    name: 'funTagsView',
+                    component: () => import('/@/views/fun/tagsView/index.vue'),
+                    meta: {
+                        title: 'tagsView 操作',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        icon: 'el-icon-thumb'
+                    }
+                }
+            ]
         },
         {
             path: '/pages',

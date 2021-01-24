@@ -692,6 +692,10 @@
 
 /* NavMenu 导航菜单
 ------------------------------- */
+// 去掉默认 focus 时，背景的高亮
+.el-menu-item:focus {
+  background: transparent !important;
+}
 // 默认样式修改
 .el-menu {
   border-right: none !important;
@@ -706,6 +710,7 @@
 // horizontal 水平方向时
 .el-menu--horizontal > .el-menu-item.is-active,
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
+  border-bottom: 3px solid !important;
   border-bottom-color: set-color(primary);
   color: set-color(primary);
 }
@@ -785,6 +790,10 @@
   margin-right: 5px;
   width: 24px;
   text-align: center;
+}
+// element plus 本身字体图标
+.el-submenu [class^='el-icon-'] {
+  font-size: 14px !important;
 }
 
 /* Tabs 标签页

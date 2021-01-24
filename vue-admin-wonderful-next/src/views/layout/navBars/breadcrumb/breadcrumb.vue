@@ -20,13 +20,7 @@
 </template>
 
 <script lang="ts">
-import {
-  toRefs,
-  reactive,
-  onBeforeMount,
-  computed,
-  getCurrentInstance,
-} from "vue";
+import { toRefs, reactive, computed, getCurrentInstance, onMounted } from "vue";
 import { onBeforeRouteUpdate, useRoute, useRouter } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 export default {
@@ -37,28 +31,55 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const state = reactive({
-      breadcrumbList: [{ meta: { title: "", icon: "" } }], // 定义初始值，不能为空数组，否则 v-for 报错
+      breadcrumbList: [],
+      routeSplit: [],
+      routeSplitFirst: "",
+      routeSplitIndex: 1,
     });
-    const getBreadcrumbList = (matched: any) => {
-      state.breadcrumbList = matched;
-    };
+    // 获取布局配置信息
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
+    });
+    // 面包屑点击时
     const onBreadcrumbClick = (v: object) => {
       const { redirect, path } = v;
       if (redirect) router.push(redirect);
       else router.push(path);
     };
+    // 展开/收起左侧菜单点击
     const onThemeConfigChange = () => {
       proxy.mittBus.emit("onMenuClick");
       store.state.themeConfig.isCollapse = !store.state.themeConfig.isCollapse;
     };
-    const getThemeConfig = computed(() => {
-      return store.state.themeConfig;
+    // 处理面包屑数据
+    const getBreadcrumbList = (arr: Array<object>) => {
+      arr.map((item) => {
+        state.routeSplit.map((v, k, arrs) => {
+          if (state.routeSplitFirst === item.path) {
+            state.routeSplitFirst += `/${arrs[state.routeSplitIndex]}`;
+            state.breadcrumbList.push(item);
+            state.routeSplitIndex++;
+            if (item.children) getBreadcrumbList(item.children);
+          }
+        });
+      });
+    };
+    // 当前路由字符串切割成数组，并删除第一项空内容
+    const initRouteSplit = (path: string) => {
+      state.breadcrumbList = [store.state.routes[0]];
+      state.routeSplit = path.split("/");
+      state.routeSplit.shift();
+      state.routeSplitFirst = `/${state.routeSplit[0]}`;
+      state.routeSplitIndex = 1;
+      getBreadcrumbList(store.state.routes);
+    };
+    // 页面加载时
+    onMounted(() => {
+      initRouteSplit(route.path);
     });
-    onBeforeMount(() => {
-      state.breadcrumbList = route.matched;
-    });
+    // 路由更新时
     onBeforeRouteUpdate((to) => {
-      getBreadcrumbList(to.matched);
+      initRouteSplit(to.path);
     });
     return {
       onThemeConfigChange,

@@ -37,7 +37,7 @@ export default {
 <style scoped lang="scss">
 .layout-logo {
   width: 220px;
-  height: 49px;
+  height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-navbars-breadcrumb-user">
+  <div class="layout-navbars-breadcrumb-user" :style="setFlexAutoStyle">
     <div class="layout-navbars-breadcrumb-user-icon">
       <i class="el-icon-search" title="菜单搜索"></i>
     </div>
@@ -29,16 +29,27 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance } from "vue";
+import { ref, getCurrentInstance, computed } from "vue";
+import { useStore } from "/@/store/index.ts";
 export default {
   name: "layoutBreadcrumbUser",
   setup() {
     const { proxy } = getCurrentInstance();
+    const store = useStore();
     const onLayoutSetingClick = () => {
       proxy.mittBus.emit("openSetingsDrawer");
     };
+    const setFlexAutoStyle = computed(() => {
+      if (
+        !store.state.themeConfig.isBreadcrumb &&
+        store.state.themeConfig.layout !== "transverse" &&
+        !store.state.themeConfig.isClassicSplitMenu
+      )
+        return { flex: 1 };
+    });
     return {
       onLayoutSetingClick,
+      setFlexAutoStyle,
     };
   },
 };
@@ -48,7 +59,6 @@ export default {
 .layout-navbars-breadcrumb-user {
   display: flex;
   align-items: center;
-  flex: 1;
   justify-content: flex-end;
   &-link {
     height: 100%;

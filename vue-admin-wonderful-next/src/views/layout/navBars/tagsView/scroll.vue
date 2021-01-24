@@ -59,10 +59,14 @@ export default {
         }
       }
     };
+    const updateScrollbar = () => {
+      proxy.$refs.elScrollbarRef.update();
+    };
     return {
       setScrollLeft,
       onHandleScroll,
       moveToTarget,
+      updateScrollbar,
       ...toRefs(state),
     };
   },

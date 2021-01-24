@@ -40,6 +40,8 @@
             </el-color-picker>
           </div>
         </div>
+
+        <!-- 菜单 / 顶栏 -->
         <el-divider content-position="left">菜单 / 顶栏</el-divider>
         <div class="layout-breadcrumb-seting-bar-flex">
           <div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景</div>
@@ -158,10 +160,12 @@
             <el-switch v-model="getThemeConfig.isShowLogo" @change="onIsShowLogoChange"></el-switch>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
+        <div class="layout-breadcrumb-seting-bar-flex mt15"
+          :style="{opacity:getThemeConfig.layout === 'transverse' ? 0.5 : 1}">
           <div class="layout-breadcrumb-seting-bar-flex-label">面包屑 Breadcrumb</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isBreadcrumb" @change="onIsBreadcrumbChange"></el-switch>
+            <el-switch v-model="getThemeConfig.isBreadcrumb" :disabled="getThemeConfig.layout === 'transverse'"
+              @change="onIsBreadcrumbChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -183,7 +187,7 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">开启缓存 TagsView</div>
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 TagsView 缓存 </div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isCacheTagsView" @change="setLocalThemeConfig"></el-switch>
           </div>
@@ -432,6 +436,7 @@ export default defineComponent({
       nextTick(() => {
         setTimeout(() => {
           let els = document.querySelector(".el-menu-item.is-active");
+          if (!els) return false;
           let attr = "el-menu-item is-active";
           if (getThemeConfig.value.isMenuBarColorHighlight)
             els.setAttribute("class", `${attr} add-is-active`);
@@ -458,6 +463,7 @@ export default defineComponent({
     const onClassicSplitMenuChange = () => {
       getThemeConfig.value.isBreadcrumb = false;
       setLocalThemeConfig();
+      proxy.mittBus.emit("getBreadcrumbIndexSetFilterRoutes");
     };
     // 4、界面显示 --> 侧边栏 Logo
     const onIsShowLogoChange = () => {
