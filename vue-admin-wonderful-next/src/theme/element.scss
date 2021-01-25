@@ -737,6 +737,10 @@
   color: inherit;
   text-decoration: none;
 }
+.el-menu-item a {
+  width: 86%;
+  display: inline-block;
+}
 // 默认 hover 时
 .el-menu-item:hover,
 .el-submenu__title:hover {

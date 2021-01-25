@@ -66,6 +66,7 @@ export default {
     };
     // 当前路由字符串切割成数组，并删除第一项空内容
     const initRouteSplit = (path: string) => {
+      if (!store.state.themeConfig.isBreadcrumb) return false;
       state.breadcrumbList = [store.state.routes[0]];
       state.routeSplit = path.split("/");
       state.routeSplit.shift();

@@ -17,8 +17,8 @@ export default {
     const store = useStore();
     // 是否显示 tagsView
     const setShowTagsView = computed(() => {
-      let { layout } = store.state.themeConfig;
-      return layout !== "classic";
+      let { layout, isTagsview } = store.state.themeConfig;
+      return layout !== "classic" && isTagsview;
     });
     return {
       setShowTagsView,

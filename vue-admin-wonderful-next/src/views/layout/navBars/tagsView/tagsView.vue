@@ -1,6 +1,5 @@
 <template>
-  <div class="layout-navbars-tagsview" :class="{'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic'}"
-    v-show="getThemeConfig.isTagsview">
+  <div class="layout-navbars-tagsview" :class="{'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic'}">
     <Scroll ref="scrollRef">
       <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle">
         <li v-for="(v,k) in tagsViewList" :key="k" class="layout-navbars-tagsview-ul-li" :data-name="v.name"
@@ -103,6 +102,7 @@ export default {
     const addTagsView = (path: string) => {
       if (state.tagsViewList.some((v) => v.path === path)) return false;
       const item = store.state.tagsViewRoutes.find((v) => v.path === path);
+      if (item.meta.isLink && !item.meta.isIframe) return false;
       if (!item.meta.isHide) state.tagsViewList.push({ ...item });
       addBrowserSetSession(state.tagsViewList);
     };

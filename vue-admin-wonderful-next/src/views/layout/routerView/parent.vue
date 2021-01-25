@@ -3,7 +3,7 @@
     <router-view v-slot="{ Component }">
       <transition :name="setTransitionName" mode="out-in">
         <keep-alive :include="getCaches">
-          <component :is="Component" :key="refreshRouterViewKey" />
+          <component :is="Component" :key="refreshRouterViewKey" class="w100" />
         </keep-alive>
       </transition>
     </router-view>
@@ -38,7 +38,6 @@ export default defineComponent({
     const store = useStore();
     const state = reactive({
       transitionName: "slide-right",
-      headerHeight: "84px",
       refreshRouterViewKey: route.path,
     });
     // 设置主界面切换动画
@@ -59,19 +58,11 @@ export default defineComponent({
     const getCaches = computed(() => {
       return store.state.caches;
     });
-    // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-    watch(store.state.themeConfig, (val) => {
-      state.headerHeight = val.isTagsview ? "84px" : "50px";
-      if (val.isFixedHeaderChange !== val.isFixedHeader) {
-        if (!proxy.$refs.layoutScrollbarRef) return false;
-        proxy.$refs.layoutScrollbarRef.update();
-      }
-    });
     // 路由更新时
     onBeforeRouteUpdate((to) => {
       state.refreshRouterViewKey = to.path;
     });
-    // 页面加载时
+    // 页面加载前
     onBeforeMount(() => {
       proxy.mittBus.on("onTagsViewRefreshRouterView", (path: string) => {
         if (route.path !== path) return false;

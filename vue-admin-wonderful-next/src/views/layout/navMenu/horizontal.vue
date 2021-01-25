@@ -12,7 +12,8 @@
           </el-submenu>
           <el-menu-item :index="val.path" :key="val.path" v-else>
             <i :class="val.meta.icon ? val.meta.icon : ''"></i>
-            <template #title v-if="!val.meta.isLink">{{ val.meta.title }}</template>
+            <template #title
+              v-if="!val.meta.isLink || val.meta.isLink && val.meta.isIframe">{{ val.meta.title }}</template>
             <template #title v-else><a :href="val.meta.isLink" target="_blank">{{ val.meta.title }}</a></template>
           </el-menu-item>
         </template>
@@ -107,8 +108,14 @@ export default defineComponent({
   flex: 1;
   overflow: hidden;
   margin-right: 30px;
+  ::v-deep(.el-scrollbar__bar.is-vertical) {
+    display: none;
+  }
   .el-menu.el-menu--horizontal {
     display: flex;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 </style>

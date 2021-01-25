@@ -6,8 +6,8 @@
 .slide-left-leave-active {
   will-change: transform;
   transition: all 0.3s ease;
-  position: absolute;
 }
+// slide-right
 .slide-right-enter-from {
   opacity: 0;
   transform: translateX(-20px);
@@ -16,17 +16,18 @@
   opacity: 0;
   transform: translateX(20px);
 }
+// slide-left
 .slide-left-enter-from {
   @extend .slide-right-leave-to;
 }
 .slide-left-leave-to {
   @extend .slide-right-enter-from;
 }
+// opacitys
 .opacitys-enter-active,
 .opacitys-leave-active {
   will-change: transform;
   transition: all 0.3s ease;
-  position: absolute;
 }
 .opacitys-enter-from,
 .opacitys-leave-to {

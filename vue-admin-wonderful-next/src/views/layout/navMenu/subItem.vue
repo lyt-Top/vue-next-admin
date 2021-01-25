@@ -9,7 +9,7 @@
     </el-submenu>
     <el-menu-item :index="val.path" :key="val.path" v-else>
       <i :class="val.meta.icon ? val.meta.icon : ''"></i>
-      <template v-if="!val.meta.isLink">
+      <template v-if="!val.meta.isLink || val.meta.isLink && val.meta.isIframe">
         <span>{{ val.meta.title }}</span>
       </template>
       <template v-else><a :href="val.meta.isLink" target="_blank">{{ val.meta.title }}</a></template>

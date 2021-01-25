@@ -14,6 +14,7 @@ export const dynamicRoutes = [
             isHide: false,
             isKeepAlive: true,
             isAffix: true,
+            isIframe: false,
             icon: 'iconfont icon-shouye'
         },
         children: [{
@@ -26,6 +27,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: true,
+                isIframe: false,
                 icon: 'iconfont icon-shouye'
             }
         },
@@ -40,6 +42,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -53,6 +56,7 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
+                        isIframe: false,
                         icon: 'iconfont icon-caidan'
                     }
                 },
@@ -66,6 +70,7 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
+                        isIframe: false,
                         icon: 'iconfont icon-icon-',
                     }
                 }
@@ -82,6 +87,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-quanxian'
             },
             children: [
@@ -95,7 +101,8 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
-                        isAffix: false
+                        isAffix: false,
+                        isIframe: false
                     },
                     children: [
                         {
@@ -107,7 +114,8 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
-                                isAffix: false
+                                isAffix: false,
+                                isIframe: false
                             }
                         },
                         {
@@ -119,7 +127,8 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
-                                isAffix: false
+                                isAffix: false,
+                                isIframe: false
                             }
                         }
                     ]
@@ -133,7 +142,8 @@ export const dynamicRoutes = [
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
-                        isAffix: false
+                        isAffix: false,
+                        isIframe: false
                     },
                     children: [
                         {
@@ -145,7 +155,8 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
-                                isAffix: false
+                                isAffix: false,
+                                isIframe: false
                             }
                         },
                         {
@@ -157,7 +168,8 @@ export const dynamicRoutes = [
                                 isLink: '',
                                 isHide: false,
                                 isKeepAlive: true,
-                                isAffix: false
+                                isAffix: false,
+                                isIframe: false
                             }
                         }
                     ]
@@ -175,6 +187,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -189,6 +202,7 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
+                        isIframe: false,
                         icon: 'iconfont icon-caidan'
                     },
                     children: [
@@ -202,6 +216,7 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
+                                isIframe: false,
                                 icon: 'iconfont icon-caidan'
                             }
                         },
@@ -216,6 +231,7 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
+                                isIframe: false,
                                 icon: 'iconfont icon-caidan'
                             },
                             children: [
@@ -229,6 +245,7 @@ export const dynamicRoutes = [
                                         isHide: false,
                                         isKeepAlive: true,
                                         isAffix: false,
+                                        isIframe: false,
                                         icon: 'iconfont icon-caidan'
                                     }
                                 },
@@ -242,6 +259,7 @@ export const dynamicRoutes = [
                                         isHide: false,
                                         isKeepAlive: true,
                                         isAffix: false,
+                                        isIframe: false,
                                         icon: 'iconfont icon-caidan'
                                     }
                                 }
@@ -257,6 +275,7 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
+                                isIframe: false,
                                 icon: 'iconfont icon-caidan'
                             }
                         }
@@ -272,6 +291,7 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
+                        isIframe: false,
                         icon: 'iconfont icon-caidan'
                     }
                 }
@@ -288,6 +308,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-crew_feature'
             },
             children: [
@@ -301,6 +322,7 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
+                        isIframe: false,
                         icon: 'el-icon-thumb'
                     }
                 }
@@ -316,6 +338,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-fuzhiyemian'
             }
         },
@@ -329,6 +352,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-zujian'
             }
         },
@@ -342,6 +366,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-ico_shuju'
             }
         },
@@ -355,6 +380,7 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-gerenzhongxin'
             }
         },
@@ -368,32 +394,35 @@ export const dynamicRoutes = [
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-gongju'
             }
         },
         {
             path: '/link',
-            name: 'link',
+            name: 'layoutLinkView',
             component: () => import('/@/views/layout/routerView/parent.vue'),
             meta: {
                 title: '外链',
-                isLink: '',
-                isHide: true,
-                isKeepAlive: true,
-                isAffix: true,
+                isLink: 'https://element-plus.gitee.io/#/zh-CN/component/installation',
+                isHide: false,
+                isKeepAlive: false,
+                isAffix: false,
+                isIframe: false,
                 icon: 'iconfont icon-caozuo-wailian'
             }
         },
         {
             path: '/iframes',
-            name: 'iframes',
-            component: () => import('/@/views/layout/routerView/iframes.vue'),
+            name: 'layoutIfameView',
+            component: () => import('/@/views/layout/routerView/parent.vue'),
             meta: {
                 title: '内嵌 iframe',
-                isLink: '',
+                isLink: 'https://gitee.com/lyt-top/vue-admin-wonderful',
                 isHide: false,
                 isKeepAlive: true,
                 isAffix: true,
+                isIframe: true,
                 icon: 'iconfont icon-neiqianshujuchucun'
             }
         }]
