@@ -692,10 +692,6 @@
 
 /* NavMenu 导航菜单
 ------------------------------- */
-// 去掉默认 focus 时，背景的高亮
-.el-menu-item:focus {
-  background: transparent !important;
-}
 // 默认样式修改
 .el-menu {
   border-right: none !important;
