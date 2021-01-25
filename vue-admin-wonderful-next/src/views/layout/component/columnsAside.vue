@@ -8,15 +8,15 @@
           <div class="layout-columns-aside-li-box">
             <template v-if="!v.meta.isLink">
               <i :class="v.meta.icon"></i>
-              <div class="layout-columns-aside-li-box-title">
-                {{v.meta.title && v.meta.title.length >= 2 ? v.meta.title.substr(0,2) : v.meta.title}}
+              <div class="layout-columns-aside-li-box-title font12">
+                {{v.meta.title && v.meta.title.length >= 4 ? v.meta.title.substr(0,4) : v.meta.title}}
               </div>
             </template>
             <template v-else>
               <a :href="v.meta.isLink" target="_blank">
                 <i :class="v.meta.icon"></i>
-                <div class="layout-columns-aside-li-box-title">
-                  {{v.meta.title && v.meta.title.length >= 2 ? v.meta.title.substr(0,2) : v.meta.title}}
+                <div class="layout-columns-aside-li-box-title font12">
+                  {{v.meta.title && v.meta.title.length >= 4 ? v.meta.title.substr(0,4) : v.meta.title}}
                 </div>
               </a>
             </template>

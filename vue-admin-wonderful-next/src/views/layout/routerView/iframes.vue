@@ -1,7 +1,7 @@
 <template>
   <div class="layout-scrollbar">
     <div class="layout-view-bg-white flex h100" v-loading="iframeLoading">
-      <iframe :src="currentRouteMeta.isLink" frameborder="0" height="100%" width="100%" id="iframe"></iframe>
+      <iframe :src="iframeUrl" frameborder="0" height="100%" width="100%" id="iframe"></iframe>
     </div>
   </div>
 </template>
@@ -13,8 +13,12 @@ import {
   reactive,
   toRefs,
   onMounted,
+  onBeforeMount,
+  onUnmounted,
   nextTick,
+  getCurrentInstance,
 } from "vue";
+import { useRoute } from "vue-router";
 export default defineComponent({
   name: "layoutIfameView",
   props: {
@@ -24,24 +28,40 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { proxy } = getCurrentInstance();
+    const route = useRoute();
     const state = reactive({
       iframeLoading: true,
+      iframeUrl: "",
     });
-    // 获取父级菜单数据
-    const currentRouteMeta = computed(() => {
-      return props.meta;
-    });
-    // 页面加载时
-    onMounted(() => {
+    // 初始化页面加载 loading
+    const initIframeLoad = () => {
       nextTick(() => {
+        state.iframeLoading = true;
         const iframe = document.getElementById("iframe");
         iframe.onload = () => {
           state.iframeLoading = false;
         };
       });
+    };
+    // 页面加载前
+    onBeforeMount(() => {
+      state.iframeUrl = props.meta.isLink;
+      proxy.mittBus.on("onTagsViewRefreshRouterView", (path: string) => {
+        if (route.path !== path) return false;
+        state.iframeUrl = `${props.meta.isLink}?key=${Math.random()}`;
+        initIframeLoad();
+      });
+    });
+    // 页面加载时
+    onMounted(() => {
+      initIframeLoad();
+    });
+    // 页面卸载时
+    onUnmounted(() => {
+      proxy.mittBus.off("onTagsViewRefreshRouterView");
     });
     return {
-      currentRouteMeta,
       ...toRefs(state),
     };
   },

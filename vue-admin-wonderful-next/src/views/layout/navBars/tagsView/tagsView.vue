@@ -8,7 +8,7 @@
           <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont font14" v-if="isActive(v.path)"></i>
           <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon"
             v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
-          <span>{{v.meta.title}}</span>
+          <span :class="{'is-active-four': v.meta.isAffix}">{{v.meta.title}}</span>
           <template v-if="isActive(v.path)">
             <i class="el-icon-refresh-right ml5" @click="refreshCurrentTagsView(v.path)"></i>
             <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active" v-if="!v.meta.isAffix"
@@ -417,6 +417,11 @@ export default {
         }
         &::after {
           right: -51px;
+        }
+      }
+      .is-active-four {
+        &::after {
+          right: -40px;
         }
       }
       &::before,
