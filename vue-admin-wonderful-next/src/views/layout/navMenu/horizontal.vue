@@ -11,10 +11,16 @@
             <SubItem :chil="val.children" />
           </el-submenu>
           <el-menu-item :index="val.path" :key="val.path" v-else>
-            <i :class="val.meta.icon ? val.meta.icon : ''"></i>
-            <template #title
-              v-if="!val.meta.isLink || val.meta.isLink && val.meta.isIframe">{{ val.meta.title }}</template>
-            <template #title v-else><a :href="val.meta.isLink" target="_blank">{{ val.meta.title }}</a></template>
+            <template #title v-if="!val.meta.isLink || val.meta.isLink && val.meta.isIframe">
+              <i :class="val.meta.icon ? val.meta.icon : ''"></i>
+              {{ val.meta.title }}
+            </template>
+            <template #title v-else>
+              <a :href="val.meta.isLink" target="_blank">
+                <i :class="val.meta.icon ? val.meta.icon : ''"></i>
+                {{ val.meta.title }}
+              </a>
+            </template>
           </el-menu-item>
         </template>
       </el-menu>
@@ -110,6 +116,9 @@ export default defineComponent({
   margin-right: 30px;
   ::v-deep(.el-scrollbar__bar.is-vertical) {
     display: none;
+  }
+  ::v-deep(a) {
+    width: 100%;
   }
   .el-menu.el-menu--horizontal {
     display: flex;

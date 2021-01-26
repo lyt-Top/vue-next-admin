@@ -18,7 +18,6 @@ import {
 } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
-import { dynamicRoutes } from "/@/router/index.ts";
 import Breadcrumb from "/@/views/layout/navBars/breadcrumb/breadcrumb.vue";
 import User from "/@/views/layout/navBars/breadcrumb/user.vue";
 import Logo from "/@/views/layout/logo/index.vue";
@@ -55,7 +54,6 @@ export default {
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
       let { layout, isClassicSplitMenu } = store.state.themeConfig;
-      store.dispatch("setRoutes", dynamicRoutes[0].children);
       if (layout === "classic" && isClassicSplitMenu) {
         state.menuList = delClassicChildren(
           filterRoutesFun(store.state.routes)

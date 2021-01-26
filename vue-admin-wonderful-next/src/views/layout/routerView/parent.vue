@@ -25,7 +25,6 @@ import {
 import {
   useRoute,
   useRouter,
-  RouteRecordRaw,
   onBeforeRouteUpdate,
 } from "vue-router";
 import { useStore } from "/@/store/index.ts";

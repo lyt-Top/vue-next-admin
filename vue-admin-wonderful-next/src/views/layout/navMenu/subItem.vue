@@ -8,11 +8,16 @@
       <sub-item :chil="val.children" />
     </el-submenu>
     <el-menu-item :index="val.path" :key="val.path" v-else>
-      <i :class="val.meta.icon ? val.meta.icon : ''"></i>
       <template v-if="!val.meta.isLink || val.meta.isLink && val.meta.isIframe">
+        <i :class="val.meta.icon ? val.meta.icon : ''"></i>
         <span>{{ val.meta.title }}</span>
       </template>
-      <template v-else><a :href="val.meta.isLink" target="_blank">{{ val.meta.title }}</a></template>
+      <template v-else>
+        <a :href="val.meta.isLink" target="_blank">
+          <i :class="val.meta.icon ? val.meta.icon : ''"></i>
+          {{ val.meta.title }}
+        </a>
+      </template>
     </el-menu-item>
   </template>
 </template>

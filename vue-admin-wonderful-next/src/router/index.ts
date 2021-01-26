@@ -9,13 +9,7 @@ export const dynamicRoutes = [
         component: () => import('/@/views/layout/index.vue'),
         redirect: '/home',
         meta: {
-            title: '首页',
-            isLink: '',
-            isHide: false,
-            isKeepAlive: true,
-            isAffix: true,
-            isIframe: false,
-            icon: 'iconfont icon-shouye'
+            isKeepAlive: true
         },
         children: [{
             path: '/home',
@@ -28,6 +22,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: true,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-shouye'
             }
         },
@@ -43,6 +38,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin'],
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -57,6 +53,7 @@ export const dynamicRoutes = [
                         isKeepAlive: true,
                         isAffix: false,
                         isIframe: false,
+                        auth: ['admin'],
                         icon: 'iconfont icon-caidan'
                     }
                 },
@@ -71,6 +68,7 @@ export const dynamicRoutes = [
                         isKeepAlive: true,
                         isAffix: false,
                         isIframe: false,
+                        auth: ['admin'],
                         icon: 'iconfont icon-icon-',
                     }
                 }
@@ -88,6 +86,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-quanxian'
             },
             children: [
@@ -102,7 +101,8 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
-                        isIframe: false
+                        isIframe: false,
+                        auth: ['admin', 'test']
                     },
                     children: [
                         {
@@ -115,7 +115,8 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
-                                isIframe: false
+                                isIframe: false,
+                                auth: ['admin', 'test']
                             }
                         },
                         {
@@ -128,7 +129,8 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
-                                isIframe: false
+                                isIframe: false,
+                                auth: ['admin', 'test']
                             }
                         }
                     ]
@@ -143,7 +145,8 @@ export const dynamicRoutes = [
                         isHide: false,
                         isKeepAlive: true,
                         isAffix: false,
-                        isIframe: false
+                        isIframe: false,
+                        auth: ['admin', 'test']
                     },
                     children: [
                         {
@@ -156,7 +159,8 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
-                                isIframe: false
+                                isIframe: false,
+                                auth: ['admin', 'test']
                             }
                         },
                         {
@@ -169,7 +173,8 @@ export const dynamicRoutes = [
                                 isHide: false,
                                 isKeepAlive: true,
                                 isAffix: false,
-                                isIframe: false
+                                isIframe: false,
+                                auth: ['admin', 'test']
                             }
                         }
                     ]
@@ -188,6 +193,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-xitongshezhi'
             },
             children: [
@@ -203,6 +209,7 @@ export const dynamicRoutes = [
                         isKeepAlive: true,
                         isAffix: false,
                         isIframe: false,
+                        auth: ['admin', 'test'],
                         icon: 'iconfont icon-caidan'
                     },
                     children: [
@@ -217,6 +224,7 @@ export const dynamicRoutes = [
                                 isKeepAlive: true,
                                 isAffix: false,
                                 isIframe: false,
+                                auth: ['admin', 'test'],
                                 icon: 'iconfont icon-caidan'
                             }
                         },
@@ -232,6 +240,7 @@ export const dynamicRoutes = [
                                 isKeepAlive: true,
                                 isAffix: false,
                                 isIframe: false,
+                                auth: ['admin', 'test'],
                                 icon: 'iconfont icon-caidan'
                             },
                             children: [
@@ -246,6 +255,7 @@ export const dynamicRoutes = [
                                         isKeepAlive: true,
                                         isAffix: false,
                                         isIframe: false,
+                                        auth: ['admin', 'test'],
                                         icon: 'iconfont icon-caidan'
                                     }
                                 },
@@ -260,6 +270,7 @@ export const dynamicRoutes = [
                                         isKeepAlive: true,
                                         isAffix: false,
                                         isIframe: false,
+                                        auth: ['admin', 'test'],
                                         icon: 'iconfont icon-caidan'
                                     }
                                 }
@@ -276,6 +287,7 @@ export const dynamicRoutes = [
                                 isKeepAlive: true,
                                 isAffix: false,
                                 isIframe: false,
+                                auth: ['admin', 'test'],
                                 icon: 'iconfont icon-caidan'
                             }
                         }
@@ -292,6 +304,7 @@ export const dynamicRoutes = [
                         isKeepAlive: true,
                         isAffix: false,
                         isIframe: false,
+                        auth: ['admin', 'test'],
                         icon: 'iconfont icon-caidan'
                     }
                 }
@@ -309,6 +322,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-crew_feature'
             },
             children: [
@@ -323,6 +337,7 @@ export const dynamicRoutes = [
                         isKeepAlive: true,
                         isAffix: false,
                         isIframe: false,
+                        auth: ['admin', 'test'],
                         icon: 'el-icon-thumb'
                     }
                 }
@@ -339,6 +354,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-fuzhiyemian'
             }
         },
@@ -353,6 +369,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-zujian'
             }
         },
@@ -367,6 +384,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-ico_shuju'
             }
         },
@@ -381,6 +399,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-gerenzhongxin'
             }
         },
@@ -395,6 +414,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin', 'test'],
                 icon: 'iconfont icon-gongju'
             }
         },
@@ -409,6 +429,7 @@ export const dynamicRoutes = [
                 isKeepAlive: false,
                 isAffix: false,
                 isIframe: false,
+                auth: ['admin'],
                 icon: 'iconfont icon-caozuo-wailian'
             }
         },
@@ -423,6 +444,7 @@ export const dynamicRoutes = [
                 isKeepAlive: true,
                 isAffix: true,
                 isIframe: true,
+                auth: ['admin'],
                 icon: 'iconfont icon-neiqianshujuchucun'
             }
         }]
@@ -504,16 +526,62 @@ export function setCacheTagsViewRoutes() {
     store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children)
 }
 
+// 获取当前用户的权限去比对路由表，用于左侧菜单/横向菜单的显示
+export function setFilterMenu() {
+    if (store.state.auths.length <= 0) store.dispatch('setAuths')
+    store.dispatch("setRoutes", setFilterMenuFun(dynamicRoutes[0].children, store.state.auths))
+}
+
+// 判断路由 auth 中是否包含当前登录用户权限字段
+export function hasAuth(auths: any, route: any) {
+    if (route.meta && route.meta.auth) return auths.some((auth: any) => route.meta.auth.includes(auth))
+    else return true
+}
+
+// 递归过滤又权限的路由
+export function setFilterMenuFun(routes: any, auth: any) {
+    const menu: any = []
+    routes.map((route: any) => {
+        const item = { ...route }
+        if (hasAuth(auth, item)) {
+            if (item.children) item.children = setFilterMenuFun(item.children, auth)
+            menu.push(item)
+        }
+    })
+    return menu
+}
+
+// 获取当前用户的权限去比对路由表，用于动态路由的添加
+export function setFilterRoute() {
+    if (store.state.auths.length <= 0) store.dispatch('setAuths')
+    let filterRoute: any = []
+    formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children.map((route: any) => {
+        route.meta.auth.map((metaAuth: any) => {
+            store.state.auths.map((auth: any) => {
+                if (metaAuth === auth) filterRoute.push({ ...route })
+            })
+        })
+    })
+    return filterRoute
+}
+
+// 比对后的路由表，进行重新赋值
+export function setFilterRouteEnd() {
+    let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))
+    filterRouteEnd[0].children = setFilterRoute()
+    return filterRouteEnd
+}
+
 // 添加动态路由
 export function setAddRoute() {
-    formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes)).map((route: any) => {
+    setFilterRouteEnd().map((route: any) => {
         router.addRoute(route as RouteRecordRaw)
     })
 }
 
 // 删除/重置路由
 export function resetRoute() {
-    formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes)).map((route: any) => {
+    setFilterRouteEnd().map((route: any) => {
         const { name } = route
         router.hasRoute(name) && router.removeRoute(name)
     })
@@ -521,7 +589,9 @@ export function resetRoute() {
 
 // 初始化执行函数
 setAddRoute()
+setFilterMenu()
 setCacheTagsViewRoutes()
+
 
 // router.afterEach((to, from) => {
 

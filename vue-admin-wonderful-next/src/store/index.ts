@@ -44,7 +44,8 @@ export interface RootStateTypes {
     },
     routes: Array<object>,
     caches: Array<string>,
-    tagsViewRoutes: Array<object>
+    tagsViewRoutes: Array<object>,
+    auths: Array<string>
 }
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol()
@@ -54,7 +55,8 @@ export const store = createStore<RootStateTypes>({
         themeConfig,
         routes: [],
         caches: [],
-        tagsViewRoutes: []
+        tagsViewRoutes: [],
+        auths: []
     },
     mutations: {
         getThemeConfig(state: any, data: object) {
@@ -68,6 +70,9 @@ export const store = createStore<RootStateTypes>({
         },
         getTagsViewRoutes(state: any, data: Array<string>) {
             state.tagsViewRoutes = data
+        },
+        getAuths(state: any, data: Array<string>) {
+            state.auths = data
         }
     },
     actions: {
@@ -83,6 +88,13 @@ export const store = createStore<RootStateTypes>({
         async setTagsViewRoutes({ commit }, data: Array<string>) {
             commit('getTagsViewRoutes', data)
         },
+        setAuths({ commit }, data: Array<string>) {
+            const defaultAuthList: Array<string> = ['admin', 'btn.add', 'btn.del', 'btn.edit']
+            let authList: Array<string> = []
+            if (data && data.length > 0) authList = data
+            else authList = defaultAuthList
+            commit('getAuths', authList)
+        }
     }
 })
 
