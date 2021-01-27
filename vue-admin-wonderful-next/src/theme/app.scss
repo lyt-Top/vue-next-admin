@@ -109,6 +109,15 @@ body,
   }
 }
 
+/* nprogress 进度条跟随主题颜色
+------------------------------- */
+#nprogress {
+  .bar {
+    background: var(--color-primary) !important;
+    z-index: 9999999 !important;
+  }
+}
+
 /* flex 弹性布局
 ------------------------------- */
 .flex {
