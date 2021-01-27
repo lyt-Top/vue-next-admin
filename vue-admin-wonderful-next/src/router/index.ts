@@ -1,5 +1,8 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import { store } from "/@/store/index.ts"
+import { getSession, clearSession } from "/@/utils/storage.ts"
 
 // 定义动态路由
 export const dynamicRoutes = [
@@ -455,6 +458,7 @@ export const dynamicRoutes = [
 const staticRoutes: Array<RouteRecordRaw> = [
     {
         path: '/login',
+        name: 'login',
         component: () => import('/@/views/login/index.vue'),
         meta: {
             title: '登陆'
@@ -462,6 +466,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: '/404',
+        name: '404',
         component: () => import('/@/views/error/404.vue'),
         meta: {
             title: '找不到此页面'
@@ -469,6 +474,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: '/401',
+        name: '401',
         component: () => import('/@/views/error/401.vue'),
         meta: {
             title: '没有权限'
@@ -476,6 +482,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: '/:pathMatch(.*)',
+        name: 'pathMatch',
         redirect: '/404',
         meta: {
             title: '页面找不到重定向'
@@ -528,7 +535,6 @@ export function setCacheTagsViewRoutes() {
 
 // 获取当前用户的权限去比对路由表，用于左侧菜单/横向菜单的显示
 export function setFilterMenu() {
-    if (store.state.auths.length <= 0) store.dispatch('setAuths')
     store.dispatch("setRoutes", setFilterMenuFun(dynamicRoutes[0].children, store.state.auths))
 }
 
@@ -538,7 +544,7 @@ export function hasAuth(auths: any, route: any) {
     else return true
 }
 
-// 递归过滤又权限的路由
+// 递归过滤有权限的路由
 export function setFilterMenuFun(routes: any, auth: any) {
     const menu: any = []
     routes.map((route: any) => {
@@ -553,7 +559,6 @@ export function setFilterMenuFun(routes: any, auth: any) {
 
 // 获取当前用户的权限去比对路由表，用于动态路由的添加
 export function setFilterRoute() {
-    if (store.state.auths.length <= 0) store.dispatch('setAuths')
     let filterRoute: any = []
     formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children.map((route: any) => {
         route.meta.auth.map((metaAuth: any) => {
@@ -587,14 +592,46 @@ export function resetRoute() {
     })
 }
 
-// 初始化执行函数
-setAddRoute()
-setFilterMenu()
-setCacheTagsViewRoutes()
+// 初始化方法，防止刷新时丢失 
+export function initAllFun() {
+    const token = getSession('token')
+    if (!token) return false
+    store.dispatch('setAuths')
+    setAddRoute() // 添加动态路由
+    setFilterMenu() // 过滤权限菜单
+    setCacheTagsViewRoutes() // 添加 keepAlive 缓存
+}
 
+// 初始化方法执行
+initAllFun()
 
-// router.afterEach((to, from) => {
+// 路由加载前
+router.beforeEach((to, from, next) => {
+    document.title = `${to.meta.title} - vue-admin-wonderful-next` || 'vue-admin-wonderful-next'
+    NProgress.configure({ showSpinner: false })
+    NProgress.start()
+    const token = getSession('token')
+    if (to.path === '/login' && !token) {
+        next()
+        NProgress.done()
+    } else {
+        if (!token) {
+            next('/login')
+            clearSession()
+            resetRoute()
+            NProgress.done()
+        } else if (token && to.path === '/login') {
+            next('/home')
+            NProgress.done()
+        } else {
+            next();
+        }
+    }
+})
 
-// })
+// 路由加载后
+router.afterEach(() => {
+    NProgress.done()
+})
 
 export default router

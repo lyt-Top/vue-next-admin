@@ -1,4 +1,4 @@
-# 创建 vue3.x vite 项目
+# 手把手创建 vue3.x vite 项目
 
 ## 安装 vite
 
@@ -23,20 +23,30 @@ npm run dev
 ## 配置 vite 
 在项目根目录中创建一个 `vite.config.js` 或 `vite.config.ts` 文件（与vue.config.js一样）。如果在当前工作目录中找到 `Vite`，它将自动使用它。
 
-官网 `config.ts` 配置参考：[https://github.com/vitejs/vite/blob/master/src/node/config.ts](https://github.com/vitejs/vite/blob/master/src/node/config.ts)
+- github `config.ts` 配置参考(失效0.x 版本)：[https://github.com/vitejs/vite/blob/master/src/node/config.ts](https://github.com/vitejs/vite/blob/master/src/node/config.ts)
+- vite最新文档（英文）：[https://vitejs.dev/index.html](https://vitejs.dev/index.html)
 
 配置 `vite.config.ts`：
 ```ts
 import type { UserConfig } from 'vite'
 
 const viteConfig: UserConfig = {
-    port: 8080, // 端口号
-    hostname: 'localhost', // 主机名
-    open: true // 运行自动打开浏览器
+    server: {
+      port: 8080, // 端口号g
+      hostname: 'localhost', // 主机名
+      open: true // 运行自动打开浏览器
+    }
 }
 
 export default viteConfig
 ```
+
+:::tip vite 配置参考
+- github：[github/vite/config.ts](https://github.com/vitejs/vite/blob/73196e517643af88a790ab5222d3e6b68dbbf987/packages/vite/src/node/config.ts)
+- issues：[https://github.com/vitejs/vite/issues/1467](https://github.com/vitejs/vite/issues/1467)
+- plugin-vue：[@vitejs/plugin-vue](@vitejs/plugin-vue)
+- plugins：[alias#entries](https://github.com/rollup/plugins/tree/master/packages/alias#entries)
+:::
 
 
 ## 安装 typescript

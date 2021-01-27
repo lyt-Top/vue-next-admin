@@ -108,7 +108,8 @@ module.exports = {
 	      title: '配置',
 	      collapsable: false,
 	      children: [
-			''
+          '',
+          'other'
 	      ]
 	    }
 	  ],

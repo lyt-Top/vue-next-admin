@@ -8,7 +8,7 @@
     </div>
     <div class="layout-navbars-breadcrumb-user-icon"><i class="el-icon-bell" title="消息"></i></div>
     <div class="layout-navbars-breadcrumb-user-icon mr10"><i class="icon-fullscreen iconfont" title="开全屏"></i></div>
-    <el-dropdown :show-timeout="70" :hide-timeout="50">
+    <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
       <span class="layout-navbars-breadcrumb-user-link">
         <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
           class="layout-navbars-breadcrumb-user-link-photo mr5" /> small@小柒
@@ -16,12 +16,11 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>个人中心</el-dropdown-item>
-          <el-dropdown-item>首页</el-dropdown-item>
-          <el-dropdown-item>文档</el-dropdown-item>
-          <el-dropdown-item>404</el-dropdown-item>
-          <el-dropdown-item>401</el-dropdown-item>
-          <el-dropdown-item divided>退出登录</el-dropdown-item>
+          <el-dropdown-item command="/home">首页</el-dropdown-item>
+          <el-dropdown-item command="/personal">个人中心</el-dropdown-item>
+          <el-dropdown-item command="/404">404</el-dropdown-item>
+          <el-dropdown-item command="/401">401</el-dropdown-item>
+          <el-dropdown-item divided command="logOut">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -30,15 +29,18 @@
 
 <script lang="ts">
 import { ref, getCurrentInstance, computed } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessageBox, ElMessage } from "element-plus";
+import { resetRoute } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
+import { clearSession } from "/@/utils/storage.ts";
 export default {
   name: "layoutBreadcrumbUser",
   setup() {
     const { proxy } = getCurrentInstance();
+    const router = useRouter();
     const store = useStore();
-    const onLayoutSetingClick = () => {
-      proxy.mittBus.emit("openSetingsDrawer");
-    };
+    // 设置布局
     const setFlexAutoStyle = computed(() => {
       if (
         !store.state.themeConfig.isBreadcrumb &&
@@ -47,9 +49,53 @@ export default {
       )
         return { flex: 1 };
     });
+    // 布局配置 icon 点击时
+    const onLayoutSetingClick = () => {
+      proxy.mittBus.emit("openSetingsDrawer");
+    };
+    // 下拉菜单点击时
+    const onHandleCommandClick = (path) => {
+      if (path === "logOut") {
+        ElMessageBox({
+          closeOnClickModal: false,
+          closeOnPressEscape: false,
+          title: "提示",
+          message: "此操作将退出登录, 是否继续?",
+          showCancelButton: true,
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          beforeClose: (action, instance, done) => {
+            if (action === "confirm") {
+              instance.confirmButtonLoading = true;
+              instance.confirmButtonText = "退出中";
+              setTimeout(() => {
+                done();
+                setTimeout(() => {
+                  instance.confirmButtonLoading = false;
+                }, 300);
+              }, 700);
+            } else {
+              done();
+            }
+          },
+        })
+          .then((action) => {
+            clearSession(); // 清除缓存/token等
+            resetRoute(); // 删除/重置路由
+            router.push("/login");
+            setTimeout(() => {
+              ElMessage.success("退出成功！记得回来哟~");
+            }, 300);
+          })
+          .catch(() => {});
+      } else {
+        router.push(path);
+      }
+    };
     return {
-      onLayoutSetingClick,
       setFlexAutoStyle,
+      onLayoutSetingClick,
+      onHandleCommandClick,
     };
   },
 };

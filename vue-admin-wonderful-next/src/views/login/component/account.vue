@@ -1,7 +1,7 @@
 <template>
   <el-form class="login-content-form">
     <el-form-item>
-      <el-input type="text" placeholder="用户名 admin 或 test" prefix-icon="el-icon-user" v-model="ruleForm.userName"
+      <el-input type="text" placeholder="用户名 admin 或不输均为 test" prefix-icon="el-icon-user" v-model="ruleForm.userName"
         clearable autocomplete="off">
       </el-input>
     </el-form-item>
@@ -24,7 +24,7 @@
       </el-row>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" class="login-content-submit" round>
+      <el-button type="primary" class="login-content-submit" round @click="onSignIn">
         <span>登 录</span>
       </el-button>
     </el-form-item>
@@ -32,18 +32,68 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent } from "vue";
+import { toRefs, reactive, defineComponent, computed } from "vue";
+import { useRouter } from "vue-router";
+import { ElMessage } from "element-plus";
+import {
+  setAddRoute,
+  setFilterMenu,
+  setCacheTagsViewRoutes,
+} from "/@/router/index.ts";
+import { useStore } from "/@/store/index.ts";
+import { setSession } from "/@/utils/storage.ts";
+import { formatAxis } from "/@/utils/formatTime";
 export default defineComponent({
   name: "login",
   setup() {
+    const store = useStore();
+    const router = useRouter();
     const state = reactive({
       ruleForm: {
-        userName: "",
-        password: "",
-        code: "",
+        userName: "admin",
+        password: "123456",
+        code: "1234",
       },
     });
+    // 时间获取
+    const currentTime = computed(() => {
+      return formatAxis(new Date());
+    });
+    // 重新执行添加动态路由、过滤权限菜单、缓存等方法
+    const initAllFun = () => {
+      setAddRoute();
+      setFilterMenu();
+      setCacheTagsViewRoutes();
+    };
+    // 登录
+    const onSignIn = () => {
+      let currentTimeInfo = currentTime.value;
+      let defaultAuthList: Array<string> = [];
+      let adminAuthList: Array<string> = [
+        "admin",
+        "btn.add",
+        "btn.del",
+        "btn.edit",
+      ];
+      let testAuthList: Array<string> = ["test", "btn.add"];
+      if (state.ruleForm.userName === "admin") defaultAuthList = adminAuthList;
+      else defaultAuthList = testAuthList;
+      store.dispatch("setAuths", defaultAuthList);
+      initAllFun();
+      setSession("defaultAuthList", defaultAuthList);
+      setSession("token", Math.random().toString(36).substr(0));
+      setSession("userInfo", {
+        userName: state.ruleForm.userName,
+        time: new Date().getTime(),
+      });
+      router.push("/");
+      setTimeout(() => {
+        ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
+      }, 300);
+    };
     return {
+      currentTime,
+      onSignIn,
       ...toRefs(state),
     };
   },
