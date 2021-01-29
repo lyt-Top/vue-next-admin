@@ -9,6 +9,7 @@
     "element-plus": "^1.0.2-beta.30",
     "mitt": "^2.1.0",
     "nprogress": "^0.2.0",
+    "screenfull": "^5.1.0",
     "sortablejs": "^1.13.0",
     "vue": "^3.0.5",
     "vue-router": "^4.0.2",

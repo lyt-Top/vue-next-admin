@@ -7,7 +7,8 @@
       <i class="icon-skin iconfont" title="布局配置"></i>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon"><i class="el-icon-bell" title="消息"></i></div>
-    <div class="layout-navbars-breadcrumb-user-icon mr10"><i class="icon-fullscreen iconfont" title="开全屏"></i></div>
+    <div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick"><i class="iconfont"
+        :title="isScreenfull ? '开全屏' : '关全屏'" :class="!isScreenfull?'icon-fullscreen':'icon-tuichuquanping'"></i></div>
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
       <span class="layout-navbars-breadcrumb-user-link">
         <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
@@ -28,9 +29,17 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance, computed } from "vue";
+import {
+  ref,
+  getCurrentInstance,
+  computed,
+  reactive,
+  toRefs,
+  toRef,
+} from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
+import screenfull from "screenfull";
 import { resetRoute } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
 import { clearSession } from "/@/utils/storage.ts";
@@ -40,6 +49,9 @@ export default {
     const { proxy } = getCurrentInstance();
     const router = useRouter();
     const store = useStore();
+    const state = reactive({
+      isScreenfull: false,
+    });
     // 设置布局
     const setFlexAutoStyle = computed(() => {
       if (
@@ -49,6 +61,15 @@ export default {
       )
         return { flex: 1 };
     });
+    // 全屏点击时
+    const onScreenfullClick = () => {
+      if (!screenfull.isEnabled) {
+        ElMessage.warning("暂不不支持全屏");
+        return false;
+      }
+      screenfull.toggle();
+      state.isScreenfull = !state.isScreenfull;
+    };
     // 布局配置 icon 点击时
     const onLayoutSetingClick = () => {
       proxy.mittBus.emit("openSetingsDrawer");
@@ -96,6 +117,8 @@ export default {
       setFlexAutoStyle,
       onLayoutSetingClick,
       onHandleCommandClick,
+      onScreenfullClick,
+      ...toRefs(state),
     };
   },
 };

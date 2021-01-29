@@ -1,10 +1,18 @@
 <template>
-  <el-aside :class="setCollapseWidth">
+  <el-aside :class="setCollapseWidth" v-if="clientWidth > 1000">
     <Logo v-if="setShowLogo" />
     <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
       <Vertical :menuList="menuList" :class="setCollapseWidth" />
     </el-scrollbar>
   </el-aside>
+  <el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
+    <el-aside class="w100 h100">
+      <Logo v-if="setShowLogo" />
+      <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
+        <Vertical :menuList="menuList" />
+      </el-scrollbar>
+    </el-aside>
+  </el-drawer>
 </template>
 
 <script lang="ts">
@@ -17,10 +25,12 @@ import {
   ref,
   onBeforeMount,
   onUnmounted,
+  nextTick,
 } from "vue";
 import { useStore } from "/@/store/index.ts";
 import Logo from "/@/views/layout/logo/index.vue";
 import Vertical from "/@/views/layout/navMenu/vertical.vue";
+import { stat } from "fs";
 export default {
   name: "layoutAside",
   components: { Logo, Vertical },
@@ -29,22 +39,12 @@ export default {
     const store = useStore();
     const state = reactive({
       menuList: [],
+      clientWidth: "",
     });
-    // 设置/过滤路由（非静态路由/是否显示在菜单中）
-    const setFilterRoutes = () => {
-      if (store.state.themeConfig.layout === "columns") return false;
-      state.menuList = filterRoutesFun(store.state.routes);
-    };
-    // 路由过滤递归函数
-    const filterRoutesFun = (arr: Array<object>) => {
-      return arr
-        .filter((item) => !item.meta.isHide)
-        .map((item) => {
-          item = Object.assign({}, item);
-          if (item.children) item.children = filterRoutesFun(item.children);
-          return item;
-        });
-    };
+    // 获取布局配置信息
+    const getThemeConfig = computed(() => {
+      return store.state.themeConfig;
+    });
     // 设置菜单展开/收起时的宽度
     const setCollapseWidth = computed(() => {
       let { layout, isCollapse, menuBar } = store.state.themeConfig;
@@ -79,6 +79,25 @@ export default {
         (isShowLogo && layout === "columns")
       );
     });
+    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    const setFilterRoutes = () => {
+      if (store.state.themeConfig.layout === "columns") return false;
+      state.menuList = filterRoutesFun(store.state.routes);
+    };
+    // 路由过滤递归函数
+    const filterRoutesFun = (arr: Array<object>) => {
+      return arr
+        .filter((item) => !item.meta.isHide)
+        .map((item) => {
+          item = Object.assign({}, item);
+          if (item.children) item.children = filterRoutesFun(item.children);
+          return item;
+        });
+    };
+    // 设置菜单导航是否固定（移动端）
+    const initMenuFixed = (clientWidth: number) => {
+      state.clientWidth = clientWidth;
+    };
     // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
     watch(store.state.themeConfig, (val) => {
       if (val.isShowLogoChange !== val.isShowLogo) {
@@ -88,6 +107,7 @@ export default {
     });
     // 页面加载前
     onBeforeMount(() => {
+      initMenuFixed(document.body.clientWidth);
       setFilterRoutes();
       proxy.mittBus.on("setSendColumnsChildren", (res) => {
         state.menuList = res.children;
@@ -100,16 +120,21 @@ export default {
       proxy.mittBus.on("getBreadcrumbIndexSetFilterRoutes", () => {
         setFilterRoutes();
       });
+      proxy.mittBus.on("layoutMobileResize", (res) => {
+        initMenuFixed(res.clientWidth);
+      });
     });
     // 页面卸载时
     onUnmounted(() => {
       proxy.mittBus.off("setSendColumnsChildren");
       proxy.mittBus.off("setSendClassicChildren");
       proxy.mittBus.off("getBreadcrumbIndexSetFilterRoutes");
+      proxy.mittBus.off("layoutMobileResize");
     });
     return {
       setCollapseWidth,
       setShowLogo,
+      getThemeConfig,
       ...toRefs(state),
     };
   },

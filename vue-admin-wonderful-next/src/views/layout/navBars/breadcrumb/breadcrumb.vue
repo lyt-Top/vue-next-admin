@@ -2,7 +2,7 @@
   <div class="layout-navbars-breadcrumb" v-show="getThemeConfig.isBreadcrumb">
     <i class="layout-navbars-breadcrumb-icon" :class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
       @click="onThemeConfigChange"></i>
-    <el-breadcrumb>
+    <el-breadcrumb class="layout-navbars-breadcrumb-hide">
       <transition-group name="breadcrumb" mode="out-in">
         <el-breadcrumb-item v-for="(v,k) in breadcrumbList" :key="v.meta.title">
           <span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">

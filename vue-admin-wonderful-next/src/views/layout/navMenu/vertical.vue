@@ -1,5 +1,5 @@
 <template>
-  <el-menu router :default-active="defaultActive" background-color="transparent" :collapse="getThemeConfig.isCollapse"
+  <el-menu router :default-active="defaultActive" background-color="transparent" :collapse="setIsCollapse"
     :unique-opened="getThemeConfig.isUniqueOpened" :collapse-transition="false">
     <template v-for="val in menuList">
       <el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
@@ -27,6 +27,7 @@ import {
   computed,
   defineComponent,
   getCurrentInstance,
+  onBeforeMount,
 } from "vue";
 import { useRoute, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
@@ -57,14 +58,23 @@ export default defineComponent({
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
+    // 设置菜单的收起/展开
+    const setIsCollapse = computed(() => {
+      return document.body.clientWidth < 1000
+        ? false
+        : getThemeConfig.value.isCollapse;
+    });
     // 路由更新时
     onBeforeRouteUpdate((to) => {
       state.defaultActive = to.path;
       proxy.mittBus.emit("onMenuClick");
+      const clientWidth = document.body.clientWidth;
+      if (clientWidth < 1000) getThemeConfig.value.isCollapse = false;
     });
     return {
       menuList,
       getThemeConfig,
+      setIsCollapse,
       ...toRefs(state),
     };
   },

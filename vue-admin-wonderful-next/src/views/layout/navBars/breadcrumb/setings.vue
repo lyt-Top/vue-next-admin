@@ -193,6 +193,12 @@
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 TagsView 拖拽 </div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="getThemeConfig.isSortableTagsView" @change="onSortableTagsViewChange"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>
@@ -364,6 +370,7 @@ export default defineComponent({
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
+    // 获取布局配置信息
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
@@ -479,6 +486,11 @@ export default defineComponent({
       }
       setLocalThemeConfig();
     };
+    // 4、界面显示 --> 开启 TagsView 拖拽
+    const onSortableTagsViewChange = () => {
+      proxy.mittBus.emit("openOrCloseSortable");
+      setLocalThemeConfig();
+    };
     // 4、界面显示 --> 灰色模式/色弱模式
     const onAddFilterChange = (attr: string) => {
       if (attr === "grayscale") {
@@ -515,6 +527,7 @@ export default defineComponent({
     };
     // 5、布局切换
     const onSetLayout = (layout: string) => {
+      setLocal("oldLayout", layout);
       if (getThemeConfig.value.layout === layout) return false;
       getThemeConfig.value.layout = layout;
       getThemeConfig.value.isDrawer = false;
@@ -526,6 +539,7 @@ export default defineComponent({
       if (getThemeConfig.value.layout === "classic") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
+        getThemeConfig.value.isCollapse = false;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#FFFFFF";
         getThemeConfig.value.menuBarColor = "#606266";
@@ -535,6 +549,7 @@ export default defineComponent({
       } else if (getThemeConfig.value.layout === "transverse") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = false;
+        getThemeConfig.value.isCollapse = false;
         getThemeConfig.value.isTagsview = false;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBarColor = "#FFFFFF";
@@ -544,6 +559,7 @@ export default defineComponent({
       } else if (getThemeConfig.value.layout === "columns") {
         getThemeConfig.value.isShowLogo = true;
         getThemeConfig.value.isBreadcrumb = true;
+        getThemeConfig.value.isCollapse = false;
         getThemeConfig.value.isTagsview = true;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#FFFFFF";
@@ -554,6 +570,7 @@ export default defineComponent({
       } else {
         getThemeConfig.value.isShowLogo = false;
         getThemeConfig.value.isBreadcrumb = true;
+        getThemeConfig.value.isCollapse = true;
         getThemeConfig.value.isTagsview = true;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#545c64";
@@ -596,8 +613,18 @@ export default defineComponent({
     };
     onMounted(() => {
       nextTick(() => {
+        // 监听菜单点击，菜单字体背景高亮
         proxy.mittBus.on("onMenuClick", () => {
           onMenuBarHighlightChange();
+        });
+        // 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
+        proxy.mittBus.on("layoutMobileResize", (res) => {
+          if (getThemeConfig.value.layout === res.layout) return false;
+          getThemeConfig.value.layout = res.layout;
+          getThemeConfig.value.isDrawer = false;
+          initSetLayoutChange();
+          onMenuBarHighlightChange();
+          getThemeConfig.value.isCollapse = false;
         });
         // 刷新页面时，设置了值，直接取缓存中的值进行初始化
         setTimeout(() => {
@@ -631,7 +658,9 @@ export default defineComponent({
       });
     });
     onUnmounted(() => {
-      proxy.mittBus.off("onMenuClick", () => {});
+      // 取消监听菜单点击，菜单字体背景高亮
+      proxy.mittBus.off("onMenuClick");
+      proxy.mittBus.off("layoutMobileResize");
     });
     return {
       openDrawer,
@@ -652,6 +681,7 @@ export default defineComponent({
       setLocalThemeConfig,
       onClassicSplitMenuChange,
       onIsBreadcrumbChange,
+      onSortableTagsViewChange,
     };
   },
 });

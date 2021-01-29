@@ -110,6 +110,7 @@ export default defineComponent({
     .login-content-code-img {
       width: 100%;
       height: 40px;
+      line-height: 40px;
       background-color: #ffffff;
       border: 1px solid rgb(220, 223, 230);
       color: #333;

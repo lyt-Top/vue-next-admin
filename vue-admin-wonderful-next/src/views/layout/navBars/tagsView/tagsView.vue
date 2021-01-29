@@ -61,6 +61,7 @@ export default {
       },
       tagsRefsIndex: 0,
       tagsViewList: [],
+      sortable: "",
     });
     // 动态设置 tagsView 风格样式
     const setTagsStyle = computed(() => {
@@ -202,19 +203,23 @@ export default {
     const initSortable = () => {
       const el = document.querySelector(".layout-navbars-tagsview-ul");
       if (!el) return false;
-      const sortable = Sortable.create(el, {
-        animation: 300,
-        dataIdAttr: "data-name",
-        onEnd: () => {
-          const sortEndList = [];
-          sortable.toArray().map((val) => {
-            state.tagsViewList.map((v) => {
-              if (v.name === val) sortEndList.push({ ...v });
+      if (!getThemeConfig.value.isSortableTagsView)
+        state.sortable && state.sortable.destroy();
+      if (getThemeConfig.value.isSortableTagsView) {
+        state.sortable = Sortable.create(el, {
+          animation: 300,
+          dataIdAttr: "data-name",
+          onEnd: () => {
+            const sortEndList = [];
+            state.sortable.toArray().map((val) => {
+              state.tagsViewList.map((v) => {
+                if (v.name === val) sortEndList.push({ ...v });
+              });
             });
-          });
-          addBrowserSetSession(sortEndList);
-        },
-      });
+            addBrowserSetSession(sortEndList);
+          },
+        });
+      }
     };
     // 数据加载前
     onBeforeMount(() => {
@@ -222,11 +227,17 @@ export default {
       proxy.mittBus.on("onCurrentContextmenuClick", (data: object) => {
         onCurrentContextmenuClick(data);
       });
+      // 监听布局配置界面开启/关闭拖拽
+      proxy.mittBus.on("openOrCloseSortable", () => {
+        initSortable();
+      });
     });
     // 页面卸载时
     onUnmounted(() => {
       // 取消非本页面调用监听
       proxy.mittBus.off("onCurrentContextmenuClick");
+      // 取消监听布局配置界面开启/关闭拖拽
+      proxy.mittBus.off("openOrCloseSortable");
     });
     // 数据更新时
     onBeforeUpdate(() => {
@@ -266,6 +277,9 @@ export default {
 .layout-navbars-tagsview {
   flex: 1;
   background-color: #ffffff;
+  ::v-deep(.el-scrollbar__wrap) {
+    overflow-x: auto !important;
+  }
   &-ul {
     list-style: none;
     margin: 0;

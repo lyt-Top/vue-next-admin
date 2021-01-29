@@ -6,15 +6,9 @@
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, onMounted, onUnmounted } from "vue";
+import { computed, onBeforeMount, onUnmounted, getCurrentInstance } from "vue";
 import { useStore } from "/@/store/index.ts";
-import {
-  setLocal,
-  getLocal,
-  setSession,
-  getSession,
-  removeSession,
-} from "/@/utils/storage.ts";
+import { getLocal } from "/@/utils/storage.ts";
 import Defaults from "/@/views/layout/main/defaults.vue";
 import Classic from "/@/views/layout/main/classic.vue";
 import Transverse from "/@/views/layout/main/transverse.vue";
@@ -23,37 +17,32 @@ export default {
   name: "layout",
   components: { Defaults, Classic, Transverse, Columns },
   setup() {
+    const { proxy } = getCurrentInstance();
     const store = useStore();
     // 获取布局配置信息
     const getThemeConfig = computed(() => {
       return store.state.themeConfig;
     });
-    // 窗口大小改变时
+    // 窗口大小改变时(适配移动端)
     const onLayoutResize = () => {
       const clientWidth = document.body.clientWidth;
-      console.log(clientWidth);
       if (clientWidth < 1000) {
-        if (getLocal("themeConfig").layout === "defaults") return false;
-        setSession("oldThemeConfig", getLocal("themeConfig"));
-        const config = getLocal("themeConfig");
-        config.layout = "defaults";
-        console.log(config);
-        setLocal("themeConfig", config);
+        getThemeConfig.value.isCollapse = false;
+        proxy.mittBus.emit("layoutMobileResize", {
+          layout: "defaults",
+          clientWidth,
+        });
       } else {
-        if (
-          getLocal("themeConfig").layout === getSession("oldThemeConfig").layout
-        )
-          return false;
-        setLocal("themeConfig", getSession("oldThemeConfig"));
+        proxy.mittBus.emit("layoutMobileResize", {
+          layout: getLocal("oldLayout") ? getLocal("oldLayout") : "defaults",
+          clientWidth,
+        });
       }
     };
     // 页面加载前
     onBeforeMount(() => {
-      window.addEventListener("resize", onLayoutResize);
-    });
-    // 页面加载时
-    onMounted(() => {
       onLayoutResize();
+      window.addEventListener("resize", onLayoutResize);
     });
     // 页面卸载时
     onUnmounted(() => {

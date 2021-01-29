@@ -29,6 +29,7 @@ export default {
     isBreadcrumbIcon: false,
     isTagsviewIcon: false,
     isCacheTagsView: false,
+    isSortableTagsView: true,
     isFooter: false,
     isGrayscale: false,
     isInvert: false,

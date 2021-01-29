@@ -130,6 +130,7 @@ body,
   @extend .flex;
   flex-direction: column;
   width: 100%;
+  overflow: hidden;
 }
 .flex-margin {
   margin: auto;
