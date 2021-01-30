@@ -1,6 +1,6 @@
 <template>
   <div class="layout-scrollbar">
-    <div class="layout-view-bg-white flex">
+    <div class="layout-view-bg-white flex layout-view-link">
       <a :href="currentRouteMeta.isLink" target="_blank"
         class="flex-margin">{{currentRouteMeta.title}}：{{currentRouteMeta.isLink}}</a>
     </div>

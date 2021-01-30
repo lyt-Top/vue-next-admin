@@ -256,6 +256,10 @@
 .el-input-number__decrease:hover {
   color: set-color(primary);
 }
+// 菜单搜索
+.el-autocomplete-suggestion__wrap {
+  max-height: 280px !important;
+}
 
 /* Select 选择器
 ------------------------------- */
@@ -362,6 +366,14 @@
 ------------------------------- */
 .el-transfer-panel__item:hover {
   color: set-color(primary);
+}
+
+/* Form 表单
+------------------------------- */
+.el-form {
+  .el-form-item:last-of-type {
+    margin-bottom: 0 !important;
+  }
 }
 
 /* Table 表格

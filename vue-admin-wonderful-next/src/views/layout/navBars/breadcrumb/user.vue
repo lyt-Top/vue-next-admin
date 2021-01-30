@@ -1,12 +1,21 @@
 <template>
   <div class="layout-navbars-breadcrumb-user" :style="setFlexAutoStyle">
-    <div class="layout-navbars-breadcrumb-user-icon">
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
       <i class="el-icon-search" title="菜单搜索"></i>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
       <i class="icon-skin iconfont" title="布局配置"></i>
     </div>
-    <div class="layout-navbars-breadcrumb-user-icon"><i class="el-icon-bell" title="消息"></i></div>
+    <div class="layout-navbars-breadcrumb-user-icon" @click="onUserNewsPopoverClick">
+      <el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300">
+        <template #reference>
+          <el-badge :is-dot="true">
+            <i class="el-icon-bell" title="消息"></i>
+          </el-badge>
+        </template>
+        <UserNews />
+      </el-popover>
+    </div>
     <div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick"><i class="iconfont"
         :title="isScreenfull ? '开全屏' : '关全屏'" :class="!isScreenfull?'icon-fullscreen':'icon-tuichuquanping'"></i></div>
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
@@ -25,6 +34,7 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
+    <Search ref="searchRef" />
   </div>
 </template>
 
@@ -36,6 +46,7 @@ import {
   reactive,
   toRefs,
   toRef,
+  ref,
 } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
@@ -43,14 +54,19 @@ import screenfull from "screenfull";
 import { resetRoute } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
 import { clearSession } from "/@/utils/storage.ts";
+import UserNews from "/@/views/layout/navBars/breadcrumb/userNews.vue";
+import Search from "/@/views/layout/navBars/breadcrumb/search.vue";
 export default {
   name: "layoutBreadcrumbUser",
+  components: { UserNews, Search },
   setup() {
     const { proxy } = getCurrentInstance();
     const router = useRouter();
     const store = useStore();
+    const searchRef = ref();
     const state = reactive({
       isScreenfull: false,
+      isShowUserNewsPopover: false,
     });
     // 设置布局
     const setFlexAutoStyle = computed(() => {
@@ -113,11 +129,22 @@ export default {
         router.push(path);
       }
     };
+    // 菜单搜索点击
+    const onSearchClick = () => {
+      searchRef.value.openSearch();
+    };
+    // 我的消息点击
+    const onUserNewsPopoverClick = () => {
+      state.isShowUserNewsPopover = !state.isShowUserNewsPopover;
+    };
     return {
       setFlexAutoStyle,
       onLayoutSetingClick,
       onHandleCommandClick,
       onScreenfullClick,
+      onSearchClick,
+      onUserNewsPopoverClick,
+      searchRef,
       ...toRefs(state),
     };
   },
@@ -146,6 +173,8 @@ export default {
     color: var(--bg-topBarColor);
     height: 50px;
     line-height: 50px;
+    display: flex;
+    align-items: center;
     &:hover {
       background: rgba(0, 0, 0, 0.04);
       i {
@@ -156,6 +185,15 @@ export default {
   }
   ::v-deep(.el-dropdown) {
     color: var(--bg-topBarColor);
+  }
+  ::v-deep(.el-badge) {
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+  }
+  ::v-deep(.el-badge__content.is-fixed) {
+    top: 12px;
   }
 }
 </style>

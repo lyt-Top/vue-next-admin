@@ -1,26 +1,49 @@
 <template>
-  <el-card shadow="hover" header="tagsView 功能演示">
-    <el-form :inline="true" :model="formInline" size="small" label-width="60px" style="margin-bottom:1px;">
-      <el-form-item label="功能：">
-        <el-select v-model="formInline.selectId" placeholder="请选择">
-          <el-option v-for="item in selectOptions" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="路径：">
-        <el-input v-model="formInline.path" placeholder="路径如：/fun/tagsView" style="max-width:203px;"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onImplementClick">点击执行</el-button>
-      </el-form-item>
-    </el-form>
-    <el-divider></el-divider>
-    <el-button type="primary" size="small" icon="el-icon-refresh-right" @click="refreshCurrentTagsView">刷新当前页
-    </el-button>
-    <el-button type="info" size="small" icon="el-icon-close" @click="closeCurrentTagsView">关闭当前页</el-button>
-    <el-button type="warning" size="small" icon="el-icon-circle-close" @click="closeOtherTagsView">关闭其它</el-button>
-    <el-button type="danger" size="small" icon="el-icon-folder-delete" @click="closeAllTagsView">全部关闭</el-button>
-  </el-card>
+  <div>
+    <el-card shadow="hover" header="tagsView 非当前页演示">
+      <el-form :model="formInline" size="small" label-width="60px" style="margin-bottom:1px;">
+        <el-form-item label="功能：">
+          <el-select v-model="formInline.selectId" placeholder="请选择">
+            <el-option v-for="item in selectOptions" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="路径：">
+          <el-input v-model="formInline.path" placeholder="路径如：/fun/tagsView" style="max-width:203px;"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onImplementClick" icon="el-icon-thumb">点击执行</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+    <el-card shadow="hover" header="tagsView 当前页演示" class="mt15">
+      <div class="flex-warp">
+        <div class="flex-warp-item">
+          <div class="flex-warp-item-box">
+            <el-button type="primary" size="small" icon="el-icon-refresh-right" @click="refreshCurrentTagsView">刷新当前页
+            </el-button>
+          </div>
+        </div>
+        <div class="flex-warp-item">
+          <div class="flex-warp-item-box">
+            <el-button type="info" size="small" icon="el-icon-close" @click="closeCurrentTagsView">关闭当前页</el-button>
+          </div>
+        </div>
+        <div class="flex-warp-item">
+          <div class="flex-warp-item-box">
+            <el-button type="warning" size="small" icon="el-icon-circle-close" @click="closeOtherTagsView">关闭其它
+            </el-button>
+          </div>
+        </div>
+        <div class="flex-warp-item">
+          <div class="flex-warp-item-box">
+            <el-button type="danger" size="small" icon="el-icon-folder-delete" @click="closeAllTagsView">全部关闭
+            </el-button>
+          </div>
+        </div>
+      </div>
+    </el-card>
+  </div>
 </template>
 
 <script lang="ts">
@@ -104,7 +127,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.el-form-item {
-  margin-bottom: 0 !important;
+.flex-warp {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  margin: 0 -5px;
+  .flex-warp-item {
+    padding: 5px;
+    .flex-warp-item-box {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
 </style>

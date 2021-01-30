@@ -528,7 +528,7 @@ export function formatTwoStageRoutes(arr: any) {
     return newArr
 }
 
-// 缓存多级嵌套数组处理后的一维数组(tagsView中使用)
+// 缓存多级嵌套数组处理后的一维数组(tagsView、菜单过滤中使用：未过滤隐藏的(isHide))
 export function setCacheTagsViewRoutes() {
     store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children)
 }

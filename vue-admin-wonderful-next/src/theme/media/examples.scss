@@ -1,0 +1,13 @@
+@import './index.scss';
+
+/* 页面宽度小于576px
+------------------------------- */
+@media screen and (max-width: $xs) {
+  // tagsView 操作
+}
+
+/* 页面宽度小于768px
+------------------------------- */
+@media screen and (max-width: $sm) {
+  // tagsView 操作
+}

@@ -160,11 +160,13 @@ export default {
       store.state.themeConfig.lockScreenTime = 30;
       setLocalThemeConfig();
     };
+    // 页面加载时
     onMounted(() => {
       initGetElement();
       initSetTime();
       initLockScreen();
     });
+    // 页面卸载时
     onUnmounted(() => {
       clearInterval(state.setIntervalTime);
       clearInterval(state.isShowLockScreenIntervalTime);

@@ -6,8 +6,8 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-input type="password" placeholder="密码：123456" prefix-icon="el-icon-lock" v-model="ruleForm.password" clearable
-        autocomplete="off">
+      <el-input type="password" placeholder="密码：123456" prefix-icon="el-icon-lock" v-model="ruleForm.password"
+        autocomplete="off" show-password>
       </el-input>
     </el-form-item>
     <el-form-item>
