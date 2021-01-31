@@ -6,6 +6,7 @@
     "build": "vite build"
   },
   "dependencies": {
+    "clipboard": "^2.0.6",
     "element-plus": "^1.0.2-beta.30",
     "mitt": "^2.1.0",
     "nprogress": "^0.2.0",
@@ -16,6 +17,7 @@
     "vuex": "^4.0.0-rc.2"
   },
   "devDependencies": {
+    "@types/clipboard": "^2.0.1",
     "@types/node": "^14.14.22",
     "@types/nprogress": "^0.2.0",
     "@types/sortablejs": "^1.10.6",

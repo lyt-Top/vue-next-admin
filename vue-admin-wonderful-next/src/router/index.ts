@@ -528,9 +528,12 @@ export function formatTwoStageRoutes(arr: any) {
     return newArr
 }
 
-// 缓存多级嵌套数组处理后的一维数组(tagsView、菜单过滤中使用：未过滤隐藏的(isHide))
+// 缓存多级嵌套数组处理后的一维数组(tagsView、菜单搜索中使用：未过滤隐藏的(isHide))
 export function setCacheTagsViewRoutes() {
-    store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children)
+    // 先处理有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
+    let authsRoutes = setFilterMenuFun(dynamicRoutes, store.state.auths)
+    // 添加到 vuex setTagsViewRoutes 中
+    store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(authsRoutes))[0].children)
 }
 
 // 获取当前用户的权限去比对路由表，用于左侧菜单/横向菜单的显示
@@ -634,4 +637,5 @@ router.afterEach(() => {
     NProgress.done()
 })
 
+// 导出路由
 export default router

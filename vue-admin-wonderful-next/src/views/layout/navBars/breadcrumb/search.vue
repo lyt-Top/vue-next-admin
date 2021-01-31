@@ -1,8 +1,8 @@
 <template>
   <div class="layout-search-dialog">
-    <el-dialog v-model="isShowSearch" width="300px" destroy-on-close :modal="false" fullscreen>
+    <el-dialog v-model="isShowSearch" width="300px" destroy-on-close :modal="false" fullscreen :show-close="false">
       <el-autocomplete v-model="menuQuery" :fetch-suggestions="menuSearch" placeholder="菜单搜索：支持中文、路由路径"
-        prefix-icon="el-icon-search" ref="layoutMenuAutocompleteRef" @select="onHandleSelect">
+        prefix-icon="el-icon-search" ref="layoutMenuAutocompleteRef" @select="onHandleSelect" @blur="onSearchBlur">
         <template #default="{ item }">
           <div><i :class="item.meta.icon" class="mr10"></i>{{ item.meta.title }}</div>
         </template>
@@ -74,12 +74,17 @@ export default defineComponent({
       else router.push(path);
       closeSearch();
     };
+    // input 失去焦点时
+    const onSearchBlur = () => {
+      closeSearch();
+    };
     return {
       layoutMenuAutocompleteRef,
       openSearch,
       closeSearch,
       menuSearch,
       onHandleSelect,
+      onSearchBlur,
       ...toRefs(state),
     };
   },
@@ -99,13 +104,6 @@ export default defineComponent({
     top: 100px;
     left: 50%;
     transform: translateX(-50%);
-  }
-  ::v-deep(.el-dialog__headerbtn) {
-    top: 15px;
-    right: 15px;
-    .el-dialog__close {
-      color: var(--color-primary);
-    }
   }
 }
 </style>

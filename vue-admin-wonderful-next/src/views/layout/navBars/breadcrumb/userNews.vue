@@ -79,10 +79,9 @@ export default {
   .content-box {
     font-size: 13px;
     .content-box-item {
-      border-bottom: 1px solid #ebeef5;
-      padding: 12px 0;
+      padding-top: 12px;
       &:last-of-type {
-        border-bottom: 1px solid transparent;
+        padding-bottom: 12px;
       }
       .content-box-msg {
         color: #999999;

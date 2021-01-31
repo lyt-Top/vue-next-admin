@@ -21,7 +21,8 @@
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
       <span class="layout-navbars-breadcrumb-user-link">
         <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
-          class="layout-navbars-breadcrumb-user-link-photo mr5" /> small@小柒
+          class="layout-navbars-breadcrumb-user-link-photo mr5" />
+        {{userInfo.userName === '' ? 'test' : userInfo.userName}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <template #dropdown>
@@ -47,13 +48,14 @@ import {
   toRefs,
   toRef,
   ref,
+  onMounted,
 } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
 import screenfull from "screenfull";
 import { resetRoute } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
-import { clearSession } from "/@/utils/storage.ts";
+import { getSession, clearSession } from "/@/utils/storage.ts";
 import UserNews from "/@/views/layout/navBars/breadcrumb/userNews.vue";
 import Search from "/@/views/layout/navBars/breadcrumb/search.vue";
 export default {
@@ -67,6 +69,7 @@ export default {
     const state = reactive({
       isScreenfull: false,
       isShowUserNewsPopover: false,
+      userInfo: {},
     });
     // 设置布局
     const setFlexAutoStyle = computed(() => {
@@ -121,7 +124,7 @@ export default {
             resetRoute(); // 删除/重置路由
             router.push("/login");
             setTimeout(() => {
-              ElMessage.success("退出成功！记得回来哟~");
+              ElMessage.success("安全退出成功！");
             }, 300);
           })
           .catch(() => {});
@@ -137,6 +140,15 @@ export default {
     const onUserNewsPopoverClick = () => {
       state.isShowUserNewsPopover = !state.isShowUserNewsPopover;
     };
+    // 获取用户信息（sessionStorage）
+    const initUserInfo = () => {
+      if (!getSession("userInfo")) return false;
+      state.userInfo = getSession("userInfo");
+    };
+    // 页面加载时
+    onMounted(() => {
+      initUserInfo();
+    });
     return {
       setFlexAutoStyle,
       onLayoutSetingClick,
@@ -145,6 +157,7 @@ export default {
       onSearchClick,
       onUserNewsPopoverClick,
       searchRef,
+      initUserInfo,
       ...toRefs(state),
     };
   },

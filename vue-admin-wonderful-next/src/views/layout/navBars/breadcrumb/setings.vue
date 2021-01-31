@@ -339,12 +339,11 @@
           </div>
         </div>
         <div class="copy-config">
-          <el-alert title="点击下方按钮，复制 / 还原布局配置。" type="warning" :closable="false">
+          <el-alert title="点击下方按钮，复制布局配置去 `src/utils/themeConfig.ts` 中修改。" type="warning" :closable="false">
           </el-alert>
-          <el-button size="small" class="copy-config-btn" icon="el-icon-document-copy" type="primary">一键复制配置
+          <el-button size="small" class="copy-config-btn" icon="el-icon-document-copy" type="primary"
+            ref="copyConfigBtnRef" @click="onCopyConfigClick($event.target)">一键复制配置
           </el-button>
-          <el-button size="small" class="copy-config-btn copy-config-last-btn" icon="el-icon-refresh" type="warning">
-            一键还原配置</el-button>
         </div>
       </el-scrollbar>
     </el-drawer>
@@ -359,7 +358,10 @@ import {
   getCurrentInstance,
   defineComponent,
   computed,
+  ref,
 } from "vue";
+import { ElMessage } from "element-plus";
+import ClipboardJS from "clipboard";
 import { useStore } from "/@/store/index.ts";
 import { getLightColor } from "/@/utils/theme.ts";
 import Watermark from "/@/utils/wartermark.ts";
@@ -369,6 +371,7 @@ export default defineComponent({
   name: "layoutBreadcrumbSeting",
   setup() {
     const { proxy } = getCurrentInstance();
+    const copyConfigBtnRef = ref();
     const store = useStore();
     // 获取布局配置信息
     const getThemeConfig = computed(() => {
@@ -597,6 +600,10 @@ export default defineComponent({
     // 布局配置弹窗打开
     const openDrawer = () => {
       getThemeConfig.value.isDrawer = true;
+      nextTick(() => {
+        // 初始化复制功能，防止点击两次才可以复制
+        onCopyConfigClick(copyConfigBtnRef.value.$el);
+      });
     };
     // 触发 store 布局配置更新
     const setDispatchThemeConfig = () => {
@@ -610,6 +617,23 @@ export default defineComponent({
     // 存储布局配置全局主题样式（html根标签）
     const setLocalThemeConfigStyle = () => {
       setLocal("themeConfigStyle", document.documentElement.style.cssText);
+    };
+    // 一键复制配置
+    const onCopyConfigClick = (target: any) => {
+      let copyThemeConfig = getLocal("themeConfig");
+      copyThemeConfig.isDrawer = false;
+      const clipboard = new ClipboardJS(target, {
+        text: () => JSON.stringify(copyThemeConfig),
+      });
+      clipboard.on("success", () => {
+        getThemeConfig.value.isDrawer = false;
+        ElMessage.success("复制成功！");
+        clipboard.destroy();
+      });
+      clipboard.on("error", () => {
+        ElMessage.error("复制失败！");
+        clipboard.destroy();
+      });
     };
     onMounted(() => {
       nextTick(() => {
@@ -682,6 +706,8 @@ export default defineComponent({
       onClassicSplitMenuChange,
       onIsBreadcrumbChange,
       onSortableTagsViewChange,
+      copyConfigBtnRef,
+      onCopyConfigClick,
     };
   },
 });

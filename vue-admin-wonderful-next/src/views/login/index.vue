@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-logo">
-      <img src="/@/assets/logo-web-element.svg" />
+      <span>SMALL@小柒</span>
     </div>
     <div class="login-content" :class="{'login-content-mobile' : tabsActiveName === 'mobile'}">
       <div class="login-content-main">
@@ -61,10 +61,15 @@ export default {
   .login-logo {
     position: absolute;
     top: 30px;
-    left: 30px;
+    left: 50%;
     height: 50px;
     display: flex;
     align-items: center;
+    font-size: 20px;
+    color: var(--color-primary);
+    letter-spacing: 2px;
+    width: 90%;
+    transform: translateX(-50%);
   }
   .login-content {
     width: 500px;
