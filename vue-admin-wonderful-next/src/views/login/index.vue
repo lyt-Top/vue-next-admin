@@ -18,8 +18,10 @@
             </transition>
           </el-tab-pane>
         </el-tabs>
-        <el-button type="text" size="small">第三方登录</el-button>
-        <el-button type="text" size="small">友情链接</el-button>
+        <div class="mt10">
+          <el-button type="text" size="small">第三方登录</el-button>
+          <el-button type="text" size="small">友情链接</el-button>
+        </div>
       </div>
     </div>
     <div class="login-copyright">
