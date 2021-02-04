@@ -222,9 +222,9 @@
 <script lang="ts">
 import { ElMessage } from "element-plus";
 import LimitsFrontEndPage from "/@/views/limits/frontEnd/page/index.vue";
-import Auth from "/@/views/components/auth/auth.vue";
-import Auths from "/@/views/components/auth/auths.vue";
-import AuthAll from "/@/views/components/auth/authAll.vue";
+import Auth from "/@/components/auth/auth.vue";
+import Auths from "/@/components/auth/auths.vue";
+import AuthAll from "/@/components/auth/authAll.vue";
 import { auth, auths, authAll } from "/@/utils/authFunction.ts";
 export default {
   name: "limitsFrontEndBtn",

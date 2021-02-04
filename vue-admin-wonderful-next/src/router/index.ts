@@ -348,21 +348,6 @@ export const dynamicRoutes = [
             }
         },
         {
-            path: '/components',
-            name: 'componentsIndex',
-            component: () => import('/@/views/components/index.vue'),
-            meta: {
-                title: '组件',
-                isLink: '',
-                isHide: false,
-                isKeepAlive: true,
-                isAffix: false,
-                isIframe: false,
-                auth: ['admin', 'test'],
-                icon: 'iconfont icon-zujian'
-            }
-        },
-        {
             path: '/chart',
             name: 'chartIndex',
             component: () => import('/@/views/chart/index.vue'),
