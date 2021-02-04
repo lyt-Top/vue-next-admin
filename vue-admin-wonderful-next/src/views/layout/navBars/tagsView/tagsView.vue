@@ -81,6 +81,7 @@ export default {
     };
     // 获取 vuex 中的 tagsViewRoutes 列表
     const getTagsViewRoutes = () => {
+      state.routePath = route.path;
       state.tagsViewList = [];
       removeSession("tagsViewList");
       state.tagsViewRoutesList = store.state.tagsViewRoutes;
@@ -185,6 +186,7 @@ export default {
     };
     // 当前的 tagsView 项点击时
     const onTagsClick = (v: object, k: number) => {
+      state.routePath = v.path;
       state.tagsRefsIndex = k;
       router.push(v.path);
     };

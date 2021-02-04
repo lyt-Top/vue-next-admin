@@ -39,6 +39,7 @@ export default defineComponent({
       nextTick(() => {
         state.iframeLoading = true;
         const iframe = document.getElementById("iframe");
+        if (!iframe) return false;
         iframe.onload = () => {
           state.iframeLoading = false;
         };
@@ -59,7 +60,9 @@ export default defineComponent({
     });
     // 页面卸载时
     onUnmounted(() => {
-      proxy.mittBus.off("onTagsViewRefreshRouterView");
+      proxy.mittBus.off("onTagsViewRefreshRouterView", () => {
+        console.log(1111);
+      });
     });
     return {
       ...toRefs(state),

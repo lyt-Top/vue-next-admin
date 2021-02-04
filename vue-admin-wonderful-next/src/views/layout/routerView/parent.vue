@@ -57,9 +57,9 @@ export default defineComponent({
     onBeforeMount(() => {
       proxy.mittBus.on("onTagsViewRefreshRouterView", (path: string) => {
         if (route.path !== path) return false;
-        state.refreshRouterViewKey = Math.random();
+        state.refreshRouterViewKey = route.path;
         nextTick(() => {
-          state.refreshRouterViewKey = path;
+          state.refreshRouterViewKey = null;
         });
       });
     });

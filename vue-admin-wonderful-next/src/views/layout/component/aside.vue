@@ -108,6 +108,8 @@ export default {
     // 监听路由的变化，动态赋值给菜单中
     watch(store.state, (val) => {
       if (val.routes.length === state.menuList.length) return false;
+      let { layout, isClassicSplitMenu } = val.themeConfig;
+      if (layout === "classic" && isClassicSplitMenu) return false;
       setFilterRoutes();
     });
     // 页面加载前
@@ -119,8 +121,10 @@ export default {
       });
       proxy.mittBus.on("setSendClassicChildren", (res) => {
         let { layout, isClassicSplitMenu } = store.state.themeConfig;
-        if (layout === "classic" && isClassicSplitMenu)
+        if (layout === "classic" && isClassicSplitMenu) {
+          state.menuList = [];
           state.menuList = res.children;
+        }
       });
       proxy.mittBus.on("getBreadcrumbIndexSetFilterRoutes", () => {
         setFilterRoutes();

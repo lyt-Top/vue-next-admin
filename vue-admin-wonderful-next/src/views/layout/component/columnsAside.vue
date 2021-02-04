@@ -35,6 +35,7 @@ import {
   onMounted,
   nextTick,
   getCurrentInstance,
+  watch,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
@@ -51,6 +52,7 @@ export default {
       columnsAsideList: [],
       liIndex: 0,
       difference: 0,
+      routeSplit: [],
     });
     // 设置高亮样式
     const setColumnsAsideStyle = computed(() => {
@@ -64,7 +66,7 @@ export default {
         return "layout-columns-card-active";
     });
     // 设置菜单高亮位置移动
-    const setColumnsAsideMove = (v: Object, k: number) => {
+    const setColumnsAsideMove = (k: number) => {
       state.liIndex = k;
       columnsAsideActiveRef.value.style.top = `${
         columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference
@@ -72,22 +74,22 @@ export default {
     };
     // 菜单高亮点击事件
     const onColumnsAsideMenuClick = (v: Object, k: number) => {
-      setColumnsAsideMove(v, k);
+      setColumnsAsideMove(k);
       let { path, redirect } = v;
       if (redirect) router.push(redirect);
       else router.push(path);
     };
     // 设置高亮动态位置
-    const onColumnsAsideDown = (v: Object, k: number) => {
+    const onColumnsAsideDown = (k: number) => {
       nextTick(() => {
-        setColumnsAsideMove(v, k);
+        setColumnsAsideMove(k);
       });
     };
     // 设置/过滤路由（非静态路由/是否显示在菜单中）
     const setFilterRoutes = () => {
       state.columnsAsideList = filterRoutesFun(store.state.routes);
       const resData = setSendChildren(route.path);
-      onColumnsAsideDown(resData.item[0], resData.item[0].k);
+      onColumnsAsideDown(resData.item[0].k);
       proxy.mittBus.emit("setSendColumnsChildren", resData);
     };
     // 传送当前子级数据到菜单中
@@ -114,12 +116,31 @@ export default {
           return item;
         });
     };
+    // tagsView 点击时，根据路由查找下标 columnsAsideList，实现左侧菜单高亮
+    const setColumnsMenuHighlight = (path) => {
+      state.routeSplit = path.split("/");
+      state.routeSplit.shift();
+      const routeFirst = `/${state.routeSplit[0]}`;
+      const currentSplitRoute = state.columnsAsideList.find(
+        (v) => v.path === routeFirst
+      );
+      // 延迟拿值，防止取不到
+      setTimeout(() => {
+        onColumnsAsideDown(currentSplitRoute.k);
+      }, 0);
+    };
+    // 监听路由的变化，动态赋值给菜单中
+    watch(store.state, (val) => {
+      if (val.routes.length === state.columnsAsideList.length) return false;
+      setFilterRoutes();
+    });
     // 页面加载时
     onMounted(() => {
       setFilterRoutes();
     });
     // 路由更新时
     onBeforeRouteUpdate((to) => {
+      setColumnsMenuHighlight(to.path);
       proxy.mittBus.emit("setSendColumnsChildren", setSendChildren(to.path));
     });
     return {

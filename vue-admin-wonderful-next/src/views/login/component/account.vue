@@ -74,8 +74,9 @@ export default defineComponent({
         "btn.add",
         "btn.del",
         "btn.edit",
+        "btn.link",
       ];
-      let testAuthList: Array<string> = ["test", "btn.add"];
+      let testAuthList: Array<string> = ["test", "btn.add", "btn.link"];
       if (state.ruleForm.userName === "admin") defaultAuthList = adminAuthList;
       else defaultAuthList = testAuthList;
       const userInfos = {

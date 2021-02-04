@@ -1,7 +1,8 @@
 <template>
   <div class="el-menu-horizontal-warp">
     <el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-      <el-menu router :default-active="defaultActive" background-color="transparent" mode="horizontal">
+      <el-menu router :default-active="defaultActive" background-color="transparent" mode="horizontal"
+        @select="onHorizontalSelect">
         <template v-for="val in menuList">
           <el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
             <template #title>
@@ -90,6 +91,37 @@ export default defineComponent({
         state.defaultActive = path;
       }
     };
+    // 路由过滤递归函数
+    const filterRoutesFun = (arr: Array<object>) => {
+      return arr
+        .filter((item) => !item.meta.isHide)
+        .map((item) => {
+          item = Object.assign({}, item);
+          if (item.children) item.children = filterRoutesFun(item.children);
+          return item;
+        });
+    };
+    // 传送当前子级数据到菜单中
+    const setSendClassicChildren = (path: string) => {
+      const currentPathSplit = path.split("/");
+      let currentData: object = {};
+      filterRoutesFun(store.state.routes).map((v, k) => {
+        if (v.path === `/${currentPathSplit[1]}`) {
+          v["k"] = k;
+          currentData["item"] = [{ ...v }];
+          currentData["children"] = [{ ...v }];
+          if (v.children) currentData["children"] = v.children;
+        }
+      });
+      return currentData;
+    };
+    // 菜单激活回调
+    const onHorizontalSelect = (path) => {
+      proxy.mittBus.emit(
+        "setSendClassicChildren",
+        setSendClassicChildren(path)
+      );
+    };
     // 页面加载时
     onMounted(() => {
       initElMenuOffsetLeft();
@@ -103,6 +135,7 @@ export default defineComponent({
     return {
       menuList,
       onElMenuHorizontalScroll,
+      onHorizontalSelect,
       ...toRefs(state),
     };
   },

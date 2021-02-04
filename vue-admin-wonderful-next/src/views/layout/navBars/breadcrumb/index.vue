@@ -15,8 +15,9 @@ import {
   onMounted,
   onUnmounted,
   getCurrentInstance,
+  watch,
 } from "vue";
-import { useRoute, onBeforeRouteUpdate } from "vue-router";
+import { useRoute } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 import Breadcrumb from "/@/views/layout/navBars/breadcrumb/breadcrumb.vue";
 import User from "/@/views/layout/navBars/breadcrumb/user.vue";
@@ -95,6 +96,11 @@ export default {
       });
       return currentData;
     };
+    // 监听路由的变化，动态赋值给菜单中
+    watch(store.state, (val) => {
+      if (val.routes.length === state.menuList.length) return false;
+      setFilterRoutes();
+    });
     // 页面加载时
     onMounted(() => {
       setFilterRoutes();
@@ -105,13 +111,6 @@ export default {
     // 页面卸载时
     onUnmounted(() => {
       proxy.mittBus.off("getBreadcrumbIndexSetFilterRoutes");
-    });
-    // 路由更新时
-    onBeforeRouteUpdate((to) => {
-      proxy.mittBus.emit(
-        "setSendClassicChildren",
-        setSendClassicChildren(to.path)
-      );
     });
     return {
       getThemeConfig,
