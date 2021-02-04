@@ -35,10 +35,11 @@ import {
   onBeforeMount,
   onUnmounted,
   getCurrentInstance,
+  watch,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
 import { useStore } from "/@/store/index.ts";
-import { setSession, getSession } from "/@/utils/storage.ts";
+import { setSession, getSession, removeSession } from "/@/utils/storage.ts";
 import Sortable from "sortablejs";
 import Contextmenu from "/@/views/layout/navBars/tagsView/contextmenu.vue";
 import Scroll from "/@/views/layout/navBars/tagsView/scroll.vue";
@@ -55,13 +56,11 @@ export default {
     const router = useRouter();
     const state = reactive({
       routePath: route.path,
-      dropdown: {
-        x: "",
-        y: "",
-      },
+      dropdown: { x: "", y: "" },
       tagsRefsIndex: 0,
       tagsViewList: [],
       sortable: "",
+      tagsViewRoutesList: [],
     });
     // 动态设置 tagsView 风格样式
     const setTagsStyle = computed(() => {
@@ -80,6 +79,13 @@ export default {
     const addBrowserSetSession = (tagsViewList: Array<object>) => {
       setSession("tagsViewList", tagsViewList);
     };
+    // 获取 vuex 中的 tagsViewRoutes 列表
+    const getTagsViewRoutes = () => {
+      state.tagsViewList = [];
+      removeSession("tagsViewList");
+      state.tagsViewRoutesList = store.state.tagsViewRoutes;
+      initTagsView();
+    };
     // vuex 中获取路由信息：如果是设置了固定的（isAffix），进行初始化显示
     const initTagsView = () => {
       if (
@@ -88,7 +94,7 @@ export default {
       ) {
         state.tagsViewList = getSession("tagsViewList");
       } else {
-        store.state.tagsViewRoutes.map((v) => {
+        state.tagsViewRoutesList.map((v) => {
           if (v.meta.isAffix && !v.meta.isHide)
             state.tagsViewList.push({ ...v });
         });
@@ -102,7 +108,7 @@ export default {
     // 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中
     const addTagsView = (path: string) => {
       if (state.tagsViewList.some((v) => v.path === path)) return false;
-      const item = store.state.tagsViewRoutes.find((v) => v.path === path);
+      const item = state.tagsViewRoutesList.find((v) => v.path === path);
       if (item.meta.isLink && !item.meta.isIframe) return false;
       if (!item.meta.isHide) state.tagsViewList.push({ ...item });
       addBrowserSetSession(state.tagsViewList);
@@ -128,7 +134,7 @@ export default {
     // 4、关闭其它 tagsView：如果是设置了固定的（isAffix），不进行关闭
     const closeOtherTagsView = (path: string) => {
       state.tagsViewList = [];
-      store.state.tagsViewRoutes.map((v) => {
+      state.tagsViewRoutesList.map((v) => {
         if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
       });
       addTagsView(path);
@@ -136,7 +142,7 @@ export default {
     // 5、关闭全部 tagsView：如果是设置了固定的（isAffix），不进行关闭
     const closeAllTagsView = (path: string) => {
       state.tagsViewList = [];
-      store.state.tagsViewRoutes.map((v) => {
+      state.tagsViewRoutesList.map((v) => {
         if (v.meta.isAffix && !v.meta.isHide) {
           state.tagsViewList.push({ ...v });
           if (state.tagsViewList.some((v) => v.path === path))
@@ -221,7 +227,13 @@ export default {
         });
       }
     };
-    // 数据加载前
+    // 监听路由的变化，动态赋值给 tagsView
+    watch(store.state, (val) => {
+      if (val.tagsViewRoutes.length === state.tagsViewRoutesList.length)
+        return false;
+      getTagsViewRoutes();
+    });
+    // 页面加载前
     onBeforeMount(() => {
       // 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部
       proxy.mittBus.on("onCurrentContextmenuClick", (data: object) => {
@@ -239,14 +251,15 @@ export default {
       // 取消监听布局配置界面开启/关闭拖拽
       proxy.mittBus.off("openOrCloseSortable");
     });
-    // 数据更新时
+    // 页面更新时
     onBeforeUpdate(() => {
       tagsRefs.value = [];
     });
     // 页面加载时
     onMounted(() => {
+      // 初始化 vuex 中的 tagsViewRoutes 列表
+      getTagsViewRoutes();
       initSortable();
-      initTagsView();
     });
     // 路由更新时
     onBeforeRouteUpdate((to) => {
@@ -258,6 +271,7 @@ export default {
     return {
       isActive,
       onContextmenu,
+      getTagsViewRoutes,
       onTagsClick,
       tagsRefs,
       contextmenuRef,

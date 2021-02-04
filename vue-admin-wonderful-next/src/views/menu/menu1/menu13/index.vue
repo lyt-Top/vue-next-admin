@@ -1,7 +1,6 @@
 <template>
   <div>
-    menu13
-    <el-input v-model="val"></el-input>
+    <el-input v-model="val" placeholder="menu13：请输入内容测试路由缓存"></el-input>
   </div>
 </template>
 

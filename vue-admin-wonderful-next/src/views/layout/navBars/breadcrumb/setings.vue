@@ -162,22 +162,22 @@
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15"
           :style="{opacity:getThemeConfig.layout === 'transverse' ? 0.5 : 1}">
-          <div class="layout-breadcrumb-seting-bar-flex-label">面包屑 Breadcrumb</div>
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Breadcrumb</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isBreadcrumb" :disabled="getThemeConfig.layout === 'transverse'"
               @change="onIsBreadcrumbChange"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
-          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
-          <div class="layout-breadcrumb-seting-bar-flex-value">
-            <el-switch v-model="getThemeConfig.isTagsview" @change="setLocalThemeConfig"></el-switch>
-          </div>
-        </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15">
           <div class="layout-breadcrumb-seting-bar-flex-label">开启 Breadcrumb 图标</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-switch v-model="getThemeConfig.isBreadcrumbIcon" @change="setLocalThemeConfig"></el-switch>
+          </div>
+        </div>
+        <div class="layout-breadcrumb-seting-bar-flex mt15">
+          <div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
+          <div class="layout-breadcrumb-seting-bar-flex-value">
+            <el-switch v-model="getThemeConfig.isTagsview" @change="setLocalThemeConfig"></el-switch>
           </div>
         </div>
         <div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -573,7 +573,7 @@ export default defineComponent({
       } else {
         getThemeConfig.value.isShowLogo = false;
         getThemeConfig.value.isBreadcrumb = true;
-        getThemeConfig.value.isCollapse = true;
+        getThemeConfig.value.isCollapse = false;
         getThemeConfig.value.isTagsview = true;
         getThemeConfig.value.isClassicSplitMenu = false;
         getThemeConfig.value.menuBar = "#545c64";

@@ -8,7 +8,7 @@ export default {
     danger: "#f56c6c",
     topBar: "#ffffff",
     menuBar: "#545c64",
-    columnsMenuBar: '#4276ab',
+    columnsMenuBar: '#545c64',
     topBarColor: "#606266",
     menuBarColor: "#eaeaea",
     columnsMenuBarColor: '#e6e6e6',

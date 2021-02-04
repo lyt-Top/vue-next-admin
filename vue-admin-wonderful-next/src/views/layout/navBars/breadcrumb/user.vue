@@ -20,9 +20,8 @@
         :title="isScreenfull ? '开全屏' : '关全屏'" :class="!isScreenfull?'icon-fullscreen':'icon-tuichuquanping'"></i></div>
     <el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
       <span class="layout-navbars-breadcrumb-user-link">
-        <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
-          class="layout-navbars-breadcrumb-user-link-photo mr5" />
-        {{userInfo.userName === '' ? 'test' : userInfo.userName}}
+        <img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
+        {{getUserInfos.userName === '' ? 'test' : getUserInfos.userName}}
         <i class="el-icon-arrow-down el-icon--right"></i>
       </span>
       <template #dropdown>
@@ -48,7 +47,6 @@ import {
   toRefs,
   toRef,
   ref,
-  onMounted,
 } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessageBox, ElMessage } from "element-plus";
@@ -69,7 +67,6 @@ export default {
     const state = reactive({
       isScreenfull: false,
       isShowUserNewsPopover: false,
-      userInfo: {},
     });
     // 设置布局
     const setFlexAutoStyle = computed(() => {
@@ -79,6 +76,10 @@ export default {
         !store.state.themeConfig.isClassicSplitMenu
       )
         return { flex: 1 };
+    });
+    // 获取用户信息 vuex
+    const getUserInfos = computed(() => {
+      return store.state.userInfos;
     });
     // 全屏点击时
     const onScreenfullClick = () => {
@@ -140,24 +141,15 @@ export default {
     const onUserNewsPopoverClick = () => {
       state.isShowUserNewsPopover = !state.isShowUserNewsPopover;
     };
-    // 获取用户信息（sessionStorage）
-    const initUserInfo = () => {
-      if (!getSession("userInfo")) return false;
-      state.userInfo = getSession("userInfo");
-    };
-    // 页面加载时
-    onMounted(() => {
-      initUserInfo();
-    });
     return {
       setFlexAutoStyle,
+      getUserInfos,
       onLayoutSetingClick,
       onHandleCommandClick,
       onScreenfullClick,
       onSearchClick,
       onUserNewsPopoverClick,
       searchRef,
-      initUserInfo,
       ...toRefs(state),
     };
   },

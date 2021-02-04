@@ -105,6 +105,11 @@ export default {
         proxy.$refs.layoutAsideScrollbarRef.update();
       }
     });
+    // 监听路由的变化，动态赋值给菜单中
+    watch(store.state, (val) => {
+      if (val.routes.length === state.menuList.length) return false;
+      setFilterRoutes();
+    });
     // 页面加载前
     onBeforeMount(() => {
       initMenuFixed(document.body.clientWidth);

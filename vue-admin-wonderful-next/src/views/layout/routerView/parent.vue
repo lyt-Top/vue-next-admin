@@ -22,11 +22,7 @@ import {
   onUnmounted,
   nextTick,
 } from "vue";
-import {
-  useRoute,
-  useRouter,
-  onBeforeRouteUpdate,
-} from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 export default defineComponent({
   name: "layoutParentView",
@@ -37,7 +33,7 @@ export default defineComponent({
     const store = useStore();
     const state = reactive({
       transitionName: "slide-right",
-      refreshRouterViewKey: route.path,
+      refreshRouterViewKey: null,
     });
     // 设置主界面切换动画
     const setTransitionName = computed(() => {
@@ -56,10 +52,6 @@ export default defineComponent({
     // 获取组件缓存列表(name值)
     const getCaches = computed(() => {
       return store.state.caches;
-    });
-    // 路由更新时
-    onBeforeRouteUpdate((to) => {
-      state.refreshRouterViewKey = to.path;
     });
     // 页面加载前
     onBeforeMount(() => {

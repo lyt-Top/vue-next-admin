@@ -47,7 +47,8 @@ export interface RootStateTypes {
     routes: Array<object>,
     caches: Array<string>,
     tagsViewRoutes: Array<object>,
-    auths: Array<string>
+    auths: Array<string>,
+    userInfos: object
 }
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol()
@@ -58,7 +59,8 @@ export const store = createStore<RootStateTypes>({
         routes: [],
         caches: [],
         tagsViewRoutes: [],
-        auths: []
+        auths: [],
+        userInfos: {}
     },
     mutations: {
         // 设置布局配置
@@ -80,7 +82,11 @@ export const store = createStore<RootStateTypes>({
         // 设置权限
         getAuths(state: any, data: Array<string>) {
             state.auths = data
-        }
+        },
+        // 设置用户信息
+        getUserInfos(state: any, data: object) {
+            state.userInfos = data
+        },
     },
     actions: {
         // 设置布局配置
@@ -102,15 +108,19 @@ export const store = createStore<RootStateTypes>({
         // 设置权限
         async setAuths({ commit }, data: Array<string>) {
             // 模拟权限，实际项目中，请通过直接走接口获取权限标识
-            let authList: Array<string> = []
-            if (getSession('defaultAuthList')) {
-                authList = getSession('defaultAuthList')
+            if (data && data.length > 0) {
+                commit('getAuths', data)
             } else {
-                let defaultAuthList: Array<string> = ['admin', 'btn.add', 'btn.del', 'btn.edit']
-                if (data && data.length > 0) authList = data
-                else authList = defaultAuthList
+                if (getSession('userInfo')) commit('getAuths', getSession('userInfo').authList)
             }
-            commit('getAuths', authList)
+        },
+        // 设置用户信息
+        async setUserInfos({ commit }, data: object) {
+            if (data) {
+                commit('getUserInfos', data)
+            } else {
+                if (getSession('userInfo')) commit('getUserInfos', getSession('userInfo'))
+            }
         },
     }
 })

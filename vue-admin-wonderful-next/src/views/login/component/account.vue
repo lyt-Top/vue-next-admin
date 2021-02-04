@@ -78,14 +78,20 @@ export default defineComponent({
       let testAuthList: Array<string> = ["test", "btn.add"];
       if (state.ruleForm.userName === "admin") defaultAuthList = adminAuthList;
       else defaultAuthList = testAuthList;
-      store.dispatch("setAuths", defaultAuthList);
-      initAllFun();
-      setSession("defaultAuthList", defaultAuthList);
-      setSession("token", Math.random().toString(36).substr(0));
-      setSession("userInfo", {
+      const userInfos = {
         userName: state.ruleForm.userName,
+        photo:
+          state.ruleForm.userName === "admin"
+            ? "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg"
+            : "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg",
         time: new Date().getTime(),
-      });
+        authList: defaultAuthList,
+      };
+      setSession("token", Math.random().toString(36).substr(0));
+      setSession("userInfo", userInfos);
+      store.dispatch("setAuths", defaultAuthList); // 请注意执行顺序(存储用户权限到vuex)
+      store.dispatch("setUserInfos", userInfos); // 请注意执行顺序(存储用户信息vuex)
+      initAllFun(); // 请注意执行顺序
       router.push("/");
       setTimeout(() => {
         ElMessage.success(`${currentTimeInfo}，欢迎回来！`);

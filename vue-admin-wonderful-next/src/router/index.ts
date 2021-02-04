@@ -165,20 +165,6 @@ export const dynamicRoutes = [
                                 isIframe: false,
                                 auth: ['admin', 'test']
                             }
-                        },
-                        {
-                            path: '/limits/backEnd/btn',
-                            name: 'limitsBackEndEndBtn',
-                            component: () => import('/@/views/limits/backEnd/btn/index.vue'),
-                            meta: {
-                                title: '按钮权限',
-                                isLink: '',
-                                isHide: false,
-                                isKeepAlive: true,
-                                isAffix: false,
-                                isIframe: false,
-                                auth: ['admin', 'test']
-                            }
                         }
                     ]
                 }
@@ -190,7 +176,7 @@ export const dynamicRoutes = [
             component: () => import('/@/views/layout/routerView/parent.vue'),
             redirect: '/menu/menu1',
             meta: {
-                title: '路由嵌套',
+                title: '菜单嵌套',
                 isLink: '',
                 isHide: false,
                 isKeepAlive: true,
@@ -600,6 +586,7 @@ export function initAllFun() {
     const token = getSession('token')
     if (!token) return false
     store.dispatch('setAuths')
+    store.dispatch('setUserInfos')
     setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单
     setCacheTagsViewRoutes() // 添加 keepAlive 缓存
