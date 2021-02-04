@@ -2,7 +2,7 @@
   <div class="h100">
     <router-view v-slot="{ Component }">
       <transition :name="setTransitionName" mode="out-in">
-        <keep-alive :include="getCaches">
+        <keep-alive :include="getKeepAliveNames">
           <component :is="Component" :key="refreshRouterViewKey" class="w100" />
         </keep-alive>
       </transition>
@@ -50,8 +50,8 @@ export default defineComponent({
       return store.state.themeConfig;
     });
     // 获取组件缓存列表(name值)
-    const getCaches = computed(() => {
-      return store.state.caches;
+    const getKeepAliveNames = computed(() => {
+      return store.state.keepAliveNames;
     });
     // 页面加载前
     onBeforeMount(() => {
@@ -69,7 +69,7 @@ export default defineComponent({
     });
     return {
       getThemeConfig,
-      getCaches,
+      getKeepAliveNames,
       setTransitionName,
       ...toRefs(state),
     };

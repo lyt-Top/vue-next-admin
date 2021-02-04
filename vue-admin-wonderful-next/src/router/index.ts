@@ -517,14 +517,14 @@ export function formatTwoStageRoutes(arr: any) {
 // 缓存多级嵌套数组处理后的一维数组(tagsView、菜单搜索中使用：未过滤隐藏的(isHide))
 export function setCacheTagsViewRoutes() {
     // 先处理有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
-    let authsRoutes = setFilterMenuFun(dynamicRoutes, store.state.auths)
+    let authsRoutes = setFilterMenuFun(dynamicRoutes, store.state.userInfos.authPageList)
     // 添加到 vuex setTagsViewRoutes 中
     store.dispatch('setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(authsRoutes))[0].children)
 }
 
 // 获取当前用户的权限去比对路由表，用于左侧菜单/横向菜单的显示
 export function setFilterMenu() {
-    store.dispatch("setRoutes", setFilterMenuFun(dynamicRoutes[0].children, store.state.auths))
+    store.dispatch("setRoutes", setFilterMenuFun(dynamicRoutes[0].children, store.state.userInfos.authPageList))
 }
 
 // 判断路由 auth 中是否包含当前登录用户权限字段
@@ -551,7 +551,7 @@ export function setFilterRoute() {
     let filterRoute: any = []
     formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children.map((route: any) => {
         route.meta.auth.map((metaAuth: any) => {
-            store.state.auths.map((auth: any) => {
+            store.state.userInfos.authPageList.map((auth: any) => {
                 if (metaAuth === auth) filterRoute.push({ ...route })
             })
         })
@@ -585,7 +585,6 @@ export function resetRoute() {
 export function initAllFun() {
     const token = getSession('token')
     if (!token) return false
-    store.dispatch('setAuths')
     store.dispatch('setUserInfos')
     setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单

@@ -45,9 +45,8 @@ export interface RootStateTypes {
         layout: string
     },
     routes: Array<object>,
-    caches: Array<string>,
+    keepAliveNames: Array<string>,
     tagsViewRoutes: Array<object>,
-    auths: Array<string>,
     userInfos: object
 }
 
@@ -57,9 +56,8 @@ export const store = createStore<RootStateTypes>({
     state: {
         themeConfig,
         routes: [],
-        caches: [],
+        keepAliveNames: [],
         tagsViewRoutes: [],
-        auths: [],
         userInfos: {}
     },
     mutations: {
@@ -73,15 +71,11 @@ export const store = createStore<RootStateTypes>({
         },
         // 设置缓存（name字段）
         getCacheKeepAlive(state: any, data: Array<string>) {
-            state.caches = data
+            state.keepAliveNames = data
         },
         // 设置 TagsView 路由
         getTagsViewRoutes(state: any, data: Array<string>) {
             state.tagsViewRoutes = data
-        },
-        // 设置权限
-        getAuths(state: any, data: Array<string>) {
-            state.auths = data
         },
         // 设置用户信息
         getUserInfos(state: any, data: object) {
@@ -104,15 +98,6 @@ export const store = createStore<RootStateTypes>({
         // 设置 TagsView 路由
         async setTagsViewRoutes({ commit }, data: Array<string>) {
             commit('getTagsViewRoutes', data)
-        },
-        // 设置权限
-        async setAuths({ commit }, data: Array<string>) {
-            // 模拟权限，实际项目中，请通过直接走接口获取权限标识
-            if (data && data.length > 0) {
-                commit('getAuths', data)
-            } else {
-                if (getSession('userInfo')) commit('getAuths', getSession('userInfo').authList)
-            }
         },
         // 设置用户信息
         async setUserInfos({ commit }, data: object) {

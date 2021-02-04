@@ -1,5 +1,5 @@
 <template>
-  <div v-if="getUserAuthList">
+  <div v-if="getUserAuthBtnList">
     <slot />
   </div>
 </template>
@@ -18,11 +18,11 @@ export default {
   setup(props) {
     const store = useStore();
     // 获取 vuex 中的用户权限
-    const getUserAuthList = computed(() => {
-      return store.state.auths.some((v) => v === props.value);
+    const getUserAuthBtnList = computed(() => {
+      return store.state.userInfos.authBtnList.some((v) => v === props.value);
     });
     return {
-      getUserAuthList,
+      getUserAuthBtnList,
     };
   },
 };

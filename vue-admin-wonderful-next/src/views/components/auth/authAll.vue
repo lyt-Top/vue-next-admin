@@ -1,6 +1,5 @@
 <template>
-  {{getUserAuthList}}
-  <div v-if="getUserAuthList">
+  <div v-if="getUserAuthBtnList">
     <slot />
   </div>
 </template>
@@ -18,13 +17,23 @@ export default {
   },
   setup(props) {
     const store = useStore();
-    console.log(store.state);
+    // 判断两数组是否相同
+    const judementSameArr = (news, old) => {
+      let count = 0;
+      const leng = old.length;
+      for (let i in old) {
+        for (let j in news) {
+          if (old[i] === news[j]) count++;
+        }
+      }
+      return count === leng ? true : false;
+    };
     // 获取 vuex 中的用户权限
-    const getUserAuthList = computed(() => {
-      return false;
+    const getUserAuthBtnList = computed(() => {
+      return judementSameArr(props.value, store.state.userInfos.authBtnList);
     });
     return {
-      getUserAuthList,
+      getUserAuthBtnList,
     };
   },
 };
