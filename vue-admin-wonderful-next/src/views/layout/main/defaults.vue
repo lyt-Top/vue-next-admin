@@ -1,13 +1,14 @@
 <template>
   <el-container class="layout-container">
     <Aside />
-    <el-container class="flex-center">
+    <el-container class="flex-center layout-backtop">
       <Header v-if="isFixedHeader" />
       <el-scrollbar>
         <Header v-if="!isFixedHeader" />
         <Main />
       </el-scrollbar>
     </el-container>
+    <el-backtop target=".layout-backtop .el-scrollbar__wrap"></el-backtop>
   </el-container>
 </template>
 

@@ -3,7 +3,7 @@
     <ColumnsAside />
     <div class="layout-columns-warp">
       <Aside />
-      <el-container class="flex-center">
+      <el-container class="flex-center layout-backtop">
         <Header v-if="isFixedHeader" />
         <el-scrollbar>
           <Header v-if="!isFixedHeader" />
@@ -11,6 +11,7 @@
         </el-scrollbar>
       </el-container>
     </div>
+    <el-backtop target=".layout-backtop .el-scrollbar__wrap"></el-backtop>
   </el-container>
 </template>
 

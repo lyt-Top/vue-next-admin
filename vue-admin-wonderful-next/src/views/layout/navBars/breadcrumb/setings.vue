@@ -255,7 +255,7 @@
             </el-select>
           </div>
         </div>
-        <div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
+        <div class="layout-breadcrumb-seting-bar-flex mt15 mb28">
           <div class="layout-breadcrumb-seting-bar-flex-label">分栏高亮风格</div>
           <div class="layout-breadcrumb-seting-bar-flex-value">
             <el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width:90px;"

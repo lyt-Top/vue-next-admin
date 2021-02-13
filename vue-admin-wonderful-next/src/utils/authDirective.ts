@@ -1,17 +1,6 @@
 import type { App } from 'vue'
 import { store } from "/@/store/index.ts";
-
-// 判断两数组是否相同
-export function judementSameArr(news: Array<string>, old: Array<string>) {
-    let count = 0
-    const leng = old.length
-    for (let i in old) {
-        for (let j in news) {
-            if (old[i] === news[j]) count++
-        }
-    }
-    return count === leng ? true : false
-}
+import { judementSameArr } from '/@/utils/arrayOperation.ts'
 
 export function authDirective(app: App) {
     // 单个权限验证（v-auth="xxx"）

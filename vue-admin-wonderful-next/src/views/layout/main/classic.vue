@@ -3,11 +3,12 @@
     <Header />
     <el-container class="layout-mian-height-50">
       <Aside />
-      <div class="flex-center">
+      <div class="flex-center layout-backtop">
         <TagsView />
         <Main />
       </div>
     </el-container>
+    <el-backtop target=".layout-backtop .el-main .el-scrollbar__wrap"></el-backtop>
   </el-container>
 </template>
 

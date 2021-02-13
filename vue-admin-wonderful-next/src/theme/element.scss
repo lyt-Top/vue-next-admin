@@ -821,6 +821,9 @@
 .el-tabs__active-bar {
   background-color: set-color(primary);
 }
+.el-tabs__nav-wrap::after {
+  height: 1px !important;
+}
 
 /* Breadcrumb 面包屑
 ------------------------------- */
@@ -875,6 +878,12 @@
 .el-dialog__headerbtn:focus .el-dialog__close,
 .el-dialog__headerbtn:hover .el-dialog__close {
   color: set-color(primary);
+}
+
+/* Card 卡片
+------------------------------- */
+.el-card__header {
+  padding: 15px 20px;
 }
 
 /* Timeline 时间线

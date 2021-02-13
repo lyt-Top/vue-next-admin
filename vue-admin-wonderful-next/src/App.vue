@@ -16,7 +16,7 @@ import {
 } from "vue";
 import { useStore } from "/@/store/index.ts";
 import { getLocal } from "/@/utils/storage.ts";
-import { setIconfont } from "/@/utils/setIconfont.ts";
+import setIntroduction from "/@/utils/setIconfont.ts";
 import LockScreen from "/@/views/layout/lockScreen/index.vue";
 import Setings from "/@/views/layout/navBars/breadcrumb/setings.vue";
 export default {
@@ -37,7 +37,9 @@ export default {
     // 设置初始化，防止刷新时恢复默认
     onBeforeMount(() => {
       // 设置批量第三方 icon 图标
-      setIconfont();
+      setIntroduction.cssCdn();
+      // 设置批量第三方 js
+      setIntroduction.jsCdn();
     });
     onMounted(() => {
       nextTick(() => {
