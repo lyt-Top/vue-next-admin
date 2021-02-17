@@ -7,12 +7,14 @@ const { VITE_PORT, VITE_PUBLIC_PATH, VITE_OPEN } = loadEnv()
 const viteConfig: UserConfig = {
     plugins: [vue()],
     root: process.cwd(),
-    alias: [
-        {
-            find: /^\/@\//,
-            replacement: '/src/'
-        }
-    ],
+    resolve: {
+        alias: [
+            {
+                find: /^\/@\//,
+                replacement: '/src/'
+            }
+        ]
+    },
     base: process.env.NODE_ENV === "production" ? VITE_PUBLIC_PATH : './',
     optimizeDeps: {
         include: ['element-plus/lib/locale/lang/zh-cn']

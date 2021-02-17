@@ -1,19 +1,27 @@
 <template>
   <div>
     <el-card shadow="hover" header="tagsView 非当前页演示">
-      <el-form :model="formInline" size="small" label-width="60px" style="margin-bottom:1px;">
-        <el-form-item label="功能：">
-          <el-select v-model="formInline.selectId" placeholder="请选择">
-            <el-option v-for="item in selectOptions" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="路径：">
-          <el-input v-model="formInline.path" placeholder="路径如：/fun/tagsView" style="max-width:203px;"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onImplementClick" icon="el-icon-thumb">点击执行</el-button>
-        </el-form-item>
+      <el-form :model="formInline" size="small" label-width="40px" class="tags-view-form">
+        <el-row :gutter="35">
+          <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4" class="tags-view-form-col">
+            <el-form-item label="功能">
+              <el-select v-model="formInline.selectId" placeholder="请选择" class="w100">
+                <el-option v-for="item in selectOptions" :key="item.value" :label="item.label" :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4" class="tags-view-form-col">
+            <el-form-item label="路径">
+              <el-input v-model="formInline.path" placeholder="路径如：/fun/tagsView"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4">
+            <el-form-item>
+              <el-button type="primary" @click="onImplementClick" icon="el-icon-thumb">点击执行</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
     </el-card>
     <el-card shadow="hover" header="tagsView 当前页演示" class="mt15">
@@ -125,19 +133,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.flex-warp {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
-  margin: 0 -5px;
-  .flex-warp-item {
-    padding: 5px;
-    .flex-warp-item-box {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
-</style>
