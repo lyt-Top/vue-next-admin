@@ -28,7 +28,7 @@
     </el-row>
     <el-row :gutter="15">
       <el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="mb15">
-        <el-card shadow="hover" header="实验室使用情况">
+        <el-card shadow="hover" header="商品销售情况">
           <div id="homeLaboratory" style="height:200px;"></div>
         </el-card>
       </el-col>
@@ -50,8 +50,8 @@
     </el-row>
     <el-row :gutter="15">
       <el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="home-warning-media">
-        <el-card shadow="hover" header="预警信息">
-          <el-table :data="tableData.data" style="width: 100%;" height="200" stripe>
+        <el-card shadow="hover" header="预警信息" class="home-warning-card">
+          <el-table :data="tableData.data" style="width: 100%;" stripe>
             <el-table-column prop="date" label="时间"></el-table-column>
             <el-table-column prop="name" label="实验室名称"></el-table-column>
             <el-table-column prop="address" label="报警内容"></el-table-column>
@@ -95,6 +95,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, onMounted } from "vue";
+import * as echarts from "echarts";
 import { topCardItemList, environmentList, activitiesList } from "./mock.ts";
 export default {
   name: "home",
@@ -327,6 +328,12 @@ export default {
         height: auto;
         text-align: center;
       }
+    }
+  }
+  .home-warning-card {
+    height: 292px;
+    ::v-deep(.el-card) {
+      height: 100%;
     }
   }
   .home-dynamic {

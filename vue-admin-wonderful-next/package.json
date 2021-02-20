@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "clipboard": "^2.0.6",
+    "echarts": "^5.0.2",
+    "echarts-wordcloud": "^2.0.0",
     "element-plus": "^1.0.2-beta.32",
     "mitt": "^2.1.0",
     "nprogress": "^0.2.0",

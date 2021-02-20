@@ -183,7 +183,7 @@ export const dynamicRoutes = [
                 isAffix: false,
                 isIframe: false,
                 auth: ['admin', 'test'],
-                icon: 'iconfont icon-xitongshezhi'
+                icon: 'iconfont icon-caidan'
             },
             children: [
                 {

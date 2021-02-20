@@ -498,33 +498,33 @@
   @include Tag(danger, whites, danger-light-3);
 }
 
-/* Tag 标签
+/* Progress 进度条
 ------------------------------- */
 // primary
 .el-progress-bar__inner {
-  background-color: set-color(primary);
+  background-color: set-color(primary) !important;
 }
 // success
 .el-progress.is-success .el-progress-bar__inner {
-  background-color: set-color(success);
+  background-color: set-color(success) !important;
 }
 .el-progress.is-success .el-progress__text {
-  color: set-color(success);
+  color: set-color(success) !important;
 }
 // warning
 .el-progress.is-warning .el-progress-bar__inner {
-  background-color: set-color(warning);
+  background-color: set-color(warning) !important;
 }
 .el-progress.is-warning .el-progress__text {
-  color: set-color(warning);
+  color: set-color(warning) !important;
 }
 // danger
 .el-badge__content,
 .el-progress.is-exception .el-progress-bar__inner {
-  background-color: set-color(danger);
+  background-color: set-color(danger) !important;
 }
 .el-progress.is-exception .el-progress__text {
-  color: set-color(danger);
+  color: set-color(danger) !important;
 }
 
 /* Pagination 分页
@@ -920,7 +920,7 @@
   background-color: set-color(primary-light-9);
 }
 
-/* Tag 标签
+/* Backtop 回到顶部
 ------------------------------- */
 .el-backtop {
   color: set-color(primary);

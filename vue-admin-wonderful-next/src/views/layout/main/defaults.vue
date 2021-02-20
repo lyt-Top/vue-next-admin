@@ -3,7 +3,7 @@
     <Aside />
     <el-container class="flex-center layout-backtop">
       <Header v-if="isFixedHeader" />
-      <el-scrollbar>
+      <el-scrollbar ref="layoutDefaultsScrollbarRef">
         <Header v-if="!isFixedHeader" />
         <Main />
       </el-scrollbar>
@@ -13,7 +13,8 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, getCurrentInstance, watch } from 'vue'
+import { useRoute } from "vue-router";
 import { useStore } from "/@/store/index.ts";
 import Aside from '/@/views/layout/component/aside.vue';
 import Header from '/@/views/layout/component/header.vue';
@@ -22,10 +23,19 @@ export default {
   name: 'layoutDefaults',
   components: { Aside, Header, Main },
   setup() {
+    const { proxy } = getCurrentInstance();
     const store = useStore();
+    const route = useRoute();
     const isFixedHeader = computed(() => {
       return store.state.themeConfig.isFixedHeader;
     });
+    // 监听路由的变化
+    watch(
+      () => route.path,
+      () => {
+        proxy.$refs.layoutDefaultsScrollbarRef.wrap.scrollTop = 0;
+      }
+    );
     return {
       isFixedHeader
     }

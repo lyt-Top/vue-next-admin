@@ -1,7 +1,7 @@
 // 字体图标 url
 const cssCdnUrlList: Array<string> = ['//at.alicdn.com/t/font_2298093_ri4yz1f9b7o.css']
 // 第三方 js url
-const jsCdnUrlList: Array<string> = ['https://cdn.jsdelivr.net/npm/echarts@5.0.2/dist/echarts.min.js']
+const jsCdnUrlList: Array<string> = []
 
 // 动态设置字体图标
 export function setCssCdn() {
