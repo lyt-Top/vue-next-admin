@@ -3,7 +3,8 @@
     <span>vue-admin-wonderful</span>
   </div>
   <div class="layout-logo-size" v-else @click="onThemeConfigChange">
-    <img src="/@/assets/logo-docs-mini.svg" class="layout-logo-size-img" />
+    <img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next/assets/logo-docs-mini.svg"
+      class="layout-logo-size-img" />
   </div>
 </template>
 

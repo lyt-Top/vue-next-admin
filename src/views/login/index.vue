@@ -58,7 +58,8 @@ export default {
 .login-container {
   width: 100%;
   height: 100%;
-  background: url("/src/assets/bg-login.png") no-repeat;
+  background: url("https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next/assets/bg-login.png")
+    no-repeat;
   background-size: 100% 100%;
   .login-logo {
     position: absolute;
