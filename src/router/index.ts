@@ -3,6 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { store } from "/@/store/index.ts"
 import { getSession, clearSession } from "/@/utils/storage.ts"
+import { getMenuAdmin } from '/@/api/menu/index.ts'
 
 // 定义动态路由
 export const dynamicRoutes = [
@@ -467,6 +468,16 @@ const router = createRouter({
     routes: staticRoutes
 })
 
+// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+// console.log(store)
+// console.log(dynamicRoutes)
+// store.dispatch('setBackEndControlRoutes', 'admin')
+export function getBackEndControlRoutes() {
+    getMenuAdmin().then((res: any) => {
+        console.log(res);
+    });
+}
+
 // 多级嵌套数组处理成一维数组
 export function formatFlatteningRoutes(arr: any) {
     if (arr.length < 0) return false
@@ -577,7 +588,9 @@ export function initAllFun() {
 }
 
 // 初始化方法执行
-initAllFun()
+if (!store.state.themeConfig.isRequestRoutes) initAllFun()
+// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
 
 // 路由加载前
 router.beforeEach((to, from, next) => {

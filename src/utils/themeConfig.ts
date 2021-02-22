@@ -38,5 +38,6 @@ export default {
     tagsStyle: 'tagsStyleOne',
     animation: 'slideRight',
     columnsAsideStyle: 'columnsRound',
-    layout: 'defaults'
+    layout: 'defaults',
+    isRequestRoutes: true
 }

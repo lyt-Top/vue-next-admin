@@ -2,7 +2,7 @@ import vue from '@vitejs/plugin-vue'
 import type { UserConfig } from 'vite'
 import { loadEnv } from './build/utils'
 
-const { VITE_PORT, VITE_PUBLIC_PATH, VITE_OPEN } = loadEnv()
+const { VITE_PORT, VITE_OPEN, VITE_PUBLIC_PATH } = loadEnv()
 
 const viteConfig: UserConfig = {
     plugins: [vue()],
@@ -21,7 +21,15 @@ const viteConfig: UserConfig = {
     },
     server: {
         port: VITE_PORT,
-        open: VITE_OPEN
+        open: VITE_OPEN,
+        proxy: {
+            '/gitee': {
+                target: 'https://gitee.com',
+                ws: true,
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/gitee/, ''),
+            }
+        }
     },
     build: {
         outDir: 'dist',

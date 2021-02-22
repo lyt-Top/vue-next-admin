@@ -42,7 +42,8 @@ export interface RootStateTypes {
         tagsStyle: string,
         animation: string,
         columnsAsideStyle: string,
-        layout: string
+        layout: string,
+        isRequestRoutes: boolean
     },
     routes: Array<object>,
     keepAliveNames: Array<string>,
@@ -107,6 +108,12 @@ export const store = createStore<RootStateTypes>({
                 if (getSession('userInfo')) commit('getUserInfos', getSession('userInfo'))
             }
         },
+        // 后端控制路由
+        async setBackEndControlRoutes({ commit }, query: string) {
+            if (query === 'admin') {
+
+            } else { }
+        }
     }
 })
 
