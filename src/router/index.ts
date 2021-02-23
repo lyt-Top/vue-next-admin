@@ -1,9 +1,10 @@
+import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { store } from "/@/store/index.ts"
 import { getSession, clearSession } from "/@/utils/storage.ts"
-import { getMenuAdmin } from '/@/api/menu/index.ts'
+import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts'
 
 // 定义动态路由
 export const dynamicRoutes = [
@@ -473,9 +474,29 @@ const router = createRouter({
 // console.log(dynamicRoutes)
 // store.dispatch('setBackEndControlRoutes', 'admin')
 export function getBackEndControlRoutes() {
-    getMenuAdmin().then((res: any) => {
-        console.log(res);
+    getMenuTest().then((res: any) => {
+        console.log(JSON.parse(JSON.stringify(res)));
+        console.log(backEndRouter(res.data))
+        dynamicRoutes[0].children = backEndRouter(res.data)
+        console.log(dynamicRoutes)
+        // initAllFun()
+        store.dispatch('setUserInfos')
+        setAddRoute() // 添加动态路由
+        setFilterMenu() // 过滤权限菜单
+        setCacheTagsViewRoutes() // 添加 keepAlive 缓存
+        console.log(router.getRoutes())
     });
+}
+
+// 后端控制路由，递归处理每一项 `component` 中的路径
+export function backEndRouter(routes: any) {
+    if (!routes) return false
+    return routes.map((v: any) => {
+        // if (v.component) v.component = () => import(`/@/views/${v.component}.vue`)
+        if (v.component) v.component = () => import(v.component)
+        if (v.children) v.children = backEndRouter(v.children)
+        return v
+    })
 }
 
 // 多级嵌套数组处理成一维数组

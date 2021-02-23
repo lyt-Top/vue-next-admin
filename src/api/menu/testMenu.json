@@ -1,0 +1,363 @@
+{
+    "code": 0,
+    "type": "testMenu",
+    "data": [
+        {
+            "path": "/home",
+            "name": "home",
+            "component": "'/@/views/home/index.vue'",
+            "meta": {
+                "title": "首页",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": true,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-shouye"
+            }
+        },
+        {
+            "path": "/limits",
+            "name": "limits",
+            "component": "layout/routerView/parent",
+            "redirect": "/limits/frontEnd",
+            "meta": {
+                "title": "权限管理",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": false,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-quanxian"
+            },
+            "children": [
+                {
+                    "path": "/limits/frontEnd",
+                    "name": "limitsFrontEnd",
+                    "component": "layout/routerView/parent",
+                    "redirect": "/limits/frontEnd/page",
+                    "meta": {
+                        "title": "前端控制",
+                        "isLink": "",
+                        "isHide": false,
+                        "isKeepAlive": true,
+                        "isAffix": false,
+                        "isIframe": false,
+                        "auth": [
+                            "admin",
+                            "test"
+                        ]
+                    },
+                    "children": [
+                        {
+                            "path": "/limits/frontEnd/page",
+                            "name": "limitsFrontEndPage",
+                            "component": "limits/frontEnd/page/index",
+                            "meta": {
+                                "title": "页面权限",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ]
+                            }
+                        },
+                        {
+                            "path": "/limits/frontEnd/btn",
+                            "name": "limitsFrontEndBtn",
+                            "component": "limits/frontEnd/btn/index",
+                            "meta": {
+                                "title": "按钮权限",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "path": "/limits/backEnd",
+                    "name": "limitsBackEnd",
+                    "component": "layout/routerView/parent",
+                    "meta": {
+                        "title": "后端控制",
+                        "isLink": "",
+                        "isHide": false,
+                        "isKeepAlive": true,
+                        "isAffix": false,
+                        "isIframe": false,
+                        "auth": [
+                            "admin",
+                            "test"
+                        ]
+                    },
+                    "children": [
+                        {
+                            "path": "/limits/backEnd/page",
+                            "name": "limitsBackEndEndPage",
+                            "component": "limits/backEnd/page/index",
+                            "meta": {
+                                "title": "页面权限",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "path": "/menu",
+            "name": "menu",
+            "component": "layout/routerView/parent",
+            "redirect": "/menu/menu1",
+            "meta": {
+                "title": "菜单嵌套",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": false,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-caidan"
+            },
+            "children": [
+                {
+                    "path": "/menu/menu1",
+                    "name": "menu1",
+                    "component": "layout/routerView/parent",
+                    "redirect": "/menu/menu1/menu11",
+                    "meta": {
+                        "title": "菜单1",
+                        "isLink": "",
+                        "isHide": false,
+                        "isKeepAlive": true,
+                        "isAffix": false,
+                        "isIframe": false,
+                        "auth": [
+                            "admin",
+                            "test"
+                        ],
+                        "icon": "iconfonticon-caidan"
+                    },
+                    "children": [
+                        {
+                            "path": "/menu/menu1/menu11",
+                            "name": "menu11",
+                            "component": "menu/menu1/menu11/index",
+                            "meta": {
+                                "title": "菜单11",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ],
+                                "icon": "iconfonticon-caidan"
+                            }
+                        },
+                        {
+                            "path": "/menu/menu1/menu12",
+                            "name": "menu12",
+                            "component": "layout/routerView/parent",
+                            "redirect": "/menu/menu1/menu12/menu121",
+                            "meta": {
+                                "title": "菜单12",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ],
+                                "icon": "iconfonticon-caidan"
+                            },
+                            "children": [
+                                {
+                                    "path": "/menu/menu1/menu12/menu121",
+                                    "name": "menu121",
+                                    "component": "menu/menu1/menu12/menu121/index",
+                                    "meta": {
+                                        "title": "菜单121",
+                                        "isLink": "",
+                                        "isHide": false,
+                                        "isKeepAlive": true,
+                                        "isAffix": false,
+                                        "isIframe": false,
+                                        "auth": [
+                                            "admin",
+                                            "test"
+                                        ],
+                                        "icon": "iconfonticon-caidan"
+                                    }
+                                },
+                                {
+                                    "path": "/menu/menu1/menu12/menu122",
+                                    "name": "menu122",
+                                    "component": "menu/menu1/menu12/menu122/index",
+                                    "meta": {
+                                        "title": "菜单122",
+                                        "isLink": "",
+                                        "isHide": false,
+                                        "isKeepAlive": true,
+                                        "isAffix": false,
+                                        "isIframe": false,
+                                        "auth": [
+                                            "admin",
+                                            "test"
+                                        ],
+                                        "icon": "iconfonticon-caidan"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "path": "/menu/menu1/menu13",
+                            "name": "menu13",
+                            "component": "menu/menu1/menu13/index",
+                            "meta": {
+                                "title": "菜单13",
+                                "isLink": "",
+                                "isHide": false,
+                                "isKeepAlive": true,
+                                "isAffix": false,
+                                "isIframe": false,
+                                "auth": [
+                                    "admin",
+                                    "test"
+                                ],
+                                "icon": "iconfonticon-caidan"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "path": "/menu/menu2",
+                    "name": "menu2",
+                    "component": "menu/menu2/index",
+                    "meta": {
+                        "title": "菜单2",
+                        "isLink": "",
+                        "isHide": false,
+                        "isKeepAlive": true,
+                        "isAffix": false,
+                        "isIframe": false,
+                        "auth": [
+                            "admin",
+                            "test"
+                        ],
+                        "icon": "iconfonticon-caidan"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/fun",
+            "name": "funIndex",
+            "component": "layout/routerView/parent",
+            "redirect": "/fun/tagsView",
+            "meta": {
+                "title": "功能",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": false,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-crew_feature"
+            },
+            "children": [
+                {
+                    "path": "/fun/tagsView",
+                    "name": "funTagsView",
+                    "component": "fun/tagsView/index",
+                    "meta": {
+                        "title": "tagsView操作",
+                        "isLink": "",
+                        "isHide": false,
+                        "isKeepAlive": true,
+                        "isAffix": false,
+                        "isIframe": false,
+                        "auth": [
+                            "admin",
+                            "test"
+                        ],
+                        "icon": "el-icon-thumb"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/pages",
+            "name": "pagesIndex",
+            "component": "pages/index",
+            "meta": {
+                "title": "页面",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": false,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-fuzhiyemian"
+            }
+        },
+        {
+            "path": "/chart",
+            "name": "chartIndex",
+            "component": "chart/index",
+            "meta": {
+                "title": "大数据图表",
+                "isLink": "",
+                "isHide": false,
+                "isKeepAlive": true,
+                "isAffix": false,
+                "isIframe": false,
+                "auth": [
+                    "admin",
+                    "test"
+                ],
+                "icon": "iconfonticon-ico_shuju"
+            }
+        }
+    ]
+}

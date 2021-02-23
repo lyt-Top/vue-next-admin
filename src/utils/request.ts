@@ -50,7 +50,7 @@ service.interceptors.response.use(
 		} else if (error.message == "Network Error") {
 			ElMessage.error("网络连接错误");
 		} else {
-			if (error.response.data) ElMessage.error(error.response.data.message)
+			if (error.response.data) ElMessage.error(error.response.statusText)
 			else ElMessage.error('接口路径找不到')
 		}
 		return Promise.reject(error);
