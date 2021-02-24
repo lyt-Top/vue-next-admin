@@ -39,5 +39,5 @@ export default {
     animation: 'slideRight',
     columnsAsideStyle: 'columnsRound',
     layout: 'defaults',
-    isRequestRoutes: true
+    isRequestRoutes: false
 }

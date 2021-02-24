@@ -6,16 +6,31 @@
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, onUnmounted, getCurrentInstance } from "vue";
+import {
+  computed,
+  onBeforeMount,
+  onUnmounted,
+  getCurrentInstance,
+  defineAsyncComponent,
+} from "vue";
 import { useStore } from "/@/store/index.ts";
 import { getLocal } from "/@/utils/storage.ts";
-import Defaults from "/@/views/layout/main/defaults.vue";
-import Classic from "/@/views/layout/main/classic.vue";
-import Transverse from "/@/views/layout/main/transverse.vue";
-import Columns from "/@/views/layout/main/columns.vue";
 export default {
   name: "layout",
-  components: { Defaults, Classic, Transverse, Columns },
+  components: {
+    Defaults: defineAsyncComponent(
+      () => import("/@/views/layout/main/defaults.vue")
+    ),
+    Classic: defineAsyncComponent(
+      () => import("/@/views/layout/main/classic.vue")
+    ),
+    Transverse: defineAsyncComponent(
+      () => import("/@/views/layout/main/transverse.vue")
+    ),
+    Columns: defineAsyncComponent(
+      () => import("/@/views/layout/main/columns.vue")
+    ),
+  },
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();

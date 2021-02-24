@@ -476,27 +476,67 @@ const router = createRouter({
 export function getBackEndControlRoutes() {
     getMenuTest().then((res: any) => {
         console.log(JSON.parse(JSON.stringify(res)));
-        console.log(backEndRouter(res.data))
+        // console.log(backEndRouter(res.data))
         dynamicRoutes[0].children = backEndRouter(res.data)
+        dynamicRoutes[0].children = res.data
         console.log(dynamicRoutes)
         // initAllFun()
         store.dispatch('setUserInfos')
         setAddRoute() // 添加动态路由
         setFilterMenu() // 过滤权限菜单
         setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-        console.log(router.getRoutes())
+        // console.log(router.getRoutes())
     });
 }
 
+// export function loadView(path: string) {
+//     return () => import(`../views/${path}.vue`)
+// }
+
 // 后端控制路由，递归处理每一项 `component` 中的路径
+// export function backEndRouter(routes: any) {
+//     if (!routes) return false
+//     return routes.map((v: any) => {
+//         if (v.component) v.component = () => import(`../views${v.component}.vue`)
+//         if (v.children) v.children = backEndRouter(v.children)
+//         return v
+//     })
+// }
+
+const dynamicViewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
+
+console.log(dynamicViewsModules)
+
+
 export function backEndRouter(routes: any) {
-    if (!routes) return false
-    return routes.map((v: any) => {
-        // if (v.component) v.component = () => import(`/@/views/${v.component}.vue`)
-        if (v.component) v.component = () => import(v.component)
-        if (v.children) v.children = backEndRouter(v.children)
-        return v
-    })
+    if (!routes) return;
+    return routes.forEach((item: any) => {
+        const { component } = item;
+        const { children } = item;
+        if (component) item.component = dynamicImport(dynamicViewsModules, component as string);
+        children && backEndRouter(children);
+        return item
+    });
+}
+
+export function dynamicImport(
+    dynamicViewsModules: Record<string, () => Promise<{ [key: string]: any; }>>,
+    component: string
+) {
+    const keys = Object.keys(dynamicViewsModules);
+    const matchKeys = keys.filter((key) => {
+        const k = key.replace('../views', '');
+        return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
+    });
+    console.log(matchKeys)
+    if (matchKeys?.length === 1) {
+        const matchKey = matchKeys[0];
+        return dynamicViewsModules[matchKey];
+    }
+    if (matchKeys?.length > 1) {
+        console.warn('Please do not create');
+        return false;
+    }
 }
 
 // 多级嵌套数组处理成一维数组
@@ -602,10 +642,12 @@ export function resetRoute() {
 export function initAllFun() {
     const token = getSession('token')
     if (!token) return false
-    store.dispatch('setUserInfos')
-    setAddRoute() // 添加动态路由
-    setFilterMenu() // 过滤权限菜单
-    setCacheTagsViewRoutes() // 添加 keepAlive 缓存
+    setTimeout(() => {
+        store.dispatch('setUserInfos')
+        setAddRoute() // 添加动态路由
+        setFilterMenu() // 过滤权限菜单
+        setCacheTagsViewRoutes() // 添加 keepAlive 缓存
+    }, 1000)
 }
 
 // 初始化方法执行

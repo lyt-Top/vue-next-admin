@@ -5,7 +5,7 @@
         {
             "path": "/home",
             "name": "home",
-            "component": "'/@/views/home/index.vue'",
+            "component": "home/index",
             "meta": {
                 "title": "首页",
                 "isLink": "",
