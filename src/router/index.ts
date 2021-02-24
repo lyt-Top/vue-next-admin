@@ -1,7 +1,7 @@
 import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import { store } from "/@/store/index.ts"
 import { getSession, clearSession } from "/@/utils/storage.ts"
 import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts'
@@ -452,16 +452,21 @@ const staticRoutes: Array<RouteRecordRaw> = [
         meta: {
             title: '没有权限'
         }
-    },
-    {
-        path: '/:pathMatch(.*)',
-        name: 'pathMatch',
-        redirect: '/404',
-        meta: {
-            title: '页面找不到重定向'
-        }
     }
 ]
+
+// 定义404界面
+const pathMatch = {
+    path: '/:pathMatch(.*)',
+    name: 'pathMatch',
+    component: () => import('/@/views/error/404.vue'),
+    meta: {
+        title: '页面找不到重定向'
+    }
+}
+
+// 获取目录下的 .vue 全部文件，参考 vite：import.meta.glob
+const dynamicViewsModules = import.meta.glob('../views/**/*.{vue,tsx}')
 
 // 添加静态路由
 const router = createRouter({
@@ -470,72 +475,66 @@ const router = createRouter({
 })
 
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-// console.log(store)
-// console.log(dynamicRoutes)
 // store.dispatch('setBackEndControlRoutes', 'admin')
 export function getBackEndControlRoutes() {
-    getMenuTest().then((res: any) => {
-        console.log(JSON.parse(JSON.stringify(res)));
-        // console.log(backEndRouter(res.data))
-        dynamicRoutes[0].children = backEndRouter(res.data)
-        dynamicRoutes[0].children = res.data
-        console.log(dynamicRoutes)
-        // initAllFun()
-        store.dispatch('setUserInfos')
-        setAddRoute() // 添加动态路由
-        setFilterMenu() // 过滤权限菜单
-        setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-        // console.log(router.getRoutes())
-    });
+    store.dispatch('setUserInfos')
+    NProgress.remove()
+    const auth = store.state.userInfos.authPageList[0] // 模拟 admin 与 test
+    if (auth !== 'admin') {
+        getMenuAdmin().then((res: any) => {
+            setBackEndControlRoutesFun(res)
+        })
+    } else {
+        getMenuTest().then((res: any) => {
+            setTimeout(() => {
+                setBackEndControlRoutesFun(res)
+            }, 500)
+        })
+    }
 }
 
-// export function loadView(path: string) {
-//     return () => import(`../views/${path}.vue`)
-// }
+// 后端控制路由，模拟执行路由初始化
+export function setBackEndControlRoutesFun(res: any) {
+    const oldRoutes = JSON.parse(JSON.stringify(res.data))
+    store.dispatch('setBackEndControlRoutes', oldRoutes)
+    dynamicRoutes[0].children = backEndRouter(res.data)
+    setAddRoute() // 添加动态路由
+    router.addRoute(pathMatch) // 添加404界面
+    setFilterMenu() // 过滤权限菜单
+    setCacheTagsViewRoutes() // 添加 keepAlive 缓存
+    // window.location.href = window.location.href // 页面刷新时，防止404（未找到方法，临时使用，控制台报黄）
+    console.log(store)
+}
 
-// 后端控制路由，递归处理每一项 `component` 中的路径
-// export function backEndRouter(routes: any) {
-//     if (!routes) return false
-//     return routes.map((v: any) => {
-//         if (v.component) v.component = () => import(`../views${v.component}.vue`)
-//         if (v.children) v.children = backEndRouter(v.children)
-//         return v
-//     })
-// }
-
-const dynamicViewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
-
-console.log(dynamicViewsModules)
-
-
+// 后端控制路由，后端路由 component 转换
 export function backEndRouter(routes: any) {
-    if (!routes) return;
-    return routes.forEach((item: any) => {
-        const { component } = item;
-        const { children } = item;
-        if (component) item.component = dynamicImport(dynamicViewsModules, component as string);
-        children && backEndRouter(children);
+    if (!routes) return
+    return routes.map((item: any) => {
+        const { component } = item
+        const { children } = item
+        if (component) item.component = dynamicImport(dynamicViewsModules, component as string)
+        children && backEndRouter(children)
         return item
-    });
+    })
 }
 
+// 后端控制路由，后端路由 component 转换函数
 export function dynamicImport(
-    dynamicViewsModules: Record<string, () => Promise<{ [key: string]: any; }>>,
+    dynamicViewsModules: Record<string, () => Promise<{ [key: string]: any }>>,
     component: string
 ) {
-    const keys = Object.keys(dynamicViewsModules);
+    const keys = Object.keys(dynamicViewsModules)
     const matchKeys = keys.filter((key) => {
-        const k = key.replace('../views', '');
-        return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
-    });
-    console.log(matchKeys)
+        const k = key.replace('../views', '')
+        return k.startsWith(`${component}`) || k.startsWith(`/${component}`)
+    })
     if (matchKeys?.length === 1) {
-        const matchKey = matchKeys[0];
-        return dynamicViewsModules[matchKey];
+        const matchKey = matchKeys[0]
+        return dynamicViewsModules[matchKey]
     }
     if (matchKeys?.length > 1) {
-        console.warn('Please do not create');
-        return false;
+        console.warn('Do not create files that do not end with. Vue')
+        return false
     }
 }
 
@@ -607,7 +606,7 @@ export function setFilterMenuFun(routes: any, auth: any) {
 export function setFilterRoute() {
     let filterRoute: any = []
     formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children.map((route: any) => {
-        route.meta.auth.map((metaAuth: any) => {
+        if (route.meta.auth) route.meta.auth.map((metaAuth: any) => {
             store.state.userInfos.authPageList.map((auth: any) => {
                 if (metaAuth === auth) filterRoute.push({ ...route })
             })
@@ -640,20 +639,17 @@ export function resetRoute() {
 
 // 初始化方法，防止刷新时丢失 
 export function initAllFun() {
-    const token = getSession('token')
-    if (!token) return false
-    setTimeout(() => {
-        store.dispatch('setUserInfos')
-        setAddRoute() // 添加动态路由
-        setFilterMenu() // 过滤权限菜单
-        setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-    }, 1000)
+    store.dispatch('setUserInfos') // 触发初始化用户信息
+    setAddRoute() // 添加动态路由
+    router.addRoute(pathMatch) // 添加404界面
+    setFilterMenu() // 过滤权限菜单
+    setCacheTagsViewRoutes() // 添加 keepAlive 缓存
 }
 
 // 初始化方法执行
-if (!store.state.themeConfig.isRequestRoutes) initAllFun()
+if (!store.state.themeConfig.isRequestRoutes && getSession('token')) initAllFun()
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
+if (store.state.themeConfig.isRequestRoutes && getSession('token')) getBackEndControlRoutes()
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
@@ -674,7 +670,7 @@ router.beforeEach((to, from, next) => {
             next('/home')
             NProgress.done()
         } else {
-            next();
+            next()
         }
     }
 })

@@ -39,6 +39,7 @@ import {
   setAddRoute,
   setFilterMenu,
   setCacheTagsViewRoutes,
+  getBackEndControlRoutes,
 } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
 import { setSession } from "/@/utils/storage.ts";
@@ -100,11 +101,19 @@ export default defineComponent({
         authPageList: defaultAuthPageList,
         authBtnList: defaultAuthBtnList,
       };
+      // 存储 token 到浏览器缓存
       setSession("token", Math.random().toString(36).substr(0));
+      // 存储用户信息到浏览器缓存
       setSession("userInfo", userInfos);
-      store.dispatch("setUserInfos", userInfos); // 请注意执行顺序(存储用户信息vuex)
-      initAllFun(); // 请注意执行顺序
+      // 1、请注意执行顺序(存储用户信息到vuex)
+      store.dispatch("setUserInfos", userInfos);
+      // 前端控制路由，2、请注意执行顺序
+      if (store.state.themeConfig.isRequestRoutes) initAllFun();
+      // 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+      else getBackEndControlRoutes();
+      // 登录成功，跳到转首页
       router.push("/");
+      // 登录成功提示
       setTimeout(() => {
         ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
       }, 300);

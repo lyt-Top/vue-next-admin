@@ -48,7 +48,8 @@ export interface RootStateTypes {
     routes: Array<object>,
     keepAliveNames: Array<string>,
     tagsViewRoutes: Array<object>,
-    userInfos: object
+    userInfos: object,
+    requestOldRoutes: Array<object>,
 }
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol()
@@ -59,7 +60,8 @@ export const store = createStore<RootStateTypes>({
         routes: [],
         keepAliveNames: [],
         tagsViewRoutes: [],
-        userInfos: {}
+        userInfos: {},
+        requestOldRoutes: []
     },
     mutations: {
         // 设置布局配置
@@ -81,6 +83,10 @@ export const store = createStore<RootStateTypes>({
         // 设置用户信息
         getUserInfos(state: any, data: object) {
             state.userInfos = data
+        },
+        // 后端控制路由
+        getBackEndControlRoutes(state: any, data: object) {
+            state.requestOldRoutes = data
         },
     },
     actions: {
@@ -109,10 +115,8 @@ export const store = createStore<RootStateTypes>({
             }
         },
         // 后端控制路由
-        async setBackEndControlRoutes({ commit }, query: string) {
-            if (query === 'admin') {
-
-            } else { }
+        setBackEndControlRoutes({ commit }, routes: Array<string>) {
+            commit('getBackEndControlRoutes', routes)
         }
     }
 })

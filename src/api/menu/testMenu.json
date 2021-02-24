@@ -40,60 +40,6 @@
             },
             "children": [
                 {
-                    "path": "/limits/frontEnd",
-                    "name": "limitsFrontEnd",
-                    "component": "layout/routerView/parent",
-                    "redirect": "/limits/frontEnd/page",
-                    "meta": {
-                        "title": "前端控制",
-                        "isLink": "",
-                        "isHide": false,
-                        "isKeepAlive": true,
-                        "isAffix": false,
-                        "isIframe": false,
-                        "auth": [
-                            "admin",
-                            "test"
-                        ]
-                    },
-                    "children": [
-                        {
-                            "path": "/limits/frontEnd/page",
-                            "name": "limitsFrontEndPage",
-                            "component": "limits/frontEnd/page/index",
-                            "meta": {
-                                "title": "页面权限",
-                                "isLink": "",
-                                "isHide": false,
-                                "isKeepAlive": true,
-                                "isAffix": false,
-                                "isIframe": false,
-                                "auth": [
-                                    "admin",
-                                    "test"
-                                ]
-                            }
-                        },
-                        {
-                            "path": "/limits/frontEnd/btn",
-                            "name": "limitsFrontEndBtn",
-                            "component": "limits/frontEnd/btn/index",
-                            "meta": {
-                                "title": "按钮权限",
-                                "isLink": "",
-                                "isHide": false,
-                                "isKeepAlive": true,
-                                "isAffix": false,
-                                "isIframe": false,
-                                "auth": [
-                                    "admin",
-                                    "test"
-                                ]
-                            }
-                        }
-                    ]
-                },
-                {
                     "path": "/limits/backEnd",
                     "name": "limitsBackEnd",
                     "component": "layout/routerView/parent",
