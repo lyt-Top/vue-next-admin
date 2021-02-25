@@ -16,8 +16,7 @@ export function getMenuAdmin(params?: object) {
 // 获取后端动态路由菜单(test)
 export function getMenuTest(params?: object) {
     return request({
-        // url: '/gitee/lyt-top/vue-admin-wonderful-images/raw/master/next/menu/testMenu.json',
-        url: '/src/api/menu/testMenu.json',
+        url: '/gitee/lyt-top/vue-admin-wonderful-images/raw/master/next/menu/testMenu.json',
         method: 'get',
         params,
     });

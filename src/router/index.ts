@@ -476,7 +476,7 @@ export function getBackEndControlRoutes() {
     if (!token) return false
     store.dispatch('setUserInfos')
     const auth = store.state.userInfos.authPageList[0] // 模拟 admin 与 test
-    if (auth !== 'admin') {
+    if (auth === 'admin') {
         return new Promise((resolve, reject) => {
             getMenuAdmin().then((res: any) => {
                 setBackEndControlRoutesFun(res)
@@ -486,11 +486,13 @@ export function getBackEndControlRoutes() {
         })
     } else {
         return new Promise((resolve, reject) => {
-            getMenuTest().then((res: any) => {
-                setBackEndControlRoutesFun(res)
-                if (res.data) resolve(res)
-                else reject('请求错误')
-            })
+            setTimeout(() => {
+                getMenuTest().then((res: any) => {
+                    setBackEndControlRoutesFun(res)
+                    if (res.data) resolve(res)
+                    else reject('请求错误')
+                })
+            }, 1000)
         })
     }
 }
@@ -500,12 +502,12 @@ export function setBackEndControlRoutesFun(res: any) {
     const oldRoutes = JSON.parse(JSON.stringify(res.data))
     store.dispatch('setBackEndControlRoutes', oldRoutes)
     dynamicRoutes[0].children = backEndRouter(res.data)
+    resetRoute() // 删除/重置路由
     router.addRoute(pathMatch) // 添加404界面
     setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单
     setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-    console.log(dynamicRoutes)
-    console.log(router.getRoutes())
+    window.location.href = window.location.href
 }
 
 // 后端控制路由，后端路由 component 转换
@@ -659,7 +661,7 @@ if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} - vue-admin-wonderful-next` || `vue-admin-wonderful-next`
     NProgress.configure({ showSpinner: false })
-    NProgress.start()
+    if (to.meta.title) NProgress.start()
     const token = getSession('token')
     if (to.path === '/login' && !token) {
         next()
