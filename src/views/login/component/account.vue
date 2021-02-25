@@ -44,6 +44,8 @@ import {
 import { useStore } from "/@/store/index.ts";
 import { setSession } from "/@/utils/storage.ts";
 import { formatAxis } from "/@/utils/formatTime";
+
+import themeConfig from "/@/utils/themeConfig.ts";
 export default defineComponent({
   name: "login",
   setup() {
@@ -68,7 +70,6 @@ export default defineComponent({
     };
     // 登录
     const onSignIn = () => {
-      let currentTimeInfo = currentTime.value;
       let defaultAuthPageList: Array<string> = [];
       let defaultAuthBtnList: Array<string> = [];
       // admin 页面权限标识，对应路由 meta.auth
@@ -108,9 +109,21 @@ export default defineComponent({
       // 1、请注意执行顺序(存储用户信息到vuex)
       store.dispatch("setUserInfos", userInfos);
       // 前端控制路由，2、请注意执行顺序
-      if (store.state.themeConfig.isRequestRoutes) initAllFun();
+      if (!store.state.themeConfig.isRequestRoutes) {
+        initAllFun();
+        signInSuccess();
+      }
       // 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-      else getBackEndControlRoutes();
+      else {
+        getBackEndControlRoutes().then((res) => {
+          signInSuccess();
+        });
+      }
+    };
+    // 登录成功后的跳转
+    const signInSuccess = () => {
+      // 初始化登录成功时间问候语
+      let currentTimeInfo = currentTime.value;
       // 登录成功，跳到转首页
       router.push("/");
       // 登录成功提示

@@ -439,7 +439,7 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: '/404',
-        name: '404',
+        name: 'notFound',
         component: () => import('/@/views/error/404.vue'),
         meta: {
             title: '找不到此页面'
@@ -447,22 +447,18 @@ const staticRoutes: Array<RouteRecordRaw> = [
     },
     {
         path: '/401',
-        name: '401',
+        name: 'noPower',
         component: () => import('/@/views/error/401.vue'),
         meta: {
             title: '没有权限'
         }
-    }
+    },
 ]
 
 // 定义404界面
 const pathMatch = {
-    path: '/:pathMatch(.*)',
-    name: 'pathMatch',
-    component: () => import('/@/views/error/404.vue'),
-    meta: {
-        title: '页面找不到重定向'
-    }
+    path: '/:path(.*)*',
+    redirect: '/404'
 }
 
 // 获取目录下的 .vue 全部文件，参考 vite：import.meta.glob
@@ -475,35 +471,41 @@ const router = createRouter({
 })
 
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-// store.dispatch('setBackEndControlRoutes', 'admin')
 export function getBackEndControlRoutes() {
+    const token = getSession('token')
+    if (!token) return false
     store.dispatch('setUserInfos')
-    NProgress.remove()
     const auth = store.state.userInfos.authPageList[0] // 模拟 admin 与 test
     if (auth !== 'admin') {
-        getMenuAdmin().then((res: any) => {
-            setBackEndControlRoutesFun(res)
+        return new Promise((resolve, reject) => {
+            getMenuAdmin().then((res: any) => {
+                setBackEndControlRoutesFun(res)
+                if (res.data) resolve(res)
+                else reject('请求错误')
+            })
         })
     } else {
-        getMenuTest().then((res: any) => {
-            setTimeout(() => {
+        return new Promise((resolve, reject) => {
+            getMenuTest().then((res: any) => {
                 setBackEndControlRoutesFun(res)
-            }, 500)
+                if (res.data) resolve(res)
+                else reject('请求错误')
+            })
         })
     }
 }
 
-// 后端控制路由，模拟执行路由初始化
+// 后端控制路由，模拟执行路由数据初始化
 export function setBackEndControlRoutesFun(res: any) {
     const oldRoutes = JSON.parse(JSON.stringify(res.data))
     store.dispatch('setBackEndControlRoutes', oldRoutes)
     dynamicRoutes[0].children = backEndRouter(res.data)
-    setAddRoute() // 添加动态路由
     router.addRoute(pathMatch) // 添加404界面
+    setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单
     setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-    // window.location.href = window.location.href // 页面刷新时，防止404（未找到方法，临时使用，控制台报黄）
-    console.log(store)
+    console.log(dynamicRoutes)
+    console.log(router.getRoutes())
 }
 
 // 后端控制路由，后端路由 component 转换
@@ -625,7 +627,7 @@ export function setFilterRouteEnd() {
 // 添加动态路由
 export function setAddRoute() {
     setFilterRouteEnd().map((route: any) => {
-        router.addRoute(route as RouteRecordRaw)
+        router.addRoute((route as unknown) as RouteRecordRaw)
     })
 }
 
@@ -639,6 +641,8 @@ export function resetRoute() {
 
 // 初始化方法，防止刷新时丢失 
 export function initAllFun() {
+    const token = getSession('token')
+    if (!token) return false
     store.dispatch('setUserInfos') // 触发初始化用户信息
     setAddRoute() // 添加动态路由
     router.addRoute(pathMatch) // 添加404界面
@@ -647,13 +651,13 @@ export function initAllFun() {
 }
 
 // 初始化方法执行
-if (!store.state.themeConfig.isRequestRoutes && getSession('token')) initAllFun()
+if (!store.state.themeConfig.isRequestRoutes) initAllFun()
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-if (store.state.themeConfig.isRequestRoutes && getSession('token')) getBackEndControlRoutes()
+if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} - vue-admin-wonderful-next` || 'vue-admin-wonderful-next'
+    document.title = `${to.meta.title} - vue-admin-wonderful-next` || `vue-admin-wonderful-next`
     NProgress.configure({ showSpinner: false })
     NProgress.start()
     const token = getSession('token')
