@@ -1,33 +1,26 @@
 // 消息通知
 export const newsInfoList: Array<object> = [
   {
-    title: "[发布] 2020年11月15日发布 v1.0.0 版本",
+    title: "[发布] 2021年02月28日发布 vue3.x v1.0.0 版本",
+    date: "02/28",
+    link: "https://gitee.com/lyt-top/vue-admin-wonderful-next",
+  },
+  {
+    title: "[发布] 2020年11月15日发布 vue2.x v1.0.0 版本",
     date: "11/15",
     link: "https://gitee.com/lyt-top/vue-admin-wonderful",
   },
   {
     title:
-      "[预览] pro 版本预览 http://lyt-top.gitee.io/vue-admin-wonderful-preview",
+      "[预览] 2020年12月08日，基于 vue3.x 版本后台模板的预览",
+    date: "12/08",
+    link: "http://lyt-top.gitee.io/vue-admin-wonderful-next-preview",
+  },
+  {
+    title:
+      "[预览] 2020年11月15日，基于 vue2.x 版本后台模板的预览",
     date: "11/15",
     link: "http://lyt-top.gitee.io/vue-admin-wonderful-preview",
-  },
-  {
-    title:
-      "[预览] fashion 版本预览 http://lyt-top.gitee.io/vue-admin-wonderful-fashion-preview",
-    date: "11/15",
-    link: "http://lyt-top.gitee.io/vue-admin-wonderful-fashion-preview",
-  },
-  {
-    title:
-      "[预览] classic 版本预览 http://lyt-top.gitee.io/vue-admin-wonderful-classic-preview",
-    date: "11/15",
-    link: "http://lyt-top.gitee.io/vue-admin-wonderful-classic-preview",
-  },
-  {
-    title:
-      "[预览] elegant 版本预览 http://lyt-top.gitee.io/vue-admin-wonderful-elegant-preview",
-    date: "11/15",
-    link: "http://lyt-top.gitee.io/vue-admin-wonderful-elegant-preview",
   },
 ]
 

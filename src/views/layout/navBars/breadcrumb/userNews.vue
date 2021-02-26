@@ -27,9 +27,9 @@ export default {
     const state = reactive({
       newsList: [
         {
-          label: "关于版本开发的通知",
+          label: "关于版本发布的通知",
           value:
-            "vue-admin-wonderful-next，基于 vue3 + CompositionAPI + typescript + vite + element plus，正在抓紧时间开发！",
+            "vue-admin-wonderful-next，基于 vue3 + CompositionAPI + typescript + vite + element plus，正式发布时间：2021年02月28日！",
           time: "2020-12-08",
         },
         {

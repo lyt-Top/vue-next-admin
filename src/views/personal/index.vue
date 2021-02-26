@@ -14,7 +14,7 @@
             </div>
             <div class="personal-user-right">
               <el-row>
-                <el-col :span="24" class="personal-title mb18">傍晚好，admin，生活变的再糟糕，也不妨碍我变得更好！
+                <el-col :span="24" class="personal-title mb18">{{currentTime}}，admin，生活变的再糟糕，也不妨碍我变得更好！
                 </el-col>
                 <el-col :span="24">
                   <el-row>
@@ -56,7 +56,7 @@
           <div class="personal-info-box">
             <ul class="personal-info-ul">
               <li v-for="(v,k) in newsInfoList" :key="k" class="personal-info-li">
-                <a href="#" class="personal-info-li-title">{{v.title}}</a>
+                <a :href="v.link" target="_block" class="personal-info-li-title">{{v.title}}</a>
               </li>
             </ul>
           </div>
@@ -183,6 +183,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed } from "vue";
+import { formatAxis } from "/@/utils/formatTime";
 import { newsInfoList, recommendList } from "./mock.ts";
 export default {
   name: "personal",
@@ -199,7 +200,12 @@ export default {
         sex: "",
       },
     });
+    // 当前时间提示语
+    const currentTime = computed(() => {
+      return formatAxis(new Date());
+    });
     return {
+      currentTime,
       ...toRefs(state),
     };
   },

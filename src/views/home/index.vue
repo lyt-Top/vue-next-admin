@@ -7,7 +7,7 @@
             <img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg">
             <div class="home-card-first-right ml15">
               <div class="flex-margin">
-                <div class="home-card-first-right-title">早上好，admin！</div>
+                <div class="home-card-first-right-title">{{currentTime}}，admin！</div>
                 <div class="home-card-first-right-msg mt5">超级管理</div>
               </div>
             </div>
@@ -94,9 +94,10 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, nextTick } from "vue";
+import { toRefs, reactive, onMounted, nextTick, computed } from "vue";
 import * as echarts from "echarts";
 import { CountUp } from "countup.js";
+import { formatAxis } from "/@/utils/formatTime";
 import { topCardItemList, environmentList, activitiesList } from "./mock.ts";
 export default {
   name: "home",
@@ -124,6 +125,10 @@ export default {
           },
         ],
       },
+    });
+    // 当前时间提示语
+    const currentTime = computed(() => {
+      return formatAxis(new Date());
     });
     // 初始化数字滚动
     const initNumCountUp = () => {
@@ -254,6 +259,7 @@ export default {
       initHomeOvertime();
     });
     return {
+      currentTime,
       ...toRefs(state),
     };
   },
