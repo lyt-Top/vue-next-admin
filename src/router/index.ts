@@ -507,7 +507,7 @@ export function setBackEndControlRoutesFun(res: any) {
     setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单
     setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-    window.location.href = window.location.href
+    window.location.href = window.location.href // 防止页面刷新时，出现空白或404
 }
 
 // 后端控制路由，后端路由 component 转换

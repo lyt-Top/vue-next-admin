@@ -570,40 +570,40 @@
 ------------------------------- */
 // success
 .el-alert--success.is-light {
-  @include Alert(success, success-light-9, success-light-8);
+  @include Alert(success, success-light-9, success-light-7);
 }
 .el-alert--success.is-dark {
-  @include Alert(whites, success, success-light-8);
+  @include Alert(whites, success, success-light-7);
 }
 .el-alert--success.is-light .el-alert__description {
   color: set-color(success);
 }
 // warning
 .el-alert--warning.is-light {
-  @include Alert(warning, warning-light-9, warning-light-8);
+  @include Alert(warning, warning-light-9, warning-light-7);
 }
 .el-alert--warning.is-dark {
-  @include Alert(whites, warning, warning-light-8);
+  @include Alert(whites, warning, warning-light-7);
 }
 .el-alert--warning.is-light .el-alert__description {
   color: set-color(warning);
 }
 // info
 .el-alert--info.is-light {
-  @include Alert(info, info-light-9, info-light-8);
+  @include Alert(info, info-light-9, info-light-7);
 }
 .el-alert--info.is-dark {
-  @include Alert(whites, info, info-light-8);
+  @include Alert(whites, info, info-light-7);
 }
 .el-alert--info.is-light .el-alert__description {
   color: set-color(info);
 }
 // error
 .el-alert--error.is-light {
-  @include Alert(danger, danger-light-9, danger-light-8);
+  @include Alert(danger, danger-light-9, danger-light-7);
 }
 .el-alert--error.is-dark {
-  @include Alert(whites, danger, danger-light-8);
+  @include Alert(whites, danger, danger-light-7);
 }
 .el-alert--error.is-light .el-alert__description {
   color: set-color(danger);
