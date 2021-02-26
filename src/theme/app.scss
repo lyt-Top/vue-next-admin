@@ -191,6 +191,24 @@ body,
   min-height: 100vh !important;
 }
 
+/* 颜色值
+------------------------------- */
+.color-primary {
+  color: var(--color-primary);
+}
+.color-success {
+  color: var(--color-success);
+}
+.color-warning {
+  color: var(--color-warning);
+}
+.color-danger {
+  color: var(--color-danger);
+}
+.color-info {
+  color: var(--color-info);
+}
+
 /* 字体大小全局样式
 ------------------------------- */
 @for $i from 10 through 32 {
