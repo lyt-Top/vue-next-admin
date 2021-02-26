@@ -101,5 +101,12 @@ export default {
     /* 后端控制路由
     ------------------------------- */
     // 是否开启后端控制路由
-    isRequestRoutes: false
+    isRequestRoutes: false,
+
+    /* 全局网站标题 / 副标题
+    ------------------------------- */
+    // 网站主标题（菜单导航、浏览器当前网页标题）
+    globalTitle: 'vue-admin-wonderful-next',
+    // 网站副标题（登录页顶部文字）
+    globalViceTitle: 'SMALL@小柒'
 }

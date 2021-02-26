@@ -1,6 +1,6 @@
 <template>
   <div class="layout-logo" v-if="setShowLogo" @click="onThemeConfigChange">
-    <span>vue-admin-wonderful</span>
+    <span>{{config.globalTitle}}</span>
   </div>
   <div class="layout-logo-size" v-else @click="onThemeConfigChange">
     <img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next/assets/logo-docs-mini.svg"
@@ -9,13 +9,17 @@
 </template>
 
 <script lang="ts">
-import { computed, getCurrentInstance } from "vue";
+import { reactive, toRefs, computed, getCurrentInstance } from "vue";
 import { useStore } from "/@/store/index.ts";
+import config from "/@/utils/themeConfig.ts";
 export default {
   name: "layoutLogo",
   setup() {
     const { proxy } = getCurrentInstance();
     const store = useStore();
+    const state = reactive({
+      config,
+    });
     // 设置 logo 的显示。classic 经典布局默认显示 logo
     const setShowLogo = computed(() => {
       let { isCollapse, layout } = store.state.themeConfig;
@@ -32,6 +36,7 @@ export default {
     return {
       setShowLogo,
       onThemeConfigChange,
+      ...toRefs(state),
     };
   },
 };

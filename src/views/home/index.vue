@@ -18,9 +18,9 @@
         <div class="home-card-item home-card-item-box" :style="{background:v.color}">
           <div class="home-card-item-flex">
             <div class="home-card-item-title pb3">{{v.title}}</div>
-            <div class="home-card-item-title-num pb6">{{v.titleNum}}</div>
+            <div class="home-card-item-title-num pb6" :id="`titleNum${k+1}`"></div>
             <div class="home-card-item-tip pb3">{{v.tip}}</div>
-            <div class="home-card-item-tip-num">{{v.tipNum}}</div>
+            <div class="home-card-item-tip-num" :id="`tipNum${k+1}`"></div>
           </div>
           <i :class="v.icon" :style="{'color': v.iconColor}"></i>
         </div>
@@ -94,8 +94,9 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from "vue";
+import { toRefs, reactive, onMounted, nextTick } from "vue";
 import * as echarts from "echarts";
+import { CountUp } from "countup.js";
 import { topCardItemList, environmentList, activitiesList } from "./mock.ts";
 export default {
   name: "home",
@@ -124,6 +125,17 @@ export default {
         ],
       },
     });
+    // 初始化数字滚动
+    const initNumCountUp = () => {
+      nextTick(() => {
+        new CountUp("titleNum1", Math.random() * 10000).start();
+        new CountUp("titleNum2", Math.random() * 10000).start();
+        new CountUp("titleNum3", Math.random() * 10000).start();
+        new CountUp("tipNum1", Math.random() * 1000).start();
+        new CountUp("tipNum2", Math.random() * 1000).start();
+        new CountUp("tipNum3", Math.random() * 1000).start();
+      });
+    };
     // 实验室使用情况
     const initHomeLaboratory = () => {
       const myChart = echarts.init(document.getElementById("homeLaboratory"));
@@ -235,8 +247,9 @@ export default {
         myChart.resize();
       });
     };
-    // 页面加载前
+    // 页面加载时
     onMounted(() => {
+      initNumCountUp();
       initHomeLaboratory();
       initHomeOvertime();
     });

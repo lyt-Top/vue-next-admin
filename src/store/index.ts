@@ -43,7 +43,9 @@ export interface RootStateTypes {
         animation: string,
         columnsAsideStyle: string,
         layout: string,
-        isRequestRoutes: boolean
+        isRequestRoutes: boolean,
+        globalTitle: string,
+        globalViceTitle: string,
     },
     routes: Array<object>,
     keepAliveNames: Array<string>,

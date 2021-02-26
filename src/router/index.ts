@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css'
 import { store } from "/@/store/index.ts"
 import { getSession, clearSession } from "/@/utils/storage.ts"
 import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts'
+import themeConfig from '/@/utils/themeConfig.ts'
 
 // 定义动态路由
 export const dynamicRoutes = [
@@ -659,7 +660,7 @@ if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
-    document.title = `${to.meta.title} - vue-admin-wonderful-next` || `vue-admin-wonderful-next`
+    document.title = `${to.meta.title} - ${themeConfig.globalTitle}` || themeConfig.globalTitle
     NProgress.configure({ showSpinner: false })
     if (to.meta.title) NProgress.start()
     const token = getSession('token')

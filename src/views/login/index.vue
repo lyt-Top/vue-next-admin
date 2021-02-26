@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="login-logo">
-      <span>SMALL@小柒</span>
+      <span>{{themeConfig.globalViceTitle}}</span>
     </div>
     <div class="login-content" :class="{'login-content-mobile' : tabsActiveName === 'mobile'}">
       <div class="login-content-main">
@@ -34,6 +34,7 @@
 <script lang="ts">
 import Account from "/@/views/login/component/account.vue";
 import Mobile from "/@/views/login/component/mobile.vue";
+import themeConfig from "/@/utils/themeConfig.ts";
 import { toRefs, reactive } from "vue";
 export default {
   name: "login",
@@ -42,6 +43,7 @@ export default {
     const state = reactive({
       tabsActiveName: "account",
       isTabPaneShow: false,
+      themeConfig,
     });
     const onTabsClick = () => {
       state.isTabPaneShow = !state.isTabPaneShow;
