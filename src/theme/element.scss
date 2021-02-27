@@ -879,6 +879,16 @@
 .el-dialog__headerbtn:hover .el-dialog__close {
   color: set-color(primary);
 }
+.el-overlay {
+  display: flex;
+  align-items: center;
+  .el-dialog {
+    margin: 0 auto !important;
+    .el-dialog__body {
+      padding: 20px !important;
+    }
+  }
+}
 
 /* Card 卡片
 ------------------------------- */

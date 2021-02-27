@@ -40,6 +40,7 @@ import {
   setFilterMenu,
   setCacheTagsViewRoutes,
   getBackEndControlRoutes,
+  setBackEndControlRoutesFun,
 } from "/@/router/index.ts";
 import { useStore } from "/@/store/index.ts";
 import { setSession } from "/@/utils/storage.ts";
@@ -115,8 +116,10 @@ export default defineComponent({
       }
       // 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
       else {
-        getBackEndControlRoutes().then((res) => {
-          signInSuccess();
+        getBackEndControlRoutes((res) => {
+          setBackEndControlRoutesFun(res, (cb) => {
+            signInSuccess();
+          });
         });
       }
     };

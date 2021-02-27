@@ -472,34 +472,38 @@ const router = createRouter({
 })
 
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-export function getBackEndControlRoutes() {
+export function getBackEndControlRoutes(callback: any) {
     const token = getSession('token')
     if (!token) return false
     store.dispatch('setUserInfos')
     const auth = store.state.userInfos.authPageList[0] // 模拟 admin 与 test
     if (auth === 'admin') {
-        return new Promise((resolve, reject) => {
-            getMenuAdmin().then((res: any) => {
-                setBackEndControlRoutesFun(res)
-                if (res.data) resolve(res)
-                else reject('请求错误')
-            })
+        getMenuAdmin().then((res: any) => {
+            callback(res)
         })
     } else {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                getMenuTest().then((res: any) => {
-                    setBackEndControlRoutesFun(res)
-                    if (res.data) resolve(res)
-                    else reject('请求错误')
-                })
-            }, 1000)
+        getMenuTest().then((res: any) => {
+            callback(res)
         })
     }
 }
 
 // 后端控制路由，模拟执行路由数据初始化
-export function setBackEndControlRoutesFun(res: any) {
+export function setBackEndControlRoutesFun(res: any, callback?: any) {
+    initBackEndControlRoutesFun(res)
+    window.location.href = window.location.href // 防止页面刷新时，出现空白或404
+    callback(res)
+}
+
+// 后端控制路由，动态添加菜单时（刷新菜单）
+export function setBackEndControlRefreshRoutes() {
+    getBackEndControlRoutes((res: any) => {
+        initBackEndControlRoutesFun(res)
+    })
+}
+
+// 后端控制路由，模拟执行路由数据初始化
+const initBackEndControlRoutesFun = (res: any) => {
     const oldRoutes = JSON.parse(JSON.stringify(res.data))
     store.dispatch('setBackEndControlRoutes', oldRoutes)
     dynamicRoutes[0].children = backEndRouter(res.data)
@@ -508,7 +512,6 @@ export function setBackEndControlRoutesFun(res: any) {
     setAddRoute() // 添加动态路由
     setFilterMenu() // 过滤权限菜单
     setCacheTagsViewRoutes() // 添加 keepAlive 缓存
-    window.location.href = window.location.href // 防止页面刷新时，出现空白或404
 }
 
 // 后端控制路由，后端路由 component 转换
@@ -654,9 +657,10 @@ export function initAllFun() {
 }
 
 // 初始化方法执行
-if (!store.state.themeConfig.isRequestRoutes) initAllFun()
+const requestRoutes = store.state.themeConfig.isRequestRoutes
+if (!requestRoutes) initAllFun()
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-if (store.state.themeConfig.isRequestRoutes) getBackEndControlRoutes()
+if (requestRoutes) getBackEndControlRoutes((res: any) => { setBackEndControlRoutesFun(res) })
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
