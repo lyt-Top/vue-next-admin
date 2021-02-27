@@ -3,7 +3,7 @@
     <el-card shadow="hover">
       <el-table :data="menuTableData" stripe style="width: 100%" row-key="path"
         :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-        <el-table-column label="菜单" show-overflow-tooltip>
+        <el-table-column label="菜单名称" show-overflow-tooltip>
           <template #default="scope">
             <i :class="scope.row.meta.icon"></i>
             <span class="ml10">{{ scope.row.meta.title }}</span>
@@ -41,7 +41,7 @@
             <span v-else class="color-info">否</span>
           </template>
         </el-table-column>
-        <el-table-column label="权限" show-overflow-tooltip>
+        <el-table-column label="权限标识" show-overflow-tooltip>
           <template #default="scope">
             <span>{{ scope.row.meta.auth }}</span>
           </template>
