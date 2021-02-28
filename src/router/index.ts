@@ -348,9 +348,9 @@ export const dynamicRoutes = [
                     }
                 },
                 {
-                    path: '/fun/relationGraph',
+                    path: '/fun/graph',
                     name: 'relationGraph',
-                    component: () => import('/@/views/fun/relationGraph/index.vue'),
+                    component: () => import('/@/views/fun/graph/index.vue'),
                     meta: {
                         title: 'graph 关系图谱',
                         isLink: '',
