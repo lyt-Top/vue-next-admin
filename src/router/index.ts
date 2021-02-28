@@ -346,6 +346,21 @@ export const dynamicRoutes = [
                         auth: ['admin', 'test'],
                         icon: 'el-icon-odometer'
                     }
+                },
+                {
+                    path: '/fun/relationGraph',
+                    name: 'relationGraph',
+                    component: () => import('/@/views/fun/relationGraph/index.vue'),
+                    meta: {
+                        title: 'graph 关系图谱',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-connection'
+                    }
                 }
             ]
         },

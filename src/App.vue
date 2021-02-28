@@ -41,6 +41,7 @@ export default {
       // 设置批量第三方 js
       setIntroduction.jsCdn();
     });
+    // 页面加载时
     onMounted(() => {
       nextTick(() => {
         // 监听布局配置弹窗点击打开

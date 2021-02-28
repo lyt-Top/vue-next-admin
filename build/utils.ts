@@ -3,8 +3,7 @@ import dotenv from 'dotenv'
 export interface ViteEnv {
     VITE_PORT: number,
     VITE_OPEN: boolean,
-    VITE_PUBLIC_PATH: string,
-    VITE_LOCAL_PATH: string
+    VITE_PUBLIC_PATH: string
 }
 
 export function loadEnv(): ViteEnv {
