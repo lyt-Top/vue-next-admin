@@ -1,4 +1,3 @@
-import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -331,6 +330,21 @@ export const dynamicRoutes = [
                         isIframe: false,
                         auth: ['admin', 'test'],
                         icon: 'el-icon-thumb'
+                    }
+                },
+                {
+                    path: '/fun/countup',
+                    name: 'countup',
+                    component: () => import('/@/views/fun/countup/index.vue'),
+                    meta: {
+                        title: 'countup 数字滚动',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-odometer'
                     }
                 }
             ]
