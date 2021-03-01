@@ -348,11 +348,11 @@ export const dynamicRoutes = [
                     }
                 },
                 {
-                    path: '/fun/graph',
-                    name: 'relationGraph',
-                    component: () => import('/@/views/fun/graph/index.vue'),
+                    path: '/fun/echartsTree',
+                    name: 'echartsTree',
+                    component: () => import('/@/views/fun/tree/index.vue'),
                     meta: {
-                        title: 'graph 关系图谱',
+                        title: 'echartsTree 树图',
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
@@ -367,7 +367,7 @@ export const dynamicRoutes = [
         {
             path: '/pages',
             name: 'pagesIndex',
-            component: () => import('/@/views/pages/index.vue'),
+            component: () => import('/@/views/layout/routerView/parent.vue'),
             meta: {
                 title: '页面',
                 isLink: '',
@@ -377,7 +377,24 @@ export const dynamicRoutes = [
                 isIframe: false,
                 auth: ['admin', 'test'],
                 icon: 'iconfont icon-fuzhiyemian'
-            }
+            },
+            children: [
+                {
+                    path: '/pages/filtering',
+                    name: 'filtering',
+                    component: () => import('/@/views/pages/filtering/index.vue'),
+                    meta: {
+                        title: '过滤筛选组件',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-sell'
+                    }
+                },
+            ]
         },
         {
             path: '/chart',
