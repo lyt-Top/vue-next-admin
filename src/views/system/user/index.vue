@@ -56,7 +56,7 @@ export default {
           num: `00${i + 1}`,
           name: (Math.round(Math.random() * 20901) + 19968).toString(16),
           photo:
-            "https://dss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3142181265,1044547961&fm=11&gp=0.jpg",
+            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1633081619,2004077072&fm=26&gp=0.jpg",
           phone: Math.floor(Math.random() * 10000000000),
           email: `${Math.floor(Math.random() * 1000)}@qq.com`,
           sex: i % 2 === 0 ? "男" : "女",

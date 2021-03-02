@@ -131,7 +131,7 @@ export const filterList = [
         img:
             "http://www.sznews.com/photo/pic/2020-08/12/a08d6eb0-1d53-4f76-a313-ad3e5d701f98.jpg",
         title:
-            "记者手记：可可西里，“挪”向“藏羚羊大产房”的14个半小时 记者手记：可可西里，“挪”向“藏羚羊大产房”的14个半小时",
+            "记者手记：可可西里，“挪”向“藏羚羊大产房”的14个半小时",
         evaluate: (Math.random() * 10).toFixed(2),
         collection: (Math.random() * 100).toFixed(2),
         price: (Math.random() * 10).toFixed(2),

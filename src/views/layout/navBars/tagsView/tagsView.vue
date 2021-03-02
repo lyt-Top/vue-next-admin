@@ -8,7 +8,7 @@
           <i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont font14" v-if="isActive(v.path)"></i>
           <i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon"
             v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
-          <span :class="{'is-active-four': v.meta.isAffix}">{{v.meta.title}}</span>
+          <span>{{v.meta.title}}</span>
           <template v-if="isActive(v.path)">
             <i class="el-icon-refresh-right ml5" @click="refreshCurrentTagsView(v.path)"></i>
             <i class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active" v-if="!v.meta.isAffix"
@@ -414,7 +414,7 @@ export default {
       margin-right: 0 !important;
       border: none !important;
       position: relative;
-      border-radius: 0 !important;
+      border-radius: 3px !important;
       .layout-icon-active {
         display: none;
       }
@@ -426,57 +426,8 @@ export default {
       }
     }
     .is-active {
-      border-top-left-radius: 8px !important;
-      border-top-right-radius: 8px !important;
-      position: relative;
-      z-index: 1;
-      span {
-        position: relative;
-        &::before,
-        &::after {
-          content: "";
-          position: absolute;
-          bottom: 0px;
-          width: 10px;
-          height: 10px;
-          background: var(--color-primary);
-          z-index: 1;
-        }
-        &::before {
-          left: -36px;
-        }
-        &::after {
-          right: -51px;
-        }
-      }
-      .is-active-four {
-        &::after {
-          right: -40px;
-        }
-      }
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        bottom: 1px;
-        width: 10px;
-        height: 10px;
-        background: white;
-        z-index: 2;
-      }
-      &::before {
-        left: -10px;
-        transform: rotate(-4deg);
-        border-bottom-right-radius: 10px;
-      }
-      &::after {
-        right: -10px;
-        transform: rotate(4deg) !important;
-        border-bottom-left-radius: 10px;
-      }
-      &:hover {
-        background: var(--color-primary) !important;
-      }
+      background: none !important;
+      color: var(--color-primary) !important;
     }
   }
 }
