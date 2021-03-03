@@ -1,5 +1,5 @@
 <template>
-  <el-header :height="setHeaderHeight">
+  <el-header class="layout-header" :height="setHeaderHeight">
     <NavBarsIndex />
   </el-header>
 </template>

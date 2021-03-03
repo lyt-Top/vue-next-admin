@@ -1,5 +1,5 @@
 <template>
-  <el-main>
+  <el-main class="layout-main">
     <el-scrollbar class="layout-scrollbar" ref="layoutScrollbarRef"
       v-show="!currentRouteMeta.isLink && !currentRouteMeta.isIframe"
       :style="{minHeight: `calc(100vh - ${headerHeight}`}">

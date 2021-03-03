@@ -31,10 +31,7 @@ export default {
         const styles = document.styleSheets;
         let sheetsList = [];
         for (let i = 0; i < styles.length; i++) {
-          if (
-            styles[i].href &&
-            styles[i].href.indexOf("http://at.alicdn.com") > -1
-          ) {
+          if (styles[i].href && styles[i].href.indexOf("at.alicdn.com") > -1) {
             sheetsList.push(styles[i]);
           }
         }

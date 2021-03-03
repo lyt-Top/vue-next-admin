@@ -1,17 +1,19 @@
 <template>
   <div class="element-container">
-    <el-card shadow="hover" header="element 字体图标(自动载入)">
+    <el-card shadow="hover" header="element plus 字体图标(自动载入)">
       <el-row class="iconfont-row">
-        <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2" v-for="(v,k) in sheetsIconList" :key="k">
-          <div class="iconfont-warp">
-            <div class="flex-margin">
-              <div class="iconfont-warp-value">
-                <i :class="v" class="iconfont"></i>
+        <template v-for="(v,k) in sheetsIconList" :key="k">
+          <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2">
+            <div class="iconfont-warp">
+              <div class="flex-margin">
+                <div class="iconfont-warp-value">
+                  <i :class="v"></i>
+                </div>
+                <div class="iconfont-warp-label mt10">{{v}}</div>
               </div>
-              <div class="iconfont-warp-label mt10">{{v}}</div>
             </div>
-          </div>
-        </el-col>
+          </el-col>
+        </template>
       </el-row>
     </el-card>
   </div>
@@ -29,24 +31,15 @@ export default {
     const initGetStyleSheets = () => {
       nextTick(() => {
         const styles = document.styleSheets;
-        let sheetsList = [];
         for (let i = 0; i < styles.length; i++) {
-          if (
-            styles[i].href &&
-            styles[i].href.indexOf("http://at.alicdn.com") > -1
-          ) {
-            sheetsList.push(styles[i]);
-          }
-        }
-        for (let i = 0; i < sheetsList.length; i++) {
-          for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
+          for (let j = 0; j < styles[i].cssRules.length; j++) {
             if (
-              sheetsList[i].cssRules[j].selectorText &&
-              sheetsList[i].cssRules[j].selectorText.indexOf(".icon-") > -1
+              styles[i].cssRules[j].selectorText &&
+              styles[i].cssRules[j].selectorText.indexOf(".el-icon-") === 0
             ) {
               state.sheetsIconList.push(
-                `${sheetsList[i].cssRules[j].selectorText
-                  .substring(1, sheetsList[i].cssRules[j].selectorText.length)
+                `${styles[i].cssRules[j].selectorText
+                  .substring(1, styles[i].cssRules[j].selectorText.length)
                   .replace(/\:\:before/gi, "")}`
               );
             }
@@ -70,6 +63,10 @@ export default {
   .iconfont-row {
     border-top: 1px solid #ebeef5;
     border-left: 1px solid #ebeef5;
+    .el-col:nth-last-child(1),
+    .el-col:nth-last-child(2) {
+      display: none;
+    }
     .iconfont-warp {
       text-align: center;
       border-right: 1px solid #ebeef5;

@@ -114,6 +114,8 @@ cnpm run build
 - <a href="https://github.com/microsoft/TypeScript" target="_blank">typescript</a>
 - <a href="https://github.com/vitejs/vite" target="_blank">vite</a>
 
+#### 特别感谢
+
 #### 其他事项
 
 - <a href="https://lyt-top.gitee.io/vue-admin-wonderful-next-preview/#/login" target="_blank">vue3.x vue-admin-wonderful-next 版本</a>，基于 vue3.x + CompositionAPI + typescript + vite + element plus。

@@ -384,7 +384,7 @@ export const dynamicRoutes = [
                     name: 'filtering',
                     component: () => import('/@/views/pages/filtering/index.vue'),
                     meta: {
-                        title: '过滤筛选',
+                        title: '过滤筛选组件',
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,

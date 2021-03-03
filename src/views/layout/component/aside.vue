@@ -1,12 +1,12 @@
 <template>
-  <el-aside :class="setCollapseWidth" v-if="clientWidth > 1000">
+  <el-aside class="layout-aside" :class="setCollapseWidth" v-if="clientWidth > 1000">
     <Logo v-if="setShowLogo" />
     <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
       <Vertical :menuList="menuList" :class="setCollapseWidth" />
     </el-scrollbar>
   </el-aside>
   <el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
-    <el-aside class="w100 h100">
+    <el-aside class="layout-aside w100 h100">
       <Logo v-if="setShowLogo" />
       <el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
         <Vertical :menuList="menuList" />
