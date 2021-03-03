@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card shadow="hover" header="数字滚动演示">
-      <el-alert title="感谢 `countup.js`，项目地址：https://github.com/inorganik/countUp.js" type="success" :closable="false"
+      <el-alert title="感谢优秀的 `countup.js`，项目地址：https://github.com/inorganik/countUp.js" type="success" :closable="false"
         class="mb15"></el-alert>
       <el-row :gutter="20">
         <el-col :sm="6" class="mb15" v-for="(v,k) in topCardItemList" :key="k">

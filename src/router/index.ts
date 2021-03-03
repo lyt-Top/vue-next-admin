@@ -384,7 +384,7 @@ export const dynamicRoutes = [
                     name: 'filtering',
                     component: () => import('/@/views/pages/filtering/index.vue'),
                     meta: {
-                        title: '过滤筛选组件',
+                        title: '过滤筛选',
                         isLink: '',
                         isHide: false,
                         isKeepAlive: true,
@@ -392,6 +392,36 @@ export const dynamicRoutes = [
                         isIframe: false,
                         auth: ['admin', 'test'],
                         icon: 'el-icon-sell'
+                    }
+                },
+                {
+                    path: '/pages/iocnfont',
+                    name: 'iocnfont',
+                    component: () => import('/@/views/pages/iocnfont/index.vue'),
+                    meta: {
+                        title: 'iconfont 字体图标',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-present'
+                    }
+                },
+                {
+                    path: '/pages/element',
+                    name: 'element',
+                    component: () => import('/@/views/pages/element/index.vue'),
+                    meta: {
+                        title: 'element 字体图标',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-platform-eleme'
                     }
                 },
             ]

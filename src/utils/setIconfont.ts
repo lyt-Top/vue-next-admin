@@ -10,6 +10,7 @@ export function setCssCdn() {
         let link = document.createElement('link')
         link.rel = 'stylesheet'
         link.href = v
+        link.crossOrigin = 'anonymous'
         document.getElementsByTagName('head')[0].appendChild(link)
     })
 }
