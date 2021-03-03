@@ -383,6 +383,7 @@ export const dynamicRoutes = [
             path: '/pages',
             name: 'pagesIndex',
             component: () => import('/@/views/layout/routerView/parent.vue'),
+            redirect: '/pages/filtering',
             meta: {
                 title: '页面',
                 isLink: '',
