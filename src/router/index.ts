@@ -361,6 +361,21 @@ export const dynamicRoutes = [
                         auth: ['admin', 'test'],
                         icon: 'el-icon-connection'
                     }
+                },
+                {
+                    path: '/fun/selector',
+                    name: 'selector',
+                    component: () => import('/@/views/fun/selector/index.vue'),
+                    meta: {
+                        title: '图标选择器',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'iconfont icon-xuanzeqi'
+                    }
                 }
             ]
         },
