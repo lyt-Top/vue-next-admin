@@ -20,32 +20,17 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, nextTick, onMounted } from "vue";
+import { toRefs, reactive, onMounted } from "vue";
+import initIconfont from "/@/utils/getStyleSheets.ts";
 export default {
   name: "element",
   setup() {
     const state = reactive({
       sheetsIconList: [],
     });
-    // 初始化获取 css 样式，这里使用阿里的图标(记得加上前缀 `iconfont`)，其它第三方请自行做判断
+    // 初始化获取 css 样式，获取 element plus 自带图标
     const initGetStyleSheets = () => {
-      nextTick(() => {
-        const styles = document.styleSheets;
-        for (let i = 0; i < styles.length; i++) {
-          for (let j = 0; j < styles[i].cssRules.length; j++) {
-            if (
-              styles[i].cssRules[j].selectorText &&
-              styles[i].cssRules[j].selectorText.indexOf(".el-icon-") === 0
-            ) {
-              state.sheetsIconList.push(
-                `${styles[i].cssRules[j].selectorText
-                  .substring(1, styles[i].cssRules[j].selectorText.length)
-                  .replace(/\:\:before/gi, "")}`
-              );
-            }
-          }
-        }
-      });
+      initIconfont.ele().then((res) => (state.sheetsIconList = res));
     };
     // 页面加载时
     onMounted(() => {

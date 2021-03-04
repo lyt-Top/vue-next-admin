@@ -18,7 +18,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, nextTick, onMounted } from "vue";
+import { toRefs, reactive, onMounted } from "vue";
+import initIconfont from "/@/utils/getStyleSheets.ts";
 export default {
   name: "iconfont",
   setup() {
@@ -27,29 +28,7 @@ export default {
     });
     // 初始化获取 css 样式，这里使用阿里的图标(记得加上前缀 `iconfont`)，其它第三方请自行做判断
     const initGetStyleSheets = () => {
-      nextTick(() => {
-        const styles = document.styleSheets;
-        let sheetsList = [];
-        for (let i = 0; i < styles.length; i++) {
-          if (styles[i].href && styles[i].href.indexOf("at.alicdn.com") > -1) {
-            sheetsList.push(styles[i]);
-          }
-        }
-        for (let i = 0; i < sheetsList.length; i++) {
-          for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
-            if (
-              sheetsList[i].cssRules[j].selectorText &&
-              sheetsList[i].cssRules[j].selectorText.indexOf(".icon-") > -1
-            ) {
-              state.sheetsIconList.push(
-                `${sheetsList[i].cssRules[j].selectorText
-                  .substring(1, sheetsList[i].cssRules[j].selectorText.length)
-                  .replace(/\:\:before/gi, "")}`
-              );
-            }
-          }
-        }
-      });
+      initIconfont.ali().then((res) => (state.sheetsIconList = res));
     };
     // 页面加载时
     onMounted(() => {

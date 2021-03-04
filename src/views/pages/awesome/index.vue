@@ -20,42 +20,17 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, nextTick, onMounted } from "vue";
+import { toRefs, reactive, onMounted } from "vue";
+import initIconfont from "/@/utils/getStyleSheets.ts";
 export default {
   name: "awesome",
   setup() {
     const state = reactive({
       sheetsIconList: [],
     });
-    // 初始化获取 css 样式，这里使用阿里的图标(记得加上前缀 `iconfont`)，其它第三方请自行做判断
+    // 初始化获取 css 样式，这里使用fontawesome的图标(记得加上前缀 `fa`)，其它第三方请自行做判断
     const initGetStyleSheets = () => {
-      nextTick(() => {
-        const styles = document.styleSheets;
-        let sheetsList = [];
-        for (let i = 0; i < styles.length; i++) {
-          if (
-            styles[i].href &&
-            styles[i].href.indexOf("netdna.bootstrapcdn.com") > -1
-          ) {
-            sheetsList.push(styles[i]);
-          }
-        }
-        for (let i = 0; i < sheetsList.length; i++) {
-          for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
-            if (
-              sheetsList[i].cssRules[j].selectorText &&
-              sheetsList[i].cssRules[j].selectorText.indexOf(".fa-") === 0 &&
-              sheetsList[i].cssRules[j].selectorText.indexOf(",") === -1
-            ) {
-              state.sheetsIconList.push(
-                `${sheetsList[i].cssRules[j].selectorText
-                  .substring(1, sheetsList[i].cssRules[j].selectorText.length)
-                  .replace(/\:\:before/gi, "")}`
-              );
-            }
-          }
-        }
-      });
+      initIconfont.awe().then((res) => (state.sheetsIconList = res));
     };
     // 页面加载时
     onMounted(() => {
