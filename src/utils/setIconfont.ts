@@ -1,5 +1,8 @@
 // 字体图标 url
-const cssCdnUrlList: Array<string> = ['//at.alicdn.com/t/font_2298093_xviws8fx96h.css']
+const cssCdnUrlList: Array<string> = [
+    '//at.alicdn.com/t/font_2298093_xviws8fx96h.css',
+    '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+]
 // 第三方 js url
 const jsCdnUrlList: Array<string> = []
 

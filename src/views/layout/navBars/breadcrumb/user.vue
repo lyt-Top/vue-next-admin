@@ -6,14 +6,17 @@
     <div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
       <i class="icon-skin iconfont" title="布局配置"></i>
     </div>
-    <div class="layout-navbars-breadcrumb-user-icon" @click="onUserNewsPopoverClick">
-      <el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300">
+    <div class="layout-navbars-breadcrumb-user-icon">
+      <el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300"
+        popper-class="el-popover-pupop-user-news">
         <template #reference>
           <el-badge :is-dot="true">
             <i class="el-icon-bell" title="消息"></i>
           </el-badge>
         </template>
-        <UserNews />
+        <transition name="el-zoom-in-top">
+          <UserNews v-show="isShowUserNewsPopover" />
+        </transition>
       </el-popover>
     </div>
     <div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick"><i class="iconfont"
@@ -137,10 +140,6 @@ export default {
     const onSearchClick = () => {
       searchRef.value.openSearch();
     };
-    // 我的消息点击
-    const onUserNewsPopoverClick = () => {
-      state.isShowUserNewsPopover = !state.isShowUserNewsPopover;
-    };
     return {
       setFlexAutoStyle,
       getUserInfos,
@@ -148,7 +147,6 @@ export default {
       onHandleCommandClick,
       onScreenfullClick,
       onSearchClick,
-      onUserNewsPopoverClick,
       searchRef,
       ...toRefs(state),
     };

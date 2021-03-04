@@ -1,13 +1,13 @@
 <template>
-  <div class="element-container">
-    <el-card shadow="hover" :header="`element plus 字体图标(自动载入)：${sheetsIconList.length - 2}个`">
+  <div class="awesome-container">
+    <el-card shadow="hover" :header="`fontawesome 字体图标(自动载入)：${sheetsIconList.length - 24}个`">
       <el-row class="iconfont-row">
         <template v-for="(v,k) in sheetsIconList" :key="k">
           <el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2">
             <div class="iconfont-warp">
               <div class="flex-margin">
                 <div class="iconfont-warp-value">
-                  <i :class="v"></i>
+                  <i :class="v" class="fa"></i>
                 </div>
                 <div class="iconfont-warp-label mt10">{{v}}</div>
               </div>
@@ -22,7 +22,7 @@
 <script lang="ts">
 import { toRefs, reactive, nextTick, onMounted } from "vue";
 export default {
-  name: "element",
+  name: "awesome",
   setup() {
     const state = reactive({
       sheetsIconList: [],
@@ -31,15 +31,25 @@ export default {
     const initGetStyleSheets = () => {
       nextTick(() => {
         const styles = document.styleSheets;
+        let sheetsList = [];
         for (let i = 0; i < styles.length; i++) {
-          for (let j = 0; j < styles[i].cssRules.length; j++) {
+          if (
+            styles[i].href &&
+            styles[i].href.indexOf("netdna.bootstrapcdn.com") > -1
+          ) {
+            sheetsList.push(styles[i]);
+          }
+        }
+        for (let i = 0; i < sheetsList.length; i++) {
+          for (let j = 0; j < sheetsList[i].cssRules.length; j++) {
             if (
-              styles[i].cssRules[j].selectorText &&
-              styles[i].cssRules[j].selectorText.indexOf(".el-icon-") === 0
+              sheetsList[i].cssRules[j].selectorText &&
+              sheetsList[i].cssRules[j].selectorText.indexOf(".fa-") === 0 &&
+              sheetsList[i].cssRules[j].selectorText.indexOf(",") === -1
             ) {
               state.sheetsIconList.push(
-                `${styles[i].cssRules[j].selectorText
-                  .substring(1, styles[i].cssRules[j].selectorText.length)
+                `${sheetsList[i].cssRules[j].selectorText
+                  .substring(1, sheetsList[i].cssRules[j].selectorText.length)
                   .replace(/\:\:before/gi, "")}`
               );
             }
@@ -59,12 +69,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.element-container {
+.awesome-container {
   .iconfont-row {
     border-top: 1px solid #ebeef5;
     border-left: 1px solid #ebeef5;
-    .el-col:nth-last-child(1),
-    .el-col:nth-last-child(2) {
+    .el-col:nth-child(-n + 24) {
       display: none;
     }
     .iconfont-warp {

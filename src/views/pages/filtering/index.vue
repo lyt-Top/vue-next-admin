@@ -16,7 +16,8 @@
       </div>
       <div class="flex-warp mt15 mb15" v-if="tableData.data.length > 0">
         <el-row :gutter="15">
-          <el-col :sm="6" class="mb15" v-for="(v,k) in tableData.data" :key="k" @click="onTableItemClick(v)">
+          <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb15" v-for="(v,k) in tableData.data" :key="k"
+            @click="onTableItemClick(v)">
             <div class="flex-warp-item">
               <div class="flex-warp-item-box">
                 <div class="item-img">

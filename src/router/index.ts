@@ -440,6 +440,21 @@ export const dynamicRoutes = [
                         icon: 'el-icon-platform-eleme'
                     }
                 },
+                {
+                    path: '/pages/awesome',
+                    name: 'awesome',
+                    component: () => import('/@/views/pages/awesome/index.vue'),
+                    meta: {
+                        title: 'awesome 字体图标',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'el-icon-set-up'
+                    }
+                },
             ]
         },
         {
