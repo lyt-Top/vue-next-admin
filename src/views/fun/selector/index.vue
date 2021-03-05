@@ -1,9 +1,11 @@
 <template>
   <div class="selector-container">
-    <el-card shadow="hover" header="1、图标选择器：简单版本">
+    <el-card shadow="hover" header="1、图标选择器(宽度自动)：简单版本">
       <IconSelector @get="ongetCurrentIcon" />
     </el-card>
-    <el-card shadow="hover" header="2、图标选择器：高级版本" class="mt15"></el-card>
+    <el-card shadow="hover" header="2、图标选择器(宽度自动)：高级版本" class="mt15">
+      <IconSelector @get="ongetCurrentIcon" :isAllOn="true" />
+    </el-card>
   </div>
 </template>
 

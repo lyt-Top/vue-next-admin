@@ -11,7 +11,7 @@
     "countup.js": "^2.0.7",
     "echarts": "^5.0.2",
     "echarts-wordcloud": "^2.0.0",
-    "element-plus": "^1.0.2-beta.32",
+    "element-plus": "^1.0.2-beta.33",
     "mitt": "^2.1.0",
     "nprogress": "^0.2.0",
     "screenfull": "^5.1.0",
@@ -27,11 +27,11 @@
     "@types/nprogress": "^0.2.0",
     "@types/sortablejs": "^1.10.6",
     "@vitejs/plugin-vue": "^1.1.5",
-    "@vue/compiler-sfc": "^3.0.6",
+    "@vue/compiler-sfc": "^3.0.7",
     "dotenv": "^8.2.0",
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
-    "typescript": "^4.2.2",
-    "vite": "^2.0.4"
+    "typescript": "^4.2.3",
+    "vite": "^2.0.5"
   }
 }
