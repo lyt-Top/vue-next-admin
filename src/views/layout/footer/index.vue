@@ -1,7 +1,7 @@
 <template>
   <div class="layout-footer mt15" v-show="isDelayFooter">
     <div class="layout-footer-warp">
-      <div>vue-admin-wonderful，Made by lyt with ❤️</div>
+      <div>vue-next-admin，Made by lyt with ❤️</div>
       <div class="mt5">Copyright &copy 深圳市 xxx 软件科技有限公司</div>
     </div>
   </div>

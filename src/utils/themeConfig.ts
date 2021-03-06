@@ -106,7 +106,7 @@ export default {
     /* 全局网站标题 / 副标题
     ------------------------------- */
     // 网站主标题（菜单导航、浏览器当前网页标题）
-    globalTitle: 'vue-admin-wonderful-next',
+    globalTitle: 'vue-next-admin',
     // 网站副标题（登录页顶部文字）
     globalViceTitle: 'SMALL@小柒'
 }

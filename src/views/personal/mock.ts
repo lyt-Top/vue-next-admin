@@ -3,7 +3,7 @@ export const newsInfoList: Array<object> = [
   {
     title: "[发布] 2021年02月28日发布 vue3.x v1.0.0 版本",
     date: "02/28",
-    link: "https://gitee.com/lyt-top/vue-admin-wonderful-next",
+    link: "https://gitee.com/lyt-top/vue-next-admin",
   },
   {
     title: "[发布] 2020年11月15日发布 vue2.x v1.0.0 版本",
@@ -14,7 +14,7 @@ export const newsInfoList: Array<object> = [
     title:
       "[预览] 2020年12月08日，基于 vue3.x 版本后台模板的预览",
     date: "12/08",
-    link: "http://lyt-top.gitee.io/vue-admin-wonderful-next-preview",
+    link: "http://lyt-top.gitee.io/vue-next-admin-preview",
   },
   {
     title:

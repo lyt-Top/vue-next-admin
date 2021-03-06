@@ -1,9 +1,11 @@
 <template>
   <div class="layout-logo" v-if="setShowLogo" @click="onThemeConfigChange">
+    <img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-mini.svg"
+      class="layout-logo-medium-img" />
     <span>{{config.globalTitle}}</span>
   </div>
   <div class="layout-logo-size" v-else @click="onThemeConfigChange">
-    <img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next-admin/assets/logo-docs-mini.svg"
+    <img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-mini.svg"
       class="layout-logo-size-img" />
   </div>
 </template>
@@ -59,6 +61,10 @@ export default {
       color: var(--color-primary-light-2);
     }
   }
+  &-medium-img {
+    width: 20px;
+    margin-right: 5px;
+  }
 }
 .layout-logo-size {
   width: 100%;
@@ -67,7 +73,7 @@ export default {
   cursor: pointer;
   animation: logoAnimation 0.3s ease-in-out;
   &-img {
-    width: 30px;
+    width: 20px;
     margin: auto;
   }
   &:hover {

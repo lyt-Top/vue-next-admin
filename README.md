@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next/logo/logo-docs-large-element-text.svg">
+	<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-text.svg">
 	<p align="center">
 	    <a href="https://v3.vuejs.org/" target="_blank">
 	        <img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
@@ -28,7 +28,7 @@
 
 ###### vue3.x 版本
 
-- vue-admin-wonderful-next 版本预览 <a href="https://lyt-top.gitee.io/vue-admin-wonderful-next-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-admin-wonderful-next-preview/#/login</a>
+- vue-next-admin 版本预览 <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
 
 ###### vue2.x 版本
 
@@ -40,7 +40,7 @@
 
 #### 代码仓库
 
-- vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-admin-wonderful-next" target="_blank">https://gitee.com/lyt-top/vue-admin-wonderful-next</a>
+- vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin</a>
 - vue2.x 版本 <a href="https://gitee.com/lyt-top/vue-admin-wonderful" target="_blank">https://gitee.com/lyt-top/vue-admin-wonderful</a>
 
 #### 安装 cnpm
@@ -51,7 +51,7 @@
 
 ```bash
 # 克隆项目
-git clone https://gitee.com/lyt-top/vue-admin-wonderful-next.git
+git clone https://gitee.com/lyt-top/vue-next-admin.git
 
 # 进入项目
 cd vue-admin-wonderful-next
@@ -87,11 +87,11 @@ cnpm run build
 
 #### 学习交流加 QQ 群
 
-- 加群下载基础模板、查看开发文档、<a href="https://lyt-top.gitee.io/vue-admin-wonderful-next-preview/#/login" target="_blank">vue-admin-wonderful-next</a> 开发文档正在编写中...
+- 加群下载基础模板、查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
 - 群号码：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
-<img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/doc/qqs.png" width="220" alt="vue-admin-wonderful 讨论群" title="vue-admin-wonderful 讨论群"/></a>
+<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qqs.png" width="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群"/></a>
 
 #### 鸣谢列表
 
@@ -116,8 +116,14 @@ cnpm run build
 
 #### 特别感谢
 
+特别感谢群里老哥的建议、指导与帮忙，谢谢！
+
+- <a href="https://gitee.com/sz6/sa-plus" target="_blank">@省长</a>
+- @唐参
+- <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
+
 #### 其他事项
 
-- <a href="https://lyt-top.gitee.io/vue-admin-wonderful-next-preview/#/login" target="_blank">vue3.x vue-admin-wonderful-next 版本</a>，基于 vue3.x + CompositionAPI + typescript + vite + element plus。
+- <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue3.x vue-next-admin 版本</a>，基于 vue3.x + CompositionAPI + typescript + vite + element plus。
 - <a href="http://lyt-top.gitee.io/vue-admin-wonderful-preview/#/login" target="_blank">vue2.x vue-admin-wonderful 版本</a>，基于 vue2.x + element ui。
-- 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-admin-wonderful-next" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！
+- 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！

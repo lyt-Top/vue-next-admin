@@ -5,7 +5,7 @@
     </div>
     <div class="login-content" :class="{'login-content-mobile' : tabsActiveName === 'mobile'}">
       <div class="login-content-main">
-        <h4 class="login-content-title">vue-admin-wonderful</h4>
+        <h4 class="login-content-title">{{themeConfig.globalTitle}}后台模板</h4>
         <el-tabs v-model="tabsActiveName" @tab-click="onTabsClick">
           <el-tab-pane label="账号密码登录" name="account">
             <transition name="el-zoom-in-center">
@@ -32,10 +32,11 @@
 </template>
 
 <script lang="ts">
+import { toRefs, reactive } from "vue";
 import Account from "/@/views/login/component/account.vue";
 import Mobile from "/@/views/login/component/mobile.vue";
 import themeConfig from "/@/utils/themeConfig.ts";
-import { toRefs, reactive } from "vue";
+
 export default {
   name: "login",
   components: { Account, Mobile },
@@ -60,7 +61,7 @@ export default {
 .login-container {
   width: 100%;
   height: 100%;
-  background: url("https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/next-admin/assets/bg-login.png")
+  background: url("https://gitee.com/lyt-top/vue-next-admin-images/raw/master/login/bg-login.png")
     no-repeat;
   background-size: 100% 100%;
   .login-logo {
