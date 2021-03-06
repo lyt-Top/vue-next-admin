@@ -33,7 +33,7 @@ const viteConfig: UserConfig = {
     },
     build: {
         outDir: 'dist',
-        minify: 'esbuild',
+        minify: 'terser',
         sourcemap: false
     }
 }
