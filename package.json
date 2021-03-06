@@ -1,5 +1,5 @@
 {
-  "name": "vue-admin-wonderful-next",
+  "name": "vue-next-admin",
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
