@@ -22,6 +22,7 @@ body,
   background-color: #f8f8f8;
   font-size: 14px;
   overflow: hidden;
+  position: relative;
 }
 
 /* 主布局样式
@@ -43,13 +44,14 @@ body,
     }
   }
   .layout-header {
-    box-shadow: 0 1px 4px rgb(0 21 41 / 4%);
     padding: 0 !important;
   }
   .layout-main {
     padding: 0 !important;
     overflow: hidden;
     width: 100%;
+    background-color: #f8f8f8;
+    border-top: 1px solid #f1f2f3;
   }
   .el-scrollbar {
     width: 100%;

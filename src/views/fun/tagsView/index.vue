@@ -49,6 +49,12 @@
             </el-button>
           </div>
         </div>
+        <div class="flex-warp-item">
+          <div class="flex-warp-item-box">
+            <el-button type="success" size="small" icon="el-icon-full-screen" @click="openCurrenFullscreen">当前页全屏
+            </el-button>
+          </div>
+        </div>
       </div>
     </el-card>
   </div>
@@ -115,6 +121,13 @@ export default {
         path: route.path,
       });
     };
+    // 5、开启当前页面全屏
+    const openCurrenFullscreen = () => {
+      proxy.mittBus.emit("onCurrentContextmenuClick", {
+        id: 4,
+        path: route.path,
+      });
+    };
     // 执行点击
     const onImplementClick = () => {
       proxy.mittBus.emit("onCurrentContextmenuClick", {
@@ -127,6 +140,7 @@ export default {
       closeCurrentTagsView,
       closeOtherTagsView,
       closeAllTagsView,
+      openCurrenFullscreen,
       onImplementClick,
       ...toRefs(state),
     };
