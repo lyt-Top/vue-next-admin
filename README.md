@@ -113,8 +113,6 @@ cnpm run build
 - <a href="https://github.com/sass/sass" target="_blank">sass</a>
 - <a href="https://github.com/microsoft/TypeScript" target="_blank">typescript</a>
 - <a href="https://github.com/vitejs/vite" target="_blank">vite</a>
-- <a href="https://github.com/wangeditor-team/wangEditor" target="_blank">wangeditor</a>
-- <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">cropperjs</a>
 
 #### 特别感谢
 

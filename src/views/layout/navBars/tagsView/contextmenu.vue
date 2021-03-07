@@ -41,12 +41,6 @@ export default defineComponent({
         { id: 1, txt: "关闭", affix: false, icon: "el-icon-close" },
         { id: 2, txt: "关闭其它", affix: false, icon: "el-icon-circle-close" },
         { id: 3, txt: "全部关闭", affix: false, icon: "el-icon-folder-delete" },
-        {
-          id: 4,
-          txt: "当前全屏",
-          affix: false,
-          icon: "iconfont icon-fullscreen",
-        },
       ],
       path: {},
     });
@@ -99,9 +93,6 @@ export default defineComponent({
   position: fixed;
   .el-dropdown-menu__item {
     font-size: 12px !important;
-    i {
-      font-size: 12px !important;
-    }
   }
 }
 </style>

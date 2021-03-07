@@ -376,36 +376,6 @@ export const dynamicRoutes = [
                         auth: ['admin', 'test'],
                         icon: 'iconfont icon-xuanzeqi'
                     }
-                },
-                {
-                    path: '/fun/wangEditor',
-                    name: 'wangEditor',
-                    component: () => import('/@/views/fun/wangEditor/index.vue'),
-                    meta: {
-                        title: 'wangEditor 编辑器',
-                        isLink: '',
-                        isHide: false,
-                        isKeepAlive: true,
-                        isAffix: false,
-                        isIframe: false,
-                        auth: ['admin', 'test'],
-                        icon: 'iconfont icon-fuwenbenkuang'
-                    }
-                },
-                {
-                    path: '/fun/cropper',
-                    name: 'cropper',
-                    component: () => import('/@/views/fun/cropper/index.vue'),
-                    meta: {
-                        title: 'cropper 图片裁剪',
-                        isLink: '',
-                        isHide: false,
-                        isKeepAlive: true,
-                        isAffix: false,
-                        isIframe: false,
-                        auth: ['admin', 'test'],
-                        icon: 'iconfont icon-caijian'
-                    }
                 }
             ]
         },
@@ -483,21 +453,6 @@ export const dynamicRoutes = [
                         isIframe: false,
                         auth: ['admin', 'test'],
                         icon: 'el-icon-set-up'
-                    }
-                },
-                {
-                    path: '/pages/cityLinkage',
-                    name: 'cityLinkage',
-                    component: () => import('/@/views/pages/cityLinkage/index.vue'),
-                    meta: {
-                        title: '城市多级联动',
-                        isLink: '',
-                        isHide: false,
-                        isKeepAlive: true,
-                        isAffix: false,
-                        isIframe: false,
-                        auth: ['admin', 'test'],
-                        icon: 'iconfont icon-jiliandongxuanzeqi'
                     }
                 },
             ]

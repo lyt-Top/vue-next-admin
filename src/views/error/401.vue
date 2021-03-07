@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="right">
-        <img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/error/401.png" />
+        <img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/images/error/401.png" />
       </div>
     </div>
   </div>

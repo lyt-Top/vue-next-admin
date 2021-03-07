@@ -38,7 +38,6 @@ import {
   watch,
 } from "vue";
 import { useRoute, useRouter, onBeforeRouteUpdate } from "vue-router";
-import screenfull from "screenfull";
 import { useStore } from "/@/store/index.ts";
 import { setSession, getSession, removeSession } from "/@/utils/storage.ts";
 import Sortable from "sortablejs";
@@ -154,14 +153,6 @@ export default {
       });
       addBrowserSetSession(state.tagsViewList);
     };
-    // 6、开启当前页面全屏
-    const openCurrenFullscreen = (path: string) => {
-      nextTick(() => {
-        router.push(path);
-        const element = document.querySelector(".layout-main");
-        screenfull.request(element);
-      });
-    };
     // 当前项右键菜单点击
     const onCurrentContextmenuClick = (data: object) => {
       let { id, path } = data;
@@ -179,9 +170,6 @@ export default {
           break;
         case 3:
           closeAllTagsView(path);
-          break;
-        case 4:
-          openCurrenFullscreen(path);
           break;
       }
     };
@@ -305,7 +293,6 @@ export default {
 .layout-navbars-tagsview {
   flex: 1;
   background-color: #ffffff;
-  border-top: 1px solid #ebeef5;
   ::v-deep(.el-scrollbar__wrap) {
     overflow-x: auto !important;
   }
