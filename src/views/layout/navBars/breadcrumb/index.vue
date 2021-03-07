@@ -130,6 +130,5 @@ export default {
   padding-right: 15px;
   background: var(--bg-topBar);
   overflow: hidden;
-  border-bottom: 1px solid rgb(238, 238, 238);
 }
 </style>
