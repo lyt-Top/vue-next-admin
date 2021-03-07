@@ -305,7 +305,7 @@ export default {
 .layout-navbars-tagsview {
   flex: 1;
   background-color: #ffffff;
-  border-top: 1px solid #ebeef5;
+  border-bottom: 1px solid #f1f2f3;
   ::v-deep(.el-scrollbar__wrap) {
     overflow-x: auto !important;
   }
