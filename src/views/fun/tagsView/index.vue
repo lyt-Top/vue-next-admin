@@ -90,9 +90,13 @@ export default {
           value: 3,
           label: "关闭全部",
         },
+        {
+          value: 4,
+          label: "当前页全屏",
+        },
       ],
     });
-    // 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部
+    // 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
     // 1、刷新当前 tagsView
     const refreshCurrentTagsView = () => {
       proxy.mittBus.emit("onCurrentContextmenuClick", {
