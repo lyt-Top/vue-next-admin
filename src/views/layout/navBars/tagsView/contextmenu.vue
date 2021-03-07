@@ -43,7 +43,7 @@ export default defineComponent({
         { id: 3, txt: "全部关闭", affix: false, icon: "el-icon-folder-delete" },
         {
           id: 4,
-          txt: "当前全屏",
+          txt: "当前页全屏",
           affix: false,
           icon: "iconfont icon-fullscreen",
         },

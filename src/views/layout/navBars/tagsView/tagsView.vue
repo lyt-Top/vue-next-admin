@@ -249,7 +249,7 @@ export default {
     });
     // 页面加载前
     onBeforeMount(() => {
-      // 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部
+      // 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
       proxy.mittBus.on("onCurrentContextmenuClick", (data: object) => {
         onCurrentContextmenuClick(data);
       });
