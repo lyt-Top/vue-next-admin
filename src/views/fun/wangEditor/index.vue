@@ -13,7 +13,6 @@ import { toRefs, reactive, onMounted } from "vue";
 import wangeditor from "wangeditor";
 export default {
   name: "wangeditor",
-  components: {},
   setup() {
     const state = reactive({});
     // 初始化富文本
