@@ -8,13 +8,13 @@
 import { computed } from "vue";
 import { useStore } from "/@/store/index.ts";
 export default {
+  name: "auth",
   props: {
     value: {
       type: String,
       default: () => "",
     },
   },
-  nane: "auth",
   setup(props) {
     const store = useStore();
     // 获取 vuex 中的用户权限

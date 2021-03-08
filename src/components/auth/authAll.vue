@@ -9,7 +9,7 @@ import { computed } from "vue";
 import { useStore } from "/@/store/index.ts";
 import { judementSameArr } from "/@/utils/arrayOperation.ts";
 export default {
-  nane: "authAll",
+  name: "authAll",
   props: {
     value: {
       type: Array,

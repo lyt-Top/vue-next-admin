@@ -406,6 +406,21 @@ export const dynamicRoutes = [
                         auth: ['admin', 'test'],
                         icon: 'iconfont icon-caijian'
                     }
+                },
+                {
+                    path: '/fun/mindMap',
+                    name: 'mindMap',
+                    component: () => import('/@/views/fun/mindMap/index.vue'),
+                    meta: {
+                        title: 'G6 思维导图',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'iconfont icon-siweidaotu'
+                    }
                 }
             ]
         },
