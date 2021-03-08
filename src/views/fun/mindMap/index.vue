@@ -8,7 +8,6 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, onMounted, nextTick } from "vue";
-import G6 from "@antv/g6";
 import { useStore } from "/@/store/index.ts";
 export default {
   name: "mindMap",
@@ -23,258 +22,533 @@ export default {
     });
     // 初始化 antv/G6
     const initAntvG6 = () => {
-      console.log(G6);
+      const { Util } = G6;
+      const colorArr = [
+        "#5B8FF9",
+        "#5AD8A6",
+        "#5D7092",
+        "#F6BD16",
+        "#6F5EF9",
+        "#6DC8EC",
+        "#D3EEF9",
+        "#DECFEA",
+        "#FFE0C7",
+        "#1E9493",
+        "#BBDEDE",
+        "#FF99C3",
+        "#FFE0ED",
+        "#CDDDFD",
+        "#CDF3E4",
+        "#CED4DE",
+        "#FCEBB9",
+        "#D3CEFD",
+        "#945FB9",
+        "#FF9845",
+      ];
 
-      const fontSize = 12;
-      // 自定义节点
-      G6.registerNode("line", {
-        draw: (cfg, group) => {
-          const width = cfg.label.length * 10;
-          const rect = group.addShape("rect", {
-            attrs: {
-              x: 0,
-              y: -10,
-              ...cfg.style,
-              width,
-              height: 20,
-              lineWidth: 0,
-              opacity: 0,
-            },
-            name: "rect-shape",
-            draggable: true,
-          });
-          const label = group.addShape("text", {
-            attrs: {
-              text: cfg.label,
-              fill: "#000",
-              fontSize,
-              x: 0,
-              y: -5,
-            },
-            name: "label-shape",
-            draggable: true,
-          });
-          const labelBBox = label.getBBox();
-          // const icon = group.addShape('circle', {
-          //   attrs: {
-          //     x: labelBBox.maxX + 10,
-          //     y: (labelBBox.minY + labelBBox.maxY) / 2,
-          //     r: 5,
-          //     stroke: '#000'
-          //   },
-          //   name: 'circle-shape',
-          //   draggable: true
-          // });
-          const bboxWidth = label.getBBox().width + 20;
-          rect.attr({ width: bboxWidth });
-          group.addShape("path", {
-            attrs: {
-              lineWidth: 1,
-              fill: "#ccc",
-              stroke: "#0092ff",
-              path: [
-                ["M", 0, 0],
-                ["L", bboxWidth, 0],
-              ],
-            },
-            name: "path-shape",
-            draggable: true,
-          });
-          return rect;
-        },
-      });
-      //获取宽度
-      const width = document.getElementById("antvG6").clientWidth;
-      const height = document.getElementById("antvG6").clientHeight;
-
-      // return false;
-      const graph = new G6.TreeGraph({
-        container: "antvG6",
-        width,
-        height,
-        pixelRatio: 2,
-        modes: {
-          default: ["collapse-expand", "drag-canvas", "zoom-canvas"],
-        },
-        // 节点类型及样式
-        defaultNode: {
-          type: "rect",
-          // size: 16,
-          width: "auto",
-          anchorPoints: [
-            [0, 0.5],
-            [1, 0.5],
-          ],
-          style: {
-            fill: "#005ff2", //背景色
-            stroke: "#005ff2", //边框
-          },
-          labelCfg: {
-            style: {
-              fill: "#ffffff",
-              fontSize,
-            },
-          },
-        },
-        //  连线类型及样式
-        defaultEdge: {
-          type: "cubic-horizontal",
-          // polyline
-          style: {
-            stroke: "#0092ff",
-          },
-        },
-        // 布局
-        layout: {
-          type: "mindmap",
-          direction: "H",
-          getHeight: function getHeight() {
-            return 16;
-          },
-          getWidth: function getWidth() {
-            return 16;
-          },
-          getVGap: function getVGap() {
-            return 10;
-          },
-          getHGap: function getHGap() {
-            return 100;
-          },
-        },
-      });
-      graph.node(function (node) {
-        // depth 类似节点标识
-        if (node.depth == 0) {
-          return {
-            // size:[100,60],
-            style: {
-              fill: "#005ff2", //背景色
-              stroke: "#005ff2", //边框
-            },
-            // label:node.id
-          };
-        }
-        if (node.depth == 1) {
-          return {
-            style: {
-              //渐变色
-              fill:
-                "l(0) 0:rgba(0,36,186,1) 0.5:rgba(0,36,186,0.5) 1:rgba(0,0,0,0.1)",
-            },
-          };
-        }
-        if (node.depth == 2) {
-          return {
-            type: "line",
-          };
-        }
-        return {
-          // label: node.id, // 设置显示名称
-          labelCfg: {
-            // position: node.children && node.children.length > 0 ? 'left' : node.x > centerX ? 'right' : 'left', // 设置显示左右
-            offset: 5,
-          },
-        };
-      });
-      const data = {
-        id: "id1",
-        label: "遗属补助小专项",
+      const rawData = {
+        label: "vue-next-admin",
+        id: "0",
         children: [
           {
-            id: "id1-1",
-            label: "已死亡",
+            label: "Classification",
+            id: "0-1",
+            color: "#5AD8A6",
             children: [
               {
-                id: "id1-1-1",
-                label: "问题数：35个",
+                label: "Logistic regression",
+                id: "0-1-1",
               },
               {
-                id: "id1-1-2",
-                label: "人数：50人",
+                label: "Linear discriminant analysis",
+                id: "0-1-2",
               },
               {
-                id: "id1-1-3",
-                label: "资金：340万",
+                label: "Rules",
+                id: "0-1-3",
+              },
+              {
+                label: "Decision trees",
+                id: "0-1-4",
+              },
+              {
+                label: "Naive Bayes",
+                id: "0-1-5",
+              },
+              {
+                label: "K nearest neighbor",
+                id: "0-1-6",
+              },
+              {
+                label: "Probabilistic neural network",
+                id: "0-1-7",
+              },
+              {
+                label: "Support vector machine",
+                id: "0-1-8",
               },
             ],
           },
           {
-            id: "id1-2",
-            label: "姓名与身份证不符",
+            label: "Consensus",
+            id: "0-2",
+            color: "#F6BD16",
             children: [
               {
-                id: "id1-2-1",
-                label: "问题数：35个",
+                label: "Models diversity",
+                id: "0-2-1",
+                children: [
+                  {
+                    label: "Different initializations",
+                    id: "0-2-1-1",
+                  },
+                  {
+                    label: "Different parameter choices",
+                    id: "0-2-1-2",
+                  },
+                  {
+                    label: "Different architectures",
+                    id: "0-2-1-3",
+                  },
+                  {
+                    label: "Different modeling methods",
+                    id: "0-2-1-4",
+                  },
+                  {
+                    label: "Different training sets",
+                    id: "0-2-1-5",
+                  },
+                  {
+                    label: "Different feature sets",
+                    id: "0-2-1-6",
+                  },
+                ],
               },
               {
-                id: "id1-2-2",
-                label: "人数：50人",
+                label: "Methods",
+                id: "0-2-2",
+                children: [
+                  {
+                    label: "Classifier selection",
+                    id: "0-2-2-1",
+                  },
+                  {
+                    label: "Classifier fusion",
+                    id: "0-2-2-2",
+                  },
+                ],
               },
               {
-                id: "id1-2-3",
-                label: "资金：340万",
+                label: "Common",
+                id: "0-2-3",
+                children: [
+                  {
+                    label: "Bagging",
+                    id: "0-2-3-1",
+                  },
+                  {
+                    label: "Boosting",
+                    id: "0-2-3-2",
+                  },
+                  {
+                    label: "AdaBoost",
+                    id: "0-2-3-3",
+                  },
+                ],
               },
             ],
           },
           {
-            id: "id1-3",
-            label: "未查到身份证信息",
+            label: "Regression",
+            id: "0-3",
+            color: "#269A99",
             children: [
               {
-                id: "id1-3-1",
-                label: "问题数：35个",
+                label: "Multiple linear regression",
+                id: "0-3-1",
               },
               {
-                id: "id1-3-2",
-                label: "人数：50人",
+                label: "Partial least squares",
+                id: "0-3-2",
               },
               {
-                id: "id1-3-3",
-                label: "资金：340万",
-              },
-            ],
-          },
-          {
-            id: "id1-4",
-            label: "领取低保",
-            children: [
-              {
-                id: "id1-4-1",
-                label: "问题数：35个",
+                label: "Multi-layer feedforward neural network",
+                id: "0-3-3",
               },
               {
-                id: "id1-4-2",
-                label: "人数：50人",
+                label: "General regression neural network",
+                id: "0-3-4",
               },
               {
-                id: "id1-4-3",
-                label: "资金：340万",
-              },
-            ],
-          },
-          {
-            id: "id1-5",
-            label: "年龄不符合",
-            children: [
-              {
-                id: "id1-5-1",
-                label: "问题数：35个",
-              },
-              {
-                id: "id1-5-2",
-                label: "人数：50人",
-              },
-              {
-                id: "id1-5-3",
-                label: "资金：340万",
+                label: "Support vector regression",
+                id: "0-3-5",
               },
             ],
           },
         ],
       };
-      graph.data(data);
-      graph.render();
-      graph.fitView();
+
+      G6.registerNode(
+        "dice-mind-map-root",
+        {
+          jsx: (cfg) => {
+            const width = Util.getTextSize(cfg.label, 16)[0] + 24;
+            const stroke = cfg.style.stroke || "#096dd9";
+            const fill = cfg.style.fill;
+
+            return `
+      <group>
+        <rect draggable="true" style={{width: ${width}, height: 42, stroke: ${stroke}, radius: 4}} keyshape>
+          <text style={{ fontSize: 16, marginLeft: 12, marginTop: 12 }}>${
+            cfg.label
+          }</text>
+          <text style={{ marginLeft: ${
+            width - 16
+          }, marginTop: -20, stroke: '#66ccff', fill: '#000', cursor: 'pointer', opacity: ${
+              cfg.hover ? 0.75 : 0
+            } }} action="add">+</text>
+        </rect>
+      </group>
+    `;
+          },
+          getAnchorPoints() {
+            return [
+              [0, 0.5],
+              [1, 0.5],
+            ];
+          },
+        },
+        "single-node"
+      );
+
+      G6.registerNode(
+        "dice-mind-map-sub",
+        {
+          jsx: (cfg) => {
+            const width = Util.getTextSize(cfg.label, 14)[0] + 24;
+            const color = cfg.color || cfg.style.stroke;
+
+            return `
+      <group>
+        <rect draggable="true" style={{width: ${
+          width + 24
+        }, height: 22}} keyshape>
+          <text draggable="true" style={{ fontSize: 14, marginLeft: 12, marginTop: 6 }}>${
+            cfg.label
+          }</text>
+          <text style={{ marginLeft: ${
+            width - 8
+          }, marginTop: -10, stroke: ${color}, fill: '#000', cursor: 'pointer', opacity: ${
+              cfg.hover ? 0.75 : 0
+            }, next: 'inline' }} action="add">+</text>
+          <text style={{ marginLeft: ${
+            width - 4
+          }, marginTop: -10, stroke: ${color}, fill: '#000', cursor: 'pointer', opacity: ${
+              cfg.hover ? 0.75 : 0
+            }, next: 'inline' }} action="delete">-</text>
+        </rect>
+        <rect style={{ fill: ${color}, width: ${
+              width + 24
+            }, height: 2, x: 0, y: 22 }} />
+        
+      </group>
+    `;
+          },
+          getAnchorPoints() {
+            return [
+              [0, 0.965],
+              [1, 0.965],
+            ];
+          },
+        },
+        "single-node"
+      );
+
+      G6.registerNode(
+        "dice-mind-map-leaf",
+        {
+          jsx: (cfg) => {
+            const width = Util.getTextSize(cfg.label, 12)[0] + 24;
+            const color = cfg.color || cfg.style.stroke;
+
+            return `
+      <group>
+        <rect draggable="true" style={{width: ${
+          width + 20
+        }, height: 26, fill: 'transparent' }}>
+          <text style={{ fontSize: 12, marginLeft: 12, marginTop: 6 }}>${
+            cfg.label
+          }</text>
+              <text style={{ marginLeft: ${
+                width - 8
+              }, marginTop: -10, stroke: ${color}, fill: '#000', cursor: 'pointer', opacity: ${
+              cfg.hover ? 0.75 : 0
+            }, next: 'inline' }} action="add">+</text>
+              <text style={{ marginLeft: ${
+                width - 4
+              }, marginTop: -10, stroke: ${color}, fill: '#000', cursor: 'pointer', opacity: ${
+              cfg.hover ? 0.75 : 0
+            }, next: 'inline' }} action="delete">-</text>
+        </rect>
+        <rect style={{ fill: ${color}, width: ${
+              width + 24
+            }, height: 2, x: 0, y: 32 }} />
+        
+      </group>
+    `;
+          },
+          getAnchorPoints() {
+            return [
+              [0, 0.965],
+              [1, 0.965],
+            ];
+          },
+        },
+        "single-node"
+      );
+
+      G6.registerBehavior("dice-mindmap", {
+        getEvents() {
+          return {
+            "node:click": "clickNode",
+            "node:dblclick": "editNode",
+            "node:mouseenter": "hoverNode",
+            "node:mouseleave": "hoverNodeOut",
+          };
+        },
+        clickNode(evt) {
+          const model = evt.item.get("model");
+          const name = evt.target.get("action");
+          switch (name) {
+            case "add":
+              const newId =
+                model.id +
+                "-" +
+                (((model.children &&
+                  model.children.reduce((a, b) => {
+                    const num = Number(b.id.split("-").pop());
+                    return a < num ? num : a;
+                  }, 0)) ||
+                  0) +
+                  1);
+              evt.currentTarget.updateItem(evt.item, {
+                children: (model.children || []).concat([
+                  {
+                    id: newId,
+                    direction:
+                      newId.charCodeAt(newId.length - 1) % 2 === 0
+                        ? "right"
+                        : "left",
+                    label: "New",
+                    type: "dice-mind-map-leaf",
+                    color:
+                      model.color ||
+                      colorArr[Math.floor(Math.random() * colorArr.length)],
+                  },
+                ]),
+              });
+              evt.currentTarget.refreshLayout(false);
+              break;
+            case "delete":
+              const parent = evt.item.get("parent");
+              evt.currentTarget.updateItem(parent, {
+                children: (parent.get("model").children || []).filter(
+                  (e) => e.id !== model.id
+                ),
+              });
+              evt.currentTarget.refreshLayout(false);
+              break;
+            case "edit":
+              break;
+            default:
+              return;
+          }
+        },
+        editNode(evt) {
+          const item = evt.item;
+          const model = item.get("model");
+          const { x, y } = item.calculateBBox();
+          const graph = evt.currentTarget;
+          const realPosition = evt.currentTarget.getClientByPoint(x, y);
+          const el = document.createElement("div");
+          const fontSizeMap = {
+            "dice-mind-map-root": 24,
+            "dice-mind-map-sub": 18,
+            "dice-mind-map-leaf": 16,
+          };
+          el.style.fontSize = fontSizeMap[model.type] + "px";
+          el.style.position = "fixed";
+          el.style.top = realPosition.y + "px";
+          el.style.left = realPosition.x + "px";
+          el.style.paddingLeft = "12px";
+          el.style.transformOrigin = "top left";
+          el.style.transform = `scale(${evt.currentTarget.getZoom()})`;
+          const input = document.createElement("input");
+          input.style.border = "none";
+          input.value = model.label;
+          input.style.width =
+            Util.getTextSize(model.label, fontSizeMap[model.type])[0] + "px";
+          input.className = "dice-input";
+          el.className = "dice-input";
+          el.appendChild(input);
+          document.body.appendChild(el);
+          const destroyEl = () => {
+            document.body.removeChild(el);
+          };
+          const clickEvt = (event) => {
+            if (!event.target["className"].includes("dice-input")) {
+              window.removeEventListener("mousedown", clickEvt);
+              window.removeEventListener("scroll", clickEvt);
+              graph.updateItem(item, {
+                label: input.value,
+              });
+              graph.refreshLayout(false);
+              graph.off("wheelZoom", clickEvt);
+              destroyEl();
+            }
+          };
+          graph.on("wheelZoom", clickEvt);
+          window.addEventListener("mousedown", clickEvt);
+          window.addEventListener("scroll", clickEvt);
+          input.addEventListener("keyup", (event) => {
+            if (event.key === "Enter") {
+              clickEvt({
+                target: {},
+              });
+            }
+          });
+        },
+        hoverNode(evt) {
+          evt.currentTarget.updateItem(evt.item, {
+            hover: true,
+          });
+        },
+        hoverNodeOut(evt) {
+          evt.currentTarget.updateItem(evt.item, {
+            hover: false,
+          });
+        },
+      });
+
+      G6.registerBehavior("scroll-canvas", {
+        getEvents: function getEvents() {
+          return {
+            wheel: "onWheel",
+          };
+        },
+
+        onWheel: function onWheel(ev) {
+          const { graph } = this;
+          if (!graph) {
+            return;
+          }
+          if (ev.ctrlKey) {
+            const canvas = graph.get("canvas");
+            const point = canvas.getPointByClient(ev.clientX, ev.clientY);
+            let ratio = graph.getZoom();
+            if (ev.wheelDelta > 0) {
+              ratio += ratio * 0.05;
+            } else {
+              ratio *= ratio * 0.05;
+            }
+            graph.zoomTo(ratio, {
+              x: point.x,
+              y: point.y,
+            });
+          } else {
+            const x = ev.deltaX || ev.movementX;
+            const y = ev.deltaY || ev.movementY || (-ev.wheelDelta * 125) / 3;
+            graph.translate(-x, -y);
+          }
+          ev.preventDefault();
+        },
+      });
+
+      const dataTransform = (data) => {
+        const changeData = (d, level = 0, color) => {
+          const data = {
+            ...d,
+          };
+          switch (level) {
+            case 0:
+              data.type = "dice-mind-map-root";
+              break;
+            case 1:
+              data.type = "dice-mind-map-sub";
+              break;
+            default:
+              data.type = "dice-mind-map-leaf";
+              break;
+          }
+
+          data.hover = false;
+
+          if (color) {
+            data.color = color;
+          }
+
+          if (level === 1 && !d.direction) {
+            if (!d.direction) {
+              data.direction =
+                d.id.charCodeAt(d.id.length - 1) % 2 === 0 ? "right" : "left";
+            }
+          }
+
+          if (d.children) {
+            data.children = d.children.map((child) =>
+              changeData(child, level + 1, data.color)
+            );
+          }
+          return data;
+        };
+        return changeData(data);
+      };
+
+      const container = document.getElementById("antvG6");
+      const width = container.scrollWidth;
+      const height = container.scrollHeight;
+      const tree = new G6.TreeGraph({
+        container: "antvG6",
+        width,
+        height,
+        fitView: true,
+        fitViewPadding: [10, 20],
+        layout: {
+          type: "mindmap",
+          direction: "H",
+          getHeight: () => {
+            return 16;
+          },
+          getWidth: (node) => {
+            return node.level === 0
+              ? Util.getTextSize(node.label, 16)[0] + 12
+              : Util.getTextSize(node.label, 12)[0];
+          },
+          getVGap: () => {
+            return 10;
+          },
+          getHGap: () => {
+            return 60;
+          },
+          getSide: (node) => {
+            return node.data.direction;
+          },
+        },
+        defaultEdge: {
+          type: "cubic-horizontal",
+          style: {
+            lineWidth: 2,
+          },
+        },
+        minZoom: 0.5,
+        modes: {
+          default: ["drag-canvas", "zoom-canvas", "dice-mindmap"],
+        },
+      });
+
+      tree.data(dataTransform(rawData));
+
+      tree.render();
     };
     // 页面加载时
     onMounted(() => {
@@ -287,6 +561,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-</style>

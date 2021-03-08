@@ -4,7 +4,9 @@ const cssCdnUrlList: Array<string> = [
     '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
 ]
 // 第三方 js url
-const jsCdnUrlList: Array<string> = []
+const jsCdnUrlList: Array<string> = [
+    'https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.8.1/dist/g6.min.js'
+]
 
 // 动态设置字体图标
 export function setCssCdn() {
