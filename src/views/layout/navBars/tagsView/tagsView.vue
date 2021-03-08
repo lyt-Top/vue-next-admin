@@ -84,7 +84,8 @@ export default {
     const getTagsViewRoutes = () => {
       state.routePath = route.path;
       state.tagsViewList = [];
-      removeSession("tagsViewList");
+      if (!store.state.themeConfig.isCacheTagsView)
+        removeSession("tagsViewList");
       state.tagsViewRoutesList = store.state.tagsViewRoutes;
       initTagsView();
     };
