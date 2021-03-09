@@ -116,6 +116,7 @@ cnpm run build
 - <a href="https://github.com/wangeditor-team/wangEditor" target="_blank">wangeditor</a>
 - <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">cropperjs</a>
 - <a href="https://github.com/antvis/g6" target="_blank">@antv/g6</a>
+- <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
 
 #### 特别感谢
 
