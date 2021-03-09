@@ -6,7 +6,7 @@ const cssCdnUrlList: Array<string> = [
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [
     'https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.8.1/dist/g6.min.js',
-    'http://static.runoob.com/assets/qrcode/qrcode.min.js'
+    'https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.min.js'
 ]
 
 // 动态设置字体图标
