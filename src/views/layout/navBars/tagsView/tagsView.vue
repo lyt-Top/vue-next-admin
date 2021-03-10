@@ -1,7 +1,7 @@
 <template>
   <div class="layout-navbars-tagsview" :class="{'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic'}">
-    <Scroll ref="scrollRef">
-      <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle">
+    <el-scrollbar ref="scrollbarRef" @wheel.native.prevent="onHandleScroll">
+      <ul class="layout-navbars-tagsview-ul" :class="setTagsStyle" ref="tagsUlRef">
         <li v-for="(v,k) in tagsViewList" :key="k" class="layout-navbars-tagsview-ul-li" :data-name="v.name"
           :class="{'is-active':isActive(v.path)}" @contextmenu.prevent="onContextmenu(v,$event)"
           @click="onTagsClick(v,k)" :ref="el => { if (el) tagsRefs[k] = el }">
@@ -18,7 +18,7 @@
             @click="closeCurrentTagsView(v.path)"></i>
         </li>
       </ul>
-    </Scroll>
+    </el-scrollbar>
   </div>
   <Contextmenu :dropdown="dropdown" ref="contextmenuRef" @currentContextmenuClick="onCurrentContextmenuClick" />
 </template>
@@ -50,8 +50,9 @@ export default {
   setup() {
     const { proxy } = getCurrentInstance();
     const tagsRefs = ref([]);
-    const scrollRef = ref();
+    const scrollbarRef = ref();
     const contextmenuRef = ref();
+    const tagsUlRef = ref();
     const store = useStore();
     const route = useRoute();
     const router = useRouter();
@@ -103,10 +104,10 @@ export default {
         });
         addTagsView(route.path);
       }
-      // 添加初始化横向滚动条移动到对应位置
-      scrollRef.value.setScrollLeft(tagsRefs);
+      // 初始化当前元素(li)的下标
       getTagsRefsIndex(route.path);
-      moveToCurrentTag();
+      // 添加初始化横向滚动条移动到对应位置
+      tagsViewmoveToCurrentTag();
     };
     // 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中
     const addTagsView = (path: string) => {
@@ -203,21 +204,75 @@ export default {
       state.tagsRefsIndex = k;
       router.push(v.path);
     };
-    // tagsView 横向滚动 + 鼠标滚轮滚动
-    const moveToCurrentTag = () => {
+    // 更新滚动条显示
+    const updateScrollbar = () => {
+      proxy.$refs.scrollbarRef.update();
+    };
+    // 鼠标滚轮滚动
+    const onHandleScroll = (e: object) => {
+      proxy.$refs.scrollbarRef.$refs.wrap.scrollLeft += e.wheelDelta / 4;
+    };
+    // tagsView 横向滚动
+    const tagsViewmoveToCurrentTag = () => {
       nextTick(() => {
-        scrollRef.value.moveToTarget(tagsRefs.value[state.tagsRefsIndex]);
-        scrollRef.value.updateScrollbar();
+        if (tagsRefs.value.length <= 0) return false;
+        // ul 宽度
+        let ulWidth = tagsUlRef.value.offsetWidth;
+        // 当前 li 元素
+        let liDom = tagsRefs.value[state.tagsRefsIndex];
+        // 当前 li 元素下标
+        let liIndex = state.tagsRefsIndex;
+        // 当前 ul 下 li 元素总长度
+        let liLength = tagsRefs.value.length;
+        // 最前 li
+        let liFirst = tagsRefs.value[0];
+        // 最后 li
+        let liLast = tagsRefs.value[tagsRefs.value.length - 1];
+        // 当前滚动条的值
+        let scrollRefs = proxy.$refs.scrollbarRef.$refs.wrap;
+        // 当前滚动条滚动宽度
+        let scrollS = scrollRefs.scrollWidth;
+        // 当前滚动条偏移宽度
+        let offsetW = scrollRefs.offsetWidth;
+        // 当前滚动条偏移距离
+        let scrollL = scrollRefs.scrollLeft;
+        // 上一个 tags li dom
+        let liPrevTag = tagsRefs.value[state.tagsRefsIndex - 1];
+        // 下一个 tags li dom
+        let liNextTag = tagsRefs.value[state.tagsRefsIndex + 1];
+        // 上一个 tags li dom 的偏移距离
+        let beforePrevL = "";
+        // 下一个 tags li dom 的偏移距离
+        let afterNextL = "";
+        if (liDom === liFirst) {
+          // 头部
+          scrollRefs.scrollLeft = 0;
+        } else if (liDom === liLast) {
+          // 尾部
+          scrollRefs.scrollLeft = scrollS - offsetW;
+        } else {
+          // 非头/尾部
+          if (liIndex === 0) beforePrevL = liFirst.offsetLeft - 5;
+          else beforePrevL = liPrevTag.offsetLeft - 5;
+          if (liIndex === liLength)
+            afterNextL = liLast.offsetLeft + liLast.offsetWidth + 5;
+          else afterNextL = liNextTag.offsetLeft + liNextTag.offsetWidth + 5;
+          if (afterNextL > scrollL + offsetW) {
+            scrollRefs.scrollLeft = afterNextL - offsetW;
+          } else if (beforePrevL < scrollL) {
+            scrollRefs.scrollLeft = beforePrevL;
+          }
+        }
+        // 更新滚动条，防止不出现
+        updateScrollbar();
       });
     };
     // 获取 tagsView 的下标：用于处理 tagsView 点击时的横向滚动
     const getTagsRefsIndex = (path: string) => {
       if (state.tagsViewList.length > 0) {
-        const tagsRefsFindIndex = state.tagsViewList.findIndex(
+        state.tagsRefsIndex = state.tagsViewList.findIndex(
           (item) => item.path === path
         );
-        if (tagsRefsFindIndex <= 0) return false;
-        state.tagsRefsIndex = tagsRefsFindIndex;
       }
     };
     // 设置 tagsView 可以进行拖拽
@@ -281,7 +336,7 @@ export default {
       state.routePath = to.path;
       addTagsView(to.path);
       getTagsRefsIndex(to.path);
-      moveToCurrentTag();
+      tagsViewmoveToCurrentTag();
     });
     return {
       isActive,
@@ -290,7 +345,9 @@ export default {
       onTagsClick,
       tagsRefs,
       contextmenuRef,
-      scrollRef,
+      scrollbarRef,
+      tagsUlRef,
+      onHandleScroll,
       getThemeConfig,
       setTagsStyle,
       refreshCurrentTagsView,

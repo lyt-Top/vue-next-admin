@@ -421,6 +421,21 @@ export const dynamicRoutes = [
                         auth: ['admin', 'test'],
                         icon: 'iconfont icon-siweidaotu'
                     }
+                },
+                {
+                    path: '/fun/qrcode',
+                    name: 'qrcode',
+                    component: () => import('/@/views/fun/qrcode/index.vue'),
+                    meta: {
+                        title: 'qrcode 二维码生成',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'iconfont icon-ico'
+                    }
                 }
             ]
         },
@@ -513,6 +528,36 @@ export const dynamicRoutes = [
                         isIframe: false,
                         auth: ['admin', 'test'],
                         icon: 'iconfont icon-jiliandongxuanzeqi'
+                    }
+                },
+                {
+                    path: '/pages/formAdapt',
+                    name: 'formAdapt',
+                    component: () => import('/@/views/pages/formAdapt/index.vue'),
+                    meta: {
+                        title: '表单自适应',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'iconfont icon-biaodan'
+                    }
+                },
+                {
+                    path: '/pages/listAdapt',
+                    name: 'listAdapt',
+                    component: () => import('/@/views/pages/listAdapt/index.vue'),
+                    meta: {
+                        title: '列表自适应',
+                        isLink: '',
+                        isHide: false,
+                        isKeepAlive: true,
+                        isAffix: false,
+                        isIframe: false,
+                        auth: ['admin', 'test'],
+                        icon: 'iconfont icon-chazhaobiaodanliebiao'
                     }
                 },
             ]
