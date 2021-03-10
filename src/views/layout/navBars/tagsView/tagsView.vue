@@ -43,10 +43,9 @@ import { useStore } from "/@/store/index.ts";
 import { setSession, getSession, removeSession } from "/@/utils/storage.ts";
 import Sortable from "sortablejs";
 import Contextmenu from "/@/views/layout/navBars/tagsView/contextmenu.vue";
-import Scroll from "/@/views/layout/navBars/tagsView/scroll.vue";
 export default {
   name: "layoutTagsView",
-  components: { Contextmenu, Scroll },
+  components: { Contextmenu },
   setup() {
     const { proxy } = getCurrentInstance();
     const tagsRefs = ref([]);
