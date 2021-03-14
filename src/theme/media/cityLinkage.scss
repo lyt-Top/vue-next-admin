@@ -3,8 +3,8 @@
 /* 页面宽度小于576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
-  .el-cascader__dropdown.el-popper {
-    overflow: auto;
-    max-width: 100%;
-  }
+	.el-cascader__dropdown.el-popper {
+		overflow: auto;
+		max-width: 100%;
+	}
 }

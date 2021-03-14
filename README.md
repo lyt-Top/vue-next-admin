@@ -43,9 +43,9 @@
 - vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin</a>
 - vue2.x 版本 <a href="https://gitee.com/lyt-top/vue-admin-wonderful" target="_blank">https://gitee.com/lyt-top/vue-admin-wonderful</a>
 
-#### 安装 cnpm
+#### 安装 yarn
 
-- 复制代码(桌面 cmd 运行) `npm install -g cnpm --registry=https://registry.npm.taobao.org`
+- 复制代码(桌面 cmd 运行) `npm install -g yarn`
 
 #### 使用说明(vue3.x 版本)
 
@@ -57,13 +57,13 @@ git clone https://gitee.com/lyt-top/vue-next-admin.git
 cd vue-next-admin
 
 # 安装依赖
-cnpm install
+yarn install
 
 # 运行项目
-cnpm run dev
+yarn run dev
 
 # 打包发布
-cnpm run build
+yarn run build
 ```
 
 #### 使用说明(vue2.x 版本)
@@ -102,7 +102,6 @@ cnpm run build
 - <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-nex</a>
 - <a href="https://github.com/vuejs/vuex" target="_blank">vuex</a>
 - <a href="https://github.com/apache/echarts" target="_blank">echarts</a>
-- <a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank">vue-element-admin</a>
 - <a href="https://github.com/axios/axios" target="_blank">axios</a>
 - <a href="https://github.com/zenorocha/clipboard.js" target="_blank">clipboard</a>
 - <a href="https://github.com/inorganik/countUp.js" target="_blank">countUp</a>

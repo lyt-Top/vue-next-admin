@@ -1,0 +1,17 @@
+
+*.sh
+node_modules
+lib
+*.md
+*.scss
+*.woff
+*.ttf
+.vscode
+.idea
+dist
+mock
+public
+bin
+build
+config
+index.html
