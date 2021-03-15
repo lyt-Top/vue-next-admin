@@ -53,10 +53,12 @@
 
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import { filterList } from './mock.ts';
 export default {
 	name: 'listAdapt',
 	setup() {
+		const router = useRouter();
 		const state = reactive({
 			tableData: {
 				data: filterList,
@@ -68,6 +70,13 @@ export default {
 				},
 			},
 		});
+		// 当前列表项点击
+		const onTableItemClick = (v: object) => {
+			router.push({
+				path: '/pages/filteringDetails',
+				query: { id: v.id },
+			});
+		};
 		// 分页点击
 		const onHandleSizeChange = (val: number) => {
 			state.tableData.param.pageSize = val;
@@ -77,6 +86,7 @@ export default {
 			state.tableData.param.pageNum = val;
 		};
 		return {
+			onTableItemClick,
 			onHandleSizeChange,
 			onHandleCurrentChange,
 			...toRefs(state),

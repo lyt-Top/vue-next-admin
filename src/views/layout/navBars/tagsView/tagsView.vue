@@ -20,17 +20,17 @@
 					<i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon" v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
 					<span>{{ v.meta.title }}</span>
 					<template v-if="isActive(v.path)">
-						<i class="el-icon-refresh-right ml5" @click="refreshCurrentTagsView(v.path)"></i>
+						<i class="el-icon-refresh-right ml5" @click.stop="refreshCurrentTagsView(v.path)"></i>
 						<i
 							class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active"
 							v-if="!v.meta.isAffix"
-							@click="closeCurrentTagsView(v.path)"
+							@click.stop="closeCurrentTagsView(v.path)"
 						></i>
 					</template>
 					<i
 						class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-three"
 						v-if="!v.meta.isAffix"
-						@click="closeCurrentTagsView(v.path)"
+						@click.stop="closeCurrentTagsView(v.path)"
 					></i>
 				</li>
 			</ul>

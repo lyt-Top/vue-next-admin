@@ -486,6 +486,21 @@ export const dynamicRoutes = [
 						},
 					},
 					{
+						path: '/pages/filteringDetails',
+						name: 'filteringDetails',
+						component: () => import('/@/views/pages/filtering/details.vue'),
+						meta: {
+							title: '过滤筛选组件详情',
+							isLink: '',
+							isHide: true,
+							isKeepAlive: false,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-s-order',
+						},
+					},
+					{
 						path: '/pages/iocnfont',
 						name: 'iocnfont',
 						component: () => import('/@/views/pages/iocnfont/index.vue'),

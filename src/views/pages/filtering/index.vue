@@ -86,11 +86,13 @@
 
 <script lang="ts">
 import { ref, toRefs, reactive, onMounted, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
 import { filtering, filterList } from './mock.ts';
 export default {
 	name: 'filtering',
 	setup() {
 		const dlRefs = ref([]);
+		const router = useRouter();
 		const state = reactive({
 			filtering,
 			tableData: {
@@ -141,7 +143,10 @@ export default {
 		};
 		// 当前列表项点击
 		const onTableItemClick = (v: object) => {
-			console.log(v);
+			router.push({
+				path: '/pages/filteringDetails',
+				query: { id: v.id },
+			});
 		};
 		// 分页点击
 		const onHandleSizeChange = (val: number) => {
