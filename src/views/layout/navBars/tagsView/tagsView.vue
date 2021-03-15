@@ -20,17 +20,17 @@
 					<i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon" v-if="!isActive(v.path) && getThemeConfig.isTagsviewIcon"></i>
 					<span>{{ v.meta.title }}</span>
 					<template v-if="isActive(v.path)">
-						<i class="el-icon-refresh-right ml5" @click="refreshCurrentTagsView(v.path)"></i>
+						<i class="el-icon-refresh-right ml5" @click.stop="refreshCurrentTagsView(v.path)"></i>
 						<i
 							class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active"
 							v-if="!v.meta.isAffix"
-							@click="closeCurrentTagsView(v.path)"
+							@click.stop="closeCurrentTagsView(v.path)"
 						></i>
 					</template>
 					<i
 						class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-three"
 						v-if="!v.meta.isAffix"
-						@click="closeCurrentTagsView(v.path)"
+						@click.stop="closeCurrentTagsView(v.path)"
 					></i>
 				</li>
 			</ul>
@@ -107,7 +107,7 @@ export default {
 			if (state.tagsViewList.some((v: any) => v.path === path)) return false;
 			const item = state.tagsViewRoutesList.find((v: any) => v.path === path);
 			if (item.meta.isLink && !item.meta.isIframe) return false;
-			if (!item.meta.isHide) state.tagsViewList.push({ ...item });
+			state.tagsViewList.push({ ...item });
 			addBrowserSetSession(state.tagsViewList);
 		};
 		// 2、刷新当前 tagsView：
@@ -155,6 +155,16 @@ export default {
 				const element = document.querySelector('.layout-main');
 				const screenfulls: any = screenfull;
 				screenfulls.request(element);
+			});
+		};
+		// 7、设置了 `isHide` 界面的，页面离开时关闭当前界面
+		const removeCurrentTagsView = (from: any) => {
+			const { meta, path } = from;
+			state.tagsViewList.map((v: any, k: number) => {
+				if (meta.isHide && path === v.path) {
+					state.tagsViewList.splice(k, 1);
+					addBrowserSetSession(state.tagsViewList);
+				}
 			});
 		};
 		// 当前项右键菜单点击
@@ -318,7 +328,8 @@ export default {
 			initSortable();
 		});
 		// 路由更新时
-		onBeforeRouteUpdate((to) => {
+		onBeforeRouteUpdate((to, from) => {
+			removeCurrentTagsView(from);
 			state.routePath = to.path;
 			addTagsView(to.path);
 			getTagsRefsIndex(to.path);

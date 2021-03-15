@@ -5,7 +5,7 @@ import router, { resetRoute } from '/@/router/index.ts';
 
 // 配置新建一个 axios 实例
 const service = axios.create({
-	baseURL: 'http://localhost:10000/',
+	baseURL: import.meta.env.VITE_API_URL as any,
 	timeout: 50000,
 	headers: { 'Content-Type': 'application/json' },
 });
