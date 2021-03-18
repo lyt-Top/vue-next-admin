@@ -452,6 +452,21 @@ export const dynamicRoutes = [
 							icon: 'iconfont icon-ditu',
 						},
 					},
+					{
+						path: '/fun/rollNotice',
+						name: 'rollNotice',
+						component: () => import('/@/views/fun/rollNotice/index.vue'),
+						meta: {
+							title: 'notice 滚动通知',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-tongzhi',
+						},
+					},
 				],
 			},
 			{
@@ -491,6 +506,21 @@ export const dynamicRoutes = [
 						component: () => import('/@/views/pages/filtering/details.vue'),
 						meta: {
 							title: '过滤筛选组件详情',
+							isLink: '',
+							isHide: true,
+							isKeepAlive: false,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-s-order',
+						},
+					},
+					{
+						path: '/pages/filteringDetails1',
+						name: 'filteringDetails1',
+						component: () => import('/@/views/pages/filtering/details1.vue'),
+						meta: {
+							title: '过滤筛选组件详情111',
 							isLink: '',
 							isHide: true,
 							isKeepAlive: false,
