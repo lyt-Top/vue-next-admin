@@ -103,10 +103,11 @@ export default {
 			tagsViewmoveToCurrentTag();
 		};
 		// 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中
-		const addTagsView = (path: string) => {
+		const addTagsView = (path: string, to: any) => {
 			if (state.tagsViewList.some((v: any) => v.path === path)) return false;
 			const item = state.tagsViewRoutesList.find((v: any) => v.path === path);
 			if (item.meta.isLink && !item.meta.isIframe) return false;
+			item.query = to?.query ? to?.query : route.query;
 			state.tagsViewList.push({ ...item });
 			addBrowserSetSession(state.tagsViewList);
 		};
@@ -121,7 +122,10 @@ export default {
 					if (v.path === path) {
 						state.tagsViewList.splice(k, 1);
 						setTimeout(() => {
-							router.push(arr[arr.length - 1].path);
+							// 最后一个
+							if (state.tagsViewList.length === k) router.push({ path: arr[arr.length - 1].path, query: arr[arr.length - 1].query });
+							// 否则，跳转到下一个
+							else router.push({ path: arr[k].path, query: arr[k].query });
 						}, 0);
 					}
 				}
@@ -142,44 +146,36 @@ export default {
 			state.tagsViewRoutesList.map((v: any) => {
 				if (v.meta.isAffix && !v.meta.isHide) {
 					state.tagsViewList.push({ ...v });
-					if (state.tagsViewList.some((v: any) => v.path === path)) router.push(path);
-					else router.push(v.path);
+					if (state.tagsViewList.some((v: any) => v.path === path)) router.push({ path, query: route.query });
+					else router.push({ path: v.path, query: route.query });
 				}
 			});
 			addBrowserSetSession(state.tagsViewList);
 		};
 		// 6、开启当前页面全屏
 		const openCurrenFullscreen = (path: string) => {
+			const item = state.tagsViewList.find((v: any) => v.path === path);
 			nextTick(() => {
-				router.push(path);
+				router.push({ path, query: item.query });
 				const element = document.querySelector('.layout-main');
 				const screenfulls: any = screenfull;
 				screenfulls.request(element);
 			});
 		};
-		// 7、设置了 `isHide` 界面的，页面离开时关闭当前界面
-		const removeCurrentTagsView = (from: any) => {
-			const { meta, path } = from;
-			state.tagsViewList.map((v: any, k: number) => {
-				if (meta.isHide && path === v.path) {
-					state.tagsViewList.splice(k, 1);
-					addBrowserSetSession(state.tagsViewList);
-				}
-			});
-		};
 		// 当前项右键菜单点击
 		const onCurrentContextmenuClick = (data: any) => {
 			let { id, path } = data;
+			let currentTag = state.tagsViewList.find((v: any) => v.path === path);
 			switch (id) {
 				case 0:
 					refreshCurrentTagsView(path);
-					router.push(path);
+					router.push({ path, query: currentTag.query });
 					break;
 				case 1:
 					closeCurrentTagsView(path);
 					break;
 				case 2:
-					router.push(path);
+					router.push({ path, query: currentTag.query });
 					closeOtherTagsView(path);
 					break;
 				case 3:
@@ -205,7 +201,7 @@ export default {
 		const onTagsClick = (v: any, k: number) => {
 			state.routePath = v.path;
 			state.tagsRefsIndex = k;
-			router.push(v.path);
+			router.push(v);
 		};
 		// 更新滚动条显示
 		const updateScrollbar = () => {
@@ -254,7 +250,7 @@ export default {
 				} else {
 					// 非头/尾部
 					if (liIndex === 0) beforePrevL = liFirst.offsetLeft - 5;
-					else beforePrevL = liPrevTag.offsetLeft - 5;
+					else beforePrevL = liPrevTag?.offsetLeft - 5;
 					if (liIndex === liLength) afterNextL = liLast.offsetLeft + liLast.offsetWidth + 5;
 					else afterNextL = liNextTag.offsetLeft + liNextTag.offsetWidth + 5;
 					if (afterNextL > scrollL + offsetW) {
@@ -328,10 +324,9 @@ export default {
 			initSortable();
 		});
 		// 路由更新时
-		onBeforeRouteUpdate((to, from) => {
-			removeCurrentTagsView(from);
+		onBeforeRouteUpdate((to) => {
 			state.routePath = to.path;
-			addTagsView(to.path);
+			addTagsView(to.path, to);
 			getTagsRefsIndex(to.path);
 			tagsViewmoveToCurrentTag();
 		});

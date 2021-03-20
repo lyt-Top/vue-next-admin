@@ -406,11 +406,10 @@ export default defineComponent({
 				setTimeout(() => {
 					let els = document.querySelector('.el-menu-item.is-active');
 					if (!els) return false;
-					let attr = 'el-menu-item is-active';
-					if (getThemeConfig.value.isMenuBarColorHighlight) els.setAttribute('class', `${attr} add-is-active`);
-					else els.setAttribute('class', `${attr}`);
+					if (getThemeConfig.value.isMenuBarColorHighlight) els.setAttribute('id', `add-is-active`);
+					else els.setAttribute('id', ``);
 					setLocalThemeConfig();
-					setLocal('menuBarHighlightClass', els.getAttribute('class'));
+					setLocal('menuBarHighlightId', els.getAttribute('id'));
 				}, 0);
 			});
 		};
@@ -596,32 +595,34 @@ export default defineComponent({
 					onMenuBarHighlightChange();
 					getThemeConfig.value.isCollapse = false;
 				});
-				// 刷新页面时，设置了值，直接取缓存中的值进行初始化
-				setTimeout(() => {
-					// 顶栏背景渐变
-					if (getLocal('navbarsBgStyle')) {
-						const breadcrumbIndexEl: any = document.querySelector('.layout-navbars-breadcrumb-index');
-						breadcrumbIndexEl.style.cssText = getLocal('navbarsBgStyle');
-					}
-					// 菜单背景渐变
-					if (getLocal('asideBgStyle')) {
-						const asideEl: any = document.querySelector('.layout-container .el-aside');
-						asideEl.style.cssText = getLocal('asideBgStyle');
-					}
-					// 菜单字体背景高亮
-					if (getLocal('menuBarHighlightClass')) {
-						let els = document.querySelector('.el-menu-item.is-active');
-						if (!els) return false;
-						els.setAttribute('class', getLocal('menuBarHighlightClass'));
-					}
-					// 灰色模式/色弱模式
-					if (getLocal('appFilterStyle')) {
-						const appEl: any = document.querySelector('#app');
-						appEl.style.cssText = getLocal('appFilterStyle');
-					}
-					// 开启水印
-					onWartermarkChange();
-				}, 300);
+				window.addEventListener('load', () => {
+					// 刷新页面时，设置了值，直接取缓存中的值进行初始化
+					setTimeout(() => {
+						// 顶栏背景渐变
+						if (getLocal('navbarsBgStyle')) {
+							const breadcrumbIndexEl: any = document.querySelector('.layout-navbars-breadcrumb-index');
+							breadcrumbIndexEl.style.cssText = getLocal('navbarsBgStyle');
+						}
+						// 菜单背景渐变
+						if (getLocal('asideBgStyle')) {
+							const asideEl: any = document.querySelector('.layout-container .el-aside');
+							asideEl.style.cssText = getLocal('asideBgStyle');
+						}
+						// 菜单字体背景高亮
+						if (getLocal('menuBarHighlightId')) {
+							let els = document.querySelector('.el-menu-item.is-active');
+							if (!els) return false;
+							els.setAttribute('id', getLocal('menuBarHighlightId'));
+						}
+						// 灰色模式/色弱模式
+						if (getLocal('appFilterStyle')) {
+							const appEl: any = document.querySelector('#app');
+							appEl.style.cssText = getLocal('appFilterStyle');
+						}
+						// 开启水印
+						onWartermarkChange();
+					}, 400);
+				});
 			});
 		});
 		onUnmounted(() => {

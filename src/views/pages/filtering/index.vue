@@ -143,10 +143,17 @@ export default {
 		};
 		// 当前列表项点击
 		const onTableItemClick = (v: object) => {
-			router.push({
-				path: '/pages/filteringDetails',
-				query: { id: v.id },
-			});
+			if (v.id === 1) {
+				router.push({
+					path: '/pages/filteringDetails',
+					query: { id: v.id },
+				});
+			} else {
+				router.push({
+					path: '/pages/filteringDetails1',
+					query: { id: v.id },
+				});
+			}
 		};
 		// 分页点击
 		const onHandleSizeChange = (val: number) => {
