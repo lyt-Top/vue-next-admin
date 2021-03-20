@@ -406,11 +406,10 @@ export default defineComponent({
 				setTimeout(() => {
 					let els = document.querySelector('.el-menu-item.is-active');
 					if (!els) return false;
-					let attr = 'el-menu-item is-active';
-					if (getThemeConfig.value.isMenuBarColorHighlight) els.setAttribute('class', `${attr} add-is-active`);
-					else els.setAttribute('class', `${attr}`);
+					if (getThemeConfig.value.isMenuBarColorHighlight) els.setAttribute('id', `add-is-active`);
+					else els.setAttribute('id', ``);
 					setLocalThemeConfig();
-					setLocal('menuBarHighlightClass', els.getAttribute('class'));
+					setLocal('menuBarHighlightId', els.getAttribute('id'));
 				}, 0);
 			});
 		};
@@ -610,10 +609,10 @@ export default defineComponent({
 							asideEl.style.cssText = getLocal('asideBgStyle');
 						}
 						// 菜单字体背景高亮
-						if (getLocal('menuBarHighlightClass')) {
+						if (getLocal('menuBarHighlightId')) {
 							let els = document.querySelector('.el-menu-item.is-active');
 							if (!els) return false;
-							els.setAttribute('class', getLocal('menuBarHighlightClass'));
+							els.setAttribute('id', getLocal('menuBarHighlightId'));
 						}
 						// 灰色模式/色弱模式
 						if (getLocal('appFilterStyle')) {

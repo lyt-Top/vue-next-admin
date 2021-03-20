@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb-user" :style="{ flex: setFlexAutoStyle }">
+	<div class="layout-navbars-breadcrumb-user">
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<i class="el-icon-search" title="菜单搜索"></i>
 		</div>
@@ -63,11 +63,6 @@ export default {
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
 		});
-		// 设置布局
-		const setFlexAutoStyle = computed(() => {
-			let { isBreadcrumb, layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
-			return !isBreadcrumb && layout !== 'transverse' && isClassicSplitMenu ? 1 : '';
-		});
 		// 获取用户信息 vuex
 		const getUserInfos = computed(() => {
 			return store.state.userInfos.userInfos;
@@ -129,7 +124,6 @@ export default {
 			searchRef.value.openSearch();
 		};
 		return {
-			setFlexAutoStyle,
 			getUserInfos,
 			onLayoutSetingClick,
 			onHandleCommandClick,
@@ -147,6 +141,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
+	flex: 1;
 	&-link {
 		height: 100%;
 		display: flex;

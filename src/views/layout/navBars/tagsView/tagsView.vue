@@ -250,7 +250,7 @@ export default {
 				} else {
 					// 非头/尾部
 					if (liIndex === 0) beforePrevL = liFirst.offsetLeft - 5;
-					else beforePrevL = liPrevTag.offsetLeft - 5;
+					else beforePrevL = liPrevTag?.offsetLeft - 5;
 					if (liIndex === liLength) afterNextL = liLast.offsetLeft + liLast.offsetWidth + 5;
 					else afterNextL = liNextTag.offsetLeft + liNextTag.offsetWidth + 5;
 					if (afterNextL > scrollL + offsetW) {

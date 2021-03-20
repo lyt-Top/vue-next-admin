@@ -765,7 +765,7 @@
 		color: #ffffff !important;
 	}
 }
-.add-is-active {
+#add-is-active {
 	@extend .el-active-extend;
 	&:hover {
 		@extend .el-active-extend;
@@ -802,6 +802,10 @@
 // element plus 本身字体图标
 .el-submenu [class^='el-icon-'] {
 	font-size: 14px !important;
+}
+// 去掉离开浏览器时，菜单的默认高亮
+.el-menu-item:focus {
+	background-color: transparent !important;
 }
 
 /* Tabs 标签页
@@ -865,6 +869,13 @@
 }
 .el-step__head.is-error {
 	border-color: set-color(danger);
+}
+.el-step__icon-inner {
+	font-size: 30px !important;
+	font-weight: 400 !important;
+}
+.el-step__title {
+	font-size: 14px;
 }
 
 /* Dialog 对话框
@@ -953,4 +964,16 @@
 	width: 100%;
 	height: 100%;
 	overflow: auto;
+}
+.el-drawer-fade-enter-active .el-drawer.rtl {
+	animation: rtl-drawer-animation 0.3s ease-in reverse !important;
+}
+.el-drawer-fade-leave-active .el-drawer.rtl {
+	animation: rtl-drawer-animation 0.3s ease !important;
+}
+.el-drawer-fade-enter-active .el-drawer.ltr {
+	animation: ltr-drawer-animation 0.3s ease-in reverse !important;
+}
+.el-drawer-fade-leave-active .el-drawer.ltr {
+	animation: ltr-drawer-animation 0.3s ease !important;
 }
