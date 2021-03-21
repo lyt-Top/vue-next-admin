@@ -6,4 +6,7 @@
 	.el-dialog {
 		width: 90% !important;
 	}
+	.el-dialog.is-fullscreen {
+		width: 100% !important;
+	}
 }

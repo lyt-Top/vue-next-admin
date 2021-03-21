@@ -33,6 +33,10 @@
 	}
 	.big-data-down-right {
 		.flex-warp-item {
+			.flex-warp-item-box {
+				border: none !important;
+				border-bottom: 1px solid #ebeef5 !important;
+			}
 			&:nth-of-type(2) {
 				padding-left: 15px !important;
 			}
