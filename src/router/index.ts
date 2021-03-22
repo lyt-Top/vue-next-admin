@@ -452,6 +452,21 @@ export const dynamicRoutes = [
 							icon: 'iconfont icon-ditu',
 						},
 					},
+					{
+						path: '/fun/printJs',
+						name: 'printJs',
+						component: () => import('/@/views/fun/printJs/index.vue'),
+						meta: {
+							title: '页面打印',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-printer',
+						},
+					},
 				],
 			},
 			{
@@ -603,6 +618,21 @@ export const dynamicRoutes = [
 							isIframe: false,
 							auth: ['admin', 'test'],
 							icon: 'iconfont icon-chazhaobiaodanliebiao',
+						},
+					},
+					{
+						path: '/pages/waterfall',
+						name: 'waterfall',
+						component: () => import('/@/views/pages/waterfall/index.vue'),
+						meta: {
+							title: '瀑布屏',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-zidingyibuju',
 						},
 					},
 					{

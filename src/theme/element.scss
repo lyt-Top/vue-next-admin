@@ -127,6 +127,27 @@
 .el-button--danger:active {
 	@include Button(whites, danger, danger);
 }
+// 第三方字体图标大小
+.el-button i.iconfont,
+.el-button i.fa {
+	font-size: 14px !important;
+	margin-right: 5px;
+}
+.el-button--medium i.iconfont,
+.el-button--medium i.fa {
+	font-size: 14px !important;
+	margin-right: 5px;
+}
+.el-button--small i.iconfont,
+.el-button--small i.fa {
+	font-size: 12px !important;
+	margin-right: 5px;
+}
+.el-button--mini i.iconfont,
+.el-button--mini i.fa {
+	font-size: 12px !important;
+	margin-right: 5px;
+}
 
 /* Link 文字链接
 ------------------------------- */
@@ -603,6 +624,9 @@
 }
 .el-alert--error.is-light .el-alert__description {
 	color: set-color(danger);
+}
+.el-alert__title {
+	word-break: break-all;
 }
 
 /* Loading 加载
