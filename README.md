@@ -7,10 +7,10 @@
 	    <a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
 	        <img src="https://img.shields.io/badge/element--plus-%3E1.0.0-blue" alt="element plus">
 	    </a>
-		<a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">
+		<a href="https://www.tslang.cn/" target="_blank">
 	        <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript">
 	    </a>
-		<a href="https://gitee.com/lyt-top/vue-admin-wonderful-next/blob/master/LICENSE" target="_blank">
+		<a href="https://gitee.com/lyt-top/vue-next-admin/blob/master/LICENSE" target="_blank">
 		    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="license">
 		</a>
 		<a href="https://vitejs.dev/" target="_blank">
@@ -117,6 +117,7 @@ cnpm run build
 - <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">cropperjs</a>
 - <a href="https://github.com/antvis/g6" target="_blank">@antv/g6</a>
 - <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
+- <a href="https://github.com/crabbly/Print.js" target="_blank">print-js</a>
 
 #### 特别感谢
 
