@@ -36,7 +36,7 @@
 			</el-row>
 		</el-form-item>
 		<el-form-item>
-			<el-button type="primary" class="login-content-submit" round @click="onSignIn">
+			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
 				<span>登 录</span>
 			</el-button>
 		</el-form-item>
@@ -47,7 +47,7 @@
 import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
-import { setAddRoute, setFilterMenu, setCacheTagsViewRoutes, getBackEndControlRoutes, setBackEndControlRoutesFun } from '/@/router/index.ts';
+import { initAllFun, getBackEndControlRoutes, setBackEndControlRoutesFun } from '/@/router/index.ts';
 import { useStore } from '/@/store/index.ts';
 import { setSession } from '/@/utils/storage.ts';
 import { formatAxis } from '/@/utils/formatTime.ts';
@@ -62,19 +62,17 @@ export default defineComponent({
 				password: '123456',
 				code: '1234',
 			},
+			loading: {
+				signIn: false,
+			},
 		});
 		// 时间获取
 		const currentTime = computed(() => {
 			return formatAxis(new Date());
 		});
-		// 重新执行添加动态路由、过滤权限菜单、缓存等方法
-		const initAllFun = () => {
-			setAddRoute();
-			setFilterMenu();
-			setCacheTagsViewRoutes();
-		};
 		// 登录
 		const onSignIn = () => {
+			state.loading.signIn = true;
 			let defaultAuthPageList: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
 			// admin 页面权限标识，对应路由 meta.auth
@@ -130,7 +128,9 @@ export default defineComponent({
 			router.push('/');
 			// 登录成功提示
 			setTimeout(() => {
+				state.loading.signIn = true;
 				ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
+				// 关闭 loading
 			}, 300);
 		};
 		return {

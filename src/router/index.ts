@@ -3,6 +3,7 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { store } from '/@/store/index.ts';
 import { getSession, clearSession } from '/@/utils/storage.ts';
+import { NextLoading } from '/@/utils/loading.ts';
 import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts';
 
 // 定义动态路由
@@ -811,6 +812,7 @@ export function setBackEndControlRefreshRoutes() {
 
 // 后端控制路由，模拟执行路由数据初始化
 const initBackEndControlRoutesFun = (res: any) => {
+	NextLoading.start();
 	const oldRoutes = JSON.parse(JSON.stringify(res.data));
 	store.dispatch('requestOldRoutes/setBackEndControlRoutes', oldRoutes);
 	dynamicRoutes[0].children = backEndRouter(res.data);
@@ -868,7 +870,7 @@ export function formatTwoStageRoutes(arr: any) {
 	if (arr.length < 0) return false;
 	const newArr: any = [];
 	const cacheList: Array<string> = [];
-	arr.map((v: any) => {
+	arr.forEach((v: any) => {
 		if (v.path === '/') {
 			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] });
 		} else {
@@ -904,7 +906,7 @@ export function hasAuth(auths: any, route: any) {
 // 递归过滤有权限的路由
 export function setFilterMenuFun(routes: any, auth: any) {
 	const menu: any = [];
-	routes.map((route: any) => {
+	routes.forEach((route: any) => {
 		const item = { ...route };
 		if (hasAuth(auth, item)) {
 			if (item.children) item.children = setFilterMenuFun(item.children, auth);
@@ -915,12 +917,12 @@ export function setFilterMenuFun(routes: any, auth: any) {
 }
 
 // 获取当前用户的权限去比对路由表，用于动态路由的添加
-export function setFilterRoute() {
+export function setFilterRoute(chil: any) {
 	let filterRoute: any = [];
-	formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes))[0].children.map((route: any) => {
+	chil.forEach((route: any) => {
 		if (route.meta.auth)
-			route.meta.auth.map((metaAuth: any) => {
-				store.state.userInfos.userInfos.authPageList.map((auth: any) => {
+			route.meta.auth.forEach((metaAuth: any) => {
+				store.state.userInfos.userInfos.authPageList.forEach((auth: any) => {
 					if (metaAuth === auth) filterRoute.push({ ...route });
 				});
 			});
@@ -931,20 +933,20 @@ export function setFilterRoute() {
 // 比对后的路由表，进行重新赋值
 export function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
-	filterRouteEnd[0].children = setFilterRoute();
+	filterRouteEnd[0].children = setFilterRoute(filterRouteEnd[0].children);
 	return filterRouteEnd;
 }
 
 // 添加动态路由
 export function setAddRoute() {
-	setFilterRouteEnd().map((route: any) => {
+	setFilterRouteEnd().forEach((route: any) => {
 		router.addRoute((route as unknown) as RouteRecordRaw);
 	});
 }
 
 // 删除/重置路由
 export function resetRoute() {
-	setFilterRouteEnd().map((route: any) => {
+	setFilterRouteEnd().forEach((route: any) => {
 		const { name } = route;
 		router.hasRoute(name) && router.removeRoute(name);
 	});
@@ -952,6 +954,7 @@ export function resetRoute() {
 
 // 初始化方法，防止刷新时丢失
 export function initAllFun() {
+	NextLoading.start();
 	const token = getSession('token');
 	if (!token) return false;
 	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
@@ -997,6 +1000,7 @@ router.beforeEach((to, from, next) => {
 // 路由加载后
 router.afterEach(() => {
 	NProgress.done();
+	NextLoading.done();
 });
 
 // 导出路由
