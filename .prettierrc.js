@@ -36,4 +36,4 @@ module.exports = {
 	vueIndentScriptAndStyle: false,
 	// 换行符使用 lf 结尾是 可选值"<auto|lf|crlf|cr>"
 	endOfLine: 'lf',
-}
+};
