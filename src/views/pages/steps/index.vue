@@ -14,7 +14,7 @@
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
 export default {
-	name: 'steps',
+	name: 'pagesSteps',
 	setup() {
 		const state = reactive({
 			stepsActive: 1,

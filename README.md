@@ -124,7 +124,7 @@ cnpm run build
 特别感谢群里老哥的建议、指导与帮忙，谢谢！
 
 - <a href="https://gitee.com/sz6/sa-plus" target="_blank">@省长</a>
-- @唐参
+- <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参
 - <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
 
 #### 其他事项

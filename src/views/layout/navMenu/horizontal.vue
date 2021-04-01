@@ -6,19 +6,19 @@
 					<el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
 						<template #title>
 							<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-							<span>{{ val.meta.title }}</span>
+							<span>{{ $t(val.meta.title) }}</span>
 						</template>
 						<SubItem :chil="val.children" />
 					</el-submenu>
 					<el-menu-item :index="val.path" :key="val.path" v-else>
 						<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 							<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-							{{ val.meta.title }}
+							{{ $t(val.meta.title) }}
 						</template>
 						<template #title v-else>
 							<a :href="val.meta.isLink" target="_blank">
 								<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-								{{ val.meta.title }}
+								{{ $t(val.meta.title) }}
 							</a>
 						</template>
 					</el-menu-item>

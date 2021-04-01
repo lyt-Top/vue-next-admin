@@ -22,7 +22,7 @@
 import { ref, toRefs, reactive } from 'vue';
 import CropperDialog from '/@/components/cropper/index.vue';
 export default {
-	name: 'cropper',
+	name: 'funCropper',
 	components: { CropperDialog },
 	setup() {
 		const cropperDialogRef = ref();

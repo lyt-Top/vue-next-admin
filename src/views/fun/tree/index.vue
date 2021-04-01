@@ -12,7 +12,7 @@ import * as echarts from 'echarts';
 import { useStore } from '/@/store/index.ts';
 import { echartsTreeList } from './mock.ts';
 export default {
-	name: 'echartsTree',
+	name: 'funEchartsTree',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();

@@ -1,8 +1,8 @@
 <template>
 	<div class="layout-navbars-breadcrumb-user-news">
 		<div class="head-box">
-			<div class="head-box-title">通知</div>
-			<div class="head-box-btn" v-if="newsList.length > 0" @click="onAllReadClick">全部已读</div>
+			<div class="head-box-title">{{ $t('message.user.newTitle') }}</div>
+			<div class="head-box-btn" v-if="newsList.length > 0" @click="onAllReadClick">{{ $t('message.user.newBtn') }}</div>
 		</div>
 		<div class="content-box">
 			<template v-if="newsList.length > 0">
@@ -14,9 +14,9 @@
 					<div class="content-box-time">{{ v.time }}</div>
 				</div>
 			</template>
-			<el-empty description="暂无通知" v-else></el-empty>
+			<el-empty :description="$t('message.user.newDesc')" v-else></el-empty>
 		</div>
-		<div class="foot-box" @click="onGoToGiteeClick" v-if="newsList.length > 0">前往通知中心</div>
+		<div class="foot-box" @click="onGoToGiteeClick" v-if="newsList.length > 0">{{ $t('message.user.newGo') }}</div>
 	</div>
 </template>
 

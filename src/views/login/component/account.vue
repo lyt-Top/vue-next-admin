@@ -3,7 +3,7 @@
 		<el-form-item>
 			<el-input
 				type="text"
-				placeholder="用户名 admin 或不输均为 test"
+				:placeholder="$t('message.account.accountPlaceholder1')"
 				prefix-icon="el-icon-user"
 				v-model="ruleForm.userName"
 				clearable
@@ -12,7 +12,14 @@
 			</el-input>
 		</el-form-item>
 		<el-form-item>
-			<el-input type="password" placeholder="密码：123456" prefix-icon="el-icon-lock" v-model="ruleForm.password" autocomplete="off" show-password>
+			<el-input
+				type="password"
+				:placeholder="$t('message.account.accountPlaceholder2')"
+				prefix-icon="el-icon-lock"
+				v-model="ruleForm.password"
+				autocomplete="off"
+				show-password
+			>
 			</el-input>
 		</el-form-item>
 		<el-form-item>
@@ -21,7 +28,7 @@
 					<el-input
 						type="text"
 						maxlength="4"
-						placeholder="请输入验证码"
+						:placeholder="$t('message.account.accountPlaceholder3')"
 						prefix-icon="el-icon-position"
 						v-model="ruleForm.code"
 						clearable
@@ -37,7 +44,7 @@
 		</el-form-item>
 		<el-form-item>
 			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
-				<span>登 录</span>
+				<span>{{ $t('message.account.accountBtnText') }}</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
@@ -47,6 +54,7 @@
 import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
+import { useI18n } from 'vue-i18n';
 import { initAllFun, getBackEndControlRoutes, setBackEndControlRoutesFun } from '/@/router/index.ts';
 import { useStore } from '/@/store/index.ts';
 import { setSession } from '/@/utils/storage.ts';
@@ -54,6 +62,7 @@ import { formatAxis } from '/@/utils/formatTime.ts';
 export default defineComponent({
 	name: 'login',
 	setup() {
+		const { t } = useI18n();
 		const store = useStore();
 		const router = useRouter();
 		const state = reactive({
@@ -129,7 +138,8 @@ export default defineComponent({
 			// 登录成功提示
 			setTimeout(() => {
 				state.loading.signIn = true;
-				ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
+				const signInText = t('message.signInText');
+				ElMessage.success(`${currentTimeInfo}，${signInText}`);
 				// 关闭 loading
 			}, 300);
 		};
@@ -164,6 +174,7 @@ export default defineComponent({
 			cursor: pointer;
 			transition: all ease 0.2s;
 			border-radius: 4px;
+			user-select: none;
 			&:hover {
 				border-color: #c0c4cc;
 				transition: all ease 0.2s;

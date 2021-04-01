@@ -919,6 +919,11 @@
 		}
 	}
 }
+.el-dialog__body {
+	max-height: 70vh !important;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 
 /* Card 卡片
 ------------------------------- */

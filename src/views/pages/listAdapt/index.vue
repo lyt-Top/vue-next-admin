@@ -56,7 +56,7 @@ import { toRefs, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { filterList } from './mock.ts';
 export default {
-	name: 'listAdapt',
+	name: 'pagesListAdapt',
 	setup() {
 		const router = useRouter();
 		const state = reactive({

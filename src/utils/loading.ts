@@ -4,12 +4,26 @@ import { nextTick } from 'vue';
 export const NextLoading = {
 	// 创建 loading
 	start: () => {
-		const body: any = document.body;
+		const bodys: any = document.body;
 		const div = document.createElement('div');
 		div.setAttribute('class', 'loading-next');
-		const html = `<div class="loading-next-box"><div class="loading-next-animation"><div class="loading-next-animation-box"><div></div><div></div></div></div></div>`;
-		div.innerHTML = html;
-		body.insertBefore(div, body.childNodes[0]);
+		const htmls = `
+			<div class="loading-next-box">
+			<div class="loading-next-box-warp">
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+				<div class="loading-next-box-item"></div>
+			</div>
+		</div>
+		`;
+		div.innerHTML = htmls;
+		bodys.insertBefore(div, bodys.childNodes[0]);
 	},
 	// 移除 loading
 	done: () => {

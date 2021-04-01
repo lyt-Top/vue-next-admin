@@ -84,7 +84,7 @@
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
 export default {
-	name: 'formAdapt',
+	name: 'pagesFormAdapt',
 	setup() {
 		const state = reactive({
 			form: {},

@@ -16,7 +16,7 @@
 import { reactive, toRefs } from 'vue';
 import printJs from 'print-js';
 export default {
-	name: 'printJs',
+	name: 'funPrintJs',
 	setup() {
 		const state = reactive({});
 		// 打印点击

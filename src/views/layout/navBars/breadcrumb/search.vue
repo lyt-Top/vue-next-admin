@@ -4,14 +4,14 @@
 			<el-autocomplete
 				v-model="menuQuery"
 				:fetch-suggestions="menuSearch"
-				placeholder="菜单搜索：支持中文、路由路径"
+				:placeholder="$t('message.user.searchPlaceholder')"
 				prefix-icon="el-icon-search"
 				ref="layoutMenuAutocompleteRef"
 				@select="onHandleSelect"
 				@blur="onSearchBlur"
 			>
 				<template #default="{ item }">
-					<div><i :class="item.meta.icon" class="mr10"></i>{{ item.meta.title }}</div>
+					<div><i :class="item.meta.icon" class="mr10"></i>{{ $t(item.meta.title) }}</div>
 				</template>
 			</el-autocomplete>
 		</el-dialog>

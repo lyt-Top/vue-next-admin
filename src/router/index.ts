@@ -22,7 +22,7 @@ export const dynamicRoutes = [
 				name: 'home',
 				component: () => import('/@/views/home/index.vue'),
 				meta: {
-					title: '首页',
+					title: 'message.router.home',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -38,7 +38,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				redirect: '/system/menu',
 				meta: {
-					title: '系统设置',
+					title: 'message.router.system',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -53,7 +53,7 @@ export const dynamicRoutes = [
 						name: 'systemMenu',
 						component: () => import('/@/views/system/menu/index.vue'),
 						meta: {
-							title: '菜单管理',
+							title: 'message.router.systemMenu',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -68,7 +68,7 @@ export const dynamicRoutes = [
 						name: 'systemUser',
 						component: () => import('/@/views/system/user/index.vue'),
 						meta: {
-							title: '用户管理',
+							title: 'message.router.systemUser',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -80,13 +80,14 @@ export const dynamicRoutes = [
 					},
 				],
 			},
+
 			{
 				path: '/limits',
 				name: 'limits',
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				redirect: '/limits/frontEnd',
 				meta: {
-					title: '权限管理',
+					title: 'message.router.limits',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -102,7 +103,7 @@ export const dynamicRoutes = [
 						component: () => import('/@/views/layout/routerView/parent.vue'),
 						redirect: '/limits/frontEnd/page',
 						meta: {
-							title: '前端控制',
+							title: 'message.router.limitsFrontEnd',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -116,7 +117,7 @@ export const dynamicRoutes = [
 								name: 'limitsFrontEndPage',
 								component: () => import('/@/views/limits/frontEnd/page/index.vue'),
 								meta: {
-									title: '页面权限',
+									title: 'message.router.limitsFrontEndPage',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -130,7 +131,7 @@ export const dynamicRoutes = [
 								name: 'limitsFrontEndBtn',
 								component: () => import('/@/views/limits/frontEnd/btn/index.vue'),
 								meta: {
-									title: '按钮权限',
+									title: 'message.router.limitsFrontEndBtn',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -146,7 +147,7 @@ export const dynamicRoutes = [
 						name: 'limitsBackEnd',
 						component: () => import('/@/views/layout/routerView/parent.vue'),
 						meta: {
-							title: '后端控制',
+							title: 'message.router.limitsBackEnd',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -160,7 +161,7 @@ export const dynamicRoutes = [
 								name: 'limitsBackEndEndPage',
 								component: () => import('/@/views/limits/backEnd/page/index.vue'),
 								meta: {
-									title: '页面权限',
+									title: 'message.router.limitsBackEndEndPage',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -179,7 +180,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				redirect: '/menu/menu1',
 				meta: {
-					title: '菜单嵌套',
+					title: 'message.router.menu',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -195,7 +196,7 @@ export const dynamicRoutes = [
 						component: () => import('/@/views/layout/routerView/parent.vue'),
 						redirect: '/menu/menu1/menu11',
 						meta: {
-							title: '菜单1',
+							title: 'message.router.menu1',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -210,7 +211,7 @@ export const dynamicRoutes = [
 								name: 'menu11',
 								component: () => import('/@/views/menu/menu1/menu11/index.vue'),
 								meta: {
-									title: '菜单11',
+									title: 'message.router.menu11',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -226,7 +227,7 @@ export const dynamicRoutes = [
 								component: () => import('/@/views/layout/routerView/parent.vue'),
 								redirect: '/menu/menu1/menu12/menu121',
 								meta: {
-									title: '菜单12',
+									title: 'message.router.menu12',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -241,7 +242,7 @@ export const dynamicRoutes = [
 										name: 'menu121',
 										component: () => import('/@/views/menu/menu1/menu12/menu121/index.vue'),
 										meta: {
-											title: '菜单121',
+											title: 'message.router.menu121',
 											isLink: '',
 											isHide: false,
 											isKeepAlive: true,
@@ -256,7 +257,7 @@ export const dynamicRoutes = [
 										name: 'menu122',
 										component: () => import('/@/views/menu/menu1/menu12/menu122/index.vue'),
 										meta: {
-											title: '菜单122',
+											title: 'message.router.menu122',
 											isLink: '',
 											isHide: false,
 											isKeepAlive: true,
@@ -273,7 +274,7 @@ export const dynamicRoutes = [
 								name: 'menu13',
 								component: () => import('/@/views/menu/menu1/menu13/index.vue'),
 								meta: {
-									title: '菜单13',
+									title: 'message.router.menu13',
 									isLink: '',
 									isHide: false,
 									isKeepAlive: true,
@@ -290,7 +291,7 @@ export const dynamicRoutes = [
 						name: 'menu2',
 						component: () => import('/@/views/menu/menu2/index.vue'),
 						meta: {
-							title: '菜单2',
+							title: 'message.router.menu2',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -308,7 +309,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				redirect: '/fun/tagsView',
 				meta: {
-					title: '功能',
+					title: 'message.router.funIndex',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -323,7 +324,7 @@ export const dynamicRoutes = [
 						name: 'funTagsView',
 						component: () => import('/@/views/fun/tagsView/index.vue'),
 						meta: {
-							title: 'tagsView 操作',
+							title: 'message.router.funTagsView',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -335,10 +336,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/countup',
-						name: 'countup',
+						name: 'funCountup',
 						component: () => import('/@/views/fun/countup/index.vue'),
 						meta: {
-							title: 'countup 数字滚动',
+							title: 'message.router.funCountup',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -350,10 +351,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/echartsTree',
-						name: 'echartsTree',
+						name: 'funEchartsTree',
 						component: () => import('/@/views/fun/tree/index.vue'),
 						meta: {
-							title: 'echartsTree 树图',
+							title: 'message.router.funEchartsTree',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -365,10 +366,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/selector',
-						name: 'selector',
+						name: 'funSelector',
 						component: () => import('/@/views/fun/selector/index.vue'),
 						meta: {
-							title: '图标选择器',
+							title: 'message.router.funSelector',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -380,10 +381,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/wangEditor',
-						name: 'wangEditor',
+						name: 'funWangEditor',
 						component: () => import('/@/views/fun/wangEditor/index.vue'),
 						meta: {
-							title: 'wangEditor 编辑器',
+							title: 'message.router.funWangEditor',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -395,10 +396,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/cropper',
-						name: 'cropper',
+						name: 'funCropper',
 						component: () => import('/@/views/fun/cropper/index.vue'),
 						meta: {
-							title: 'cropper 图片裁剪',
+							title: 'message.router.funCropper',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -410,10 +411,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/mindMap',
-						name: 'mindMap',
+						name: 'funMindMap',
 						component: () => import('/@/views/fun/mindMap/index.vue'),
 						meta: {
-							title: 'G6 思维导图',
+							title: 'message.router.funMindMap',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -425,10 +426,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/qrcode',
-						name: 'qrcode',
+						name: 'funQrcode',
 						component: () => import('/@/views/fun/qrcode/index.vue'),
 						meta: {
-							title: 'qrcode 二维码生成',
+							title: 'message.router.funQrcode',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -440,10 +441,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/echartsMap',
-						name: 'echartsMap',
+						name: 'funEchartsMap',
 						component: () => import('/@/views/fun/echartsMap/index.vue'),
 						meta: {
-							title: '地理坐标/地图',
+							title: 'message.router.funEchartsMap',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -455,10 +456,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/fun/printJs',
-						name: 'printJs',
+						name: 'funPrintJs',
 						component: () => import('/@/views/fun/printJs/index.vue'),
 						meta: {
-							title: '页面打印',
+							title: 'message.router.funPrintJs',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -466,6 +467,21 @@ export const dynamicRoutes = [
 							isIframe: false,
 							auth: ['admin', 'test'],
 							icon: 'el-icon-printer',
+						},
+					},
+					{
+						path: '/fun/clipboard',
+						name: 'funClipboard',
+						component: () => import('/@/views/fun/clipboard/index.vue'),
+						meta: {
+							title: 'message.router.funClipboard',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-document-copy',
 						},
 					},
 				],
@@ -476,7 +492,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				redirect: '/pages/filtering',
 				meta: {
-					title: '页面',
+					title: 'message.router.pagesIndex',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -488,10 +504,10 @@ export const dynamicRoutes = [
 				children: [
 					{
 						path: '/pages/filtering',
-						name: 'filtering',
+						name: 'pagesFiltering',
 						component: () => import('/@/views/pages/filtering/index.vue'),
 						meta: {
-							title: '过滤筛选组件',
+							title: 'message.router.pagesFiltering',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -503,10 +519,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/filteringDetails',
-						name: 'filteringDetails',
+						name: 'pagesFilteringDetails',
 						component: () => import('/@/views/pages/filtering/details.vue'),
 						meta: {
-							title: '过滤筛选组件详情',
+							title: 'message.router.pagesFilteringDetails',
 							isLink: '',
 							isHide: true,
 							isKeepAlive: false,
@@ -518,10 +534,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/filteringDetails1',
-						name: 'filteringDetails1',
+						name: 'pagesFilteringDetails1',
 						component: () => import('/@/views/pages/filtering/details1.vue'),
 						meta: {
-							title: '过滤筛选组件详情111',
+							title: 'message.router.pagesFilteringDetails1',
 							isLink: '',
 							isHide: true,
 							isKeepAlive: false,
@@ -533,10 +549,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/iocnfont',
-						name: 'iocnfont',
+						name: 'pagesIocnfont',
 						component: () => import('/@/views/pages/iocnfont/index.vue'),
 						meta: {
-							title: 'iconfont 字体图标',
+							title: 'message.router.pagesIocnfont',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -548,10 +564,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/element',
-						name: 'element',
+						name: 'pagesElement',
 						component: () => import('/@/views/pages/element/index.vue'),
 						meta: {
-							title: 'element 字体图标',
+							title: 'message.router.pagesElement',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -563,10 +579,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/awesome',
-						name: 'awesome',
+						name: 'pagesAwesome',
 						component: () => import('/@/views/pages/awesome/index.vue'),
 						meta: {
-							title: 'awesome 字体图标',
+							title: 'message.router.pagesAwesome',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -578,10 +594,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/cityLinkage',
-						name: 'cityLinkage',
+						name: 'pagesCityLinkage',
 						component: () => import('/@/views/pages/cityLinkage/index.vue'),
 						meta: {
-							title: '城市多级联动',
+							title: 'message.router.pagesCityLinkage',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -593,10 +609,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/formAdapt',
-						name: 'formAdapt',
+						name: 'pagesFormAdapt',
 						component: () => import('/@/views/pages/formAdapt/index.vue'),
 						meta: {
-							title: '表单自适应',
+							title: 'message.router.pagesFormAdapt',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -608,10 +624,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/listAdapt',
-						name: 'listAdapt',
+						name: 'pagesListAdapt',
 						component: () => import('/@/views/pages/listAdapt/index.vue'),
 						meta: {
-							title: '列表自适应',
+							title: 'message.router.pagesListAdapt',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -623,10 +639,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/waterfall',
-						name: 'waterfall',
+						name: 'pagesWaterfall',
 						component: () => import('/@/views/pages/waterfall/index.vue'),
 						meta: {
-							title: '瀑布屏',
+							title: 'message.router.pagesWaterfall',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -638,10 +654,10 @@ export const dynamicRoutes = [
 					},
 					{
 						path: '/pages/steps',
-						name: 'steps',
+						name: 'pagesSteps',
 						component: () => import('/@/views/pages/steps/index.vue'),
 						meta: {
-							title: '步骤条',
+							title: 'message.router.pagesSteps',
 							isLink: '',
 							isHide: false,
 							isKeepAlive: true,
@@ -658,7 +674,7 @@ export const dynamicRoutes = [
 				name: 'chartIndex',
 				component: () => import('/@/views/chart/index.vue'),
 				meta: {
-					title: '大数据图表',
+					title: 'message.router.chartIndex',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -673,7 +689,7 @@ export const dynamicRoutes = [
 				name: 'personal',
 				component: () => import('/@/views/personal/index.vue'),
 				meta: {
-					title: '个人中心',
+					title: 'message.router.personal',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -688,7 +704,7 @@ export const dynamicRoutes = [
 				name: 'tools',
 				component: () => import('/@/views/tools/index.vue'),
 				meta: {
-					title: '工具类集合',
+					title: 'message.router.tools',
 					isLink: '',
 					isHide: false,
 					isKeepAlive: true,
@@ -703,7 +719,7 @@ export const dynamicRoutes = [
 				name: 'layoutLinkView',
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				meta: {
-					title: '外链',
+					title: 'message.router.layoutLinkView',
 					isLink: 'https://element-plus.gitee.io/#/zh-CN/component/installation',
 					isHide: false,
 					isKeepAlive: false,
@@ -718,7 +734,7 @@ export const dynamicRoutes = [
 				name: 'layoutIfameView',
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				meta: {
-					title: '内嵌 iframe',
+					title: 'message.router.layoutIfameView',
 					isLink: 'https://gitee.com/lyt-top/vue-admin-wonderful',
 					isHide: false,
 					isKeepAlive: false,
@@ -975,7 +991,6 @@ if (requestRoutes)
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
-	document.title = `${to.meta.title} - ${store.state.themeConfig.themeConfig.globalTitle}` || store.state.themeConfig.themeConfig.globalTitle;
 	NProgress.configure({ showSpinner: false });
 	if (to.meta.title) NProgress.start();
 	const token = getSession('token');

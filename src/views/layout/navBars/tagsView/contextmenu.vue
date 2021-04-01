@@ -13,7 +13,7 @@
 				<template v-for="(v, k) in dropdownList">
 					<li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" :key="k" v-if="!v.affix" @click="onCurrentContextmenuClick(v.id)">
 						<i :class="v.icon"></i>
-						<span>{{ v.txt }}</span>
+						<span>{{ $t(v.txt) }}</span>
 					</li>
 				</template>
 			</ul>
@@ -35,13 +35,13 @@ export default defineComponent({
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ id: 0, txt: '刷新', affix: false, icon: 'el-icon-refresh-right' },
-				{ id: 1, txt: '关闭', affix: false, icon: 'el-icon-close' },
-				{ id: 2, txt: '关闭其它', affix: false, icon: 'el-icon-circle-close' },
-				{ id: 3, txt: '全部关闭', affix: false, icon: 'el-icon-folder-delete' },
+				{ id: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'el-icon-refresh-right' },
+				{ id: 1, txt: 'message.tagsView.close', affix: false, icon: 'el-icon-close' },
+				{ id: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'el-icon-circle-close' },
+				{ id: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'el-icon-folder-delete' },
 				{
 					id: 4,
-					txt: '当前页全屏',
+					txt: 'message.tagsView.fullscreen',
 					affix: false,
 					icon: 'iconfont icon-fullscreen',
 				},

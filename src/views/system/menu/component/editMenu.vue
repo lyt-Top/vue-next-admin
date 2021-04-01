@@ -1,99 +1,91 @@
 <template>
 	<div class="system-menu-container">
 		<el-dialog title="编辑菜单" v-model="isShowDialog" width="769px">
-			<div class="system-menu-form">
-				<el-form :model="ruleForm" size="small" label-width="80px">
-					<el-row :gutter="35">
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="菜单名称">
-								<el-input v-model="ruleForm.meta.title" placeholder="请输入菜单名称" clearable></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="路由名称">
-								<el-input v-model="ruleForm.name" placeholder="路由名称（路由中的name值）" clearable></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="菜单图标">
-								<el-input v-model="ruleForm.meta.icon" placeholder="请输入菜单图标" clearable></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="组件地址">
-								<el-input v-model="ruleForm.component" placeholder="组件地址" clearable></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="是否隐藏">
-								<el-select v-model="ruleForm.meta.isHide" placeholder="请选择是否隐藏" clearable class="w100">
-									<el-option label="是" value="true"></el-option>
-									<el-option label="否" value="false"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="是否缓存">
-								<el-select v-model="ruleForm.meta.isKeepAlive" placeholder="请选择是否缓存" clearable class="w100">
-									<el-option label="是" value="true"></el-option>
-									<el-option label="否" value="false"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="是否固定">
-								<el-select v-model="ruleForm.meta.isAffix" placeholder="请选择是否固定" clearable class="w100">
-									<el-option label="是" value="true"></el-option>
-									<el-option label="否" value="false"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="是否外链">
-								<el-select
-									v-model="ruleForm.isLink"
-									placeholder="请选择是否外链"
-									clearable
-									class="w100"
-									:disabled="ruleForm.meta.isIframe === 'true'"
-								>
-									<el-option label="是" value="true"></el-option>
-									<el-option label="否" value="false"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="是否内嵌">
-								<el-select v-model="ruleForm.meta.isIframe" placeholder="请选择是否iframe" clearable class="w100" @change="onSelectIframeChange">
-									<el-option label="是" value="true"></el-option>
-									<el-option label="否" value="false"></el-option>
-								</el-select>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="链接地址">
-								<el-input
-									v-model="ruleForm.meta.isLink"
-									placeholder="外链/内嵌时链接地址（http:xxx.com）"
-									clearable
-									:disabled="ruleForm.isLink === '' || ruleForm.isLink === 'false'"
-								>
-								</el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="权限标识">
-								<el-input v-model="ruleForm.meta.auth" placeholder="路由权限标识（多个请用逗号隔开）" clearable></el-input>
-							</el-form-item>
-						</el-col>
-						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
-							<el-form-item label="菜单排序">
-								<el-input v-model="ruleForm.menuSort" placeholder="菜单排序" clearable></el-input>
-							</el-form-item>
-						</el-col>
-					</el-row>
-				</el-form>
-			</div>
+			<el-form :model="ruleForm" size="small" label-width="80px">
+				<el-row :gutter="35">
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="菜单名称">
+							<el-input v-model="ruleForm.meta.title" placeholder="格式：message.router.xxx" clearable></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="路由名称">
+							<el-input v-model="ruleForm.name" placeholder="路由名称（路由中的name值）" clearable></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="菜单图标">
+							<el-input v-model="ruleForm.meta.icon" placeholder="请输入菜单图标" clearable></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="组件地址">
+							<el-input v-model="ruleForm.component" placeholder="组件地址" clearable></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="是否隐藏">
+							<el-select v-model="ruleForm.meta.isHide" placeholder="请选择是否隐藏" clearable class="w100">
+								<el-option label="是" value="true"></el-option>
+								<el-option label="否" value="false"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="是否缓存">
+							<el-select v-model="ruleForm.meta.isKeepAlive" placeholder="请选择是否缓存" clearable class="w100">
+								<el-option label="是" value="true"></el-option>
+								<el-option label="否" value="false"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="是否固定">
+							<el-select v-model="ruleForm.meta.isAffix" placeholder="请选择是否固定" clearable class="w100">
+								<el-option label="是" value="true"></el-option>
+								<el-option label="否" value="false"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="是否外链">
+							<el-select v-model="ruleForm.isLink" placeholder="请选择是否外链" clearable class="w100" :disabled="ruleForm.meta.isIframe === 'true'">
+								<el-option label="是" value="true"></el-option>
+								<el-option label="否" value="false"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="是否内嵌">
+							<el-select v-model="ruleForm.meta.isIframe" placeholder="请选择是否iframe" clearable class="w100" @change="onSelectIframeChange">
+								<el-option label="是" value="true"></el-option>
+								<el-option label="否" value="false"></el-option>
+							</el-select>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="链接地址">
+							<el-input
+								v-model="ruleForm.meta.isLink"
+								placeholder="外链/内嵌时链接地址（http:xxx.com）"
+								clearable
+								:disabled="ruleForm.isLink === '' || ruleForm.isLink === 'false'"
+							>
+							</el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="权限标识">
+							<el-input v-model="ruleForm.meta.auth" placeholder="路由权限标识（多个请用逗号隔开）" clearable></el-input>
+						</el-form-item>
+					</el-col>
+					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+						<el-form-item label="菜单排序">
+							<el-input v-model="ruleForm.menuSort" placeholder="菜单排序" clearable></el-input>
+						</el-form-item>
+					</el-col>
+				</el-row>
+			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="onCancel" size="small">取 消</el-button>
@@ -106,10 +98,12 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
+import { useI18n } from 'vue-i18n';
 // import { setBackEndControlRefreshRoutes } from "/@/router/index.ts";
 export default {
 	name: 'systemEditMenu',
 	setup() {
+		const { t } = useI18n();
 		const state = reactive({
 			isShowDialog: false,
 			/**
@@ -141,7 +135,7 @@ export default {
 			state.ruleForm.component = '';
 			state.ruleForm.isLink = row.meta.isLink ? 'true' : '';
 			state.ruleForm.menuSort = '';
-			state.ruleForm.meta.title = row.meta.title;
+			state.ruleForm.meta.title = t(row.meta.title);
 			state.ruleForm.meta.icon = row.meta.icon;
 			state.ruleForm.meta.isHide = row.meta.isHide ? 'true' : 'false';
 			state.ruleForm.meta.isKeepAlive = row.meta.isKeepAlive ? 'true' : 'false';
@@ -201,13 +195,3 @@ export default {
 	},
 };
 </script>
-
-<style scoped lang="scss">
-.system-menu-container {
-	.system-menu-form {
-		max-height: 70vh !important;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
-}
-</style>
