@@ -21,7 +21,7 @@
 import { toRefs, reactive, onMounted, getCurrentInstance } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 export default {
-	name: 'qrcode',
+	name: 'funQrcode',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const state = reactive({

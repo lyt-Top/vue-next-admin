@@ -11,7 +11,7 @@ import { toRefs, reactive, computed, onMounted, getCurrentInstance } from 'vue';
 import G6 from '@antv/g6';
 import { useStore } from '/@/store/index.ts';
 export default {
-	name: 'mindMap',
+	name: 'funMindMap',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();

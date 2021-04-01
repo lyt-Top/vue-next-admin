@@ -24,7 +24,7 @@
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
 export default {
-	name: 'waterfall',
+	name: 'pagesWaterfall',
 	setup() {
 		const state = reactive({});
 		return {

@@ -113,6 +113,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			globalTitle: 'vue-next-admin',
 			// 网站副标题（登录页顶部文字）
 			globalViceTitle: 'SMALL@小柒',
+			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
+			globalI18n: 'zh-cn',
 		},
 	},
 	mutations: {

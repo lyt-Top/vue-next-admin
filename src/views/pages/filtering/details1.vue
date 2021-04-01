@@ -12,7 +12,7 @@
 import { toRefs, reactive, computed } from 'vue';
 import { useStore } from '/@/store/index.ts';
 export default {
-	name: 'filteringDetails1',
+	name: 'pagesFilteringDetails1',
 	setup() {
 		const store = useStore();
 		const state = reactive({

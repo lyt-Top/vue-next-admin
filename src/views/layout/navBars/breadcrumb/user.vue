@@ -1,16 +1,28 @@
 <template>
-	<div class="layout-navbars-breadcrumb-user">
+	<div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
+		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
+			<div class="layout-navbars-breadcrumb-user-icon">
+				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
+			</div>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item command="zh-cn" :disabled="disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
+					<el-dropdown-item command="en" :disabled="disabledI18n === 'en'">English</el-dropdown-item>
+					<el-dropdown-item command="zh-tw" :disabled="disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
-			<i class="el-icon-search" title="菜单搜索"></i>
+			<i class="el-icon-search" :title="$t('message.user.title2')"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
-			<i class="icon-skin iconfont" title="布局配置"></i>
+			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
 			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
 				<template #reference>
 					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
-						<i class="el-icon-bell" title="消息"></i>
+						<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
 					</el-badge>
 				</template>
 				<transition name="el-zoom-in-top">
@@ -19,7 +31,11 @@
 			</el-popover>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
-			<i class="iconfont" :title="isScreenfull ? '开全屏' : '关全屏'" :class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"></i>
+			<i
+				class="iconfont"
+				:title="isScreenfull ? $t('message.user.title5') : $t('message.user.title6')"
+				:class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
+			></i>
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
@@ -29,11 +45,11 @@
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="/home">首页</el-dropdown-item>
-					<el-dropdown-item command="/personal">个人中心</el-dropdown-item>
-					<el-dropdown-item command="/404">404</el-dropdown-item>
-					<el-dropdown-item command="/401">401</el-dropdown-item>
-					<el-dropdown-item divided command="logOut">退出登录</el-dropdown-item>
+					<el-dropdown-item command="/home">{{ $t('message.user.dropdown1') }}</el-dropdown-item>
+					<el-dropdown-item command="/personal">{{ $t('message.user.dropdown2') }}</el-dropdown-item>
+					<el-dropdown-item command="/404">{{ $t('message.user.dropdown3') }}</el-dropdown-item>
+					<el-dropdown-item command="/401">{{ $t('message.user.dropdown4') }}</el-dropdown-item>
+					<el-dropdown-item divided command="logOut">{{ $t('message.user.dropdown5') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -42,19 +58,21 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance, computed, reactive, toRefs } from 'vue';
+import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
+import { useI18n } from 'vue-i18n';
 import { resetRoute } from '/@/router/index.ts';
 import { useStore } from '/@/store/index.ts';
-import { clearSession } from '/@/utils/storage.ts';
+import { clearSession, setLocal, getLocal, removeLocal } from '/@/utils/storage.ts';
 import UserNews from '/@/views/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/views/layout/navBars/breadcrumb/search.vue';
 export default {
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },
 	setup() {
+		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
 		const router = useRouter();
 		const store = useStore();
@@ -62,10 +80,23 @@ export default {
 		const state = reactive({
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
+			disabledI18n: false,
 		});
 		// 获取用户信息 vuex
 		const getUserInfos = computed(() => {
 			return store.state.userInfos.userInfos;
+		});
+		// 获取布局配置信息
+		const getThemeConfig = computed(() => {
+			return store.state.themeConfig.themeConfig;
+		});
+		// 设置分割样式
+		const layoutUserFlexNum = computed(() => {
+			let { layout, isClassicSplitMenu } = getThemeConfig.value;
+			let num = '';
+			if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu)) num = 1;
+			else num = null;
+			return num;
 		});
 		// 全屏点击时
 		const onScreenfullClick = () => {
@@ -86,15 +117,15 @@ export default {
 				ElMessageBox({
 					closeOnClickModal: false,
 					closeOnPressEscape: false,
-					title: '提示',
-					message: '此操作将退出登录, 是否继续?',
+					title: t('message.user.logOutTitle'),
+					message: t('message.user.logOutMessage'),
 					showCancelButton: true,
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
+					confirmButtonText: t('message.user.logOutConfirm'),
+					cancelButtonText: t('message.user.logOutCancel'),
 					beforeClose: (action, instance, done) => {
 						if (action === 'confirm') {
 							instance.confirmButtonLoading = true;
-							instance.confirmButtonText = '退出中';
+							instance.confirmButtonText = t('message.user.logOutExit');
 							setTimeout(() => {
 								done();
 								setTimeout(() => {
@@ -111,7 +142,7 @@ export default {
 						resetRoute(); // 删除/重置路由
 						router.push('/login');
 						setTimeout(() => {
-							ElMessage.success('安全退出成功！');
+							ElMessage.success(t('message.user.logOutSuccess'));
 						}, 300);
 					})
 					.catch(() => {});
@@ -123,13 +154,41 @@ export default {
 		const onSearchClick = () => {
 			searchRef.value.openSearch();
 		};
+		// 语言切换
+		const onLanguageChange = (lang: string) => {
+			removeLocal('themeConfig');
+			getThemeConfig.value.globalI18n = lang;
+			setLocal('themeConfig', getThemeConfig.value);
+			proxy.$i18n.locale = lang;
+			initI18n();
+		};
+		// 初始化言语国际化
+		const initI18n = () => {
+			switch (getLocal('themeConfig').globalI18n) {
+				case 'zh-cn':
+					state.disabledI18n = 'zh-cn';
+					break;
+				case 'en':
+					state.disabledI18n = 'en';
+					break;
+				case 'zh-tw':
+					state.disabledI18n = 'zh-tw';
+					break;
+			}
+		};
+		// 页面加载时
+		onMounted(() => {
+			if (getLocal('themeConfig')) initI18n();
+		});
 		return {
 			getUserInfos,
 			onLayoutSetingClick,
 			onHandleCommandClick,
 			onScreenfullClick,
 			onSearchClick,
+			onLanguageChange,
 			searchRef,
+			layoutUserFlexNum,
 			...toRefs(state),
 		};
 	},
@@ -141,7 +200,6 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: flex-end;
-	flex: 1;
 	&-link {
 		height: 100%;
 		display: flex;

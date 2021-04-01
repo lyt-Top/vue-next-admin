@@ -2,7 +2,7 @@
 	<div class="h100">
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
-				<keep-alive :include="getKeepAliveNames">
+				<keep-alive :include="keepAliveNameList">
 					<component :is="Component" :key="refreshRouterViewKey" class="w100" />
 				</keep-alive>
 			</transition>
@@ -22,6 +22,8 @@ export default defineComponent({
 		const store = useStore();
 		const state: any = reactive({
 			refreshRouterViewKey: null,
+			keepAliveNameList: [],
+			keepAliveNameNewList: [],
 		});
 		// 设置主界面切换动画
 		const setTransitionName = computed(() => {
@@ -35,13 +37,16 @@ export default defineComponent({
 		const getKeepAliveNames = computed(() => {
 			return store.state.keepAliveNames.keepAliveNames;
 		});
-		// 页面加载前
+		// 页面加载前，处理缓存，页面刷新时路由缓存处理
 		onBeforeMount(() => {
+			state.keepAliveNameList = getKeepAliveNames.value;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (path: string) => {
 				if (route.path !== path) return false;
+				state.keepAliveNameList = getKeepAliveNames.value.filter((name: string) => route.name !== name);
 				state.refreshRouterViewKey = route.path;
 				nextTick(() => {
 					state.refreshRouterViewKey = null;
+					state.keepAliveNameList = getKeepAliveNames.value;
 				});
 			});
 		});

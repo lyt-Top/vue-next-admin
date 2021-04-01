@@ -46,7 +46,7 @@
 import { toRefs, reactive, onMounted } from 'vue';
 import threeLevelLinkageJson from '/@/mock/threeLevelLinkage.json';
 export default {
-	name: 'cityLinkage',
+	name: 'pagesCityLinkage',
 	setup() {
 		const state = reactive({
 			threeLevelLinkage: '',

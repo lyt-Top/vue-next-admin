@@ -21,7 +21,7 @@
 import { toRefs, reactive, onMounted } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets.ts';
 export default {
-	name: 'iconfont',
+	name: 'pagesIocnfont',
 	setup() {
 		const state = reactive({
 			sheetsIconList: [],

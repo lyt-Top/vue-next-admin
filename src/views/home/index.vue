@@ -28,12 +28,12 @@
 		</el-row>
 		<el-row :gutter="15">
 			<el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="mb15">
-				<el-card shadow="hover" header="商品销售情况">
+				<el-card shadow="hover" :header="$t('message.card.title1')">
 					<div style="height: 200px" ref="homeLaboratoryRef"></div>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="10" :md="10" :lg="8" :xl="8">
-				<el-card shadow="hover" header="环境监测">
+				<el-card shadow="hover" :header="$t('message.card.title2')">
 					<div class="home-monitor">
 						<div class="flex-warp">
 							<div class="flex-warp-item" v-for="(v, k) in environmentList" :key="k">
@@ -50,16 +50,16 @@
 		</el-row>
 		<el-row :gutter="15">
 			<el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="home-warning-media">
-				<el-card shadow="hover" header="预警信息" class="home-warning-card">
+				<el-card shadow="hover" :header="$t('message.card.title3')" class="home-warning-card">
 					<el-table :data="tableData.data" style="width: 100%" stripe>
-						<el-table-column prop="date" label="时间"></el-table-column>
-						<el-table-column prop="name" label="实验室名称"></el-table-column>
-						<el-table-column prop="address" label="报警内容"></el-table-column>
+						<el-table-column prop="date" :label="$t('message.table.th1')"></el-table-column>
+						<el-table-column prop="name" :label="$t('message.table.th2')"></el-table-column>
+						<el-table-column prop="address" :label="$t('message.table.th3')"></el-table-column>
 					</el-table>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="10" :md="10" :lg="8" :xl="8" class="home-dynamic-media">
-				<el-card shadow="hover" header="动态信息">
+				<el-card shadow="hover" :header="$t('message.card.title4')">
 					<div class="home-dynamic">
 						<el-scrollbar>
 							<div class="home-dynamic-item" v-for="(v, k) in activitiesList" :key="k">
@@ -85,7 +85,7 @@
 		</el-row>
 		<el-row>
 			<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mt15">
-				<el-card shadow="hover" header="履约超时预警">
+				<el-card shadow="hover" :header="$t('message.card.title5')">
 					<div style="height: 200px" ref="homeOvertimeRef"></div>
 				</el-card>
 			</el-col>

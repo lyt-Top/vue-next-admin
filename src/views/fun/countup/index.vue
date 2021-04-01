@@ -35,7 +35,7 @@
 import { reactive, toRefs, onMounted, nextTick } from 'vue';
 import { CountUp } from 'countup.js';
 export default {
-	name: 'countup',
+	name: 'funCountup',
 	setup() {
 		const state = reactive({
 			topCardItemList: [

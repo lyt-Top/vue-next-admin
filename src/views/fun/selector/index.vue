@@ -13,7 +13,7 @@
 import { toRefs, reactive } from 'vue';
 import IconSelector from '/@/components/iconSelector/index.vue';
 export default {
-	name: 'selector',
+	name: 'funSelector',
 	components: { IconSelector },
 	setup() {
 		const state = reactive({});

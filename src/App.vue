@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent } from 'vue';
+import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
+import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useStore } from '/@/store/index.ts';
 import { getLocal } from '/@/utils/storage.ts';
 import setIntroduction from '/@/utils/setIconfont.ts';
@@ -15,8 +17,10 @@ export default defineComponent({
 	name: 'app',
 	components: { LockScreen, Setings },
 	setup() {
+		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
 		const setingsRef = ref();
+		const route = useRoute();
 		const store = useStore();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
@@ -51,6 +55,17 @@ export default defineComponent({
 		onUnmounted(() => {
 			proxy.mittBus.off('openSetingsDrawer', () => {});
 		});
+		// 监听路由的变化，设置网站标题
+		watch(
+			() => route.path,
+			() => {
+				nextTick(() => {
+					let webTitle = '';
+					route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
+					document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
+				});
+			}
+		);
 		return {
 			setingsRef,
 			getThemeConfig,
