@@ -31,6 +31,7 @@ export default {
 		funEchartsMap: '地理座標/地圖',
 		funPrintJs: '頁面列印',
 		funClipboard: '複製剪切',
+		funScreenShort: '自定義截圖',
 		pagesIndex: '頁面',
 		pagesFiltering: '過濾篩選組件',
 		pagesFilteringDetails: '過濾篩選組件詳情',

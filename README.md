@@ -118,6 +118,7 @@ cnpm run build
 - <a href="https://github.com/antvis/g6" target="_blank">@antv/g6</a>
 - <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
 - <a href="https://github.com/crabbly/Print.js" target="_blank">print-js</a>
+- <a href="https://github.com/likaia/screen-shot" target="_blank">vue-web-screen-shot</a>
 
 #### 特别感谢
 

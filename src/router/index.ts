@@ -484,6 +484,21 @@ export const dynamicRoutes = [
 							icon: 'el-icon-document-copy',
 						},
 					},
+					{
+						path: '/fun/screenShort',
+						name: 'funScreenShort',
+						component: () => import('/@/views/fun/screenShort/index.vue'),
+						meta: {
+							title: 'message.router.funScreenShort',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-crop',
+						},
+					},
 				],
 			},
 			{

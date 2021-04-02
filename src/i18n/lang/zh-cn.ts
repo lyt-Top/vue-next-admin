@@ -31,6 +31,7 @@ export default {
 		funEchartsMap: '地理坐标/地图',
 		funPrintJs: '页面打印',
 		funClipboard: '复制剪切',
+		funScreenShort: 'web端自定义截屏',
 		pagesIndex: '页面',
 		pagesFiltering: '过滤筛选组件',
 		pagesFilteringDetails: '过滤筛选组件详情',
