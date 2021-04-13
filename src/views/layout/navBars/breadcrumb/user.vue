@@ -94,7 +94,7 @@ export default {
 		const layoutUserFlexNum = computed(() => {
 			let { layout, isClassicSplitMenu } = getThemeConfig.value;
 			let num = '';
-			if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu)) num = 1;
+			if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu) || layout === 'columns') num = 1;
 			else num = null;
 			return num;
 		});

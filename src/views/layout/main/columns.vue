@@ -15,7 +15,7 @@
 	</el-container>
 </template>
 
-<script>
+<script lang="ts">
 import { computed } from 'vue';
 import { useStore } from '/@/store/index.ts';
 import Aside from '/@/views/layout/component/aside.vue';

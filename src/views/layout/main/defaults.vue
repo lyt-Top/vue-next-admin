@@ -12,7 +12,7 @@
 	</el-container>
 </template>
 
-<script>
+<script lang="ts">
 import { computed, getCurrentInstance, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index.ts';

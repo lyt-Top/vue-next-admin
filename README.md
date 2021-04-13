@@ -124,12 +124,12 @@ cnpm run build
 
 特别感谢群里老哥的建议、指导与帮忙，谢谢！
 
-- <a href="https://gitee.com/sz6/sa-plus" target="_blank">@省长</a>
+- <a href="https://gitee.com/click33/sa-plus" target="_blank">@省长</a>
 - <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参
 - <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
 
 #### 其他事项
 
 - <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue3.x vue-next-admin 版本</a>，基于 vue3.x + CompositionAPI + typescript + vite + element plus。
-- <a href="http://lyt-top.gitee.io/vue-admin-wonderful-preview/#/login" target="_blank">vue2.x vue-admin-wonderful 版本</a>，基于 vue2.x + element ui。
+- <a href="http://lyt-top.gitee.io/vue-admin-wonderful-preview/#/login" target="_blank">vue2.x vue-prev-admin 版本</a>，基于 vue2.x + element ui。
 - 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！
