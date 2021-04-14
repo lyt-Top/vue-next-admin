@@ -750,7 +750,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				meta: {
 					title: 'message.router.layoutIfameView',
-					isLink: 'https://gitee.com/lyt-top/vue-admin-wonderful',
+					isLink: 'https://gitee.com/lyt-top/vue-next-admin',
 					isHide: false,
 					isKeepAlive: false,
 					isAffix: true,

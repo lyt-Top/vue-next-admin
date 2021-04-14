@@ -42,6 +42,7 @@ module.exports = {
 		'vue/no-template-key': 'off',
 		'vue/no-v-html': 'off',
 		'vue/comment-directive': 'off',
+		'vue/no-parsing-error': 'off',
 		'no-use-before-define': 'off',
 		'no-restricted-globals': 'off',
 		'no-restricted-syntax': 'off',
