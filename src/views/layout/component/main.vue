@@ -19,75 +19,71 @@
 	</el-main>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, toRefs, reactive, getCurrentInstance, watch, onBeforeMount } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from '/@/store/index.ts';
-import LayoutParentView from '/@/views/layout/routerView/parent.vue';
-import Footer from '/@/views/layout/footer/index.vue';
-import Link from '/@/views/layout/routerView/link.vue';
-import Iframes from '/@/views/layout/routerView/iframes.vue';
-export default defineComponent({
+<script>
+import LayoutParentView from '@/views/layout/routerView/parent.vue';
+import Footer from '@/views/layout/footer/index.vue';
+import Link from '@/views/layout/routerView/link.vue';
+import Iframes from '@/views/layout/routerView/iframes.vue';
+export default {
 	name: 'layoutMain',
 	components: { LayoutParentView, Footer, Link, Iframes },
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
-		const route = useRoute();
-		const state = reactive({
+	data() {
+		return {
 			headerHeight: '',
 			currentRouteMeta: {},
 			isShowLink: false,
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 子组件触发更新
-		const onGetCurrentRouteMeta = () => {
-			initCurrentRouteMeta(route.meta);
-		};
-		// 初始化当前路由 meta 信息
-		const initCurrentRouteMeta = (meta: object) => {
-			state.isShowLink = false;
-			state.currentRouteMeta = meta;
-			setTimeout(() => {
-				state.isShowLink = true;
-			}, 100);
-		};
-		// 设置 main 的高度
-		const initHeaderHeight = () => {
-			let { isTagsview } = store.state.themeConfig.themeConfig;
-			if (isTagsview) return (state.headerHeight = `84px`);
-			else return (state.headerHeight = `50px`);
-		};
-		// 页面加载前
-		onBeforeMount(() => {
-			initCurrentRouteMeta(route.meta);
-			initHeaderHeight();
-		});
-		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-		watch(store.state.themeConfig.themeConfig, (val) => {
-			state.headerHeight = val.isTagsview ? '84px' : '50px';
-			if (val.isFixedHeaderChange !== val.isFixedHeader) {
-				if (!proxy.$refs.layoutScrollbarRef) return false;
-				proxy.$refs.layoutScrollbarRef.update();
-			}
-		});
-		// 监听路由的变化
-		watch(
-			() => route.path,
-			() => {
-				initCurrentRouteMeta(route.meta);
-				proxy.$refs.layoutScrollbarRef.wrap.scrollTop = 0;
-			}
-		);
-		return {
-			getThemeConfig,
-			initCurrentRouteMeta,
-			onGetCurrentRouteMeta,
-			...toRefs(state),
 		};
 	},
-});
+	computed: {
+		// 获取布局配置信息
+		getThemeConfig() {
+			return this.$store.state.themeConfig.themeConfig;
+		},
+	},
+	mounted() {
+		this.initHeaderHeight();
+		this.initCurrentRouteMeta(this.$route.meta);
+	},
+	methods: {
+		// 初始化当前路由 meta 信息
+		initCurrentRouteMeta(meta) {
+			this.isShowLink = false;
+			this.currentRouteMeta = meta;
+			setTimeout(() => {
+				this.isShowLink = true;
+			}, 100);
+		},
+		// 设置 main 的高度
+		initHeaderHeight() {
+			let { isTagsview } = this.$store.state.themeConfig.themeConfig;
+			if (isTagsview) return (this.headerHeight = `84px`);
+			else return (this.headerHeight = `50px`);
+		},
+		// 子组件触发更新
+		onGetCurrentRouteMeta() {
+			this.initCurrentRouteMeta(this.$route.meta);
+		},
+	},
+	watch: {
+		// 监听 vuex 数据变化
+		'$store.state.themeConfig.themeConfig': {
+			handler(val) {
+				this.headerHeight = val.isTagsview ? '84px' : '50px';
+				if (val.isFixedHeaderChange !== val.isFixedHeader) {
+					if (!this.$refs.layoutScrollbarRef) return false;
+					this.$refs.layoutScrollbarRef.update();
+				}
+			},
+			deep: true,
+		},
+		// 监听路由的变化
+		$route: {
+			handler(to) {
+				this.initCurrentRouteMeta(to.meta);
+				this.$refs.layoutScrollbarRef.wrap.scrollTop = 0;
+			},
+			deep: true,
+		},
+	},
+};
 </script>

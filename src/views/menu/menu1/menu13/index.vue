@@ -4,23 +4,19 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, onActivated, onMounted } from 'vue';
+<script>
 export default {
 	name: 'menu13',
-	setup() {
-		const state = reactive({
-			val: '',
-		});
-		onMounted(() => {
-			console.log(2222);
-		});
-		onActivated(() => {
-			console.log(1111);
-		});
+	data() {
 		return {
-			...toRefs(state),
+			val: '',
 		};
+	},
+	mounted() {
+		console.log(2222);
+	},
+	activated() {
+		console.log(1111);
 	},
 };
 </script>

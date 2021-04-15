@@ -1,14 +1,13 @@
 <template>
 	<div class="layout-scrollbar">
 		<div class="layout-view-bg-white flex layout-view-link">
-			<a :href="currentRouteMeta.isLink" target="_blank" class="flex-margin">{{ currentRouteMeta.title }}：{{ currentRouteMeta.isLink }}</a>
+			<a :href="meta.isLink" target="_blank" class="flex-margin">{{ meta.title }}：{{ meta.isLink }}</a>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
-export default defineComponent({
+<script>
+export default {
 	name: 'layoutLinkView',
 	props: {
 		meta: {
@@ -16,14 +15,5 @@ export default defineComponent({
 			default: () => {},
 		},
 	},
-	setup(props) {
-		// 获取父级菜单数据
-		const currentRouteMeta = computed(() => {
-			return props.meta;
-		});
-		return {
-			currentRouteMeta,
-		};
-	},
-});
+};
 </script>

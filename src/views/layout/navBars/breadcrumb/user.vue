@@ -4,13 +4,11 @@
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
 			</div>
-			<template #dropdown>
-				<el-dropdown-menu>
-					<el-dropdown-item command="zh-cn" :disabled="disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
-					<el-dropdown-item command="en" :disabled="disabledI18n === 'en'">English</el-dropdown-item>
-					<el-dropdown-item command="zh-tw" :disabled="disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
-				</el-dropdown-menu>
-			</template>
+			<el-dropdown-menu slot="dropdown">
+				<el-dropdown-item command="zh-cn" :disabled="disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
+				<el-dropdown-item command="en" :disabled="disabledI18n === 'en'">English</el-dropdown-item>
+				<el-dropdown-item command="zh-tw" :disabled="disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
+			</el-dropdown-menu>
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<i class="el-icon-search" :title="$t('message.user.title2')"></i>
@@ -19,12 +17,10 @@
 			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
-			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
-				<template #reference>
-					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
-						<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
-					</el-badge>
-				</template>
+			<el-popover placement="bottom" trigger="click" v-model="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
+				<el-badge :is-dot="true" @click.stop="isShowUserNewsPopover = !isShowUserNewsPopover" slot="reference">
+					<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
+				</el-badge>
 				<transition name="el-zoom-in-top">
 					<UserNews v-show="isShowUserNewsPopover" />
 				</transition>
@@ -37,160 +33,139 @@
 				:class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
 			></i>
 		</div>
-		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
+		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onDropdownCommand">
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
 				{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}
 				<i class="el-icon-arrow-down el-icon--right"></i>
 			</span>
-			<template #dropdown>
-				<el-dropdown-menu>
-					<el-dropdown-item command="/home">{{ $t('message.user.dropdown1') }}</el-dropdown-item>
-					<el-dropdown-item command="/personal">{{ $t('message.user.dropdown2') }}</el-dropdown-item>
-					<el-dropdown-item command="/404">{{ $t('message.user.dropdown3') }}</el-dropdown-item>
-					<el-dropdown-item command="/401">{{ $t('message.user.dropdown4') }}</el-dropdown-item>
-					<el-dropdown-item divided command="logOut">{{ $t('message.user.dropdown5') }}</el-dropdown-item>
-				</el-dropdown-menu>
-			</template>
+			<el-dropdown-menu slot="dropdown">
+				<el-dropdown-item command="/home">{{ $t('message.user.dropdown1') }}</el-dropdown-item>
+				<el-dropdown-item command="/personal">{{ $t('message.user.dropdown2') }}</el-dropdown-item>
+				<el-dropdown-item command="/404">{{ $t('message.user.dropdown3') }}</el-dropdown-item>
+				<el-dropdown-item command="/401">{{ $t('message.user.dropdown4') }}</el-dropdown-item>
+				<el-dropdown-item divided command="logOut">{{ $t('message.user.dropdown5') }}</el-dropdown-item>
+			</el-dropdown-menu>
 		</el-dropdown>
 		<Search ref="searchRef" />
 	</div>
 </template>
 
-<script lang="ts">
-import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { ElMessageBox, ElMessage } from 'element-plus';
+<script>
 import screenfull from 'screenfull';
-import { useI18n } from 'vue-i18n';
-import { resetRoute } from '/@/router/index.ts';
-import { useStore } from '/@/store/index.ts';
-import { clearSession, setLocal, getLocal, removeLocal } from '/@/utils/storage.ts';
-import UserNews from '/@/views/layout/navBars/breadcrumb/userNews.vue';
-import Search from '/@/views/layout/navBars/breadcrumb/search.vue';
+import { resetRouter } from '@/router/index.js';
+import { clearSession, removeLocal, getLocal, setLocal } from '@/utils/storage.js';
+import UserNews from '@/views/layout/navBars/breadcrumb/userNews.vue';
+import Search from '@/views/layout/navBars/breadcrumb/search.vue';
 export default {
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },
-	setup() {
-		const { t } = useI18n();
-		const { proxy } = getCurrentInstance() as any;
-		const router = useRouter();
-		const store = useStore();
-		const searchRef = ref();
-		const state = reactive({
+	data() {
+		return {
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
 			disabledI18n: false,
-		});
-		// 获取用户信息 vuex
-		const getUserInfos = computed(() => {
-			return store.state.userInfos.userInfos;
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 设置分割样式
-		const layoutUserFlexNum = computed(() => {
-			let { layout, isClassicSplitMenu } = getThemeConfig.value;
+		};
+	},
+	computed: {
+		// 获取用户信息
+		getUserInfos() {
+			return this.$store.state.userInfos.userInfos;
+		},
+		// 设置弹性盒子布局 flex
+		layoutUserFlexNum() {
+			let { layout, isClassicSplitMenu } = this.$store.state.themeConfig.themeConfig;
 			let num = '';
 			if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu) || layout === 'columns') num = 1;
 			else num = null;
 			return num;
-		});
-		// 全屏点击时
-		const onScreenfullClick = () => {
+		},
+	},
+	mounted() {
+		if (getLocal('themeConfig')) this.initI18n();
+	},
+	methods: {
+		// 搜索点击
+		onSearchClick() {
+			this.$refs.searchRef.openSearch();
+		},
+		// 布局配置点击
+		onLayoutSetingClick() {
+			this.bus.$emit('openSetingsDrawer');
+		},
+		// 全屏点击
+		onScreenfullClick() {
 			if (!screenfull.isEnabled) {
-				ElMessage.warning('暂不不支持全屏');
+				this.$message.warning('暂不不支持全屏');
 				return false;
 			}
 			screenfull.toggle();
-			state.isScreenfull = !state.isScreenfull;
-		};
-		// 布局配置 icon 点击时
-		const onLayoutSetingClick = () => {
-			proxy.mittBus.emit('openSetingsDrawer');
-		};
-		// 下拉菜单点击时
-		const onHandleCommandClick = (path: string) => {
-			if (path === 'logOut') {
-				ElMessageBox({
-					closeOnClickModal: false,
-					closeOnPressEscape: false,
-					title: t('message.user.logOutTitle'),
-					message: t('message.user.logOutMessage'),
-					showCancelButton: true,
-					confirmButtonText: t('message.user.logOutConfirm'),
-					cancelButtonText: t('message.user.logOutCancel'),
-					beforeClose: (action, instance, done) => {
-						if (action === 'confirm') {
-							instance.confirmButtonLoading = true;
-							instance.confirmButtonText = t('message.user.logOutExit');
-							setTimeout(() => {
-								done();
-								setTimeout(() => {
-									instance.confirmButtonLoading = false;
-								}, 300);
-							}, 700);
-						} else {
-							done();
-						}
-					},
-				})
-					.then(() => {
-						clearSession(); // 清除缓存/token等
-						resetRoute(); // 删除/重置路由
-						router.push('/login');
-						setTimeout(() => {
-							ElMessage.success(t('message.user.logOutSuccess'));
-						}, 300);
-					})
-					.catch(() => {});
-			} else {
-				router.push(path);
-			}
-		};
-		// 菜单搜索点击
-		const onSearchClick = () => {
-			searchRef.value.openSearch();
-		};
+			this.isScreenfull = !this.isScreenfull;
+		},
 		// 语言切换
-		const onLanguageChange = (lang: string) => {
+		onLanguageChange(lang) {
 			removeLocal('themeConfig');
-			getThemeConfig.value.globalI18n = lang;
-			setLocal('themeConfig', getThemeConfig.value);
-			proxy.$i18n.locale = lang;
-			initI18n();
-		};
+			this.$store.state.themeConfig.themeConfig.globalI18n = lang;
+			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			this.$i18n.locale = lang;
+			this.initI18n();
+		},
 		// 初始化言语国际化
-		const initI18n = () => {
+		initI18n() {
 			switch (getLocal('themeConfig').globalI18n) {
 				case 'zh-cn':
-					state.disabledI18n = 'zh-cn';
+					this.disabledI18n = 'zh-cn';
 					break;
 				case 'en':
-					state.disabledI18n = 'en';
+					this.disabledI18n = 'en';
 					break;
 				case 'zh-tw':
-					state.disabledI18n = 'zh-tw';
+					this.disabledI18n = 'zh-tw';
 					break;
 			}
-		};
-		// 页面加载时
-		onMounted(() => {
-			if (getLocal('themeConfig')) initI18n();
-		});
-		return {
-			getUserInfos,
-			onLayoutSetingClick,
-			onHandleCommandClick,
-			onScreenfullClick,
-			onSearchClick,
-			onLanguageChange,
-			searchRef,
-			layoutUserFlexNum,
-			...toRefs(state),
-		};
+		},
+		// `dropdown 下拉菜单` 当前项点击
+		onDropdownCommand(path) {
+			if (path === 'logOut') {
+				setTimeout(() => {
+					this.$msgbox({
+						closeOnClickModal: false,
+						closeOnPressEscape: false,
+						title: this.$t('message.user.logOutTitle'),
+						message: this.$t('message.user.logOutMessage'),
+						showCancelButton: true,
+						confirmButtonText: this.$t('message.user.logOutConfirm'),
+						cancelButtonText: this.$t('message.user.logOutCancel'),
+						beforeClose: (action, instance, done) => {
+							if (action === 'confirm') {
+								instance.confirmButtonLoading = true;
+								instance.confirmButtonText = this.$t('message.user.logOutExit');
+								setTimeout(() => {
+									done();
+									setTimeout(() => {
+										instance.confirmButtonLoading = false;
+									}, 300);
+								}, 700);
+							} else {
+								done();
+							}
+						},
+					})
+						.then(() => {
+							clearSession(); // 清除缓存/token等
+							this.$store.dispatch('routesList/setRoutesList', []); // 清空 vuex 路由列表缓存
+							resetRouter(); // 删除/重置路由
+							this.$router.push('/login');
+							setTimeout(() => {
+								this.$message.success(this.$t('message.user.logOutSuccess'));
+							}, 300);
+						})
+						.catch(() => {});
+				}, 150);
+			} else {
+				this.$router.push(path);
+			}
+		},
 	},
 };
 </script>
@@ -227,16 +202,16 @@ export default {
 			}
 		}
 	}
-	::v-deep(.el-dropdown) {
+	& ::v-deep .el-dropdown {
 		color: var(--bg-topBarColor);
 	}
-	::v-deep(.el-badge) {
+	& ::v-deep .el-badge {
 		height: 40px;
 		line-height: 40px;
 		display: flex;
 		align-items: center;
 	}
-	::v-deep(.el-badge__content.is-fixed) {
+	& ::v-deep .el-badge__content.is-fixed {
 		top: 12px;
 	}
 }

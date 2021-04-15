@@ -1,0 +1,200 @@
+{
+	"code": 0,
+	"data": {
+		"path": "/",
+		"name": "/",
+		"redirect": "/home",
+		"component": "layout/index",
+		"children": [
+			{
+				"path": "/home",
+				"name": "home",
+				"component": "home",
+				"meta": {
+					"title": "message.router.home",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": true,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-shouye"
+				}
+			},
+			{
+				"path": "/tools",
+				"name": "tools",
+				"component": "tools",
+				"meta": {
+					"title": "message.router.tools",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-gongju"
+				}
+			},
+			{
+				"path": "/menu",
+				"name": "menu",
+				"component": "layout/routerView/parent",
+				"redirect": "/menu/menu1",
+				"meta": {
+					"title": "message.router.menu",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-caidan"
+				},
+				"children": [
+					{
+						"path": "/menu/menu1",
+						"name": "menu1",
+						"component": "layout/routerView/parent",
+						"redirect": "/menu/menu1/menu11",
+						"meta": {
+							"title": "message.router.menu1",
+							"isLink": "",
+							"isHide": false,
+							"isKeepAlive": true,
+							"isAffix": false,
+							"isIframe": false,
+							"auth": ["admin", "test"],
+							"icon": "iconfont icon-caidan"
+						},
+						"children": [
+							{
+								"path": "/menu/menu1/menu11",
+								"name": "menu11",
+								"component": "menu/menu1/menu11/index",
+								"meta": {
+									"title": "message.router.menu11",
+									"isLink": "",
+									"isHide": false,
+									"isKeepAlive": true,
+									"isAffix": false,
+									"isIframe": false,
+									"auth": ["admin", "test"],
+									"icon": "iconfont icon-caidan"
+								}
+							},
+							{
+								"path": "/menu/menu1/menu12",
+								"name": "menu12",
+								"component": "layout/routerView/parent",
+								"redirect": "/menu/menu1/menu12/menu121",
+								"meta": {
+									"title": "message.router.menu12",
+									"isLink": "",
+									"isHide": false,
+									"isKeepAlive": true,
+									"isAffix": false,
+									"isIframe": false,
+									"auth": ["admin", "test"],
+									"icon": "iconfont icon-caidan"
+								},
+								"children": [
+									{
+										"path": "/menu/menu1/menu12/menu121",
+										"name": "menu121",
+										"component": "menu/menu1/menu12/menu121/index",
+										"meta": {
+											"title": "message.router.menu121",
+											"isLink": "",
+											"isHide": false,
+											"isKeepAlive": true,
+											"isAffix": false,
+											"isIframe": false,
+											"auth": ["admin", "test"],
+											"icon": "iconfont icon-caidan"
+										}
+									},
+									{
+										"path": "/menu/menu1/menu12/menu122",
+										"name": "menu122",
+										"component": "menu/menu1/menu12/menu122/index",
+										"meta": {
+											"title": "message.router.menu122",
+											"isLink": "",
+											"isHide": false,
+											"isKeepAlive": true,
+											"isAffix": false,
+											"isIframe": false,
+											"auth": ["admin", "test"],
+											"icon": "iconfont icon-caidan"
+										}
+									}
+								]
+							},
+							{
+								"path": "/menu/menu1/menu13",
+								"name": "menu13",
+								"component": "menu/menu1/menu13/index",
+								"meta": {
+									"title": "message.router.menu13",
+									"isLink": "",
+									"isHide": false,
+									"isKeepAlive": true,
+									"isAffix": false,
+									"isIframe": false,
+									"auth": ["admin", "test"],
+									"icon": "iconfont icon-caidan"
+								}
+							}
+						]
+					},
+					{
+						"path": "/menu/menu2",
+						"name": "menu2",
+						"component": "menu/menu2/index",
+						"meta": {
+							"title": "message.router.menu2",
+							"isLink": "",
+							"isHide": false,
+							"isKeepAlive": true,
+							"isAffix": false,
+							"isIframe": false,
+							"auth": ["admin", "test"],
+							"icon": "iconfont icon-caidan"
+						}
+					}
+				]
+			},
+			{
+				"path": "/link",
+				"name": "layoutLinkView",
+				"component": "layout/routerView/parent",
+				"meta": {
+					"title": "message.router.layoutLinkView",
+					"isLink": "https://element-plus.gitee.io/#/zh-CN/component/installation",
+					"isHide": false,
+					"isKeepAlive": false,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin"],
+					"icon": "iconfont icon-caozuo-wailian"
+				}
+			},
+			{
+				"path": "/iframes",
+				"name": "layoutIfameView",
+				"component": "layout/routerView/parent",
+				"meta": {
+					"title": "message.router.layoutIfameView",
+					"isLink": "https://gitee.com/lyt-top/vue-next-admin",
+					"isHide": false,
+					"isKeepAlive": false,
+					"isAffix": true,
+					"isIframe": true,
+					"auth": ["admin"],
+					"icon": "iconfont icon-neiqianshujuchucun"
+				}
+			}
+		]
+	}
+}

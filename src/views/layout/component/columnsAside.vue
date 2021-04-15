@@ -6,11 +6,7 @@
 					v-for="(v, k) in columnsAsideList"
 					:key="k"
 					@click="onColumnsAsideMenuClick(v, k)"
-					:ref="
-						(el) => {
-							if (el) columnsAsideOffsetTopRefs[k] = el;
-						}
-					"
+					ref="columnsAsideOffsetTopRefs"
 					:class="{ 'layout-columns-active': liIndex === k }"
 					:title="$t(v.meta.title)"
 				>
@@ -35,59 +31,59 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { reactive, toRefs, ref, computed, onMounted, nextTick, getCurrentInstance, watch } from 'vue';
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
-import { useStore } from '/@/store/index.ts';
+<script>
 export default {
 	name: 'layoutColumnsAside',
-	setup() {
-		const columnsAsideOffsetTopRefs: any = ref([]);
-		const columnsAsideActiveRef = ref();
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
-		const route = useRoute();
-		const router = useRouter();
-		const state: any = reactive({
+	data() {
+		return {
 			columnsAsideList: [],
 			liIndex: 0,
 			difference: 0,
 			routeSplit: [],
-		});
+		};
+	},
+	computed: {
 		// 设置高亮样式
-		const setColumnsAsideStyle = computed(() => {
-			return store.state.themeConfig.themeConfig.columnsAsideStyle;
-		});
+		setColumnsAsideStyle() {
+			return this.$store.state.themeConfig.themeConfig.columnsAsideStyle;
+		},
+	},
+	mounted() {
+		this.setFilterRoutes();
+	},
+	methods: {
 		// 设置菜单高亮位置移动
-		const setColumnsAsideMove = (k: number) => {
-			state.liIndex = k;
-			columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
-		};
+		setColumnsAsideMove(k) {
+			const els = this.$refs.columnsAsideOffsetTopRefs;
+			this.liIndex = k;
+			this.$refs.columnsAsideActiveRef.style.top = `${els[k].offsetTop + this.difference}px`;
+		},
 		// 菜单高亮点击事件
-		const onColumnsAsideMenuClick = (v: Object, k: number) => {
-			setColumnsAsideMove(k);
-			let { path, redirect } = v as any;
-			if (redirect) router.push(redirect);
-			else router.push(path);
-		};
+		onColumnsAsideMenuClick(v, k) {
+			this.setColumnsAsideMove(k);
+			let { path, redirect } = v;
+			if (redirect) this.$router.push(redirect);
+			else this.$router.push(path);
+		},
 		// 设置高亮动态位置
-		const onColumnsAsideDown = (k: number) => {
-			nextTick(() => {
-				setColumnsAsideMove(k);
+		onColumnsAsideDown(k) {
+			this.$nextTick(() => {
+				this.setColumnsAsideMove(k);
 			});
-		};
+		},
 		// 设置/过滤路由（非静态路由/是否显示在菜单中）
-		const setFilterRoutes = () => {
-			state.columnsAsideList = filterRoutesFun(store.state.routesList.routesList);
-			const resData: any = setSendChildren(route.path);
-			onColumnsAsideDown(resData.item[0].k);
-			proxy.mittBus.emit('setSendColumnsChildren', resData);
-		};
+		setFilterRoutes() {
+			if (this.$store.state.routesList.routesList.length <= 0) return false;
+			this.columnsAsideList = this.filterRoutesFun(this.$store.state.routesList.routesList);
+			const resData = this.setSendChildren(this.$route.path);
+			this.onColumnsAsideDown(resData.item[0].k);
+			this.bus.$emit('setSendColumnsChildren', resData);
+		},
 		// 传送当前子级数据到菜单中
-		const setSendChildren = (path: string) => {
+		setSendChildren(path) {
 			const currentPathSplit = path.split('/');
-			let currentData: any = {};
-			state.columnsAsideList.map((v: any, k: number) => {
+			let currentData = {};
+			this.columnsAsideList.map((v, k) => {
 				if (v.path === `/${currentPathSplit[1]}`) {
 					v['k'] = k;
 					currentData['item'] = [{ ...v }];
@@ -96,51 +92,47 @@ export default {
 				}
 			});
 			return currentData;
-		};
+		},
 		// 路由过滤递归函数
-		const filterRoutesFun = (arr: Array<object>) => {
+		filterRoutesFun(arr) {
 			return arr
-				.filter((item: any) => !item.meta.isHide)
-				.map((item: any) => {
+				.filter((item) => !item.meta.isHide)
+				.map((item) => {
 					item = Object.assign({}, item);
-					if (item.children) item.children = filterRoutesFun(item.children);
+					if (item.children) item.children = this.filterRoutesFun(item.children);
 					return item;
 				});
-		};
+		},
 		// tagsView 点击时，根据路由查找下标 columnsAsideList，实现左侧菜单高亮
-		const setColumnsMenuHighlight = (path: string) => {
-			state.routeSplit = path.split('/');
-			state.routeSplit.shift();
-			const routeFirst = `/${state.routeSplit[0]}`;
-			const currentSplitRoute = state.columnsAsideList.find((v: any) => v.path === routeFirst);
+		setColumnsMenuHighlight(path) {
+			this.routeSplit = path.split('/');
+			this.routeSplit.shift();
+			const routeFirst = `/${this.routeSplit[0]}`;
+			const currentSplitRoute = this.columnsAsideList.find((v) => v.path === routeFirst);
 			// 延迟拿值，防止取不到
 			setTimeout(() => {
-				onColumnsAsideDown(currentSplitRoute.k);
+				this.onColumnsAsideDown(currentSplitRoute.k);
 			}, 0);
-		};
-		// 监听路由的变化，动态赋值给菜单中
-		watch(store.state, (val) => {
-			val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-			if (val.routesList.routesList.length === state.columnsAsideList.length) return false;
-			setFilterRoutes();
-		});
-		// 页面加载时
-		onMounted(() => {
-			setFilterRoutes();
-		});
-		// 路由更新时
-		onBeforeRouteUpdate((to) => {
-			setColumnsMenuHighlight(to.path);
-			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
-		});
-		return {
-			columnsAsideOffsetTopRefs,
-			columnsAsideActiveRef,
-			onColumnsAsideDown,
-			setColumnsAsideStyle,
-			onColumnsAsideMenuClick,
-			...toRefs(state),
-		};
+		},
+	},
+	watch: {
+		// 监听 vuex 数据变化
+		'$store.state': {
+			handler(val) {
+				val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (this.difference = 3) : (this.difference = 0);
+				if (val.routesList.routesList.length === this.columnsAsideList.length) return false;
+				this.setFilterRoutes();
+			},
+			deep: true,
+		},
+		// 监听路由的变化
+		$route: {
+			handler(to) {
+				this.setColumnsMenuHighlight(to.path);
+				this.bus.$emit('setSendColumnsChildren', this.setSendChildren(to.path));
+			},
+			deep: true,
+		},
 	},
 };
 </script>
@@ -182,7 +174,7 @@ export default {
 			position: absolute;
 			left: 50%;
 			top: 2px;
-			height: 44px;
+			height: 50px;
 			width: 58px;
 			transform: translateX(-50%);
 			z-index: 0;

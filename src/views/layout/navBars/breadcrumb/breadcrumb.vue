@@ -7,7 +7,7 @@
 		></i>
 		<el-breadcrumb class="layout-navbars-breadcrumb-hide">
 			<transition-group name="breadcrumb" mode="out-in">
-				<el-breadcrumb-item v-for="(v, k) in breadcrumbList" :key="v.meta.title">
+				<el-breadcrumb-item v-for="(v, k) in breadcrumbList" :key="v.path">
 					<span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
 						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ $t(v.meta.title) }}
 					</span>
@@ -20,75 +20,76 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, computed, getCurrentInstance, onMounted } from 'vue';
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
-import { useStore } from '/@/store/index.ts';
+<script>
 export default {
 	name: 'layoutBreadcrumb',
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
-		const route = useRoute();
-		const router = useRouter();
-		const state: any = reactive({
+	data() {
+		return {
 			breadcrumbList: [],
 			routeSplit: [],
 			routeSplitFirst: '',
 			routeSplitIndex: 1,
-		});
+		};
+	},
+	computed: {
 		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 面包屑点击时
-		const onBreadcrumbClick = (v: any) => {
+		getThemeConfig() {
+			return this.$store.state.themeConfig.themeConfig;
+		},
+	},
+	mounted() {
+		this.initRouteSplit(this.$route.path);
+	},
+	methods: {
+		// breadcrumb 当前项点击时
+		onBreadcrumbClick(v) {
 			const { redirect, path } = v;
-			if (redirect) router.push(redirect);
-			else router.push(path);
-		};
-		// 展开/收起左侧菜单点击
-		const onThemeConfigChange = () => {
-			proxy.mittBus.emit('onMenuClick');
-			store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
-		};
-		// 处理面包屑数据
-		const getBreadcrumbList = (arr: Array<object>) => {
-			arr.map((item: any) => {
-				state.routeSplit.map((v: any, k: number, arrs: any) => {
-					if (state.routeSplitFirst === item.path) {
-						state.routeSplitFirst += `/${arrs[state.routeSplitIndex]}`;
-						state.breadcrumbList.push(item);
-						state.routeSplitIndex++;
-						if (item.children) getBreadcrumbList(item.children);
+			if (redirect) this.$router.push(redirect);
+			else this.$router.push(path);
+		},
+		// breadcrumb icon 点击菜单展开与收起
+		onThemeConfigChange() {
+			this.$store.state.themeConfig.themeConfig.isCollapse = !this.$store.state.themeConfig.themeConfig.isCollapse;
+		},
+		// 递归设置 breadcrumb
+		getBreadcrumbList(arr) {
+			arr.map((item) => {
+				this.routeSplit.map((v, k, arrs) => {
+					if (this.routeSplitFirst === item.path) {
+						this.routeSplitFirst += `/${arrs[this.routeSplitIndex]}`;
+						this.breadcrumbList.push(item);
+						this.routeSplitIndex++;
+						if (item.children) this.getBreadcrumbList(item.children);
 					}
 				});
 			});
-		};
-		// 当前路由字符串切割成数组，并删除第一项空内容
-		const initRouteSplit = (path: string) => {
-			if (!store.state.themeConfig.themeConfig.isBreadcrumb) return false;
-			state.breadcrumbList = [store.state.routesList.routesList[0]];
-			state.routeSplit = path.split('/');
-			state.routeSplit.shift();
-			state.routeSplitFirst = `/${state.routeSplit[0]}`;
-			state.routeSplitIndex = 1;
-			getBreadcrumbList(store.state.routesList.routesList);
-		};
-		// 页面加载时
-		onMounted(() => {
-			initRouteSplit(route.path);
-		});
-		// 路由更新时
-		onBeforeRouteUpdate((to) => {
-			initRouteSplit(to.path);
-		});
-		return {
-			onThemeConfigChange,
-			getThemeConfig,
-			onBreadcrumbClick,
-			...toRefs(state),
-		};
+		},
+		// 当前路由分割处理
+		initRouteSplit(path) {
+			this.breadcrumbList = [
+				{
+					path: '/',
+					meta: {
+						title: this.$store.state.routesList.routesList[0].meta.title,
+						icon: this.$store.state.routesList.routesList[0].meta.icon,
+					},
+				},
+			];
+			this.routeSplit = path.split('/');
+			this.routeSplit.shift();
+			this.routeSplitFirst = `/${this.routeSplit[0]}`;
+			this.routeSplitIndex = 1;
+			this.getBreadcrumbList(this.$store.state.routesList.routesList);
+		},
+	},
+	// 监听路由的变化
+	watch: {
+		$route: {
+			handler(newVal) {
+				this.initRouteSplit(newVal.path);
+			},
+			deep: true,
+		},
 	},
 };
 </script>
@@ -114,7 +115,7 @@ export default {
 		font-size: 14px;
 		margin-right: 5px;
 	}
-	::v-deep(.el-breadcrumb__separator) {
+	& ::v-deep .el-breadcrumb__separator {
 		opacity: 0.7;
 		color: var(--bg-topBarColor);
 	}

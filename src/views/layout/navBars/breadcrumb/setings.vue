@@ -2,111 +2,19 @@
 	<div class="layout-breadcrumb-seting">
 		<el-drawer
 			:title="$t('message.layout.configTitle')"
-			v-model="getThemeConfig.isDrawer"
+			:visible.sync="getThemeConfig.isDrawer"
 			direction="rtl"
 			destroy-on-close
 			size="240px"
 			@close="onDrawerClose"
 		>
 			<el-scrollbar class="layout-breadcrumb-seting-bar">
-				<!-- 全局主题 -->
-				<el-divider content-position="left">{{ $t('message.layout.oneTitle') }}</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">primary</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.primary" size="small" @change="onColorPickerChange('primary')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">success</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.success" size="small" @change="onColorPickerChange('success')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">info</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.info" size="small" @change="onColorPickerChange('info')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">warning</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.warning" size="small" @change="onColorPickerChange('warning')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">danger</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.danger" size="small" @change="onColorPickerChange('danger')"> </el-color-picker>
-					</div>
-				</div>
-
-				<!-- 菜单 / 顶栏 -->
-				<el-divider content-position="left">{{ $t('message.layout.twoTitle') }}</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoTopBar') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.topBar" size="small" @change="onBgColorPickerChange('topBar')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoMenuBar') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.menuBar" size="small" @change="onBgColorPickerChange('menuBar')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoColumnsMenuBar') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.columnsMenuBar" size="small" @change="onBgColorPickerChange('columnsMenuBar')">
-						</el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoTopBarColor') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.topBarColor" size="small" @change="onBgColorPickerChange('topBarColor')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoMenuBarColor') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.menuBarColor" size="small" @change="onBgColorPickerChange('menuBarColor')"> </el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoColumnsMenuBarColor') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-color-picker v-model="getThemeConfig.columnsMenuBarColor" size="small" @change="onBgColorPickerChange('columnsMenuBarColor')">
-						</el-color-picker>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt10">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsTopBarColorGradual') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isTopBarColorGradual" @change="onTopBarGradualChange"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsMenuBarColorGradual') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isMenuBarColorGradual" @change="onMenuBarGradualChange"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsMenuBarColorHighlight') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
-					</div>
-				</div>
-
 				<!-- 界面设置 -->
 				<el-divider content-position="left">{{ $t('message.layout.threeTitle') }}</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsCollapse') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isCollapse" @change="onThemeConfigChange"></el-switch>
+						<el-switch v-model="getThemeConfig.isCollapse" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -118,44 +26,16 @@
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsFixedHeader') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isFixedHeader" @change="onIsFixedHeaderChange"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout !== 'classic' ? 0.5 : 1 }">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsClassicSplitMenu') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isClassicSplitMenu" :disabled="getThemeConfig.layout !== 'classic'" @change="onClassicSplitMenuChange">
-						</el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsLockScreen') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isLockScreen" @change="setLocalThemeConfig"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt11">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeLockScreenTime') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-input-number
-							v-model="getThemeConfig.lockScreenTime"
-							controls-position="right"
-							:min="0"
-							:max="9999"
-							@change="setLocalThemeConfig"
-							size="mini"
-							style="width: 90px"
-						>
-						</el-input-number>
+						<el-switch v-model="getThemeConfig.isFixedHeader" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 
 				<!-- 界面显示 -->
 				<el-divider content-position="left">{{ $t('message.layout.fourTitle') }}</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
+				<div class="layout-breadcrumb-seting-bar-flex">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsShowLogo') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isShowLogo" @change="onIsShowLogoChange"></el-switch>
+						<el-switch v-model="getThemeConfig.isShowLogo" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout === 'transverse' ? 0.5 : 1 }">
@@ -164,7 +44,7 @@
 						<el-switch
 							v-model="getThemeConfig.isBreadcrumb"
 							:disabled="getThemeConfig.layout === 'transverse'"
-							@change="onIsBreadcrumbChange"
+							@change="setLocalThemeConfig"
 						></el-switch>
 					</div>
 				</div>
@@ -193,12 +73,6 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsSortableTagsView') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isSortableTagsView" @change="onSortableTagsViewChange"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsFooter') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>
@@ -214,51 +88,6 @@
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsInvert') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isInvert" @change="onAddFilterChange('invert')"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsWartermark') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isWartermark" @change="onWartermarkChange"></el-switch>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourWartermarkText') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-input v-model="getThemeConfig.wartermarkText" size="mini" style="width: 90px" @input="onWartermarkTextInput($event)"></el-input>
-					</div>
-				</div>
-
-				<!-- 其它设置 -->
-				<el-divider content-position="left">{{ $t('message.layout.fiveTitle') }}</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveTagsStyle') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
-							<el-option label="风格1" value="tags-style-one"></el-option>
-							<el-option label="风格2" value="tags-style-two"></el-option>
-							<el-option label="风格3" value="tags-style-three"></el-option>
-							<el-option label="风格4" value="tags-style-four"></el-option>
-						</el-select>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveAnimation') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
-							<el-option label="slide-right" value="slide-right"></el-option>
-							<el-option label="slide-left" value="slide-left"></el-option>
-							<el-option label="opacitys" value="opacitys"></el-option>
-						</el-select>
-					</div>
-				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15 mb28">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveColumnsAsideStyle') }}</div>
-					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
-							<el-option label="圆角" value="columns-round"></el-option>
-							<el-option label="卡片" value="columns-card"></el-option>
-						</el-select>
 					</div>
 				</div>
 
@@ -338,7 +167,7 @@
 						icon="el-icon-document-copy"
 						type="primary"
 						ref="copyConfigBtnRef"
-						@click="onCopyConfigClick($event.target)"
+						@click="onCopyConfigClick"
 						>{{ $t('message.layout.copyText') }}
 					</el-button>
 				</div>
@@ -347,337 +176,159 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { nextTick, onUnmounted, onMounted, getCurrentInstance, defineComponent, computed, ref } from 'vue';
-import { ElMessage } from 'element-plus';
+<script>
 import ClipboardJS from 'clipboard';
-import { useI18n } from 'vue-i18n';
-import { useStore } from '/@/store/index.ts';
-import { getLightColor } from '/@/utils/theme.ts';
-import Watermark from '/@/utils/wartermark.ts';
-import { verifyAndSpace } from '/@/utils/toolsValidate.ts';
-import { setLocal, getLocal, removeLocal } from '/@/utils/storage.ts';
-export default defineComponent({
+import { setLocal, removeLocal, getLocal } from '@/utils/storage.js';
+export default {
 	name: 'layoutBreadcrumbSeting',
-	setup() {
-		const { t } = useI18n();
-		const { proxy } = getCurrentInstance() as any;
-		const copyConfigBtnRef = ref();
-		const store = useStore();
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 1、全局主题
-		const onColorPickerChange = (color: string) => {
-			setPropertyFun(`--color-${color}`, getThemeConfig.value[color]);
-			setDispatchThemeConfig();
-		};
-		// 1、全局主题设置函数
-		const setPropertyFun = (color: string, targetVal: any) => {
-			document.documentElement.style.setProperty(color, targetVal);
-			for (let i = 1; i <= 9; i++) {
-				document.documentElement.style.setProperty(`${color}-light-${i}`, getLightColor(targetVal, i / 10));
-			}
-		};
-		// 2、菜单 / 顶栏
-		const onBgColorPickerChange = (bg: string) => {
-			document.documentElement.style.setProperty(`--bg-${bg}`, getThemeConfig.value[bg]);
-			onTopBarGradualChange();
-			onMenuBarGradualChange();
-			setDispatchThemeConfig();
-		};
-		// 2、菜单 / 顶栏 --> 顶栏背景渐变
-		const onTopBarGradualChange = () => {
-			setGraduaFun('.layout-navbars-breadcrumb-index', getThemeConfig.value.isTopBarColorGradual, getThemeConfig.value.topBar);
-		};
-		// 2、菜单 / 顶栏 --> 菜单背景渐变
-		const onMenuBarGradualChange = () => {
-			setGraduaFun('.layout-container .el-aside', getThemeConfig.value.isMenuBarColorGradual, getThemeConfig.value.menuBar);
-		};
-		// 2、菜单 / 顶栏 --> 背景渐变函数
-		const setGraduaFun = (el: string, bool: boolean, color: string) => {
-			nextTick(() => {
-				let els = document.querySelector(el);
-				if (!els) return false;
-				if (bool) els.setAttribute('style', `background-image:linear-gradient(to bottom left , ${color}, ${getLightColor(color, 0.6)})`);
-				else els.setAttribute('style', `background-image:${color}`);
-				setLocalThemeConfig();
-				const elNavbars: any = document.querySelector('.layout-navbars-breadcrumb-index');
-				const elAside: any = document.querySelector('.layout-container .el-aside');
-				if (elNavbars) setLocal('navbarsBgStyle', elNavbars.style.cssText);
-				if (elAside) setLocal('asideBgStyle', elAside.style.cssText);
-			});
-		};
-		// 2、菜单 / 顶栏 --> 菜单字体背景高亮
-		const onMenuBarHighlightChange = () => {
-			nextTick(() => {
-				setTimeout(() => {
-					let elsItems = document.querySelectorAll('.el-menu-item');
-					let elActive = document.querySelector('.el-menu-item.is-active');
-					if (!elActive) return false;
-					if (getThemeConfig.value.isMenuBarColorHighlight) {
-						elsItems.forEach((el: any) => el.setAttribute('id', ``));
-						elActive.setAttribute('id', `add-is-active`);
-						setLocal('menuBarHighlightId', elActive.getAttribute('id'));
-					} else {
-						elActive.setAttribute('id', ``);
-					}
-					setLocalThemeConfig();
-				}, 0);
-			});
-		};
-		// 3、界面设置 --> 菜单水平折叠
-		const onThemeConfigChange = () => {
-			onMenuBarHighlightChange();
-			setDispatchThemeConfig();
-		};
-		// 3、界面设置 --> 固定 Header
-		const onIsFixedHeaderChange = () => {
-			getThemeConfig.value.isFixedHeaderChange = getThemeConfig.value.isFixedHeader ? false : true;
-			setLocalThemeConfig();
-		};
-		// 3、界面设置 --> 经典布局分割菜单
-		const onClassicSplitMenuChange = () => {
-			getThemeConfig.value.isBreadcrumb = false;
-			setLocalThemeConfig();
-			proxy.mittBus.emit('getBreadcrumbIndexSetFilterRoutes');
-		};
-		// 4、界面显示 --> 侧边栏 Logo
-		const onIsShowLogoChange = () => {
-			getThemeConfig.value.isShowLogoChange = getThemeConfig.value.isShowLogo ? false : true;
-			setLocalThemeConfig();
-		};
-		// 4、界面显示 --> 面包屑 Breadcrumb
-		const onIsBreadcrumbChange = () => {
-			if (getThemeConfig.value.layout === 'classic') {
-				getThemeConfig.value.isClassicSplitMenu = false;
-			}
-			setLocalThemeConfig();
-		};
-		// 4、界面显示 --> 开启 TagsView 拖拽
-		const onSortableTagsViewChange = () => {
-			proxy.mittBus.emit('openOrCloseSortable');
-			setLocalThemeConfig();
-		};
-		// 4、界面显示 --> 灰色模式/色弱模式
-		const onAddFilterChange = (attr: string) => {
-			if (attr === 'grayscale') {
-				if (getThemeConfig.value.isGrayscale) getThemeConfig.value.isInvert = false;
-			} else {
-				if (getThemeConfig.value.isInvert) getThemeConfig.value.isGrayscale = false;
-			}
-			const cssAttr =
-				attr === 'grayscale' ? `grayscale(${getThemeConfig.value.isGrayscale ? 1 : 0})` : `invert(${getThemeConfig.value.isInvert ? '80%' : '0%'})`;
-			const appEle: any = document.querySelector('#app');
-			appEle.setAttribute('style', `filter: ${cssAttr}`);
-			setLocalThemeConfig();
-			setLocal('appFilterStyle', appEle.style.cssText);
-		};
-		// 4、界面显示 --> 开启水印
-		const onWartermarkChange = () => {
-			getThemeConfig.value.isWartermark ? Watermark.set(getThemeConfig.value.wartermarkText) : Watermark.del();
-			setLocalThemeConfig();
-		};
-		// 4、界面显示 --> 水印文案
-		const onWartermarkTextInput = (val: string) => {
-			getThemeConfig.value.wartermarkText = verifyAndSpace(val);
-			if (getThemeConfig.value.wartermarkText === '') return false;
-			if (getThemeConfig.value.isWartermark) Watermark.set(getThemeConfig.value.wartermarkText);
-			setLocalThemeConfig();
-		};
-		// 5、布局切换
-		const onSetLayout = (layout: string) => {
-			setLocal('oldLayout', layout);
-			if (getThemeConfig.value.layout === layout) return false;
-			getThemeConfig.value.layout = layout;
-			getThemeConfig.value.isDrawer = false;
-			initSetLayoutChange();
-			onMenuBarHighlightChange();
-		};
-		// 设置布局切换，重置主题样式
-		const initSetLayoutChange = () => {
-			if (getThemeConfig.value.layout === 'classic') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = false;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isClassicSplitMenu = false;
-				getThemeConfig.value.menuBar = '#FFFFFF';
-				getThemeConfig.value.menuBarColor = '#606266';
-				getThemeConfig.value.topBar = '#ffffff';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			} else if (getThemeConfig.value.layout === 'transverse') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = false;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = false;
-				getThemeConfig.value.isClassicSplitMenu = false;
-				getThemeConfig.value.menuBarColor = '#FFFFFF';
-				getThemeConfig.value.topBar = '#545c64';
-				getThemeConfig.value.topBarColor = '#FFFFFF';
-				initLayoutChangeFun();
-			} else if (getThemeConfig.value.layout === 'columns') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = true;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = true;
-				getThemeConfig.value.isClassicSplitMenu = false;
-				getThemeConfig.value.menuBar = '#FFFFFF';
-				getThemeConfig.value.menuBarColor = '#606266';
-				getThemeConfig.value.topBar = '#ffffff';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			} else {
-				getThemeConfig.value.isShowLogo = false;
-				getThemeConfig.value.isBreadcrumb = true;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = true;
-				getThemeConfig.value.isClassicSplitMenu = false;
-				getThemeConfig.value.menuBar = '#545c64';
-				getThemeConfig.value.menuBarColor = '#eaeaea';
-				getThemeConfig.value.topBar = '#FFFFFF';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			}
-		};
-		// 设置布局切换函数
-		const initLayoutChangeFun = () => {
-			onBgColorPickerChange('menuBar');
-			onBgColorPickerChange('menuBarColor');
-			onBgColorPickerChange('topBar');
-			onBgColorPickerChange('topBarColor');
-		};
-		// 关闭弹窗时，初始化变量。变量用于处理 proxy.$refs.layoutScrollbarRef.update()
-		const onDrawerClose = () => {
-			getThemeConfig.value.isFixedHeaderChange = false;
-			getThemeConfig.value.isShowLogoChange = false;
-			getThemeConfig.value.isDrawer = false;
-			setLocalThemeConfig();
-		};
-		// 布局配置弹窗打开
-		const openDrawer = () => {
-			getThemeConfig.value.isDrawer = true;
-			nextTick(() => {
-				// 初始化复制功能，防止点击两次才可以复制
-				onCopyConfigClick(copyConfigBtnRef.value.$el);
-			});
-		};
-		// 触发 store 布局配置更新
-		const setDispatchThemeConfig = () => {
-			setLocalThemeConfig();
-			setLocalThemeConfigStyle();
-		};
-		// 存储布局配置
-		const setLocalThemeConfig = () => {
-			removeLocal('themeConfig');
-			setLocal('themeConfig', getThemeConfig.value);
-		};
-		// 存储布局配置全局主题样式（html根标签）
-		const setLocalThemeConfigStyle = () => {
-			setLocal('themeConfigStyle', document.documentElement.style.cssText);
-		};
-		// 一键复制配置
-		const onCopyConfigClick = (target: any) => {
-			let copyThemeConfig = getLocal('themeConfig');
-			copyThemeConfig.isDrawer = false;
-			const clipboard = new ClipboardJS(target, {
-				text: () => JSON.stringify(copyThemeConfig),
-			});
-			clipboard.on('success', () => {
-				getThemeConfig.value.isDrawer = false;
-				ElMessage.success(t('message.layout.copyTextSuccess'));
-				clipboard.destroy();
-			});
-			clipboard.on('error', () => {
-				ElMessage.error(t('message.layout.copyTextError'));
-				clipboard.destroy();
-			});
-		};
-		onMounted(() => {
-			nextTick(() => {
-				// 监听菜单点击，菜单字体背景高亮
-				proxy.mittBus.on('onMenuClick', () => {
-					onMenuBarHighlightChange();
-				});
-				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
-				proxy.mittBus.on('layoutMobileResize', (res: any) => {
-					if (getThemeConfig.value.layout === res.layout) return false;
-					getThemeConfig.value.layout = res.layout;
-					getThemeConfig.value.isDrawer = false;
-					initSetLayoutChange();
-					onMenuBarHighlightChange();
-					getThemeConfig.value.isCollapse = false;
-				});
-				window.addEventListener('load', () => {
-					// 刷新页面时，设置了值，直接取缓存中的值进行初始化
-					setTimeout(() => {
-						// 顶栏背景渐变
-						if (getLocal('navbarsBgStyle') && getThemeConfig.value.isTopBarColorGradual) {
-							const breadcrumbIndexEl: any = document.querySelector('.layout-navbars-breadcrumb-index');
-							breadcrumbIndexEl.style.cssText = getLocal('navbarsBgStyle');
-						}
-						// 菜单背景渐变
-						if (getLocal('asideBgStyle') && getThemeConfig.value.isMenuBarColorGradual) {
-							const asideEl: any = document.querySelector('.layout-container .el-aside');
-							asideEl.style.cssText = getLocal('asideBgStyle');
-						}
-						// 菜单字体背景高亮
-						if (getLocal('menuBarHighlightId') && getThemeConfig.value.isMenuBarColorHighlight) {
-							let els = document.querySelector('.el-menu-item.is-active');
-							if (!els) return false;
-							els.setAttribute('id', getLocal('menuBarHighlightId'));
-						}
-						// 灰色模式/色弱模式
-						if (getLocal('appFilterStyle')) {
-							const appEl: any = document.querySelector('#app');
-							appEl.style.cssText = getLocal('appFilterStyle');
-						}
-						// 开启水印
-						onWartermarkChange();
-						// 语言国际化
-						if (getLocal('themeConfig')) proxy.$i18n.locale = getLocal('themeConfig').globalI18n;
-					}, 1000);
-				});
-			});
-		});
-		onUnmounted(() => {
-			// 取消监听菜单点击，菜单字体背景高亮
-			proxy.mittBus.off('onMenuClick');
-			proxy.mittBus.off('layoutMobileResize');
-		});
+	data() {
 		return {
-			openDrawer,
-			onColorPickerChange,
-			onBgColorPickerChange,
-			onTopBarGradualChange,
-			onMenuBarGradualChange,
-			onMenuBarHighlightChange,
-			onThemeConfigChange,
-			onIsFixedHeaderChange,
-			onIsShowLogoChange,
-			getThemeConfig,
-			onDrawerClose,
-			onAddFilterChange,
-			onWartermarkChange,
-			onWartermarkTextInput,
-			onSetLayout,
-			setLocalThemeConfig,
-			onClassicSplitMenuChange,
-			onIsBreadcrumbChange,
-			onSortableTagsViewChange,
-			copyConfigBtnRef,
-			onCopyConfigClick,
+			isCollapse: false,
+			layout: 'defaults',
 		};
 	},
-});
+	computed: {
+		// 获取布局配置信息
+		getThemeConfig() {
+			return this.$store.state.themeConfig.themeConfig;
+		},
+	},
+	created() {
+		// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
+		this.bus.$on('layoutMobileResize', (res) => {
+			if (this.$store.state.themeConfig.themeConfig.layout === res.layout) return false;
+			this.$store.state.themeConfig.themeConfig.layout = res.layout;
+			this.$store.state.themeConfig.themeConfig.isDrawer = false;
+			this.$store.state.themeConfig.themeConfig.isCollapse = false;
+			this.initSetLayoutChange();
+		});
+	},
+	mounted() {
+		this.initLayoutConfig();
+	},
+	methods: {
+		// 初始化：刷新页面时，设置了值，直接取缓存中的值进行初始化
+		initLayoutConfig() {
+			window.addEventListener('load', () => {
+				// 灰色模式/色弱模式
+				if (getLocal('appFilterStyle')) {
+					const appEl = document.body;
+					appEl.style.cssText = getLocal('appFilterStyle');
+				}
+				// 语言国际化
+				if (getLocal('themeConfig')) this.$i18n.locale = getLocal('themeConfig').globalI18n;
+			});
+		},
+		// 存储布局配置
+		setLocalThemeConfig() {
+			removeLocal('themeConfig');
+			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			this.setLocalThemeConfigStyle();
+		},
+		// 存储布局配置全局主题样式（html根标签）
+		setLocalThemeConfigStyle() {
+			setLocal('themeConfigStyle', document.documentElement.style.cssText);
+		},
+		// 布局配置弹窗打开
+		openDrawer() {
+			this.$store.state.themeConfig.themeConfig.isDrawer = true;
+		},
+		// 关闭弹窗时，初始化变量
+		onDrawerClose() {
+			this.$store.state.themeConfig.themeConfig.isDrawer = false;
+			this.setLocalThemeConfig();
+		},
+		// 灰色模式/色弱模式
+		onAddFilterChange(attr) {
+			if (attr === 'grayscale') {
+				if (this.$store.state.themeConfig.themeConfig.isGrayscale) this.$store.state.themeConfig.themeConfig.isInvert = false;
+			} else {
+				if (this.$store.state.themeConfig.themeConfig.isInvert) this.$store.state.themeConfig.themeConfig.isGrayscale = false;
+			}
+			const cssAttr =
+				attr === 'grayscale'
+					? `grayscale(${this.$store.state.themeConfig.themeConfig.isGrayscale ? 1 : 0})`
+					: `invert(${this.$store.state.themeConfig.themeConfig.isInvert ? '80%' : '0%'})`;
+			const appEle = document.body;
+			appEle.setAttribute('style', `filter: ${cssAttr};`);
+			this.setLocalThemeConfig();
+			setLocal('appFilterStyle', appEle.style.cssText);
+		},
+		// 布局切换
+		onSetLayout(layout) {
+			setLocal('oldLayout', layout);
+			if (this.$store.state.themeConfig.themeConfig.layout === layout) return false;
+			this.$store.state.themeConfig.themeConfig.layout = layout;
+			this.$store.state.themeConfig.themeConfig.isDrawer = false;
+			this.initSetLayoutChange();
+		},
+		// 设置布局切换，重置主题样式
+		initSetLayoutChange() {
+			if (this.$store.state.themeConfig.themeConfig.layout === 'classic') {
+				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
+				this.$store.state.themeConfig.themeConfig.isBreadcrumb = false;
+				this.$store.state.themeConfig.themeConfig.isCollapse = false;
+				this.onBgColorPickerChange('menuBar', '#ffffff');
+				this.onBgColorPickerChange('menuBarColor', '#606266');
+				this.onBgColorPickerChange('topBar', '#ffffff');
+				this.onBgColorPickerChange('topBarColor', '#606266');
+			} else if (this.$store.state.themeConfig.themeConfig.layout === 'transverse') {
+				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
+				this.$store.state.themeConfig.themeConfig.isBreadcrumb = false;
+				this.$store.state.themeConfig.themeConfig.isCollapse = false;
+				this.$store.state.themeConfig.themeConfig.isTagsview = false;
+				this.onBgColorPickerChange('menuBarColor', '#ffffff');
+				this.onBgColorPickerChange('topBar', '#545c64');
+				this.onBgColorPickerChange('topBarColor', '#ffffff');
+			} else if (this.$store.state.themeConfig.themeConfig.layout === 'columns') {
+				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
+				this.$store.state.themeConfig.themeConfig.isBreadcrumb = true;
+				this.$store.state.themeConfig.themeConfig.isCollapse = false;
+				this.$store.state.themeConfig.themeConfig.isTagsview = true;
+				this.onBgColorPickerChange('menuBar', '#ffffff');
+				this.onBgColorPickerChange('menuBarColor', '#606266');
+				this.onBgColorPickerChange('topBar', '#ffffff');
+				this.onBgColorPickerChange('topBarColor', '#606266');
+			} else {
+				this.$store.state.themeConfig.themeConfig.isShowLogo = false;
+				this.$store.state.themeConfig.themeConfig.isBreadcrumb = true;
+				this.$store.state.themeConfig.themeConfig.isCollapse = false;
+				this.$store.state.themeConfig.themeConfig.isTagsview = true;
+				this.onBgColorPickerChange('menuBar', '#545c64');
+				this.onBgColorPickerChange('menuBarColor', '#eaeaea');
+				this.onBgColorPickerChange('topBar', '#ffffff');
+				this.onBgColorPickerChange('topBarColor', '#606266');
+			}
+		},
+		// 菜单 / 顶栏背景等
+		onBgColorPickerChange(bg, rgb) {
+			document.documentElement.style.setProperty(`--bg-${bg}`, rgb);
+			this.setLocalThemeConfigStyle();
+		},
+		// 一键复制配置
+		onCopyConfigClick() {
+			this.$store.state.themeConfig.themeConfig.isDrawer = false;
+			let clipboardJS = new ClipboardJS('.copy-config-btn', {
+				text: () => JSON.stringify(this.$store.state.themeConfig.themeConfig),
+			});
+			clipboardJS.on('success', () => {
+				this.$message.success('配置复制成功');
+				this.isDrawer = false;
+				clipboardJS.destroy();
+			});
+			clipboardJS.on('error', () => {
+				this.$message.error('配置复制失败');
+			});
+		},
+	},
+};
 </script>
 
 <style scoped lang="scss">
 .layout-breadcrumb-seting-bar {
 	height: calc(100vh - 50px);
 	padding: 0 15px;
-	::v-deep(.el-scrollbar__view) {
+	::v-deep .el-scrollbar__view {
 		overflow-x: hidden !important;
 	}
 	.layout-breadcrumb-seting-bar-flex {
@@ -734,7 +385,7 @@ export default defineComponent({
 				top: 50%;
 				transform: translate(-50%, -50%);
 				border: 1px solid;
-				border-color: var(--color-primary-light-4);
+				border-color: #8cc5ff;
 				border-radius: 100%;
 				padding: 4px;
 				.layout-tips-box {
@@ -743,7 +394,7 @@ export default defineComponent({
 					height: 30px;
 					z-index: 9;
 					border: 1px solid;
-					border-color: var(--color-primary-light-4);
+					border-color: #8cc5ff;
 					border-radius: 100%;
 					.layout-tips-txt {
 						transition: inherit;
@@ -753,7 +404,7 @@ export default defineComponent({
 						line-height: 1;
 						letter-spacing: 2px;
 						white-space: nowrap;
-						color: var(--color-primary-light-4);
+						color: #8cc5ff;
 						text-align: center;
 						transform: rotate(30deg);
 						left: -1px;

@@ -5,53 +5,46 @@
 	<Columns v-else-if="getThemeConfig.layout === 'columns'" />
 </template>
 
-<script lang="ts">
-import { computed, onBeforeMount, onUnmounted, getCurrentInstance, defineAsyncComponent } from 'vue';
-import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
+<script>
+import { getLocal } from '@/utils/storage.js';
 export default {
 	name: 'layout',
 	components: {
-		Defaults: defineAsyncComponent(() => import('/@/views/layout/main/defaults.vue')),
-		Classic: defineAsyncComponent(() => import('/@/views/layout/main/classic.vue')),
-		Transverse: defineAsyncComponent(() => import('/@/views/layout/main/transverse.vue')),
-		Columns: defineAsyncComponent(() => import('/@/views/layout/main/columns.vue')),
+		Defaults: () => import('@/views/layout/main/defaults.vue'),
+		Classic: () => import('@/views/layout/main/classic.vue'),
+		Transverse: () => import('@/views/layout/main/transverse.vue'),
+		Columns: () => import('@/views/layout/main/columns.vue'),
 	},
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
+	computed: {
 		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
+		getThemeConfig() {
+			return this.$store.state.themeConfig.themeConfig;
+		},
+	},
+	created() {
+		this.onLayoutResize();
+		window.addEventListener('resize', this.onLayoutResize);
+	},
+	methods: {
 		// 窗口大小改变时(适配移动端)
-		const onLayoutResize = () => {
+		onLayoutResize() {
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
-				getThemeConfig.value.isCollapse = false;
-				proxy.mittBus.emit('layoutMobileResize', {
+				this.$store.state.themeConfig.themeConfig.isCollapse = false;
+				this.bus.$emit('layoutMobileResize', {
 					layout: 'defaults',
 					clientWidth,
 				});
 			} else {
-				proxy.mittBus.emit('layoutMobileResize', {
+				this.bus.$emit('layoutMobileResize', {
 					layout: getLocal('oldLayout') ? getLocal('oldLayout') : 'defaults',
 					clientWidth,
 				});
 			}
-		};
-		// 页面加载前
-		onBeforeMount(() => {
-			onLayoutResize();
-			window.addEventListener('resize', onLayoutResize);
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			window.removeEventListener('resize', onLayoutResize);
-		});
-		return {
-			getThemeConfig,
-		};
+		},
+	},
+	distroyed() {
+		window.removeEventListener('resize', this.onLayoutResize);
 	},
 };
 </script>

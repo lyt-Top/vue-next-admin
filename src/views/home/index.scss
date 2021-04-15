@@ -1,0 +1,170 @@
+.home {
+	width: 100%;
+	overflow: hidden;
+	.home-card-more {
+		float: right;
+		padding: 3px 0;
+		font-size: 13px;
+	}
+	.home-card-time {
+		float: right;
+		font-size: 13px;
+		width: 130px;
+		margin-top: -4px;
+	}
+	.user-item {
+		height: 198px;
+		display: flex;
+		align-items: center;
+		.user-item-left {
+			width: 100px;
+			height: 130px;
+			border-radius: 4px;
+			overflow: hidden;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.user-item-right {
+			flex: 1;
+			padding: 15px;
+			.right-title {
+				font-size: 20px;
+			}
+			.right-l-v {
+				font-size: 13px;
+				display: flex;
+				.right-label {
+					color: gray;
+					width: 40px;
+				}
+				.right-value {
+					flex: 1;
+				}
+			}
+		}
+	}
+	.info {
+		height: 198px;
+		.info-scroll {
+			height: 100%;
+			overflow: hidden;
+			.info-ul {
+				list-style: none;
+				.info-item {
+					display: flex;
+					font-size: 13px;
+					color: gray;
+					height: 28px;
+					line-height: 28px;
+					&:hover {
+						color: var(--color-primary);
+						cursor: pointer;
+					}
+					.info-item-left {
+						flex: 1;
+						flex-shrink: 0;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+					.info-item-right {
+						width: 60px;
+						text-align: right;
+					}
+				}
+			}
+		}
+	}
+	.home-recommend-row {
+		.home-recommend {
+			position: relative;
+			height: 100px;
+			color: #ffffff;
+			border-radius: 4px;
+			overflow: hidden;
+			cursor: pointer;
+			&:hover {
+				i {
+					right: 0px !important;
+					bottom: 0px !important;
+					transition: all ease 0.3s;
+				}
+			}
+			i {
+				position: absolute;
+				right: -10px;
+				bottom: -10px;
+				font-size: 70px;
+				transform: rotate(-30deg);
+				transition: all ease 0.3s;
+			}
+			.home-recommend-auto {
+				padding: 15px;
+				position: absolute;
+				left: 0;
+				top: 5%;
+				.home-recommend-msg {
+					font-size: 12px;
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+	.charts {
+		width: 100%;
+		height: 282.6px;
+		display: flex;
+		padding: 12px 15px;
+		.charts-left {
+			flex: 1;
+			height: 100%;
+		}
+		.charts-right {
+			flex: 1;
+			height: 100%;
+		}
+	}
+	.home-charts {
+		height: 282.6px;
+		.home-charts-item {
+			background-color: #f5f5f5;
+			padding: 19px 15px;
+			border-radius: 2px;
+			display: flex;
+			align-items: center;
+			margin-bottom: 12px;
+			cursor: pointer;
+			&:last-of-type {
+				margin-bottom: 0;
+			}
+			&:hover {
+				.home-charts-item-right {
+					i {
+						transform: rotate(45deg);
+						transition: all ease 0.3s;
+					}
+				}
+			}
+			.home-charts-item-left {
+				flex: 1;
+				.home-charts-item-title {
+					font-size: 13px;
+				}
+				.home-charts-item-num {
+					font-size: 20px;
+					margin-top: 5px;
+				}
+			}
+			.home-charts-item-right {
+				i {
+					font-size: 20px;
+					padding: 8px;
+					border-radius: 100%;
+					transition: all ease 0.3s;
+				}
+			}
+		}
+	}
+}

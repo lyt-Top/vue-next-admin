@@ -12,24 +12,20 @@
 				</div>
 			</div>
 			<div class="right">
-				<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/error/404.png" />
+				<img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/images/error/404.png" />
 			</div>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
+<script>
 export default {
-	name: '404',
-	setup() {
-		const router = useRouter();
-		const onGoHome = () => {
-			router.push('/');
-		};
-		return {
-			onGoHome,
-		};
+	name: 'noFound',
+	methods: {
+		// 去首页
+		onGoHome() {
+			this.$router.push('/');
+		},
 	},
 };
 </script>

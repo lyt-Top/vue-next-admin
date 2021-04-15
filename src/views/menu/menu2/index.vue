@@ -4,16 +4,12 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive } from 'vue';
+<script>
 export default {
 	name: 'menu2',
-	setup() {
-		const state = reactive({
-			val: '',
-		});
+	data() {
 		return {
-			...toRefs(state),
+			val: '',
 		};
 	},
 };

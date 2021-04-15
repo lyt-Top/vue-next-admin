@@ -1,7 +1,8 @@
 <template>
-	<template v-for="val in chils">
-		<el-submenu :index="val.path" :key="val.path" v-if="val.children && val.children.length > 0">
-			<template #title>
+	<div>
+		<template v-for="val in chil">
+			<el-submenu :index="val.path" :key="val.path" v-if="val.children && val.children.length > 0">
+			<template slot="title">
 				<i :class="val.meta.icon"></i>
 				<span>{{ $t(val.meta.title) }}</span>
 			</template>
@@ -13,33 +14,26 @@
 				<span>{{ $t(val.meta.title) }}</span>
 			</template>
 			<template v-else>
-				<a :href="val.meta.isLink" target="_blank">
+				<a :href="val.meta.isLink" target="_blank"></a>
 					<i :class="val.meta.icon ? val.meta.icon : ''"></i>
 					{{ $t(val.meta.title) }}
 				</a>
 			</template>
 		</el-menu-item>
-	</template>
+		</template>
+	</div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
-export default defineComponent({
-	name: 'navMenuSubItem',
+<script>
+export default {
+	name: 'subItem',
 	props: {
 		chil: {
 			type: Array,
-			default: () => [],
+			default() {
+				return [];
+			},
 		},
 	},
-	setup(props) {
-		// 获取父级菜单数据
-		const chils = computed(() => {
-			return props.chil;
-		});
-		return {
-			chils,
-		};
-	},
-});
+};
 </script>

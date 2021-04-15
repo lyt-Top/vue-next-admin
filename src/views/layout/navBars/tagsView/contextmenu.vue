@@ -1,91 +1,73 @@
 <template>
-	<transition name="el-zoom-in-center">
-		<div
-			aria-hidden="true"
-			class="el-dropdown__popper el-popper is-light is-pure custom-contextmenu"
-			role="tooltip"
-			data-popper-placement="bottom"
-			:style="`top: ${dropdowns.y + 5}px;left: ${dropdowns.x}px;`"
-			:key="Math.random()"
-			v-show="isShow"
-		>
-			<ul class="el-dropdown-menu">
-				<template v-for="(v, k) in dropdownList">
-					<li class="el-dropdown-menu__item" aria-disabled="false" tabindex="-1" :key="k" v-if="!v.affix" @click="onCurrentContextmenuClick(v.id)">
+	<div>
+		<transition name="el-zoom-in-center">
+			<ul
+				class="el-dropdown-menu el-popper el-dropdown-menu--medium custom-contextmenu"
+				:style="`top: ${this.dropdown.y}px;left: ${this.dropdown.x}px;`"
+				x-placement="bottom-end"
+				id="contextmenu"
+				v-show="isShow"
+			>
+				<li class="el-dropdown-menu__item" v-for="(v, k) in dropdownList" :key="k" @click="onCurrentContextmenuClick(v.id)">
+					<template v-if="!v.affix">
 						<i :class="v.icon"></i>
 						<span>{{ $t(v.txt) }}</span>
-					</li>
-				</template>
+					</template>
+				</li>
+				<div x-arrow class="popper__arrow" style="left:5px"></div>
 			</ul>
-			<div class="el-popper__arrow" style="left: 10px"></div>
-		</div>
-	</transition>
+		</transition>
+	</div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted } from 'vue';
-export default defineComponent({
+<script>
+export default {
 	name: 'layoutTagsViewContextmenu',
 	props: {
 		dropdown: {
 			type: Object,
 		},
 	},
-	setup(props, { emit }) {
-		const state = reactive({
+	data() {
+		return {
 			isShow: false,
 			dropdownList: [
 				{ id: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'el-icon-refresh-right' },
 				{ id: 1, txt: 'message.tagsView.close', affix: false, icon: 'el-icon-close' },
 				{ id: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'el-icon-circle-close' },
 				{ id: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'el-icon-folder-delete' },
-				{
-					id: 4,
-					txt: 'message.tagsView.fullscreen',
-					affix: false,
-					icon: 'iconfont icon-fullscreen',
-				},
 			],
 			path: {},
-		});
-		// 父级传过来的坐标 x,y 值
-		const dropdowns = computed(() => {
-			return props.dropdown;
-		});
-		// 当前项菜单点击
-		const onCurrentContextmenuClick = (id: number) => {
-			emit('currentContextmenuClick', { id, path: state.path });
-		};
-		// 打开右键菜单：判断是否固定，固定则不显示关闭按钮
-		const openContextmenu = (item: any) => {
-			state.path = item.path;
-			item.meta.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
-			closeContextmenu();
-			setTimeout(() => {
-				state.isShow = true;
-			}, 10);
-		};
-		// 关闭右键菜单
-		const closeContextmenu = () => {
-			state.isShow = false;
-		};
-		// 监听页面监听进行右键菜单的关闭
-		onMounted(() => {
-			document.body.addEventListener('click', closeContextmenu);
-		});
-		// 页面卸载时，移除右键菜单监听事件
-		onUnmounted(() => {
-			document.body.removeEventListener('click', closeContextmenu);
-		});
-		return {
-			dropdowns,
-			openContextmenu,
-			closeContextmenu,
-			onCurrentContextmenuClick,
-			...toRefs(state),
 		};
 	},
-});
+	mounted() {
+		// 监听页面监听进行右键菜单的关闭
+		document.body.addEventListener('click', this.closeContextmenu);
+	},
+	methods: {
+		// 当前项菜单点击
+		onCurrentContextmenuClick(id) {
+			this.$emit('currentContextmenuClick', { id, path: this.path });
+		},
+		// 打开右键菜单：判断是否固定，固定则不显示关闭按钮
+		openContextmenu(item) {
+			this.path = item.path;
+			item.meta.isAffix ? (this.dropdownList[1].affix = true) : (this.dropdownList[1].affix = false);
+			this.closeContextmenu();
+			setTimeout(() => {
+				this.isShow = true;
+			}, 80);
+		},
+		// 关闭右键菜单
+		closeContextmenu() {
+			this.isShow = false;
+		},
+	},
+	destroyed() {
+		// 页面卸载时，移除右键菜单监听事件
+		document.body.removeEventListener('click', this.closeContextmenu);
+	},
+};
 </script>
 
 <style scoped lang="scss">

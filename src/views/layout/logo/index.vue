@@ -8,34 +8,26 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { computed, getCurrentInstance } from 'vue';
-import { useStore } from '/@/store/index.ts';
+<script>
 export default {
 	name: 'layoutLogo',
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
+	computed: {
 		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 设置 logo 的显示。classic 经典布局默认显示 logo
-		const setShowLogo = computed(() => {
-			let { isCollapse, layout } = store.state.themeConfig.themeConfig;
+		getThemeConfig() {
+			return this.$store.state.themeConfig.themeConfig;
+		},
+		// 设置 logo 是否显示
+		setShowLogo() {
+			let { isCollapse, layout } = this.$store.state.themeConfig.themeConfig;
 			return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000;
-		});
+		},
+	},
+	methods: {
 		// logo 点击实现菜单展开/收起
-		const onThemeConfigChange = () => {
-			if (store.state.themeConfig.themeConfig.layout === 'transverse') return false;
-			proxy.mittBus.emit('onMenuClick');
-			store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
-		};
-		return {
-			setShowLogo,
-			getThemeConfig,
-			onThemeConfigChange,
-		};
+		onThemeConfigChange() {
+			if (this.$store.state.themeConfig.themeConfig.layout === 'transverse') return false;
+			this.$store.state.themeConfig.themeConfig.isCollapse = !this.$store.state.themeConfig.themeConfig.isCollapse;
+		},
 	},
 };
 </script>
@@ -54,7 +46,7 @@ export default {
 	animation: logoAnimation 0.3s ease-in-out;
 	&:hover {
 		span {
-			color: var(--color-primary-light-2);
+			opacity: 0.9;
 		}
 	}
 	&-medium-img {
@@ -67,15 +59,10 @@ export default {
 	height: 50px;
 	display: flex;
 	cursor: pointer;
-	animation: logoAnimation 0.3s ease-in-out;
 	&-img {
 		width: 20px;
 		margin: auto;
-	}
-	&:hover {
-		img {
-			animation: logoAnimation 0.3s ease-in-out;
-		}
+		animation: logoAnimation 0.3s ease-in-out;
 	}
 }
 </style>

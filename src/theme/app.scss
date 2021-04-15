@@ -4,24 +4,16 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	outline: none !important;
+	outline: none;
 }
 
 html,
 body,
 #app {
-	margin: 0;
-	padding: 0;
 	width: 100%;
 	height: 100%;
-	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
-	font-weight: 400;
-	-webkit-font-smoothing: antialiased;
-	-webkit-tap-highlight-color: transparent;
-	background-color: #f8f8f8;
+	background-color: var(--color-bg);
 	font-size: 14px;
-	overflow: hidden;
-	position: relative;
 }
 
 /* 主布局样式
@@ -109,13 +101,10 @@ body,
 	}
 }
 
-/* nprogress 进度条跟随主题颜色
+/* 进度条颜色
 ------------------------------- */
-#nprogress {
-	.bar {
-		background: var(--color-primary) !important;
-		z-index: 9999999 !important;
-	}
+#nprogress .bar {
+	background: var(--color-primary) !important;
 }
 
 /* flex 弹性布局
@@ -148,7 +137,6 @@ body,
 		}
 	}
 }
-
 /* 宽高 100%
 ------------------------------- */
 .w100 {
@@ -185,6 +173,23 @@ body,
 	color: var(--color-info);
 }
 
+/* 溢出省略号
+------------------------------- */
+.one-text-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.two-text-overflow {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden;
+}
+.overflow {
+	overflow: hidden !important;
+}
+
 /* 字体大小全局样式
 ------------------------------- */
 @for $i from 10 through 32 {
@@ -195,7 +200,7 @@ body,
 
 /* 外边距、内边距全局样式
 ------------------------------- */
-@for $i from 1 through 35 {
+@for $i from 5 through 35 {
 	.mt#{$i} {
 		margin-top: #{$i}px !important;
 	}

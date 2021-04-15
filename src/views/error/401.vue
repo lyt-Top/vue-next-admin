@@ -12,26 +12,25 @@
 				</div>
 			</div>
 			<div class="right">
-				<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/error/401.png" />
+				<img src="https://gitee.com/lyt-top/vue-admin-wonderful-images/raw/master/images/error/401.png" />
 			</div>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
-import { clearSession } from '/@/utils/storage.ts';
+<script>
+import { clearSession } from '@/utils/storage';
+import { resetRouter } from '@/router';
 export default {
-	name: '401',
-	setup() {
-		const router = useRouter();
-		const onSetAuth = () => {
+	name: 'noAuth',
+	methods: {
+		// 重新授权
+		onSetAuth() {
 			clearSession();
-			router.push('/login');
-		};
-		return {
-			onSetAuth,
-		};
+			this.$store.commit('setMenuData', {});
+			resetRouter(); // 重置路由
+			this.$router.push('/login');
+		},
 	},
 };
 </script>

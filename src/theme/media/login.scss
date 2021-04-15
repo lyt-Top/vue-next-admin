@@ -3,19 +3,27 @@
 /* 页面宽度小于576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
-	.login-container {
-		.login-content {
-			width: 90% !important;
-			padding: 20px 0 !important;
+	.login-left {
+		display: none !important;
+	}
+	.login-right {
+		width: 100% !important;
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
+		.login-main {
+			width: 94% !important;
 		}
-		.login-content-form-btn {
-			width: 100% !important;
-			padding: 12px 0 !important;
-		}
-		.login-copyright {
-			.login-copyright-msg {
-				white-space: unset !important;
-			}
-		}
+	}
+}
+
+/* 页面宽度大于576px小于992px
+------------------------------- */
+@media screen and (min-width: $xs) and (max-width: $md) {
+	.login-left {
+		display: none !important;
+	}
+	.login-right {
+		border-top-left-radius: 4px;
+		border-bottom-left-radius: 4px;
 	}
 }

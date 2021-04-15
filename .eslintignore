@@ -1,4 +1,3 @@
-
 *.sh
 node_modules
 lib
@@ -6,6 +5,7 @@ lib
 *.scss
 *.woff
 *.ttf
+*.json
 .vscode
 .idea
 dist

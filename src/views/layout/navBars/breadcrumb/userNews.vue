@@ -14,44 +14,45 @@
 					<div class="content-box-time">{{ v.time }}</div>
 				</div>
 			</template>
-			<el-empty :description="$t('message.user.newDesc')" v-else></el-empty>
+			<div class="content-box-empty" v-else>
+				<div class="content-box-empty-margin">
+					<i class="el-icon-s-promotion"></i>
+					<div class="mt15">{{ $t('message.user.newDesc') }}</div>
+				</div>
+			</div>
 		</div>
 		<div class="foot-box" @click="onGoToGiteeClick" v-if="newsList.length > 0">{{ $t('message.user.newGo') }}</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { reactive, toRefs } from 'vue';
+<script>
 export default {
 	name: 'layoutBreadcrumbUserNews',
-	setup() {
-		const state = reactive({
+	data() {
+		return {
 			newsList: [
 				{
 					label: '关于版本发布的通知',
-					value: 'vue-next-admin，基于 vue3 + CompositionAPI + typescript + vite + element plus，正式发布时间：2021年02月28日！',
-					time: '2020-12-08',
+					value: '基于 vue2.x + element ui，正式发布时间：2020年11月15日！',
+					time: '2020-11-15',
 				},
 				{
 					label: '关于学习交流的通知',
 					value: 'QQ群号码 665452019，欢迎小伙伴入群学习交流探讨！',
-					time: '2020-12-08',
+					time: '2020-11-15',
 				},
 			],
-		});
+		};
+	},
+	methods: {
 		// 全部已读点击
-		const onAllReadClick = () => {
-			state.newsList = [];
-		};
+		onAllReadClick() {
+			this.newsList = [];
+		},
 		// 前往通知中心点击
-		const onGoToGiteeClick = () => {
+		onGoToGiteeClick() {
 			window.open('https://gitee.com/lyt-top/vue-next-admin');
-		};
-		return {
-			onAllReadClick,
-			onGoToGiteeClick,
-			...toRefs(state),
-		};
+		},
 	},
 };
 </script>
@@ -90,6 +91,17 @@ export default {
 			}
 			.content-box-time {
 				color: #999999;
+			}
+		}
+		.content-box-empty {
+			height: 260px;
+			display: flex;
+			.content-box-empty-margin {
+				margin: auto;
+				text-align: center;
+				i {
+					font-size: 60px;
+				}
 			}
 		}
 	}
