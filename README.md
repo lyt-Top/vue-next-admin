@@ -22,13 +22,14 @@
 
 #### 介绍
 
-基于 vue3.x + CompositionAPI + typescript + vite + element plus + vue-router-next + next.vuex，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
+这是 `electron` 项目，可通过以下 `使用说明` 进行启动项目查看效果。
 
-#### 安装 cnpm
+#### 安装 cnpm、yarn
 
 - 复制代码(桌面 cmd 运行) `npm install -g cnpm --registry=https://registry.npm.taobao.org`
+- 复制代码(桌面 cmd 运行) `npm install -g yarn`
 
-#### 使用说明(vue3.x 版本)
+#### 使用说明
 
 ```bash
 # 克隆项目
@@ -50,14 +51,18 @@ cnpm run dev
 cnpm run build
 ```
 
-#### electron 文档
+#### 阅读文档
 
-<a target="_blank" href="https://www.electronjs.org/docs">electron 文档</a>
+<a target="_blank" href="https://www.electronjs.org/docs">electron 文档：https://www.electronjs.org/docs</a>
 
 #### 学习交流加 QQ 群
 
-- 加群下载基础模板、查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
+- 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
 - 群号码：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi"></a>
 <img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qqs.png" width="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群"/></a>
+
+#### 其他事项
+
+- 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！
