@@ -82,7 +82,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (getLocal('themeConfig')) this.initI18n();
+		if (getLocal('themeConfigPrev')) this.initI18n();
 	},
 	methods: {
 		// 搜索点击
@@ -104,15 +104,15 @@ export default {
 		},
 		// 语言切换
 		onLanguageChange(lang) {
-			removeLocal('themeConfig');
+			removeLocal('themeConfigPrev');
 			this.$store.state.themeConfig.themeConfig.globalI18n = lang;
-			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.$i18n.locale = lang;
 			this.initI18n();
 		},
 		// 初始化言语国际化
 		initI18n() {
-			switch (getLocal('themeConfig').globalI18n) {
+			switch (getLocal('themeConfigPrev').globalI18n) {
 				case 'zh-cn':
 					this.disabledI18n = 'zh-cn';
 					break;

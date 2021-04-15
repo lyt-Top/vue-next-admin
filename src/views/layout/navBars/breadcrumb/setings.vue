@@ -216,13 +216,13 @@ export default {
 					appEl.style.cssText = getLocal('appFilterStyle');
 				}
 				// 语言国际化
-				if (getLocal('themeConfig')) this.$i18n.locale = getLocal('themeConfig').globalI18n;
+				if (getLocal('themeConfigPrev')) this.$i18n.locale = getLocal('themeConfigPrev').globalI18n;
 			});
 		},
 		// 存储布局配置
 		setLocalThemeConfig() {
-			removeLocal('themeConfig');
-			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			removeLocal('themeConfigPrev');
+			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.setLocalThemeConfigStyle();
 		},
 		// 存储布局配置全局主题样式（html根标签）

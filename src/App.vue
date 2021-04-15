@@ -33,11 +33,11 @@ export default {
 		},
 		// 获取缓存中的布局配置
 		getLayoutThemeConfig() {
-			if (getLocal('themeConfig')) {
-				this.$store.dispatch('themeConfig/setThemeConfig', getLocal('themeConfig'));
+			if (getLocal('themeConfigPrev')) {
+				this.$store.dispatch('themeConfig/setThemeConfig', getLocal('themeConfigPrev'));
 				document.documentElement.style.cssText = getLocal('themeConfigStyle');
 			} else {
-				setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+				setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			}
 		},
 	},

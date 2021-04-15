@@ -6,6 +6,8 @@ import request from '@/utils/request';
  * 开发环境，请求跨越的接口。为了配置跨越示例
  * 线上环境，请求目录下的 `json` 数据
  * 一般后端接口都会处理跨越问题，可根据具体情况进行修改
+ * json 格式地址：https://gitee.com/lyt-top/vue-next-admin-images/tree/master/vue2
+ * 本地菜单地址：public/xxx.json
  */
 // 获取后端动态路由菜单(超级管理)
 export function getMenuAdmin() {
@@ -16,7 +18,7 @@ export function getMenuAdmin() {
 	});
 	// 模拟跨域
 	// return request({
-	// 	url: '/gitee/lyt-top/vue-admin-wonderful-images/raw/master/menu/menuAdmin.json',
+	// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/admin.json',
 	// 	method: 'get',
 	// });
 }
@@ -30,7 +32,7 @@ export function getMenuTest() {
 	});
 	// 模拟跨域
 	// return request({
-	// 	url: '/gitee/lyt-top/vue-admin-wonderful-images/raw/master/menu/menuTest.json',
+	// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/test.json',
 	// 	method: 'get',
 	// });
 }
