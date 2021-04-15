@@ -10,11 +10,11 @@
 		<a href="https://www.tslang.cn/" target="_blank">
 	        <img src="https://img.shields.io/badge/typescript-%3E4.0.0-blue" alt="typescript">
 	    </a>
-		<a href="https://gitee.com/lyt-top/vue-next-admin/blob/master/LICENSE" target="_blank">
-		    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="license">
-		</a>
 		<a href="https://vitejs.dev/" target="_blank">
-		    <img src="https://img.shields.io/badge/license-MIT-success" alt="vite">
+		    <img src="https://img.shields.io/badge/vite-%3E2.0.0-yellow" alt="vite">
+		</a>
+		<a href="https://gitee.com/lyt-top/vue-next-admin/blob/master/LICENSE" target="_blank">
+		    <img src="https://img.shields.io/badge/license-MIT-success" alt="license">
 		</a>
 	</p>
 	<p>&nbsp;</p>
@@ -26,28 +26,20 @@
 
 #### 线上预览
 
-###### vue3.x 版本
-
-- vue-next-admin 版本预览 <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
-
-###### vue2.x 版本
-
-- pro 版本预览 <a href="http://lyt-top.gitee.io/vue-admin-wonderful-preview" target="_blank">http://lyt-top.gitee.io/vue-admin-wonderful-preview</a>
-- fashion 版本预览 <a href="http://lyt-top.gitee.io/vue-admin-wonderful-fashion-preview" target="_blank">http://lyt-top.gitee.io/vue-admin-wonderful-fashion-preview</a>
-- classic 版本预览 <a href="http://lyt-top.gitee.io/vue-admin-wonderful-classic-preview" target="_blank">http://lyt-top.gitee.io/vue-admin-wonderful-classic-preview</a>
-- elegant 版本预览 <a href="http://lyt-top.gitee.io/vue-admin-wonderful-elegant-preview" target="_blank">http://lyt-top.gitee.io/vue-admin-wonderful-elegant-preview</a>
-- strange 版本预览 <a href="http://lyt-top.gitee.io/vue-admin-wonderful-strange-preview" target="_blank">http://lyt-top.gitee.io/vue-admin-wonderful-strange-preview</a>
+- vue3.x 版本预览（vue-next-admin） <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
+- vue2.x 版本预览（vue-prev-admin）<a href="https://lyt-top.gitee.io/vue-prev-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-prev-admin-preview/#/login</a>
 
 #### 代码仓库
 
 - vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin</a>
-- vue2.x 版本 <a href="https://gitee.com/lyt-top/vue-admin-wonderful" target="_blank">https://gitee.com/lyt-top/vue-admin-wonderful</a>
+- vue2.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin/tree/vue-prev-admin" target="_blank">https://gitee.com/lyt-top/vue-next-admin/tree/vue-prev-admin</a>
 
-#### 安装 cnpm
+#### 安装 cnpm、yarn
 
 - 复制代码(桌面 cmd 运行) `npm install -g cnpm --registry=https://registry.npm.taobao.org`
+- 复制代码(桌面 cmd 运行) `npm install -g yarn`
 
-#### 使用说明(vue3.x 版本)
+#### 使用说明
 
 ```bash
 # 克隆项目
@@ -66,28 +58,18 @@ cnpm run dev
 cnpm run build
 ```
 
-#### 使用说明(vue2.x 版本)
+#### git 命令
 
-```bash
-# 克隆项目
-git clone https://gitee.com/lyt-top/vue-admin-wonderful.git
-
-# 进入项目
-cd vue-admin-wonderful
-
-# 安装依赖
-cnpm install
-
-# 运行项目
-cnpm run serve
-
-# 打包发布
-cnpm run build
-```
+- 在本地新建一个分支：`git branch newBranch`
+- 切换到你的新分支：`git checkout newBranch`
+- 将新分支发布在 github、gitee 上：`git push origin newBranch`
+- 在本地删除一个分支：`git branch -d newBranch`
+- 在 github 远程端删除一个分支：`git push origin :newBranch (分支名前的冒号代表删除)`
+- 注意删除远程分支后，如果有对应的本地分支，本地分支并不会同步删除！
 
 #### 学习交流加 QQ 群
 
-- 加群下载基础模板、查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
+- 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
 - 群号码：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
 
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
@@ -130,6 +112,4 @@ cnpm run build
 
 #### 其他事项
 
-- <a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue3.x vue-next-admin 版本</a>，基于 vue3.x + CompositionAPI + typescript + vite + element plus。
-- <a href="http://lyt-top.gitee.io/vue-admin-wonderful-preview/#/login" target="_blank">vue2.x vue-prev-admin 版本</a>，基于 vue2.x + element ui。
 - 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！
