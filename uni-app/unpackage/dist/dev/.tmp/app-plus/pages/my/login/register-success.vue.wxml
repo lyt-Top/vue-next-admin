@@ -1,0 +1,1 @@
+<template name="ac4da770"><view class="_view ac4da770 no-more"><view class="_view ac4da770 no-more-img"><image class="_image ac4da770 img" src="{{noMore.imgPath}}"></image><text class="_text ac4da770 msg">{{ noMore.msg }}</text><view class="_view ac4da770 time-box"><text class="_text ac4da770 time">{{ noMore.time }} S</text>后自动跳转至登录页</view></view></view></template>

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "my-set-list": "../../components/mySetList/mySetList",
+    "my-server-list": "../../components/myServer/myServer"
+  },
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#ffffff"
+}

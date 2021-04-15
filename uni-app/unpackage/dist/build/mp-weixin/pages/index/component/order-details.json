@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "no-more": "/components/no-more/no-more"
+  }
+}

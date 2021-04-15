@@ -1,0 +1,240 @@
+/* 作者信息详情页组件 */
+
+/* 相关推荐标题 */
+.relevant {
+  width: 100%;
+  height: 70rpx;
+  background: white;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 28rpx;
+}
+
+.relevant::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #F5F5F5;
+  bottom: 0;
+  left: 0;
+  transform: scaleY(0.5);
+}
+
+.groom {
+  font-size: 28rpx;
+  position: relative;
+  padding-left: 15rpx;
+  color: #f34c4f;
+}
+
+.groom::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 24rpx;
+  width: 5rpx;
+  background: #f34c4f;
+  border-radius: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 视频组件列表 */
+page {
+  background: #F5F5F5;
+}
+
+.video-flex {
+  height: 100%;
+}
+
+.video-no-img {
+  width: 100%;
+  height: 100%;
+}
+
+.video-warp {
+  height: 520rpx;
+  width: 100%;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+}
+
+/* 图片蒙蔽层 */
+.video-mb {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.video-mb::after{
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #F5F5F5;
+  bottom: 0;
+  left: 0;
+  transform: scaleY(0.5);
+}
+
+.video-top {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-top-title {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  color: white;
+  padding: 15rpx;
+  font-size: 32rpx;
+}
+
+.pub {
+  position: absolute;
+  z-index: 2;
+  bottom: 15rpx;
+  color: white;
+  font-size: 24rpx;
+}
+
+.videoNum {
+  left: 15rpx;
+}
+
+.duration {
+  right: 15rpx;
+  background: rgba(0,0,0,.5);
+  padding: 3rpx 7rpx;
+  border-radius: 7rpx;
+}
+
+.video-top-img {
+  width: 100%;
+}
+
+.video-top-btn {
+  width: 90rpx;
+  height: 90rpx;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 100%;
+  z-index: 2;
+  background: rgba(0,0,0,.5);
+  display: flex;
+}
+
+.video-top-btn .btn-img {
+  width: 70%;
+  height: 70%;
+  margin: auto;
+}
+
+.video-bottom {
+  flex-basis: 100rpx;
+  padding: 0 28rpx;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  background: white;
+}
+
+.user-photo {
+  flex-basis: 60rpx;
+  display: flex;
+  align-items: center;
+}
+
+.author-warp {
+  flex: 1;
+  display: flex;
+}
+
+.author {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 100%;
+  margin-right: 15rpx;
+}
+
+.author-flex {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  flex-basis: 100rpx;
+  color: #c7c7c7;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.function-btn {
+  width: 35rpx;
+  height: 35rpx;
+}
+
+.author-flex .msg1 {
+  color: #c7c7c7;
+  overflow:hidden;
+  white-space:normal;
+  word-break:break-all;
+  text-overflow:ellipsis;
+  font-size: 20rpx;
+  padding-right: 15rpx;
+  display: -webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient: vertical;
+}
+
+.author-flex .msg:first-of-type {
+  color: #f34c4f;
+}
+
+/* 底部功能按钮 */
+.video-db {
+  flex-basis: 70rpx;
+  background: white;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.video-db-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.share-btn {
+  color: #2c2c2c;
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  background-color: white;
+}
+
+.share-btn::after {
+  border: 0; 
+}
+
+.icon {
+  width: 35rpx;
+  height: 35rpx;
+  padding-right: 7rpx;
+}

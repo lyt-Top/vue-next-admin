@@ -1,0 +1,1 @@
+<view class="no-more"><view class="no-more-img"><image class="img" src="{{noMore.imgPath}}"></image><text class="msg">{{noMore.msg}}</text><view class="time-box"><text class="time">{{noMore.time+" S"}}</text>后自动跳转至登录页</view></view></view>

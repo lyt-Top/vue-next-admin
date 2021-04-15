@@ -1,0 +1,46 @@
+<!-- 视频组件列表 -->
+<view class='video-flex'>
+  <image src='../../images/video-bg.png' class='video-no-img' hidden='{{isShowList}}'></image>
+  <view class='video-warp' wx:for="{{videoLists}}" wx:key="index" hidden='{{!isShowList}}'>
+    <view class='video-mb'>
+      <!-- 视频内容 -->
+      <view class='video-top'>
+        <view style='display: flex;height: 100%;' wx:if="{{currentPlay != index}}">
+          <view class='video-top-title'>{{item.data.header.title}}</view>
+          <image src="{{item.data.content.data.cover.feed}}" class='video-top-img'></image>
+          <view class='video-top-btn' id="{{index}}" bind:tap="onPlayClick">
+            <image src="../../images/playBtn.png" class='btn-img'></image>
+          </view>
+          <view class='videoNum pub'>{{item.data.content.data.author.videoNum}}万观看</view>
+          <view class='duration pub'>{{item.data.content.data.duration}} 秒</view>
+        </view>
+        <video src="{{item.data.content.data.playUrl}}" title="{{item.data.header.title}}" data-id="{{index}}" wx:if="{{currentPlay == index}}" autoplay="{{isAutoPlay}}"></video>
+      </view>
+      
+      <!-- 作者信息 -->
+      <view class='video-bottom' bind:tap="onUserClick" id="{{item.id}}" data-author="{{item}}">
+        <view class='user-photo'>
+          <image class='author' src="{{item.data.content.data.author.icon}}"></image>
+        </view>
+        <view class='author-warp'>
+          <view class='author-flex'>
+            <text class='msg'>{{item.data.content.data.author.name}}</text>
+            <view class='msg1'>{{item.data.content.data.author.description}}</view>
+          </view>
+          <view class='comment' catchtap="onCommentClick" data-url="{{item.data.content.data.webUrl.raw}}">
+            <image src="../../images/message.png" class='message'></image>
+            <text class='num'>{{item.data.content.data.author.id}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据时显示 -->
+  <view class='video-no-list' wx:if="{{!videoLists.length && isShowList}}">
+    <view class='video-no-list-warp'>
+      <image class='video-no-list-img' src="../../images/video-no-data1.png"></image>
+      <view class='video-no-list-txt'>数据被网管掳走了呦...</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "nav-all": "/pages/index/order/nav-all",
+    "nav-ship": "/pages/index/order/nav-ship",
+    "nav-goods": "/pages/index/order/nav-goods"
+  }
+}

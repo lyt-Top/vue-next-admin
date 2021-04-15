@@ -1,0 +1,13 @@
+{
+  "titleNView": {
+    "titleText": "",
+    "titleColor": "#ffffff",
+    "backgroundColor": "#198cff",
+    "buttons": [
+      {
+        "text": "取消",
+        "fontSize": "14"
+      }
+    ]
+  }
+}

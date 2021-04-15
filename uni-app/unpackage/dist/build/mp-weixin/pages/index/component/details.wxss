@@ -1,0 +1,1 @@
+.details{height:400rpx;position:relative;overflow:hidden}.details .img{width:100%;height:420rpx}.details .title{position:absolute;color:#fff;padding:28rpx;font-size:32rpx;bottom:0}.msg-box{padding:28rpx}.msg-box .date{font-size:30rpx;line-height:70rpx;color:#778190}.msg-box .msg{font-size:30rpx;line-height:60rpx}

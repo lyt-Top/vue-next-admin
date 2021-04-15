@@ -1,0 +1,1 @@
+<template name="6d0dacd6"><view class="_view 6d0dacd6"><view class="_view 6d0dacd6 logo"><image class="_image 6d0dacd6 photo" src="../../../static/my/logo.png"></image></view><view class="_view 6d0dacd6 txt"><rich-text nodes="{{html}}" class="_text 6d0dacd6"></rich-text></view></view></template>

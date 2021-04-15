@@ -1,0 +1,9 @@
+<!-- 我的页面，功能设置组件 -->
+<view class='my-set'>
+  <view wx:for="{{data}}" wx:key="index">
+    <navigator class='my-navigator' url="{{item.urlPath}}">
+      <view class='my-set-title'>{{item.title}}</view>
+      <image src='../../images/arrow.png' class='my-set-img'></image>
+    </navigator>
+  </view>
+</view>

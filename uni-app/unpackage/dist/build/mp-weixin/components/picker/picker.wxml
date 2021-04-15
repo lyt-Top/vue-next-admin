@@ -1,0 +1,1 @@
+<view><picker mode="{{sel.date}}" value="{{date}}" start="{{startDate}}" end="{{endDate}}" data-event-opts="{{[['change',[['bindDateChange',['$event']]]],['cancel',[['bindDateCancel',['$event']]]]]}}" bindchange="__e" bindcancel="__e"><view class="uni-input title">{{date}}</view></picker></view>

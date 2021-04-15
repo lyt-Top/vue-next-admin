@@ -1,0 +1,63 @@
+<!-- 作者信息详情页组件 -->
+<view wx:if="{{isShowView}}">
+  <!-- 相关推荐导航标题 -->
+  <view class='relevant'>
+    <text class='groom'>相关推荐</text>
+  </view>
+
+  <!-- 视频组件列表 -->
+  <view class='video-flex'>
+    <view class='video-warp' wx:for="{{data}}" wx:key="index" hidden='{{!isShowList}}' wx:if='{{item.type !="textCard"}}'>
+      <view class='video-mb'>
+        <!-- 作者信息 -->
+        <view class='video-bottom' bind:tap="onUserClick" id="{{item.data.id}}" data-author="{{item.data.author}}">
+          <view class='user-photo'>
+            <image class='author' src="{{item.data.author.icon}}"></image>
+          </view>
+          <view class='author-warp'>
+            <view class='author-flex'>
+              <text class='msg'>{{item.data.author.name}}</text>
+              <view class='msg1'>{{item.data.author.description}}</view>
+            </view>
+            <view class='comment' catchtap="onCommentClick" data-url="{{item.data.content.data.webUrl.raw}}" data-fn="{{item.data.author}}">
+              <image src="../../images/function.png" class='function-btn'></image>
+            </view>
+          </view>
+        </view>
+        <!-- 视频内容 -->
+        <view class='video-top'>
+          <view style='display: flex;height: 100%;' wx:if="{{currentPlay != index}}">
+            <view class='video-top-title'>{{item.data.title}}</view>
+            <image src="{{item.data.cover.feed}}" class='video-top-img'></image>
+            <view class='video-top-btn' id="{{index}}" bind:tap="onPlayClick">
+              <image src="../../images/playBtn.png" class='btn-img'></image>
+            </view>
+            <view class='videoNum pub'>{{item.data.author.videoNum}}万观看</view>
+            <view class='duration pub'>{{item.data.duration}} 秒</view>
+          </view>
+          <video src="{{item.data.playUrl}}" title="{{item.data.title}}" data-id="{{index}}" wx:if="{{currentPlay == index}}" autoplay="{{isAutoPlay}}"></video>
+        </view>
+
+        <!-- 底部功能按钮 -->
+        <view class='video-db'>
+          <view class='video-db-item'>
+            <image src="../../images/thumbs.png" class='icon'></image>
+            <text>{{item.data.duration}}</text>
+          </view>
+          <view class='video-db-item'>
+            <image src="../../images/message.png" class='icon'></image>
+            <text>{{item.data.author.id}}</text>
+          </view>
+          <view class='video-db-item'>
+            <button open-type="share" class='share-btn'>
+              <image src="../../images/share.png" class='icon'></image>
+              <view>分享</view>
+            </button>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+</view>

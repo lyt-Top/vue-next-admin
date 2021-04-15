@@ -1,0 +1,10 @@
+(global["webpackJsonp"]=global["webpackJsonp"]||[]).push([["pages/index/order/nav-all"],{"0a6a":function(t,e,n){"use strict";n.r(e);var i=n("1b72"),l=n.n(i);for(var s in i)"default"!==s&&function(t){n.d(e,t,(function(){return i[t]}))}(s);e["default"]=l.a},"0b53":function(t,e,n){"use strict";var i,l=function(){var t=this,e=t.$createElement;t._self._c},s=[];n.d(e,"b",(function(){return l})),n.d(e,"c",(function(){return s})),n.d(e,"a",(function(){return i}))},"1b72":function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0}),e.default=void 0;var i=function(){n.e("pages/index/component/order-details").then(function(){return resolve(n("72bf"))}.bind(null,n)).catch(n.oe)},l={components:{orderDetails:i},data:function(){return{list:[{type:"木材",weight:"2000吨",status:"待装货",children:[{title:"发货港",msg:"江苏 南京"},{title:"卸货港",msg:"江苏 南昌"},{title:"价格",msg:"5000元"},{title:"订单编号",msg:"20190101195050"},{title:"订单日期",msg:"2019-01-01 19:50:50"}]},{type:"木材",weight:"2000吨",status:"待装货",children:[{title:"发货港",msg:"江苏 南京"},{title:"卸货港",msg:"江苏 南昌"},{title:"价格",msg:"5000元"},{title:"订单编号",msg:"20190101195050"},{title:"订单日期",msg:"2019-01-01 19:50:50"}]},{type:"黄金",weight:"1000吨",status:"已到达",children:[{title:"发货港",msg:"广西 南宁"},{title:"卸货港",msg:"广东 广州"},{title:"船名",msg:"蛟龙号"},{title:"船舶类型",msg:"集装箱船"},{title:"价格",msg:"5000元"},{title:"订单编号",msg:"20190101195050"},{title:"订单日期",msg:"2019-01-01 19:50:50"}]}]}}};e.default=l},"80f8":function(t,e,n){"use strict";n.r(e);var i=n("0b53"),l=n("0a6a");for(var s in l)"default"!==s&&function(t){n.d(e,t,(function(){return l[t]}))}(s);var r,u=n("f0c5"),a=Object(u["a"])(l["default"],i["b"],i["c"],!1,null,null,null,!1,i["a"],r);e["default"]=a.exports}}]);
+;(global["webpackJsonp"] = global["webpackJsonp"] || []).push([
+    'pages/index/order/nav-all-create-component',
+    {
+        'pages/index/order/nav-all-create-component':(function(module, exports, __webpack_require__){
+            __webpack_require__('543d')['createComponent'](__webpack_require__("80f8"))
+        })
+    },
+    [['pages/index/order/nav-all-create-component']]
+]);

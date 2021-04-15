@@ -1,0 +1,1 @@
+<view class="no-more"><view class="no-more-img"><image class="img" src="{{noMore.imgPath}}"></image><text class="msg">{{noMore.msg}}</text></view></view>

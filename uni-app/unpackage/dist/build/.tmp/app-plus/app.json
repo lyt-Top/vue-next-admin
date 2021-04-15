@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/ship/ship",
+    "pages/goods/goods",
+    "pages/my/my",
+    "pages/index/component/details",
+    "pages/index/order",
+    "components/search/search",
+    "pages/ship/details",
+    "pages/my/login/sign-in",
+    "pages/my/login/register",
+    "pages/my/login/update-password",
+    "pages/my/login/register-success",
+    "pages/my/my-info",
+    "pages/my/component/web-view",
+    "pages/my/set",
+    "pages/my/info",
+    "pages/my/info-details",
+    "pages/my/about",
+    "pages/my/about/know",
+    "pages/my/about/call",
+    "pages/my/about/clause",
+    "pages/my/feedback",
+    "pages/my/set/my-info-update",
+    "pages/my/set/password",
+    "pages/my/set/phone",
+    "pages/my/set/phone-update",
+    "pages/my/set/nickname"
+  ],
+  "subPackages": [],
+  "window": {},
+  "usingComponents": {},
+  "tabBar": {
+    "backgroundColor": "",
+    "borderStyle": "",
+    "color": "#7A7E83",
+    "selectedColor": "#198cff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tabBar/icon1.png",
+        "selectedIconPath": "static/tabBar/active1.png"
+      },
+      {
+        "pagePath": "pages/ship/ship",
+        "text": "找船盘",
+        "iconPath": "static/tabBar/icon2.png",
+        "selectedIconPath": "static/tabBar/active2.png"
+      },
+      {
+        "pagePath": "pages/goods/goods",
+        "text": "找货盘",
+        "iconPath": "static/tabBar/icon3.png",
+        "selectedIconPath": "static/tabBar/active3.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/tabBar/icon4.png",
+        "selectedIconPath": "static/tabBar/active4.png"
+      }
+    ]
+  },
+  "splashscreen": {
+    "alwaysShowBeforeRender": true,
+    "autoclose": false
+  },
+  "appname": "uni-app"
+}

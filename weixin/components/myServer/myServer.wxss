@@ -1,0 +1,39 @@
+/* 我的页面中的我的服务 */
+.my-server {
+  background: white;
+  padding: 28rpx;
+  font-size: 32rpx;
+}
+
+.my-title {
+  margin-bottom: 28rpx;
+}
+
+.my-server-warp {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.my-server-flex {
+  width: 25%;
+  text-align: center;
+}
+
+.my-server-item {
+  display: flex;
+  flex-direction: column;
+  padding: 28rpx 0;
+}
+
+.my-server-img {
+  width: 50rpx;
+  height: 50rpx;
+  margin: auto;
+}
+
+.my-server-txt {
+  font-size: 24rpx;
+  color: #4c4c4c;
+  margin-top: 15rpx;
+}

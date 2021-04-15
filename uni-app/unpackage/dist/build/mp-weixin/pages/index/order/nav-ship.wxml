@@ -1,0 +1,1 @@
+<order-details vue-id="6a7f5589-1" order="{{list}}" bind:__l="__l"></order-details>

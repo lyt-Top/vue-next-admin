@@ -1,0 +1,13 @@
+
+      !(function(){
+        var uniAppViewReadyCallback = function(){
+          setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"history { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; height: ",[0,70],"; padding: ",[0,10]," ",[0,28],"; }\n.",[1],"history .",[1],"txt { font-size: ",[0,32],"; }\n.",[1],"history .",[1],"title { -webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; }\n.",[1],"history .",[1],"del-icon { -webkit-box-flex: 1; -webkit-flex: 1; -ms-flex: 1; flex: 1; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-align: center; -webkit-align-items: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: end; -webkit-justify-content: flex-end; -ms-flex-pack: end; justify-content: flex-end; color: #999; }\n.",[1],"list { padding: 0 ",[0,28]," 0 ",[0,18],"; font-size: ",[0,32],"; display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-align-content: flex-start; -ms-flex-line-pack: start; align-content: flex-start; }\n.",[1],"list .",[1],"msg-box { margin: ",[0,10],"; background-color: #f7f7f7; border-radius: ",[0,10],"; padding: ",[0,15],"; color: #848484; }\n.",[1],"find { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-flex-wrap: wrap; -ms-flex-wrap: wrap; flex-wrap: wrap; -webkit-align-content: flex-start; -ms-flex-line-pack: start; align-content: flex-start; padding: 0 ",[0,28],"; font-size: ",[0,32],"; }\n.",[1],"find .",[1],"flex { width: 50%; margin: ",[0,15]," 0; color: #848484; overflow: hidden; -o-text-overflow: ellipsis; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }\n.",[1],"find-hide { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; }\n.",[1],"find-hide .",[1],"hide { color: #cbcbcb; margin: auto; font-size: ",[0,24],"; }\n",],undefined,{path:"./components/search/search.wxss"})();
+document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./components/search/search.wxml') } }));
+        }
+        if(window.__uniAppViewReady__){
+          uniAppViewReadyCallback()
+        }else{
+          document.addEventListener('uniAppViewReady',uniAppViewReadyCallback)
+        }
+      })();
+      

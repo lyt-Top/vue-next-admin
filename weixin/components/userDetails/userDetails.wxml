@@ -1,0 +1,27 @@
+<!-- 当前作者信息 -->
+<view class='author' wx:if="{{isShowView}}">
+  <view class='author-top'>
+    <view class='top-pub'>
+      <image src='{{authorData.data.content.data.author.icon}}' class='top-img'></image>
+      <text class='top-name'>{{authorData.data.content.data.author.name}}</text>
+    </view>
+  </view>
+  <view class='author-bottom'>
+    <view class='bottom-item one'>
+      <view class='one-flex'>
+        <image src='../../images/users1.png' class="one-img"></image>
+        <text class="one-txt">{{authorData.data.content.data.author.description}}</text>
+      </view>
+      <view class='one-flex' wx:if="{{authorData.data.content.data.descriptionEditor != ''}}">
+        <image src='../../images/users2.png' class="one-img"></image>
+        <text class="one-txt">{{authorData.data.content.data.descriptionEditor}}</text>
+      </view>
+    </view>
+    <view class='bottom-item two'>
+      <view class='two-flex'><text class='size'>{{authorData.data.content.data.consumption.collectionCount}}万</text><text class='color'>粉丝</text></view>
+      <view class='two-flex'><text class='size'>{{authorData.data.content.data.author.videoNum}}</text><text class='color'>视频</text></view>
+      <view class='two-flex'><text class='size'>{{authorData.data.content.data.consumption.shareCount}}</text><text class='color'>关注</text></view>
+      <view class='two-flex'><button class='two-btn' bind:tap="onFollowClick">关注</button></view>
+    </view>
+  </view>
+</view>

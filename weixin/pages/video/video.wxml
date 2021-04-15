@@ -1,0 +1,9 @@
+<!-- 视频页 -->
+<view class='warp'>
+  <view class='nav'>
+    <nav-bar navData="{{navList}}" bind:navClick="onNavClick"/>
+  </view>
+  <view class='content'>
+    <video-list videoLists="{{videoList}}" isShowList="{{isShowList}}"/>
+  </view>
+</view>

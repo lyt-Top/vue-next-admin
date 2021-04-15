@@ -1,0 +1,119 @@
+/* 当前作者信息 */
+
+/* 底部内容 */
+.author {
+  height: 400rpx;
+  margin-bottom: 15rpx;
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.author-top {
+  flex-basis: 150rpx;
+  background: #2088a0;
+  padding: 0 28rpx;
+  position: relative;
+}
+
+.author-bottom {
+  flex: 1;
+  padding: 40rpx 28rpx 10rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-pub {
+  position: absolute;
+  bottom: -20rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.top-img {
+  width:100rpx;
+  height:100rpx;
+  border-radius:100%;
+  margin-right:28rpx;
+}
+
+.top-name {
+  font-size: 28rpx;
+  color: white;
+  line-height: 20rpx;
+}
+
+/* 底部内容 */
+.bottom-item {
+  flex: 1;
+  display: flex;
+}
+
+/* 上部分 */
+
+.one {
+  display: flex;
+  flex-direction: column;
+}
+
+.one-flex {
+  display: flex;
+  align-items: center;
+  margin-top: 15rpx;
+}
+
+.one-img {
+  display: block;
+  width:23rpx;
+  height:27rpx;
+}
+
+.one-txt {
+  flex: 1;
+  color: #757575;
+  margin-left: 15rpx;
+  font-size: 24rpx;
+  overflow:hidden;
+  white-space:normal;
+  word-break:break-all;
+  text-overflow:ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp:1;
+  -webkit-box-orient: vertical;
+}
+
+/* 下部分 */
+.two {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  align-items: center;
+  text-align: center;
+}
+
+.two-flex {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.size {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.color {
+  color: #757575;
+}
+
+.two-btn {
+  color: white;
+  width: 100%;
+  font-size: 24rpx;
+  background-color: #f34c4f;
+}
+
+.two-btn::after {
+  border: 0; 
+}

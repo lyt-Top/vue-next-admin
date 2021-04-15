@@ -1,0 +1,6 @@
+<!-- 作者信息详情页 -->
+<view>
+  <user-details authorData="{{authorData}}" isShowView="{{isShowView}}"/>
+  <!-- 相关视频推荐 -->
+  <video-user-details data="{{userData}}" isShowList="true" isShowView="{{isShowView}}"/>
+</view>

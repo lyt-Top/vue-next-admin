@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "select-list": "/pages/ship/component/select-list",
+    "picker-type": "/components/picker/picker"
+  }
+}

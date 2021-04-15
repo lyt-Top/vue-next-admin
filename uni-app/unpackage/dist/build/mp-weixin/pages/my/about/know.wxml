@@ -1,0 +1,1 @@
+<view><view class="logo"><image class="photo" src="../../../static/my/logo.png"></image></view><view class="txt"><text><rich-text nodes="{{html}}"></rich-text></text></view></view>

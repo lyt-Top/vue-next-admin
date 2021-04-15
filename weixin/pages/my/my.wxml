@@ -1,0 +1,29 @@
+<!--pages/my/my.wxml-->
+<view>
+  <!-- 顶部 -->
+  <view class='my-info'>
+    <view class='my-info-flex' bind:tap="onUserinfoClick" data-setUserInfo="{{userInfo}}">
+      <view class='my-one'><image src="{{userInfo.imgPath}}" class='my-img-pub {{userInfo.isLogin ? "my-one-img" : ""}}'></image></view>
+      <view class='my-two'>
+        <view class='my-login'>
+          <button class='my-login-btn' open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">{{userInfo.btnTxt}}</button>
+        </view>
+        <view class='my-login-msg'>{{userInfo.msg}}</view>
+        <view class='my-login-arrow' wx:if="{{userInfo.isLogin}}"><image src='../../images/arrow.png' class='my-set-img'></image></view>
+      </view>
+    </view>
+    <view class='my-info-flex two'>
+      <view class='my-btn-group' wx:for="{{myCollection}}" wx:key="index" bind:tap="onMyCollectionClick" data-content="{{item}}" data-index="{{index}}">
+        <image src='{{item.imgPath}}' class='my-btn-img'></image>
+        <view class='my-btn-txt'>{{item.title}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置组件 -->
+  <view>
+    <my-set-list data="{{mySetList}}"/>
+    <my-server-list data="{{myServerList}}"/>
+    <my-set-list data="{{mySetList1}}"/>
+  </view>
+</view>

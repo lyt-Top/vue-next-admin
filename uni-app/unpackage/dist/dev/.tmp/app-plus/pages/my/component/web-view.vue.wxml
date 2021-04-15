@@ -1,0 +1,1 @@
+<template name="188afe59"><view class="_view 188afe59"><web-view webview-styles="{{webviewStyles}}" src="{{path}}" class="_web-view 188afe59"></web-view></view></template>

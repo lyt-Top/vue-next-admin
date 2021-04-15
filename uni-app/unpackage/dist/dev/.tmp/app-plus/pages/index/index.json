@@ -1,0 +1,9 @@
+{
+  "enablePullDownRefresh": true,
+  "titleNView": {
+    "type": "transparent",
+    "titleText": "首页",
+    "titleColor": "#ffffff",
+    "backgroundColor": "#198cff"
+  }
+}

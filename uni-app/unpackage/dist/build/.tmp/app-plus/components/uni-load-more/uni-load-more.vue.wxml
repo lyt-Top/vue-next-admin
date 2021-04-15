@@ -1,0 +1,7 @@
+<template name="3b9c5252"><view class="_view 3b9c5252 load-more"><view class="_view 3b9c5252 loading-img" hidden="{{!(loadingType === 1 && showImage)}}"><view class="_view 3b9c5252 load1"><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view></view><view class="_view 3b9c5252 load2"><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view></view><view class="_view 3b9c5252 load3"><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view><view class="_view 3b9c5252" style=" {{('background:' + color + ';')}}"></view></view></view><text class="_text 3b9c5252 loading-text" style=" {{('color:' + color + ';')}}">{{
+			loadingType === 0
+				? contentText.contentdown
+				: loadingType === 1
+				? contentText.contentrefresh
+				: contentText.contentnomore
+		}}</text></view></template>

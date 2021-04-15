@@ -1,0 +1,73 @@
+/* 首页列表数据 */
+
+.list-warp {
+  height: 100%;
+}
+
+.list-flex {
+  width: 100%;
+  display: flex;
+  height: 250rpx;
+  position: relative;
+}
+
+.list-flex::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: #f2f2f2;
+  bottom: 0;
+  left: 0;
+  transform: scaleY(0.5);
+}
+
+.list-flex:last-of-type::after {
+  height: 0;
+}
+
+.list-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.list-title {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  padding-right: 15rpx;
+}
+
+.list-footer {
+  font-size: 27rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  color: #c7c7c7;
+}
+
+.list-msg {
+  padding-right: 10rpx;
+}
+
+.list-right {
+  margin: auto;
+  flex-basis: 270rpx;
+}
+
+.list-image {
+  width: 270rpx;
+  height: 180rpx;
+}
+
+.list-no-data,
+.list-no-img{
+  width: 100%;
+  height: 100%;
+}

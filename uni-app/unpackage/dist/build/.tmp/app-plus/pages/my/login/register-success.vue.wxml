@@ -1,0 +1,1 @@
+<template name="10a18fca"><view class="_view 10a18fca no-more"><view class="_view 10a18fca no-more-img"><image class="_image 10a18fca img" src="{{noMore.imgPath}}"></image><text class="_text 10a18fca msg">{{ noMore.msg }}</text><view class="_view 10a18fca time-box"><text class="_text 10a18fca time">{{ noMore.time }} S</text>后自动跳转至登录页</view></view></view></template>

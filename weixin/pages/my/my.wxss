@@ -1,0 +1,104 @@
+/* pages/my/my.wxss */
+page {
+  background: #F5F5F5;
+}
+
+.my-info {
+  height: 300rpx;
+  background: white;
+  padding: 0 28rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-info-flex {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.my-one {
+  flex-basis: 130rpx;
+  height: 130rpx;
+  background: #f5f5f5;
+  border-radius: 100%;
+  display: flex;
+}
+
+.my-two {
+  flex: 1;
+  padding-left: 28rpx;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.my-login-btn {
+  background-color: white;
+  float: left;
+  margin: -15rpx 0 0 -25rpx;
+}
+
+.my-login-btn::after {
+  border: 0; 
+}
+
+.my-login-msg {
+  color: #a2a2a2;
+  font-size: 24rpx;
+}
+
+.my-img-pub {
+  margin: auto;
+  border-radius: 100%;
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.my-one-img {
+  width: 130rpx !important;
+  height: 130rpx !important;
+}
+
+.my-func {
+  height: 100rpx;
+  margin: 15rpx 0;
+  background: pink;
+}
+
+.two {
+  display: flex;
+  align-items: center;
+}
+
+.my-btn-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+}
+
+.my-btn-img {
+  width: 50rpx;
+  height: 50rpx;
+  margin: auto;
+}
+
+.my-btn-txt {
+  margin-top: 15rpx;
+  color: #4c4c4c;
+  font-size: 24rpx;
+}
+
+.my-login-arrow {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.my-set-img {
+  width: 30rpx;
+  height: 30rpx;
+}

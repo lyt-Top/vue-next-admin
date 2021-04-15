@@ -1,0 +1,1 @@
+<import src="/pages/my/component/set-list.vue.wxml" /><template name="72b7e0e4"><view class="_view 72b7e0e4"><view class="_view 72b7e0e4 logo"><image class="_image 72b7e0e4 photo" src="../../static/my/logo.png"></image></view><template data="{{...$root['0'], ...$root[$kk+'72b7e0e4-0'],$root}}" is="d08e07f8"></template></view></template>

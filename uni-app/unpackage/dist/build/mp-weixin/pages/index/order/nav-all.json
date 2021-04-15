@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "order-details": "/pages/index/component/order-details"
+  }
+}

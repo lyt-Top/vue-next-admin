@@ -1,0 +1,419 @@
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 自定义 */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.uni-padding-wrap {
+  height: 400rpx;
+}
+.uni-padding-wrap .page-section-spacing .swiper-height {
+    height: 400rpx;
+}
+.uni-padding-wrap .page-section-spacing .swiper-item-img {
+    width: 100%;
+    height: 400rpx;
+}
+
+
+.load-more {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: horizontal;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: row;
+	    -ms-flex-direction: row;
+	        flex-direction: row;
+	height: 80rpx;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	    -ms-flex-align: center;
+	        align-items: center;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+}
+.loading-img {
+	height: 24px;
+	width: 24px;
+	margin-right: 10px;
+}
+.loading-text {
+	font-size: 28rpx;
+	color: #777777;
+}
+.loading-img > view {
+	position: absolute;
+}
+.load1,
+.load2,
+.load3 {
+	height: 24px;
+	width: 24px;
+}
+.load2 {
+	-webkit-transform: rotate(30deg);
+	    -ms-transform: rotate(30deg);
+	        transform: rotate(30deg);
+}
+.load3 {
+	-webkit-transform: rotate(60deg);
+	    -ms-transform: rotate(60deg);
+	        transform: rotate(60deg);
+}
+.loading-img > view view {
+	width: 6px;
+	height: 2px;
+	border-top-left-radius: 1px;
+	border-bottom-left-radius: 1px;
+	background: #777;
+	position: absolute;
+	opacity: 0.2;
+	-webkit-transform-origin: 50%;
+	    -ms-transform-origin: 50%;
+	        transform-origin: 50%;
+	-webkit-animation: load 1.56s ease infinite;
+}
+.loading-img > view view:nth-child(1) {
+	-webkit-transform: rotate(90deg);
+	    -ms-transform: rotate(90deg);
+	        transform: rotate(90deg);
+	top: 2px;
+	left: 9px;
+}
+.loading-img > view view:nth-child(2) {
+	-webkit-transform: rotate(180deg);
+	top: 11px;
+	right: 0px;
+}
+.loading-img > view view:nth-child(3) {
+	-webkit-transform: rotate(270deg);
+	    -ms-transform: rotate(270deg);
+	        transform: rotate(270deg);
+	bottom: 2px;
+	left: 9px;
+}
+.loading-img > view view:nth-child(4) {
+	top: 11px;
+	left: 0px;
+}
+.load1 view:nth-child(1) {
+	-webkit-animation-delay: 0s;
+	        animation-delay: 0s;
+}
+.load2 view:nth-child(1) {
+	-webkit-animation-delay: 0.13s;
+	        animation-delay: 0.13s;
+}
+.load3 view:nth-child(1) {
+	-webkit-animation-delay: 0.26s;
+	        animation-delay: 0.26s;
+}
+.load1 view:nth-child(2) {
+	-webkit-animation-delay: 0.39s;
+	        animation-delay: 0.39s;
+}
+.load2 view:nth-child(2) {
+	-webkit-animation-delay: 0.52s;
+	        animation-delay: 0.52s;
+}
+.load3 view:nth-child(2) {
+	-webkit-animation-delay: 0.65s;
+	        animation-delay: 0.65s;
+}
+.load1 view:nth-child(3) {
+	-webkit-animation-delay: 0.78s;
+	        animation-delay: 0.78s;
+}
+.load2 view:nth-child(3) {
+	-webkit-animation-delay: 0.91s;
+	        animation-delay: 0.91s;
+}
+.load3 view:nth-child(3) {
+	-webkit-animation-delay: 1.04s;
+	        animation-delay: 1.04s;
+}
+.load1 view:nth-child(4) {
+	-webkit-animation-delay: 1.17s;
+	        animation-delay: 1.17s;
+}
+.load2 view:nth-child(4) {
+	-webkit-animation-delay: 1.3s;
+	        animation-delay: 1.3s;
+}
+.load3 view:nth-child(4) {
+	-webkit-animation-delay: 1.43s;
+	        animation-delay: 1.43s;
+}
+@-webkit-keyframes load {
+0% {
+		opacity: 1;
+}
+100% {
+		opacity: 0.2;
+}
+}
+
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 自定义 */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.list-flex {
+  height: 186rpx;
+  padding: 28rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+}
+.list-flex::after {
+    content: '';
+    background: #dcdcdc;
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    bottom: 0;
+    -webkit-transform: scaleY(0.5);
+        -ms-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+}
+.list-flex-warp {
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.list-flex-warp .img {
+      width: 200rpx;
+}
+.list-flex-warp .img .photo {
+        width: 200rpx;
+        height: 100%;
+}
+.list-flex-warp .content {
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
+      -webkit-flex-wrap: wrap;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap;
+      -webkit-align-content: space-around;
+          -ms-flex-line-pack: distribute;
+              align-content: space-around;
+      padding-left: 28rpx;
+}
+.list-flex-warp .content .title {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+}
+.list-flex-warp .content .title .txt {
+          width: 100%;
+          overflow: hidden;
+          -o-text-overflow: ellipsis;
+             text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          font-size: 32rpx;
+}
+.list-flex-warp .content .date {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-justify-content: space-around;
+            -ms-flex-pack: distribute;
+                justify-content: space-around;
+        -webkit-box-align: end;
+        -webkit-align-items: flex-end;
+            -ms-flex-align: end;
+                align-items: flex-end;
+}
+.list-flex-warp .content .date .msg {
+          font-size: 28rpx;
+          color: #778190;
+          -webkit-box-flex: 1;
+          -webkit-flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -ms-flexbox;
+          display: flex;
+}
+.list-flex-warp .content .date .right {
+          -webkit-box-pack: end;
+          -webkit-justify-content: flex-end;
+              -ms-flex-pack: end;
+                  justify-content: flex-end;
+}
+
+@charset "UTF-8";
+/**
+ * 这里是uni-app内置的常用样式变量
+ *
+ * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
+ * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ *
+ */
+/**
+ * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ *
+ * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ */
+/* 自定义 */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.nav {
+  height: 248rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
+  background-color: #f4f8fe;
+}
+.nav-flex {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.nav-flex-item {
+      margin: auto;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -webkit-flex-direction: column;
+          -ms-flex-direction: column;
+              flex-direction: column;
+}
+.nav-flex-item .yse {
+        width: 75rpx;
+        height: 75rpx;
+        border-radius: 28rpx;
+        margin: auto;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+                box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.nav-flex-item .yse ._i {
+          margin: auto;
+          color: white;
+}
+.nav-flex-item .yse1 {
+        background: -webkit-gradient(linear, left top, right bottom, from(#febc5d), color-stop(25%, #fd964c), to(#fc7f42));
+        background: -o-linear-gradient(top left, #febc5d 0%, #fd964c 25%, #fc7f42 100%);
+        background: linear-gradient(to bottom right, #febc5d 0%, #fd964c 25%, #fc7f42 100%);
+}
+.nav-flex-item .yse2 {
+        background: -webkit-gradient(linear, left top, right bottom, from(#84edfd), color-stop(25%, #56c6f9), to(#3eb2f6));
+        background: -o-linear-gradient(top left, #84edfd 0%, #56c6f9 25%, #3eb2f6 100%);
+        background: linear-gradient(to bottom right, #84edfd 0%, #56c6f9 25%, #3eb2f6 100%);
+}
+.nav-flex-item .yse3 {
+        background: -webkit-gradient(linear, left top, right bottom, from(#7bfaa1), color-stop(25%, #4ceaa0), to(#2de09f));
+        background: -o-linear-gradient(top left, #7bfaa1 0%, #4ceaa0 25%, #2de09f 100%);
+        background: linear-gradient(to bottom right, #7bfaa1 0%, #4ceaa0 25%, #2de09f 100%);
+}
+.nav-flex-item .yse4 {
+        background: -webkit-gradient(linear, left top, right bottom, from(#dfa1fe), color-stop(25%, #c075fc), to(#ae5afa));
+        background: -o-linear-gradient(top left, #dfa1fe 0%, #c075fc 25%, #ae5afa 100%);
+        background: linear-gradient(to bottom right, #dfa1fe 0%, #c075fc 25%, #ae5afa 100%);
+}
+.nav-flex-item .txt {
+        font-size: 28rpx;
+        color: #778190;
+        text-align: center;
+        padding-top: 15rpx;
+}
+

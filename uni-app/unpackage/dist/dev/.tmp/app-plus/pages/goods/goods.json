@@ -1,0 +1,16 @@
+{
+  "titleNView": {
+    "titleText": "找货盘",
+    "titleColor": "#ffffff",
+    "backgroundColor": "#198cff",
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
+        "fontSize": "22",
+        "background": "rgba(0,0,0,0)"
+      }
+    ]
+  },
+  "scrollIndicator": "none"
+}

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title></title>
+		<style>
+			* {
+				margin: 0;
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+				-webkit-tap-highlight-color: transparent;
+			}
+
+			html {
+				-webkit-user-select: none;
+				user-select: none;
+				height: 100%;
+				width: 100%;
+				background: transparent;
+			}
+
+			body {
+				-webkit-user-select: none;
+				user-select: none;
+				width: 100%;
+				overflow-x: hidden;
+				background: transparent;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;">
+
+		</div>
+
+		<script>
+			var containerElem = document.getElementById('container')
+
+			function plusReady(callback) {
+				if (window.plus && window.plus.isReady) {
+					callback()
+				} else {
+					document.addEventListener('plusready', callback)
+				}
+			}
+
+			var UniPlusBridge = {
+				subscribe: function(eventType, args, callbackId) {
+					console.log(eventType, args)
+					switch (eventType) {
+						case 'insertScrollView':
+							insertScrollView(args, callbackId)
+							break
+						case 'updateScrollView':
+							updateScrollView(args, callbackId)
+							break
+						case 'insertTextView':
+							insertTextView(args, callbackId)
+							break
+						case 'updateTextView':
+							updateTextView(args, callbackId)
+							break
+						case 'insertImageView':
+							insertImageView(args, callbackId)
+							break
+						case 'updateImageView':
+							updateImageView(args, callbackId)
+							break
+						case 'animateCoverView':
+							animateCoverView(args, callbackId)
+							break
+						case 'removeScrollView':
+						case 'removeTextView':
+						case 'removeImageView':
+							removeCoverView(eventType, args, callbackId)
+							break
+					}
+				},
+				publish: function(eventType, args) {
+					plusReady(function() {
+						plus.webview.currentWebview().parent().evalJS(
+							"PlusJSBridge.subscribeHandler(" + eventType + ", " + JSON.stringify(args) + ")")
+					})
+				},
+				invoke: function(callbackId, args) {
+					plusReady(function() {
+						plus.webview.currentWebview().parent().evalJS(
+							"PlusJSBridge.invokeCallbackHandler(" + callbackId + ", " + JSON.stringify(args) + ")")
+					})
+				}
+			}
+
+			function hexToRgba(hex) {
+				var r,
+					g,
+					b,
+					a;
+				hex = hex.replace('#', '');
+				if (8 === hex.length) {
+					r = hex.substring(0, 2);
+					g = hex.substring(2, 4);
+					b = hex.substring(4, 6);
+					a = hex.substring(6, 8);
+				} else {
+					return '';
+				}
+				if ('undefined' === typeof a) {
+					a = 'ff';
+				}
+				if (1 === r.length) {
+					r += r;
+				}
+				if (1 === g.length) {
+					g += g;
+				}
+				if (1 === b.length) {
+					b += b;
+				}
+				if (1 === a.length) {
+					a += a;
+				}
+				r = parseInt(r, 16);
+				g = parseInt(g, 16);
+				b = parseInt(b, 16);
+				a = parseInt(a, 16) / 255;
+				return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+			}
+
+			function updatePosition(elem, position) {
+				elem.style.left = position.left + 'px'
+				elem.style.top = position.top + 'px'
+				elem.style.width = position.width + 'px'
+				elem.style.height = position.height + 'px'
+			}
+
+			var pxProps = ['left', 'top', 'width', 'height', 'borderRadius', 'borderWidth', 'fontSize', 'lineHeight']
+
+			var hexProps = ['bgColor', 'borderColor', 'color']
+
+			function updateStyle(elem, styles) {
+				styles = styles || {}
+				var elemStyle = elem.style
+				for (var name in styles) {
+					if (styles.hasOwnProperty(name)) {
+						if (pxProps.indexOf(name) !== -1) {
+							elemStyle[name] = styles[name] + 'px'
+						} else if (hexProps.indexOf(name) !== -1) {
+							elemStyle[name === 'bgColor' ? 'backgroundColor' : name] = hexToRgba(styles[name])
+						} else if (name === 'fixed') {
+							if (styles['fixed']) {
+								elemStyle.position = 'fixed'
+							} else {
+								elemStyle.position = 'absolute'
+							}
+						} else if (name === 'padding') {
+							elemStyle.padding = styles['padding'].join('px ') + 'px'
+						} else if (name === 'content') {
+							elem.innerText = styles[name]
+						} else {
+							elemStyle[name] = styles[name]
+						}
+					}
+				}
+			}
+
+			function removeCoverView(eventType, args, callbackId) {
+				var viewId = args.viewId
+				var coverViewElem = document.querySelector('#cover-view-' + viewId)
+				if (coverViewElem) {
+					coverViewElem.parentNode && coverViewElem.parentNode.removeChild(coverViewElem)
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: eventType + ':ok'
+					})
+				} else {
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: eventType + ':fail'
+					})
+				}
+			}
+
+			function insertScrollView(args, callbackId) {
+
+			}
+
+			function updateScrollView(args, callbackId) {
+
+			}
+
+			function insertTextView(args, callbackId) {
+				var viewId = args.viewId
+				var parentId = args.parentId
+
+				var coverViewElem = document.createElement('div')
+				var labelElem = document.createElement('div')
+				coverViewElem.id = 'cover-view-' + viewId
+				labelElem.id = 'cover-view-label-' + viewId
+				updateStyle(coverViewElem, args.position)
+				updateStyle(coverViewElem, args.style)
+				updateStyle(labelElem, args.label)
+
+				coverViewElem.appendChild(labelElem)
+
+				var parentElem = document.querySelector('#cover-view-' + parentId) || document.querySelector('#container')
+
+				parentElem.appendChild(coverViewElem)
+
+				UniPlusBridge.invoke(callbackId, {
+					errMsg: 'insertTextView:ok'
+				})
+			}
+
+			function updateTextView(args, callbackId) {
+				var viewId = args.viewId
+				var coverViewElem = document.querySelector('#cover-view-' + viewId)
+				if (coverViewElem) {
+					labelElem = coverViewElem.querySelector('#cover-view-label-' + viewId)
+					updateStyle(coverViewElem, args.position)
+					updateStyle(coverViewElem, args.style)
+					updateStyle(labelElem, args.label)
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: 'updateTextView:ok'
+					})
+				} else {
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: 'updateTextView:fail'
+					})
+				}
+			}
+
+			function insertImageView(args, callbackId) {
+				var viewId = args.viewId
+				var parentId = args.parentId
+
+				var coverViewElem = document.createElement('div')
+				var coverImageElem = document.createElement('img')
+				coverViewElem.id = 'cover-view-' + viewId
+				coverImageElem.id = 'cover-view-image-' + viewId
+				updateStyle(coverViewElem, args.position)
+				updateStyle(coverViewElem, args.style)
+                
+				if (args.iconPath) {
+					coverImageElem.src = args.iconPath
+				}
+				coverViewElem.appendChild(coverImageElem)
+
+				var parentElem = document.querySelector('#cover-view-' + parentId) || document.querySelector('#container')
+
+				parentElem.appendChild(coverViewElem)
+
+				UniPlusBridge.invoke(callbackId, {
+					errMsg: 'insertImageView:ok'
+				})
+			}
+
+			function updateImageView(args, callbackId) {
+				var viewId = args.viewId
+				var coverViewElem = document.querySelector('#cover-view-' + viewId)
+				if (coverViewElem) {
+					coverImageElem = coverViewElem.querySelector('#cover-view-image-' + viewId)
+					updateStyle(coverViewElem, args.position)
+					updateStyle(coverViewElem, args.style)
+					if (args.iconPath) {
+						coverImageElem.src = args.iconPath
+					}
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: 'updateImageView:ok'
+					})
+				} else {
+					UniPlusBridge.invoke(callbackId, {
+						errMsg: 'updateImageView:fail'
+					})
+				}
+			}
+
+			function animateCoverView(args, callbackId) {
+
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,1 @@
+<template name="2f8ea46e"><view class="_view 2f8ea46e no-more"><view class="_view 2f8ea46e no-more-img"><image class="_image 2f8ea46e img" src="{{noMore.imgPath}}"></image><text class="_text 2f8ea46e msg">{{ noMore.msg }}</text></view></view></template>

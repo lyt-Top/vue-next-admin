@@ -1,0 +1,20 @@
+/* 当前登录用户信息 */
+page {
+  background: #F5F5F5;
+}
+@import "../../components/userDetails/userDetails.wxss"
+
+.author-top {
+  background: #f34c4f;
+}
+
+.two-btn {
+  color: #a3a3a3;
+  width: 97%;
+  font-size: 24rpx;
+  background-color: white;
+}
+
+.two-btn::after {
+  border: 1px solid #a3a3a3; 
+}

@@ -1,0 +1,8 @@
+<!-- 首页顶部导航 -->
+<view>
+  <scroll-view scroll-x="true" class='nav-height' scroll-left="{{scrollLeft}}" scroll-with-animation="true">
+    <view class='nav-warp'>
+      <text class="nav-text {{activeIndex == index ? 'nav-active' : ''}}" wx:for="{{navData}}" wx:key="index" bindtap="onNavClicks" data-index='{{index}}' data-item="{{item}}">{{item.name}}</text>
+    </view>
+  </scroll-view>
+</view>

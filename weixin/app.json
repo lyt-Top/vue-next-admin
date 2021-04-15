@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/video/video",
+    "pages/listDetails/listDetails",
+    "pages/videoUserDetails/videoUserDetails",
+    "pages/webView/webView",
+    "pages/myInfo/myInfo",
+    "pages/editUserInfo/editUserInfo"
+  ],
+  "tabBar": {
+    "backgroundColor": "#f9f9f9",
+    "selectedColor": "#f34c4f",
+    "color": "#a3a3a3",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "新闻",
+        "iconPath": "images/tabBar/index.png",
+        "selectedIconPath": "images/tabBar/index-sel.png"
+      },
+      {
+        "pagePath": "pages/video/video",
+        "text": "视频",
+        "iconPath": "images/tabBar/video.png",
+        "selectedIconPath": "images/tabBar/video-sel.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "images/tabBar/my.png",
+        "selectedIconPath": "images/tabBar/my-sel.png"
+      }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#f34c4f",
+    "navigationBarTitleText": "lyt 新闻",
+    "navigationBarTextStyle": "white"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+}

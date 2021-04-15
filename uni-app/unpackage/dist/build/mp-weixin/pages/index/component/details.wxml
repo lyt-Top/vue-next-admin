@@ -1,0 +1,1 @@
+<view><view class="details"><image class="img" src="{{list.cover}}"></image><view class="title"><text class="txt">{{list.title}}</text></view></view><view class="msg-box"><text class="date">{{list.author_name+" 发表于 "+list.published_at}}</text><view class="msg"><view><rich-text nodes="{{list.content}}"></rich-text></view></view></view></view>

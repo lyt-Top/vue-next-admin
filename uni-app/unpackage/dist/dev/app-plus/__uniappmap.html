@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title></title>
+    <style>
+        html,
+        body,
+        .container {
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: #000000;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .actTonav {
+            display: none;
+            position: absolute;
+            right: 16px;
+            bottom: 56px;
+            width: 60px;
+            height: 60px;
+            border-radius: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <iframe id="map" allow="geolocation" seamless sandbox="allow-scripts allow-same-origin allow-forms" frameborder="0"></iframe>
+        <!-- 去这里 -->
+        <div id="actTonav" class="actTonav"></div>
+    </div>
+    <script>
+        var loc;
+        var serviceWebview;
+        var back = function () {
+            var webview = plus.webview.currentWebview()
+            if (webview.__uniapp_dark) {
+                plus.navigator.setStatusBarStyle('dark')
+            }
+            webview.close('auto');
+        };
+        var isIos = !!navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        /**
+         * 调用系统第三方程序进行导航
+         */
+        function openSysMap(lat, lng, title) {
+            /**
+             * 网页版地图源
+             */
+            var mapsSourceWeb = [{
+                    title: '腾讯地图网页版',
+                    getUrl: function () {
+                        var url
+                        url = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive' + '&to=' +
+                            encodeURIComponent(title) + '&tocoord=' + encodeURIComponent(lat + ',' + lng) +
+                            '&referer=APP'
+                        return url
+                    }
+                },
+                {
+                    title: '谷歌地图网页版',
+                    getUrl: function () {
+                        var url
+                        url = 'https://maps.google.cn/?daddr=' + encodeURIComponent(title) + '&sll=' +
+                            encodeURIComponent(lat + ',' + lng)
+                        return url
+                    }
+                }
+            ]
+            /**
+             * APP版地图源
+             */
+            var mapsSource = [{
+                    title: '高德地图',
+                    pname: 'com.autonavi.minimap',
+                    action: !isIos ? 'amapuri://' : 'iosamap://',
+                    getUrl: function () {
+                        var url
+                        if (!isIos) {
+                            url = 'amapuri://route/plan/'
+                        } else {
+                            url = 'iosamap://path'
+                        }
+                        url += '?sourceApplication=APP&dname=' + encodeURIComponent(title) + '&dlat=' + lat +
+                            '&dlon=' + lng + '&dev=0'
+                        return url
+                    }
+                },
+                {
+                    title: '百度地图',
+                    pname: 'com.baidu.BaiduMap',
+                    action: 'baidumap://',
+                    getUrl: function () {
+                        var url
+                        url = 'baidumap://map/direction?destination=' + encodeURIComponent('latlng:' + lat +
+                            ',' + lng + '|name:' + title) + '&mode=driving&src=APP'
+                        return url
+                    }
+                },
+                {
+                    title: '腾讯地图',
+                    pname: 'com.tencent.map',
+                    action: 'qqmap://',
+                    getUrl: function () {
+                        var url
+                        url = 'qqmap://map/routeplan?type=drive' + (isIos ? ('&from=' + encodeURIComponent(
+                                '我的位置')) : '') + '&to=' + encodeURIComponent(title) + '&tocoord=' +
+                            encodeURIComponent(lat + ',' + lng) + '&referer=APP'
+                        return url
+                    }
+                },
+                {
+                    title: '谷歌地图',
+                    pname: 'com.google.android.apps.maps',
+                    action: 'comgooglemapsurl://',
+                    getUrl: function () {
+                        var url
+                        if (!isIos) {
+                            url = 'https://maps.google.com/'
+                        } else {
+                            url = 'comgooglemapsurl://maps.google.com/'
+                        }
+                        url += '?daddr=' + encodeURIComponent(title) + '&sll=' + encodeURIComponent(lat + ',' +
+                            lng)
+                        return url
+                    }
+                },
+            ]
+            var maps = []
+            mapsSource.forEach(function (mapsSource) {
+                var installed = plus.runtime.isApplicationExist({
+                    pname: mapsSource.pname,
+                    action: mapsSource.action,
+                })
+                if (installed) {
+                    maps.push(mapsSource)
+                }
+            })
+            if (isIos) {
+                maps.unshift({
+                    title: 'Apple 地图',
+                    getUrl: function () {
+                        var url
+                        url = 'https://maps.apple.com/?daddr=' + encodeURIComponent(title) + '&sll=' +
+                            encodeURIComponent(lat + ',' + lng)
+                        return url
+                    }
+                })
+            }
+            if (maps.length === 0) {
+                maps = maps.concat(mapsSourceWeb)
+            }
+            plus.nativeUI.actionSheet({
+                title: '导航方式',
+                cancel: '取消',
+                buttons: maps,
+            }, function (res) {
+                var index = res.index
+                var map
+                if (index > 0) {
+                    map = maps[index - 1]
+                    plus.runtime.openURL(map.getUrl(), function () {}, map.pname)
+                }
+            })
+        }
+
+        window.__chooseLocationConfirm__ = function () {
+            if (!loc) {
+                plus.nativeUI.alert('您尚未选择位置!');
+                return;
+            }
+            serviceWebview.evalJS('window.__chooseLocationCallback__&&__chooseLocationCallback__(' + JSON.stringify(
+                loc) + ')');
+            back();
+        }
+        document.addEventListener('plusready', function () {
+            serviceWebview = plus.webview.getWebviewById('__W2A_CONTEXT_') || plus.webview.getLaunchWebview();
+            plus.key.addEventListener('backbutton', back);
+        })
+
+        var mapElem = document.getElementById('map');
+        var defaultReferer = 'wxdevtools';
+        var defaultKey = 'JMRBZ-R4HCD-X674O-PXLN4-B7CLH-42BSB';
+        window.__openLocation__ = function (params) {
+            var key = params.key || defaultKey;
+            var referer = params.referer = defaultReferer;
+            var latitude = params.latitude;
+            var longitude = params.longitude;
+            var scale = params.scale;
+            var name = params.name;
+            var address = params.address;
+            var marker = 'coord:' + latitude + ',' + longitude;
+            if (name) {
+                marker += ';title:' + encodeURIComponent(name);
+            }
+            if (address) {
+                marker += ';addr:' + encodeURIComponent(address);
+            }
+            var url = 'http://apis.map.qq.com/tools/poimarker?type=0&marker=' + marker + '&key=' + defaultKey +
+                '&referer=' + referer;
+            mapElem.src = url;
+            var actTonav = document.getElementById('actTonav')
+            actTonav.style.display = 'block';
+            actTonav.onclick = function () {
+                openSysMap(latitude, longitude, name)
+            }
+        };
+        window.__chooseLocation__ = function (params) {
+            var params = params || {};
+            var key = params.key || defaultKey;
+            var referer = params.referer = defaultReferer;
+            var coord = params.coord || {};
+            var lat = coord.lat;
+            var lng = coord.lng;
+            var coordtype = coord.type || 5;
+            var url = 'http://apis.map.qq.com/tools/locpicker?type=1&search=1&coord=' + (lat && lng ? (lat + ',' +
+                lng) : '') + '&coordtype=' + coordtype + '&key=' + defaultKey + '&referer=' + referer;
+            mapElem.src = url;
+        };
+        window.addEventListener('message', function (event) {
+            var _loc = event.data;
+            if (_loc && _loc.module == 'locationPicker') {
+                loc = _loc;
+            }
+        }, false);
+    </script>
+</body>
+
+</html>

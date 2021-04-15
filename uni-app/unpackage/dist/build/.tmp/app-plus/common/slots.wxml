@@ -1,0 +1,16 @@
+<import src="/components/picker/picker.vue.wxml" />
+<import src="/pages/ship/component/select-list.vue.wxml" />
+<import src="/pages/index/component/swipers.vue.wxml" />
+<import src="/pages/index/component/list.vue.wxml" />
+<import src="/pages/index/order/nav-all.vue.wxml" />
+<import src="/pages/index/order/nav-ship.vue.wxml" />
+<import src="/pages/index/order/nav-goods.vue.wxml" />
+<import src="/pages/my/component/set-list.vue.wxml" />
+<import src="/pages/my/login/sign-code.vue.wxml" />
+<import src="/pages/my/login/sign-password.vue.wxml" />
+<import src="/components/mpvue-picker/mpvuePicker.vue.wxml" />
+<import src="/components/mpvue-citypicker/mpvueCityPicker.vue.wxml" />
+<import src="/components/uni-load-more/uni-load-more.vue.wxml" />
+<import src="/pages/index/component/order-details.vue.wxml" />
+<import src="/components/no-more/no-more.vue.wxml" />
+

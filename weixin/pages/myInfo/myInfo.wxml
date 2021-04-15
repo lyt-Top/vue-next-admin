@@ -1,0 +1,27 @@
+<!-- 当前登录用户信息 -->
+<view class='author' wx:if="{{isShowView}}">
+  <view class='author-top'>
+    <view class='top-pub'>
+      <image src='{{authorData.imgPath}}' class='top-img'></image>
+      <text class='top-name'>{{authorData.btnTxt}}</text>
+    </view>
+  </view>
+  <view class='author-bottom'>
+    <view class='bottom-item one'>
+      <view class='one-flex'>
+        <image src='../../images/users1.png' class="one-img"></image>
+        <text class="one-txt">我喜欢的样子你都有~</text>
+      </view>
+      <view class='one-flex'>
+        <image src='../../images/users2.png' class="one-img"></image>
+        <text class="one-txt">{{authorData.msg}}</text>
+      </view>
+    </view>
+    <view class='bottom-item two'>
+      <view class='two-flex'><text class='size'>10万</text><text class='color'>粉丝</text></view>
+      <view class='two-flex'><text class='size'>0</text><text class='color'>视频</text></view>
+      <view class='two-flex'><text class='size'>7</text><text class='color'>关注</text></view>
+      <view class='two-flex'><button class='two-btn' bind:tap="onEditClick">编辑资料</button></view>
+    </view>
+  </view>
+</view>

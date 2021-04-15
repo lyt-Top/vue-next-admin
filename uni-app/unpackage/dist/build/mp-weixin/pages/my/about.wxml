@@ -1,0 +1,1 @@
+<view><view class="logo"><image class="photo" src="../../static/my/logo.png"></image></view><set-list vue-id="72d48f83-1" sel-data="{{setListData}}" bind:__l="__l"></set-list></view>

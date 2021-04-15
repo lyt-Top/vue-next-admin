@@ -1,0 +1,1 @@
+<template name="29870052"><view class="_view 29870052"><picker mode="{{sel.date}}" value="{{date}}" start="{{startDate}}" end="{{endDate}}" bindchange="handleProxy" bindcancel="handleProxy" data-eventid="{{'29870052-0'}}" data-comkey="{{$k}}" class="_picker 29870052"><view class="_view 29870052 uni-input title">{{ date }}</view></picker></view></template>

@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "sign-code": "/pages/my/login/sign-code",
+    "sign-password": "/pages/my/login/sign-password"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "titleNView": {
+    "titleText": "登录",
+    "titleColor": "#ffffff",
+    "backgroundColor": "#198cff",
+    "buttons": [
+      {
+        "text": "新用户注册",
+        "fontSize": "14",
+        "background": "rgba(0,0,0,0)",
+        "width": "auto"
+      }
+    ]
+  }
+}

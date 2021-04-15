@@ -1,0 +1,13 @@
+<view class='warp'>
+  <view class='nav'>
+    <nav-bar navData="{{navList}}" bind:navClick="onNavClick"/>
+  </view>
+  <view class='content'>
+    <index-list listData="{{indexList}}" isShow="{{show}}" bind:listClick="onListClick"/>
+  </view>
+  <view class='text' wx:if="{{reachBottomStatus == '0'}}">{{reachBottomText}}</view>
+  <view class='go-top' bind:tap="goTop" wx:if='{{isShowTopBtn}}'>
+    <image src='../../images/goTop.png' class='go-top-img'></image>
+  </view>
+</view>
+

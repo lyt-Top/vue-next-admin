@@ -1,0 +1,11 @@
+/* pages/listDetails/listDetails.wxss */
+@import "../../wxParse/wxParse.wxss"
+
+.art_p {
+  padding: 0 28rpx 28rpx;
+  text-indent: 2em;
+}
+
+.wxParse-div {
+  display: none;
+}

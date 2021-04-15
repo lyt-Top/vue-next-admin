@@ -1,0 +1,44 @@
+/**index.wxss**/
+page {
+  height: 100%;
+}
+
+.warp {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav {
+  flex-basis: 88rpx;
+}
+
+.content {
+  flex: 1;
+  padding: 0rpx 28rpx 15rpx 28rpx;
+}
+
+.text {
+  font-size: 27rpx;
+  color: #c7c7c7;
+  text-align: center;
+  margin-bottom: 15rpx;
+}
+
+/* 返回顶部 */
+.go-top {
+  position: fixed;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 100%;
+  background: rgba(0, 0, 0, .5);
+  bottom: 50rpx;
+  right: 28rpx;
+  display: flex;
+}
+
+.go-top-img {
+  width: 60%;
+  height: 60%;
+  margin: auto;
+}

@@ -1,0 +1,23 @@
+{
+  "titleNView": {
+    "type": "transparent",
+    "titleText": "我的",
+    "titleColor": "#ffffff",
+    "backgroundColor": "#198cff",
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
+        "fontSize": "22",
+        "background": "rgba(0,0,0,0)",
+        "badgeText": "7"
+      },
+      {
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
+        "background": "rgba(0,0,0,0)",
+        "fontSize": "22"
+      }
+    ]
+  }
+}

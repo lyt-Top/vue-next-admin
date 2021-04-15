@@ -1,0 +1,22 @@
+<!-- 首页列表数据 -->
+<view class="list-warp">
+  <scroll-view scroll-y="true" hidden="{{!isShow}}">
+    <view style='margin-top: 88rpx;'>
+      <view class='list-flex' wx:for="{{listData}}" wx:key="index" data-index="{{index}}" data-item="{{item}}" bindtap="onListClicks">
+        <view class='list-left'>
+          <view class='list-title'>{{item.title}}</view>
+          <view class='list-footer'>
+            <text class='list-msg'>{{item.src}}</text>
+            <text>{{item.time}}</text>
+          </view>
+        </view>
+        <view class='list-right'>
+          <image class='list-image' src='{{item.pic}}'></image>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view hidden="{{isShow}}" class='list-no-data'>
+    <image class='list-no-img' src='../../images/index-list-bg.png'></image>
+  </view>
+</view>

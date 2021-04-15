@@ -1,0 +1,1 @@
+<import src="/pages/my/component/set-list.vue.wxml" /><template name="557ec8b1"><view class="_view 557ec8b1"><view class="_view 557ec8b1 logo"><image class="_image 557ec8b1 photo" src="../../static/my/logo.png"></image></view><template data="{{...$root['0'], ...$root[$kk+'557ec8b1-0'],$root}}" is="33882d52"></template></view></template>

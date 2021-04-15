@@ -1,0 +1,1 @@
+<view><view class="logo">用户使用服务条款</view><view class="txt"><view class="_div"><rich-text nodes="{{html}}"></rich-text></view></view></view>

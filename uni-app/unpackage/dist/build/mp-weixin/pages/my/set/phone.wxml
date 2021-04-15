@@ -1,0 +1,1 @@
+<view><view class="phone"><image class="img" src="../../../static/my/phone.png"></image></view><view class="text"><text class="txt color">您已绑定手机号</text><text class="txt">{{phone}}</text></view><view class="btn"><text data-event-opts="{{[['tap',[['goToSetPhone',['$event']]]]]}}" class="btn-msg" bindtap="__e">更换手机号</text></view></view>

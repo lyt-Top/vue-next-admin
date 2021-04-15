@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "video-user-details": "../../components/videoUser/videoUser",
+    "user-details": "../../components/userDetails/userDetails"
+  },
+  "navigationBarTitleText": "", 
+  "navigationBarBackgroundColor": "#2088a0"
+}

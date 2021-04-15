@@ -1,0 +1,1 @@
+<view><block wx:for="{{selData}}" wx:for-item="v" wx:for-index="k" wx:key="k"><view data-event-opts="{{[['tap',[['setClick',['$0',k],[[['selData','',k]]]]]]]}}" class="set-function" bindtap="__e"><view class="set-function-list"><text class="title">{{v.title}}</text><view class="arrow"><view class="iconfont _i"></view></view></view></view></block></view>

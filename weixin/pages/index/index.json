@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "nav-bar": "../../components/navBar/navBar",
+    "index-list": "../../components/list/list"
+  },
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 30
+}

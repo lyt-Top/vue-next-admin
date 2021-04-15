@@ -1,0 +1,25 @@
+/* 我的页面，功能设置组件 */
+.my-set {
+  margin: 15rpx 0;
+  background: white;
+}
+
+.my-navigator {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 28rpx 0;
+  font-size: 32rpx;
+}
+
+.my-navigator:last-of-type {
+  padding-bottom: 28rpx;
+}
+
+.my-set-title {
+  flex: 1;
+}
+
+.my-set-img {
+  flex-basis: 30rpx;
+  height: 30rpx;
+}
