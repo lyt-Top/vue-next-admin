@@ -31,6 +31,7 @@ export default {
 		funEchartsMap: 'EchartsMap',
 		funPrintJs: 'PrintJs',
 		funClipboard: 'Copy cut',
+		funScreenShort: 'screenCapture',
 		pagesIndex: 'pages',
 		pagesFiltering: 'Filtering',
 		pagesFilteringDetails: 'FilteringDetails',

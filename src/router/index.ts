@@ -484,6 +484,21 @@ export const dynamicRoutes = [
 							icon: 'el-icon-document-copy',
 						},
 					},
+					{
+						path: '/fun/screenShort',
+						name: 'funScreenShort',
+						component: () => import('/@/views/fun/screenShort/index.vue'),
+						meta: {
+							title: 'message.router.funScreenShort',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-crop',
+						},
+					},
 				],
 			},
 			{
@@ -735,7 +750,7 @@ export const dynamicRoutes = [
 				component: () => import('/@/views/layout/routerView/parent.vue'),
 				meta: {
 					title: 'message.router.layoutIfameView',
-					isLink: 'https://gitee.com/lyt-top/vue-admin-wonderful',
+					isLink: 'https://gitee.com/lyt-top/vue-next-admin',
 					isHide: false,
 					isKeepAlive: false,
 					isAffix: true,

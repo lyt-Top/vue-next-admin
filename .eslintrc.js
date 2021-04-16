@@ -1,4 +1,5 @@
 module.exports = {
+	root: true,
 	env: {
 		browser: true,
 		es2021: true,
@@ -40,6 +41,8 @@ module.exports = {
 		'vue/no-arrow-functions-in-watch': 'off',
 		'vue/no-template-key': 'off',
 		'vue/no-v-html': 'off',
+		'vue/comment-directive': 'off',
+		'vue/no-parsing-error': 'off',
 		'no-use-before-define': 'off',
 		'no-restricted-globals': 'off',
 		'no-restricted-syntax': 'off',

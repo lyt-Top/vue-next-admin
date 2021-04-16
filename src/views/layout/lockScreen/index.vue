@@ -100,7 +100,7 @@ export default {
 					el.setAttribute('style', `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`);
 					state.moveDifference = -el.clientHeight;
 					setTimeout(() => {
-						el.remove();
+						el && el.parentNode?.removeChild(el);
 					}, 300);
 				}
 				if (state.moveDifference === -el.clientHeight) {

@@ -2,7 +2,7 @@
 	<div class="layout-footer mt15" v-show="isDelayFooter">
 		<div class="layout-footer-warp">
 			<div>vue-next-admin，Made by lyt with ❤️</div>
-			<div class="mt5">Copyright 深圳市 xxx 软件科技有限公司</div>
+			<div class="mt5">{{ $t('message.copyright.one5') }}</div>
 		</div>
 	</div>
 </template>
