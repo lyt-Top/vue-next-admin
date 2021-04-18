@@ -191,10 +191,10 @@ export function resetRouter() {
 // 路由加载前
 router.beforeEach((to, from, next) => {
 	NProgress.configure({ showSpinner: false });
-	NProgress.start();
+	if (to.meta.title) NProgress.start();
 	keepAliveSplice(to);
 	let token = getSession('token');
-	if (to.fullPath === '/login' && !token) {
+	if (to.path === '/login' && !token) {
 		next();
 		NProgress.done();
 	} else {
@@ -202,7 +202,7 @@ router.beforeEach((to, from, next) => {
 			next('/login');
 			clearSession();
 			NProgress.done();
-		} else if (token && to.fullPath === '/login') {
+		} else if (token && to.path === '/login') {
 			next('/home');
 			NProgress.done();
 		} else {
