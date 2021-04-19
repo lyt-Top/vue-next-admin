@@ -166,6 +166,39 @@
 				]
 			},
 			{
+				"path": "/fun",
+				"name": "funIndex",
+				"component": "layout/routerView/parent",
+				"redirect": "/fun/tagsView",
+				"meta": {
+					"title": "message.router.funIndex",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-crew_feature"
+				},
+				"children": [
+					{
+						"path": "/fun/tagsView",
+						"name": "funTagsView",
+						"component": "fun/tagsView/index",
+						"meta": {
+							"title": "message.router.funTagsView",
+							"isLink": "",
+							"isHide": false,
+							"isKeepAlive": true,
+							"isAffix": false,
+							"isIframe": false,
+							"auth": ["admin", "test"],
+							"icon": "el-icon-thumb"
+						}
+					}
+				]
+			},
+			{
 				"path": "/link",
 				"name": "layoutLinkView",
 				"component": "layout/routerView/parent",

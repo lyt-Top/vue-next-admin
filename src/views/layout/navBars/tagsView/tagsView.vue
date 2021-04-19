@@ -57,6 +57,12 @@ export default {
 			return this.$store.state.themeConfig.themeConfig;
 		},
 	},
+	created() {
+		// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部
+		this.bus.$on('onCurrentContextmenuClick', (data) => {
+			this.onCurrentContextmenuClick(data);
+		});
+	},
 	mounted() {
 		this.getTagsViewRoutes();
 	},
@@ -278,6 +284,10 @@ export default {
 			},
 			deep: true,
 		},
+	},
+	destroyed() {
+		// 取消非本页面调用监听（fun/tagsView）
+		this.bus.$off('onCurrentContextmenuClick');
 	},
 };
 </script>
