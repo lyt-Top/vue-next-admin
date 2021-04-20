@@ -45,6 +45,9 @@ git clone https://gitee.com/lyt-top/vue-next-admin.git
 # 进入项目
 cd vue-next-admin
 
+# 切换分支
+git checkout vue-prev-admin
+
 # 安装依赖
 cnpm install
 

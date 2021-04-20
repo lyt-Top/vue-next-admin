@@ -203,8 +203,10 @@ router.beforeEach((to, from, next) => {
 			clearSession();
 			NProgress.done();
 		} else if (token && to.path === '/login') {
-			next('/home');
-			NProgress.done();
+			next({ path: '/home', replace: true });
+			Vue.nextTick(() => {
+				NProgress.done();
+			});
 		} else {
 			// 动态加载后端返回路由路由(模拟数据)
 			if (!getSession('userInfo')) return false;

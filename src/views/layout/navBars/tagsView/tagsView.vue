@@ -186,7 +186,6 @@ export default {
 				this.tagsViewRoutesList.map((v) => {
 					if (v.meta.isAffix && !v.meta.isHide) this.tagsViewList.push({ ...v });
 				});
-
 				this.addTagsView(this.$route.path);
 			}
 			// 初始化当前元素(li)的下标
