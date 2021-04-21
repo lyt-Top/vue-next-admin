@@ -5,12 +5,13 @@
 	"scripts": {
 		"dev": "vue-cli-service serve",
 		"build": "vue-cli-service build",
-		"lint": "vue-cli-service lint"
+		"lint": "vue-cli-service lint",
+		"webpack": "webpack --version"
 	},
 	"dependencies": {
 		"axios": "^0.21.1",
 		"clipboard": "^2.0.8",
-		"core-js": "^3.10.1",
+		"core-js": "^3.10.2",
 		"countup.js": "^2.0.7",
 		"echarts": "^5.1.0",
 		"element-ui": "^2.15.1",
@@ -38,7 +39,7 @@
 		"babel-eslint": "^10.1.0",
 		"eslint": "^7.24.0",
 		"eslint-plugin-vue": "^7.9.0",
-		"sass": "^1.32.10",
+		"sass": "^1.32.11",
 		"sass-loader": "^10.1.1",
 		"vue-template-compiler": "^2.6.12"
 	}

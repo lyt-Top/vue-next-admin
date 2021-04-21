@@ -135,7 +135,7 @@ export function keepAliveSplice(to) {
 
 // 处理后端返回的 `component` 路径，拼装实现懒加载
 export function loadView(path) {
-	return () => import(`@/views/${path}`);
+	return () => Promise.resolve(require(`@/views/${path}`));
 }
 
 // 递归处理每一项 `component` 中的路径
