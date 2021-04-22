@@ -195,6 +195,21 @@
 							"auth": ["admin", "test"],
 							"icon": "el-icon-thumb"
 						}
+					},
+					{
+						"path": "/fun/signCanvas",
+						"name": "funSignCanvas",
+						"component": "fun/signCanvas/index",
+						"meta": {
+							"title": "message.router.funSignCanvas",
+							"isLink": "",
+							"isHide": false,
+							"isKeepAlive": true,
+							"isAffix": false,
+							"isIframe": false,
+							"auth": ["admin", "test"],
+							"icon": "el-icon-edit"
+						}
 					}
 				]
 			},

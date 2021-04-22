@@ -21,6 +21,7 @@ export default {
 		menu2: '選單2',
 		funIndex: '功能',
 		funTagsView: 'tagsView 操作',
+		funSignCanvas: '線上簽名',
 		funCountup: 'countup 數位滾動',
 		funEchartsTree: 'echartsTree 樹圖',
 		funSelector: '圖標選擇器',

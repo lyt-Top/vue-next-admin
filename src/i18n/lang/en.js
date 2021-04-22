@@ -21,6 +21,7 @@ export default {
 		menu2: 'menu2',
 		funIndex: 'function',
 		funTagsView: 'funTagsView',
+		funSignCanvas: 'Online signature',
 		funCountup: 'countup',
 		funEchartsTree: 'echartsTree',
 		funSelector: 'funSelector',
