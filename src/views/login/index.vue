@@ -177,7 +177,7 @@ export default {
 			// 存储用户信息到vuex
 			this.$store.dispatch('userInfos/setUserInfos', userInfos);
 			PrevLoading.start();
-			this.$router.push('/');
+			window.location.href = `${window.location.origin}${window.location.pathname}`;
 			setTimeout(() => {
 				this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
 			}, 300);
