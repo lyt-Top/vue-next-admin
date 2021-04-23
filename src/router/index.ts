@@ -808,9 +808,9 @@ const router = createRouter({
 
 // 前端控制路由：初始化方法，防止刷新时丢失
 export function initAllFun() {
-	NextLoading.start();
-	const token = getSession('token');
-	if (!token) return false;
+	NextLoading.start(); // 界面 loading 动画开始执行
+	const token = getSession('token'); // 获取浏览器缓存 token 值
+	if (!token) return false; // 无 token 停止执行下一步
 	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
 	router.addRoute(pathMatch); // 添加404界面
 	resetRoute(); // 删除/重置路由
