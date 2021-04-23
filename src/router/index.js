@@ -188,10 +188,10 @@ export function resetRouter() {
 }
 
 // 延迟关闭进度条
-export function delayNProgressDone() {
+export function delayNProgressDone(time = 300) {
 	setTimeout(() => {
 		NProgress.done();
-	}, 300);
+	}, time);
 }
 
 // 路由加载前
@@ -218,6 +218,7 @@ router.beforeEach((to, from, next) => {
 				else if (getSession('userInfo').userName === 'test') testUser(router, to, next);
 			} else {
 				next();
+				delayNProgressDone(0);
 			}
 		}
 	}
