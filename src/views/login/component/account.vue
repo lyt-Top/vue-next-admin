@@ -55,7 +55,7 @@ import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { initAllFun, getBackEndControlRoutes, setBackEndControlRoutesFun } from '/@/router/index.ts';
+import { initAllFun, initBackEndControlRoutesFun } from '/@/router/index.ts';
 import { useStore } from '/@/store/index.ts';
 import { setSession } from '/@/utils/storage.ts';
 import { formatAxis } from '/@/utils/formatTime.ts';
@@ -80,7 +80,7 @@ export default defineComponent({
 			return formatAxis(new Date());
 		});
 		// 登录
-		const onSignIn = () => {
+		const onSignIn = async () => {
 			state.loading.signIn = true;
 			let defaultAuthPageList: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
@@ -99,6 +99,7 @@ export default defineComponent({
 				defaultAuthPageList = testAuthPageList;
 				defaultAuthBtnList = testAuthBtnList;
 			}
+			// 用户信息模拟数据
 			const userInfos = {
 				userName: state.ruleForm.userName,
 				photo:
@@ -115,18 +116,16 @@ export default defineComponent({
 			setSession('userInfo', userInfos);
 			// 1、请注意执行顺序(存储用户信息到vuex)
 			store.dispatch('userInfos/setUserInfos', userInfos);
-			// 前端控制路由，2、请注意执行顺序
 			if (!store.state.themeConfig.themeConfig.isRequestRoutes) {
-				initAllFun();
+				// 前端控制路由，2、请注意执行顺序
+				await initAllFun();
 				signInSuccess();
-			}
-			// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-			else {
-				getBackEndControlRoutes((res: any) => {
-					setBackEndControlRoutesFun(res, () => {
-						signInSuccess();
-					});
-				});
+			} else {
+				// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+				// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
+				await initBackEndControlRoutesFun();
+				// 执行完 initBackEndControlRoutesFun，再执行 signInSuccess
+				signInSuccess();
 			}
 		};
 		// 登录成功后的跳转
@@ -134,13 +133,14 @@ export default defineComponent({
 			// 初始化登录成功时间问候语
 			let currentTimeInfo = currentTime.value;
 			// 登录成功，跳到转首页
+			// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
 			router.push('/');
 			// 登录成功提示
 			setTimeout(() => {
+				// 关闭 loading
 				state.loading.signIn = true;
 				const signInText = t('message.signInText');
 				ElMessage.success(`${currentTimeInfo}，${signInText}`);
-				// 关闭 loading
 			}, 300);
 		};
 		return {

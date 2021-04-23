@@ -806,62 +806,63 @@ const router = createRouter({
 	routes: staticRoutes,
 });
 
-// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-export function getBackEndControlRoutes(callback: any) {
+// 前端控制路由：初始化方法，防止刷新时丢失
+export function initAllFun() {
+	NextLoading.start();
 	const token = getSession('token');
 	if (!token) return false;
-	store.dispatch('userInfos/setUserInfos');
-	const auth = store.state.userInfos.userInfos.authPageList[0]; // 模拟 admin 与 test
-	if (auth === 'admin') {
-		getMenuAdmin()
-			.then((res: any) => {
-				callback(res);
-			})
-			.catch(() => {});
-	} else {
-		getMenuTest()
-			.then((res: any) => {
-				callback(res);
-			})
-			.catch(() => {});
-	}
-}
-
-// 后端控制路由，模拟执行路由数据初始化
-export function setBackEndControlRoutesFun(res: any, callback?: any) {
-	initBackEndControlRoutesFun(res);
-	window.location.href = window.location.href; // 防止页面刷新时，出现空白或404
-	callback(res);
-}
-
-// 后端控制路由，动态添加菜单时（刷新菜单）
-export function setBackEndControlRefreshRoutes() {
-	getBackEndControlRoutes((res: any) => {
-		initBackEndControlRoutesFun(res);
-	});
-}
-
-// 后端控制路由，模拟执行路由数据初始化
-const initBackEndControlRoutesFun = (res: any) => {
-	NextLoading.start();
-	const oldRoutes = JSON.parse(JSON.stringify(res.data));
-	store.dispatch('requestOldRoutes/setBackEndControlRoutes', oldRoutes);
-	dynamicRoutes[0].children = backEndRouter(res.data);
-	resetRoute(); // 删除/重置路由
+	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
 	router.addRoute(pathMatch); // 添加404界面
+	resetRoute(); // 删除/重置路由
 	setAddRoute(); // 添加动态路由
 	setFilterMenu(); // 过滤权限菜单
 	setCacheTagsViewRoutes(); // 添加 keepAlive 缓存
-};
+}
+
+// 后端控制路由：模拟执行路由数据初始化
+export async function initBackEndControlRoutesFun() {
+	NextLoading.start(); // 界面 loading 动画开始执行
+	const token = getSession('token'); // 获取浏览器缓存 token 值
+	if (!token) return false; // 无 token 停止执行下一步
+	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
+	const res = await getBackEndControlRoutes(); // 获取路由
+	const oldRoutes = JSON.parse(JSON.stringify(res.data)); // 获取接口原始路由（未处理component）
+	store.dispatch('requestOldRoutes/setBackEndControlRoutes', oldRoutes); // 存原始路由到 vuex 中
+	dynamicRoutes[0].children = await backEndRouter(res.data); // 处理路由（component）
+	router.addRoute(pathMatch); // 添加404界面
+	await setAddRoute(); // 添加动态路由
+	setFilterMenu(); // 过滤权限菜单
+	setCacheTagsViewRoutes(); // 添加 keepAlive 缓存
+	setRefreshPagesRestore(); // 防止界面刷新时，出现404、空白、报错等
+}
+
+// 防止界面刷新时，出现404、空白、报错等
+export function setRefreshPagesRestore() {
+	const { matched, query, path } = router.currentRoute.value;
+	if (matched.length <= 0) router.push({ path, query });
+}
+
+// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+export function getBackEndControlRoutes() {
+	// 模拟 admin 与 test
+	const auth = store.state.userInfos.userInfos.authPageList[0];
+	// 管理员 admin
+	if (auth === 'admin') return getMenuAdmin();
+	// 其它用户 test
+	else return getMenuTest();
+}
+
+// 后端控制路由，动态添加菜单时（菜单管理界面刷新菜单，路径：/src/views/system/menu/component/addMenu.vue）
+export function setBackEndControlRefreshRoutes() {
+	getBackEndControlRoutes();
+}
 
 // 后端控制路由，后端路由 component 转换
 export function backEndRouter(routes: any) {
 	if (!routes) return;
 	return routes.map((item: any) => {
-		const { component } = item;
-		const { children } = item;
-		if (component) item.component = dynamicImport(dynamicViewsModules, component as string);
-		children && backEndRouter(children);
+		if (item.component) item.component = dynamicImport(dynamicViewsModules, item.component as string);
+		item.children && backEndRouter(item.children);
 		return item;
 	});
 }
@@ -885,7 +886,7 @@ export function dynamicImport(dynamicViewsModules: Record<string, () => Promise<
 
 // 多级嵌套数组处理成一维数组
 export function formatFlatteningRoutes(arr: any) {
-	if (arr.length < 0) return false;
+	if (arr.length <= 0) return false;
 	for (let i = 0; i < arr.length; i++) {
 		if (arr[i].children) {
 			arr = arr.slice(0, i + 1).concat(arr[i].children, arr.slice(i + 1));
@@ -898,7 +899,7 @@ export function formatFlatteningRoutes(arr: any) {
 // 只保留二级：也就是二级以上全部处理成只有二级，keep-alive 支持二级缓存
 // isKeepAlive 处理 `name` 值，进行缓存。顶级关闭，全部不缓存
 export function formatTwoStageRoutes(arr: any) {
-	if (arr.length < 0) return false;
+	if (arr.length <= 0) return false;
 	const newArr: any = [];
 	const cacheList: Array<string> = [];
 	arr.forEach((v: any) => {
@@ -983,26 +984,15 @@ export function resetRoute() {
 	});
 }
 
-// 初始化方法，防止刷新时丢失
-export function initAllFun() {
-	NextLoading.start();
-	const token = getSession('token');
-	if (!token) return false;
-	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
-	setAddRoute(); // 添加动态路由
-	router.addRoute(pathMatch); // 添加404界面
-	setFilterMenu(); // 过滤权限菜单
-	setCacheTagsViewRoutes(); // 添加 keepAlive 缓存
-}
-
 // 初始化方法执行
-const requestRoutes = store.state.themeConfig.themeConfig.isRequestRoutes;
-if (!requestRoutes) initAllFun();
-// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-if (requestRoutes)
-	getBackEndControlRoutes((res: any) => {
-		setBackEndControlRoutesFun(res);
-	});
+const { isRequestRoutes } = store.state.themeConfig.themeConfig;
+if (!isRequestRoutes) {
+	// 未开启后端控制路由
+	initAllFun();
+} else if (isRequestRoutes) {
+	// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+	initBackEndControlRoutesFun();
+}
 
 // 路由加载前
 router.beforeEach((to, from, next) => {
@@ -1022,7 +1012,7 @@ router.beforeEach((to, from, next) => {
 			next('/home');
 			NProgress.done();
 		} else {
-			next();
+			if (store.state.routesList.routesList.length > 0) next();
 		}
 	}
 });
