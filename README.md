@@ -101,6 +101,7 @@ cnpm run build
 - <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
 - <a href="https://github.com/crabbly/Print.js" target="_blank">print-js</a>
 - <a href="https://github.com/likaia/screen-shot" target="_blank">vue-web-screen-shot</a>
+- <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 
 #### 特别感谢
 

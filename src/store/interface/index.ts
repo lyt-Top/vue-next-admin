@@ -46,6 +46,7 @@ declare interface ThemeConfigState {
 		globalTitle: string;
 		globalViceTitle: string;
 		globalI18n: string;
+		globalComponentSize: string;
 	};
 }
 

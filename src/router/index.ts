@@ -499,6 +499,21 @@ export const dynamicRoutes = [
 							icon: 'el-icon-crop',
 						},
 					},
+					{
+						path: '/fun/gridLayout',
+						name: 'funGridLayout',
+						component: () => import('/@/views/fun/gridLayout/index.vue'),
+						meta: {
+							title: 'message.router.funGridLayout',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-tuodong',
+						},
+					},
 				],
 			},
 			{
