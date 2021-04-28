@@ -8,7 +8,7 @@
 <script lang="ts">
 import { computed, onBeforeMount, onUnmounted, getCurrentInstance } from 'vue';
 import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
+import { getLocal, setLocal } from '/@/utils/storage.ts';
 import Defaults from '/@/views/layout/main/defaults.vue';
 import Classic from '/@/views/layout/main/classic.vue';
 import Transverse from '/@/views/layout/main/transverse.vue';
@@ -25,6 +25,7 @@ export default {
 		});
 		// 窗口大小改变时(适配移动端)
 		const onLayoutResize = () => {
+			if (!getLocal('oldLayout')) setLocal('oldLayout', getThemeConfig.value.layout);
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
 				getThemeConfig.value.isCollapse = false;

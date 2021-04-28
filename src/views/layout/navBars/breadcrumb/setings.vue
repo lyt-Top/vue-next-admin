@@ -602,7 +602,6 @@ export default defineComponent({
 				});
 				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 				proxy.mittBus.on('layoutMobileResize', (res: any) => {
-					if (getThemeConfig.value.layout === res.layout) return false;
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
 					initSetLayoutChange();
