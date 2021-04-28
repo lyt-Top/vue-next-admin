@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { getLocal } from '@/utils/storage.js';
+import { getLocal, setLocal } from '@/utils/storage.js';
 export default {
 	name: 'layout',
 	components: {
@@ -28,6 +28,7 @@ export default {
 	methods: {
 		// 窗口大小改变时(适配移动端)
 		onLayoutResize() {
+			if (!getLocal('oldLayout')) setLocal('oldLayout', this.$store.state.themeConfig.themeConfig.layout);
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
 				this.$store.state.themeConfig.themeConfig.isCollapse = false;

@@ -196,7 +196,6 @@ export default {
 	created() {
 		// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 		this.bus.$on('layoutMobileResize', (res) => {
-			if (this.$store.state.themeConfig.themeConfig.layout === res.layout) return false;
 			this.$store.state.themeConfig.themeConfig.layout = res.layout;
 			this.$store.state.themeConfig.themeConfig.isDrawer = false;
 			this.$store.state.themeConfig.themeConfig.isCollapse = false;
