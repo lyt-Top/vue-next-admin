@@ -109,6 +109,7 @@ export default {
 		twoColumnsMenuBarColor: 'Default font color bar menu',
 		twoIsTopBarColorGradual: 'Top bar gradient',
 		twoIsMenuBarColorGradual: 'Menu gradient',
+		twoIsColumnsMenuBarColorGradual: 'Column gradient',
 		twoIsMenuBarColorHighlight: 'Menu font highlight',
 		threeTitle: 'Interface settings',
 		threeIsCollapse: 'Menu horizontal collapse',

@@ -38,6 +38,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isTopBarColorGradual: false,
 			// 是否开启菜单背景颜色渐变
 			isMenuBarColorGradual: false,
+			// 是否开启分栏菜单背景颜色渐变
+			isColumnsMenuBarColorGradual: false,
 			// 是否开启菜单字体背景高亮
 			isMenuBarColorHighlight: false,
 			// 是否开启菜单字体背景高亮

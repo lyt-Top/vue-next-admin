@@ -109,6 +109,7 @@ export default {
 		twoColumnsMenuBarColor: '分欄選單默認字體顏色',
 		twoIsTopBarColorGradual: '頂欄背景漸變',
 		twoIsMenuBarColorGradual: '選單背景漸變',
+		twoIsColumnsMenuBarColorGradual: '分欄選單背景漸變',
 		twoIsMenuBarColorHighlight: '選單字體背景高亮',
 		threeTitle: '介面設定',
 		threeIsCollapse: '選單水准折疊',

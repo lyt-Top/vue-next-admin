@@ -17,6 +17,7 @@ declare interface ThemeConfigState {
 		columnsMenuBarColor: string;
 		isTopBarColorGradual: boolean;
 		isMenuBarColorGradual: boolean;
+		isColumnsMenuBarColorGradual: boolean;
 		isMenuBarColorHighlight: boolean;
 		isCollapse: boolean;
 		isUniqueOpened: boolean;

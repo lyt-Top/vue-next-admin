@@ -109,6 +109,7 @@ export default {
 		twoColumnsMenuBarColor: '分栏菜单默认字体颜色',
 		twoIsTopBarColorGradual: '顶栏背景渐变',
 		twoIsMenuBarColorGradual: '菜单背景渐变',
+		twoIsColumnsMenuBarColorGradual: '分栏菜单背景渐变',
 		twoIsMenuBarColorHighlight: '菜单字体背景高亮',
 		threeTitle: '界面设置',
 		threeIsCollapse: '菜单水平折叠',
