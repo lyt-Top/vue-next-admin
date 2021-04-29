@@ -1,5 +1,18 @@
 <template>
 	<div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
+		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onComponentSizeChange">
+			<div class="layout-navbars-breadcrumb-user-icon">
+				<i class="iconfont icon-ziti" :title="$t('message.user.title0')"></i>
+			</div>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
+					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">{{ $t('message.user.dropdownMedium') }}</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
+					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">{{ $t('message.user.dropdownMini') }}</el-dropdown-item>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
@@ -64,7 +77,8 @@ export default {
 		return {
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
-			disabledI18n: false,
+			disabledI18n: 'zh-cn',
+			disabledSize: 'small',
 		};
 	},
 	computed: {
@@ -82,7 +96,10 @@ export default {
 		},
 	},
 	mounted() {
-		if (getLocal('themeConfigPrev')) this.initI18n();
+		if (getLocal('themeConfigPrev')) {
+			this.initI18n();
+			this.initComponentSize();
+		}
 	},
 	methods: {
 		// 搜索点击
@@ -101,6 +118,14 @@ export default {
 			}
 			screenfull.toggle();
 			this.isScreenfull = !this.isScreenfull;
+		},
+		// 组件大小改变
+		onComponentSizeChange(size) {
+			removeLocal('themeConfig');
+			this.$store.state.themeConfig.themeConfig.globalComponentSize = size;
+			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			this.$ELEMENT.size = size;
+			this.initComponentSize();
 		},
 		// 语言切换
 		onLanguageChange(lang) {
@@ -121,6 +146,23 @@ export default {
 					break;
 				case 'zh-tw':
 					this.disabledI18n = 'zh-tw';
+					break;
+			}
+		},
+		// 初始化全局组件大小
+		initComponentSize() {
+			switch (getLocal('themeConfig').globalComponentSize) {
+				case 'default':
+					this.disabledSize = 'default';
+					break;
+				case 'medium':
+					this.disabledSize = 'medium';
+					break;
+				case 'small':
+					this.disabledSize = 'small';
+					break;
+				case 'mini':
+					this.disabledSize = 'mini';
 					break;
 			}
 		},
