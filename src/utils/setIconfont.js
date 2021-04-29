@@ -1,5 +1,5 @@
 // 字体图标 url
-const cssCdnUrlList = ['//at.alicdn.com/t/font_2298093_vcabyobusxq.css', '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'];
+const cssCdnUrlList = ['//at.alicdn.com/t/font_2348547_zjuiclx86c.css', '//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'];
 // 第三方 js url
 const jsCdnUrlList = [];
 
