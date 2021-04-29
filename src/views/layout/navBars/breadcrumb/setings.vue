@@ -635,7 +635,7 @@ export default defineComponent({
 							asideEl.style.cssText = getLocal('asideBgStyle');
 						}
 						// 分栏菜单背景渐变
-						if (getLocal('columnsBgStyle') && getThemeConfig.value.isMenuBarColorGradual) {
+						if (getLocal('columnsBgStyle') && getThemeConfig.value.isColumnsMenuBarColorGradual) {
 							const asideEl: any = document.querySelector('.layout-container .layout-columns-aside');
 							asideEl.style.cssText = getLocal('columnsBgStyle');
 						}
