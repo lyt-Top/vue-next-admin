@@ -654,7 +654,7 @@ export default defineComponent({
 						onWartermarkChange();
 						// 语言国际化
 						if (getLocal('themeConfig')) proxy.$i18n.locale = getLocal('themeConfig').globalI18n;
-					}, 1000);
+					}, 1100);
 				});
 			});
 		});

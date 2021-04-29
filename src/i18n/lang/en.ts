@@ -45,6 +45,7 @@ export default {
 		pagesListAdapt: 'ListAdapt',
 		pagesWaterfall: 'Waterfall',
 		pagesSteps: 'Steps',
+		pagesPreview: 'Large preview',
 		chartIndex: 'chartIndex',
 		personal: 'personal',
 		tools: 'tools',

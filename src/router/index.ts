@@ -697,6 +697,21 @@ export const dynamicRoutes = [
 							icon: 'iconfont icon-step',
 						},
 					},
+					{
+						path: '/pages/preview',
+						name: 'pagesPreview',
+						component: () => import('/@/views/pages/preview/index.vue'),
+						meta: {
+							title: 'message.router.pagesPreview',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-15tupianyulan',
+						},
+					},
 				],
 			},
 			{

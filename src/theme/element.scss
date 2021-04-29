@@ -583,6 +583,25 @@
 	background-color: set-color(info);
 }
 
+/* Result 结果
+------------------------------- */
+// success
+.el-result .icon-success {
+	fill: set-color(success);
+}
+// warning
+.el-result .icon-warning {
+	fill: set-color(warning);
+}
+// error
+.el-result .icon-error {
+	fill: set-color(danger);
+}
+// info
+.el-result .icon-info {
+	fill: set-color(info);
+}
+
 /* Alert 警告
 ------------------------------- */
 // success

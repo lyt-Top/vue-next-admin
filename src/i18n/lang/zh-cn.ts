@@ -45,6 +45,7 @@ export default {
 		pagesListAdapt: '列表自适应',
 		pagesWaterfall: '瀑布屏',
 		pagesSteps: '步骤条',
+		pagesPreview: '大图预览',
 		chartIndex: '大数据图表',
 		personal: '个人中心',
 		tools: '工具类集合',
