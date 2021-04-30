@@ -2,7 +2,7 @@
 	<div class="waterfall-container">
 		<el-card shadow="hover" header="瀑布屏（布局一）" class="mb15">
 			<div class="waterfall-first">
-				<div class="waterfall-first-item" v-for="v in 30" :key="v">
+				<div class="waterfall-first-item" v-for="v in 30" :key="v" v-waves>
 					<div class="w100 h100 flex">
 						<span class="flex-margin">{{ v }}</span>
 					</div>
@@ -11,7 +11,7 @@
 		</el-card>
 		<el-card shadow="hover" header="瀑布屏（布局二）">
 			<div class="waterfall-last">
-				<div class="waterfall-last-item" v-for="v in 30" :key="v">
+				<div class="waterfall-last-item" v-for="v in 30" :key="v" v-waves="'light'">
 					<div class="w100 h100 flex">
 						<span class="flex-margin">{{ v }}</span>
 					</div>
@@ -62,9 +62,6 @@ export default {
 				transition: all 0.3s ease;
 				cursor: pointer;
 			}
-			&:active {
-				opacity: 0.5;
-			}
 		}
 	}
 	.waterfall-last {
@@ -83,9 +80,6 @@ export default {
 				box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
 				transition: all 0.3s ease;
 				cursor: pointer;
-			}
-			&:active {
-				opacity: 0.5;
 			}
 		}
 	}

@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { store, key } from './store';
-import { authDirective } from '/@/utils/authDirective.ts';
+import { directive } from '/@/utils/directive.ts';
 import { i18n } from '/@/i18n/index.ts';
 import { globalComponentSize } from '/@/utils/componentSize.ts';
 
@@ -25,4 +25,4 @@ app
 
 app.config.globalProperties.mittBus = mitt();
 
-authDirective(app);
+directive(app);

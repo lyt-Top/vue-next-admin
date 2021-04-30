@@ -2,6 +2,7 @@ import type { App } from 'vue';
 import { store } from '/@/store/index.ts';
 import { judementSameArr } from '/@/utils/arrayOperation.ts';
 
+// 用户权限指令
 export function authDirective(app: App) {
 	// 单个权限验证（v-auth="xxx"）
 	app.directive('auth', {
