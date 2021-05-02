@@ -48,6 +48,7 @@ export default {
 		pagesSteps: 'Steps',
 		pagesPreview: 'Large preview',
 		pagesWaves: 'Wave effect',
+		pagesTree: 'tree alter table',
 		chartIndex: 'chartIndex',
 		personal: 'personal',
 		tools: 'tools',

@@ -48,6 +48,7 @@ export default {
 		pagesSteps: '步骤条',
 		pagesPreview: '大图预览',
 		pagesWaves: '波浪效果',
+		pagesTree: '树形改表格',
 		chartIndex: '大数据图表',
 		personal: '个人中心',
 		tools: '工具类集合',

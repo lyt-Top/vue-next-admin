@@ -742,6 +742,21 @@ export const dynamicRoutes = [
 							icon: 'iconfont icon-bolangneng',
 						},
 					},
+					{
+						path: '/pages/tree',
+						name: 'pagesTree',
+						component: () => import('/@/views/pages/tree/index.vue'),
+						meta: {
+							title: 'message.router.pagesTree',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-shuxingtu',
+						},
+					},
 				],
 			},
 			{

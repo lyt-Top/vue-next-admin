@@ -9,7 +9,7 @@ export function wavesDirective(app: App) {
 			function setConvertStyle(obj: any) {
 				let style: string = '';
 				for (let i in obj) {
-					if (obj.hasOwnProperty(i)) style += i + ':' + obj[i] + ';';
+					if (obj.hasOwnProperty(i)) style += `${i}:${obj[i]};`;
 				}
 				return style;
 			}
