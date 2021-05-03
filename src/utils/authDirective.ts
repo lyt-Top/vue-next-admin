@@ -1,6 +1,6 @@
 import type { App } from 'vue';
-import { store } from '/@/store/index.ts';
-import { judementSameArr } from '/@/utils/arrayOperation.ts';
+import { store } from '/@/store/index';
+import { judementSameArr } from '/@/utils/arrayOperation';
 
 export function authDirective(app: App) {
 	// 单个权限验证（v-auth="xxx"）

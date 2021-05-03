@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { getSession } from '/@/utils/storage.ts';
+import { getSession } from '/@/utils/storage';
 
 const userInfosModule: Module<UserInfosState, RootStateTypes> = {
 	namespaced: true,

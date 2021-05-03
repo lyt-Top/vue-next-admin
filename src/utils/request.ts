@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { clearSession, getSession } from '/@/utils/storage.ts';
-import router, { resetRoute } from '/@/router/index.ts';
+import { clearSession, getSession } from '/@/utils/storage';
+import router, { resetRoute } from '/@/router/index';
 
 // 配置新建一个 axios 实例
 const service = axios.create({

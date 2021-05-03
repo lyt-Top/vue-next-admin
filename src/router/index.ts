@@ -1,10 +1,10 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { store } from '/@/store/index.ts';
-import { getSession, clearSession } from '/@/utils/storage.ts';
-import { NextLoading } from '/@/utils/loading.ts';
-import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts';
+import { store } from '/@/store/index';
+import { getSession, clearSession } from '/@/utils/storage';
+import { NextLoading } from '/@/utils/loading';
+import { getMenuAdmin, getMenuTest } from '/@/api/menu/index';
 
 // 定义动态路由
 export const dynamicRoutes = [

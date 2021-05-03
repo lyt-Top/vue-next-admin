@@ -1,11 +1,11 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
-import themeConfig from '/@/store/modules/themeConfig.ts';
-import routesList from '/@/store/modules/routesList.ts';
-import keepAliveNames from '/@/store/modules/keepAliveNames.ts';
-import tagsViewRoutes from '/@/store/modules/tagsViewRoutes.ts';
-import userInfos from '/@/store/modules/userInfos.ts';
-import requestOldRoutes from '/@/store/modules/requestOldRoutes.ts';
+import themeConfig from '/@/store/modules/themeConfig';
+import routesList from '/@/store/modules/routesList';
+import keepAliveNames from '/@/store/modules/keepAliveNames';
+import tagsViewRoutes from '/@/store/modules/tagsViewRoutes';
+import userInfos from '/@/store/modules/userInfos';
+import requestOldRoutes from '/@/store/modules/requestOldRoutes';
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol();
 

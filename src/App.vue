@@ -8,9 +8,9 @@
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
-import setIntroduction from '/@/utils/setIconfont.ts';
+import { useStore } from '/@/store/index';
+import { getLocal } from '/@/utils/storage';
+import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/views/layout/lockScreen/index.vue';
 import Setings from '/@/views/layout/navBars/breadcrumb/setings.vue';
 export default defineComponent({

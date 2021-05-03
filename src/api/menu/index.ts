@@ -1,4 +1,4 @@
-import request from '/@/utils/request.ts';
+import request from '/@/utils/request';
 
 /**
  * 后端控制菜单模拟json，路径在 https://gitee.com/lyt-top/vue-next-admin-images/tree/master/menu

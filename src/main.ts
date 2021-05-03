@@ -2,8 +2,8 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import { store, key } from './store';
-import { authDirective } from '/@/utils/authDirective.ts';
-import { i18n } from '/@/i18n/index.ts';
+import { authDirective } from '/@/utils/authDirective';
+import { i18n } from '/@/i18n/index';
 
 import ElementPlus from 'element-plus';
 import 'element-plus/lib/theme-chalk/index.css';
