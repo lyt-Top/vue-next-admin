@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { computed, getCurrentInstance } from 'vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default {
 	name: 'layoutLogo',
 	setup() {

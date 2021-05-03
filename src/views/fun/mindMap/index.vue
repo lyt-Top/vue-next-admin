@@ -9,7 +9,7 @@
 <script lang="ts">
 import { toRefs, reactive, computed, onMounted, getCurrentInstance } from 'vue';
 import G6 from '@antv/g6';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default {
 	name: 'funMindMap',
 	setup() {

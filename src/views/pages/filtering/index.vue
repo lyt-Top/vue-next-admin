@@ -87,7 +87,7 @@
 <script lang="ts">
 import { ref, toRefs, reactive, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
-import { filtering, filterList } from './mock.ts';
+import { filtering, filterList } from './mock';
 export default {
 	name: 'pagesFiltering',
 	setup() {

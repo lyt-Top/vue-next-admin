@@ -54,7 +54,7 @@
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { filterList } from './mock.ts';
+import { filterList } from './mock';
 export default {
 	name: 'pagesListAdapt',
 	setup() {

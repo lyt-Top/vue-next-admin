@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { computed, onBeforeMount, onUnmounted, getCurrentInstance, defineAsyncComponent } from 'vue';
-import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
+import { useStore } from '/@/store/index';
+import { getLocal } from '/@/utils/storage';
 export default {
 	name: 'layout',
 	components: {

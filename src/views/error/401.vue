@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router';
-import { clearSession } from '/@/utils/storage.ts';
+import { clearSession } from '/@/utils/storage';
 export default {
 	name: '401',
 	setup() {

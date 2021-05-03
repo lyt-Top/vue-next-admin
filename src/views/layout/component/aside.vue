@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, watch, getCurrentInstance, onBeforeMount, onUnmounted } from 'vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 import Logo from '/@/views/layout/logo/index.vue';
 import Vertical from '/@/views/layout/navMenu/vertical.vue';
 export default {

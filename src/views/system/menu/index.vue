@@ -66,7 +66,7 @@
 <script lang="ts">
 import { ref, toRefs, reactive, computed } from 'vue';
 import { ElMessageBox } from 'element-plus';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 import AddMenu from '/@/views/system/menu/component/addMenu.vue';
 import EditMenu from '/@/views/system/menu/component/editMenu.vue';
 export default {

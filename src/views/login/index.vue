@@ -35,7 +35,7 @@
 import { toRefs, reactive, computed } from 'vue';
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default {
 	name: 'login',
 	components: { Account, Mobile },

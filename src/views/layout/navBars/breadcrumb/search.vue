@@ -21,7 +21,7 @@
 <script lang="ts">
 import { reactive, toRefs, defineComponent, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default defineComponent({
 	name: 'layoutBreadcrumbSearch',
 	setup() {

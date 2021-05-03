@@ -63,9 +63,9 @@ import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
-import { resetRoute } from '/@/router/index.ts';
-import { useStore } from '/@/store/index.ts';
-import { clearSession, setLocal, getLocal, removeLocal } from '/@/utils/storage.ts';
+import { resetRoute } from '/@/router/index';
+import { useStore } from '/@/store/index';
+import { clearSession, setLocal, getLocal, removeLocal } from '/@/utils/storage';
 import UserNews from '/@/views/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/views/layout/navBars/breadcrumb/search.vue';
 export default {

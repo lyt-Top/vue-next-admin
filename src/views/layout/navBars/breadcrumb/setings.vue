@@ -352,11 +352,11 @@ import { nextTick, onUnmounted, onMounted, getCurrentInstance, defineComponent, 
 import { ElMessage } from 'element-plus';
 import ClipboardJS from 'clipboard';
 import { useI18n } from 'vue-i18n';
-import { useStore } from '/@/store/index.ts';
-import { getLightColor } from '/@/utils/theme.ts';
-import Watermark from '/@/utils/wartermark.ts';
-import { verifyAndSpace } from '/@/utils/toolsValidate.ts';
-import { setLocal, getLocal, removeLocal } from '/@/utils/storage.ts';
+import { useStore } from '/@/store/index';
+import { getLightColor } from '/@/utils/theme';
+import Watermark from '/@/utils/wartermark';
+import { verifyAndSpace } from '/@/utils/toolsValidate';
+import { setLocal, getLocal, removeLocal } from '/@/utils/storage';
 export default defineComponent({
 	name: 'layoutBreadcrumbSeting',
 	setup() {

@@ -17,7 +17,7 @@
 
 <script lang="ts">
 import { computed } from 'vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 import Aside from '/@/views/layout/component/aside.vue';
 import Header from '/@/views/layout/component/header.vue';
 import Main from '/@/views/layout/component/main.vue';

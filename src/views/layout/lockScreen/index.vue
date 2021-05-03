@@ -53,9 +53,9 @@
 
 <script lang="ts">
 import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance } from 'vue';
-import { useStore } from '/@/store/index.ts';
-import { formatDate } from '/@/utils/formatTime.ts';
-import { setLocal } from '/@/utils/storage.ts';
+import { useStore } from '/@/store/index';
+import { formatDate } from '/@/utils/formatTime';
+import { setLocal } from '/@/utils/storage';
 export default {
 	name: 'layoutLockScreen',
 	setup() {
