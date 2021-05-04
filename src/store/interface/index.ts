@@ -1,7 +1,7 @@
 // 接口类型声明
 
 // 布局配置
-declare interface ThemeConfigState {
+export interface ThemeConfigState {
 	themeConfig: {
 		isDrawer: boolean;
 		primary: string;
@@ -52,32 +52,32 @@ declare interface ThemeConfigState {
 }
 
 // 路由列表
-declare interface RoutesListState {
+export interface RoutesListState {
 	routesList: Array<object>;
 }
 
 // 路由缓存列表
-declare interface KeepAliveNamesState {
+export interface KeepAliveNamesState {
 	keepAliveNames: Array<string>;
 }
 
 // TagsView 路由列表
-declare interface TagsViewRoutesState {
+export interface TagsViewRoutesState {
 	tagsViewRoutes: Array<object>;
 }
 
 // 用户信息
-declare interface UserInfosState {
+export interface UserInfosState {
 	userInfos: object;
 }
 
 // 后端返回原始路由(未处理时)
-declare interface RequestOldRoutesState {
+export interface RequestOldRoutesState {
 	requestOldRoutes: Array<object>;
 }
 
 // 主接口(顶级类型声明)
-declare interface RootStateTypes {
+export interface RootStateTypes {
 	themeConfig: ThemeConfigState;
 	routesList: RoutesListState;
 	keepAliveNames: KeepAliveNamesState;
