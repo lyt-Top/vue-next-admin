@@ -11,7 +11,7 @@
 	"dependencies": {
 		"axios": "^0.21.1",
 		"clipboard": "^2.0.8",
-		"core-js": "^3.11.0",
+		"core-js": "^3.12.0",
 		"countup.js": "^2.0.7",
 		"echarts": "^5.1.1",
 		"element-ui": "^2.15.1",
@@ -22,7 +22,7 @@
 		"screenfull": "^5.1.0",
 		"sign-canvas": "^1.1.4",
 		"vue": "^2.6.12",
-		"vue-i18n": "^8.24.3",
+		"vue-i18n": "^8.24.4",
 		"vue-particles": "^1.0.9",
 		"vue-router": "^3.5.1",
 		"vue-seamless-scroll": "^1.1.23",
@@ -39,7 +39,7 @@
 		"babel-eslint": "^10.1.0",
 		"eslint": "^7.25.0",
 		"eslint-plugin-vue": "^7.9.0",
-		"sass": "^1.32.11",
+		"sass": "^1.32.12",
 		"sass-loader": "^10.1.1",
 		"vue-template-compiler": "^2.6.12"
 	}
