@@ -6,17 +6,16 @@
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, onUnmounted, getCurrentInstance, defineAsyncComponent } from 'vue';
+import { computed, onBeforeMount, onUnmounted, getCurrentInstance } from 'vue';
 import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
+import { getLocal, setLocal } from '/@/utils/storage.ts';
+import Defaults from '/@/views/layout/main/defaults.vue';
+import Classic from '/@/views/layout/main/classic.vue';
+import Transverse from '/@/views/layout/main/transverse.vue';
+import Columns from '/@/views/layout/main/columns.vue';
 export default {
 	name: 'layout',
-	components: {
-		Defaults: defineAsyncComponent(() => import('/@/views/layout/main/defaults.vue')),
-		Classic: defineAsyncComponent(() => import('/@/views/layout/main/classic.vue')),
-		Transverse: defineAsyncComponent(() => import('/@/views/layout/main/transverse.vue')),
-		Columns: defineAsyncComponent(() => import('/@/views/layout/main/columns.vue')),
-	},
+	components: { Defaults, Classic, Transverse, Columns },
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
@@ -26,6 +25,7 @@ export default {
 		});
 		// 窗口大小改变时(适配移动端)
 		const onLayoutResize = () => {
+			if (!getLocal('oldLayout')) setLocal('oldLayout', getThemeConfig.value.layout);
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
 				getThemeConfig.value.isCollapse = false;

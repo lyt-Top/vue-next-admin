@@ -1,4 +1,6 @@
 import { Module } from 'vuex';
+// 此处加上 `.ts` 后缀报错，具体原因不详
+import { ThemeConfigState, RootStateTypes } from '/@/store/interface/index';
 
 const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 	namespaced: true,
@@ -38,6 +40,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isTopBarColorGradual: false,
 			// 是否开启菜单背景颜色渐变
 			isMenuBarColorGradual: false,
+			// 是否开启分栏菜单背景颜色渐变
+			isColumnsMenuBarColorGradual: false,
 			// 是否开启菜单字体背景高亮
 			isMenuBarColorHighlight: false,
 			// 是否开启菜单字体背景高亮
@@ -115,6 +119,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			globalViceTitle: 'SMALL@小柒',
 			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
 			globalI18n: 'zh-cn',
+			// 默认全局组件大小，可选值"<default|medium|small|mini>"，默认 default
+			globalComponentSize: 'default',
 		},
 	},
 	mutations: {

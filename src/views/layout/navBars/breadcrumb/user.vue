@@ -1,5 +1,18 @@
 <template>
 	<div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
+		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onComponentSizeChange">
+			<div class="layout-navbars-breadcrumb-user-icon">
+				<i class="iconfont icon-ziti" :title="$t('message.user.title0')"></i>
+			</div>
+			<template #dropdown>
+				<el-dropdown-menu>
+					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
+					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">{{ $t('message.user.dropdownMedium') }}</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
+					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">{{ $t('message.user.dropdownMini') }}</el-dropdown-item>
+				</el-dropdown-menu>
+			</template>
+		</el-dropdown>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
@@ -80,7 +93,8 @@ export default {
 		const state = reactive({
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
-			disabledI18n: false,
+			disabledI18n: 'zh-cn',
+			disabledSize: 'small',
 		});
 		// 获取用户信息 vuex
 		const getUserInfos = computed(() => {
@@ -154,6 +168,14 @@ export default {
 		const onSearchClick = () => {
 			searchRef.value.openSearch();
 		};
+		// 组件大小改变
+		const onComponentSizeChange = (size: string) => {
+			removeLocal('themeConfig');
+			getThemeConfig.value.globalComponentSize = size;
+			setLocal('themeConfig', getThemeConfig.value);
+			proxy.$ELEMENT.size = size;
+			initComponentSize();
+		};
 		// 语言切换
 		const onLanguageChange = (lang: string) => {
 			removeLocal('themeConfig');
@@ -176,9 +198,29 @@ export default {
 					break;
 			}
 		};
+		// 初始化全局组件大小
+		const initComponentSize = () => {
+			switch (getLocal('themeConfig').globalComponentSize) {
+				case 'default':
+					state.disabledSize = 'default';
+					break;
+				case 'medium':
+					state.disabledSize = 'medium';
+					break;
+				case 'small':
+					state.disabledSize = 'small';
+					break;
+				case 'mini':
+					state.disabledSize = 'mini';
+					break;
+			}
+		};
 		// 页面加载时
 		onMounted(() => {
-			if (getLocal('themeConfig')) initI18n();
+			if (getLocal('themeConfig')) {
+				initI18n();
+				initComponentSize();
+			}
 		});
 		return {
 			getUserInfos,
@@ -186,6 +228,7 @@ export default {
 			onHandleCommandClick,
 			onScreenfullClick,
 			onSearchClick,
+			onComponentSizeChange,
 			onLanguageChange,
 			searchRef,
 			layoutUserFlexNum,

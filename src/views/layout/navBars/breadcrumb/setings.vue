@@ -95,6 +95,12 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
+					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsColumnsMenuBarColorGradual') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-switch v-model="getThemeConfig.isColumnsMenuBarColorGradual" @change="onColumnsMenuBarGradualChange"></el-switch>
+					</div>
+				</div>
+				<div class="layout-breadcrumb-seting-bar-flex mt14">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsMenuBarColorHighlight') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
@@ -385,6 +391,7 @@ export default defineComponent({
 			document.documentElement.style.setProperty(`--bg-${bg}`, getThemeConfig.value[bg]);
 			onTopBarGradualChange();
 			onMenuBarGradualChange();
+			onColumnsMenuBarGradualChange();
 			setDispatchThemeConfig();
 		};
 		// 2、菜单 / 顶栏 --> 顶栏背景渐变
@@ -394,6 +401,10 @@ export default defineComponent({
 		// 2、菜单 / 顶栏 --> 菜单背景渐变
 		const onMenuBarGradualChange = () => {
 			setGraduaFun('.layout-container .el-aside', getThemeConfig.value.isMenuBarColorGradual, getThemeConfig.value.menuBar);
+		};
+		// 2、菜单 / 顶栏 --> 分栏菜单背景渐变
+		const onColumnsMenuBarGradualChange = () => {
+			setGraduaFun('.layout-container .layout-columns-aside', getThemeConfig.value.isColumnsMenuBarColorGradual, getThemeConfig.value.columnsMenuBar);
 		};
 		// 2、菜单 / 顶栏 --> 背景渐变函数
 		const setGraduaFun = (el: string, bool: boolean, color: string) => {
@@ -405,8 +416,10 @@ export default defineComponent({
 				setLocalThemeConfig();
 				const elNavbars: any = document.querySelector('.layout-navbars-breadcrumb-index');
 				const elAside: any = document.querySelector('.layout-container .el-aside');
+				const elColumns: any = document.querySelector('.layout-container .layout-columns-aside');
 				if (elNavbars) setLocal('navbarsBgStyle', elNavbars.style.cssText);
 				if (elAside) setLocal('asideBgStyle', elAside.style.cssText);
+				if (elColumns) setLocal('columnsBgStyle', elColumns.style.cssText);
 			});
 		};
 		// 2、菜单 / 顶栏 --> 菜单字体背景高亮
@@ -602,7 +615,6 @@ export default defineComponent({
 				});
 				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 				proxy.mittBus.on('layoutMobileResize', (res: any) => {
-					if (getThemeConfig.value.layout === res.layout) return false;
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
 					initSetLayoutChange();
@@ -622,6 +634,11 @@ export default defineComponent({
 							const asideEl: any = document.querySelector('.layout-container .el-aside');
 							asideEl.style.cssText = getLocal('asideBgStyle');
 						}
+						// 分栏菜单背景渐变
+						if (getLocal('columnsBgStyle') && getThemeConfig.value.isColumnsMenuBarColorGradual) {
+							const asideEl: any = document.querySelector('.layout-container .layout-columns-aside');
+							asideEl.style.cssText = getLocal('columnsBgStyle');
+						}
 						// 菜单字体背景高亮
 						if (getLocal('menuBarHighlightId') && getThemeConfig.value.isMenuBarColorHighlight) {
 							let els = document.querySelector('.el-menu-item.is-active');
@@ -637,7 +654,7 @@ export default defineComponent({
 						onWartermarkChange();
 						// 语言国际化
 						if (getLocal('themeConfig')) proxy.$i18n.locale = getLocal('themeConfig').globalI18n;
-					}, 1000);
+					}, 1100);
 				});
 			});
 		});
@@ -652,6 +669,7 @@ export default defineComponent({
 			onBgColorPickerChange,
 			onTopBarGradualChange,
 			onMenuBarGradualChange,
+			onColumnsMenuBarGradualChange,
 			onMenuBarHighlightChange,
 			onThemeConfigChange,
 			onIsFixedHeaderChange,

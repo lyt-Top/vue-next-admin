@@ -56,7 +56,11 @@ export default {
 			height: 120px;
 			overflow: hidden;
 			display: flex;
+			transition: all 0.3s ease;
 			&:hover {
+				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+				cursor: pointer;
+				transition: all 0.3s ease;
 				.iconfont-warp-value {
 					i {
 						color: var(--color-primary);
