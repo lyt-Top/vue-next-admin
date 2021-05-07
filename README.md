@@ -84,7 +84,6 @@ cnpm run build
 - <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-nex</a>
 - <a href="https://github.com/vuejs/vuex" target="_blank">vuex</a>
 - <a href="https://github.com/apache/echarts" target="_blank">echarts</a>
-- <a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank">vue-element-admin</a>
 - <a href="https://github.com/axios/axios" target="_blank">axios</a>
 - <a href="https://github.com/zenorocha/clipboard.js" target="_blank">clipboard</a>
 - <a href="https://github.com/inorganik/countUp.js" target="_blank">countUp</a>
