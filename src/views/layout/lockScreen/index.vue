@@ -195,6 +195,8 @@ export default {
 }
 .layout-lock-screen-filter {
 	filter: blur(5px);
+	transform: scale(1.2);
+	transition: all 0.3s ease;
 }
 .layout-lock-screen-mask {
 	background: rgba(255, 255, 255, 1);
