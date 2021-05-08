@@ -1079,7 +1079,7 @@ router.beforeEach((to, from, next) => {
 		NProgress.done();
 	} else {
 		if (!token) {
-			next('/login');
+			next(`/login?redirect=${to.path}`);
 			clearSession();
 			resetRoute();
 			NProgress.done();
