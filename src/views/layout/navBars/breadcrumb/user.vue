@@ -126,6 +126,7 @@ export default {
 			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
 			this.$ELEMENT.size = size;
 			this.initComponentSize();
+			window.location.reload();
 		},
 		// 语言切换
 		onLanguageChange(lang) {
