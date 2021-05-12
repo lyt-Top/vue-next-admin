@@ -175,6 +175,7 @@ export default {
 			setLocal('themeConfig', getThemeConfig.value);
 			proxy.$ELEMENT.size = size;
 			initComponentSize();
+			window.location.reload();
 		};
 		// 语言切换
 		const onLanguageChange = (lang: string) => {
