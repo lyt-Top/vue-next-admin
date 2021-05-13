@@ -6,7 +6,7 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
+					<el-dropdown-item command="" :disabled="disabledSize === ''">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
 					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">{{ $t('message.user.dropdownMedium') }}</el-dropdown-item>
 					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
 					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">{{ $t('message.user.dropdownMini') }}</el-dropdown-item>
@@ -78,7 +78,7 @@ export default {
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
 			disabledI18n: 'zh-cn',
-			disabledSize: 'small',
+			disabledSize: '',
 		};
 	},
 	computed: {
@@ -153,8 +153,8 @@ export default {
 		// 初始化全局组件大小
 		initComponentSize() {
 			switch (getLocal('themeConfig').globalComponentSize) {
-				case 'default':
-					this.disabledSize = 'default';
+				case '':
+					this.disabledSize = '';
 					break;
 				case 'medium':
 					this.disabledSize = 'medium';
