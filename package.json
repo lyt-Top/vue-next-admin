@@ -33,7 +33,7 @@
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
 		"@types/clipboard": "^2.0.1",
-		"@types/node": "^15.0.2",
+		"@types/node": "^15.0.3",
 		"@types/nprogress": "^0.2.0",
 		"@types/sortablejs": "^1.10.6",
 		"@typescript-eslint/eslint-plugin": "^4.23.0",
@@ -44,10 +44,10 @@
 		"eslint": "^7.26.0",
 		"eslint-plugin-vue": "^7.9.0",
 		"prettier": "^2.3.0",
-		"sass": "^1.32.12",
+		"sass": "^1.32.13",
 		"sass-loader": "^11.1.0",
 		"typescript": "^4.2.4",
-		"vite": "^2.3.0",
+		"vite": "^2.3.2",
 		"vue-eslint-parser": "^7.6.0"
 	},
 	"browserslist": [
