@@ -7,10 +7,10 @@
 <script lang="ts">
 import { defineComponent, toRefs, reactive } from 'vue';
 export default defineComponent({
-	name: 'home',
+	name: 'about',
 	setup() {
 		const state = reactive({
-			text: 'home',
+			text: 'about',
 		});
 		return {
 			...toRefs(state),
