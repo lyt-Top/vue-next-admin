@@ -28,7 +28,7 @@ const getAlicdnIconfont = () => {
 };
 
 // 初始化获取 css 样式，获取 element plus 自带图标
-const elementPlusIconfont = () => {
+const getElementPlusIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
 			const styles: any = document.styleSheets;
@@ -49,7 +49,7 @@ const elementPlusIconfont = () => {
 };
 
 // 初始化获取 css 样式，这里使用 fontawesome 的图标
-const awesomeIconfont = () => {
+const getAwesomeIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
 			const styles: any = document.styleSheets;
@@ -81,14 +81,17 @@ const awesomeIconfont = () => {
 
 // 定义导出方法集合
 const initIconfont = {
+	// iconfont
 	ali: () => {
 		return getAlicdnIconfont();
 	},
+	// element plus
 	ele: () => {
-		return elementPlusIconfont();
+		return getElementPlusIconfont();
 	},
+	// fontawesome
 	awe: () => {
-		return awesomeIconfont();
+		return getAwesomeIconfont();
 	},
 };
 

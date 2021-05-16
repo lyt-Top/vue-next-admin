@@ -5,7 +5,7 @@ export function wavesDirective(app: App) {
 	app.directive('waves', {
 		mounted(el, binding) {
 			el.classList.add('waves-effect');
-			binding.value && el.classList.add('waves-' + binding.value);
+			binding.value && el.classList.add(`waves-${binding.value}`);
 			function setConvertStyle(obj: any) {
 				let style: string = '';
 				for (let i in obj) {
