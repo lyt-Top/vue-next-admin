@@ -121,9 +121,9 @@ export default {
 		},
 		// 组件大小改变
 		onComponentSizeChange(size) {
-			removeLocal('themeConfig');
+			removeLocal('themeConfigPrev');
 			this.$store.state.themeConfig.themeConfig.globalComponentSize = size;
-			setLocal('themeConfig', this.$store.state.themeConfig.themeConfig);
+			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.$ELEMENT.size = size;
 			this.initComponentSize();
 			window.location.reload();
@@ -152,7 +152,7 @@ export default {
 		},
 		// 初始化全局组件大小
 		initComponentSize() {
-			switch (getLocal('themeConfig').globalComponentSize) {
+			switch (getLocal('themeConfigPrev').globalComponentSize) {
 				case '':
 					this.disabledSize = '';
 					break;
