@@ -139,6 +139,7 @@ export default {
 		fiveTagsStyle: 'Tagsview style',
 		fiveAnimation: 'page animation',
 		fiveColumnsAsideStyle: 'Column style',
+		fiveColumnsAsideLayout: 'Column layout',
 		sixTitle: 'Layout switch',
 		sixDefaults: 'One',
 		sixClassic: 'Two',

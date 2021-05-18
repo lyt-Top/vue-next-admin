@@ -100,6 +100,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			animation: 'slide-right',
 			// 默认分栏高亮风格，可选 1、 圆角 columns-round 2、 卡片 columns-card
 			columnsAsideStyle: 'columns-round',
+			// 默认分栏布局风格，可选 1、 水平 columns-horizontal 2、 垂直 columns-vertical
+			columnsAsideLayout: 'columns-vertical',
 
 			/* 布局切换
             ------------------------------- */

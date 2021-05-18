@@ -139,6 +139,7 @@ export default {
 		fiveTagsStyle: 'Tagsview 风格',
 		fiveAnimation: '主页面切换动画',
 		fiveColumnsAsideStyle: '分栏高亮风格',
+		fiveColumnsAsideLayout: '分栏布局风格',
 		sixTitle: '布局切换',
 		sixDefaults: '默认',
 		sixClassic: '经典',
