@@ -10,17 +10,25 @@
 					:class="{ 'layout-columns-active': liIndex === k }"
 					:title="$t(v.meta.title)"
 				>
-					<div class="layout-columns-aside-li-box" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
+					<div :class="setColumnsAsidelayout" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
 						<i :class="v.meta.icon"></i>
 						<div class="layout-columns-aside-li-box-title font12">
-							{{ $t(v.meta.title) && $t(v.meta.title).length >= 4 ? $t(v.meta.title).substr(0, 4) : $t(v.meta.title) }}
+							{{
+								$t(v.meta.title) && $t(v.meta.title).length >= 4
+									? $t(v.meta.title).substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3)
+									: $t(v.meta.title)
+							}}
 						</div>
 					</div>
-					<div class="layout-columns-aside-li-box" v-else>
+					<div :class="setColumnsAsidelayout" v-else>
 						<a :href="v.meta.isLink" target="_blank">
 							<i :class="v.meta.icon"></i>
 							<div class="layout-columns-aside-li-box-title font12">
-								{{ $t(v.meta.title) && $t(v.meta.title).length >= 4 ? $t(v.meta.title).substr(0, 4) : $t(v.meta.title) }}
+								{{
+									$t(v.meta.title) && $t(v.meta.title).length >= 4
+										? $t(v.meta.title).substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3)
+										: $t(v.meta.title)
+								}}
 							</div>
 						</a>
 					</div>
@@ -43,9 +51,13 @@ export default {
 		};
 	},
 	computed: {
-		// 设置高亮样式
+		// 设置分栏高亮风格
 		setColumnsAsideStyle() {
 			return this.$store.state.themeConfig.themeConfig.columnsAsideStyle;
+		},
+		// 设置分栏布局风格
+		setColumnsAsidelayout() {
+			return this.$store.state.themeConfig.themeConfig.columnsAsideLayout;
 		},
 	},
 	mounted() {
@@ -139,7 +151,7 @@ export default {
 
 <style scoped lang="scss">
 .layout-columns-aside {
-	width: 64px;
+	width: 70px;
 	height: 100%;
 	background: var(--bg-columnsMenuBar);
 	ul {
@@ -153,10 +165,26 @@ export default {
 			cursor: pointer;
 			position: relative;
 			z-index: 1;
-			.layout-columns-aside-li-box {
+			.columns-vertical {
 				margin: auto;
-				.layout-columns-aside-li-box-title {
+				.columns-vertical-title {
 					padding-top: 1px;
+				}
+			}
+			.columns-horizontal {
+				display: flex;
+				height: 50px;
+				width: 100%;
+				align-items: center;
+				padding: 0 5px;
+				i {
+					margin-right: 3px;
+				}
+				a {
+					display: flex;
+					.columns-horizontal-title {
+						padding-top: 1px;
+					}
 				}
 			}
 			a {
@@ -175,7 +203,7 @@ export default {
 			left: 50%;
 			top: 2px;
 			height: 50px;
-			width: 58px;
+			width: 65px;
 			transform: translateX(-50%);
 			z-index: 0;
 			transition: 0.3s ease-in-out;

@@ -41,6 +41,8 @@ const themeConfigModule = {
 			layout: 'defaults',
 			// 默认分栏高亮风格，可选值"<columns-round|columns-card>"，默认 columns-round
 			columnsAsideStyle: 'columns-round',
+			// 默认分栏布局风格，，可选值"<columns-horizontal|columns-vertical>"，默认 columns-vertical
+			columnsAsideLayout: 'columns-vertical',
 
 			/* 全局网站标题 / 副标题
             ------------------------------- */
