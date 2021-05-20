@@ -42,6 +42,7 @@ export interface ThemeConfigState {
 		tagsStyle: string;
 		animation: string;
 		columnsAsideStyle: string;
+		columnsAsideLayout: string;
 		layout: string;
 		isRequestRoutes: boolean;
 		globalTitle: string;

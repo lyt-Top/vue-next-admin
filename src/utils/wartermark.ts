@@ -19,13 +19,14 @@ const setWatermark = (str: any) => {
 	div.style.left = '0px';
 	div.style.position = 'fixed';
 	div.style.zIndex = '10000000';
-	div.style.width = document.documentElement.clientWidth + 'px';
-	div.style.height = document.documentElement.clientHeight + 'px';
+	div.style.width = `${document.documentElement.clientWidth}px`;
+	div.style.height = `${document.documentElement.clientHeight}px`;
 	div.style.background = `url(${can.toDataURL('image/png')}) left top repeat`;
 	document.body.appendChild(div);
 	return id;
 };
 
+// 定义导出方法集合
 const watermark = {
 	// 设置水印
 	set: (str: any) => {
@@ -39,4 +40,5 @@ const watermark = {
 	},
 };
 
+// 导出方法
 export default watermark;

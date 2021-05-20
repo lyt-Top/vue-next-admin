@@ -100,6 +100,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			animation: 'slide-right',
 			// 默认分栏高亮风格，可选 1、 圆角 columns-round 2、 卡片 columns-card
 			columnsAsideStyle: 'columns-round',
+			// 默认分栏布局风格，可选 1、 水平 columns-horizontal 2、 垂直 columns-vertical
+			columnsAsideLayout: 'columns-vertical',
 
 			/* 布局切换
             ------------------------------- */
@@ -119,8 +121,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			globalViceTitle: 'SMALL@小柒',
 			// 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
 			globalI18n: 'zh-cn',
-			// 默认全局组件大小，可选值"<default|medium|small|mini>"，默认 default
-			globalComponentSize: 'default',
+			// 默认全局组件大小，可选值"<|medium|small|mini>"，默认 ''
+			globalComponentSize: '',
 		},
 	},
 	mutations: {

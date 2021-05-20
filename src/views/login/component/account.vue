@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, defineComponent, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import { initAllFun, initBackEndControlRoutesFun } from '/@/router/index.ts';
@@ -64,6 +64,7 @@ export default defineComponent({
 	setup() {
 		const { t } = useI18n();
 		const store = useStore();
+		const route = useRoute();
 		const router = useRouter();
 		const state = reactive({
 			ruleForm: {
@@ -134,7 +135,8 @@ export default defineComponent({
 			let currentTimeInfo = currentTime.value;
 			// 登录成功，跳到转首页
 			// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
-			router.push('/');
+			// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+			route.query?.redirect ? router.push(route.query.redirect) : router.push('/');
 			// 登录成功提示
 			setTimeout(() => {
 				// 关闭 loading

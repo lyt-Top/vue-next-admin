@@ -23,6 +23,7 @@ const viteConfig: UserConfig = {
 		include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en', 'element-plus/lib/locale/lang/zh-tw'],
 	},
 	server: {
+		host: '0.0.0.0',
 		port: VITE_PORT,
 		open: VITE_OPEN,
 		proxy: {
