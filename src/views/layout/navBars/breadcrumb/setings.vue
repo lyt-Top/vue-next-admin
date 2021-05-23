@@ -618,12 +618,16 @@ export default defineComponent({
 		};
 		onMounted(() => {
 			nextTick(() => {
+				// 判断当前布局是否不相同，不相同则初始化当前布局的样式，防止监听窗口大小改变时，布局配置logo、菜单背景等部分布局失效问题
+				if (!getLocal('frequency')) initSetLayoutChange();
+				setLocal('frequency', 1);
 				// 监听菜单点击，菜单字体背景高亮
 				proxy.mittBus.on('onMenuClick', () => {
 					onMenuBarHighlightChange();
 				});
 				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 				proxy.mittBus.on('layoutMobileResize', (res: any) => {
+					if (getThemeConfig.value.layout === res.layout) return false;
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
 					initSetLayoutChange();
