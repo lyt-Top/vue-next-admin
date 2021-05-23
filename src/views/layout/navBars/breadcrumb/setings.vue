@@ -194,8 +194,12 @@ export default {
 		},
 	},
 	created() {
+		// 判断当前布局是否不相同，不相同则初始化当前布局的样式，防止监听窗口大小改变时，布局配置logo、菜单背景等部分布局失效问题
+		if (!getLocal('frequency')) this.initSetLayoutChange();
+		setLocal('frequency', 1);
 		// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 		this.bus.$on('layoutMobileResize', (res) => {
+			if (this.$store.state.themeConfig.themeConfig.layout === res.layout) return false;
 			this.$store.state.themeConfig.themeConfig.layout = res.layout;
 			this.$store.state.themeConfig.themeConfig.isDrawer = false;
 			this.$store.state.themeConfig.themeConfig.isCollapse = false;

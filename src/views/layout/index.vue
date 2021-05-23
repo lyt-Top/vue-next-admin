@@ -38,7 +38,7 @@ export default {
 				});
 			} else {
 				this.bus.$emit('layoutMobileResize', {
-					layout: getLocal('oldLayout') ? getLocal('oldLayout') : 'defaults',
+					layout: getLocal('oldLayout') ? getLocal('oldLayout') : this.$store.state.themeConfig.themeConfig.layout,
 					clientWidth,
 				});
 			}
