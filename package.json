@@ -11,7 +11,7 @@
 	"dependencies": {
 		"axios": "^0.21.1",
 		"clipboard": "^2.0.8",
-		"core-js": "^3.12.1",
+		"core-js": "^3.13.0",
 		"countup.js": "^2.0.7",
 		"echarts": "^5.1.1",
 		"element-ui": "^2.15.1",
