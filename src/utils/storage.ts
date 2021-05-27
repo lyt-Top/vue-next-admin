@@ -37,7 +37,7 @@ export function clearSession() {
 }
 
 // 新写法，简单易记，建议使用
-// 1、window.localStorage   浏览器永久缓存
+// 1、window.localStorage 浏览器永久缓存
 export const Local = {
 	// 设置永久缓存
 	set(key: string, val: any) {
@@ -70,7 +70,7 @@ export const Session = {
 		return JSON.parse(json);
 	},
 	// 移除临时缓存
-	removeLocal(key: string) {
+	remove(key: string) {
 		window.sessionStorage.removeItem(key);
 	},
 	// 移除全部临时缓存
