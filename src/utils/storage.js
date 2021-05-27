@@ -37,7 +37,7 @@ export function clearSession() {
 }
 
 // 新写法，简单易记，建议使用
-// 1、window.localStorage   浏览器永久缓存
+// 1、window.localStorage 浏览器永久缓存
 export const Local = {
 	// 设置永久缓存
 	set(key, val) {
