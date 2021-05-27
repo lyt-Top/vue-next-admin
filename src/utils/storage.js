@@ -70,7 +70,7 @@ export const Session = {
 		return JSON.parse(json);
 	},
 	// 移除临时缓存
-	removeLocal(key) {
+	remove(key) {
 		window.sessionStorage.removeItem(key);
 	},
 	// 移除全部临时缓存
