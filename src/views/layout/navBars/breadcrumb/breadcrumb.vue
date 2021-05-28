@@ -43,6 +43,7 @@ export default {
 		});
 		// 动态设置经典、横向布局不显示
 		const isShowBreadcrumb = computed(() => {
+			initRouteSplit(route.path);
 			const { layout, isBreadcrumb } = store.state.themeConfig.themeConfig;
 			if (layout === 'classic' || layout === 'transverse') {
 				return 'none';
