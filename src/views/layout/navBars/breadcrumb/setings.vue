@@ -38,12 +38,15 @@
 						<el-switch v-model="getThemeConfig.isShowLogo" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout === 'transverse' ? 0.5 : 1 }">
+				<div
+					class="layout-breadcrumb-seting-bar-flex mt15"
+					:style="{ opacity: getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse' ? 0.5 : 1 }"
+				>
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsBreadcrumb') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch
 							v-model="getThemeConfig.isBreadcrumb"
-							:disabled="getThemeConfig.layout === 'transverse'"
+							:disabled="getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse'"
 							@change="setLocalThemeConfig"
 						></el-switch>
 					</div>
@@ -252,11 +255,10 @@ export default {
 		// 初始化：刷新页面时，设置了值，直接取缓存中的值进行初始化
 		initLayoutConfig() {
 			window.addEventListener('load', () => {
-				// 灰色模式/色弱模式
-				if (getLocal('appFilterStyle')) {
-					const appEl = document.body;
-					appEl.style.cssText = getLocal('appFilterStyle');
-				}
+				// 灰色模式
+				if (this.$store.state.themeConfig.themeConfig.isGrayscale) this.onAddFilterChange('grayscale');
+				// 色弱模式
+				if (this.$store.state.themeConfig.themeConfig.isInvert) this.onAddFilterChange('invert');
 				// 语言国际化
 				if (getLocal('themeConfigPrev')) this.$i18n.locale = getLocal('themeConfigPrev').globalI18n;
 			});
@@ -294,7 +296,6 @@ export default {
 			const appEle = document.body;
 			appEle.setAttribute('style', `filter: ${cssAttr};`);
 			this.setLocalThemeConfig();
-			setLocal('appFilterStyle', appEle.style.cssText);
 		},
 		// 布局切换
 		onSetLayout(layout) {
@@ -307,35 +308,20 @@ export default {
 		// 设置布局切换，重置主题样式
 		initSetLayoutChange() {
 			if (this.$store.state.themeConfig.themeConfig.layout === 'classic') {
-				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
-				this.$store.state.themeConfig.themeConfig.isBreadcrumb = false;
-				this.$store.state.themeConfig.themeConfig.isCollapse = false;
 				this.onBgColorPickerChange('menuBar', '#ffffff');
 				this.onBgColorPickerChange('menuBarColor', '#606266');
 				this.onBgColorPickerChange('topBar', '#ffffff');
 				this.onBgColorPickerChange('topBarColor', '#606266');
 			} else if (this.$store.state.themeConfig.themeConfig.layout === 'transverse') {
-				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
-				this.$store.state.themeConfig.themeConfig.isBreadcrumb = false;
-				this.$store.state.themeConfig.themeConfig.isCollapse = false;
-				this.$store.state.themeConfig.themeConfig.isTagsview = false;
 				this.onBgColorPickerChange('menuBarColor', '#ffffff');
 				this.onBgColorPickerChange('topBar', '#545c64');
 				this.onBgColorPickerChange('topBarColor', '#ffffff');
 			} else if (this.$store.state.themeConfig.themeConfig.layout === 'columns') {
-				this.$store.state.themeConfig.themeConfig.isShowLogo = true;
-				this.$store.state.themeConfig.themeConfig.isBreadcrumb = true;
-				this.$store.state.themeConfig.themeConfig.isCollapse = false;
-				this.$store.state.themeConfig.themeConfig.isTagsview = true;
 				this.onBgColorPickerChange('menuBar', '#ffffff');
 				this.onBgColorPickerChange('menuBarColor', '#606266');
 				this.onBgColorPickerChange('topBar', '#ffffff');
 				this.onBgColorPickerChange('topBarColor', '#606266');
 			} else {
-				this.$store.state.themeConfig.themeConfig.isShowLogo = false;
-				this.$store.state.themeConfig.themeConfig.isBreadcrumb = true;
-				this.$store.state.themeConfig.themeConfig.isCollapse = false;
-				this.$store.state.themeConfig.themeConfig.isTagsview = true;
 				this.onBgColorPickerChange('menuBar', '#545c64');
 				this.onBgColorPickerChange('menuBarColor', '#eaeaea');
 				this.onBgColorPickerChange('topBar', '#ffffff');

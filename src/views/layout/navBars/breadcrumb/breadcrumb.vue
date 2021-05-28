@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb" v-show="getThemeConfig.isBreadcrumb">
+	<div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
 		<i
 			class="layout-navbars-breadcrumb-icon"
 			:class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
@@ -35,6 +35,15 @@ export default {
 		// 获取布局配置信息
 		getThemeConfig() {
 			return this.$store.state.themeConfig.themeConfig;
+		},
+		// 动态设置经典、横向布局不显示
+		isShowBreadcrumb() {
+			const { layout, isBreadcrumb } = this.$store.state.themeConfig.themeConfig;
+			if (layout === 'classic' || layout === 'transverse') {
+				return 'none';
+			} else {
+				return isBreadcrumb ? '' : 'none';
+			}
 		},
 	},
 	mounted() {
