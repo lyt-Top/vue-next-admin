@@ -6,7 +6,7 @@ const themeConfigModule = {
 			isDrawer: false,
 
 			/* 界面设置
-            ------------------------------- */
+      ------------------------------- */
 			// 是否开启菜单水平折叠效果
 			isCollapse: false,
 			// 是否开启菜单手风琴效果
@@ -15,7 +15,7 @@ const themeConfigModule = {
 			isFixedHeader: false,
 
 			/* 界面显示
-            ------------------------------- */
+      ------------------------------- */
 			// 是否开启侧边栏 Logo
 			isShowLogo: false,
 			// 是否开启 Breadcrumb
@@ -35,17 +35,26 @@ const themeConfigModule = {
 			// 是否开启色弱模式
 			isInvert: false,
 
-			/* 布局切换
-            ------------------------------- */
-			// 默认布局，可选值"<defaults|classic|transverse|columns>"，默认 defaults
-			layout: 'defaults',
+			/* 其它设置
+      ------------------------------- */
+			// 默认 Tagsview 风格，可选 1、 tags-style-one，自行扩展：
+			// 1、需修改 @/views/layout/navBars/breadcrumb/setings.vue `getThemeConfig.tagsStyle` el-option
+			// 2、需修改 @/views/layout/navBars/tagsView/tagsView.vue 代码最底部注释部分 css 样式
+			tagsStyle: 'tags-style-one',
+			// 默认主页面切换动画，可选 1、 slide-right 2、 slide-left 3、 opacitys
+			animation: 'slide-right',
 			// 默认分栏高亮风格，可选值"<columns-round|columns-card>"，默认 columns-round
 			columnsAsideStyle: 'columns-round',
 			// 默认分栏布局风格，，可选值"<columns-horizontal|columns-vertical>"，默认 columns-vertical
 			columnsAsideLayout: 'columns-vertical',
 
+			/* 布局切换
+      ------------------------------- */
+			// 默认布局，可选值"<defaults|classic|transverse|columns>"，默认 defaults
+			layout: 'defaults',
+
 			/* 全局网站标题 / 副标题
-            ------------------------------- */
+      ------------------------------- */
 			// 网站主标题（菜单导航、浏览器当前网页标题）
 			globalTitle: 'vue-prev-admin',
 			// 网站副标题（登录页顶部文字）

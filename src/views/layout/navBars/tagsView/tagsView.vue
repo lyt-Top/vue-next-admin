@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-navbars-tagsview">
 		<el-scrollbar ref="scrollbarRef" @wheel.native.prevent="onHandleScroll">
-			<ul class="layout-navbars-tagsview-ul" ref="tagsUlRef">
+			<ul class="layout-navbars-tagsview-ul" :class="setTagsStyle" ref="tagsUlRef">
 				<li
 					v-for="(v, k) in tagsViewList"
 					:key="k"
@@ -55,6 +55,10 @@ export default {
 		// 获取布局配置信息
 		getThemeConfig() {
 			return this.$store.state.themeConfig.themeConfig;
+		},
+		// 动态设置 tagsView 风格样式
+		setTagsStyle() {
+			return this.$store.state.themeConfig.themeConfig.tagsStyle;
 		},
 	},
 	created() {
@@ -387,5 +391,14 @@ export default {
 	& ::-webkit-scrollbar {
 		display: none !important;
 	}
+	// // 风格2
+	// .tags-style-two {
+	// }
+	// // 风格3
+	// .tags-style-three {
+	// }
+	// // 风格4
+	// .tags-style-four {
+	// }
 }
 </style>

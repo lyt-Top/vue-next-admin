@@ -1,6 +1,6 @@
 <template>
 	<div class="h100">
-		<transition name="slide-right" mode="out-in">
+		<transition :name="setTransitionName" mode="out-in">
 			<keep-alive :include="keepAliveNameList">
 				<router-view :key="refreshRouterViewKey" />
 			</keep-alive>
@@ -19,6 +19,7 @@ export default {
 		};
 	},
 	created() {
+		// 页面加载前，处理缓存，页面刷新时路由缓存处理
 		this.keepAliveNameList = this.getKeepAliveNames();
 		this.bus.$on('onTagsViewRefreshRouterView', (path) => {
 			if (this.$route.path !== path) return false;
@@ -29,6 +30,12 @@ export default {
 				this.keepAliveNameList = this.getKeepAliveNames();
 			});
 		});
+	},
+	computed: {
+		// 设置主界面切换动画
+		setTransitionName() {
+			return this.$store.state.themeConfig.themeConfig.animation;
+		},
 	},
 	methods: {
 		// 获取路由缓存列表（name），默认路由全部缓存

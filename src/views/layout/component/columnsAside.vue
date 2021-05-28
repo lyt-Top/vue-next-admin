@@ -12,7 +12,7 @@
 				>
 					<div :class="setColumnsAsidelayout" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
 						<i :class="v.meta.icon"></i>
-						<div class="layout-columns-aside-li-box-title font12">
+						<div class="font12">
 							{{
 								$t(v.meta.title) && $t(v.meta.title).length >= 4
 									? $t(v.meta.title).substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3)
@@ -23,7 +23,7 @@
 					<div :class="setColumnsAsidelayout" v-else>
 						<a :href="v.meta.isLink" target="_blank">
 							<i :class="v.meta.icon"></i>
-							<div class="layout-columns-aside-li-box-title font12">
+							<div class="font12">
 								{{
 									$t(v.meta.title) && $t(v.meta.title).length >= 4
 										? $t(v.meta.title).substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3)
