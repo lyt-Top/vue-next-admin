@@ -2,6 +2,10 @@ import { Module } from 'vuex';
 // 此处加上 `.ts` 后缀报错，具体原因不详
 import { ThemeConfigState, RootStateTypes } from '/@/store/interface/index';
 
+/**
+ * 2020.05.28 by lyt 优化
+ * 修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效
+ */
 const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 	namespaced: true,
 	state: {
@@ -9,8 +13,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 是否开启布局配置抽屉
 			isDrawer: false,
 
-			/* 全局主题
-            ------------------------------- */
+			/**
+			 * 全局主题
+			 */
 			// 默认 primary 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			primary: '#409eff',
 			// 默认 success 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
@@ -22,8 +27,11 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 默认 danger 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			danger: '#f56c6c',
 
-			/* 菜单 / 顶栏
-            ------------------------------- */
+			/**
+			 * 菜单 / 顶栏
+			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/views/layout/navBars/breadcrumb/setings.vue
+			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
+			 */
 			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			topBar: '#ffffff',
 			// 默认菜单导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
@@ -46,8 +54,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isMenuBarColorHighlight: false,
 			// 是否开启菜单字体背景高亮
 
-			/* 界面设置
-            ------------------------------- */
+			/**
+			 * 界面设置
+			 */
 			// 是否开启菜单水平折叠效果
 			isCollapse: false,
 			// 是否开启菜单手风琴效果
@@ -63,13 +72,14 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 开启自动锁屏倒计时(s/秒)
 			lockScreenTime: 30,
 
-			/* 界面显示
-            ------------------------------- */
+			/**
+			 * 界面显示
+			 */
 			// 是否开启侧边栏 Logo
 			isShowLogo: false,
 			// 初始化变量，用于 el-scrollbar 的高度更新，请勿删除
 			isShowLogoChange: false,
-			// 是否开启 Breadcrumb
+			// 是否开启 Breadcrumb，强制经典、横向布局不显示
 			isBreadcrumb: true,
 			// 是否开启 Tagsview
 			isTagsview: true,
@@ -92,29 +102,35 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 水印文案
 			wartermarkText: 'small@小柒',
 
-			/* 其它设置
-            ------------------------------- */
-			// 默认 Tagsview 风格，可选 1、 tags-style-one 2、 tags-style-two 3、 tags-style-three 4、 tags-style-four
+			/**
+			 * 其它设置
+			 */
+			// Tagsview 风格：可选值"<tags-style-one|tags-style-two|tags-style-three|tags-style-four>"，默认 tags-style-one
 			tagsStyle: 'tags-style-one',
-			// 默认主页面切换动画，可选 1、 slide-right 2、 slide-left 3、 opacitys
+			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
 			animation: 'slide-right',
-			// 默认分栏高亮风格，可选 1、 圆角 columns-round 2、 卡片 columns-card
+			// 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
 			columnsAsideStyle: 'columns-round',
-			// 默认分栏布局风格，可选 1、 水平 columns-horizontal 2、 垂直 columns-vertical
+			// 分栏布局风格：可选值"<columns-horizontal|columns-vertical>"，默认 columns-horizontal
 			columnsAsideLayout: 'columns-vertical',
 
-			/* 布局切换
-            ------------------------------- */
-			// 默认布局，可选 1、默认 defaults 2、经典 classic 3、横向 transverse 4、分栏 columns
+			/**
+			 * 布局切换
+			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/views/layout/navBars/breadcrumb/setings.vue
+			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
+			 */
+			// 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults
 			layout: 'defaults',
 
-			/* 后端控制路由
-            ------------------------------- */
+			/**
+			 * 后端控制路由
+			 */
 			// 是否开启后端控制路由
 			isRequestRoutes: false,
 
-			/* 全局网站标题 / 副标题
-            ------------------------------- */
+			/**
+			 * 全局网站标题 / 副标题
+			 */
 			// 网站主标题（菜单导航、浏览器当前网页标题）
 			globalTitle: 'vue-next-admin',
 			// 网站副标题（登录页顶部文字）
