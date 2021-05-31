@@ -56,5 +56,6 @@ module.exports = {
 		'no-multiple-template-root': 'off',
 		'no-unused-vars': 'error',
 		'no-v-model-argument': 'off',
+		'no-case-declarations': 'off',
 	},
 };

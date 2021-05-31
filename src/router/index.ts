@@ -1047,7 +1047,7 @@ export function setFilterRouteEnd() {
 // 添加动态路由
 export function setAddRoute() {
 	setFilterRouteEnd().forEach((route: any) => {
-		router.addRoute((route as unknown) as RouteRecordRaw);
+		router.addRoute(route as unknown as RouteRecordRaw);
 	});
 }
 
