@@ -195,7 +195,7 @@ export default {
 }
 .layout-lock-screen-filter {
 	filter: blur(5px);
-	transform: scale(1.2);
+	transform: scale(1.01);
 }
 .layout-lock-screen-mask {
 	background: rgba(255, 255, 255, 1);
@@ -207,7 +207,6 @@ export default {
 	background-image: url('https://img6.bdstatic.com/img/image/pcindex/sunjunpchuazhoutu.JPG');
 	background-size: 100% 100%;
 	z-index: 9999991;
-	transition: all ease 0.3s 0.3s;
 }
 .layout-lock-screen {
 	@extend .layout-lock-screen-fixed;

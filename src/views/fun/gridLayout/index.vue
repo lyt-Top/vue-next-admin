@@ -8,7 +8,7 @@
 				class="mb15"
 			></el-alert>
 			<grid-layout
-				:layout.sync="layouts"
+				v-model:layout="layouts"
 				:col-num="12"
 				:row-height="30"
 				:is-draggable="true"
@@ -31,7 +31,7 @@
 <script lang="ts">
 import { toRefs, reactive } from 'vue';
 export default {
-	name: 'funGridLayout',
+	name: 'FunGridLayout',
 	setup() {
 		const state = reactive({
 			layouts: [

@@ -35,7 +35,7 @@ export default {
 				});
 			} else {
 				proxy.mittBus.emit('layoutMobileResize', {
-					layout: getLocal('oldLayout') ? getLocal('oldLayout') : 'defaults',
+					layout: getLocal('oldLayout') ? getLocal('oldLayout') : getThemeConfig.value.layout,
 					clientWidth,
 				});
 			}

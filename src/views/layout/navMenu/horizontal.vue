@@ -1,7 +1,7 @@
 <template>
 	<div class="el-menu-horizontal-warp">
 		<el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-			<el-menu router :default-active="defaultActive" background-color="transparent" mode="horizontal" @select="onHorizontalSelect">
+			<el-menu router :default-active="defaultActive" background-color="transparent" mode="horizontal">
 				<template v-for="val in menuLists">
 					<el-submenu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
 						<template #title>
@@ -99,10 +99,6 @@ export default defineComponent({
 			});
 			return currentData;
 		};
-		// 菜单激活回调
-		const onHorizontalSelect = (path: string) => {
-			proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(path));
-		};
 		// 页面加载时
 		onMounted(() => {
 			initElMenuOffsetLeft();
@@ -112,11 +108,15 @@ export default defineComponent({
 		onBeforeRouteUpdate((to) => {
 			setCurrentRouterHighlight(to.path);
 			proxy.mittBus.emit('onMenuClick');
+			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
+			let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+			if (layout === 'classic' && isClassicSplitMenu) {
+				proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
+			}
 		});
 		return {
 			menuLists,
 			onElMenuHorizontalScroll,
-			onHorizontalSelect,
 			...toRefs(state),
 		};
 	},

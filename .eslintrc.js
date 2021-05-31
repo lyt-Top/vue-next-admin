@@ -11,7 +11,7 @@ module.exports = {
 		parser: '@typescript-eslint/parser',
 		sourceType: 'module',
 	},
-	extends: ['plugin:vue/essential'],
+	extends: ['plugin:vue/vue3-essential', 'plugin:vue/essential', 'eslint:recommended'],
 	plugins: ['vue', '@typescript-eslint'],
 	rules: {
 		// http://eslint.cn/docs/rules/
@@ -43,6 +43,11 @@ module.exports = {
 		'vue/no-v-html': 'off',
 		'vue/comment-directive': 'off',
 		'vue/no-parsing-error': 'off',
+		'vue/no-deprecated-v-on-native-modifier': 'off',
+		'no-useless-escape': 'off',
+		'no-sparse-arrays': 'off',
+		'no-prototype-builtins': 'off',
+		'no-constant-condition': 'off',
 		'no-use-before-define': 'off',
 		'no-restricted-globals': 'off',
 		'no-restricted-syntax': 'off',
@@ -51,5 +56,6 @@ module.exports = {
 		'no-multiple-template-root': 'off',
 		'no-unused-vars': 'error',
 		'no-v-model-argument': 'off',
+		'no-case-declarations': 'off',
 	},
 };

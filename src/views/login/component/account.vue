@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent, computed } from 'vue';
+import { toRefs, reactive, defineComponent, computed, getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
@@ -63,6 +63,7 @@ export default defineComponent({
 	name: 'login',
 	setup() {
 		const { t } = useI18n();
+		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
@@ -143,6 +144,8 @@ export default defineComponent({
 				state.loading.signIn = true;
 				const signInText = t('message.signInText');
 				ElMessage.success(`${currentTimeInfo}，${signInText}`);
+				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
+				proxy.mittBus.emit('onSignInClick');
 			}, 300);
 		};
 		return {

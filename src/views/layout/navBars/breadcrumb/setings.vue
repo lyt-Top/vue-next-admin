@@ -164,12 +164,15 @@
 						<el-switch v-model="getThemeConfig.isShowLogo" @change="onIsShowLogoChange"></el-switch>
 					</div>
 				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout === 'transverse' ? 0.5 : 1 }">
+				<div
+					class="layout-breadcrumb-seting-bar-flex mt15"
+					:style="{ opacity: getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse' ? 0.5 : 1 }"
+				>
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsBreadcrumb') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch
 							v-model="getThemeConfig.isBreadcrumb"
-							:disabled="getThemeConfig.layout === 'transverse'"
+							:disabled="getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse'"
 							@change="onIsBreadcrumbChange"
 						></el-switch>
 					</div>
@@ -423,12 +426,6 @@ export default defineComponent({
 				if (bool) els.setAttribute('style', `background-image:linear-gradient(to bottom left , ${color}, ${getLightColor(color, 0.6)})`);
 				else els.setAttribute('style', `background-image:${color}`);
 				setLocalThemeConfig();
-				const elNavbars: any = document.querySelector('.layout-navbars-breadcrumb-index');
-				const elAside: any = document.querySelector('.layout-container .el-aside');
-				const elColumns: any = document.querySelector('.layout-container .layout-columns-aside');
-				if (elNavbars) setLocal('navbarsBgStyle', elNavbars.style.cssText);
-				if (elAside) setLocal('asideBgStyle', elAside.style.cssText);
-				if (elColumns) setLocal('columnsBgStyle', elColumns.style.cssText);
 			});
 		};
 		// 2、菜单 / 顶栏 --> 菜单字体背景高亮
@@ -491,10 +488,9 @@ export default defineComponent({
 			}
 			const cssAttr =
 				attr === 'grayscale' ? `grayscale(${getThemeConfig.value.isGrayscale ? 1 : 0})` : `invert(${getThemeConfig.value.isInvert ? '80%' : '0%'})`;
-			const appEle: any = document.querySelector('#app');
+			const appEle: any = document.body;
 			appEle.setAttribute('style', `filter: ${cssAttr}`);
 			setLocalThemeConfig();
-			setLocal('appFilterStyle', appEle.style.cssText);
 		};
 		// 4、界面显示 --> 开启水印
 		const onWartermarkChange = () => {
@@ -520,42 +516,23 @@ export default defineComponent({
 		// 设置布局切换，重置主题样式
 		const initSetLayoutChange = () => {
 			if (getThemeConfig.value.layout === 'classic') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = false;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isClassicSplitMenu = false;
 				getThemeConfig.value.menuBar = '#FFFFFF';
 				getThemeConfig.value.menuBarColor = '#606266';
 				getThemeConfig.value.topBar = '#ffffff';
 				getThemeConfig.value.topBarColor = '#606266';
 				initLayoutChangeFun();
 			} else if (getThemeConfig.value.layout === 'transverse') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = false;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = false;
-				getThemeConfig.value.isClassicSplitMenu = false;
 				getThemeConfig.value.menuBarColor = '#FFFFFF';
 				getThemeConfig.value.topBar = '#545c64';
 				getThemeConfig.value.topBarColor = '#FFFFFF';
 				initLayoutChangeFun();
 			} else if (getThemeConfig.value.layout === 'columns') {
-				getThemeConfig.value.isShowLogo = true;
-				getThemeConfig.value.isBreadcrumb = true;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = true;
-				getThemeConfig.value.isClassicSplitMenu = false;
 				getThemeConfig.value.menuBar = '#FFFFFF';
 				getThemeConfig.value.menuBarColor = '#606266';
 				getThemeConfig.value.topBar = '#ffffff';
 				getThemeConfig.value.topBarColor = '#606266';
 				initLayoutChangeFun();
 			} else {
-				getThemeConfig.value.isShowLogo = false;
-				getThemeConfig.value.isBreadcrumb = true;
-				getThemeConfig.value.isCollapse = false;
-				getThemeConfig.value.isTagsview = true;
-				getThemeConfig.value.isClassicSplitMenu = false;
 				getThemeConfig.value.menuBar = '#545c64';
 				getThemeConfig.value.menuBarColor = '#eaeaea';
 				getThemeConfig.value.topBar = '#FFFFFF';
@@ -616,60 +593,58 @@ export default defineComponent({
 				clipboard.destroy();
 			});
 		};
+		// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
+		const initSetStyle = () => {
+			setTimeout(() => {
+				// 2、菜单 / 顶栏 --> 顶栏背景渐变
+				onTopBarGradualChange();
+				// 2、菜单 / 顶栏 --> 菜单背景渐变
+				onMenuBarGradualChange();
+				// 2、菜单 / 顶栏 --> 分栏菜单背景渐变
+				onColumnsMenuBarGradualChange();
+				// 2、菜单 / 顶栏 --> 菜单字体背景高亮
+				onMenuBarHighlightChange();
+			}, 1300);
+		};
 		onMounted(() => {
 			nextTick(() => {
+				// 判断当前布局是否不相同，不相同则初始化当前布局的样式，防止监听窗口大小改变时，布局配置logo、菜单背景等部分布局失效问题
+				if (!getLocal('frequency')) initSetLayoutChange();
+				setLocal('frequency', 1);
+				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
+				proxy.mittBus.on('onSignInClick', () => {
+					initSetStyle();
+				});
 				// 监听菜单点击，菜单字体背景高亮
 				proxy.mittBus.on('onMenuClick', () => {
 					onMenuBarHighlightChange();
 				});
 				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 				proxy.mittBus.on('layoutMobileResize', (res: any) => {
+					if (getThemeConfig.value.layout === res.layout) return false;
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
 					initSetLayoutChange();
 					onMenuBarHighlightChange();
-					getThemeConfig.value.isCollapse = false;
 				});
 				window.addEventListener('load', () => {
-					// 刷新页面时，设置了值，直接取缓存中的值进行初始化
-					setTimeout(() => {
-						// 顶栏背景渐变
-						if (getLocal('navbarsBgStyle') && getThemeConfig.value.isTopBarColorGradual) {
-							const breadcrumbIndexEl: any = document.querySelector('.layout-navbars-breadcrumb-index');
-							breadcrumbIndexEl.style.cssText = getLocal('navbarsBgStyle');
-						}
-						// 菜单背景渐变
-						if (getLocal('asideBgStyle') && getThemeConfig.value.isMenuBarColorGradual) {
-							const asideEl: any = document.querySelector('.layout-container .el-aside');
-							asideEl.style.cssText = getLocal('asideBgStyle');
-						}
-						// 分栏菜单背景渐变
-						if (getLocal('columnsBgStyle') && getThemeConfig.value.isColumnsMenuBarColorGradual) {
-							const asideEl: any = document.querySelector('.layout-container .layout-columns-aside');
-							asideEl.style.cssText = getLocal('columnsBgStyle');
-						}
-						// 菜单字体背景高亮
-						if (getLocal('menuBarHighlightId') && getThemeConfig.value.isMenuBarColorHighlight) {
-							let els = document.querySelector('.el-menu-item.is-active');
-							if (!els) return false;
-							els.setAttribute('id', getLocal('menuBarHighlightId'));
-						}
-						// 灰色模式/色弱模式
-						if (getLocal('appFilterStyle')) {
-							const appEl: any = document.querySelector('#app');
-							appEl.style.cssText = getLocal('appFilterStyle');
-						}
-						// 开启水印
-						onWartermarkChange();
-						// 语言国际化
-						if (getLocal('themeConfig')) proxy.$i18n.locale = getLocal('themeConfig').globalI18n;
-					}, 1100);
+					// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
+					initSetStyle();
+					// 灰色模式
+					if (getThemeConfig.value.isGrayscale) onAddFilterChange('grayscale');
+					// 色弱模式
+					if (getThemeConfig.value.isInvert) onAddFilterChange('invert');
+					// 开启水印
+					onWartermarkChange();
+					// 语言国际化
+					if (getLocal('themeConfig')) proxy.$i18n.locale = getLocal('themeConfig').globalI18n;
 				});
 			});
 		});
 		onUnmounted(() => {
 			// 取消监听菜单点击，菜单字体背景高亮
 			proxy.mittBus.off('onMenuClick');
+			proxy.mittBus.off('onSignInClick');
 			proxy.mittBus.off('layoutMobileResize');
 		});
 		return {

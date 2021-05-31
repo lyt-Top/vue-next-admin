@@ -85,9 +85,8 @@ export default {
 				proxy.$refs.layoutAsideScrollbarRef.update();
 			}
 		});
-		// 监听路由的变化，动态赋值给菜单中
+		// 监听vuex值的变化，动态赋值给菜单中
 		watch(store.state, (val) => {
-			if (val.routesList.routesList.length === state.menuList.length) return false;
 			let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
 			if (layout === 'classic' && isClassicSplitMenu) return false;
 			setFilterRoutes();

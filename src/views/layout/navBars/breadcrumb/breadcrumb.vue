@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb" v-show="getThemeConfig.isBreadcrumb">
+	<div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
 		<i
 			class="layout-navbars-breadcrumb-icon"
 			:class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
@@ -40,6 +40,16 @@ export default {
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
+		});
+		// 动态设置经典、横向布局不显示
+		const isShowBreadcrumb = computed(() => {
+			initRouteSplit(route.path);
+			const { layout, isBreadcrumb } = store.state.themeConfig.themeConfig;
+			if (layout === 'classic' || layout === 'transverse') {
+				return 'none';
+			} else {
+				return isBreadcrumb ? '' : 'none';
+			}
 		});
 		// 面包屑点击时
 		const onBreadcrumbClick = (v: any) => {
@@ -85,6 +95,7 @@ export default {
 		});
 		return {
 			onThemeConfigChange,
+			isShowBreadcrumb,
 			getThemeConfig,
 			onBreadcrumbClick,
 			...toRefs(state),

@@ -92,6 +92,7 @@ export default {
 		const setFilterRoutes = () => {
 			state.columnsAsideList = filterRoutesFun(store.state.routesList.routesList);
 			const resData: any = setSendChildren(route.path);
+			if (Object.keys(resData).length <= 0) return false;
 			onColumnsAsideDown(resData.item[0].k);
 			proxy.mittBus.emit('setSendColumnsChildren', resData);
 		};
@@ -125,16 +126,15 @@ export default {
 			state.routeSplit.shift();
 			const routeFirst = `/${state.routeSplit[0]}`;
 			const currentSplitRoute = state.columnsAsideList.find((v: any) => v.path === routeFirst);
+			if (!currentSplitRoute) return false;
 			// 延迟拿值，防止取不到
 			setTimeout(() => {
 				onColumnsAsideDown(currentSplitRoute.k);
 			}, 0);
 		};
-		// 监听路由的变化，动态赋值给菜单中
+		// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
 		watch(store.state, (val) => {
 			val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-			if (val.routesList.routesList.length === state.columnsAsideList.length) return false;
-			setFilterRoutes();
 		});
 		// 页面加载时
 		onMounted(() => {
