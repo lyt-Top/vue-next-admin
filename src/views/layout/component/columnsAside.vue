@@ -88,6 +88,7 @@ export default {
 			if (this.$store.state.routesList.routesList.length <= 0) return false;
 			this.columnsAsideList = this.filterRoutesFun(this.$store.state.routesList.routesList);
 			const resData = this.setSendChildren(this.$route.path);
+			if (Object.keys(resData).length <= 0) return false;
 			this.onColumnsAsideDown(resData.item[0].k);
 			this.bus.$emit('setSendColumnsChildren', resData);
 		},
@@ -121,6 +122,7 @@ export default {
 			this.routeSplit.shift();
 			const routeFirst = `/${this.routeSplit[0]}`;
 			const currentSplitRoute = this.columnsAsideList.find((v) => v.path === routeFirst);
+			if (!currentSplitRoute) return false;
 			// 延迟拿值，防止取不到
 			setTimeout(() => {
 				this.onColumnsAsideDown(currentSplitRoute.k);
