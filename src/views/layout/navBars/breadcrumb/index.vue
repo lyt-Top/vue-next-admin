@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { computed, reactive, toRefs, onMounted, onUnmounted, getCurrentInstance, watch } from 'vue';
+import { computed, reactive, toRefs, onMounted, onUnmounted, getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index.ts';
 import Breadcrumb from '/@/views/layout/navBars/breadcrumb/breadcrumb.vue';
@@ -81,11 +81,6 @@ export default {
 			});
 			return currentData;
 		};
-		// 监听路由的变化，动态赋值给菜单中
-		watch(store.state, (val) => {
-			if (val.routesList.routesList.length === state.menuList.length) return false;
-			setFilterRoutes();
-		});
 		// 页面加载时
 		onMounted(() => {
 			setFilterRoutes();

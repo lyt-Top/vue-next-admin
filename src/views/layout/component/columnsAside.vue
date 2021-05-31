@@ -132,11 +132,9 @@ export default {
 				onColumnsAsideDown(currentSplitRoute.k);
 			}, 0);
 		};
-		// 监听路由的变化，动态赋值给菜单中
+		// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
 		watch(store.state, (val) => {
 			val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-			if (val.routesList.routesList.length === state.columnsAsideList.length) return false;
-			setFilterRoutes();
 		});
 		// 页面加载时
 		onMounted(() => {
