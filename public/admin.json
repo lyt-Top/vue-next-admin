@@ -214,6 +214,21 @@
 				]
 			},
 			{
+				"path": "/personal",
+				"name": "personal",
+				"component": "personal/index",
+				"meta": {
+					"title": "message.router.personal",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-gerenzhongxin"
+				}
+			},
+			{
 				"path": "/link",
 				"name": "layoutLinkView",
 				"component": "layout/routerView/parent",
