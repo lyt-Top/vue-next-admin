@@ -1,6 +1,6 @@
 {
 	"name": "vue-prev-admin",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"private": true,
 	"scripts": {
 		"dev": "vue-cli-service serve",
