@@ -1,6 +1,6 @@
 {
 	"name": "vue-prev-admin",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"private": true,
 	"scripts": {
 		"dev": "vue-cli-service serve",
@@ -18,7 +18,7 @@
 		"nprogress": "^0.2.0",
 		"screenfull": "^5.1.0",
 		"sign-canvas": "^1.1.4",
-		"vue": "^2.6.12",
+		"vue": "^2.6.13",
 		"vue-i18n": "^8.24.4",
 		"vue-particles": "^1.0.9",
 		"vue-router": "^3.5.1",
@@ -37,6 +37,6 @@
 		"eslint-plugin-vue": "^7.10.0",
 		"sass": "^1.34.0",
 		"sass-loader": "^10.1.1",
-		"vue-template-compiler": "^2.6.12"
+		"vue-template-compiler": "^2.6.13"
 	}
 }

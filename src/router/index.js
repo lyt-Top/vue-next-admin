@@ -194,6 +194,13 @@ export function delayNProgressDone(time = 300) {
 	}, time);
 }
 
+// 动态加载后端返回路由路由(模拟数据)
+export function getRouterList(router, to, next) {
+	if (!getSession('userInfo')) return false;
+	if (getSession('userInfo').userName === 'admin') adminUser(router, to, next);
+	else if (getSession('userInfo').userName === 'test') testUser(router, to, next);
+}
+
 // 路由加载前
 router.beforeEach((to, from, next) => {
 	keepAliveSplice(to);
@@ -211,11 +218,8 @@ router.beforeEach((to, from, next) => {
 			clearSession();
 			delayNProgressDone();
 		} else {
-			// 动态加载后端返回路由路由(模拟数据)
-			if (!getSession('userInfo')) return false;
 			if (Object.keys(store.state.routesList.routesList).length <= 0) {
-				if (getSession('userInfo').userName === 'admin') adminUser(router, to, next);
-				else if (getSession('userInfo').userName === 'test') testUser(router, to, next);
+				getRouterList(router, to, next);
 			} else {
 				next();
 				delayNProgressDone(0);
