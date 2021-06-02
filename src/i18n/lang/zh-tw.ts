@@ -26,7 +26,6 @@ export default {
 		funSelector: '圖標選擇器',
 		funWangEditor: 'wangEditor 編輯器',
 		funCropper: 'cropper 圖片裁剪',
-		funMindMap: 'G6 心智圖',
 		funQrcode: 'qrcode 二維碼生成',
 		funEchartsMap: '地理座標/地圖',
 		funPrintJs: '頁面列印',

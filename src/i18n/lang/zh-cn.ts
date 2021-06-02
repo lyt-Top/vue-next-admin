@@ -26,7 +26,6 @@ export default {
 		funSelector: '图标选择器',
 		funWangEditor: 'wangEditor 编辑器',
 		funCropper: 'cropper 图片裁剪',
-		funMindMap: 'G6 思维导图',
 		funQrcode: 'qrcode 二维码生成',
 		funEchartsMap: '地理坐标/地图',
 		funPrintJs: '页面打印',

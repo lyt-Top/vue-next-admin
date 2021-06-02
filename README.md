@@ -98,7 +98,6 @@ cnpm run build
 - <a href="https://github.com/vitejs/vite" target="_blank">vite</a>
 - <a href="https://github.com/wangeditor-team/wangEditor" target="_blank">wangeditor</a>
 - <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">cropperjs</a>
-- <a href="https://github.com/antvis/g6" target="_blank">@antv/g6</a>
 - <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
 - <a href="https://github.com/crabbly/Print.js" target="_blank">print-js</a>
 - <a href="https://github.com/likaia/screen-shot" target="_blank">vue-web-screen-shot</a>

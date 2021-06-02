@@ -7,7 +7,7 @@ import { NextLoading } from '/@/utils/loading.ts';
 import { getMenuAdmin, getMenuTest } from '/@/api/menu/index.ts';
 
 // 定义动态路由
-export const dynamicRoutes = [
+export const dynamicRoutes: Array<RouteRecordRaw> = [
 	{
 		path: '/',
 		name: '/',
@@ -407,21 +407,6 @@ export const dynamicRoutes = [
 							isIframe: false,
 							auth: ['admin', 'test'],
 							icon: 'iconfont icon-caijian',
-						},
-					},
-					{
-						path: '/fun/mindMap',
-						name: 'funMindMap',
-						component: () => import('/@/views/fun/mindMap/index.vue'),
-						meta: {
-							title: 'message.router.funMindMap',
-							isLink: '',
-							isHide: false,
-							isKeepAlive: true,
-							isAffix: false,
-							isIframe: false,
-							auth: ['admin', 'test'],
-							icon: 'iconfont icon-siweidaotu',
 						},
 					},
 					{
@@ -887,14 +872,13 @@ export function initAllFun() {
 	const token = getSession('token'); // 获取浏览器缓存 token 值
 	if (!token) return false; // 无 token 停止执行下一步
 	store.dispatch('userInfos/setUserInfos'); // 触发初始化用户信息
-	router.addRoute(pathMatch); // 添加404界面
 	resetRoute(); // 删除/重置路由
 	setAddRoute(); // 添加动态路由
 	setFilterMenu(); // 过滤权限菜单
 	setCacheTagsViewRoutes(); // 添加 keepAlive 缓存
 }
 
-// 后端控制路由：模拟执行路由数据初始化
+// 后端控制路由：模拟执行路由数据初始化，防止刷新时丢失
 export async function initBackEndControlRoutesFun() {
 	NextLoading.start(); // 界面 loading 动画开始执行
 	const token = getSession('token'); // 获取浏览器缓存 token 值
@@ -904,17 +888,9 @@ export async function initBackEndControlRoutesFun() {
 	const oldRoutes = JSON.parse(JSON.stringify(res.data)); // 获取接口原始路由（未处理component）
 	store.dispatch('requestOldRoutes/setBackEndControlRoutes', oldRoutes); // 存原始路由到 vuex 中
 	dynamicRoutes[0].children = await backEndRouter(res.data); // 处理路由（component）
-	router.addRoute(pathMatch); // 添加404界面
 	await setAddRoute(); // 添加动态路由
 	setFilterMenu(); // 过滤权限菜单
 	setCacheTagsViewRoutes(); // 添加 keepAlive 缓存
-	setRefreshPagesRestore(); // 防止界面刷新时，出现404、空白、报错等
-}
-
-// 防止界面刷新时，出现404、空白、报错等
-export function setRefreshPagesRestore() {
-	const { matched, query, path } = router.currentRoute.value;
-	if (matched.length <= 0) router.push({ path, query });
 }
 
 // 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
@@ -1040,37 +1016,35 @@ export function setFilterRoute(chil: any) {
 // 比对后的路由表，进行重新赋值
 export function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
-	filterRouteEnd[0].children = setFilterRoute(filterRouteEnd[0].children);
+	filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), { ...pathMatch }];
 	return filterRouteEnd;
 }
 
 // 添加动态路由
 export function setAddRoute() {
-	setFilterRouteEnd().forEach((route: any) => {
-		router.addRoute(route as unknown as RouteRecordRaw);
+	setFilterRouteEnd().forEach((route: RouteRecordRaw) => {
+		const routeName: any = route.name;
+		if (!router.hasRoute(routeName)) router.addRoute(route);
 	});
 }
 
 // 删除/重置路由
 export function resetRoute() {
-	setFilterRouteEnd().forEach((route: any) => {
-		const { name } = route;
-		router.hasRoute(name) && router.removeRoute(name);
+	setFilterRouteEnd().forEach((route: RouteRecordRaw) => {
+		const routeName: any = route.name;
+		router.hasRoute(routeName) && router.removeRoute(routeName);
 	});
 }
 
-// 初始化方法执行
+// isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/store/modules/themeConfig.ts`
 const { isRequestRoutes } = store.state.themeConfig.themeConfig;
 if (!isRequestRoutes) {
-	// 未开启后端控制路由
+	// 前端控制路由：初始化方法，防止刷新时丢失
 	initAllFun();
-} else if (isRequestRoutes) {
-	// 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-	initBackEndControlRoutesFun();
 }
 
 // 路由加载前
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	NProgress.configure({ showSpinner: false });
 	if (to.meta.title) NProgress.start();
 	const token = getSession('token');
@@ -1087,7 +1061,17 @@ router.beforeEach((to, from, next) => {
 			next('/home');
 			NProgress.done();
 		} else {
-			if (store.state.routesList.routesList.length > 0) next();
+			if (store.state.routesList.routesList.length === 0) {
+				if (isRequestRoutes) {
+					// 后端控制路由：路由数据初始化，防止刷新时丢失
+					await initBackEndControlRoutesFun();
+					// 动态添加路由：防止非首页刷新时跳转回首页的问题
+					// 确保 addRoute() 时动态添加的路由已经被完全加载上去
+					next({ ...to, replace: true });
+				}
+			} else {
+				next();
+			}
 		}
 	}
 });

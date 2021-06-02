@@ -2,6 +2,14 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.3
+
+`2021.06.02`
+
+- ❄️ 删除 G6 思维导图界面
+- 🌟 更新 手动更新 vue、vue-router、vuex 到最近最多人使用的版本，出现不可预测的问题请降低版本。版本查看：<a href="https://www.npmjs.com/package/vue" target="_blank">vue 版本查看</a>
+- 🐞 修复 开启后端控制路由`isRequestRoutes`在非首页刷新页面后，回到首页的问题，感谢群友@伯牙已遇钟子期
+
 ## 1.0.2
 
 `2021.06.01`

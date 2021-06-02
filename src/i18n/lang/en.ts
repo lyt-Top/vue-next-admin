@@ -26,7 +26,6 @@ export default {
 		funSelector: 'funSelector',
 		funWangEditor: 'wangEditor',
 		funCropper: 'cropper',
-		funMindMap: 'G6 MindMap',
 		funQrcode: 'qrcode',
 		funEchartsMap: 'EchartsMap',
 		funPrintJs: 'PrintJs',
