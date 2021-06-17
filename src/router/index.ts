@@ -858,7 +858,7 @@ const pathMatch = {
 };
 
 // 获取目录下的 .vue 全部文件，参考 vite：import.meta.glob
-const dynamicViewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
+const dynamicViewsModules: Record<string, Function> = import.meta.glob('../views/**/*.{vue,tsx}');
 
 // 添加静态路由
 const router = createRouter({
@@ -919,7 +919,7 @@ export function backEndRouter(routes: any) {
 }
 
 // 后端控制路由，后端路由 component 转换函数
-export function dynamicImport(dynamicViewsModules: Record<string, () => Promise<{ [key: string]: any }>>, component: string) {
+export function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
 	const keys = Object.keys(dynamicViewsModules);
 	const matchKeys = keys.filter((key) => {
 		const k = key.replace('../views', '');
