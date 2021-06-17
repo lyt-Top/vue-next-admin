@@ -9,7 +9,7 @@ export interface ViteEnv {
 export function loadEnv(): ViteEnv {
 	const env = process.env.NODE_ENV;
 	const ret: any = {};
-	const envList = [`.env.${env}.local`, `.env.${env}`, '.env.local', '.env', ,];
+	const envList = [`.env.${env}.local`, `.env.${env}`, '.env.local', '.env',];
 	envList.forEach((e) => {
 		dotenv.config({ path: e });
 	});
