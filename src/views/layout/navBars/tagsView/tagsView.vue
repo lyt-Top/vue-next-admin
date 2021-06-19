@@ -34,7 +34,7 @@
 
 <script>
 import Contextmenu from '@/views/layout/navBars/tagsView/contextmenu';
-import { setSession, getSession, removeSession } from '@/utils/storage.js';
+import { Session } from '@/utils/storage.js';
 export default {
 	name: 'tagsView',
 	components: { Contextmenu },
@@ -174,18 +174,18 @@ export default {
 		getTagsViewRoutes() {
 			this.tagsRoutePath = this.$route.path;
 			this.tagsViewList = [];
-			if (!this.$store.state.themeConfig.themeConfig.isCacheTagsView) removeSession('tagsViewList');
+			if (!this.$store.state.themeConfig.themeConfig.isCacheTagsView) Session.remove('tagsViewList');
 			this.tagsViewRoutesList = this.$store.state.tagsViewRoutes.tagsViewRoutes;
 			this.initTagsViewList();
 		},
 		// 存储 tagsViewList 到浏览器临时缓存中，页面刷新时，保留记录
 		addBrowserSetSession(tagsViewList) {
-			setSession('tagsViewList', tagsViewList);
+			Session.set('tagsViewList', tagsViewList);
 		},
 		// 初始化设置了 tagsView 数据
 		initTagsViewList() {
-			if (getSession('tagsViewList') && this.$store.state.themeConfig.themeConfig.isCacheTagsView) {
-				this.tagsViewList = getSession('tagsViewList');
+			if (Session.get('tagsViewList') && this.$store.state.themeConfig.themeConfig.isCacheTagsView) {
+				this.tagsViewList = Session.get('tagsViewList');
 			} else {
 				this.tagsViewRoutesList.map((v) => {
 					if (v.meta.isAffix && !v.meta.isHide) this.tagsViewList.push({ ...v });

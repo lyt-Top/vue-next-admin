@@ -1,4 +1,4 @@
-import { getLocal } from '@/utils/storage.js';
+import { Local } from '@/utils/storage.js';
 
 // 全局组件大小
-export const globalComponentSize = getLocal('themeConfigPrev') ? getLocal('themeConfigPrev').globalComponentSize : '';
+export const globalComponentSize = Local.get('themeConfigPrev') ? Local.get('themeConfigPrev').globalComponentSize : '';

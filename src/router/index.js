@@ -3,7 +3,7 @@ import store from '../store';
 import VueRouter from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { getSession, clearSession } from '@/utils/storage';
+import { Session } from '@/utils/storage';
 import { PrevLoading } from '@/utils/loading.js';
 import { getMenuAdmin, getMenuTest } from '@/api/menu';
 
@@ -196,9 +196,9 @@ export function delayNProgressDone(time = 300) {
 
 // 动态加载后端返回路由路由(模拟数据)
 export function getRouterList(router, to, next) {
-	if (!getSession('userInfo')) return false;
-	if (getSession('userInfo').userName === 'admin') adminUser(router, to, next);
-	else if (getSession('userInfo').userName === 'test') testUser(router, to, next);
+	if (!Session.get('userInfo')) return false;
+	if (Session.get('userInfo').userName === 'admin') adminUser(router, to, next);
+	else if (Session.get('userInfo').userName === 'test') testUser(router, to, next);
 }
 
 // 路由加载前
@@ -206,7 +206,7 @@ router.beforeEach((to, from, next) => {
 	keepAliveSplice(to);
 	NProgress.configure({ showSpinner: false });
 	if (to.meta.title && to.path !== '/login') NProgress.start();
-	let token = getSession('token');
+	let token = Session.get('token');
 	if (to.path === '/login' && !token) {
 		NProgress.start();
 		next();
@@ -215,7 +215,7 @@ router.beforeEach((to, from, next) => {
 		if (!token) {
 			NProgress.start();
 			next('/login');
-			clearSession();
+			Session.clear();
 			delayNProgressDone();
 		} else {
 			if (Object.keys(store.state.routesList.routesList).length <= 0) {

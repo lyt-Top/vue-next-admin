@@ -68,7 +68,7 @@
 <script>
 import screenfull from 'screenfull';
 import { resetRouter } from '@/router/index.js';
-import { clearSession, removeLocal, getLocal, setLocal } from '@/utils/storage.js';
+import { Session, Local } from '@/utils/storage.js';
 import UserNews from '@/views/layout/navBars/breadcrumb/userNews.vue';
 import Search from '@/views/layout/navBars/breadcrumb/search.vue';
 export default {
@@ -97,7 +97,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (getLocal('themeConfigPrev')) {
+		if (Local.get('themeConfigPrev')) {
 			this.initI18n();
 			this.initComponentSize();
 		}
@@ -122,24 +122,24 @@ export default {
 		},
 		// 组件大小改变
 		onComponentSizeChange(size) {
-			removeLocal('themeConfigPrev');
+			Local.remove('themeConfigPrev');
 			this.$store.state.themeConfig.themeConfig.globalComponentSize = size;
-			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
+			Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.$ELEMENT.size = size;
 			this.initComponentSize();
 			window.location.reload();
 		},
 		// 语言切换
 		onLanguageChange(lang) {
-			removeLocal('themeConfigPrev');
+			Local.remove('themeConfigPrev');
 			this.$store.state.themeConfig.themeConfig.globalI18n = lang;
-			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
+			Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.$i18n.locale = lang;
 			this.initI18n();
 		},
 		// 初始化言语国际化
 		initI18n() {
-			switch (getLocal('themeConfigPrev').globalI18n) {
+			switch (Local.get('themeConfigPrev').globalI18n) {
 				case 'zh-cn':
 					this.disabledI18n = 'zh-cn';
 					break;
@@ -153,7 +153,7 @@ export default {
 		},
 		// 初始化全局组件大小
 		initComponentSize() {
-			switch (getLocal('themeConfigPrev').globalComponentSize) {
+			switch (Local.get('themeConfigPrev').globalComponentSize) {
 				case '':
 					this.disabledSize = '';
 					break;
@@ -196,7 +196,7 @@ export default {
 						},
 					})
 						.then(() => {
-							clearSession(); // 清除缓存/token等
+							Session.clear(); // 清除缓存/token等
 							this.$store.dispatch('routesList/setRoutesList', []); // 清空 vuex 路由列表缓存
 							resetRouter(); // 删除/重置路由
 							this.$router.push('/login');

@@ -7,7 +7,7 @@
 
 <script>
 import setIntroduction from '@/utils/setIconfont.js';
-import { setLocal, getLocal } from '@/utils/storage.js';
+import { Local } from '@/utils/storage.js';
 import Setings from '@/views/layout/navBars/breadcrumb/setings.vue';
 export default {
 	name: 'App',
@@ -33,11 +33,11 @@ export default {
 		},
 		// 获取缓存中的布局配置
 		getLayoutThemeConfig() {
-			if (getLocal('themeConfigPrev')) {
-				this.$store.dispatch('themeConfig/setThemeConfig', getLocal('themeConfigPrev'));
-				document.documentElement.style.cssText = getLocal('themeConfigStyle');
+			if (Local.get('themeConfigPrev')) {
+				this.$store.dispatch('themeConfig/setThemeConfig', Local.get('themeConfigPrev'));
+				document.documentElement.style.cssText = Local.get('themeConfigStyle');
 			} else {
-				setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
+				Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			}
 		},
 	},

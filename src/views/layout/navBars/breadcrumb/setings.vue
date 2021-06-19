@@ -220,7 +220,7 @@
 
 <script>
 import ClipboardJS from 'clipboard';
-import { setLocal, removeLocal, getLocal } from '@/utils/storage.js';
+import { Local } from '@/utils/storage.js';
 export default {
 	name: 'layoutBreadcrumbSeting',
 	data() {
@@ -237,8 +237,8 @@ export default {
 	},
 	created() {
 		// 判断当前布局是否不相同，不相同则初始化当前布局的样式，防止监听窗口大小改变时，布局配置logo、菜单背景等部分布局失效问题
-		if (!getLocal('frequency')) this.initSetLayoutChange();
-		setLocal('frequency', 1);
+		if (!Local.get('frequency')) this.initSetLayoutChange();
+		Local.set('frequency', 1);
 		// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
 		this.bus.$on('layoutMobileResize', (res) => {
 			if (this.$store.state.themeConfig.themeConfig.layout === res.layout) return false;
@@ -260,18 +260,18 @@ export default {
 				// 色弱模式
 				if (this.$store.state.themeConfig.themeConfig.isInvert) this.onAddFilterChange('invert');
 				// 语言国际化
-				if (getLocal('themeConfigPrev')) this.$i18n.locale = getLocal('themeConfigPrev').globalI18n;
+				if (Local.get('themeConfigPrev')) this.$i18n.locale = Local.get('themeConfigPrev').globalI18n;
 			});
 		},
 		// 存储布局配置
 		setLocalThemeConfig() {
-			removeLocal('themeConfigPrev');
-			setLocal('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
+			Local.remove('themeConfigPrev');
+			Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 			this.setLocalThemeConfigStyle();
 		},
 		// 存储布局配置全局主题样式（html根标签）
 		setLocalThemeConfigStyle() {
-			setLocal('themeConfigStyle', document.documentElement.style.cssText);
+			Local.set('themeConfigStyle', document.documentElement.style.cssText);
 		},
 		// 布局配置弹窗打开
 		openDrawer() {

@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { setSession } from '@/utils/storage';
+import { Session } from '@/utils/storage';
 import { formatDate, formatAxis } from '@/utils/formatTime';
 import { PrevLoading } from '@/utils/loading.js';
 import { quotationsList } from './mock';
@@ -166,14 +166,9 @@ export default {
 				authBtnList: defaultAuthBtnList,
 			};
 			// 存储 token 到浏览器缓存
-			setSession(
-				'token',
-				Math.random()
-					.toString(36)
-					.substr(0)
-			);
+			Session.set('token', Math.random().toString(36).substr(0));
 			// 存储用户信息到浏览器缓存
-			setSession('userInfo', userInfos);
+			Session.set('userInfo', userInfos);
 			// 存储用户信息到vuex
 			this.$store.dispatch('userInfos/setUserInfos', userInfos);
 			PrevLoading.start();

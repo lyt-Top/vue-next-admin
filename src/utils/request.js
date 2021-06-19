@@ -2,7 +2,7 @@ import store from '@/store';
 import router, { resetRouter } from '@/router/index';
 import axios from 'axios';
 import { Message, MessageBox } from 'element-ui';
-import { clearSession, getSession } from '@/utils/storage';
+import { Session } from '@/utils/storage';
 
 // 创建 axios 实例
 const service = axios.create({
@@ -15,8 +15,8 @@ const service = axios.create({
 service.interceptors.request.use(
 	(config) => {
 		// 在发送请求之前做些什么 token
-		if (getSession('token')) {
-			config.headers.common['Authorization'] = `${getSession('token')}`;
+		if (Session.get('token')) {
+			config.headers.common['Authorization'] = `${Session.get('token')}`;
 		}
 		return config;
 	},
@@ -35,7 +35,7 @@ service.interceptors.response.use(
 			// `token` 过期或者账号已在别处登录
 			if (res.code === 401 || res.code === 4001) {
 				// 清除浏览器全部临时缓存
-				clearSession();
+				Session.clear();
 				router.push('/login');
 				store.commit('setMenuData', {});
 				resetRouter(); // 重置路由
