@@ -17,5 +17,6 @@ module.exports = {
 		'@typescript-eslint/no-inferrable-types': 'off',
 		'vue/no-setup-props-destructure': 'off',
 		'no-prototype-builtins': 'off',
+		'no-console': 'error',
 	},
 };
