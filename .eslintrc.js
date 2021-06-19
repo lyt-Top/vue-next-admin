@@ -16,5 +16,6 @@ module.exports = {
 		'no-empty': 'off',
 		'no-extra-semi': 'off',
 		'no-constant-condition': 'off',
+		'no-console': 'error',
 	},
 };
