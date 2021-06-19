@@ -42,7 +42,7 @@
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
 			<i
 				class="iconfont"
-				:title="isScreenfull ? $t('message.user.title5') : $t('message.user.title6')"
+				:title="isScreenfull ? $t('message.user.title6') : $t('message.user.title5')"
 				:class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
 			></i>
 		</div>
@@ -54,6 +54,7 @@
 			</span>
 			<el-dropdown-menu slot="dropdown">
 				<el-dropdown-item command="/home">{{ $t('message.user.dropdown1') }}</el-dropdown-item>
+				<el-dropdown-item command="wareHouse">{{ $t('message.user.dropdown6') }}</el-dropdown-item>
 				<el-dropdown-item command="/personal">{{ $t('message.user.dropdown2') }}</el-dropdown-item>
 				<el-dropdown-item command="/404">{{ $t('message.user.dropdown3') }}</el-dropdown-item>
 				<el-dropdown-item command="/401">{{ $t('message.user.dropdown4') }}</el-dropdown-item>
@@ -205,6 +206,8 @@ export default {
 						})
 						.catch(() => {});
 				}, 150);
+			} else if (path === 'wareHouse') {
+				window.open('https://gitee.com/lyt-top/vue-next-admin');
 			} else {
 				this.$router.push(path);
 			}

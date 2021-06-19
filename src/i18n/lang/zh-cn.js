@@ -68,6 +68,7 @@ export default {
 		dropdown3: '404',
 		dropdown4: '401',
 		dropdown5: '退出登录',
+		dropdown6: '代码仓库',
 		searchPlaceholder: '菜单搜索：支持中文、路由路径',
 		newTitle: '通知',
 		newBtn: '全部已读',
