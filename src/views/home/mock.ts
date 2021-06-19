@@ -1,4 +1,7 @@
-// 最顶部 card
+/**
+ * 最顶部 card
+ * @returns 返回模拟数据
+ */
 export const topCardItemList = [
 	{
 		title: '今日访问人数',
@@ -29,7 +32,10 @@ export const topCardItemList = [
 	},
 ];
 
-// 环境监测
+/**
+ * 环境监测
+ * @returns 返回模拟数据
+ */
 export const environmentList = [
 	{
 		icon: 'iconfont icon-yangan',
@@ -57,7 +63,10 @@ export const environmentList = [
 	},
 ];
 
-// 动态信息
+/**
+ * 动态信息
+ * @returns 返回模拟数据
+ */
 export const activitiesList = [
 	{
 		time1: '今天',

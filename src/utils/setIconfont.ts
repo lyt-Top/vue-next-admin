@@ -6,7 +6,7 @@ const cssCdnUrlList: Array<string> = [
 // 第三方 js url
 const jsCdnUrlList: Array<string> = [];
 
-// 动态设置字体图标
+// 动态批量设置字体图标
 export function setCssCdn() {
 	if (cssCdnUrlList.length <= 0) return false;
 	cssCdnUrlList.map((v) => {
@@ -18,7 +18,7 @@ export function setCssCdn() {
 	});
 }
 
-// 批量设置第三方js
+// 动态批量设置第三方js
 export function setJsCdn() {
 	if (jsCdnUrlList.length <= 0) return false;
 	jsCdnUrlList.map((v) => {
@@ -28,11 +28,17 @@ export function setJsCdn() {
 	});
 }
 
-// 设置执行函数
+/**
+ * 批量设置字体图标、动态js
+ * @method cssCdn 动态批量设置字体图标
+ * @method jsCdn 动态批量设置第三方js
+ */
 const setIntroduction = {
+	// 设置css
 	cssCdn: () => {
 		setCssCdn();
 	},
+	// 设置js
 	jsCdn: () => {
 		setJsCdn();
 	},

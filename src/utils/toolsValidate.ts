@@ -1,9 +1,14 @@
 /**
  * 2020.11.29 lyt 整理
  * 工具类集合，适用于平时开发
+ * 新增多行注释信息，鼠标放到方法名即可查看
  */
 
-// 小数或整数(不可以负数)
+/**
+ * 小数或整数(不可以负数)
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifyNumberIntegerAndFloat(val: string) {
 	// 匹配空格
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
@@ -21,7 +26,11 @@ export function verifyNumberIntegerAndFloat(val: string) {
 	return v;
 }
 
-// 正整数验证
+/**
+ * 正整数验证
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifiyNumberInteger(val: string) {
 	// 匹配空格
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
@@ -37,7 +46,11 @@ export function verifiyNumberInteger(val: string) {
 	return v;
 }
 
-// 去掉中文及空格
+/**
+ * 去掉中文及空格
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifyCnAndSpace(val: string) {
 	// 匹配中文与空格
 	let v = val.replace(/[\u4e00-\u9fa5\s]+/g, '');
@@ -47,7 +60,11 @@ export function verifyCnAndSpace(val: string) {
 	return v;
 }
 
-// 去掉英文及空格
+/**
+ * 去掉英文及空格
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifyEnAndSpace(val: string) {
 	// 匹配英文与空格
 	let v = val.replace(/[a-zA-Z]+/g, '');
@@ -57,7 +74,11 @@ export function verifyEnAndSpace(val: string) {
 	return v;
 }
 
-// 禁止输入空格
+/**
+ * 禁止输入空格
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifyAndSpace(val: string) {
 	// 匹配空格
 	let v = val.replace(/(^\s*)|(\s*$)/g, '');
@@ -65,7 +86,11 @@ export function verifyAndSpace(val: string) {
 	return v;
 }
 
-// 金额用 `,` 区分开
+/**
+ * 金额用 `,` 区分开
+ * @param val 当前值字符串
+ * @returns 返回处理后的字符串
+ */
 export function verifyNumberComma(val: string) {
 	// 调用小数或整数(不可以负数)方法
 	let v: any = verifyNumberIntegerAndFloat(val);
@@ -79,7 +104,13 @@ export function verifyNumberComma(val: string) {
 	return v;
 }
 
-// 匹配文字变色（搜索时）
+/**
+ * 匹配文字变色（搜索时）
+ * @param val 当前值字符串
+ * @param text 要处理的字符串值
+ * @param color 搜索到时字体高亮颜色
+ * @returns 返回处理后的字符串
+ */
 export function verifyTextColor(val: string, text = '', color = 'red') {
 	// 返回内容，添加颜色
 	let v = text.replace(new RegExp(val, 'gi'), `<span style='color: ${color}'>${val}</span>`);
@@ -87,7 +118,12 @@ export function verifyTextColor(val: string, text = '', color = 'red') {
 	return v;
 }
 
-// 数字转中文大写
+/**
+ * 数字转中文大写
+ * @param val 当前值字符串
+ * @param unit 默认：仟佰拾亿仟佰拾万仟佰拾元角分
+ * @returns 返回处理后的字符串
+ */
 export function verifyNumberCnUppercase(val: any, unit = '仟佰拾亿仟佰拾万仟佰拾元角分', v = '') {
 	// 当前内容字符串添加 2个0，为什么??
 	val += '00';
@@ -114,7 +150,11 @@ export function verifyNumberCnUppercase(val: any, unit = '仟佰拾亿仟佰拾�
 	return v;
 }
 
-// 手机号码
+/**
+ * 手机号码
+ * @param val 当前值字符串
+ * @returns 返回 true: 手机号码正确
+ */
 export function verifyPhone(val: string) {
 	// false: 手机号码不正确
 	if (!/^((12[0-9])|(13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/.test(val)) return false;
@@ -122,7 +162,11 @@ export function verifyPhone(val: string) {
 	else return true;
 }
 
-// 国内电话号码
+/**
+ * 国内电话号码
+ * @param val 当前值字符串
+ * @returns 返回 true: 国内电话号码正确
+ */
 export function verifyTelPhone(val: string) {
 	// false: 国内电话号码不正确
 	if (!/\d{3}-\d{8}|\d{4}-\d{7}/.test(val)) return false;
@@ -130,7 +174,11 @@ export function verifyTelPhone(val: string) {
 	else return true;
 }
 
-// 登录账号 (字母开头，允许5-16字节，允许字母数字下划线)
+/**
+ * 登录账号 (字母开头，允许5-16字节，允许字母数字下划线)
+ * @param val 当前值字符串
+ * @returns 返回 true: 登录账号正确
+ */
 export function verifyAccount(val: string) {
 	// false: 登录账号不正确
 	if (!/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/.test(val)) return false;
@@ -138,7 +186,11 @@ export function verifyAccount(val: string) {
 	else return true;
 }
 
-// 密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)
+/**
+ * 密码 (以字母开头，长度在6~16之间，只能包含字母、数字和下划线)
+ * @param val 当前值字符串
+ * @returns 返回 true: 密码正确
+ */
 export function verifyPassword(val: string) {
 	// false: 密码不正确
 	if (!/^[a-zA-Z]\w{5,15}$/.test(val)) return false;
@@ -146,7 +198,11 @@ export function verifyPassword(val: string) {
 	else return true;
 }
 
-// 强密码 (字母+数字+特殊字符，长度在6-16之间)
+/**
+ * 强密码 (字母+数字+特殊字符，长度在6-16之间)
+ * @param val 当前值字符串
+ * @returns 返回 true: 强密码正确
+ */
 export function verifyPasswordPowerful(val: string) {
 	// false: 强密码不正确
 	if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&\.*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&\.*]+$)(?![\d!@#$%^&\.*]+$)[a-zA-Z\d!@#$%^&\.*]{6,16}$/.test(val))
@@ -155,7 +211,14 @@ export function verifyPasswordPowerful(val: string) {
 	else return true;
 }
 
-// 密码强度
+/**
+ * 密码强度
+ * @param val 当前值字符串
+ * @description 弱：纯数字，纯字母，纯特殊字符
+ * @description 中：字母+数字，字母+特殊字符，数字+特殊字符
+ * @description 强：字母+数字+特殊字符
+ * @returns 返回处理后的字符串：弱、中、强
+ */
 export function verifyPasswordStrength(val: string) {
 	let v = '';
 	// 弱：纯数字，纯字母，纯特殊字符
@@ -169,7 +232,11 @@ export function verifyPasswordStrength(val: string) {
 	return v;
 }
 
-// IP地址
+/**
+ * IP地址
+ * @param val 当前值字符串
+ * @returns 返回 true: IP地址正确
+ */
 export function verifyIPAddress(val: string) {
 	// false: IP地址不正确
 	if (
@@ -182,7 +249,11 @@ export function verifyIPAddress(val: string) {
 	else return true;
 }
 
-// 邮箱
+/**
+ * 邮箱
+ * @param val 当前值字符串
+ * @returns 返回 true: 邮箱正确
+ */
 export function verifyEmail(val: string) {
 	// false: 邮箱不正确
 	if (
@@ -195,7 +266,11 @@ export function verifyEmail(val: string) {
 	else return true;
 }
 
-// 身份证
+/**
+ * 身份证
+ * @param val 当前值字符串
+ * @returns 返回 true: 身份证正确
+ */
 export function verifyIdCard(val: string) {
 	// false: 身份证不正确
 	if (!/^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/.test(val)) return false;
@@ -203,7 +278,11 @@ export function verifyIdCard(val: string) {
 	else return true;
 }
 
-// 姓名
+/**
+ * 姓名
+ * @param val 当前值字符串
+ * @returns 返回 true: 姓名正确
+ */
 export function verifyFullName(val: string) {
 	// false: 姓名不正确
 	if (!/^[\u4e00-\u9fa5]{1,6}(·[\u4e00-\u9fa5]{1,6}){0,2}$/.test(val)) return false;
@@ -211,7 +290,11 @@ export function verifyFullName(val: string) {
 	else return true;
 }
 
-// 邮政编码
+/**
+ * 邮政编码
+ * @param val 当前值字符串
+ * @returns 返回 true: 邮政编码正确
+ */
 export function verifyPostalCode(val: string) {
 	// false: 邮政编码不正确
 	if (!/^[1-9][0-9]{5}$/.test(val)) return false;
@@ -219,7 +302,11 @@ export function verifyPostalCode(val: string) {
 	else return true;
 }
 
-// url
+/**
+ * url 处理
+ * @param val 当前值字符串
+ * @returns 返回 true: url 正确
+ */
 export function verifyUrl(val: string) {
 	// false: url不正确
 	if (
@@ -232,7 +319,11 @@ export function verifyUrl(val: string) {
 	else return true;
 }
 
-// 车牌号
+/**
+ * 车牌号
+ * @param val 当前值字符串
+ * @returns 返回 true：车牌号正确
+ */
 export function verifyCarNum(val: string) {
 	// false: 车牌号不正确
 	if (

@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed } from 'vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default {
 	name: 'pagesFilteringDetails1',
 	setup() {

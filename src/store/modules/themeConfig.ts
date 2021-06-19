@@ -29,7 +29,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 
 			/**
 			 * 菜单 / 顶栏
-			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/views/layout/navBars/breadcrumb/setings.vue
+			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
 			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
 			 */
 			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
@@ -116,7 +116,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 
 			/**
 			 * 布局切换
-			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/views/layout/navBars/breadcrumb/setings.vue
+			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
 			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
 			 */
 			// 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults

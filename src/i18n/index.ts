@@ -2,18 +2,18 @@ import { createI18n } from 'vue-i18n';
 import zhcnLocale from 'element-plus/lib/locale/lang/zh-cn';
 import enLocale from 'element-plus/lib/locale/lang/en';
 import zhtwLocale from 'element-plus/lib/locale/lang/zh-tw';
-import { store } from '/@/store/index.ts';
+import { store } from '/@/store/index';
 
-import nextZhcn from '/@/i18n/lang/zh-cn.ts';
-import nextEn from '/@/i18n/lang/en.ts';
-import nextZhtw from '/@/i18n/lang/zh-tw.ts';
+import nextZhcn from '/@/i18n/lang/zh-cn';
+import nextEn from '/@/i18n/lang/en';
+import nextZhtw from '/@/i18n/lang/zh-tw';
 
-import pagesHomeZhcn from '/@/i18n/pages/home/zh-cn.ts';
-import pagesHomeEn from '/@/i18n/pages/home/en.ts';
-import pagesHomeZhtw from '/@/i18n/pages/home/zh-tw.ts';
-import pagesLoginZhcn from '/@/i18n/pages/login/zh-cn.ts';
-import pagesLoginEn from '/@/i18n/pages/login/en.ts';
-import pagesLoginZhtw from '/@/i18n/pages/login/zh-tw.ts';
+import pagesHomeZhcn from '/@/i18n/pages/home/zh-cn';
+import pagesHomeEn from '/@/i18n/pages/home/en';
+import pagesHomeZhtw from '/@/i18n/pages/home/zh-tw';
+import pagesLoginZhcn from '/@/i18n/pages/login/zh-cn';
+import pagesLoginEn from '/@/i18n/pages/login/en';
+import pagesLoginZhtw from '/@/i18n/pages/login/zh-tw';
 
 // 定义语言国际化内容
 /**

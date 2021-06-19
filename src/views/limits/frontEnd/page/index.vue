@@ -24,9 +24,9 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, onMounted } from 'vue';
-import { useStore } from '/@/store/index.ts';
-import { resetRoute, setAddRoute, setFilterMenu, setCacheTagsViewRoutes } from '/@/router/index.ts';
-import { setSession } from '/@/utils/storage.ts';
+import { useStore } from '/@/store/index';
+import { resetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/index';
+import { Session } from '/@/utils/storage';
 export default {
 	name: 'limitsFrontEndPage',
 	setup() {
@@ -47,25 +47,20 @@ export default {
 		const initUserAuth = () => {
 			state.userAuth = store.state.userInfos.userInfos.authPageList[0];
 		};
-		// 重新执行添加动态路由、过滤权限菜单、缓存等方法
-		const initAllFun = () => {
-			setAddRoute();
-			setFilterMenu();
-			setCacheTagsViewRoutes();
-		};
 		// 用户权限改变时
-		const onRadioChange = () => {
+		const onRadioChange = async () => {
 			resetRoute();
 			let defaultAuthPageList: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
-			// admin 页面权限标识，对应路由 meta.auth
+			// admin 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
 			let adminAuthPageList: Array<string> = ['admin'];
 			// admin 按钮权限标识
 			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.auth
+			// test 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
 			let testAuthPageList: Array<string> = ['test'];
 			// test 按钮权限标识
 			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
+			// 不同用户模拟不同的用户权限
 			if (state.userAuth === 'admin') {
 				defaultAuthPageList = adminAuthPageList;
 				defaultAuthBtnList = adminAuthBtnList;
@@ -83,9 +78,10 @@ export default {
 				authPageList: defaultAuthPageList,
 				authBtnList: defaultAuthBtnList,
 			};
-			setSession('userInfo', userInfos);
+			Session.set('userInfo', userInfos);
 			store.dispatch('userInfos/setUserInfos', userInfos); // 请注意执行顺序(存储用户信息vuex)
-			initAllFun(); // 请注意执行顺序
+			await setAddRoute();
+			setFilterMenuAndCacheTagsViewRoutes();
 		};
 		// 页面加载时
 		onMounted(() => {

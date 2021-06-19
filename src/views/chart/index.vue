@@ -203,11 +203,11 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, onMounted, getCurrentInstance } from 'vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
-import { skyList, dBtnList, chartData4List, earth3DBtnList } from '/@/views/chart/chart.ts';
+import { skyList, dBtnList, chartData4List, earth3DBtnList } from '/@/views/chart/chart';
 export default {
 	name: 'chartIndex',
 	components: { ChartHead },

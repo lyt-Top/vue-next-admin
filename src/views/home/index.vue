@@ -4,11 +4,13 @@
 			<el-col :sm="6" class="mb15">
 				<div class="home-card-item home-card-first">
 					<div class="flex-margin flex">
-						<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
+						<img :src="getUserInfos.photo" />
 						<div class="home-card-first-right ml15">
 							<div class="flex-margin">
-								<div class="home-card-first-right-title">{{ currentTime }}，admin！</div>
-								<div class="home-card-first-right-msg mt5">超级管理</div>
+								<div class="home-card-first-right-title">
+									{{ currentTime }}，{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}！
+								</div>
+								<div class="home-card-first-right-msg mt5">{{ getUserInfos.userName === 'admin' ? '超级管理' : '普通用户' }}</div>
 							</div>
 						</div>
 					</div>
@@ -97,12 +99,14 @@
 import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance } from 'vue';
 import * as echarts from 'echarts';
 import { CountUp } from 'countup.js';
-import { formatAxis } from '/@/utils/formatTime.ts';
-import { topCardItemList, environmentList, activitiesList } from './mock.ts';
+import { formatAxis } from '/@/utils/formatTime';
+import { useStore } from '/@/store/index';
+import { topCardItemList, environmentList, activitiesList } from './mock';
 export default {
 	name: 'home',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
+		const store = useStore();
 		const state = reactive({
 			topCardItemList,
 			environmentList,
@@ -126,6 +130,10 @@ export default {
 					},
 				],
 			},
+		});
+		// 获取用户信息 vuex
+		const getUserInfos = computed(() => {
+			return store.state.userInfos.userInfos;
 		});
 		// 当前时间提示语
 		const currentTime = computed(() => {
@@ -247,6 +255,7 @@ export default {
 			initHomeOvertime();
 		});
 		return {
+			getUserInfos,
 			currentTime,
 			...toRefs(state),
 		};

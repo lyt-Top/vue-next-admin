@@ -8,11 +8,11 @@
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useStore } from '/@/store/index.ts';
-import { getLocal } from '/@/utils/storage.ts';
-import setIntroduction from '/@/utils/setIconfont.ts';
-import LockScreen from '/@/views/layout/lockScreen/index.vue';
-import Setings from '/@/views/layout/navBars/breadcrumb/setings.vue';
+import { useStore } from '/@/store/index';
+import { Local } from '/@/utils/storage';
+import setIntroduction from '/@/utils/setIconfont';
+import LockScreen from '/@/layout/lockScreen/index.vue';
+import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
 export default defineComponent({
 	name: 'app',
 	components: { LockScreen, Setings },
@@ -45,9 +45,9 @@ export default defineComponent({
 					openSetingsDrawer();
 				});
 				// 获取缓存中的布局配置
-				if (getLocal('themeConfig')) {
-					store.dispatch('themeConfig/setThemeConfig', getLocal('themeConfig'));
-					document.documentElement.style.cssText = getLocal('themeConfigStyle');
+				if (Local.get('themeConfig')) {
+					store.dispatch('themeConfig/setThemeConfig', Local.get('themeConfig'));
+					document.documentElement.style.cssText = Local.get('themeConfigStyle');
 				}
 			});
 		});
@@ -60,9 +60,9 @@ export default defineComponent({
 			() => route.path,
 			() => {
 				nextTick(() => {
-					let webTitle = '';
-					route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
-					document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
+					// let webTitle = '';
+					// route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
+					// document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
 				});
 			}
 		);

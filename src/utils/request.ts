@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus';
-import { clearSession, getSession } from '/@/utils/storage.ts';
-import router, { resetRoute } from '/@/router/index.ts';
+import { Session } from '/@/utils/storage';
 
 // 配置新建一个 axios 实例
 const service = axios.create({
@@ -14,8 +13,8 @@ const service = axios.create({
 service.interceptors.request.use(
 	(config) => {
 		// 在发送请求之前做些什么 token
-		if (getSession('token')) {
-			config.headers.common['Authorization'] = `${getSession('token')}`;
+		if (Session.get('token')) {
+			config.headers.common['Authorization'] = `${Session.get('token')}`;
 		}
 		return config;
 	},
@@ -33,9 +32,8 @@ service.interceptors.response.use(
 		if (res.code && res.code !== 0) {
 			// `token` 过期或者账号已在别处登录
 			if (res.code === 401 || res.code === 4001) {
-				clearSession(); // 清除浏览器全部临时缓存
-				router.push('/login'); // 去登录页面
-				resetRoute(); // 删除/重置路由
+				Session.clear(); // 清除浏览器全部临时缓存
+				window.location.href = '/'; // 去登录页
 				ElMessageBox.alert('你已被登出，请重新登录', '提示', {})
 					.then(() => {})
 					.catch(() => {});

@@ -20,13 +20,13 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router';
-import { clearSession } from '/@/utils/storage.ts';
+import { Session } from '/@/utils/storage';
 export default {
 	name: '401',
 	setup() {
 		const router = useRouter();
 		const onSetAuth = () => {
-			clearSession();
+			Session.clear();
 			router.push('/login');
 		};
 		return {

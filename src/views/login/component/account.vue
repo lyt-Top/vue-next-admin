@@ -55,10 +55,11 @@ import { toRefs, reactive, defineComponent, computed, getCurrentInstance } from 
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
-import { initAllFun, initBackEndControlRoutesFun } from '/@/router/index.ts';
-import { useStore } from '/@/store/index.ts';
-import { setSession } from '/@/utils/storage.ts';
-import { formatAxis } from '/@/utils/formatTime.ts';
+import { initFrontEndControlRoutes } from '/@/router/frontEnd';
+import { initBackEndControlRoutes } from '/@/router/backEnd';
+import { useStore } from '/@/store/index';
+import { Session } from '/@/utils/storage';
+import { formatAxis } from '/@/utils/formatTime';
 export default defineComponent({
 	name: 'login',
 	setup() {
@@ -86,14 +87,15 @@ export default defineComponent({
 			state.loading.signIn = true;
 			let defaultAuthPageList: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
-			// admin 页面权限标识，对应路由 meta.auth
+			// admin 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
 			let adminAuthPageList: Array<string> = ['admin'];
 			// admin 按钮权限标识
 			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.auth
+			// test 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
 			let testAuthPageList: Array<string> = ['test'];
 			// test 按钮权限标识
 			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
+			// 不同用户模拟不同的用户权限
 			if (state.ruleForm.userName === 'admin') {
 				defaultAuthPageList = adminAuthPageList;
 				defaultAuthBtnList = adminAuthBtnList;
@@ -113,20 +115,20 @@ export default defineComponent({
 				authBtnList: defaultAuthBtnList,
 			};
 			// 存储 token 到浏览器缓存
-			setSession('token', Math.random().toString(36).substr(0));
+			Session.set('token', Math.random().toString(36).substr(0));
 			// 存储用户信息到浏览器缓存
-			setSession('userInfo', userInfos);
+			Session.set('userInfo', userInfos);
 			// 1、请注意执行顺序(存储用户信息到vuex)
 			store.dispatch('userInfos/setUserInfos', userInfos);
 			if (!store.state.themeConfig.themeConfig.isRequestRoutes) {
 				// 前端控制路由，2、请注意执行顺序
-				await initAllFun();
+				await initFrontEndControlRoutes();
 				signInSuccess();
 			} else {
 				// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
 				// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
-				await initBackEndControlRoutesFun();
-				// 执行完 initBackEndControlRoutesFun，再执行 signInSuccess
+				await initBackEndControlRoutes();
+				// 执行完 initBackEndControlRoutes，再执行 signInSuccess
 				signInSuccess();
 			}
 		};

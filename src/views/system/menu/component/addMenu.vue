@@ -98,14 +98,14 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
-// import { setBackEndControlRefreshRoutes } from "/@/router/index.ts";
+// import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 export default {
 	name: 'systemAddMenu',
 	setup() {
 		const state = reactive({
 			isShowDialog: false,
 			/**
-			 * 参数请参考 `/src/router/index.ts` 中的 `dynamicRoutes` 路由菜单格式（请注意参数类型！）
+			 * 参数请参考 `/src/router/route.ts` 中的 `dynamicRoutes` 路由菜单格式（请注意参数类型！）
 			 * 受到 `element plus` 类型 `string/number/object` 影响，不可使用 `:value="true"`
 			 * 的写法，所以传值到后台时，需要转换成布尔值，否则页面可能出现玄学。
 			 * 路由权限标识为数组格式，基本都需要自行转换类型

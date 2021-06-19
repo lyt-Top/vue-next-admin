@@ -1,5 +1,5 @@
 // 页面添加水印效果
-const setWatermark = (str: any) => {
+const setWatermark = (str: string) => {
 	const id = '1.23452384164.123412416';
 	if (document.getElementById(id) !== null) document.body.removeChild(document.getElementById(id) as any);
 	const can = document.createElement('canvas');
@@ -26,10 +26,14 @@ const setWatermark = (str: any) => {
 	return id;
 };
 
-// 定义导出方法集合
+/**
+ * 页面添加水印效果
+ * @method set 设置水印
+ * @method del 删除水印
+ */
 const watermark = {
 	// 设置水印
-	set: (str: any) => {
+	set: (str: string) => {
 		let id = setWatermark(str);
 		if (document.getElementById(id) === null) id = setWatermark(str);
 	},

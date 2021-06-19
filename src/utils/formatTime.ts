@@ -1,20 +1,17 @@
-/*
- * 年(Y) 可用1-4个占位符
- * 月(m)、日(d)、小时(H)、分(M)、秒(S) 可用1-2个占位符
- * 星期(W) 可用1-3个占位符
- * 季度(q为阿拉伯数字，Q为中文数字)可用1或4个占位符
- *
- * let date = new Date()
- * formatDate(date, "YYYY-mm-dd HH:MM:SS")           // 2020-02-09 14:04:23
- * formatDate(date, "YYYY-mm-dd HH:MM:SS Q")         // 2020-02-09 14:09:03 一
- * formatDate(date, "YYYY-mm-dd HH:MM:SS WWW")       // 2020-02-09 14:45:12 星期日
- * formatDate(date, "YYYY-mm-dd HH:MM:SS QQQQ")      // 2020-02-09 14:09:36 第一季度
- * formatDate(date, "YYYY-mm-dd HH:MM:SS WWW QQQQ")  // 2020-02-09 14:46:12 星期日 第一季度
+/**
+ * 时间日期转换
+ * @param date 当前时间，new Date() 格式
+ * @param format 需要转换的时间格式字符串
+ * @description format 字符串随意，如 `YYYY-mm、YYYY-mm-dd`
+ * @description format 季度："YYYY-mm-dd HH:MM:SS QQQQ"
+ * @description format 星期："YYYY-mm-dd HH:MM:SS WWW"
+ * @description format 季度 + 星期："YYYY-mm-dd HH:MM:SS WWW QQQQ"
+ * @returns 返回拼接后的时间字符串
  */
-export function formatDate(date: Date, format: string) {
+export function formatDate(date: Date, format: string): string {
 	let we = date.getDay(); // 星期
 	let qut = Math.floor((date.getMonth() + 3) / 3).toString(); // 季度
-	const opt: any = {
+	const opt: { [key: string]: string } = {
 		'Y+': date.getFullYear().toString(), // 年
 		'm+': (date.getMonth() + 1).toString(), // 月(月份从0开始，要+1)
 		'd+': date.getDate().toString(), // 日
@@ -24,7 +21,7 @@ export function formatDate(date: Date, format: string) {
 		'q+': qut, // 季度
 	};
 	// 中文数字 (星期)
-	const week: any = {
+	const week: { [key: string]: string } = {
 		'0': '日',
 		'1': '一',
 		'2': '二',
@@ -34,7 +31,7 @@ export function formatDate(date: Date, format: string) {
 		'6': '六',
 	};
 	// 中文数字（季度）
-	const quarter: any = {
+	const quarter: { [key: string]: string } = {
 		'1': '一',
 		'2': '二',
 		'3': '三',
@@ -52,27 +49,21 @@ export function formatDate(date: Date, format: string) {
 }
 
 /**
- * 10秒：  10 * 1000
- * 1分：   60 * 1000
- * 1小时： 60 * 60 * 1000
- * 24小时：60 * 60 * 24 * 1000
- * 3天：   60 * 60* 24 * 1000 * 3
- *
- * let data = new Date()
- * formatPast(data)                                           // 刚刚
- * formatPast(data - 11 * 1000)                               // 11秒前
- * formatPast(data - 2 * 60 * 1000)                           // 2分钟前
- * formatPast(data - 60 * 60 * 2 * 1000)                      // 2小时前
- * formatPast(data - 60 * 60 * 2 * 1000)                      // 2小时前
- * formatPast(data - 60 * 60 * 71 * 1000)                     // 2天前
- * formatPast("2020-06-01")                                   // 2020-06-01
- * formatPast("2020-06-01", "YYYY-mm-dd HH:MM:SS WWW QQQQ")   // 2020-06-01 08:00:00 星期一 第二季度
+ * 将时间转换为 `几秒前`、`几分钟前`、`几小时前`、`几天前`
+ * @param param 当前时间，new Date() 格式或者字符串时间格式
+ * @param format 需要转换的时间格式字符串
+ * @description param 10秒：  10 * 1000
+ * @description param 1分：   60 * 1000
+ * @description param 1小时： 60 * 60 * 1000
+ * @description param 24小时：60 * 60 * 24 * 1000
+ * @description param 3天：   60 * 60* 24 * 1000 * 3
+ * @returns 返回拼接后的时间字符串
  */
-export function formatPast(param: any, format: string = 'YYYY-mm-dd') {
+export function formatPast(param: string | Date, format: string = 'YYYY-mm-dd'): string {
 	// 传入格式处理、存储转换值
-	let t: any, s: any;
+	let t: any, s: number;
 	// 获取js 时间戳
-	let time: any = new Date().getTime();
+	let time: number = new Date().getTime();
 	// 是否是对象
 	typeof param === 'string' || 'object' ? (t = new Date(param).getTime()) : (t = param);
 	// 当前时间戳 - 传入时间戳
@@ -104,9 +95,12 @@ export function formatPast(param: any, format: string = 'YYYY-mm-dd') {
 }
 
 /**
- * formatAxis(new Date())   // 上午好
+ * 时间问候语
+ * @param param 当前时间，new Date() 格式
+ * @description param 调用 `formatAxis(new Date())` 输出 `上午好`
+ * @returns 返回拼接后的时间字符串
  */
-export function formatAxis(param: any) {
+export function formatAxis(param: Date): string {
 	let hour: number = new Date(param).getHours();
 	if (hour < 6) return '凌晨好';
 	else if (hour < 9) return '早上好';

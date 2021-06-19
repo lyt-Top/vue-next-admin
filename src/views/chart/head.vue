@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onBeforeMount, onUnmounted } from 'vue';
-import { formatDate } from '/@/utils/formatTime.ts';
+import { formatDate } from '/@/utils/formatTime';
 export default {
 	name: 'chartHead',
 	setup() {

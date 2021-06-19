@@ -1,6 +1,10 @@
 import { ElMessage } from 'element-plus';
 
-// hex颜色转rgb颜色
+/**
+ * hex颜色转rgb颜色
+ * @param str 颜色值字符串
+ * @returns 返回处理后的颜色值
+ */
 export function hexToRgb(str: any) {
 	let hexs: any = '';
 	let reg = /^\#?[0-9A-Fa-f]{6}$/;
@@ -11,7 +15,13 @@ export function hexToRgb(str: any) {
 	return hexs;
 }
 
-// rgb颜色转Hex颜色
+/**
+ * rgb颜色转Hex颜色
+ * @param r 代表红色
+ * @param g 代表绿色
+ * @param b 代表蓝色
+ * @returns 返回处理后的颜色值
+ */
 export function rgbToHex(r: any, g: any, b: any) {
 	let reg = /^\d{1,3}$/;
 	if (!reg.test(r) || !reg.test(g) || !reg.test(b)) return ElMessage({ type: 'warning', message: '输入错误的rgb颜色值' });
@@ -20,7 +30,12 @@ export function rgbToHex(r: any, g: any, b: any) {
 	return `#${hexs.join('')}`;
 }
 
-// 加深颜色值，level为加深的程度，限0-1之间
+/**
+ * 加深颜色值
+ * @param color 颜色值字符串
+ * @param level 加深的程度，限0-1之间
+ * @returns 返回处理后的颜色值
+ */
 export function getDarkColor(color: any, level: number) {
 	let reg = /^\#?[0-9A-Fa-f]{6}$/;
 	if (!reg.test(color)) return ElMessage({ type: 'warning', message: '输入错误的hex颜色值' });
@@ -29,7 +44,12 @@ export function getDarkColor(color: any, level: number) {
 	return rgbToHex(rgb[0], rgb[1], rgb[2]);
 }
 
-// 变浅颜色值，level为加深的程度，限0-1之间
+/**
+ * 变浅颜色值
+ * @param color 颜色值字符串
+ * @param level 加深的程度，限0-1之间
+ * @returns 返回处理后的颜色值
+ */
 export function getLightColor(color: any, level: number) {
 	let reg = /^\#?[0-9A-Fa-f]{6}$/;
 	if (!reg.test(color)) return ElMessage({ type: 'warning', message: '输入错误的hex颜色值' });

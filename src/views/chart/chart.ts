@@ -1,4 +1,7 @@
-// sky 天气
+/**
+ * sky 天气
+ * @returns 返回模拟数据
+ */
 export const skyList = [
 	{
 		v1: '时间',
@@ -24,7 +27,10 @@ export const skyList = [
 	},
 ];
 
-// 当前设置状态
+/**
+ * 当前设置状态
+ * @returns 返回模拟数据
+ */
 export const dBtnList = [
 	{
 		v2: '阳光玫瑰种植',
@@ -33,7 +39,10 @@ export const dBtnList = [
 	},
 ];
 
-// 当前设备监测
+/**
+ * 当前设备监测
+ * @returns 返回模拟数据
+ */
 export const chartData4List = [
 	{
 		label: '温度',
@@ -49,7 +58,10 @@ export const chartData4List = [
 	},
 ];
 
-// 3DEarth 地图周围按钮组
+/**
+ * 3DEarth 地图周围按钮组
+ * @returns 返回模拟数据
+ */
 export const earth3DBtnList = [
 	{
 		topLevelClass: 'fixed-top',

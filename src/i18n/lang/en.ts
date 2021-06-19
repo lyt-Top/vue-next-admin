@@ -71,6 +71,7 @@ export default {
 		dropdown3: '404',
 		dropdown4: '401',
 		dropdown5: 'Log out',
+		dropdown6: 'Code warehouse',
 		searchPlaceholder: 'Menu search: support Chinese, routing path',
 		newTitle: 'notice',
 		newBtn: 'All read',

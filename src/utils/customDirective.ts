@@ -1,19 +1,23 @@
 import type { App } from 'vue';
 
-// 按钮波浪指令
+/**
+ * 按钮波浪指令
+ * @directive 默认方式：v-waves，如 `<div v-waves></div>`
+ * @directive 参数方式：v-waves=" |light|red|orange|purple|green|teal"，如 `<div v-waves="'light'"></div>`
+ */
 export function wavesDirective(app: App) {
 	app.directive('waves', {
 		mounted(el, binding) {
 			el.classList.add('waves-effect');
 			binding.value && el.classList.add(`waves-${binding.value}`);
-			function setConvertStyle(obj: any) {
+			function setConvertStyle(obj: { [key: string]: unknown }) {
 				let style: string = '';
 				for (let i in obj) {
 					if (obj.hasOwnProperty(i)) style += `${i}:${obj[i]};`;
 				}
 				return style;
 			}
-			function onCurrentClick(e: any) {
+			function onCurrentClick(e: { [key: string]: unknown }) {
 				let elDiv = document.createElement('div');
 				elDiv.classList.add('waves-ripple');
 				el.appendChild(elDiv);

@@ -1,7 +1,12 @@
 import { nextTick } from 'vue';
 import loadingCss from '/@/theme/loading.scss';
 
-// 定义方法
+/**
+ * 页面全局 Loading
+ * @method setCss 载入 css
+ * @method start 创建 loading
+ * @method done 移除 loading
+ */
 export const NextLoading = {
 	// 载入 css
 	setCss: () => {
@@ -13,7 +18,7 @@ export const NextLoading = {
 	},
 	// 创建 loading
 	start: () => {
-		const bodys: any = document.body;
+		const bodys: Element = document.body;
 		const div = document.createElement('div');
 		div.setAttribute('class', 'loading-next');
 		const htmls = `
@@ -33,11 +38,13 @@ export const NextLoading = {
 		`;
 		div.innerHTML = htmls;
 		bodys.insertBefore(div, bodys.childNodes[0]);
+		window.nextLoading = true;
 	},
 	// 移除 loading
 	done: () => {
 		nextTick(() => {
 			setTimeout(() => {
+				window.nextLoading = false;
 				const el = document.querySelector('.loading-next');
 				el && el.parentNode?.removeChild(el);
 			}, 1000);

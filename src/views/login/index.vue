@@ -35,7 +35,7 @@
 import { toRefs, reactive, computed } from 'vue';
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
-import { useStore } from '/@/store/index.ts';
+import { useStore } from '/@/store/index';
 export default {
 	name: 'login',
 	components: { Account, Mobile },
@@ -89,7 +89,7 @@ export default {
 		left: 50%;
 		transform: translate(-50%, -50%) translate3d(0, 0, 0);
 		background-color: rgba(255, 255, 255, 0.99);
-		box-shadow: 0 2px 12px 0 var(--color-primary-light-5);
+		border: 5px solid var(--color-primary-light-8);
 		border-radius: 4px;
 		transition: height 0.2s linear;
 		height: 480px;
