@@ -1,37 +1,26 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { RootStateTypes } from '/@/store/interface/index';
-import themeConfig from '/@/store/modules/themeConfig.ts';
-import routesList from '/@/store/modules/routesList.ts';
-import keepAliveNames from '/@/store/modules/keepAliveNames.ts';
-import tagsViewRoutes from '/@/store/modules/tagsViewRoutes.ts';
-import userInfos from '/@/store/modules/userInfos.ts';
-import requestOldRoutes from '/@/store/modules/requestOldRoutes.ts';
 
-// const modulesFiles: Record<string, Function> = import.meta.glob('./modules/*.ts');
+// Vite supports importing multiple modules from the file system using the special import.meta.glob function
+// see https://cn.vitejs.dev/guide/features.html#glob-import
+const modulesFiles = import.meta.globEager('./modules/*.ts');
+const pathList: string[] = [];
 
-// npm run build
-// https://github.com/vitejs/vite/issues/3035
-// Top-level await is not available in the configured target environment ("chrome87", "edge88", "es2019", "firefox78", "safari13.1")
-// let modules: ModuleTree<object> = {};
-// for (const path in modulesFiles) {
-// 	const moduleName: string = path.replace(/(.*\/)*([^.]+).*/gi, '$2');
-// 	let module: ModuleTree<object> = await modulesFiles[path]();
-// 	modules = { ...modules, [moduleName]: module.default };
-// }
+for (const path in modulesFiles) {
+	pathList.push(path);
+}
+
+const modules = pathList.reduce((modules: { [x: string]: any }, modulePath: string) => {
+	const moduleName = modulePath.replace(/^\.\/modules\/(.*)\.\w+$/, '$1');
+	const value = modulesFiles[modulePath];
+	modules[moduleName] = value.default;
+	return modules;
+}, {});
 
 export const key: InjectionKey<Store<RootStateTypes>> = Symbol();
 
-export const store = createStore<RootStateTypes>({
-	modules: {
-		themeConfig,
-		routesList,
-		keepAliveNames,
-		tagsViewRoutes,
-		userInfos,
-		requestOldRoutes,
-	},
-});
+export const store = createStore<RootStateTypes>({ modules });
 
 export function useStore() {
 	return baseUseStore(key);

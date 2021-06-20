@@ -60,9 +60,9 @@ export default defineComponent({
 			() => route.path,
 			() => {
 				nextTick(() => {
-					// let webTitle = '';
-					// route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
-					// document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
+					let webTitle = '';
+					route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
+					document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
 				});
 			}
 		);

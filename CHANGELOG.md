@@ -8,6 +8,7 @@
 
 - 🌟 更新 依赖更新最新版本（"vite": "^2.3.7"）热更新无问题
 - 🎉 新增 深克隆工具，方便开发，感谢<a href="https://gitee.com/kangert" target="_blank">@kangert</a>(<a href="https://gitee.com/lyt-top/vue-next-admin/pulls/6" target="_blank">#6</a>)
+- 🎯 优化 vuex 模块自动导入。感谢<a href="https://gitee.com/kangert" target="_blank">@kangert</a>(<a href="https://gitee.com/lyt-top/vue-next-admin/pulls/4" target="_blank">#4</a>)，感谢群友@web 小学生-第五君
 - 🎯 优化 类型定义提高编码体验，修复不能将类型“string | undefined”分配给类型“string”的问题。感谢<a href="https://gitee.com/kangert" target="_blank">@kangert</a>(<a href="https://gitee.com/lyt-top/vue-next-admin/pulls/5" target="_blank">#5</a>)
 - 🎯 优化 `layout` 文件夹移动到与 `views` 文件夹同级（改动较大，`/@/views/layout` 变成 `/@/layout`）
 - 🎯 优化 页面有 `console.log` 时 `eslint` 不生效问题
