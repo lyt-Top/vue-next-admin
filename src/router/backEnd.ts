@@ -5,12 +5,14 @@ import { setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/inde
 import { dynamicRoutes } from '/@/router/route';
 import { getMenuAdmin, getMenuTest } from '/@/api/menu/index';
 
+const layouModules: any = import.meta.glob('../layout/routerView/*.{vue,tsx}');
+const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
 /**
  * 获取目录下的 .vue、.tsx 全部文件
  * @method import.meta.glob
  * @link 参考：https://cn.vitejs.dev/guide/features.html#json
  */
-const dynamicViewsModules: Record<string, Function> = import.meta.glob('../views/**/*.{vue,tsx}');
+const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...layouModules }, { ...viewsModules });
 
 /**
  * 后端控制路由：初始化方法，防止刷新时路由丢失
@@ -85,7 +87,7 @@ export function backEndComponent(routes: any) {
 export function dynamicImport(dynamicViewsModules: Record<string, Function>, component: string) {
 	const keys = Object.keys(dynamicViewsModules);
 	const matchKeys = keys.filter((key) => {
-		const k = key.replace('../views', '');
+		const k = key.replace(/..\/views|../, '');
 		return k.startsWith(`${component}`) || k.startsWith(`/${component}`);
 	});
 	if (matchKeys?.length === 1) {

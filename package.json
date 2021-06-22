@@ -1,6 +1,6 @@
 {
 	"name": "vue-next-admin",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
@@ -46,7 +46,7 @@
 		"sass": "^1.35.1",
 		"sass-loader": "^12.1.0",
 		"typescript": "^4.3.4",
-		"vite": "^2.3.7",
+		"vite": "^2.3.8",
 		"vue-eslint-parser": "^7.6.0"
 	},
 	"browserslist": [
