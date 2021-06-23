@@ -68,7 +68,9 @@ export default {
 		// 省下拉改变时
 		const onProvinceChange = (name: string) => {
 			state.linkage.city = '';
+			state.linkage.area = '';
 			state.linkage.cityList = [];
+			state.linkage.areaList = [];
 			state.linkage.provinceList.map((v: any) => {
 				if (v.name === name) state.linkage.cityList = v.children;
 			});

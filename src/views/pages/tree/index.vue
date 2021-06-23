@@ -161,14 +161,14 @@ export default {
 <style scoped lang="scss">
 .tree-container {
 	.tree-head {
-		background-color: #f8f8f8;
-		line-height: 40px;
-		height: 40px;
-		border: 1px solid #dcdee3;
+		height: 48px;
+		line-height: 48px;
+		border: 1px solid #ebeef5;
 		border-bottom: none;
 		display: flex;
-		color: #606266;
 		padding-right: 8px;
+		font-weight: bold;
+		color: #909399;
 		.tree-head-check {
 			width: 38px;
 			text-align: right;
@@ -184,27 +184,29 @@ export default {
 	}
 	.el-tree {
 		overflow: hidden;
-		border-bottom: 1px solid #dcdee3;
+		border-bottom: 1px solid #ebeef5;
 		.tree-custom-node {
 			flex: 1;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			padding-right: 8px;
+			width: 100%;
 		}
 		&::v-deep(.el-tree-node) {
-			border: 1px solid #dcdee3;
+			border: 1px solid #ebeef5;
 			border-bottom: none;
+			color: #606266;
 			.el-tree-node__content {
-				line-height: 40px !important;
-				height: 40px !important;
+				line-height: 57px !important;
+				height: 57px !important;
 			}
 			.el-tree-node__children {
 				.el-tree-node {
 					border: none;
 				}
 				.el-tree-node__content {
-					border-top: 1px solid #dcdee3;
+					border-top: 1px solid #ebeef5;
 				}
 			}
 		}
