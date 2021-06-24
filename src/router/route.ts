@@ -755,6 +755,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							icon: 'iconfont icon-shuxingtu',
 						},
 					},
+					{
+						path: '/pages/drag',
+						name: 'pagesDrag',
+						component: () => import('/@/views/pages/drag/index.vue'),
+						meta: {
+							title: 'message.router.pagesDrag',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-thumb',
+						},
+					},
 				],
 			},
 			{

@@ -48,6 +48,7 @@ export default {
 		pagesPreview: '大圖預覽',
 		pagesWaves: '波浪效果',
 		pagesTree: '樹形改表格',
+		pagesDrag: '拖動指令',
 		chartIndex: '大資料圖表',
 		personal: '個人中心',
 		tools: '工具類集合',

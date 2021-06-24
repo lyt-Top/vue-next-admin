@@ -1,6 +1,6 @@
 {
 	"name": "vue-next-admin",
-	"version": "1.0.6",
+	"version": "1.0.7",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
@@ -13,8 +13,8 @@
 		"cropperjs": "^1.5.12",
 		"echarts": "^5.1.2",
 		"echarts-wordcloud": "^2.0.0",
-		"element-plus": "^1.0.2-beta.48",
-		"mitt": "^2.1.0",
+		"element-plus": "^1.0.2-beta.51",
+		"mitt": "^3.0.0",
 		"nprogress": "^0.2.0",
 		"print-js": "^1.6.0",
 		"qrcodejs2-fixes": "^0.0.2",

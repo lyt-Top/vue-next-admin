@@ -19,6 +19,10 @@
 					</div>
 					<div class="layout-lock-screen-date-box-info">{{ time.mdq }}</div>
 				</div>
+				<div class="layout-lock-screen-date-top">
+					<i class="el-icon-top"></i>
+					<div class="layout-lock-screen-date-top-text">上滑解锁</div>
+				</div>
 			</div>
 			<transition name="el-zoom-in-center">
 				<div v-show="isShowLoockLogin" class="layout-lock-screen-login">
@@ -52,11 +56,11 @@
 </template>
 
 <script lang="ts">
-import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance } from 'vue';
+import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
-export default {
+export default defineComponent({
 	name: 'layoutLockScreen',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
@@ -182,7 +186,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -204,7 +208,7 @@ export default {
 }
 .layout-lock-screen-img {
 	@extend .layout-lock-screen-fixed;
-	background-image: url('https://img6.bdstatic.com/img/image/pcindex/sunjunpchuazhoutu.JPG');
+	background-image: url('https://gitee.com/lyt-top/vue-next-admin-images/raw/master/images/03.jpg');
 	background-size: 100% 100%;
 	z-index: 9999991;
 }
@@ -232,6 +236,53 @@ export default {
 			}
 			&-minutes {
 				font-size: 16px;
+			}
+		}
+		&-top {
+			width: 40px;
+			height: 40px;
+			line-height: 40px;
+			border-radius: 100%;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			background: rgba(255, 255, 255, 0.1);
+			color: #ffffff;
+			opacity: 0.8;
+			position: absolute;
+			right: 30px;
+			bottom: 50px;
+			text-align: center;
+			overflow: hidden;
+			transition: all 0.3s ease;
+			i {
+				transition: all 0.3s ease;
+			}
+			&-text {
+				opacity: 0;
+				position: absolute;
+				top: 150%;
+				font-size: 12px;
+				color: #ffffff;
+				left: 50%;
+				line-height: 1.2;
+				transform: translate(-50%, -50%);
+				transition: all 0.3s ease;
+				width: 35px;
+			}
+			&:hover {
+				border: 1px solid rgba(255, 255, 255, 0.5);
+				background: rgba(255, 255, 255, 0.2);
+				color: #ffffff;
+				opacity: 1;
+				transition: all 0.3s ease;
+				i {
+					transform: translateY(-40px);
+					transition: all 0.3s ease;
+				}
+				.layout-lock-screen-date-top-text {
+					opacity: 1;
+					top: 50%;
+					transition: all 0.3s ease;
+				}
 			}
 		}
 	}

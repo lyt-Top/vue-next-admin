@@ -48,6 +48,7 @@ export default {
 		pagesPreview: 'Large preview',
 		pagesWaves: 'Wave effect',
 		pagesTree: 'tree alter table',
+		pagesDrag: 'Drag command',
 		chartIndex: 'chartIndex',
 		personal: 'personal',
 		tools: 'tools',
