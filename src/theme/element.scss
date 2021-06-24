@@ -933,6 +933,7 @@
 	justify-content: center;
 	.el-dialog {
 		margin: 0 auto !important;
+		position: absolute;
 		.el-dialog__body {
 			padding: 20px !important;
 		}
