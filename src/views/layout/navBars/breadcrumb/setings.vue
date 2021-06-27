@@ -299,7 +299,7 @@ export default {
 		},
 		// 布局切换
 		onSetLayout(layout) {
-			setLocal('oldLayout', layout);
+			Local.set('oldLayout', layout);
 			if (this.$store.state.themeConfig.themeConfig.layout === layout) return false;
 			this.$store.state.themeConfig.themeConfig.layout = layout;
 			this.$store.state.themeConfig.themeConfig.isDrawer = false;
