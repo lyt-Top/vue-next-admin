@@ -8,7 +8,6 @@
 				:props="{ expandTrigger: 'hover', value: 'code', label: 'name' }"
 				size="small"
 				clearable
-				class="w100"
 			>
 			</el-cascader>
 		</el-card>
@@ -43,9 +42,9 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from 'vue';
+import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import threeLevelLinkageJson from '/@/mock/threeLevelLinkage.json';
-export default {
+export default defineComponent({
 	name: 'pagesCityLinkage',
 	setup() {
 		const state = reactive({
@@ -93,5 +92,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

@@ -42,6 +42,7 @@ export default {
 		pagesAwesome: 'awesome 字体图标',
 		pagesCityLinkage: '城市多级联动',
 		pagesFormAdapt: '表单自适应',
+		pagesFormI18n: '表单国际化',
 		pagesListAdapt: '列表自适应',
 		pagesWaterfall: '瀑布屏',
 		pagesSteps: '步骤条',

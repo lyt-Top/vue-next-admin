@@ -666,6 +666,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						},
 					},
 					{
+						path: '/pages/formI18n',
+						name: 'pagesFormI18n',
+						component: () => import('/@/views/pages/formI18n/index.vue'),
+						meta: {
+							title: 'message.router.pagesFormI18n',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-diqiu',
+						},
+					},
+					{
 						path: '/pages/listAdapt',
 						name: 'pagesListAdapt',
 						component: () => import('/@/views/pages/listAdapt/index.vue'),

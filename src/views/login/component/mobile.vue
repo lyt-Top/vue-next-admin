@@ -4,7 +4,7 @@
 			<el-input
 				type="text"
 				:placeholder="$t('message.mobile.placeholder1')"
-				prefix-icon="el-icon-user"
+				prefix-icon="iconfont icon-dianhua"
 				v-model="ruleForm.userName"
 				clearable
 				autocomplete="off"
@@ -25,7 +25,7 @@
 					></el-input>
 				</el-col>
 				<el-col :span="8">
-					<el-button>{{ $t('message.mobile.codeText') }}</el-button>
+					<el-button class="login-content-code">{{ $t('message.mobile.codeText') }}</el-button>
 				</el-col>
 			</el-row>
 		</el-form-item>
@@ -58,6 +58,13 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
+	::v-deep(.el-input__icon) {
+		display: inline-block;
+	}
+	.login-content-code {
+		width: 100%;
+		padding: 0;
+	}
 	.login-content-submit {
 		width: 100%;
 		letter-spacing: 2px;

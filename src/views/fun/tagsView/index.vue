@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="fun-tagsview">
 		<el-card shadow="hover" header="tagsView 非当前页演示">
 			<el-form :model="formInline" size="small" label-width="40px" class="tags-view-form">
 				<el-row :gutter="35">
@@ -16,7 +16,7 @@
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="8" :md="8" :lg="6" :xl="4">
-						<el-form-item>
+						<el-form-item class="fun-tagsview-from-item">
 							<el-button type="primary" @click="onImplementClick" icon="el-icon-thumb">点击执行</el-button>
 						</el-form-item>
 					</el-col>
@@ -146,3 +146,13 @@ export default {
 	},
 };
 </script>
+
+<style scoped lang="scss">
+.fun-tagsview {
+	.fun-tagsview-from-item {
+		::v-deep(.el-form-item__content) {
+			margin-left: 0 !important;
+		}
+	}
+}
+</style>

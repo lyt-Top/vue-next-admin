@@ -13,13 +13,20 @@
 		</el-form-item>
 		<el-form-item>
 			<el-input
-				type="password"
+				:type="isShowPassword ? 'text' : 'password'"
 				:placeholder="$t('message.account.accountPlaceholder2')"
 				prefix-icon="el-icon-lock"
 				v-model="ruleForm.password"
 				autocomplete="off"
-				show-password
 			>
+				<template #suffix>
+					<i
+						class="iconfont el-input__icon login-content-password"
+						:class="isShowPassword ? 'icon-yincangmima' : 'icon-xianshimima'"
+						@click="isShowPassword = !isShowPassword"
+					>
+					</i>
+				</template>
 			</el-input>
 		</el-form-item>
 		<el-form-item>
@@ -69,6 +76,7 @@ export default defineComponent({
 		const route = useRoute();
 		const router = useRouter();
 		const state = reactive({
+			isShowPassword: false,
 			ruleForm: {
 				userName: 'admin',
 				password: '123456',
@@ -162,6 +170,14 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
+	.login-content-password {
+		display: inline-block;
+		width: 25px;
+		cursor: pointer;
+		&:hover {
+			color: #909399;
+		}
+	}
 	.login-content-code {
 		display: flex;
 		align-items: center;

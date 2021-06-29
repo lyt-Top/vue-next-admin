@@ -42,6 +42,7 @@ export default {
 		pagesAwesome: 'awesome 字體圖標',
 		pagesCityLinkage: '都市多級聯動',
 		pagesFormAdapt: '表單自我調整',
+		pagesFormI18n: '表單國際化',
 		pagesListAdapt: '清單自我調整',
 		pagesWaterfall: '瀑布屏',
 		pagesSteps: '步驟條',

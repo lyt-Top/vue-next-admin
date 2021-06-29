@@ -42,6 +42,7 @@ export default {
 		pagesAwesome: 'awesome icon',
 		pagesCityLinkage: 'CityLinkage',
 		pagesFormAdapt: 'FormAdapt',
+		pagesFormI18n: 'FormI18n',
 		pagesListAdapt: 'ListAdapt',
 		pagesWaterfall: 'Waterfall',
 		pagesSteps: 'Steps',
