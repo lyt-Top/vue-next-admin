@@ -214,6 +214,39 @@
 				]
 			},
 			{
+				"path": "/pages",
+				"name": "pagesIndex",
+				"component": "layout/routerView/parent",
+				"redirect": "/pages/formAdapt",
+				"meta": {
+					"title": "message.router.pagesIndex",
+					"isLink": "",
+					"isHide": false,
+					"isKeepAlive": true,
+					"isAffix": false,
+					"isIframe": false,
+					"auth": ["admin", "test"],
+					"icon": "iconfont icon-fuzhiyemian"
+				},
+				"children": [
+					{
+						"path": "/pages/formAdapt",
+						"name": "pagesFormAdapt",
+						"component": "pages/formAdapt/index",
+						"meta": {
+							"title": "message.router.pagesFormAdapt",
+							"isLink": "",
+							"isHide": false,
+							"isKeepAlive": true,
+							"isAffix": false,
+							"isIframe": false,
+							"auth": ["admin", "test"],
+							"icon": "iconfont icon-biaodan"
+						}
+					}
+				]
+			},
+			{
 				"path": "/personal",
 				"name": "personal",
 				"component": "personal/index",
