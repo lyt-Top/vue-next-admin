@@ -24,6 +24,7 @@ export default {
 		funCountup: 'countup 数字滚动',
 		funEchartsTree: 'echartsTree 树图',
 		funSelector: '图标选择器',
+		funNoticeBar: '滚动通知栏',
 		funWangEditor: 'wangEditor 编辑器',
 		funCropper: 'cropper 图片裁剪',
 		funQrcode: 'qrcode 二维码生成',

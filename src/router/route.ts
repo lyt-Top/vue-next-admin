@@ -393,6 +393,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						},
 					},
 					{
+						path: '/fun/noticeBar',
+						name: 'funNoticeBar',
+						component: () => import('/@/views/fun/noticeBar/index.vue'),
+						meta: {
+							title: 'message.router.funNoticeBar',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'el-icon-bell',
+						},
+					},
+					{
 						path: '/fun/wangEditor',
 						name: 'funWangEditor',
 						component: () => import('/@/views/fun/wangEditor/index.vue'),

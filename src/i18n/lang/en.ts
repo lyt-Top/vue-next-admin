@@ -24,6 +24,7 @@ export default {
 		funCountup: 'countup',
 		funEchartsTree: 'echartsTree',
 		funSelector: 'funSelector',
+		funNoticeBar: 'ScrollingNoticeBar',
 		funWangEditor: 'wangEditor',
 		funCropper: 'cropper',
 		funQrcode: 'qrcode',

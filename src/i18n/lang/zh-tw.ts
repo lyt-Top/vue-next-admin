@@ -24,6 +24,7 @@ export default {
 		funCountup: 'countup 數位滾動',
 		funEchartsTree: 'echartsTree 樹圖',
 		funSelector: '圖標選擇器',
+		funNoticeBar: '滾動通知欄',
 		funWangEditor: 'wangEditor 編輯器',
 		funCropper: 'cropper 圖片裁剪',
 		funQrcode: 'qrcode 二維碼生成',
