@@ -15,7 +15,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="菜单图标">
-							<el-input v-model="ruleForm.meta.icon" placeholder="请输入菜单图标" clearable></el-input>
+							<IconSelector placeholder="请输入菜单图标" v-model="ruleForm.meta.icon" />
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -98,9 +98,11 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
+import IconSelector from '/@/components/iconSelector/index.vue';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 export default {
 	name: 'systemAddMenu',
+	components: { IconSelector },
 	setup() {
 		const state = reactive({
 			isShowDialog: false,

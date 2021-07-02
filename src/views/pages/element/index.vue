@@ -46,10 +46,6 @@ export default {
 	.iconfont-row {
 		border-top: 1px solid #ebeef5;
 		border-left: 1px solid #ebeef5;
-		.el-col:nth-last-child(1),
-		.el-col:nth-last-child(2) {
-			display: none;
-		}
 		.iconfont-warp {
 			text-align: center;
 			border-right: 1px solid #ebeef5;

@@ -1,7 +1,7 @@
 <template>
 	<div class="selector-container">
 		<el-card shadow="hover" header="图标选择器(宽度自动)：简单版本">
-			<IconSelector @get="onGetIcon" @clear="onClearIcon" />
+			<IconSelector @get="onGetIcon" @clear="onClearIcon" v-model="modelIcon" />
 		</el-card>
 
 		<el-card shadow="hover" header="图标选择器(宽度自动)：参数" class="mt15">
@@ -33,6 +33,7 @@ export default defineComponent({
 	components: { IconSelector },
 	setup() {
 		const state = reactive({
+			modelIcon: '',
 			tableData: [
 				{
 					a1: 'prepend',

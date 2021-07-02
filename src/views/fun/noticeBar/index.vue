@@ -11,7 +11,8 @@
 			<NoticeBar
 				text="🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等，适配手机、平板、pc
 				的后台开源免费模板库（vue2.x请切换vue-prev-admin分支），仓库地址：https://gitee.com/lyt-top/vue-next-admin"
-				leftIcon="el-icon-bell"
+				leftIcon="iconfont icon-tongzhi2"
+				rightIcon="el-icon-arrow-right"
 				background="#ecf5ff"
 				color="#409eff"
 			/>
@@ -55,9 +56,10 @@ export default defineComponent({
 	setup() {
 		const state = reactive({
 			noticeList: [
-				'🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等，适配手机、平板、pc的后台开源免费模板库（vue2.x请切换vue-prev-admin分支）',
+				'🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等',
+				'适配手机、平板、pc的后台开源免费模板库（vue2.x请切换vue-prev-admin分支）',
 				'仓库地址：https://gitee.com/lyt-top/vue-next-admin',
-				'演示地址：vue3.x 版本预览（vue-next-admin）https://lyt-top.gitee.io/vue-next-admin-preview/#/login',
+				'演示地址：https://lyt-top.gitee.io/vue-next-admin-preview/#/login',
 			],
 			tableData: [
 				{
@@ -120,7 +122,7 @@ export default defineComponent({
 					a1: 'scrollable',
 					a2: '是否开启垂直滚动',
 					a3: 'boolean',
-					a4: '',
+					a4: 'true',
 					a5: 'false',
 				},
 				{

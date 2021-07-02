@@ -3,10 +3,8 @@
 		<div class="notice-bar-warp" :style="{ color, fontSize: `${size}px` }">
 			<i v-if="leftIcon" class="notice-bar-warp-left-icon" :class="leftIcon"></i>
 			<div class="notice-bar-warp-text-box" ref="noticeBarWarpRef">
-				<div class="notice-bar-warp-text" ref="noticeBarWarpTextRef">
-					<template v-if="!scrollable">{{ text }}</template>
-					<template v-else><slot /></template>
-				</div>
+				<div class="notice-bar-warp-text" ref="noticeBarTextRef" v-if="!scrollable">{{ text }}</div>
+				<div class="notice-bar-warp-slot" v-else><slot /></div>
 			</div>
 			<i v-if="rightIcon" class="notice-bar-warp-right-icon" :class="rightIcon" @click="onRightIconClick"></i>
 		</div>
@@ -76,7 +74,7 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		const noticeBarWarpRef = ref();
-		const noticeBarWarpTextRef = ref();
+		const noticeBarTextRef = ref();
 		const state = reactive({
 			order: 1,
 			oneTime: '',
@@ -89,7 +87,7 @@ export default defineComponent({
 		const initAnimation = () => {
 			nextTick(() => {
 				state.warpOWidth = noticeBarWarpRef.value.offsetWidth;
-				state.textOWidth = noticeBarWarpTextRef.value.offsetWidth;
+				state.textOWidth = noticeBarTextRef.value.offsetWidth;
 				document.styleSheets[0].insertRule(`@keyframes oneAnimation {0% {left: 0px;} 100% {left: -${state.textOWidth}px;}}`);
 				document.styleSheets[0].insertRule(`@keyframes twoAnimation {0% {left: ${state.warpOWidth}px;} 100% {left: -${state.textOWidth}px;}}`);
 				computeAnimationTime();
@@ -106,15 +104,15 @@ export default defineComponent({
 		// 改变 animation 动画调用
 		const changeAnimation = () => {
 			if (state.order === 1) {
-				noticeBarWarpTextRef.value.style.animation = `oneAnimation ${state.oneTime}s linear`;
+				noticeBarTextRef.value.style.cssText = `animation: oneAnimation ${state.oneTime}s linear; opactity: 1;}`;
 				state.order = 2;
 			} else {
-				noticeBarWarpTextRef.value.style.animation = `twoAnimation ${state.twoTime}s linear infinite`;
+				noticeBarTextRef.value.style.cssText = `animation: twoAnimation ${state.twoTime}s linear infinite; opacity: 1;`;
 			}
 		};
 		// 监听 animation 动画的结束
 		const listenerAnimationend = () => {
-			noticeBarWarpTextRef.value.addEventListener(
+			noticeBarTextRef.value.addEventListener(
 				'animationend',
 				() => {
 					changeAnimation();
@@ -140,7 +138,7 @@ export default defineComponent({
 		});
 		return {
 			noticeBarWarpRef,
-			noticeBarWarpTextRef,
+			noticeBarTextRef,
 			onRightIconClick,
 			...toRefs(state),
 		};
@@ -169,7 +167,10 @@ export default defineComponent({
 				white-space: nowrap;
 				position: absolute;
 				left: 0;
+			}
+			.notice-bar-warp-slot {
 				width: 100%;
+				white-space: nowrap;
 				::v-deep(.el-carousel__item) {
 					display: flex;
 					align-items: center;
@@ -178,10 +179,12 @@ export default defineComponent({
 		}
 		.notice-bar-warp-left-icon {
 			width: 24px;
+			font-size: inherit !important;
 		}
 		.notice-bar-warp-right-icon {
 			width: 24px;
 			text-align: right;
+			font-size: inherit !important;
 			&:hover {
 				cursor: pointer;
 			}

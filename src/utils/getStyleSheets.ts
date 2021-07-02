@@ -36,9 +36,11 @@ const getElementPlusIconfont = () => {
 			for (let i = 0; i < styles.length; i++) {
 				for (let j = 0; j < styles[i].cssRules.length; j++) {
 					if (styles[i].cssRules[j].selectorText && styles[i].cssRules[j].selectorText.indexOf('.el-icon-') === 0) {
-						sheetsIconList.push(
-							`${styles[i].cssRules[j].selectorText.substring(1, styles[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
-						);
+						if (!/--/.test(styles[i].cssRules[j].selectorText)) {
+							sheetsIconList.push(
+								`${styles[i].cssRules[j].selectorText.substring(1, styles[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
+							);
+						}
 					}
 				}
 			}
@@ -67,9 +69,11 @@ const getAwesomeIconfont = () => {
 						sheetsList[i].cssRules[j].selectorText.indexOf('.fa-') === 0 &&
 						sheetsList[i].cssRules[j].selectorText.indexOf(',') === -1
 					) {
-						sheetsIconList.push(
-							`${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
-						);
+						if (/::before/.test(sheetsList[i].cssRules[j].selectorText)) {
+							sheetsIconList.push(
+								`${sheetsList[i].cssRules[j].selectorText.substring(1, sheetsList[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
+							);
+						}
 					}
 				}
 			}

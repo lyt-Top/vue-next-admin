@@ -3,7 +3,7 @@
 .icon-selector-popper {
 	padding: 0 !important;
 	.icon-selector-warp {
-		height: 300px;
+		height: 260px;
 		overflow: hidden;
 		.icon-selector-warp-title {
 			height: 40px;
@@ -11,7 +11,7 @@
 			padding: 0 15px;
 		}
 		.icon-selector-warp-row {
-			height: 260px;
+			height: 230px;
 			overflow: hidden;
 			border-top: 1px solid #ebeef5;
 			.el-row {
@@ -20,17 +20,10 @@
 			.el-scrollbar__bar.is-horizontal {
 				display: none;
 			}
-			.ele-col:nth-last-child(1),
-			.ele-col:nth-last-child(2) {
-				display: none;
-			}
-			.awe-col:nth-child(-n + 24) {
-				display: none;
-			}
 			.icon-selector-warp-item {
 				display: flex;
 				border: 1px solid #ebeef5;
-				padding: 10px;
+				padding: 5px;
 				border-radius: 5px;
 				margin-bottom: 10px;
 				.icon-selector-warp-item-value {

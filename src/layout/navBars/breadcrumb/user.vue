@@ -120,7 +120,10 @@ export default {
 				return false;
 			}
 			screenfull.toggle();
-			state.isScreenfull = !state.isScreenfull;
+			screenfull.on('change', () => {
+				if (screenfull.isFullscreen) state.isScreenfull = true;
+				else state.isScreenfull = false;
+			});
 		};
 		// 布局配置 icon 点击时
 		const onLayoutSetingClick = () => {

@@ -15,7 +15,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="菜单图标">
-							<el-input v-model="ruleForm.meta.icon" placeholder="请输入菜单图标" clearable></el-input>
+							<IconSelector placeholder="请输入菜单图标" v-model="ruleForm.meta.icon" />
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -98,10 +98,12 @@
 
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
+import IconSelector from '/@/components/iconSelector/index.vue';
 import { useI18n } from 'vue-i18n';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 export default {
 	name: 'systemEditMenu',
+	components: { IconSelector },
 	setup() {
 		const { t } = useI18n();
 		const state = reactive({
@@ -136,6 +138,7 @@ export default {
 			state.ruleForm.isLink = row.meta.isLink ? 'true' : '';
 			state.ruleForm.menuSort = '';
 			state.ruleForm.meta.title = t(row.meta.title);
+			// 回显时，图标选择器有这个图标才可以回显，菜单中使用了阿里的、element plus的，二者不可共存
 			state.ruleForm.meta.icon = row.meta.icon;
 			state.ruleForm.meta.isHide = row.meta.isHide ? 'true' : 'false';
 			state.ruleForm.meta.isKeepAlive = row.meta.isKeepAlive ? 'true' : 'false';
