@@ -118,7 +118,10 @@ export default {
 				return false;
 			}
 			screenfull.toggle();
-			this.isScreenfull = !this.isScreenfull;
+			screenfull.on('change', () => {
+				if (screenfull.isFullscreen) this.isScreenfull = true;
+				else this.isScreenfull = false;
+			});
 		},
 		// 组件大小改变
 		onComponentSizeChange(size) {
