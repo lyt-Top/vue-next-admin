@@ -14,7 +14,7 @@
 						<span>{{ $t(v.txt) }}</span>
 					</template>
 				</li>
-				<div x-arrow class="popper__arrow" style="left:5px"></div>
+				<div x-arrow class="popper__arrow" style="left: 5px"></div>
 			</ul>
 		</transition>
 	</div>
@@ -77,6 +77,7 @@ export default {
 	position: fixed;
 	.el-dropdown-menu__item {
 		font-size: 12px !important;
+		white-space: nowrap;
 		i {
 			font-size: 12px !important;
 		}
