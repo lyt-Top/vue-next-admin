@@ -1,5 +1,6 @@
 @import 'mixins/function.scss';
 @import 'mixins/element-mixins.scss';
+@import 'mixins/mixins.scss';
 
 /* Button 按钮
 ------------------------------- */
@@ -833,14 +834,6 @@
 	}
 }
 // 第三方图标字体间距/大小设置
-@mixin generalIcon {
-	font-size: 14px !important;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 5px;
-	width: 24px;
-	text-align: center;
-}
 .el-menu-item .iconfont,
 .el-submenu .iconfont {
 	@include generalIcon;
@@ -848,15 +841,6 @@
 .el-menu-item .fa,
 .el-submenu .fa {
 	@include generalIcon;
-}
-.el-menu-item .iconfont,
-.el-submenu .iconfont {
-	font-size: 14px !important;
-	display: inline-block;
-	vertical-align: middle;
-	margin-right: 5px;
-	width: 24px;
-	text-align: center;
 }
 // element plus 本身字体图标
 .el-submenu [class^='el-icon-'] {

@@ -36,7 +36,7 @@ const getElementPlusIconfont = () => {
 			for (let i = 0; i < styles.length; i++) {
 				for (let j = 0; j < styles[i].cssRules.length; j++) {
 					if (styles[i].cssRules[j].selectorText && styles[i].cssRules[j].selectorText.indexOf('.el-icon-') === 0) {
-						if (!/--/.test(styles[i].cssRules[j].selectorText)) {
+						if (/::before/.test(styles[i].cssRules[j].selectorText)) {
 							sheetsIconList.push(
 								`${styles[i].cssRules[j].selectorText.substring(1, styles[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
 							);
@@ -44,7 +44,7 @@ const getElementPlusIconfont = () => {
 					}
 				}
 			}
-			if (sheetsIconList.length > 0) resolve(sheetsIconList);
+			if (sheetsIconList.length > 0) resolve(sheetsIconList.reverse());
 			else reject('未获取到值，请刷新重试');
 		});
 	});
@@ -77,7 +77,7 @@ const getAwesomeIconfont = () => {
 					}
 				}
 			}
-			if (sheetsIconList.length > 0) resolve(sheetsIconList);
+			if (sheetsIconList.length > 0) resolve(sheetsIconList.reverse());
 			else reject('未获取到值，请刷新重试');
 		});
 	});

@@ -4,18 +4,19 @@
 			<template #reference>
 				<el-input
 					v-model="fontIconSearch"
-					:placeholder="placeholder"
+					:placeholder="fontIconPlaceholder"
 					:clearable="clearable"
 					:disabled="disabled"
 					:size="size"
 					ref="inputWidthRef"
 					@clear="onClearFontIcon"
-					@input="onIconInput"
+					@focus="onIconFocus"
+					@blur="onIconBlur"
 				>
 					<template #prepend>
 						<i
 							:class="[
-								fontIconIndex === '' ? prepend : fontIconPrefix,
+								fontIconPrefix === '' ? prepend : fontIconPrefix,
 								{ iconfont: fontIconTabsIndex === 0 },
 								{ ele: fontIconTabsIndex === 1 },
 								{ fa: fontIconTabsIndex === 2 },
@@ -31,8 +32,8 @@
 					<div class="icon-selector-warp-row">
 						<el-scrollbar>
 							<el-row :gutter="10" v-if="fontIconSheetsFilterList.length > 0">
-								<el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="4" @click="onColClick(v, k)" v-for="(v, k) in fontIconSheetsFilterList" :key="k">
-									<div class="icon-selector-warp-item" :class="{ 'icon-selector-active': fontIconIndex === k }">
+								<el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="4" @click="onColClick(v)" v-for="(v, k) in fontIconSheetsFilterList" :key="k">
+									<div class="icon-selector-warp-item" :class="{ 'icon-selector-active': fontIconPrefix === v }">
 										<div class="flex-margin">
 											<div class="icon-selector-warp-item-value">
 												<i :class="v"></i>
@@ -107,31 +108,31 @@ export default {
 			fontIconPrefix: '',
 			fontIconVisible: false,
 			fontIconWidth: 0,
-			fontIconIndex: '',
 			fontIconSearch: '',
 			fontIconTabsIndex: 0,
 			fontIconSheetsList: [],
+			fontIconPlaceholder: '',
 		});
-		// icon input 改变时，实现双向绑定
-		const onIconInput = (icon) => {
-			emit('update:modelValue', icon);
+		// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
+		const onIconFocus = () => {
+			if (!props.modelValue) return false;
+			state.fontIconSearch = '';
+			state.fontIconPlaceholder = props.modelValue;
+		};
+		// 处理 input 失去焦点时，为空将清空 input 值，为点击选中图标时，将取原先值
+		const onIconBlur = () => {
+			setTimeout(() => {
+				const icon = state.fontIconSheetsList.filter((icon: string) => icon === state.fontIconSearch);
+				if (icon.length <= 0) state.fontIconSearch = '';
+			}, 300);
 		};
 		// 处理 icon 双向绑定数值回显
 		const initModeValueEcho = () => {
-			// 父级 v-model 为空，不执行下一步
 			if (props.modelValue === '') return false;
-			// 双向绑定赋值回显
-			state.fontIconSearch = props.modelValue;
-			// 处理回显
-			let iconData: object = {};
-			for (let i in state.fontIconSheetsList) {
-				if (state.fontIconSheetsList[i].toLowerCase().indexOf(props.modelValue) !== -1) {
-					iconData = { item: state.fontIconSheetsList[i] };
-				}
-			}
-			onColClick(iconData.item, 0);
+			state.fontIconPlaceholder = props.modelValue;
+			state.fontIconPrefix = props.modelValue;
 		};
-		// 设置无数据时的空状态
+		// 图标搜索及图标数据显示
 		const fontIconSheetsFilterList = computed(() => {
 			if (!state.fontIconSearch) return state.fontIconSheetsList;
 			let search = state.fontIconSearch.trim().toLowerCase();
@@ -171,22 +172,27 @@ export default {
 					state.fontIconSheetsList = res.map((i) => `fa ${i}`);
 				});
 			}
+			// 初始化 input 的 placeholder
+			// 参考（单项数据流）：https://cn.vuejs.org/v2/guide/components-props.html?#%E5%8D%95%E5%90%91%E6%95%B0%E6%8D%AE%E6%B5%81
+			state.fontIconPlaceholder = props.placeholder;
+			// 初始化双向绑定回显
 			initModeValueEcho();
 		};
 		// 获取当前点击的 icon 图标
-		const onColClick = (v: any, k: number) => {
-			state.fontIconIndex = k;
+		const onColClick = (v: any) => {
+			state.fontIconPlaceholder = v;
 			state.fontIconVisible = false;
 			if (state.fontIconTabsIndex === 0) state.fontIconPrefix = `${v}`;
 			else if (state.fontIconTabsIndex === 1) state.fontIconPrefix = `${v}`;
 			else if (state.fontIconTabsIndex === 2) state.fontIconPrefix = `${v}`;
 			emit('get', state.fontIconPrefix);
+			emit('update:modelValue', state.fontIconPrefix);
 		};
 		// 清空当前点击的 icon 图标
 		const onClearFontIcon = () => {
-			state.fontIconIndex = '';
 			state.fontIconPrefix = '';
 			emit('clear', state.fontIconPrefix);
+			emit('update:modelValue', state.fontIconPrefix);
 		};
 		// 页面加载时
 		onMounted(() => {
@@ -206,7 +212,8 @@ export default {
 			fontIconSheetsFilterList,
 			onColClick,
 			onClearFontIcon,
-			onIconInput,
+			onIconFocus,
+			onIconBlur,
 			...toRefs(state),
 		};
 	},
