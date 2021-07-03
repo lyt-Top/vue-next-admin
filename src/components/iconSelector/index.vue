@@ -31,21 +31,11 @@
 					<div class="icon-selector-warp-row">
 						<el-scrollbar>
 							<el-row :gutter="10" v-if="fontIconSheetsFilterList.length > 0">
-								<el-col
-									:xs="6"
-									:sm="4"
-									:md="4"
-									:lg="4"
-									:xl="4"
-									:class="`${fontIconTabsIcon}-col`"
-									@click="onColClick(v, k)"
-									v-for="(v, k) in fontIconSheetsFilterList"
-									:key="k"
-								>
+								<el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="4" @click="onColClick(v, k)" v-for="(v, k) in fontIconSheetsFilterList" :key="k">
 									<div class="icon-selector-warp-item" :class="{ 'icon-selector-active': fontIconIndex === k }">
 										<div class="flex-margin">
 											<div class="icon-selector-warp-item-value">
-												<i :class="[fontIconTabsIcon, v]"></i>
+												<i :class="v"></i>
 											</div>
 										</div>
 									</div>
@@ -61,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, onMounted, nextTick, computed } from 'vue';
+import { ref, toRefs, reactive, onMounted, nextTick, computed, watch } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
 export default {
 	name: 'iconSelector',
@@ -120,7 +110,6 @@ export default {
 			fontIconIndex: '',
 			fontIconSearch: '',
 			fontIconTabsIndex: 0,
-			fontIconTabsIcon: 'iconfont ali',
 			fontIconSheetsList: [],
 		});
 		// icon input 改变时，实现双向绑定
@@ -166,21 +155,20 @@ export default {
 		const initFontIconData = async () => {
 			if (props.type === 'ali') {
 				await initIconfont.ali().then((res: any) => {
-					state.fontIconTabsIcon = 'iconfont';
 					state.fontIconTabsIndex = 0;
-					state.fontIconSheetsList = res;
+					// 阿里字体图标使用 `iconfont xxx`
+					state.fontIconSheetsList = res.map((i) => `iconfont ${i}`);
 				});
 			} else if (props.type === 'ele') {
 				await initIconfont.ele().then((res: any) => {
-					state.fontIconTabsIcon = 'ele';
 					state.fontIconTabsIndex = 1;
 					state.fontIconSheetsList = res;
 				});
 			} else if (props.type === 'awe') {
 				await initIconfont.awe().then((res: any) => {
-					state.fontIconTabsIcon = 'fa';
 					state.fontIconTabsIndex = 2;
-					state.fontIconSheetsList = res;
+					// fontawesome字体图标使用 `fa xxx`
+					state.fontIconSheetsList = res.map((i) => `fa ${i}`);
 				});
 			}
 			initModeValueEcho();
@@ -206,6 +194,13 @@ export default {
 			initResize();
 			getInputWidth();
 		});
+		// 监听双向绑定 modelValue 的变化
+		watch(
+			() => props.modelValue,
+			() => {
+				initModeValueEcho();
+			}
+		);
 		return {
 			inputWidthRef,
 			fontIconSheetsFilterList,
