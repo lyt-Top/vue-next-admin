@@ -95,6 +95,7 @@ export default defineComponent({
 	position: fixed;
 	.el-dropdown-menu__item {
 		font-size: 12px !important;
+		white-space: nowrap;
 		i {
 			font-size: 12px !important;
 		}
