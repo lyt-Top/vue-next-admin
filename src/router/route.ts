@@ -850,7 +850,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 			{
 				path: '/link',
 				name: 'layoutLinkView',
-				component: () => import('/@/layout/routerView/parent.vue'),
+				component: () => import('/@/layout/routerView/link.vue'),
 				meta: {
 					title: 'message.router.layoutLinkView',
 					isLink: 'https://element-plus.gitee.io/#/zh-CN/component/installation',
@@ -865,7 +865,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 			{
 				path: '/iframes',
 				name: 'layoutIfameView',
-				component: () => import('/@/layout/routerView/parent.vue'),
+				component: () => import('/@/layout/routerView/iframes.vue'),
 				meta: {
 					title: 'message.router.layoutIfameView',
 					isLink: 'https://gitee.com/lyt-top/vue-next-admin',

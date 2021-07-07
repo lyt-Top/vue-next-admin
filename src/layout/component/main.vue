@@ -3,68 +3,53 @@
 		<el-scrollbar
 			class="layout-scrollbar"
 			ref="layoutScrollbarRef"
-			v-if="!currentRouteMeta.isLink && !currentRouteMeta.isIframe"
-			:style="{ minHeight: `calc(100vh - ${headerHeight}` }"
+			:style="{
+				minHeight: `calc(100vh - ${headerHeight}`,
+				padding: currentRouteMeta.isLink && currentRouteMeta.isIframe ? 0 : '',
+				transition: 'padding 0.3s ease-in-out',
+			}"
 		>
 			<LayoutParentView />
 			<Footer v-if="getThemeConfig.isFooter" />
 		</el-scrollbar>
-		<Link :style="{ height: `calc(100vh - ${headerHeight}` }" :meta="currentRouteMeta" v-if="currentRouteMeta.isLink && !currentRouteMeta.isIframe" />
-		<Iframes
-			:style="{ height: `calc(100vh - ${headerHeight}` }"
-			:meta="currentRouteMeta"
-			v-if="currentRouteMeta.isLink && currentRouteMeta.isIframe && isShowLink"
-			@getCurrentRouteMeta="onGetCurrentRouteMeta"
-		/>
 	</el-main>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, toRefs, reactive, getCurrentInstance, watch, onBeforeMount } from 'vue';
-import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
+import { useRoute } from 'vue-router';
 import LayoutParentView from '/@/layout/routerView/parent.vue';
 import Footer from '/@/layout/footer/index.vue';
-import Link from '/@/layout/routerView/link.vue';
-import Iframes from '/@/layout/routerView/iframes.vue';
 export default defineComponent({
 	name: 'layoutMain',
-	components: { LayoutParentView, Footer, Link, Iframes },
+	components: { LayoutParentView, Footer },
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
 		const route = useRoute();
+		const store = useStore();
 		const state = reactive({
 			headerHeight: '',
 			currentRouteMeta: {},
-			isShowLink: false,
 		});
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
 		});
-		// 子组件触发更新
-		const onGetCurrentRouteMeta = () => {
-			initCurrentRouteMeta(route.meta);
-		};
-		// 初始化当前路由 meta 信息
-		const initCurrentRouteMeta = (meta: object) => {
-			state.isShowLink = false;
-			state.currentRouteMeta = meta;
-			setTimeout(() => {
-				state.isShowLink = true;
-			}, 100);
-		};
 		// 设置 main 的高度
 		const initHeaderHeight = () => {
 			let { isTagsview } = store.state.themeConfig.themeConfig;
 			if (isTagsview) return (state.headerHeight = `84px`);
 			else return (state.headerHeight = `50px`);
 		};
+		// 初始化获取当前路由 meta，用于设置 iframes padding
+		const initGetMeta = () => {
+			state.currentRouteMeta = route.meta;
+		};
 		// 页面加载前
 		onBeforeMount(() => {
-			initCurrentRouteMeta(route.meta);
 			initHeaderHeight();
+			initGetMeta();
 		});
 		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
 		watch(store.state.themeConfig.themeConfig, (val) => {
@@ -74,17 +59,15 @@ export default defineComponent({
 				proxy.$refs.layoutScrollbarRef.update();
 			}
 		});
-		// 监听路由的变化
+		// 监听路由变化
 		watch(
 			() => route.path,
 			() => {
-				initCurrentRouteMeta(route.meta);
+				state.currentRouteMeta = route.meta;
 			}
 		);
 		return {
 			getThemeConfig,
-			initCurrentRouteMeta,
-			onGetCurrentRouteMeta,
 			...toRefs(state),
 		};
 	},
