@@ -3,7 +3,7 @@
 		<el-scrollbar
 			class="layout-scrollbar"
 			ref="layoutScrollbarRef"
-			v-show="!currentRouteMeta.isLink && !currentRouteMeta.isIframe"
+			v-if="!currentRouteMeta.isLink && !currentRouteMeta.isIframe"
 			:style="{ minHeight: `calc(100vh - ${headerHeight}` }"
 		>
 			<LayoutParentView />
@@ -79,7 +79,6 @@ export default defineComponent({
 			() => route.path,
 			() => {
 				initCurrentRouteMeta(route.meta);
-				proxy.$refs.layoutScrollbarRef.wrap.scrollTop = 0;
 			}
 		);
 		return {

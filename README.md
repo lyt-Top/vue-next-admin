@@ -41,7 +41,7 @@
 
 #### ⚡ 使用说明
 
-建议使用 cnpm，因为 yarn 有时会报错。
+建议使用 cnpm，因为 yarn 有时会报错。<a href="http://nodejs.cn/" target="_blank">node 版本 > 12xx.xx.x</a>
 
 ```bash
 # 克隆项目

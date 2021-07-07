@@ -1,6 +1,6 @@
 <template>
 	<el-card shadow="hover" header="正则验证（一些项目中常用的正则）">
-		<el-form :model="ruleForm" :rules="rules" class="tools-warp-form" size="small">
+		<el-form :model="ruleForm" :rules="rules" class="tools-warp-form" size="small" label-position="top">
 			<el-form-item label="小数或整数:" prop="a1">
 				<div class="tools-warp-form-msg">
 					验证可以输入小数或整数，0 开始， . 只能出现一次，保留小数点后保留2位小数。(负数时，模拟拼接负号给后台)。
