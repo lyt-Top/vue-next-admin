@@ -8,7 +8,6 @@
 	},
 	"dependencies": {
 		"axios": "^0.21.1",
-		"clipboard": "^2.0.8",
 		"countup.js": "^2.0.7",
 		"cropperjs": "^1.5.12",
 		"echarts": "^5.1.2",
@@ -22,6 +21,7 @@
 		"sortablejs": "^1.14.0",
 		"splitpanes": "^3.0.4",
 		"vue": "^3.0.11",
+		"vue-clipboard3": "^1.0.1",
 		"vue-grid-layout": "^3.0.0-beta1",
 		"vue-i18n": "^9.1.4",
 		"vue-router": "^4.0.8",
