@@ -369,10 +369,10 @@
 import { nextTick, onUnmounted, onMounted, getCurrentInstance, defineComponent, computed } from 'vue';
 import { useStore } from '/@/store/index';
 import { getLightColor } from '/@/utils/theme';
-import Watermark from '/@/utils/wartermark';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
-import commonFunction from '/@/utils/commonFunction.ts';
+import Watermark from '/@/utils/wartermark';
+import commonFunction from '/@/utils/commonFunction';
 export default defineComponent({
 	name: 'layoutBreadcrumbSeting',
 	setup() {

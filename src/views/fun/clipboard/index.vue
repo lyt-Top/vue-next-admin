@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted } from 'vue';
-import commonFunction from '/@/utils/commonFunction.ts';
+import commonFunction from '/@/utils/commonFunction';
 export default {
 	name: 'funClipboard',
 	setup() {
