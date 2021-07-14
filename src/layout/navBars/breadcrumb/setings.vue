@@ -524,6 +524,8 @@ export default defineComponent({
 				getThemeConfig.value.topBarColor = '#FFFFFF';
 				initLayoutChangeFun();
 			} else if (getThemeConfig.value.layout === 'columns') {
+				// 1.0.11 更新日志
+				getThemeConfig.value.isShowLogo = false;
 				getThemeConfig.value.menuBar = '#FFFFFF';
 				getThemeConfig.value.menuBarColor = '#606266';
 				getThemeConfig.value.topBar = '#ffffff';

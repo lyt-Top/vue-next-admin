@@ -1,0 +1,39 @@
+<template>
+	<div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
+		<div class="flex-margin color-primary">
+			<div>paramsCommonDetails</div>
+			<div class="mt10 mb10">路径：path: {{ params.path }}</div>
+			<div>参数：query: {{ params.query }}</div>
+		</div>
+	</div>
+</template>
+
+<script lang="ts">
+import { defineComponent, toRefs, reactive, computed, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from '/@/store/index';
+export default defineComponent({
+	name: 'paramsCommonDetails',
+	setup() {
+		const route = useRoute();
+		const store = useStore();
+		const state = reactive({
+			params: {},
+		});
+		// 设置 view 的高度
+		const setViewHeight = computed(() => {
+			let { isTagsview } = store.state.themeConfig.themeConfig;
+			if (isTagsview) return `114px`;
+			else return `80px`;
+		});
+		// 页面加载时
+		onMounted(() => {
+			state.params = route;
+		});
+		return {
+			setViewHeight,
+			...toRefs(state),
+		};
+	},
+});
+</script>

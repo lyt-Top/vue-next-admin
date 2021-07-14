@@ -200,6 +200,7 @@ export default defineComponent({
 .layout-lock-screen-filter {
 	filter: blur(5px);
 	transform: scale(1.01);
+	transition: all 0.1s 0.1s ease-in-out;
 }
 .layout-lock-screen-mask {
 	background: rgba(255, 255, 255, 1);
@@ -271,6 +272,7 @@ export default defineComponent({
 			&:hover {
 				border: 1px solid rgba(255, 255, 255, 0.5);
 				background: rgba(255, 255, 255, 0.2);
+				box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.5);
 				color: #ffffff;
 				opacity: 1;
 				transition: all 0.3s ease;

@@ -7,8 +7,8 @@
 <script lang="ts">
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import { useStore } from '/@/store/index';
+import { useTitle } from '/@/utils/setWebTitle';
 import { Local } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/layout/lockScreen/index.vue';
@@ -17,11 +17,11 @@ export default defineComponent({
 	name: 'app',
 	components: { LockScreen, Setings },
 	setup() {
-		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
 		const setingsRef = ref();
 		const route = useRoute();
 		const store = useStore();
+		const title = useTitle();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
@@ -59,11 +59,7 @@ export default defineComponent({
 		watch(
 			() => route.path,
 			() => {
-				nextTick(() => {
-					let webTitle = '';
-					route.path === '/login' ? (webTitle = route.meta.title) : (webTitle = t(route.meta.title));
-					document.title = `${webTitle} - ${getThemeConfig.value.globalTitle}` || getThemeConfig.value.globalTitle;
-				});
+				title();
 			}
 		);
 		return {

@@ -79,6 +79,7 @@ import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { resetRoute } from '/@/router/index';
 import { useStore } from '/@/store/index';
+import { useTitle } from '/@/utils/setWebTitle';
 import { Session, Local } from '/@/utils/storage';
 import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/layout/navBars/breadcrumb/search.vue';
@@ -90,6 +91,7 @@ export default {
 		const { proxy } = getCurrentInstance() as any;
 		const router = useRouter();
 		const store = useStore();
+		const title = useTitle();
 		const searchRef = ref();
 		const state = reactive({
 			isScreenfull: false,
@@ -190,6 +192,7 @@ export default {
 			Local.set('themeConfig', getThemeConfig.value);
 			proxy.$i18n.locale = lang;
 			initI18n();
+			title();
 		};
 		// 初始化言语国际化
 		const initI18n = () => {

@@ -106,6 +106,7 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			 * 其它设置
 			 */
 			// Tagsview 风格：可选值"<tags-style-one|tags-style-two|tags-style-three|tags-style-four>"，默认 tags-style-one
+			// 定义的值与 `/src/layout/navBars/tagsView/tagsView.vue` 中的 class 同名
 			tagsStyle: 'tags-style-one',
 			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
 			animation: 'slide-right',

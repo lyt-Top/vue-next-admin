@@ -113,7 +113,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 1,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/news/pic/2020-08/13/0ea47d3c-feb9-4bd7-8597-a8a373aa6340c6ec12c7-3b33-4528-91a6-85ec8ca1df67_watermark.png',
@@ -123,7 +122,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 2,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/photo/pic/2020-08/12/a08d6eb0-1d53-4f76-a313-ad3e5d701f98.jpg',
@@ -133,7 +131,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 3,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/photo/pic/2020-08/11/43cc0e14-9bca-45b9-9a8b-342e09d6a4c7.jpg',
@@ -143,7 +140,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 4,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/photo/pic/2020-08/11/a4dc322b-68ec-40e6-8906-3124142c3e49.jpg',
@@ -153,7 +149,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 5,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/zhuanti/pic/2020-08/07/57f087b4-4812-46cc-adb9-ead73621284e.png',
@@ -163,7 +158,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 6,
-		isShowMore: false,
 	},
 	{
 		img: 'http://news.sznews.com/pic/2020-09/02/t2_(101X54X600X335)7cd39301-d9cf-45f1-91c3-9575b1e5ce0e.jpg.2',
@@ -173,7 +167,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 7,
-		isShowMore: false,
 	},
 	{
 		img: 'http://news.sznews.com/pic/2020-09/02/b8b41d9c-0508-4498-8d37-6e597493769f.jpg',
@@ -183,7 +176,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 8,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/photo/pic/2020-08/10/1635374c-f4d6-475c-ac47-1334176f365d.png',
@@ -193,7 +185,6 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 9,
-		isShowMore: false,
 	},
 	{
 		img: 'http://www.sznews.com/news/pic/2020-08/13/646e5458-92b7-4636-9940-9b0799babfe1.png',
@@ -203,6 +194,5 @@ export const filterList = [
 		price: (Math.random() * 10).toFixed(2),
 		monSales: (Math.random() * 20).toFixed(2),
 		id: 10,
-		isShowMore: false,
 	},
 ];

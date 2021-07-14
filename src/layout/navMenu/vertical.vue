@@ -47,7 +47,8 @@ export default defineComponent({
 		const store = useStore();
 		const route = useRoute();
 		const state = reactive({
-			defaultActive: route.path,
+			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+			defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
 		});
 		// 获取父级菜单数据
 		const menuLists = computed(() => {
@@ -63,7 +64,8 @@ export default defineComponent({
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
-			state.defaultActive = to.path;
+			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+			state.defaultActive = to.meta.isDynamic ? to.meta.isDynamicPath : to.path;
 			proxy.mittBus.emit('onMenuClick');
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) getThemeConfig.value.isCollapse = false;

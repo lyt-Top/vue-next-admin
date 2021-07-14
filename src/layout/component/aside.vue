@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, watch, getCurrentInstance, onBeforeMount, onUnmounted } from 'vue';
+import { toRefs, reactive, computed, watch, getCurrentInstance, onBeforeMount } from 'vue';
 import { useStore } from '/@/store/index';
 import Logo from '/@/layout/logo/index.vue';
 import Vertical from '/@/layout/navMenu/vertical.vue';
@@ -95,6 +95,8 @@ export default {
 		onBeforeMount(() => {
 			initMenuFixed(document.body.clientWidth);
 			setFilterRoutes();
+			// 此界面不需要取消监听(proxy.mittBus.off('setSendColumnsChildren))
+			// 因为切换布局时有的监听需要使用，取消了监听，某些操作将不生效
 			proxy.mittBus.on('setSendColumnsChildren', (res: any) => {
 				state.menuList = res.children;
 			});
@@ -111,13 +113,6 @@ export default {
 			proxy.mittBus.on('layoutMobileResize', (res: any) => {
 				initMenuFixed(res.clientWidth);
 			});
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			proxy.mittBus.off('setSendColumnsChildren');
-			proxy.mittBus.off('setSendClassicChildren');
-			proxy.mittBus.off('getBreadcrumbIndexSetFilterRoutes');
-			proxy.mittBus.off('layoutMobileResize');
 		});
 		return {
 			setCollapseWidth,

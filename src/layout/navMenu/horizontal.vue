@@ -102,11 +102,12 @@ export default defineComponent({
 		// 页面加载时
 		onMounted(() => {
 			initElMenuOffsetLeft();
-			setCurrentRouterHighlight(route.path);
+			setCurrentRouterHighlight(route.meta.isDynamic ? route.meta.isDynamicPath : route.path);
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
-			setCurrentRouterHighlight(to.path);
+			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+			setCurrentRouterHighlight(to.meta.isDynamic ? to.meta.isDynamicPath : to.path);
 			proxy.mittBus.emit('onMenuClick');
 			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
 			let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;

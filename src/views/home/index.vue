@@ -150,7 +150,7 @@ export default {
 				new CountUp('tipNum3', Math.random() * 1000).start();
 			});
 		};
-		// 实验室使用情况
+		// 商品销售情
 		const initHomeLaboratory = () => {
 			const myChart = echarts.init(proxy.$refs.homeLaboratoryRef);
 			const option = {
@@ -167,8 +167,28 @@ export default {
 					data: ['预购队列', '最新成交价'],
 					right: 13,
 				},
+				color: [
+					'#63caff',
+					'#49beff',
+					'#03387a',
+					'#03387a',
+					'#03387a',
+					'#6c93ee',
+					'#a9abff',
+					'#f7a23f',
+					'#27bae7',
+					'#ff6d9d',
+					'#cb79ff',
+					'#f95b5a',
+					'#ccaf27',
+					'#38b99c',
+					'#93d0ff',
+					'#bd74e0',
+					'#fd77da',
+					'#dea700',
+				],
 				xAxis: {
-					data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子'],
+					data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
 				},
 				yAxis: [
 					{
@@ -180,12 +200,36 @@ export default {
 					{
 						name: '预购队列',
 						type: 'bar',
-						data: [5, 20, 36, 10, 10, 20],
+						data: [200, 85, 112, 275, 305, 415, 441, 405, 275, 305, 415, 441],
+						itemStyle: {
+							barBorderRadius: [4, 4, 0, 0],
+							color: {
+								x: 0,
+								y: 0,
+								x2: 0,
+								y2: 1,
+								type: 'linear',
+								global: false,
+								colorStops: [
+									{
+										offset: 0,
+										color: '#0b9eff',
+									},
+									{
+										offset: 1,
+										color: '#63caff',
+									},
+								],
+							},
+						},
 					},
 					{
 						name: '最新成交价',
 						type: 'line',
-						data: [15, 20, 16, 20, 30, 8],
+						data: [50, 85, 22, 155, 170, 25, 224, 245, 285, 300, 415, 641],
+						itemStyle: {
+							color: '#febb50',
+						},
 					},
 				],
 			};

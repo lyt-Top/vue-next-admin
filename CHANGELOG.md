@@ -2,6 +2,25 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.11
+
+`2021.07.14`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 路由参数、图片懒加载界面演示
+- ⚠️ 警告 Form 表单 `binding value must be a string or number`，解决：加上 `label-position="top"` 不报警告（等待官方修复）
+- 🎯 优化 锁屏界面动画效果、首页图表显示
+- 🎯 优化 tagsView 右键菜单 `关闭` 功能逻辑
+- 🐞 修复 开启 TagsView 拖拽报错及小于 `1000px` 时自动设置禁止拖拽（<a href="https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI" target="_blank">#I3ZRRI</a>）
+- 🐞 修复 `iframe 内嵌、外链` 高度问题，使用 computed 进行计算
+- 🐞 修复 默认布局开启 `侧边栏 Logo` 与关闭 `菜单水平折叠`，切换到横向布局时，菜单看不见的问题
+- 🐞 修复 切换不同布局时，再去开启 `经典布局分割菜单` 功能不生效问题
+- 🐞 修复 浏览器窗口标题中/英文切换不实时生效的问题
+- 🐞 修复 切换布局时，某些功能不可以使用。部分界面不需要取消事件监听(proxy.mittBus.off('xxx'))
+- 🐞 修复 动态路由带参数，router-link 跳转问题（<a href="hhttps://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G" target="_blank">#I3YX6G</a>）
+- 🐞 修复 横向菜单有二级菜单时，点击子级菜单不高亮问题
+- 🐞 修复 功能 tagsView 操作演示不生效
+
 ## 1.0.10
 
 `2021.07.07`

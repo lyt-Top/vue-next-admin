@@ -760,7 +760,7 @@
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
 	border-bottom: 3px solid !important;
 	border-bottom-color: set-color(primary);
-	color: set-color(primary);
+	color: set-color(primary) !important;
 }
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover,
@@ -768,7 +768,7 @@
 .el-menu--horizontal > .el-submenu:hover .el-submenu__title,
 .el-menu--horizontal .el-menu .el-menu-item.is-active,
 .el-menu--horizontal .el-menu .el-submenu.is-active > .el-submenu__title {
-	color: set-color(primary);
+	color: set-color(primary) !important;
 }
 .el-menu.el-menu--horizontal {
 	border-bottom: none !important;

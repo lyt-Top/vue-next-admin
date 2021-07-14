@@ -81,7 +81,7 @@ export default {
 		};
 		// 获取 vuex 中的 tagsViewRoutes 列表
 		const getTagsViewRoutes = () => {
-			state.routePath = route.path;
+			state.routePath = route.meta.isDynamic ? route.meta.isDynamicPath : route.path;
 			state.tagsViewList = [];
 			if (!store.state.themeConfig.themeConfig.isCacheTagsView) Session.remove('tagsViewList');
 			state.tagsViewRoutesList = store.state.tagsViewRoutes.tagsViewRoutes;
@@ -95,7 +95,7 @@ export default {
 				state.tagsViewRoutesList.map((v: any) => {
 					if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
 				});
-				addTagsView(route.path);
+				addTagsView(route.path, route);
 			}
 			// 初始化当前元素(li)的下标
 			getTagsRefsIndex(route.path);
@@ -103,11 +103,19 @@ export default {
 			tagsViewmoveToCurrentTag();
 		};
 		// 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中
-		const addTagsView = (path: string, to: any) => {
-			if (state.tagsViewList.some((v: any) => v.path === path)) return false;
-			const item = state.tagsViewRoutesList.find((v: any) => v.path === path);
+		const addTagsView = (path: string, to?: any) => {
+			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+			let item = '';
+			if (to && to.meta.isDynamic) {
+				if (state.tagsViewList.some((v: any) => v.path === to.meta.isDynamicPath)) return false;
+				item = state.tagsViewRoutesList.find((v: any) => v.path === to.meta.isDynamicPath);
+			} else {
+				if (state.tagsViewList.some((v: any) => v.path === path)) return false;
+				item = state.tagsViewRoutesList.find((v: any) => v.path === path);
+			}
 			if (item.meta.isLink && !item.meta.isIframe) return false;
-			item.query = to?.query ? to?.query : route.query;
+			if (to && to.meta.isDynamic) item.params = to?.params ? to?.params : route.params;
+			else item.query = to?.query ? to?.query : route.query;
 			state.tagsViewList.push({ ...item });
 			addBrowserSetSession(state.tagsViewList);
 		};
@@ -122,10 +130,27 @@ export default {
 					if (v.path === path) {
 						state.tagsViewList.splice(k, 1);
 						setTimeout(() => {
-							// 最后一个
-							if (state.tagsViewList.length === k) router.push({ path: arr[arr.length - 1].path, query: arr[arr.length - 1].query });
-							// 否则，跳转到下一个
-							else router.push({ path: arr[k].path, query: arr[k].query });
+							if (state.tagsViewList.length === k && state.routePath === path) {
+								// 最后一个且高亮时
+								if (arr[arr.length - 1].meta.isDynamic) {
+									// 动态路由（xxx/:id/:name"）
+									router.push({ name: arr[arr.length - 1].name, params: arr[arr.length - 1].params });
+								} else {
+									// 普通路由
+									router.push({ path: arr[arr.length - 1].path, query: arr[arr.length - 1].query });
+								}
+							} else {
+								// 非最后一个且高亮时，跳转到下一个
+								if (state.tagsViewList.length !== k && state.routePath === path) {
+									if (arr[k].meta.isDynamic) {
+										// 动态路由（xxx/:id/:name"）
+										router.push({ name: arr[k].name, params: arr[k].params });
+									} else {
+										// 普通路由
+										router.push({ path: arr[k].path, query: arr[k].query });
+									}
+								}
+							}
 						}, 0);
 					}
 				}
@@ -138,7 +163,7 @@ export default {
 			state.tagsViewRoutesList.map((v: any) => {
 				if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
 			});
-			addTagsView(path);
+			addTagsView(path, route);
 		};
 		// 5、关闭全部 tagsView：如果是设置了固定的（isAffix），不进行关闭
 		const closeAllTagsView = (path: string) => {
@@ -163,19 +188,21 @@ export default {
 			});
 		};
 		// 当前项右键菜单点击
-		const onCurrentContextmenuClick = (data: any) => {
-			let { id, path } = data;
-			let currentTag = state.tagsViewList.find((v: any) => v.path === path);
+		const onCurrentContextmenuClick = (item) => {
+			const { id, path } = item;
+			const { meta, name, params, query } = route;
 			switch (id) {
 				case 0:
 					refreshCurrentTagsView(path);
-					router.push({ path, query: currentTag.query });
+					if (meta.isDynamic) router.push({ name, params });
+					else router.push({ path, query });
 					break;
 				case 1:
 					closeCurrentTagsView(path);
 					break;
 				case 2:
-					router.push({ path, query: currentTag.query });
+					if (meta.isDynamic) router.push({ name, params });
+					else router.push({ path, query });
 					closeOtherTagsView(path);
 					break;
 				case 3:
@@ -186,7 +213,7 @@ export default {
 					break;
 			}
 		};
-		// 判断页面高亮
+		// 判断页面高亮（修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G）
 		const isActive = (path: string) => {
 			return path === state.routePath;
 		};
@@ -271,24 +298,30 @@ export default {
 		};
 		// 设置 tagsView 可以进行拖拽
 		const initSortable = () => {
-			const el: any = document.querySelector('.layout-navbars-tagsview-ul');
+			const el = document.querySelector('.layout-navbars-tagsview-ul') as HTMLElement;
 			if (!el) return false;
-			if (!getThemeConfig.value.isSortableTagsView) state.sortable && state.sortable.destroy();
-			if (getThemeConfig.value.isSortableTagsView) {
-				state.sortable = Sortable.create(el, {
-					animation: 300,
-					dataIdAttr: 'data-name',
-					onEnd: () => {
-						const sortEndList: any = [];
-						state.sortable.toArray().map((val: any) => {
-							state.tagsViewList.map((v: any) => {
-								if (v.name === val) sortEndList.push({ ...v });
-							});
+			state.sortable && state.sortable.destroy();
+			state.sortable = Sortable.create(el, {
+				animation: 300,
+				dataIdAttr: 'data-name',
+				disabled: getThemeConfig.value.isSortableTagsView ? false : true,
+				onEnd: () => {
+					const sortEndList: any = [];
+					state.sortable.toArray().map((val: any) => {
+						state.tagsViewList.map((v: any) => {
+							if (v.name === val) sortEndList.push({ ...v });
 						});
-						addBrowserSetSession(sortEndList);
-					},
-				});
-			}
+					});
+					addBrowserSetSession(sortEndList);
+				},
+			});
+		};
+		// 拖动问题，https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI
+		const onSortableResize = () => {
+			const clientWidth = document.body.clientWidth;
+			if (clientWidth < 1000) getThemeConfig.value.isSortableTagsView = false;
+			else getThemeConfig.value.isSortableTagsView = true;
+			initSortable();
 		};
 		// 监听路由的变化，动态赋值给 tagsView
 		watch(store.state, (val) => {
@@ -297,6 +330,8 @@ export default {
 		});
 		// 页面加载前
 		onBeforeMount(() => {
+			// 拖动问题，https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI
+			window.addEventListener('resize', onSortableResize);
 			// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
 			proxy.mittBus.on('onCurrentContextmenuClick', (data: object) => {
 				onCurrentContextmenuClick(data);
@@ -312,6 +347,8 @@ export default {
 			proxy.mittBus.off('onCurrentContextmenuClick');
 			// 取消监听布局配置界面开启/关闭拖拽
 			proxy.mittBus.off('openOrCloseSortable');
+			// 取消窗口 resize 监听
+			window.removeEventListener('resize', onSortableResize);
 		});
 		// 页面更新时
 		onBeforeUpdate(() => {
@@ -325,7 +362,7 @@ export default {
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
-			state.routePath = to.path;
+			state.routePath = to.meta.isDynamic ? to.meta.isDynamicPath : to.path;
 			addTagsView(to.path, to);
 			getTagsRefsIndex(to.path);
 			tagsViewmoveToCurrentTag();

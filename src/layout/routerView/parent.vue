@@ -41,9 +41,16 @@ export default defineComponent({
 		onBeforeMount(() => {
 			state.keepAliveNameList = getKeepAliveNames.value;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (path: string) => {
-				if (route.path !== path) return false;
+				// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+				if (route.meta.isDynamic) {
+					// 动态路由（xxx/:id/:name）
+					if (route.meta.isDynamicPath !== path) return false;
+				} else {
+					// 普通路由
+					if (route.path !== path) return false;
+				}
 				state.keepAliveNameList = getKeepAliveNames.value.filter((name: string) => route.name !== name);
-				state.refreshRouterViewKey = route.path;
+				state.refreshRouterViewKey = route.meta.isDynamic ? route.meta.isDynamicPath : route.path;
 				nextTick(() => {
 					state.refreshRouterViewKey = null;
 					state.keepAliveNameList = getKeepAliveNames.value;
