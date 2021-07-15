@@ -829,7 +829,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					isKeepAlive: true,
 					isAffix: false,
 					isIframe: false,
-					auth: ['admin', 'test'],
+					auth: ['admin'],
 					icon: 'iconfont icon-zhongduancanshu',
 				},
 				children: [

@@ -187,10 +187,14 @@ export default {
 				screenfulls.request(element);
 			});
 		};
+		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
+		const getCurrentRouteItem = (path: string) => {
+			return Session.get('tagsViewList').find((v: any) => v.path === path);
+		};
 		// 当前项右键菜单点击
 		const onCurrentContextmenuClick = (item) => {
 			const { id, path } = item;
-			const { meta, name, params, query } = route;
+			const { meta, name, params, query } = getCurrentRouteItem(path);
 			switch (id) {
 				case 0:
 					refreshCurrentTagsView(path);
