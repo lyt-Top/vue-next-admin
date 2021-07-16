@@ -899,7 +899,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 				path: '/visualizing',
 				name: 'visualizingIndex',
 				component: () => import('/@/layout/routerView/parent.vue'),
-				redirect: '/visualizingLinkDemo1',
+				redirect: '/visualizing/visualizingLinkDemo1',
 				meta: {
 					title: 'message.router.visualizingIndex',
 					isLink: '',
