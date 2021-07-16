@@ -58,10 +58,18 @@ export default {
 		paramsCommonDetails: '普通路由详情',
 		paramsDynamicDetails: '动态路由详情',
 		chartIndex: '大数据图表',
+		visualizingIndex: '数据可视化',
+		visualizingLinkDemo1: '数据可视化演示1',
+		visualizingLinkDemo2: '数据可视化演示2',
 		personal: '个人中心',
 		tools: '工具类集合',
 		layoutLinkView: '外链',
 		layoutIfameView: '内嵌 iframe',
+	},
+	staticRoutes: {
+		signIn: '登录',
+		notFound: '找不到此页面',
+		noPower: '没有权限',
 	},
 	user: {
 		title0: '组件大小',

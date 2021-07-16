@@ -58,10 +58,18 @@ export default {
 		paramsCommonDetails: 'General routing details',
 		paramsDynamicDetails: 'Dynamic routing details',
 		chartIndex: 'chartIndex',
+		visualizingIndex: 'visualizingIndex',
+		visualizingLinkDemo1: 'visualizingLinkDemo1',
+		visualizingLinkDemo2: 'visualizingLinkDemo2',
 		personal: 'personal',
 		tools: 'tools',
 		layoutLinkView: 'LinkView',
 		layoutIfameView: 'IfameView',
+	},
+	staticRoutes: {
+		signIn: 'signIn',
+		notFound: 'notFound',
+		noPower: 'noPower',
 	},
 	user: {
 		title0: 'Component size',

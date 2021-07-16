@@ -21,7 +21,7 @@
 					<span>{{ $t(val.meta.title) }}</span>
 				</template>
 				<template #title v-else>
-					<a :href="val.meta.isLink" target="_blank">{{ $t(val.meta.title) }}</a></template
+					<a :href="val.meta.isLink" target="_blank" rel="opener">{{ $t(val.meta.title) }}</a></template
 				>
 			</el-menu-item>
 		</template>

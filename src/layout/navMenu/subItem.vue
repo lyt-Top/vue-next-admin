@@ -13,7 +13,7 @@
 				<span>{{ $t(val.meta.title) }}</span>
 			</template>
 			<template v-else>
-				<a :href="val.meta.isLink" target="_blank">
+				<a :href="val.meta.isLink" target="_blank" rel="opener">
 					<i :class="val.meta.icon ? val.meta.icon : ''"></i>
 					{{ $t(val.meta.title) }}
 				</a>

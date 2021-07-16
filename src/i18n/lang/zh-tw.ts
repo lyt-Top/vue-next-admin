@@ -58,10 +58,18 @@ export default {
 		paramsCommonDetails: '普通路由詳情',
 		paramsDynamicDetails: '動態路由詳情',
 		chartIndex: '大資料圖表',
+		visualizingIndex: '數據視覺化',
+		visualizingLinkDemo1: '數據視覺化演示1',
+		visualizingLinkDemo2: '數據視覺化演示2',
 		personal: '個人中心',
 		tools: '工具類集合',
 		layoutLinkView: '外鏈',
 		layoutIfameView: '内嵌 iframe',
+	},
+	staticRoutes: {
+		signIn: '登入',
+		notFound: '找不到此頁面',
+		noPower: '沒有許可權',
 	},
 	user: {
 		title0: '組件大小',

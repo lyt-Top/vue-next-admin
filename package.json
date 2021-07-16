@@ -1,6 +1,6 @@
 {
 	"name": "vue-next-admin",
-	"version": "1.0.11",
+	"version": "1.0.12",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build",
@@ -23,7 +23,7 @@
 		"vue": "^3.0.11",
 		"vue-clipboard3": "^1.0.1",
 		"vue-grid-layout": "^3.0.0-beta1",
-		"vue-i18n": "^9.1.4",
+		"vue-i18n": "^9.1.7",
 		"vue-router": "^4.0.8",
 		"vue-web-screen-shot": "^1.2.0",
 		"vuex": "^4.0.1",
@@ -32,7 +32,7 @@
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
 		"@types/clipboard": "^2.0.1",
-		"@types/node": "^16.3.1",
+		"@types/node": "^16.3.2",
 		"@types/nprogress": "^0.2.0",
 		"@types/sortablejs": "^1.10.7",
 		"@typescript-eslint/eslint-plugin": "^4.28.3",
