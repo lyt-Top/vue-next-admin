@@ -2,6 +2,14 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.13
+
+`2021.07.25`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 数据可视化演示界面（/visualizingDemo1、/visualizingDemo2）
+- 🎉 新增 登录页扫码登录
+
 ## 1.0.12
 
 `2021.07.16`

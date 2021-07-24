@@ -917,7 +917,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						component: () => import('/@/layout/routerView/link.vue'),
 						meta: {
 							title: 'message.router.visualizingLinkDemo1',
-							isLink: `${import.meta.env.VITE_API_URL}/#/visualizingDemo1`,
+							isLink: `${import.meta.env.VITE_API_URL}#/visualizingDemo1`,
 							isHide: false,
 							isKeepAlive: false,
 							isAffix: false,
@@ -932,7 +932,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						component: () => import('/@/layout/routerView/link.vue'),
 						meta: {
 							title: 'message.router.visualizingLinkDemo2',
-							isLink: `${import.meta.env.VITE_API_URL}/#/visualizingDemo2`,
+							isLink: `${import.meta.env.VITE_API_URL}#/visualizingDemo2`,
 							isHide: false,
 							isKeepAlive: false,
 							isAffix: false,
