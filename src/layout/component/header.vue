@@ -1,5 +1,5 @@
 <template>
-	<el-header class="layout-header" :height="setHeaderHeight">
+	<el-header class="layout-header sackajljfs" :height="setHeaderHeight" v-show="!isCurrenFullscreen">
 		<NavBarsIndex />
 	</el-header>
 </template>
@@ -19,8 +19,13 @@ export default {
 			if (isTagsview && layout !== 'classic') return '84px';
 			else return '50px';
 		});
+		// 获取卡片全屏信息
+		const isCurrenFullscreen = computed(() => {
+			return store.state.tagsViewRoutes.isCurrenFullscreen;
+		});
 		return {
 			setHeaderHeight,
+			isCurrenFullscreen,
 		};
 	},
 };

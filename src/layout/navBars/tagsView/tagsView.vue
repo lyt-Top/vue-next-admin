@@ -1,5 +1,9 @@
 <template>
-	<div class="layout-navbars-tagsview" :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }">
+	<div
+		class="layout-navbars-tagsview"
+		:class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }"
+		v-show="!isCurrenFullscreen"
+	>
 		<el-scrollbar ref="scrollbarRef" @wheel.native.prevent="onHandleScroll">
 			<ul class="layout-navbars-tagsview-ul" :class="setTagsStyle" ref="tagsUlRef">
 				<li
@@ -42,7 +46,6 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted, computed, ref, nextTick, onBeforeUpdate, onBeforeMount, onUnmounted, getCurrentInstance, watch } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
-import screenfull from 'screenfull';
 import { useStore } from '/@/store/index';
 import { Session } from '/@/utils/storage';
 import Sortable from 'sortablejs';
@@ -74,6 +77,10 @@ export default {
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
+		});
+		// 获取卡片全屏信息
+		const isCurrenFullscreen = computed(() => {
+			return store.state.tagsViewRoutes.isCurrenFullscreen;
 		});
 		// 存储 tagsViewList 到浏览器临时缓存中，页面刷新时，保留记录
 		const addBrowserSetSession = (tagsViewList: Array<object>) => {
@@ -182,9 +189,7 @@ export default {
 			const item = state.tagsViewList.find((v: any) => v.path === path);
 			nextTick(() => {
 				router.push({ path, query: item.query });
-				const element = document.querySelector('.layout-main');
-				const screenfulls: any = screenfull;
-				screenfulls.request(element);
+				store.dispatch('tagsViewRoutes/openCurrenFullscreen');
 			});
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
@@ -384,6 +389,7 @@ export default {
 			tagsUlRef,
 			onHandleScroll,
 			getThemeConfig,
+			isCurrenFullscreen,
 			setTagsStyle,
 			refreshCurrentTagsView,
 			closeCurrentTagsView,

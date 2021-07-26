@@ -231,6 +231,14 @@ export default {
 				initI18n();
 				initComponentSize();
 			}
+			document.onkeydown = (event) => {
+				var e = event || window.event || arguments.callee.caller.arguments[0];
+				// 阻止F11全屏
+				if (e && e.keyCode === 122 && !state.isScreenfull) {
+					e.preventDefault();
+					onScreenfullClick();
+				}
+			};
 		});
 		return {
 			getUserInfos,

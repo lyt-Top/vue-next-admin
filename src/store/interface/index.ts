@@ -65,6 +65,7 @@ export interface KeepAliveNamesState {
 // TagsView 路由列表
 export interface TagsViewRoutesState {
 	tagsViewRoutes: Array<object>;
+	isCurrenFullscreen: boolean;
 }
 
 // 用户信息
