@@ -178,37 +178,14 @@ export default {
 			addBrowserSetSession(state.tagsViewList);
 		};
 		// 6、开启当前页面全屏
-		const openCurrenFullscreen = (path: string, currentRouteInfo: object) => {
-			const { meta, name, params, query } = currentRouteInfo;
-			if (meta.isDynamic) router.push({ name, params });
-			else router.push({ path, query });
+		const openCurrenFullscreen = (path: string) => {
+			const item = state.tagsViewList.find((v: any) => v.path === path);
 			nextTick(() => {
-				// 加延时器，防止非本界面点击 `开启当前页面全屏`，高度不对问题
-				setTimeout(() => {
-					const element = document.body;
-					const aside = document.querySelector('aside');
-					const header = document.querySelector('header');
-					const columAside = document.querySelector('.layout-columns-aside');
-					const layoutView = document.querySelector('.layout-view-bg-white');
-					screenfull.on('change', () => {
-						if (screenfull.isFullscreen) {
-							if (aside) aside.style.display = `none`;
-							if (header) header.style.display = `none`;
-							if (columAside) columAside.style.display = `none`;
-							if (layoutView) layoutView.style.height = `calc(100vh - 30px)`;
-						} else {
-							if (aside) aside.style.display = `flex`;
-							if (header) header.style.display = `block`;
-							if (columAside) columAside.style.display = `block`;
-							if (!layoutView) return false;
-							let { isTagsview } = getThemeConfig.value;
-							if (isTagsview) layoutView.style.height = `calc(100vh - 114px)`;
-							else layoutView.style.height = `calc(100vh - 80px)`;
-						}
-					});
-					screenfull.request(element);
-				}, 800);
-			});
+				router.push({ path, query: item.query });
+				const element = document.querySelector('.layout-main');
+				const screenfulls: any = screenfull;
+				screenfulls.request(element);
+			})
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
 		const getCurrentRouteItem = (path: string) => {
@@ -218,8 +195,7 @@ export default {
 		// 当前项右键菜单点击
 		const onCurrentContextmenuClick = (item) => {
 			const { id, path } = item;
-			const currentRouteInfo = getCurrentRouteItem(path);
-			const { meta, name, params, query } = currentRouteInfo;
+			const { meta, name, params, query } = getCurrentRouteItem(path);
 			switch (id) {
 				case 0:
 					refreshCurrentTagsView(path);
@@ -238,7 +214,7 @@ export default {
 					closeAllTagsView(path);
 					break;
 				case 4:
-					openCurrenFullscreen(path, currentRouteInfo);
+					openCurrenFullscreen(path);
 					break;
 			}
 		};
