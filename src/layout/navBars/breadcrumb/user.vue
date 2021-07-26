@@ -225,8 +225,19 @@ export default {
 					break;
 			}
 		};
+		// 阻止F11全屏
+		const initOnkeydown = () => {
+			document.onkeydown = (event) => {
+				var e = event || window.event || arguments.callee.caller.arguments[0];
+				if (e && e.keyCode === 122 && !state.isScreenfull) {
+					e.preventDefault();
+					onScreenfullClick();
+				}
+			};
+		};
 		// 页面加载时
 		onMounted(() => {
+			initOnkeydown();
 			if (Local.get('themeConfig')) {
 				initI18n();
 				initComponentSize();

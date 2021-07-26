@@ -1,18 +1,22 @@
 <template>
-	<el-aside class="layout-aside" :class="setCollapseWidth" v-if="clientWidth > 1000">
-		<Logo v-if="setShowLogo" />
-		<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-			<Vertical :menuList="menuList" :class="setCollapseWidth" />
-		</el-scrollbar>
-	</el-aside>
-	<el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
-		<el-aside class="layout-aside w100 h100">
+	<template v-if="clientWidth > 1000">
+		<el-aside class="layout-aside" :class="setCollapseWidth" v-show="!isCurrenFullscreen">
 			<Logo v-if="setShowLogo" />
 			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-				<Vertical :menuList="menuList" />
+				<Vertical :menuList="menuList" :class="setCollapseWidth" />
 			</el-scrollbar>
 		</el-aside>
-	</el-drawer>
+	</template>
+	<template v-else>
+		<el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px">
+			<el-aside class="layout-aside w100 h100">
+				<Logo v-if="setShowLogo" />
+				<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
+					<Vertical :menuList="menuList" />
+				</el-scrollbar>
+			</el-aside>
+		</el-drawer>
+	</template>
 </template>
 
 <script lang="ts">
@@ -33,6 +37,10 @@ export default {
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
+		});
+		// 获取卡片全屏信息
+		const isCurrenFullscreen = computed(() => {
+			return store.state.tagsViewRoutes.isCurrenFullscreen;
 		});
 		// 设置菜单展开/收起时的宽度
 		const setCollapseWidth = computed(() => {
@@ -118,6 +126,7 @@ export default {
 			setCollapseWidth,
 			setShowLogo,
 			getThemeConfig,
+			isCurrenFullscreen,
 			...toRefs(state),
 		};
 	},
