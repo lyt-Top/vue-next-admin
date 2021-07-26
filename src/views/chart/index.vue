@@ -1,6 +1,6 @@
 <template>
-	<div class="chart-scrollbar" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
-		<div class="chart-warp layout-view-bg-white">
+	<div class="chart-scrollbar layout-view-bg-white" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
+		<div class="chart-warp">
 			<div class="chart-warp-top">
 				<ChartHead />
 			</div>
