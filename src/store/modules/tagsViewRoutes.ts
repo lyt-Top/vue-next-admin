@@ -4,6 +4,8 @@ import screenfull from 'screenfull';
 import { Local } from '/@/utils/storage';
 // 此处加上 `.ts` 后缀报错，具体原因不详
 import { TagsViewRoutesState, RootStateTypes } from '/@/store/interface/index';
+import { ElMessage } from 'element-plus';
+import screenfull from 'screenfull';
 
 const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 	namespaced: true,
@@ -27,33 +29,34 @@ const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 			commit('getTagsViewRoutes', data);
 		},
 		// 设置卡片全屏
-		setCurrenFullscreen({ commit }) {
+		setCurrenFullscreen({ commit }, timeout: number = 0) {
 			const screenfulls: any = screenfull;
 			if (!screenfulls.isEnabled) {
 				ElMessage.warning('暂不不支持全屏');
 				return false;
 			}
-			screenfulls.toggle();
-			const currenFullscreenChange = () => {
-				const layoutViewBgWhite = document.querySelector('.layout-view-bg-white') as HTMLElement;
-				if (screenfulls.isFullscreen) {
-					commit('getCurrenFullscreen', true);
-					// 设置全屏时，设置有 `layout-view-bg-white` 类的高度
-					if (layoutViewBgWhite) layoutViewBgWhite.style.height = `calc(100vh - 30px)`;
-				} else {
-					screenfulls.off('change', currenFullscreenChange);
-					commit('getCurrenFullscreen', false);
-					if (!layoutViewBgWhite) return false;
-					const getThemeConfig = Local.get('themeConfig');
-					if (getThemeConfig) {
-						let { isTagsview } = getThemeConfig;
-						if (isTagsview) layoutViewBgWhite.style.height = `calc(100vh - 114px)`;
-						else layoutViewBgWhite.style.height = `calc(100vh - 80px)`;
+			setTimeout(() => {
+				const currenFullscreenChange = () => {
+					const layoutViewBgWhite = document.querySelector('.layout-view-bg-white') as HTMLElement;
+					if (screenfulls.isFullscreen) {
+						commit('getCurrenFullscreen', true);
+						// 设置全屏时，设置有 `layout-view-bg-white` 类的高度
+						if (layoutViewBgWhite) layoutViewBgWhite.style.height = `calc(100vh - 30px)`;
+					} else {
+						screenfulls.off('change', currenFullscreenChange);
+						commit('getCurrenFullscreen', false);
+						if (!layoutViewBgWhite) return false;
+						const getThemeConfig = Local.get('themeConfig');
+						if (getThemeConfig) {
+							let { isTagsview } = getThemeConfig;
+							if (isTagsview) layoutViewBgWhite.style.height = `calc(100vh - 114px)`;
+							else layoutViewBgWhite.style.height = `calc(100vh - 80px)`;
+						}
 					}
-				}
-			};
-			screenfulls.on('change', currenFullscreenChange);
-			commit('getCurrenFullscreen', true);
+				};
+				screenfulls.on('change', currenFullscreenChange);
+				screenfulls.toggle();
+			}, timeout);
 		},
 	},
 };
