@@ -190,7 +190,7 @@ export default {
 				const { meta, name, params, query } = currentRouteInfo;
 				if (meta.isDynamic) router.push({ name, params });
 				else router.push({ path, query });
-				store.dispatch('tagsViewRoutes/setCurrenFullscreen');
+				store.dispatch('tagsViewRoutes/setCurrenFullscreen', 500);
 			});
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
