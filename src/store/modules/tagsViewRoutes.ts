@@ -4,8 +4,6 @@ import screenfull from 'screenfull';
 import { Local } from '/@/utils/storage';
 // 此处加上 `.ts` 后缀报错，具体原因不详
 import { TagsViewRoutesState, RootStateTypes } from '/@/store/interface/index';
-import { ElMessage } from 'element-plus';
-import screenfull from 'screenfull';
 
 const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 	namespaced: true,
