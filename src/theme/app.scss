@@ -54,6 +54,7 @@ body,
 	.el-scrollbar {
 		width: 100%;
 	}
+	// 此字段多次用到，不可删除，如需修改，请重写覆盖样式
 	.layout-view-bg-white {
 		background: white;
 		width: 100%;

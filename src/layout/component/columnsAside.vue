@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-columns-aside">
+	<div class="layout-columns-aside" v-show="!isCurrenFullscreen">
 		<el-scrollbar>
 			<ul>
 				<li
@@ -69,6 +69,10 @@ export default {
 		// 设置分栏布局风格
 		const setColumnsAsidelayout = computed(() => {
 			return store.state.themeConfig.themeConfig.columnsAsideLayout;
+		});
+		// 获取卡片全屏信息
+		const isCurrenFullscreen = computed(() => {
+			return store.state.tagsViewRoutes.isCurrenFullscreen;
 		});
 		// 设置菜单高亮位置移动
 		const setColumnsAsideMove = (k: number) => {
@@ -152,6 +156,7 @@ export default {
 			setColumnsAsideStyle,
 			setColumnsAsidelayout,
 			onColumnsAsideMenuClick,
+			isCurrenFullscreen,
 			...toRefs(state),
 		};
 	},
@@ -211,8 +216,8 @@ export default {
 			position: absolute;
 			left: 50%;
 			top: 2px;
-			height: 44px;
-			width: 65px;
+			height: 50px;
+			width: 60px;
 			transform: translateX(-50%);
 			z-index: 0;
 			transition: 0.3s ease-in-out;
@@ -221,7 +226,6 @@ export default {
 		.columns-card {
 			@extend .columns-round;
 			top: 0;
-			height: 50px;
 			width: 100%;
 			border-radius: 0;
 		}

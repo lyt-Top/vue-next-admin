@@ -1,5 +1,5 @@
 <template>
-	<el-header class="layout-header sackajljfs" :height="setHeaderHeight" v-show="!isCurrenFullscreen">
+	<el-header class="layout-header" :height="setHeaderHeight" v-show="!isCurrenFullscreen">
 		<NavBarsIndex />
 	</el-header>
 </template>

@@ -185,21 +185,24 @@ export default {
 			addBrowserSetSession(state.tagsViewList);
 		};
 		// 6、开启当前页面全屏
-		const openCurrenFullscreen = (path: string) => {
-			const item = state.tagsViewList.find((v: any) => v.path === path);
+		const openCurrenFullscreen = (path: string, currentRouteInfo: object) => {
 			nextTick(() => {
-				router.push({ path, query: item.query });
-				store.dispatch('tagsViewRoutes/openCurrenFullscreen');
+				const { meta, name, params, query } = currentRouteInfo;
+				if (meta.isDynamic) router.push({ name, params });
+				else router.push({ path, query });
+				store.dispatch('tagsViewRoutes/setCurrenFullscreen');
 			});
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
 		const getCurrentRouteItem = (path: string) => {
+			if (!Session.get('tagsViewList')) return state.tagsViewList.find((v: any) => v.path === path);
 			return Session.get('tagsViewList').find((v: any) => v.path === path);
 		};
 		// 当前项右键菜单点击
 		const onCurrentContextmenuClick = (item) => {
 			const { id, path } = item;
-			const { meta, name, params, query } = getCurrentRouteItem(path);
+			const currentRouteInfo = getCurrentRouteItem(path);
+			const { meta, name, params, query } = currentRouteInfo;
 			switch (id) {
 				case 0:
 					refreshCurrentTagsView(path);
@@ -218,7 +221,7 @@ export default {
 					closeAllTagsView(path);
 					break;
 				case 4:
-					openCurrenFullscreen(path);
+					openCurrenFullscreen(path, currentRouteInfo);
 					break;
 			}
 		};
