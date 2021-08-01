@@ -46,7 +46,7 @@ export default defineComponent({
 					icon: 'iconfont icon-fullscreen',
 				},
 			],
-			path: {},
+			item: {},
 		});
 		// 父级传过来的坐标 x,y 值
 		const dropdowns = computed(() => {
@@ -54,11 +54,11 @@ export default defineComponent({
 		});
 		// 当前项菜单点击
 		const onCurrentContextmenuClick = (id: number) => {
-			emit('currentContextmenuClick', { id, path: state.path });
+			emit('currentContextmenuClick', Object.assign({}, { id }, state.item));
 		};
 		// 打开右键菜单：判断是否固定，固定则不显示关闭按钮
 		const openContextmenu = (item: any) => {
-			state.path = item.path;
+			state.item = item;
 			item.meta.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
 			closeContextmenu();
 			setTimeout(() => {

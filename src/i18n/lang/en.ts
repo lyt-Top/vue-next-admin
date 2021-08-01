@@ -107,6 +107,7 @@ export default {
 		closeOther: 'closeOther',
 		closeAll: 'closeAll',
 		fullscreen: 'fullscreen',
+		closeFullscreen: 'closeFullscreen',
 	},
 	notFound: {
 		foundTitle: 'Wrong address input, please re-enter the address~',
@@ -147,6 +148,7 @@ export default {
 		fourIsTagsviewIcon: 'Open tagsview Icon',
 		fourIsCacheTagsView: 'Enable tagsview cache',
 		fourIsSortableTagsView: 'Enable tagsview drag',
+		fourIsShareTagsView: 'Enable tagsview sharing',
 		fourIsFooter: 'Open footer',
 		fourIsGrayscale: 'Grey model',
 		fourIsInvert: 'Color weak mode',

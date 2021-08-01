@@ -106,6 +106,7 @@ export default defineComponent({
 				txt: '',
 				fun: 0,
 			},
+			myCharts: [],
 		});
 		// 初始化时间
 		const initTime = () => {
@@ -233,9 +234,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 
 			// 地图
 			const map = myChart.getModel().getComponent('bmap').getBMap();
@@ -355,9 +354,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// A级风景区对比
 		const initVisualizingContentLeftBottom = () => {
@@ -473,9 +470,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 游客过夜情况
 		const initVisualizingContentCenterTop = () => {
@@ -603,9 +598,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 游客驻留时长
 		const initVisualizingContentCenterBottom = () => {
@@ -702,9 +695,7 @@ export default defineComponent({
 				},
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 当日游客趋势分析
 		const initVisualizingContentRightTop = () => {
@@ -839,9 +830,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 当月游客趋势分析
 		const initVisualizingContentRightBottom = () => {
@@ -923,20 +912,27 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
+			state.myCharts.push(myChart);
+		};
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				for (let i = 0; i < state.myCharts.length; i++) {
+					state.myCharts[i].resize();
+				}
 			});
 		};
 		// 页面加载时
-		onMounted(() => {
+		onMounted(async () => {
 			initTime();
-			initEchartsMap();
-			initVisualizingContentLeftTop();
-			initVisualizingContentLeftBottom();
-			initVisualizingContentCenterTop();
-			initVisualizingContentCenterBottom();
-			initVisualizingContentRightTop();
-			initVisualizingContentRightBottom();
+			await initEchartsMap();
+			await initVisualizingContentLeftTop();
+			await initVisualizingContentLeftBottom();
+			await initVisualizingContentCenterTop();
+			await initVisualizingContentCenterBottom();
+			await initVisualizingContentRightTop();
+			await initVisualizingContentRightBottom();
+			await initEchartsResize();
 		});
 		// 页面卸载时
 		onUnmounted(() => {

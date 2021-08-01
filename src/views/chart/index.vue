@@ -202,7 +202,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted, getCurrentInstance } from 'vue';
+import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick } from 'vue';
 import { useStore } from '/@/store/index';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
@@ -220,6 +220,7 @@ export default {
 			dBtnList,
 			chartData4List,
 			earth3DBtnList,
+			myCharts: [],
 		});
 		// 设置主内容的高度
 		const initTagViewHeight = computed(() => {
@@ -286,9 +287,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 初始化近7天产品追溯扫码统计
 		const initChartsSevenDays = () => {
@@ -333,9 +332,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 初始化近30天预警总数
 		const initChartsWarning = () => {
@@ -370,9 +367,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 初始化当前设备监测
 		const initChartsMonitor = () => {
@@ -412,9 +407,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 初始化近7天投入品记录
 		const initChartsInvestment = () => {
@@ -444,8 +437,14 @@ export default {
 				],
 			};
 			myChart.setOption(option);
+			state.myCharts.push(myChart);
+		};
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				for (let i = 0; i < state.myCharts.length; i++) {
+					state.myCharts[i].resize();
+				}
 			});
 		};
 		// 页面加载时
@@ -455,7 +454,19 @@ export default {
 			initChartsWarning();
 			initChartsMonitor();
 			initChartsInvestment();
+			initEchartsResize();
 		});
+		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
+		watch(
+			() => store.state.tagsViewRoutes.isTagsViewCurrenFull,
+			() => {
+				nextTick(() => {
+					for (let i = 0; i < state.myCharts.length; i++) {
+						state.myCharts[i].resize();
+					}
+				});
+			}
+		);
 		return {
 			initTagViewHeight,
 			...toRefs(state),

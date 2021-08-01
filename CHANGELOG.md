@@ -2,6 +2,19 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.14
+
+`2021.07.29`
+
+- 🌟 更新 依赖更新最新版本（vue、vuex、vue-router）,出现问题，请手动降级。版本查看：<a href="https://www.npmjs.com/" target="_blank">vnpm</a>
+- 🎯 优化 数据可视化图表演示加载卡顿问题、优化有图表的演示界面
+- 🎯 优化 路由参数演示界面
+- 🎯 优化 tagsView 操作演示界面，由于存在相同路由多标签，必须要传全部参数值（query 或者 params）
+- 🎉 新增 开启 TagsView 共用，开启时：（多个路由菜单共用一个详情组件（参数为后点击的覆盖前面点击的），tagsView 中只会出现一个（不支持同时出现多个 tagsView 标签））。关闭时：（多个路由菜单共用一个详情组件，参数不同，会同时出现多个 tagsView 标签）
+- 🐞 修复 tagsView 共用（单标签）时，右键菜单功能点击，参数不对的问题（第 2n+个参数未覆盖第一个参数值）
+- 🐞 修复 多 tagsView 标签（参数不同）、单个 tagsView 标签公用（参数不同）所带来的刷新功能、横向自动滚动等问题
+- 🐞 修复 处理全屏若干问题，<a href="https://gitee.com/lyt-top/vue-next-admin/pulls/12" target="_blank">pr!12</a>，感谢群友@另一个前端
+
 ## 1.0.13
 
 `2021.07.25`

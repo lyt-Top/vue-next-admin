@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick } from 'vue';
+import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
 export default defineComponent({
@@ -40,19 +40,11 @@ export default defineComponent({
 		// 页面加载前，处理缓存，页面刷新时路由缓存处理
 		onBeforeMount(() => {
 			state.keepAliveNameList = getKeepAliveNames.value;
-			proxy.mittBus.on('onTagsViewRefreshRouterView', (path: string) => {
-				// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-				if (route.meta.isDynamic) {
-					// 动态路由（xxx/:id/:name）
-					if (route.meta.isDynamicPath !== path) return false;
-				} else {
-					// 普通路由
-					if (route.path !== path) return false;
-				}
+			proxy.mittBus.on('onTagsViewRefreshRouterView', (fullPath: string) => {
 				state.keepAliveNameList = getKeepAliveNames.value.filter((name: string) => route.name !== name);
-				state.refreshRouterViewKey = route.meta.isDynamic ? route.meta.isDynamicPath : route.path;
+				state.refreshRouterViewKey = null;
 				nextTick(() => {
-					state.refreshRouterViewKey = null;
+					state.refreshRouterViewKey = fullPath;
 					state.keepAliveNameList = getKeepAliveNames.value;
 				});
 			});
@@ -61,6 +53,13 @@ export default defineComponent({
 		onUnmounted(() => {
 			proxy.mittBus.off('onTagsViewRefreshRouterView');
 		});
+		// 监听路由变化，防止 tagsView 多标签时，切换动画消失
+		watch(
+			() => route.fullPath,
+			() => {
+				state.refreshRouterViewKey = route.fullPath;
+			}
+		);
 		return {
 			getThemeConfig,
 			getKeepAliveNames,

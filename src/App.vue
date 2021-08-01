@@ -2,6 +2,7 @@
 	<router-view v-show="getThemeConfig.lockScreenTime !== 0" />
 	<LockScreen v-if="getThemeConfig.isLockScreen" />
 	<Setings ref="setingsRef" v-show="getThemeConfig.lockScreenTime !== 0" />
+	<CloseFull />
 </template>
 
 <script lang="ts">
@@ -13,9 +14,10 @@ import { Local } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/layout/lockScreen/index.vue';
 import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
+import CloseFull from '/@/layout/navBars/breadcrumb/closeFull.vue';
 export default defineComponent({
 	name: 'app',
-	components: { LockScreen, Setings },
+	components: { LockScreen, Setings, CloseFull },
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const setingsRef = ref();

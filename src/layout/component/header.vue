@@ -1,5 +1,5 @@
 <template>
-	<el-header class="layout-header" :height="setHeaderHeight" v-show="!isCurrenFullscreen">
+	<el-header class="layout-header" :height="setHeaderHeight" v-show="!isTagsViewCurrenFull">
 		<NavBarsIndex />
 	</el-header>
 </template>
@@ -20,12 +20,12 @@ export default {
 			else return '50px';
 		});
 		// 获取卡片全屏信息
-		const isCurrenFullscreen = computed(() => {
-			return store.state.tagsViewRoutes.isCurrenFullscreen;
+		const isTagsViewCurrenFull = computed(() => {
+			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
 		});
 		return {
 			setHeaderHeight,
-			isCurrenFullscreen,
+			isTagsViewCurrenFull,
 		};
 	},
 };

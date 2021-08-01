@@ -107,6 +107,7 @@ export default {
 		closeOther: '關閉其它',
 		closeAll: '全部關閉',
 		fullscreen: '當前頁全屏',
+		closeFullscreen: '關閉全屏',
 	},
 	notFound: {
 		foundTitle: '地址輸入錯誤，請重新輸入地址~',
@@ -147,6 +148,7 @@ export default {
 		fourIsTagsviewIcon: '開啟 Tagsview 圖標',
 		fourIsCacheTagsView: '開啟 TagsView 緩存',
 		fourIsSortableTagsView: '開啟 TagsView 拖拽',
+		fourIsShareTagsView: '開啟 TagsView 共用',
 		fourIsFooter: '開啟 Footer',
 		fourIsGrayscale: '灰色模式',
 		fourIsInvert: '色弱模式',

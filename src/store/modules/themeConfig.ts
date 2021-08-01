@@ -91,6 +91,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isCacheTagsView: false,
 			// 是否开启 TagsView 拖拽
 			isSortableTagsView: true,
+			// 是否开启 TagsView 共用
+			isShareTagsView: false,
 			// 是否开启 Footer 底部版权信息
 			isFooter: false,
 			// 是否开启灰色模式

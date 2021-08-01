@@ -1,22 +1,20 @@
 <template>
 	<template v-if="clientWidth > 1000">
-		<el-aside class="layout-aside" :class="setCollapseWidth" v-show="!isCurrenFullscreen">
+		<el-aside class="layout-aside" :class="setCollapseWidth" v-show="!isTagsViewCurrenFull">
 			<Logo v-if="setShowLogo" />
 			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
 				<Vertical :menuList="menuList" :class="setCollapseWidth" />
 			</el-scrollbar>
 		</el-aside>
 	</template>
-	<template v-else>
-		<el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px">
-			<el-aside class="layout-aside w100 h100">
-				<Logo v-if="setShowLogo" />
-				<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-					<Vertical :menuList="menuList" />
-				</el-scrollbar>
-			</el-aside>
-		</el-drawer>
-	</template>
+	<el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
+		<el-aside class="layout-aside w100 h100">
+			<Logo v-if="setShowLogo" />
+			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
+				<Vertical :menuList="menuList" />
+			</el-scrollbar>
+		</el-aside>
+	</el-drawer>
 </template>
 
 <script lang="ts">
@@ -39,8 +37,8 @@ export default {
 			return store.state.themeConfig.themeConfig;
 		});
 		// 获取卡片全屏信息
-		const isCurrenFullscreen = computed(() => {
-			return store.state.tagsViewRoutes.isCurrenFullscreen;
+		const isTagsViewCurrenFull = computed(() => {
+			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
 		});
 		// 设置菜单展开/收起时的宽度
 		const setCollapseWidth = computed(() => {
@@ -126,7 +124,7 @@ export default {
 			setCollapseWidth,
 			setShowLogo,
 			getThemeConfig,
-			isCurrenFullscreen,
+			isTagsViewCurrenFull,
 			...toRefs(state),
 		};
 	},

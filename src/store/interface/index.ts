@@ -34,6 +34,7 @@ export interface ThemeConfigState {
 		isTagsviewIcon: boolean;
 		isCacheTagsView: boolean;
 		isSortableTagsView: boolean;
+		isShareTagsView: boolean;
 		isFooter: boolean;
 		isGrayscale: boolean;
 		isInvert: boolean;
@@ -65,7 +66,7 @@ export interface KeepAliveNamesState {
 // TagsView 路由列表
 export interface TagsViewRoutesState {
 	tagsViewRoutes: Array<object>;
-	isCurrenFullscreen: boolean;
+	isTagsViewCurrenFull: Boolean;
 }
 
 // 用户信息

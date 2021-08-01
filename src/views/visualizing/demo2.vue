@@ -253,6 +253,7 @@ export default defineComponent({
 			dBtnActive: 0,
 			earth3DBtnList,
 			chartData4List,
+			myCharts: [],
 		});
 		// 初始化时间
 		const initTime = () => {
@@ -291,9 +292,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 当前设备监测
 		const initRightChartData4 = () => {
@@ -381,9 +380,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 近7天产品追溯扫码统计
 		const initRightChartData3 = () => {
@@ -462,9 +459,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 当前任务统计
 		const initRightChartData6 = () => {
@@ -478,7 +473,7 @@ export default defineComponent({
 				},
 				grid: {
 					top: 20,
-					right: 42,
+					right: 50,
 					bottom: 0,
 					left: 80,
 				},
@@ -508,7 +503,7 @@ export default defineComponent({
 						data: ['施肥任务完成率', '施药任务完成率', '农事任务完成率'],
 						axisLabel: {
 							color: '#A7D6F4',
-							fontSize: 10,
+							fontSize: 12,
 						},
 					},
 				],
@@ -516,12 +511,12 @@ export default defineComponent({
 					{
 						name: '标准化',
 						type: 'bar',
-						barWidth: 12, // 柱子宽度
+						barWidth: 10, // 柱子宽度
 						label: {
 							show: true,
 							position: 'right', // 位置
 							color: '#A7D6F4',
-							fontSize: 10,
+							fontSize: 12,
 							distance: 15, // 距离
 							formatter: '{c}%', // 这里是数据展示的时候显示的数据
 						}, // 柱子上方的数值
@@ -551,9 +546,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 近7天投入品记录
 		const initRightChartData2 = () => {
@@ -686,9 +679,7 @@ export default defineComponent({
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 3DEarth 地图
 		const init3DEarth = (globeRadius) => {
@@ -751,7 +742,7 @@ export default defineComponent({
 			myChart.setOption(option);
 		};
 		// 监听地球大小变化
-		const initAddEventListener3DEarthFun = () => {
+		const initAddEventListener3DEarth = () => {
 			let w = document.body.clientWidth;
 			let globeRadius = 0;
 			if (w >= 1920) globeRadius = 100;
@@ -761,22 +752,25 @@ export default defineComponent({
 			else if (w < 768) globeRadius = 20;
 			init3DEarth(globeRadius);
 		};
-		// 监听地球大小变化
-		const initAddEventListener3DEarth = () => {
-			initAddEventListener3DEarthFun();
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
+			initAddEventListener3DEarth();
 			window.addEventListener('resize', () => {
-				initAddEventListener3DEarthFun();
+				for (let i = 0; i < state.myCharts.length; i++) {
+					state.myCharts[i].resize();
+				}
+				initAddEventListener3DEarth();
 			});
 		};
 		// 页面加载时
-		onMounted(() => {
-			initAddEventListener3DEarth();
+		onMounted(async () => {
 			initTime();
-			initRightChartData1();
-			initRightChartData4();
-			initRightChartData3();
-			initRightChartData2();
-			initRightChartData6();
+			await initRightChartData1();
+			await initRightChartData4();
+			await initRightChartData3();
+			await initRightChartData2();
+			await initRightChartData6();
+			await initEchartsResize();
 		});
 		// 页面卸载时
 		onUnmounted(() => {
@@ -841,7 +835,7 @@ export default defineComponent({
 				left: 50%;
 				transform: translateX(-50%);
 				border: 1px transparent solid;
-				border-image: linear-gradient(to right, #000718, #43bdf0) 1 10;
+				border-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), #43bdf0) 1 10;
 			}
 			span {
 				cursor: pointer;

@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance } from 'vue';
+import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance, watch } from 'vue';
 import * as echarts from 'echarts';
 import { CountUp } from 'countup.js';
 import { formatAxis } from '/@/utils/formatTime';
@@ -130,6 +130,7 @@ export default {
 					},
 				],
 			},
+			myCharts: [],
 		});
 		// 获取用户信息 vuex
 		const getUserInfos = computed(() => {
@@ -234,9 +235,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			window.addEventListener('resize', () => {
-				myChart.resize();
-			});
+			state.myCharts.push(myChart);
 		};
 		// 履约超时预警
 		const initHomeOvertime = () => {
@@ -288,8 +287,14 @@ export default {
 				],
 			};
 			myChart.setOption(option);
+			state.myCharts.push(myChart);
+		};
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				for (let i = 0; i < state.myCharts.length; i++) {
+					state.myCharts[i].resize();
+				}
 			});
 		};
 		// 页面加载时
@@ -297,7 +302,19 @@ export default {
 			initNumCountUp();
 			initHomeLaboratory();
 			initHomeOvertime();
+			initEchartsResize();
 		});
+		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
+		watch(
+			() => store.state.tagsViewRoutes.isTagsViewCurrenFull,
+			() => {
+				nextTick(() => {
+					for (let i = 0; i < state.myCharts.length; i++) {
+						state.myCharts[i].resize();
+					}
+				});
+			}
+		);
 		return {
 			getUserInfos,
 			currentTime,

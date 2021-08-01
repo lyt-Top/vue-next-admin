@@ -1,9 +1,10 @@
 <template>
 	<div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
 		<div class="flex-margin">
-			<el-result icon="success" title="普通路由" subTitle="请根据提示进行操作">
+			<el-result icon="success" title="普通路由" subTitle="可 `开启 TagsView 共用` 进行单标签测试">
 				<template #extra>
-					<el-button type="primary" size="small" icon="iconfont icon-putong" @click="onGoDetailsClick">点击测试普通路由传参</el-button>
+					<el-input v-model="value" placeholder="请输入路由参数id值" clearable></el-input>
+					<el-button type="primary" size="small" icon="iconfont icon-putong" class="mt15" @click="onGoDetailsClick">普通路由传参</el-button>
 				</template>
 			</el-result>
 		</div>
@@ -18,7 +19,9 @@ export default defineComponent({
 	name: 'paramsCommon',
 	setup() {
 		const store = useStore();
-		const state = reactive({});
+		const state = reactive({
+			value: '',
+		});
 		const router = useRouter();
 		// 设置 view 的高度
 		const setViewHeight = computed(() => {
@@ -30,11 +33,9 @@ export default defineComponent({
 		const onGoDetailsClick = () => {
 			router.push({
 				path: '/params/common/details',
-				query: {
-					t: new Date().getTime(),
-					id: Math.random(),
-				},
+				query: { id: state.value, name: 'vue-next-admin' },
 			});
+			state.value = '';
 		};
 		return {
 			setViewHeight,
