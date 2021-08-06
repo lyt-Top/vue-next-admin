@@ -696,6 +696,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						},
 					},
 					{
+						path: '/pages/formRules',
+						name: 'pagesFormRules',
+						component: () => import('/@/views/pages/formRules/index.vue'),
+						meta: {
+							title: 'message.router.pagesFormRules',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							auth: ['admin', 'test'],
+							icon: 'iconfont icon-shuxing',
+						},
+					},
+					{
 						path: '/pages/listAdapt',
 						name: 'pagesListAdapt',
 						component: () => import('/@/views/pages/listAdapt/index.vue'),

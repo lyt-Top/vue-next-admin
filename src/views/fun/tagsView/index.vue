@@ -51,23 +51,23 @@ export default {
 		// 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
 		// 1、刷新当前 tagsView
 		const refreshCurrentTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { id: 0, ...route }));
+			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 0, ...route }));
 		};
 		// 2、关闭当前 tagsView
 		const closeCurrentTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { id: 1, ...route }));
+			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 1, ...route }));
 		};
 		// 3、关闭其它 tagsView
 		const closeOtherTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { id: 2, ...route }));
+			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 2, ...route }));
 		};
 		// 4、关闭全部 tagsView
 		const closeAllTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { id: 3, ...route }));
+			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 3, ...route }));
 		};
 		// 5、开启当前页面全屏
 		const openCurrenFullscreen = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { id: 4, ...route }));
+			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 4, ...route }));
 		};
 		return {
 			refreshCurrentTagsView,

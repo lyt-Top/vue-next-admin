@@ -44,6 +44,7 @@ export default {
 		pagesCityLinkage: 'CityLinkage',
 		pagesFormAdapt: 'FormAdapt',
 		pagesFormI18n: 'FormI18n',
+		pagesFormRules: 'Multi form validation',
 		pagesListAdapt: 'ListAdapt',
 		pagesWaterfall: 'Waterfall',
 		pagesSteps: 'Steps',

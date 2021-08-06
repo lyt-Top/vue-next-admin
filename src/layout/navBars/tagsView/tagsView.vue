@@ -279,7 +279,7 @@ export default {
 			const cParams = item.meta.isDynamic ? item.params : item.query;
 			if (!getCurrentRouteItem(item.path, cParams)) return ElMessage({ type: 'warning', message: '请正确输入路径及完整参数（query、params）' });
 			const { path, name, params, query, meta, url } = getCurrentRouteItem(item.path, cParams);
-			switch (item.id) {
+			switch (item.contextMenuClickId) {
 				case 0:
 					// 刷新当前
 					if (meta.isDynamic) await router.push({ name, params });

@@ -44,6 +44,7 @@ export default {
 		pagesCityLinkage: '都市多級聯動',
 		pagesFormAdapt: '表單自我調整',
 		pagesFormI18n: '表單國際化',
+		pagesFormRules: '多表單驗證',
 		pagesListAdapt: '清單自我調整',
 		pagesWaterfall: '瀑布屏',
 		pagesSteps: '步驟條',

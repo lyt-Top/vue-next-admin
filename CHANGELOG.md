@@ -2,6 +2,14 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.15
+
+`2021.08.06`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 tagsView 右键菜单点击时的字段名（id 已修改成 contextMenuClickId）与路由中返回的 id 名冲突问题，感谢群友@伯牙已遇钟子期
+- 🎉 新增 多个 form 表单验证界面演示
+
 ## 1.0.14
 
 `2021.07.29`
