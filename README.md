@@ -57,12 +57,28 @@ cnpm run build
 
 #### 学习交流加 QQ 群
 
+- 若加群了没同意（一般不会超过一天），那就是群满了，请换一个群试试
 - 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
-- 群号码：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
+- 群号码：
+  1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
+  2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
 
-<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi"></a>
-<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qqs.png" width="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群"/></a>
+  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
+  	<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qq1.png" width="220" height="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群1"/>
+  </a>
+  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">
+  	<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qq2.png" width="220" height="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群2"/>
+  </a>
 
-#### 其他事项
+#### 💕 特别感谢
 
-- 喜欢用就帮忙 <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">gitee star</a> 下，不喜欢用也没关系，出来打工、创业，大家都不容易，感谢大家的支持，谢谢！
+特别感谢群里老哥的建议、指导与帮忙，谢谢！
+
+- <a href="https://gitee.com/click33/sa-plus" target="_blank">@省长</a>
+- <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参
+- <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
+
+#### 💌 支持作者
+
+如果觉得框架不错，或者已经在使用了，希望你可以去 <a target="_blank" href="https://github.com/lyt-Top/vue-next-admin">Github</a> 或者
+<a target="_blank" href="https://gitee.com/lyt-top/vue-next-admin">Gitee</a> 帮我点个 ⭐ Star，这将是对我极大的鼓励与支持。
