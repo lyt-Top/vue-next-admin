@@ -46,7 +46,6 @@ import Sortable from 'sortablejs';
 import { ElMessage } from 'element-plus';
 import { useStore } from '/@/store/index';
 import { Session } from '/@/utils/storage';
-import { NextLoading } from '/@/utils/loading';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import Contextmenu from '/@/layout/navBars/tagsView/contextmenu.vue';
 export default {
@@ -242,19 +241,7 @@ export default {
 			const item = state.tagsViewList.find((v: any) => (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path));
 			if (item.meta.isDynamic) await router.push({ name: item.name, params: item.params });
 			else await router.push({ name: item.name, query: item.query });
-			NextLoading.start();
-			setTimeout(() => {
-				nextTick(() => {
-					store.dispatch('tagsViewRoutes/setCurrenFullscreen', true);
-					if (store.state.tagsViewRoutes.isTagsViewCurrenFull) {
-						const element = document.querySelector('.layout-main .layout-view-bg-white') as HTMLElement;
-						if (!element) return false;
-						// 非当前页开启 iframes 高度会有问题
-						if (route.path === '/iframes') element.style.height = `100vh`;
-						else element.style.height = `calc(100vh - 30px)`;
-					}
-				});
-			}, 1000);
+			store.dispatch('tagsViewRoutes/setCurrenFullscreen', true);
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
 		// 防止 tagsView 非当前页演示时，操作异常

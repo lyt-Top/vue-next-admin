@@ -202,7 +202,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick } from 'vue';
+import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick, onActivated } from 'vue';
 import { useStore } from '/@/store/index';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
@@ -225,8 +225,13 @@ export default {
 		// 设置主内容的高度
 		const initTagViewHeight = computed(() => {
 			let { isTagsview } = store.state.themeConfig.themeConfig;
-			if (isTagsview) return `114px`;
-			else return `80px`;
+			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
+			if (isTagsViewCurrenFull) {
+				return `30px`;
+			} else {
+				if (isTagsview) return `114px`;
+				else return `80px`;
+			}
 		});
 		// 初始化中间图表1
 		const initChartsCenterOne = () => {
@@ -440,12 +445,16 @@ export default {
 			state.myCharts.push(myChart);
 		};
 		// 批量设置 echarts resize
-		const initEchartsResize = () => {
-			window.addEventListener('resize', () => {
+		const initEchartsResizeFun = () => {
+			nextTick(() => {
 				for (let i = 0; i < state.myCharts.length; i++) {
 					state.myCharts[i].resize();
 				}
 			});
+		};
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
+			window.addEventListener('resize', initEchartsResizeFun);
 		};
 		// 页面加载时
 		onMounted(() => {
@@ -456,15 +465,15 @@ export default {
 			initChartsInvestment();
 			initEchartsResize();
 		});
+		// 由于页面缓存原因，keep-alive
+		onActivated(() => {
+			initEchartsResizeFun();
+		});
 		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
 		watch(
 			() => store.state.tagsViewRoutes.isTagsViewCurrenFull,
 			() => {
-				nextTick(() => {
-					for (let i = 0; i < state.myCharts.length; i++) {
-						state.myCharts[i].resize();
-					}
-				});
+				initEchartsResizeFun();
 			}
 		);
 		return {

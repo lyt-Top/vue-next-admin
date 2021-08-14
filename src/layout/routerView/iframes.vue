@@ -32,8 +32,13 @@ export default defineComponent({
 		// 设置 iframe 的高度
 		const setIframeHeight = computed(() => {
 			let { isTagsview } = store.state.themeConfig.themeConfig;
-			if (isTagsview) return `84px`;
-			else return `50px`;
+			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
+			if (isTagsViewCurrenFull) {
+				return `0px`;
+			} else {
+				if (isTagsview) return `84px`;
+				else return `50px`;
+			}
 		});
 		// 页面加载时
 		onMounted(() => {

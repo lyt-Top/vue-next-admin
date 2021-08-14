@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance, watch } from 'vue';
+import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance, watch, onActivated } from 'vue';
 import * as echarts from 'echarts';
 import { CountUp } from 'countup.js';
 import { formatAxis } from '/@/utils/formatTime';
@@ -290,12 +290,16 @@ export default {
 			state.myCharts.push(myChart);
 		};
 		// 批量设置 echarts resize
-		const initEchartsResize = () => {
-			window.addEventListener('resize', () => {
+		const initEchartsResizeFun = () => {
+			nextTick(() => {
 				for (let i = 0; i < state.myCharts.length; i++) {
 					state.myCharts[i].resize();
 				}
 			});
+		};
+		// 批量设置 echarts resize
+		const initEchartsResize = () => {
+			window.addEventListener('resize', initEchartsResizeFun);
 		};
 		// 页面加载时
 		onMounted(() => {
@@ -304,15 +308,15 @@ export default {
 			initHomeOvertime();
 			initEchartsResize();
 		});
+		// 由于页面缓存原因，keep-alive
+		onActivated(() => {
+			initEchartsResizeFun();
+		});
 		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
 		watch(
 			() => store.state.tagsViewRoutes.isTagsViewCurrenFull,
 			() => {
-				nextTick(() => {
-					for (let i = 0; i < state.myCharts.length; i++) {
-						state.myCharts[i].resize();
-					}
-				});
+				initEchartsResizeFun();
 			}
 		);
 		return {

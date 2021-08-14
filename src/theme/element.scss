@@ -798,8 +798,9 @@
 		color: set-color(primary);
 	}
 }
-// 高亮时
-.el-menu-item.is-active {
+// 高亮时/菜单收起时
+.el-menu-item.is-active,
+.el-menu--collapse .el-submenu.is-active i {
 	color: set-color(primary);
 }
 .el-active-extend {

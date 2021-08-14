@@ -26,7 +26,7 @@ import pagesFormI18nZhtw from '/@/i18n/pages/formI18n/zh-tw';
  */
 const messages = {
 	[zhcnLocale.name]: {
-		el: zhcnLocale.el,
+		...zhcnLocale,
 		message: {
 			...nextZhcn,
 			...pagesHomeZhcn,
@@ -35,7 +35,7 @@ const messages = {
 		},
 	},
 	[enLocale.name]: {
-		el: enLocale.el,
+		...enLocale,
 		message: {
 			...nextEn,
 			...pagesHomeEn,
@@ -44,7 +44,7 @@ const messages = {
 		},
 	},
 	[zhtwLocale.name]: {
-		el: zhtwLocale.el,
+		...zhtwLocale,
 		message: {
 			...nextZhtw,
 			...pagesHomeZhtw,

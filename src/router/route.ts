@@ -574,24 +574,32 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							auth: ['admin', 'test'],
 							icon: 'el-icon-sell',
 						},
+						/**
+						 * 注意此处详情写法：
+						 * 1、嵌套进父级里时，面包屑显示为：首页/页面/过滤筛选组件/过滤筛选组件详情
+						 * 2、不嵌套进父级时，面包屑显示为：首页/页面/过滤筛选组件/过滤筛选组件详情
+						 * 3、想要父级不高亮，面包屑显示为：首页/页面/过滤筛选组件详情，设置路径为：/pages/filteringDetails
+						 */
+						children: [
+							{
+								path: '/pages/filtering/details',
+								name: 'pagesFilteringDetails',
+								component: () => import('/@/views/pages/filtering/details.vue'),
+								meta: {
+									title: 'message.router.pagesFilteringDetails',
+									isLink: '',
+									isHide: true,
+									isKeepAlive: false,
+									isAffix: false,
+									isIframe: false,
+									auth: ['admin', 'test'],
+									icon: 'el-icon-s-order',
+								},
+							},
+						],
 					},
 					{
-						path: '/pages/filteringDetails',
-						name: 'pagesFilteringDetails',
-						component: () => import('/@/views/pages/filtering/details.vue'),
-						meta: {
-							title: 'message.router.pagesFilteringDetails',
-							isLink: '',
-							isHide: true,
-							isKeepAlive: false,
-							isAffix: false,
-							isIframe: false,
-							auth: ['admin', 'test'],
-							icon: 'el-icon-s-order',
-						},
-					},
-					{
-						path: '/pages/filteringDetails1',
+						path: '/pages/filtering/details1',
 						name: 'pagesFilteringDetails1',
 						component: () => import('/@/views/pages/filtering/details1.vue'),
 						meta: {

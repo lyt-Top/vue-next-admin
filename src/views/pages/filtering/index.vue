@@ -145,12 +145,12 @@ export default {
 		const onTableItemClick = (v: object) => {
 			if (v.id === 1) {
 				router.push({
-					path: '/pages/filteringDetails',
+					path: '/pages/filtering/details',
 					query: { id: v.id },
 				});
 			} else {
 				router.push({
-					path: '/pages/filteringDetails1',
+					path: '/pages/filtering/details1',
 					query: { id: v.id },
 				});
 			}

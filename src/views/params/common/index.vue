@@ -26,8 +26,13 @@ export default defineComponent({
 		// 设置 view 的高度
 		const setViewHeight = computed(() => {
 			let { isTagsview } = store.state.themeConfig.themeConfig;
-			if (isTagsview) return `114px`;
-			else return `80px`;
+			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
+			if (isTagsViewCurrenFull) {
+				return `30px`;
+			} else {
+				if (isTagsview) return `114px`;
+				else return `80px`;
+			}
 		});
 		// 跳转到详情
 		const onGoDetailsClick = () => {

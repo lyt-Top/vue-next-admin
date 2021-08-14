@@ -66,15 +66,6 @@ export default defineComponent({
 				proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap.scrollLeft = els.offsetLeft;
 			});
 		};
-		// 设置页面当前路由高亮
-		const setCurrentRouterHighlight = (path: string) => {
-			const currentPathSplit = path.split('/');
-			if (store.state.themeConfig.themeConfig.layout === 'classic') {
-				state.defaultActive = `/${currentPathSplit[1]}`;
-			} else {
-				state.defaultActive = path;
-			}
-		};
 		// 路由过滤递归函数
 		const filterRoutesFun = (arr: Array<object>) => {
 			return arr
@@ -99,15 +90,26 @@ export default defineComponent({
 			});
 			return currentData;
 		};
+		// 设置页面当前路由高亮
+		const setCurrentRouterHighlight = (currentRoute) => {
+			const { path, meta } = currentRoute;
+			if (store.state.themeConfig.themeConfig.layout === 'classic') {
+				state.defaultActive = `/${path.split('/')[1]}`;
+			} else {
+				const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
+				if (pathSplit.length >= 4 && meta.isHide) state.defaultActive = pathSplit.splice(0, 3).join('/');
+				else state.defaultActive = path;
+			}
+		};
 		// 页面加载时
 		onMounted(() => {
 			initElMenuOffsetLeft();
-			setCurrentRouterHighlight(route.meta.isDynamic ? route.meta.isDynamicPath : route.path);
+			setCurrentRouterHighlight(route);
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
 			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-			setCurrentRouterHighlight(to.meta.isDynamic ? to.meta.isDynamicPath : to.path);
+			setCurrentRouterHighlight(to);
 			proxy.mittBus.emit('onMenuClick');
 			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
 			let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
