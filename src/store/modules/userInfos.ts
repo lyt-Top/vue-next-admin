@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { Session } from '/@/utils/storage.ts';
+import { Session } from '/@/utils/storage';
 // 此处加上 `.ts` 后缀报错，具体原因不详
 import { UserInfosState, RootStateTypes } from '/@/store/interface/index';
 
