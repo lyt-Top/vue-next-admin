@@ -30,9 +30,9 @@
 				class="mt15"
 				:pager-count="5"
 				:page-sizes="[10, 20, 30]"
-				:current-page="tableData.param.pageNum"
+				v-model:current-page="tableData.param.pageNum"
 				background
-				:page-size="tableData.param.pageSize"
+				v-model:page-size="tableData.param.pageSize"
 				layout="total, sizes, prev, pager, next, jumper"
 				:total="tableData.total"
 			>
@@ -84,7 +84,7 @@ export default {
 		};
 		// 分页改变
 		const onHandleCurrentChange = (val: number) => {
-			state.tableData.param.pageSize = val;
+			state.tableData.param.pageNum = val;
 		};
 		// 页面加载时
 		onMounted(() => {
