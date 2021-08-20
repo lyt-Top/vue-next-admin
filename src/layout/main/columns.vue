@@ -3,9 +3,9 @@
 		<ColumnsAside />
 		<div class="layout-columns-warp">
 			<Aside />
-			<el-container class="flex-center layout-backtop">
+			<el-container class="flex-center layout-backtop" :class="{'layout-backtop':!isFixedHeader}">
 				<Header v-if="isFixedHeader" />
-				<el-scrollbar>
+				<el-scrollbar :class="{'layout-backtop':isFixedHeader}">
 					<Header v-if="!isFixedHeader" />
 					<Main />
 				</el-scrollbar>
