@@ -1,9 +1,9 @@
 <template>
 	<el-container class="layout-container">
 		<Aside />
-		<el-container class="flex-center" :class="{'layout-backtop':!isFixedHeader}">
+		<el-container class="flex-center" :class="{ 'layout-backtop': !isFixedHeader }">
 			<Header v-if="isFixedHeader" />
-			<el-scrollbar ref="layoutDefaultsScrollbarRef" :class="{'layout-backtop':isFixedHeader}">
+			<el-scrollbar ref="layoutDefaultsScrollbarRef" :class="{ 'layout-backtop': isFixedHeader }">
 				<Header v-if="!isFixedHeader" />
 				<Main />
 			</el-scrollbar>
@@ -23,7 +23,7 @@ export default {
 	name: 'layoutDefaults',
 	components: { Aside, Header, Main },
 	setup() {
-		const { proxy }:any = getCurrentInstance();
+		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
 		const isFixedHeader = computed(() => {

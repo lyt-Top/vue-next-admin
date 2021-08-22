@@ -65,17 +65,43 @@ body,
 	.layout-el-aside-br-color {
 		border-right: 1px solid rgb(238, 238, 238);
 	}
-	.layout-aside-width-default {
+	// pc端左侧导航样式
+	.layout-aside-pc-220 {
 		width: 220px !important;
 		transition: width 0.3s ease;
 	}
-	.layout-aside-width64 {
+	.layout-aside-pc-64 {
 		width: 64px !important;
 		transition: width 0.3s ease;
 	}
-	.layout-aside-width1 {
+	.layout-aside-pc-1 {
 		width: 1px !important;
 		transition: width 0.3s ease;
+	}
+	// 手机端左侧导航样式
+	.layout-aside-mobile {
+		position: fixed;
+		top: 0;
+		left: -220px;
+		width: 220px;
+		z-index: 1;
+	}
+	.layout-aside-mobile-close {
+		left: -220px;
+		transition: all 0.3s cubic-bezier(0.71, -0.01, 0.18, 0.95);
+	}
+	.layout-aside-mobile-open {
+		left: 0;
+		transition: all 0.3s cubic-bezier(0.53, -0.26, 0.42, 1.18);
+	}
+	.layout-aside-mobile-mode {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
 	}
 	.layout-scrollbar {
 		@extend .el-scrollbar;

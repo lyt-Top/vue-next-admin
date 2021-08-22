@@ -5,6 +5,7 @@ import { ThemeConfigState, RootStateTypes } from '/@/store/interface/index';
 /**
  * 2020.05.28 by lyt 优化
  * 修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效
+ * 哪个大佬有解决办法，欢迎pr，感谢💕！
  */
 const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 	namespaced: true,
@@ -29,8 +30,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 
 			/**
 			 * 菜单 / 顶栏
-			 * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
-			 * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
+			 * 注意：v1.0.17 版本去除设置布局切换，重置主题样式（initSetLayoutChange），
+			 * 切换布局需手动设置样式，设置的样式自动同步各布局，
+			 * 代码位置：/@/layout/navBars/breadcrumb/setings.vue
 			 */
 			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
 			topBar: '#ffffff',

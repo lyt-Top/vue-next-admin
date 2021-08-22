@@ -518,37 +518,8 @@ export default defineComponent({
 			if (getThemeConfig.value.layout === layout) return false;
 			getThemeConfig.value.layout = layout;
 			getThemeConfig.value.isDrawer = false;
-			initSetLayoutChange();
+			initLayoutChangeFun();
 			onMenuBarHighlightChange();
-		};
-		// 设置布局切换，重置主题样式
-		const initSetLayoutChange = () => {
-			if (getThemeConfig.value.layout === 'classic') {
-				getThemeConfig.value.menuBar = '#FFFFFF';
-				getThemeConfig.value.menuBarColor = '#606266';
-				getThemeConfig.value.topBar = '#ffffff';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			} else if (getThemeConfig.value.layout === 'transverse') {
-				getThemeConfig.value.menuBarColor = '#FFFFFF';
-				getThemeConfig.value.topBar = '#545c64';
-				getThemeConfig.value.topBarColor = '#FFFFFF';
-				initLayoutChangeFun();
-			} else if (getThemeConfig.value.layout === 'columns') {
-				// 1.0.11 更新日志
-				getThemeConfig.value.isShowLogo = false;
-				getThemeConfig.value.menuBar = '#FFFFFF';
-				getThemeConfig.value.menuBarColor = '#606266';
-				getThemeConfig.value.topBar = '#ffffff';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			} else {
-				getThemeConfig.value.menuBar = '#545c64';
-				getThemeConfig.value.menuBarColor = '#eaeaea';
-				getThemeConfig.value.topBar = '#FFFFFF';
-				getThemeConfig.value.topBarColor = '#606266';
-				initLayoutChangeFun();
-			}
 		};
 		// 设置布局切换函数
 		const initLayoutChangeFun = () => {
@@ -606,7 +577,7 @@ export default defineComponent({
 		onMounted(() => {
 			nextTick(() => {
 				// 判断当前布局是否不相同，不相同则初始化当前布局的样式，防止监听窗口大小改变时，布局配置logo、菜单背景等部分布局失效问题
-				if (!Local.get('frequency')) initSetLayoutChange();
+				if (!Local.get('frequency')) initLayoutChangeFun();
 				Local.set('frequency', 1);
 				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
 				proxy.mittBus.on('onSignInClick', () => {
@@ -620,7 +591,7 @@ export default defineComponent({
 				proxy.mittBus.on('layoutMobileResize', (res: any) => {
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
-					initSetLayoutChange();
+					initLayoutChangeFun();
 					onMenuBarHighlightChange();
 				});
 				setTimeout(() => {

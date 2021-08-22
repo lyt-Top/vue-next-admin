@@ -3,7 +3,7 @@
 		router
 		:default-active="defaultActive"
 		background-color="transparent"
-		:collapse="setIsCollapse"
+		:collapse="isCollapse"
 		:unique-opened="getThemeConfig.isUniqueOpened"
 		:collapse-transition="false"
 	>
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted } from 'vue';
+import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, watch } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from '/@/store/index';
 import SubItem from '/@/layout/navMenu/subItem.vue';
@@ -49,6 +49,7 @@ export default defineComponent({
 		const state = reactive({
 			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 			defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
+			isCollapse: false,
 		});
 		// 获取父级菜单数据
 		const menuLists = computed(() => {
@@ -58,10 +59,6 @@ export default defineComponent({
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
 		});
-		// 设置菜单的收起/展开
-		const setIsCollapse = computed(() => {
-			return document.body.clientWidth < 1000 ? false : getThemeConfig.value.isCollapse;
-		});
 		// 菜单高亮（详情时，父级高亮）
 		const setParentHighlight = (currentRoute) => {
 			const { path, meta } = currentRoute;
@@ -69,6 +66,16 @@ export default defineComponent({
 			if (pathSplit.length >= 4 && meta.isHide) return pathSplit.splice(0, 3).join('/');
 			else return path;
 		};
+		// 设置菜单的收起/展开
+		watch(
+			store.state.themeConfig.themeConfig,
+			() => {
+				document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = getThemeConfig.value.isCollapse);
+			},
+			{
+				immediate: true,
+			}
+		);
 		// 页面加载时
 		onMounted(() => {
 			state.defaultActive = setParentHighlight(route);
@@ -84,7 +91,6 @@ export default defineComponent({
 		return {
 			menuLists,
 			getThemeConfig,
-			setIsCollapse,
 			...toRefs(state),
 		};
 	},

@@ -1,20 +1,12 @@
 <template>
-	<template v-if="clientWidth > 1000">
-		<el-aside class="layout-aside" :class="setCollapseWidth" v-show="!isTagsViewCurrenFull">
-			<Logo v-if="setShowLogo" />
-			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
-				<Vertical :menuList="menuList" :class="setCollapseWidth" />
-			</el-scrollbar>
-		</el-aside>
-	</template>
-	<el-drawer v-model="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
-		<el-aside class="layout-aside w100 h100">
+	<div class="h100" v-show="!isTagsViewCurrenFull">
+		<el-aside class="layout-aside" :class="setCollapseStyle">
 			<Logo v-if="setShowLogo" />
 			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
 				<Vertical :menuList="menuList" />
 			</el-scrollbar>
 		</el-aside>
-	</el-drawer>
+	</div>
 </template>
 
 <script lang="ts">
@@ -41,25 +33,50 @@ export default {
 			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
 		});
 		// 设置菜单展开/收起时的宽度
-		const setCollapseWidth = computed(() => {
-			let { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
-			let asideBrColor = menuBar === '#FFFFFF' || menuBar === '#FFF' || menuBar === '#fff' || menuBar === '#ffffff' ? 'layout-el-aside-br-color' : '';
-			if (layout === 'columns') {
-				// 分栏布局，菜单收起时宽度给 1px
+		const setCollapseStyle = computed(() => {
+			const { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
+			const asideBrColor =
+				menuBar === '#FFFFFF' || menuBar === '#FFF' || menuBar === '#fff' || menuBar === '#ffffff' ? 'layout-el-aside-br-color' : '';
+			// 判断是否是手机端
+			if (state.clientWidth <= 1000) {
 				if (isCollapse) {
-					return ['layout-aside-width1', asideBrColor];
+					document.body.setAttribute('class', 'el-popup-parent--hidden');
+					const asideEle = document.querySelector('.layout-container') as HTMLElement;
+					const modeDivs = document.createElement('div');
+					modeDivs.setAttribute('class', 'layout-aside-mobile-mode');
+					asideEle.appendChild(modeDivs);
+					modeDivs.addEventListener('click', closeLayoutAsideMobileMode);
+					return [asideBrColor, 'layout-aside-mobile', 'layout-aside-mobile-open'];
 				} else {
-					return ['layout-aside-width-default', asideBrColor];
+					// 关闭弹窗
+					closeLayoutAsideMobileMode();
+					return [asideBrColor, 'layout-aside-mobile', 'layout-aside-mobile-close'];
 				}
 			} else {
-				// 其它布局给 64px
-				if (isCollapse) {
-					return ['layout-aside-width64', asideBrColor];
+				if (layout === 'columns') {
+					// 分栏布局，菜单收起时宽度给 1px
+					if (isCollapse) {
+						return [asideBrColor, 'layout-aside-pc-1'];
+					} else {
+						return [asideBrColor, 'layout-aside-pc-220'];
+					}
 				} else {
-					return ['layout-aside-width-default', asideBrColor];
+					// 其它布局给 64px
+					if (isCollapse) {
+						return [asideBrColor, 'layout-aside-pc-64'];
+					} else {
+						return [asideBrColor, 'layout-aside-pc-220'];
+					}
 				}
 			}
 		});
+		// 关闭移动端蒙版
+		const closeLayoutAsideMobileMode = () => {
+			const el = document.querySelector('.layout-aside-mobile-mode');
+			el && el.parentNode?.removeChild(el);
+			store.state.themeConfig.themeConfig.isCollapse = false;
+			document.body.setAttribute('class', '');
+		};
 		// 设置显示/隐藏 logo
 		const setShowLogo = computed(() => {
 			let { layout, isShowLogo } = store.state.themeConfig.themeConfig;
@@ -118,10 +135,11 @@ export default {
 			});
 			proxy.mittBus.on('layoutMobileResize', (res: any) => {
 				initMenuFixed(res.clientWidth);
+				closeLayoutAsideMobileMode();
 			});
 		});
 		return {
-			setCollapseWidth,
+			setCollapseStyle,
 			setShowLogo,
 			getThemeConfig,
 			isTagsViewCurrenFull,

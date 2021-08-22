@@ -747,6 +747,11 @@
 // 默认样式修改
 .el-menu {
 	border-right: none !important;
+	width: 220px;
+}
+// 修复点击左侧菜单折叠再展开时，宽度不跟随问题
+.el-menu--collapse {
+	width: 64px !important;
 }
 .el-menu-item,
 .el-submenu__title {
@@ -885,6 +890,9 @@
 .el-dropdown-menu__item:not(.is-disabled):hover {
 	color: set-color(primary);
 	background-color: set-color(primary-light-9);
+}
+.el-dropdown-menu .el-dropdown-menu__item {
+	white-space: nowrap;
 }
 
 /* Steps 步骤条
