@@ -1,12 +1,12 @@
 <template>
 	<template v-for="val in chils">
-		<el-submenu :index="val.path" :key="val.path" v-if="val.children && val.children.length > 0">
+		<el-sub-menu :index="val.path" :key="val.path" v-if="val.children && val.children.length > 0">
 			<template #title>
 				<i :class="val.meta.icon"></i>
 				<span>{{ $t(val.meta.title) }}</span>
 			</template>
 			<sub-item :chil="val.children" />
-		</el-submenu>
+		</el-sub-menu>
 		<el-menu-item :index="val.path" :key="val.path" v-else>
 			<template v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 				<i :class="val.meta.icon ? val.meta.icon : ''"></i>

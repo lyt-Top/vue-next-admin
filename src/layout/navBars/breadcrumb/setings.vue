@@ -365,6 +365,9 @@
 						@click="onCopyConfigClick"
 						>{{ $t('message.layout.copyText') }}
 					</el-button>
+					<el-button size="small" class="copy-config-btn-reset" icon="el-icon-refresh-right" type="info" @click="onResetConfigClick"
+						>{{ $t('message.layout.resetText') }}
+					</el-button>
 				</div>
 			</el-scrollbar>
 		</el-drawer>
@@ -561,6 +564,11 @@ export default defineComponent({
 				getThemeConfig.value.isDrawer = false;
 			});
 		};
+		// 一键恢复默认
+		const onResetConfigClick = () => {
+			Local.clear();
+			window.location.reload();
+		};
 		// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
 		const initSetStyle = () => {
 			setTimeout(() => {
@@ -637,6 +645,7 @@ export default defineComponent({
 			onSortableTagsViewChange,
 			onShareTagsViewChange,
 			onCopyConfigClick,
+			onResetConfigClick,
 		};
 	},
 });
@@ -773,7 +782,8 @@ export default defineComponent({
 			width: 100%;
 			margin-top: 15px;
 		}
-		.copy-config-last-btn {
+		.copy-config-btn-reset {
+			width: 100%;
 			margin: 10px 0 0;
 		}
 	}

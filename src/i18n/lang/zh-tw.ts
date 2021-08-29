@@ -167,6 +167,7 @@ export default {
 		sixColumns: '分欄',
 		tipText: '點擊下方按鈕，複製佈局配寘去`src/store/modules/themeConfig.ts`中修改。',
 		copyText: '一鍵複製配寘',
+		resetText: '一鍵恢復默認',
 		copyTextSuccess: '複製成功！',
 		copyTextError: '複製失敗！',
 	},

@@ -7,7 +7,7 @@ import { i18n } from '/@/i18n/index';
 import { globalComponentSize } from '/@/utils/componentSize';
 
 import ElementPlus from 'element-plus';
-import 'element-plus/lib/theme-chalk/index.css';
+import 'element-plus/dist/index.css';
 import '/@/theme/index.scss';
 import mitt from 'mitt';
 import screenShort from 'vue-web-screen-shot';

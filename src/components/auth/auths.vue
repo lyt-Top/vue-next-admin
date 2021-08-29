@@ -1,7 +1,5 @@
 <template>
-	<div v-if="getUserAuthBtnList">
-		<slot />
-	</div>
+	<slot v-if="getUserAuthBtnList" />
 </template>
 
 <script lang="ts">

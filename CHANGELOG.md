@@ -2,6 +2,16 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.0.18
+
+`2021.08.29`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 权限组件去掉顶级 div（`/src/components/auth`）
+- 🎉 新增 布局配置添加恢复默认按钮
+- 🐞 修复 升级 <a href="https://element-plus.gitee.io/#/zh-CN/component/changelog" target="_blank">element plus 1.1.0-beta.7</a>后项目无法启动、el-menu 菜单
+- 🐞 修复 表格固定列时的层级、设置了相对定位时，遮挡左侧导航菜单问题
+
 ## 1.0.17
 
 `2021.08.22`
