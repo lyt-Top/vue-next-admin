@@ -1,0 +1,48 @@
+/* 深色模式样式
+------------------------------- */
+[data-theme='dark'] {
+	// 全局
+	filter: invert(1) hue-rotate(180deg);
+	img,
+	.layout-lock-screen-img,
+	.visualizing-demo2,
+	.w-e-panel-tab-content {
+		filter: invert(1) hue-rotate(180deg);
+	}
+	.error img {
+		filter: unset;
+	}
+	// element plus
+	.el-radio-button__original-radio:checked + .el-radio-button__inner,
+	.el-image-viewer__close,
+	.el-image-viewer__actions__inner,
+	.el-image-viewer__next,
+	.el-image-viewer__prev {
+		color: #000000 !important;
+	}
+	// 数据可视化演示
+	.visualizing-container-head {
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.02)) !important;
+		.visualizing-container-head-left-text-box {
+			color: #000000 !important;
+		}
+	}
+	.visualizing-container-content-left {
+		background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.01)) !important;
+	}
+	.visualizing-container-content-center {
+		background: linear-gradient(to top, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.01)) !important;
+	}
+	.visualizing-container-content-right {
+		background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.01)) !important;
+	}
+	.cropper-modal {
+		background-color: #ffffff;
+	}
+	// 其它菜单等
+	--bg-menuBar: #ffffff !important;
+	--bg-menuBarColor: #303133 !important;
+	--bg-columnsMenuBar: #ffffff !important;
+	--bg-columnsMenuBarColor: #303133 !important;
+	--color-whites: #000000 !important;
+}

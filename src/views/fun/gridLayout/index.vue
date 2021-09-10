@@ -55,7 +55,7 @@ export default {
 .grid-layout-container {
 	.vue-grid-item {
 		background: var(--color-primary);
-		color: #ffffff;
+		color: var(--color-whites);
 	}
 }
 </style>

@@ -36,7 +36,7 @@ export default {
 	display: flex;
 	&-warp {
 		margin: auto;
-		color: #9e9e9e;
+		color: var(--el-text-color-secondary);
 		text-align: center;
 		animation: logoAnimation 0.3s ease-in-out;
 	}

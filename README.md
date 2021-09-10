@@ -110,6 +110,7 @@ cnpm run build
 - <a href="https://github.com/likaia/screen-shot" target="_blank">vue-web-screen-shot</a>
 - <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
+- <a href="https://github.com/yimijianfang/vue-drag-verify" target="_blank">vue-drag-verify</a>
 
 #### 💕 特别感谢
 

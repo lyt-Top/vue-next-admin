@@ -54,7 +54,6 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isColumnsMenuBarColorGradual: false,
 			// 是否开启菜单字体背景高亮
 			isMenuBarColorHighlight: false,
-			// 是否开启菜单字体背景高亮
 
 			/**
 			 * 界面设置
@@ -101,6 +100,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			isGrayscale: false,
 			// 是否开启色弱模式
 			isInvert: false,
+			// 是否开启深色模式
+			isIsDark: false,
 			// 是否开启水印
 			isWartermark: false,
 			// 水印文案

@@ -334,7 +334,7 @@ export default {
 	.home-card-item {
 		width: 100%;
 		height: 103px;
-		background: gray;
+		background: var(--el-text-color-secondary);
 		border-radius: 4px;
 		transition: all ease 0.3s;
 		&:hover {
@@ -364,7 +364,7 @@ export default {
 		}
 		.home-card-item-flex {
 			padding: 0 20px;
-			color: white;
+			color: var(--color-whites);
 			.home-card-item-title,
 			.home-card-item-tip {
 				font-size: 13px;
@@ -378,8 +378,8 @@ export default {
 		}
 	}
 	.home-card-first {
-		background: white;
-		border: 1px solid #ebeef5;
+		background: var(--el-color-white);
+		border: 1px solid var(--el-border-color-light, #ebeef5);
 		display: flex;
 		align-items: center;
 		img {
@@ -392,9 +392,12 @@ export default {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
+			.home-card-first-right-title {
+				color: var(--el-color-black);
+			}
 			.home-card-first-right-msg {
 				font-size: 13px;
-				color: gray;
+				color: var(--el-text-color-secondary);
 			}
 		}
 	}
@@ -408,6 +411,7 @@ export default {
 				margin: auto;
 				height: auto;
 				text-align: center;
+				color: var(--el-text-color-primary);
 			}
 		}
 	}
@@ -437,12 +441,12 @@ export default {
 				}
 				.home-dynamic-item-left-time2 {
 					font-size: 13px;
-					color: gray;
+					color: var(--el-text-color-secondary);
 				}
 			}
 			.home-dynamic-item-line {
 				height: 60px;
-				border-right: 2px dashed #dfdfdf;
+				border-right: 2px dashed var(--el-border-color-light, #ebeef5);
 				margin: 0 20px;
 				position: relative;
 				i {
@@ -452,7 +456,7 @@ export default {
 					top: 1px;
 					left: -6px;
 					transform: rotate(46deg);
-					background: white;
+					background: var(--el-color-white);
 				}
 			}
 			.home-dynamic-item-right {
@@ -460,7 +464,7 @@ export default {
 				.home-dynamic-item-right-title {
 					i {
 						margin-right: 5px;
-						border: 1px solid #dfdfdf;
+						border: 1px solid var(--el-border-color-light, #ebeef5);
 						width: 20px;
 						height: 20px;
 						border-radius: 100%;
@@ -471,7 +475,7 @@ export default {
 				}
 				.home-dynamic-item-right-label {
 					font-size: 13px;
-					color: gray;
+					color: var(--el-text-color-secondary);
 				}
 			}
 		}

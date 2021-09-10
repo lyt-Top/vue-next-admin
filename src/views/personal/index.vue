@@ -248,7 +248,7 @@ export default {
 				align-items: center;
 				font-size: 13px;
 				.personal-item-label {
-					color: gray;
+					color: var(--el-text-color-secondary);
 					@include text-ellipsis(1);
 				}
 				.personal-item-value {
@@ -260,7 +260,7 @@ export default {
 	.personal-info {
 		.personal-info-more {
 			float: right;
-			color: gray;
+			color: var(--el-text-color-secondary);
 			font-size: 13px;
 			&:hover {
 				color: var(--color-primary);
@@ -278,7 +278,7 @@ export default {
 					.personal-info-li-title {
 						display: inline-block;
 						@include text-ellipsis(1);
-						color: grey;
+						color: var(--el-text-color-secondary);
 						text-decoration: none;
 					}
 					& a:hover {
@@ -294,7 +294,7 @@ export default {
 			.personal-recommend {
 				position: relative;
 				height: 100px;
-				color: #ffffff;
+				color: var(--color-whites);
 				border-radius: 3px;
 				overflow: hidden;
 				cursor: pointer;
@@ -330,7 +330,7 @@ export default {
 		.personal-edit-title {
 			position: relative;
 			padding-left: 10px;
-			color: #606266;
+			color: var(--el-text-color-regular);
 			&::after {
 				content: '';
 				width: 2px;
@@ -343,7 +343,7 @@ export default {
 			}
 		}
 		.personal-edit-safe-box {
-			border-bottom: 1px solid #ebeef5;
+			border-bottom: 1px solid var(--el-border-color-light, #ebeef5);
 			padding: 15px 0;
 			.personal-edit-safe-item {
 				width: 100%;
@@ -354,11 +354,11 @@ export default {
 					flex: 1;
 					overflow: hidden;
 					.personal-edit-safe-item-left-label {
-						color: #606266;
+						color: var(--el-text-color-regular);
 						margin-bottom: 5px;
 					}
 					.personal-edit-safe-item-left-value {
-						color: gray;
+						color: var(--el-text-color-secondary);
 						@include text-ellipsis(1);
 						margin-right: 15px;
 					}

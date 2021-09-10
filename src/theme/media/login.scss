@@ -24,3 +24,14 @@
 		}
 	}
 }
+
+/* 页面宽度小于375px
+------------------------------- */
+@media screen and (max-width: 376px) {
+	.login-container {
+		.login-content-title {
+			font-size: 18px !important;
+			transition: all 0.3s ease;
+		}
+	}
+}

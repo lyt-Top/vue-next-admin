@@ -45,7 +45,7 @@ export default {
 		.waterfall-first-item {
 			width: 100%;
 			background: var(--color-primary);
-			color: #ffffff;
+			color: var(--color-whites);
 			transition: all 0.3s ease;
 			border-radius: 3px;
 			&:nth-of-type(3n + 1) {
@@ -73,7 +73,7 @@ export default {
 		.waterfall-last-item {
 			height: 100%;
 			background: var(--color-primary);
-			color: #ffffff;
+			color: var(--color-whites);
 			transition: all 0.3s ease;
 			border-radius: 3px;
 			&:hover {

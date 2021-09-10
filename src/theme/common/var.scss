@@ -8,7 +8,6 @@
 ------------------------------- */
 $--color-primary: #409eff !default;
 $--color-whites: #ffffff !default;
-$--color-blacks: #000000 !default;
 $--color-primary-light-1: mix($--color-whites, $--color-primary, 10%) !default;
 $--color-primary-light-2: mix($--color-whites, $--color-primary, 20%) !default;
 $--color-primary-light-3: mix($--color-whites, $--color-primary, 30%) !default;
@@ -70,7 +69,6 @@ $--bg-columnsMenuBarColor: #e6e6e6;
 :root {
 	--color-primary: #{$--color-primary};
 	--color-whites: #{$--color-whites};
-	--color-blacks: #{$--color-blacks};
 	--color-primary-light-1: #{$--color-primary-light-1};
 	--color-primary-light-2: #{$--color-primary-light-2};
 	--color-primary-light-3: #{$--color-primary-light-3};

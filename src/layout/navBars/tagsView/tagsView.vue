@@ -504,7 +504,7 @@ export default {
 <style scoped lang="scss">
 .layout-navbars-tagsview {
 	flex: 1;
-	background-color: #ffffff;
+	background-color: var(--el-color-white);
 	border-bottom: 1px solid #f1f2f3;
 	::v-deep(.el-scrollbar__wrap) {
 		overflow-x: auto !important;
@@ -516,7 +516,7 @@ export default {
 		height: 34px;
 		display: flex;
 		align-items: center;
-		color: #606266;
+		color: var(--el-text-color-regular);
 		font-size: 12px;
 		white-space: nowrap;
 		padding: 0 15px;
@@ -552,7 +552,7 @@ export default {
 				line-height: 14px;
 				right: -5px;
 				&:hover {
-					color: #fff;
+					color: var(--color-whites);
 					background-color: var(--color-primary-light-3);
 				}
 			}
@@ -564,7 +564,7 @@ export default {
 			}
 		}
 		.is-active {
-			color: #ffffff;
+			color: var(--color-whites);
 			background: var(--color-primary);
 			border-color: var(--color-primary);
 		}
@@ -615,7 +615,7 @@ export default {
 			}
 		}
 		.is-active {
-			background: white !important;
+			background: var(--el-color-white) !important;
 			color: var(--color-primary) !important;
 			border-top: 1px solid !important;
 			border-top-color: var(--color-primary) !important;

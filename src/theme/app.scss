@@ -56,11 +56,11 @@ body,
 	}
 	// 此字段多次用到，建议不删除，如需修改，请重写覆盖样式
 	.layout-view-bg-white {
-		background: white;
+		background: var(--el-color-white);
 		width: 100%;
 		height: 100%;
 		border-radius: 4px;
-		border: 1px solid #ebeef5;
+		border: 1px solid var(--el-border-color-light, #ebeef5);
 	}
 	.layout-el-aside-br-color {
 		border-right: 1px solid rgb(238, 238, 238);

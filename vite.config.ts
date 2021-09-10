@@ -39,6 +39,7 @@ const viteConfig: UserConfig = {
 		outDir: 'dist',
 		minify: 'esbuild',
 		sourcemap: false,
+		chunkSizeWarningLimit: 1500,
 	},
 	define: {
 		__VUE_I18N_LEGACY_API__: JSON.stringify(false),

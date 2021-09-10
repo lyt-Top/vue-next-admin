@@ -809,10 +809,10 @@
 	color: set-color(primary);
 }
 .el-active-extend {
-	color: #ffffff !important;
+	color: var(--color-whites) !important;
 	background-color: set-color(primary) !important;
 	i {
-		color: #ffffff !important;
+		color: var(--color-whites) !important;
 	}
 }
 #add-is-active {
@@ -823,7 +823,7 @@
 }
 // 菜单收起时且是a链接
 .el-popper.is-dark a {
-	color: #ffffff !important;
+	color: var(--color-whites) !important;
 	text-decoration: none;
 }
 // 菜单收起时鼠标经过背景颜色/字体颜色

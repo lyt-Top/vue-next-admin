@@ -110,7 +110,7 @@ export default {
 .countup-card-item {
 	width: 100%;
 	height: 103px;
-	background: gray;
+	background: var(--el-text-color-secondary);
 	border-radius: 4px;
 	transition: all ease 0.3s;
 	&:hover {
@@ -140,7 +140,7 @@ export default {
 	}
 	.countup-card-item-flex {
 		padding: 0 20px;
-		color: white;
+		color: var(--color-whites);
 		.countup-card-item-title,
 		.countup-card-item-tip {
 			font-size: 13px;

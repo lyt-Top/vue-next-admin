@@ -232,6 +232,12 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
+					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsDark') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-switch v-model="getThemeConfig.isIsDark" @change="onAddDarkChange"></el-switch>
+					</div>
+				</div>
+				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsWartermark') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isWartermark" @change="onWartermarkChange"></el-switch>
@@ -503,6 +509,12 @@ export default defineComponent({
 			appEle.setAttribute('style', `filter: ${cssAttr}`);
 			setLocalThemeConfig();
 		};
+		// 4、界面显示 --> 深色模式
+		const onAddDarkChange = () => {
+			const body = document.documentElement as HTMLElement;
+			if (getThemeConfig.value.isIsDark) body.setAttribute('data-theme', 'dark');
+			else body.setAttribute('data-theme', '');
+		};
 		// 4、界面显示 --> 开启水印
 		const onWartermarkChange = () => {
 			getThemeConfig.value.isWartermark ? Watermark.set(getThemeConfig.value.wartermarkText) : Watermark.del();
@@ -609,6 +621,8 @@ export default defineComponent({
 					if (getThemeConfig.value.isGrayscale) onAddFilterChange('grayscale');
 					// 色弱模式
 					if (getThemeConfig.value.isInvert) onAddFilterChange('invert');
+					// 深色模式
+					if (getThemeConfig.value.isIsDark) onAddDarkChange();
 					// 开启水印
 					onWartermarkChange();
 					// 语言国际化
@@ -636,6 +650,7 @@ export default defineComponent({
 			getThemeConfig,
 			onDrawerClose,
 			onAddFilterChange,
+			onAddDarkChange,
 			onWartermarkChange,
 			onWartermarkTextInput,
 			onSetLayout,

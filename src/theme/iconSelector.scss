@@ -13,7 +13,7 @@
 		.icon-selector-warp-row {
 			height: 230px;
 			overflow: hidden;
-			border-top: 1px solid #ebeef5;
+			border-top: var(--el-border-base);
 			.el-row {
 				padding: 15px;
 			}
@@ -22,14 +22,14 @@
 			}
 			.icon-selector-warp-item {
 				display: flex;
-				border: 1px solid #ebeef5;
+				border: var(--el-border-base);
 				padding: 5px;
 				border-radius: 5px;
 				margin-bottom: 10px;
 				.icon-selector-warp-item-value {
 					i {
 						font-size: 20px;
-						color: #606266;
+						color: var(--el-text-color-regular);
 					}
 				}
 				&:hover {

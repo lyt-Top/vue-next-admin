@@ -202,12 +202,12 @@ export default {
 			}
 		}
 		.layout-columns-active {
-			color: #ffffff;
+			color: var(--color-whites);
 			transition: 0.3s ease-in-out;
 		}
 		.columns-round {
 			background: var(--color-primary);
-			color: #ffffff;
+			color: var(--color-whites);
 			position: absolute;
 			left: 50%;
 			top: 2px;

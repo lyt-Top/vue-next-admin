@@ -203,7 +203,7 @@ export default defineComponent({
 	transition: all 0.1s 0.1s ease-in-out;
 }
 .layout-lock-screen-mask {
-	background: rgba(255, 255, 255, 1);
+	background: var(--el-color-white);
 	@extend .layout-lock-screen-fixed;
 	z-index: 9999990;
 }
@@ -222,7 +222,7 @@ export default defineComponent({
 		top: 0;
 		width: 100%;
 		height: 100%;
-		color: #ffffff;
+		color: var(--el-color-white);
 		z-index: 9999993;
 		user-select: none;
 		&-box {
@@ -231,9 +231,11 @@ export default defineComponent({
 			bottom: 50px;
 			&-time {
 				font-size: 100px;
+				color: var(--color-whites);
 			}
 			&-info {
 				font-size: 40px;
+				color: var(--color-whites);
 			}
 			&-minutes {
 				font-size: 16px;
@@ -244,9 +246,9 @@ export default defineComponent({
 			height: 40px;
 			line-height: 40px;
 			border-radius: 100%;
-			border: 1px solid rgba(255, 255, 255, 0.3);
+			border: 1px solid var(--el-border-color-light, #ebeef5);
 			background: rgba(255, 255, 255, 0.1);
-			color: #ffffff;
+			color: var(--color-whites);
 			opacity: 0.8;
 			position: absolute;
 			right: 30px;
@@ -262,7 +264,7 @@ export default defineComponent({
 				position: absolute;
 				top: 150%;
 				font-size: 12px;
-				color: #ffffff;
+				color: var(--color-whites);
 				left: 50%;
 				line-height: 1.2;
 				transform: translate(-50%, -50%);
@@ -273,7 +275,7 @@ export default defineComponent({
 				border: 1px solid rgba(255, 255, 255, 0.5);
 				background: rgba(255, 255, 255, 0.2);
 				box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.5);
-				color: #ffffff;
+				color: var(--color-whites);
 				opacity: 1;
 				transition: all 0.3s ease;
 				i {
@@ -298,7 +300,7 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		color: #ffffff;
+		color: var(--color-whites);
 		&-box {
 			text-align: center;
 			margin: auto;
@@ -334,13 +336,13 @@ export default defineComponent({
 	}
 }
 ::v-deep(.el-input-group__append) {
-	background: #ffffff;
+	background: var(--el-color-white);
 	padding: 0px 15px;
 }
 ::v-deep(.el-input__inner) {
-	border-right-color: #f6f6f6;
+	border-right-color: var(--el-border-color-extra-light);
 	&:hover {
-		border-color: #f6f6f6;
+		border-color: var(--el-border-color-extra-light);
 	}
 }
 </style>

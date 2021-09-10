@@ -38,6 +38,7 @@ export interface ThemeConfigState {
 		isFooter: boolean;
 		isGrayscale: boolean;
 		isInvert: boolean;
+		isIsDark: boolean;
 		isWartermark: boolean;
 		wartermarkText: string;
 		tagsStyle: string;

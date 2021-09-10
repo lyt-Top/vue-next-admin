@@ -971,7 +971,7 @@ $titleWidth: 240px;
 			left: 0;
 			display: flex;
 			align-items: center;
-			color: #fff;
+			color: var(--color-whites);
 			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.02));
 			z-index: 3;
 			.visualizing-container-head-left {
@@ -1176,11 +1176,11 @@ $titleWidth: 240px;
 		.visualizing-container-title {
 			max-width: $titleWidth;
 			font-size: 14px;
-			color: #ffffff;
+			color: var(--color-whites);
 			opacity: 0.8;
 			padding: 0 5px;
-			border-bottom: 1px solid #ffffff;
-			border-image: linear-gradient(to right, #ffffff, rgba(22, 207, 208, 0.02)) 1 10;
+			border-bottom: 1px solid var(--color-whites);
+			border-image: linear-gradient(to right, var(--color-whites), rgba(22, 207, 208, 0.02)) 1 10;
 			position: relative;
 			i {
 				padding-right: 5px;
@@ -1193,7 +1193,7 @@ $titleWidth: 240px;
 				bottom: 0;
 				width: 1px;
 				height: 10px;
-				background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0.5));
+				background: linear-gradient(to top, var(--color-whites), rgba(255, 255, 255, 0.5));
 			}
 		}
 		.visualizing-container-title-colorful {

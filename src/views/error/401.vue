@@ -39,7 +39,7 @@ export default {
 <style scoped lang="scss">
 .error {
 	height: 100%;
-	background-color: white;
+	background-color: var(--el-color-white);
 	display: flex;
 	.error-flex {
 		margin: auto;
@@ -59,17 +59,17 @@ export default {
 					animation-fill-mode: forwards;
 				}
 				.left-item-num {
-					color: #d6e0f6;
+					color: var(--el-color-info);
 					font-size: 55px;
 				}
 				.left-item-title {
 					font-size: 20px;
-					color: #333333;
+					color: var(--el-text-color-primary);
 					margin: 15px 0 5px 0;
 					animation-delay: 0.1s;
 				}
 				.left-item-msg {
-					color: #c0bebe;
+					color: var(--el-text-color-secondary);
 					font-size: 12px;
 					margin-bottom: 30px;
 					animation-delay: 0.2s;

@@ -27,6 +27,7 @@
 				<Scan v-else />
 				<div class="login-content-main-sacn" @click="isScan = !isScan">
 					<i class="iconfont" :class="isScan ? 'icon-diannao1' : 'icon-barcode-qr'"></i>
+					<div class="login-content-main-sacn-delta"></div>
 				</div>
 			</div>
 		</div>
@@ -114,6 +115,9 @@ export default {
 				letter-spacing: 4px;
 				margin: 15px 0 30px;
 				white-space: nowrap;
+				z-index: 5;
+				position: relative;
+				transition: all 0.3s ease;
 			}
 		}
 		.login-content-main-sacn {
@@ -124,18 +128,16 @@ export default {
 			height: 50px;
 			overflow: hidden;
 			cursor: pointer;
-			opacity: 0.7;
 			transition: all ease 0.3s;
-			&::before {
-				content: '';
+			&-delta {
 				position: absolute;
-				width: 0;
-				height: 0;
-				border-bottom: 50px solid #ffffff;
-				border-right: 50px solid transparent;
+				width: 35px;
+				height: 70px;
 				z-index: 2;
-				top: 0;
-				right: 0;
+				top: 2px;
+				right: 21px;
+				background: var(--el-color-white);
+				transform: rotate(-45deg);
 			}
 			&:hover {
 				opacity: 1;
@@ -143,14 +145,13 @@ export default {
 				color: var(--color-primary);
 			}
 			i {
-				content: '';
-				width: 48px;
+				width: 47px;
 				height: 50px;
+				display: inline-block;
+				font-size: 48px;
 				position: absolute;
-				top: 0px;
-				right: 0px;
-				font-size: 47px;
-				z-index: 1;
+				right: 2px;
+				top: -1px;
 			}
 		}
 	}
@@ -163,7 +164,7 @@ export default {
 		transform: translateX(-50%);
 		bottom: 30px;
 		text-align: center;
-		color: white;
+		color: var(--color-whites);
 		font-size: 12px;
 		opacity: 0.8;
 		.login-copyright-company {

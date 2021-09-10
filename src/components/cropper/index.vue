@@ -98,12 +98,12 @@ export default {
 		display: inline-block;
 		height: 350px;
 		flex: 1;
-		border: 1px solid #ebeef5;
-		background: #fff;
+		border: var(--el-border-base);
+		background: var(--color-whites);
 		overflow: hidden;
 		background-repeat: no-repeat;
 		cursor: move;
-		border-radius: 3px;
+		border-radius: var(--el-border-radius-base);
 		.cropper-warp-left-img {
 			width: 100%;
 			height: 100%;
@@ -124,7 +124,7 @@ export default {
 				.cropper-warp-right-value-img {
 					width: 100px;
 					height: 100px;
-					border-radius: 100%;
+					border-radius: var(--el-border-radius-circle);
 					margin: auto;
 				}
 				.cropper-size {
@@ -135,7 +135,7 @@ export default {
 			.cropper-warp-right-label {
 				text-align: center;
 				font-size: 12px;
-				color: #666666;
+				color: var(--el-text-color-primary);
 				height: 30px;
 				line-height: 30px;
 			}
