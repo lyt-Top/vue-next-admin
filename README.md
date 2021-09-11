@@ -39,6 +39,12 @@
 - 复制代码(桌面 cmd 运行) `npm install -g cnpm --registry=https://registry.npm.taobao.org`
 - 复制代码(桌面 cmd 运行) `npm install -g yarn`
 
+#### 🏭 环境支持
+
+|  Edge   | last 2 versions  | last 2 versions  | last 2 versions  |
+|  ----  | ----  | ----  | ----  |
+| ![Edge](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png)  | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png)| ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png)|
+
 #### ⚡ 使用说明
 
 建议使用 cnpm，因为 yarn 有时会报错。<a href="http://nodejs.cn/" target="_blank">node 版本 > 12xx.xx.x</a>
