@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, nextTick } from 'vue';
+import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, nextTick, onBeforeMount } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from '/@/store/index';
 import SubItem from '/@/layout/navMenu/subItem.vue';
@@ -46,7 +46,7 @@ export default defineComponent({
 		const { proxy } = getCurrentInstance() as any;
 		const route = useRoute();
 		const store = useStore();
-		const state: any = reactive({
+		const state = reactive({
 			defaultActive: null,
 		});
 		// 获取父级菜单数据
@@ -101,10 +101,13 @@ export default defineComponent({
 				else state.defaultActive = path;
 			}
 		};
+		// 页面加载前
+		onBeforeMount(() => {
+			setCurrentRouterHighlight(route);
+		});
 		// 页面加载时
 		onMounted(() => {
 			initElMenuOffsetLeft();
-			setCurrentRouterHighlight(route);
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
