@@ -2,7 +2,7 @@
 	<div class="h100" v-show="!isTagsViewCurrenFull">
 		<el-aside class="layout-aside" :class="setCollapseStyle">
 			<Logo v-if="setShowLogo" />
-			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef">
+			<el-scrollbar class="flex-auto" ref="layoutAsideScrollbarRef" @mouseenter="onAsideEnterLeave(true)" @mouseleave="onAsideEnterLeave(false)">
 				<Vertical :menuList="menuList" />
 			</el-scrollbar>
 		</el-aside>
@@ -101,6 +101,13 @@ export default {
 		const initMenuFixed = (clientWidth: number) => {
 			state.clientWidth = clientWidth;
 		};
+		// 鼠标移入、移出
+		const onAsideEnterLeave = (bool: Boolean) => {
+			let { layout } = store.state.themeConfig.themeConfig;
+			if (layout !== 'columns') return false;
+			if (!bool) proxy.mittBus.emit('restoreDefault');
+			store.dispatch('routesList/setColumnsMenuHover', bool);
+		};
 		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
 		watch(store.state.themeConfig.themeConfig, (val) => {
 			if (val.isShowLogoChange !== val.isShowLogo) {
@@ -143,6 +150,7 @@ export default {
 			setShowLogo,
 			getThemeConfig,
 			isTagsViewCurrenFull,
+			onAsideEnterLeave,
 			...toRefs(state),
 		};
 	},

@@ -146,7 +146,7 @@
 						<el-input-number
 							v-model="getThemeConfig.lockScreenTime"
 							controls-position="right"
-							:min="0"
+							:min="1"
 							:max="9999"
 							@change="setLocalThemeConfig"
 							size="mini"
@@ -282,7 +282,7 @@
 						</el-select>
 					</div>
 				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15 mb28">
+				<div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveColumnsAsideLayout') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-select v-model="getThemeConfig.columnsAsideLayout" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">

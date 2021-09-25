@@ -829,13 +829,17 @@
 // 菜单收起时鼠标经过背景颜色/字体颜色
 .el-popper.is-light {
 	.el-menu--vertical {
-		background: var(--bg-menuBar);
+		.el-menu {
+			background: var(--bg-menuBar);
+		}
 	}
 	.el-menu--horizontal {
 		background: var(--bg-topBar);
+		.el-menu,
 		.el-menu-item,
 		.el-sub-menu__title {
 			color: var(--bg-topBarColor);
+			background: var(--bg-topBar);
 		}
 	}
 }
@@ -937,14 +941,20 @@
 	color: set-color(primary);
 }
 .el-overlay {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	.el-dialog {
-		margin: 0 auto !important;
-		position: absolute;
-		.el-dialog__body {
-			padding: 20px !important;
+	overflow: hidden;
+	.el-overlay-dialog {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: unset !important;
+		width: 100%;
+		height: 100%;
+		.el-dialog {
+			margin: 0 auto !important;
+			position: absolute;
+			.el-dialog__body {
+				padding: 20px !important;
+			}
 		}
 	}
 }
@@ -1021,10 +1031,21 @@
 
 /* Drawer 抽屉
 ------------------------------- */
-.el-drawer__body {
-	width: 100%;
-	height: 100%;
-	overflow: auto;
+.el-drawer {
+	--el-drawer-padding-primary: unset !important;
+	.el-drawer__header {
+		padding: 0 15px !important;
+		height: 50px;
+		display: flex;
+		align-items: center;
+		margin-bottom: 0 !important;
+		border-bottom: 1px solid rgb(230, 230, 230);
+	}
+	.el-drawer__body {
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+	}
 }
 .el-drawer-fade-enter-active .el-drawer.rtl {
 	animation: rtl-drawer-animation 0.3s ease-in reverse !important;

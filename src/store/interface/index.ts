@@ -57,6 +57,8 @@ export interface ThemeConfigState {
 // 路由列表
 export interface RoutesListState {
 	routesList: Array<object>;
+	isColumnsMenuHover: Boolean;
+	isColumnsNavHover: Boolean;
 }
 
 // 路由缓存列表

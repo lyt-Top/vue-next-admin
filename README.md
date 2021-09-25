@@ -41,9 +41,11 @@
 
 #### 🏭 环境支持
 
-|  Edge   | last 2 versions  | last 2 versions  | last 2 versions  |
-|  ----  | ----  | ----  | ----  |
-| ![Edge](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png)  | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png)| ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png)|
+| Edge                                                                     | last 2 versions                                                                   | last 2 versions                                                                | last 2 versions                                                                |
+| ------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| ![Edge](https://cdn.jsdelivr.net/npm/@browser-logos/edge/edge_32x32.png) | ![Firefox](https://cdn.jsdelivr.net/npm/@browser-logos/firefox/firefox_32x32.png) | ![Chrome](https://cdn.jsdelivr.net/npm/@browser-logos/chrome/chrome_32x32.png) | ![Safari](https://cdn.jsdelivr.net/npm/@browser-logos/safari/safari_32x32.png) |
+
+> 由于 Vue3 不再支持 IE11，故而 ElementPlus 也不支持 IE11 及之前版本。
 
 #### ⚡ 使用说明
 
@@ -117,6 +119,7 @@ cnpm run build
 - <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
 - <a href="https://github.com/yimijianfang/vue-drag-verify" target="_blank">vue-drag-verify</a>
+- <a href="https://github.com/jsplumb/jsplumb" target="_blank">jsplumb</a>
 
 #### 💕 特别感谢
 

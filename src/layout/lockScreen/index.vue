@@ -144,7 +144,7 @@ export default defineComponent({
 		const initLockScreen = () => {
 			if (store.state.themeConfig.themeConfig.isLockScreen) {
 				state.isShowLockScreenIntervalTime = window.setInterval(() => {
-					if (store.state.themeConfig.themeConfig.lockScreenTime <= 0) {
+					if (store.state.themeConfig.themeConfig.lockScreenTime <= 1) {
 						state.isShowLockScreen = true;
 						setLocalThemeConfig();
 						return false;
@@ -198,9 +198,7 @@ export default defineComponent({
 	height: 100%;
 }
 .layout-lock-screen-filter {
-	filter: blur(5px);
-	transform: scale(1.01);
-	transition: all 0.1s 0.1s ease-in-out;
+	filter: blur(1px);
 }
 .layout-lock-screen-mask {
 	background: var(--el-color-white);

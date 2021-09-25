@@ -1,17 +1,18 @@
 <template>
 	<div class="layout-columns-aside">
 		<el-scrollbar>
-			<ul>
+			<ul @mouseleave="onColumnsAsideMenuMouseleave()">
 				<li
 					v-for="(v, k) in columnsAsideList"
 					:key="k"
 					@click="onColumnsAsideMenuClick(v, k)"
+					@mouseenter="onColumnsAsideMenuMouseenter(v, k)"
 					:ref="
 						(el) => {
 							if (el) columnsAsideOffsetTopRefs[k] = el;
 						}
 					"
-					:class="{ 'layout-columns-active': liIndex === k }"
+					:class="{ 'layout-columns-active': liIndex === k, 'layout-columns-hover': liHoverIndex === k }"
 					:title="$t(v.meta.title)"
 				>
 					<div :class="setColumnsAsidelayout" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
@@ -44,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, ref, computed, onMounted, nextTick, getCurrentInstance, watch } from 'vue';
+import { reactive, toRefs, ref, computed, onMounted, nextTick, getCurrentInstance, watch, onUnmounted } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from '/@/store/index';
 export default {
@@ -59,8 +60,12 @@ export default {
 		const state: any = reactive({
 			columnsAsideList: [],
 			liIndex: 0,
+			liOldIndex: null,
+			liHoverIndex: null,
+			liOldPath: null,
 			difference: 0,
 			routeSplit: [],
+			isNavHover: false,
 		});
 		// 设置分栏高亮风格
 		const setColumnsAsideStyle = computed(() => {
@@ -81,6 +86,27 @@ export default {
 			let { path, redirect } = v as any;
 			if (redirect) router.push(redirect);
 			else router.push(path);
+		};
+		// 鼠标移入时，显示当前的子级菜单
+		const onColumnsAsideMenuMouseenter = (v: Object, k: number) => {
+			let { path } = v;
+			state.liOldPath = path;
+			state.liOldIndex = k;
+			state.liHoverIndex = k;
+			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(path));
+			store.dispatch('routesList/setColumnsMenuHover', false);
+			store.dispatch('routesList/setColumnsNavHover', true);
+			state.isNavHover = true;
+		};
+		// 鼠标移走时，显示原来的子级菜单
+		const onColumnsAsideMenuMouseleave = async () => {
+			await store.dispatch('routesList/setColumnsNavHover', false);
+			// 添加延时器，防止拿到的 store.state.routesList 值不是最新的
+			setTimeout(() => {
+				const { isColumnsMenuHover, isColumnsNavHover } = store.state.routesList;
+				if (!isColumnsMenuHover && !isColumnsNavHover) proxy.mittBus.emit('restoreDefault');
+			}, 100);
+			// state.isNavHover = false;
 		};
 		// 设置高亮动态位置
 		const onColumnsAsideDown = (k: number) => {
@@ -135,10 +161,27 @@ export default {
 		// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
 		watch(store.state, (val) => {
 			val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
+			if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
+				state.liHoverIndex = null;
+				proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
+			} else {
+				state.liHoverIndex = state.liOldIndex;
+				if (!state.liOldPath) return false;
+				proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+			}
 		});
 		// 页面加载时
 		onMounted(() => {
 			setFilterRoutes();
+			// 销毁变量，防止鼠标再次移入时，保留了上次的记录
+			proxy.mittBus.on('restoreDefault', () => {
+				state.liOldIndex = null;
+				state.liOldPath = null;
+			});
+		});
+		// 页面卸载时
+		onUnmounted(() => {
+			proxy.mittBus.off('restoreDefault', () => {});
 		});
 		// 路由更新时
 		onBeforeRouteUpdate((to) => {
@@ -152,6 +195,8 @@ export default {
 			setColumnsAsideStyle,
 			setColumnsAsidelayout,
 			onColumnsAsideMenuClick,
+			onColumnsAsideMenuMouseenter,
+			onColumnsAsideMenuMouseleave,
 			...toRefs(state),
 		};
 	},
@@ -202,8 +247,14 @@ export default {
 			}
 		}
 		.layout-columns-active {
-			color: var(--color-whites);
+			color: var(--color-whites) !important;
 			transition: 0.3s ease-in-out;
+		}
+		.layout-columns-hover {
+			color: var(--color-primary);
+			a {
+				color: var(--color-primary);
+			}
 		}
 		.columns-round {
 			background: var(--color-primary);
