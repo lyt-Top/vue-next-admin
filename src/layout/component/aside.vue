@@ -74,7 +74,8 @@ export default {
 		const closeLayoutAsideMobileMode = () => {
 			const el = document.querySelector('.layout-aside-mobile-mode');
 			el && el.parentNode?.removeChild(el);
-			store.state.themeConfig.themeConfig.isCollapse = false;
+			const clientWidth = document.body.clientWidth;
+			if (clientWidth < 1000) store.state.themeConfig.themeConfig.isCollapse = false;
 			document.body.setAttribute('class', '');
 		};
 		// 设置显示/隐藏 logo
