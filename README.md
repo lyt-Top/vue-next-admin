@@ -123,7 +123,7 @@ cnpm run build
 
 #### 💕 特别感谢
 
-特别感谢群里老哥的建议、指导与帮忙，谢谢！
+特别感谢老哥们的建议、指导与帮忙。谢谢！
 
 - <a href="https://gitee.com/click33/sa-plus" target="_blank">@省长</a>
 - <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参

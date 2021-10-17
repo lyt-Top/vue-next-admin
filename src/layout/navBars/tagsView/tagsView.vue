@@ -194,10 +194,12 @@ export default {
 								// 最后一个且高亮时
 								if (arr[arr.length - 1].meta.isDynamic) {
 									// 动态路由（xxx/:id/:name"）
-									router.push({ name: arr[arr.length - 1].name, params: arr[arr.length - 1].params });
+									if (k !== arr.length) router.push({ name: arr[k].name, params: arr[k].params });
+									else router.push({ name: arr[arr.length - 1].name, params: arr[arr.length - 1].params });
 								} else {
 									// 普通路由
-									router.push({ path: arr[arr.length - 1].path, query: arr[arr.length - 1].query });
+									if (k !== arr.length) router.push({ path: arr[k].path, query: arr[k].query });
+									else router.push({ path: arr[arr.length - 1].path, query: arr[arr.length - 1].query });
 								}
 							} else {
 								// 非最后一个且高亮时，跳转到下一个
@@ -503,9 +505,10 @@ export default {
 
 <style scoped lang="scss">
 .layout-navbars-tagsview {
-	flex: 1;
 	background-color: var(--el-color-white);
 	border-bottom: 1px solid #f1f2f3;
+	z-index: 1;
+	position: relative;
 	::v-deep(.el-scrollbar__wrap) {
 		overflow-x: auto !important;
 	}
@@ -567,6 +570,7 @@ export default {
 			color: var(--color-whites);
 			background: var(--color-primary);
 			border-color: var(--color-primary);
+			transition: border-color 3s ease;
 		}
 	}
 	// 风格2

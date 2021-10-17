@@ -7,34 +7,23 @@
 				:closable="false"
 				class="mb15"
 			></el-alert>
-			<div id="wangeditor"></div>
+			<Editor :is-disable="false" v-model="editorVal" />
 		</el-card>
 	</div>
 </template>
 
 <script lang="ts">
 import { toRefs, reactive, onMounted } from 'vue';
-import wangeditor from 'wangeditor';
+import Editor from '/@/components/editor/index.vue';
 export default {
 	name: 'funWangEditor',
+	components: { Editor },
 	setup() {
-		const state = reactive({});
-		// 初始化富文本
-		// https://doc.wangeditor.com/
-		const initWangeditor = () => {
-			const editor = new wangeditor('#wangeditor');
-			editor.config.placeholder = '请输入内容';
-			editor.config.onchange = (html: string) => {
-				console.log(html);
-				// console.log(editor.txt.html());
-				// console.log(editor.txt.text());
-			};
-			editor.create();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initWangeditor();
+		const state = reactive({
+			editorVal: '',
 		});
+		// 页面加载时
+		onMounted(() => {});
 		return {
 			...toRefs(state),
 		};

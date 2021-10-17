@@ -2,6 +2,17 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.1.2
+
+`2021.10.17`
+
+- 🌟 更新 依赖更新最新版本
+- 🐞 修复 开启全屏时，刷新界面被还原成未全屏的状态
+- 🎯 优化 tagsView 右键菜单关闭逻辑
+- 🎯 优化 wangeditor 富文本编辑器（增加双向绑定）
+- 🎉 新增 工作流（暂不开源）
+- 🎉 新增 基础版 ts（不带国际化），切换 `vue-next-admin-template` 分支
+
 ## 1.1.1
 
 `2021.09.25`

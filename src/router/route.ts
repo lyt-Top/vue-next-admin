@@ -93,7 +93,6 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					},
 				],
 			},
-
 			{
 				path: '/limits',
 				name: 'limits',
@@ -1077,7 +1076,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 				component: () => import('/@/layout/routerView/iframes.vue'),
 				meta: {
 					title: 'message.router.layoutIfameView',
-					isLink: 'https://gitee.com/lyt-top/vue-next-admin',
+					isLink: 'https://wdd.js.org/jsplumb-chinese-tutorial/#/',
 					isHide: false,
 					isKeepAlive: false,
 					isAffix: true,

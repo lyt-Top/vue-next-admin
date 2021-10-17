@@ -12,7 +12,7 @@ import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounte
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
 import { useTitle } from '/@/utils/setWebTitle';
-import { Local } from '/@/utils/storage';
+import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/layout/lockScreen/index.vue';
 import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
@@ -59,6 +59,10 @@ export default defineComponent({
 				if (Local.get('themeConfig')) {
 					store.dispatch('themeConfig/setThemeConfig', Local.get('themeConfig'));
 					document.documentElement.style.cssText = Local.get('themeConfigStyle');
+				}
+				// 获取缓存中的全屏配置
+				if (Session.get('isTagsViewCurrenFull')) {
+					store.dispatch('tagsViewRoutes/setCurrenFullscreen', Session.get('isTagsViewCurrenFull'));
 				}
 			});
 		});
