@@ -3,7 +3,7 @@
 		<el-form-item>
 			<el-input
 				type="text"
-				:placeholder="$t('message.account.accountPlaceholder1')"
+				placeholder="用户名 admin 或不输均为 test"
 				prefix-icon="el-icon-user"
 				v-model="ruleForm.userName"
 				clearable
@@ -14,7 +14,7 @@
 		<el-form-item>
 			<el-input
 				:type="isShowPassword ? 'text' : 'password'"
-				:placeholder="$t('message.account.accountPlaceholder2')"
+				placeholder="密码：123456"
 				prefix-icon="el-icon-lock"
 				v-model="ruleForm.password"
 				autocomplete="off"
@@ -35,7 +35,7 @@
 					<el-input
 						type="text"
 						maxlength="4"
-						:placeholder="$t('message.account.accountPlaceholder3')"
+						placeholder="请输入验证码"
 						prefix-icon="el-icon-position"
 						v-model="ruleForm.code"
 						clearable
@@ -51,7 +51,7 @@
 		</el-form-item>
 		<el-form-item>
 			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
-				<span>{{ $t('message.account.accountBtnText') }}</span>
+				<span>登 录</span>
 			</el-button>
 		</el-form-item>
 	</el-form>
@@ -61,7 +61,6 @@
 import { toRefs, reactive, defineComponent, computed, getCurrentInstance } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
-import { useI18n } from 'vue-i18n';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
 import { initBackEndControlRoutes } from '/@/router/backEnd';
 import { useStore } from '/@/store/index';
@@ -70,7 +69,6 @@ import { formatAxis } from '/@/utils/formatTime';
 export default defineComponent({
 	name: 'login',
 	setup() {
-		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
@@ -159,8 +157,7 @@ export default defineComponent({
 			setTimeout(() => {
 				// 关闭 loading
 				state.loading.signIn = true;
-				const signInText = t('message.signInText');
-				ElMessage.success(`${currentTimeInfo}，${signInText}`);
+				ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
 				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
 				proxy.mittBus.emit('onSignInClick');
 			}, 300);

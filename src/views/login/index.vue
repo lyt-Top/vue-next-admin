@@ -8,20 +8,20 @@
 				<h4 class="login-content-title">{{ getThemeConfig.globalTitle }}后台模板</h4>
 				<div v-if="!isScan">
 					<el-tabs v-model="tabsActiveName" @tab-click="onTabsClick">
-						<el-tab-pane :label="$t('message.label.one1')" name="account" :disabled="tabsActiveName === 'account'">
+						<el-tab-pane label="账号密码登录" name="account" :disabled="tabsActiveName === 'account'">
 							<transition name="el-zoom-in-center">
 								<Account v-show="isTabPaneShow" />
 							</transition>
 						</el-tab-pane>
-						<el-tab-pane :label="$t('message.label.two2')" name="mobile" :disabled="tabsActiveName === 'mobile'">
+						<el-tab-pane label="手机号登录" name="mobile" :disabled="tabsActiveName === 'mobile'">
 							<transition name="el-zoom-in-center">
 								<Mobile v-show="!isTabPaneShow" />
 							</transition>
 						</el-tab-pane>
 					</el-tabs>
 					<div class="mt10">
-						<el-button type="text" size="small">{{ $t('message.link.one3') }}</el-button>
-						<el-button type="text" size="small">{{ $t('message.link.two4') }}</el-button>
+						<el-button type="text" size="small">第三方登录</el-button>
+						<el-button type="text" size="small">友情链接</el-button>
 					</div>
 				</div>
 				<Scan v-else />
@@ -32,8 +32,8 @@
 			</div>
 		</div>
 		<div class="login-copyright">
-			<div class="mb5 login-copyright-company">{{ $t('message.copyright.one5') }}</div>
-			<div class="login-copyright-msg">{{ $t('message.copyright.two6') }}</div>
+			<div class="mb5 login-copyright-company">版权所有：深圳市xxx软件科技有限公司</div>
+			<div class="login-copyright-msg">Copyright: Shenzhen XXX Software Technology 粤ICP备05010000号</div>
 		</div>
 	</div>
 </template>

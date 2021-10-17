@@ -9,10 +9,10 @@
 			<transition-group name="breadcrumb" mode="out-in">
 				<el-breadcrumb-item v-for="(v, k) in breadcrumbList" :key="v.meta.title">
 					<span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
-						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ $t(v.meta.title) }}
+						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ v.meta.title }}
 					</span>
 					<a v-else @click.prevent="onBreadcrumbClick(v)">
-						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ $t(v.meta.title) }}
+						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ v.meta.title }}
 					</a>
 				</el-breadcrumb-item>
 			</transition-group>

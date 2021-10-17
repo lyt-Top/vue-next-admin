@@ -1,6 +1,7 @@
 import { Module } from 'vuex';
 // 此处加上 `.ts` 后缀报错，具体原因不详
 import { TagsViewRoutesState, RootStateTypes } from '/@/store/interface/index';
+import { Session } from '/@/utils/storage';
 
 const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 	namespaced: true,
@@ -15,6 +16,7 @@ const tagsViewRoutesModule: Module<TagsViewRoutesState, RootStateTypes> = {
 		},
 		// 设置卡片全屏
 		getCurrenFullscreen(state: any, bool: boolean) {
+			Session.set('isTagsViewCurrenFull', bool);
 			state.isTagsViewCurrenFull = bool;
 		},
 	},

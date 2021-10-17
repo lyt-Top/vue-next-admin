@@ -20,7 +20,7 @@
 						@click="onCurrentContextmenuClick(v.contextMenuClickId)"
 					>
 						<i :class="v.icon"></i>
-						<span>{{ $t(v.txt) }}</span>
+						<span>{{ v.txt }}</span>
 					</li>
 				</template>
 			</ul>
@@ -42,16 +42,11 @@ export default defineComponent({
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ contextMenuClickId: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'el-icon-refresh-right' },
-				{ contextMenuClickId: 1, txt: 'message.tagsView.close', affix: false, icon: 'el-icon-close' },
-				{ contextMenuClickId: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'el-icon-circle-close' },
-				{ contextMenuClickId: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'el-icon-folder-delete' },
-				{
-					contextMenuClickId: 4,
-					txt: 'message.tagsView.fullscreen',
-					affix: false,
-					icon: 'iconfont icon-fullscreen',
-				},
+				{ contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'el-icon-refresh-right' },
+				{ contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'el-icon-close' },
+				{ contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'el-icon-circle-close' },
+				{ contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'el-icon-folder-delete' },
+				{ contextMenuClickId: 4, txt: '当前页全屏', affix: false, icon: 'iconfont icon-fullscreen' },
 			],
 			item: {},
 		});

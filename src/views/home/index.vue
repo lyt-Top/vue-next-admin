@@ -20,9 +20,9 @@
 				<div class="home-card-item home-card-item-box" :style="{ background: v.color }">
 					<div class="home-card-item-flex">
 						<div class="home-card-item-title pb3">{{ v.title }}</div>
-						<div class="home-card-item-title-num pb6" :id="`titleNum${k + 1}`"></div>
+						<div class="home-card-item-title-num pb6">{{v.titleNum}}</div>
 						<div class="home-card-item-tip pb3">{{ v.tip }}</div>
-						<div class="home-card-item-tip-num" :id="`tipNum${k + 1}`"></div>
+						<div class="home-card-item-tip-num">{{v.tipNum}}</div>
 					</div>
 					<i :class="v.icon" :style="{ color: v.iconColor }"></i>
 				</div>
@@ -30,12 +30,12 @@
 		</el-row>
 		<el-row :gutter="15">
 			<el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="mb15">
-				<el-card shadow="hover" :header="$t('message.card.title1')">
+				<el-card shadow="hover" header="商品销售情况">
 					<div style="height: 200px" ref="homeLaboratoryRef"></div>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="10" :md="10" :lg="8" :xl="8">
-				<el-card shadow="hover" :header="$t('message.card.title2')">
+				<el-card shadow="hover" header="环境监测">
 					<div class="home-monitor">
 						<div class="flex-warp">
 							<div class="flex-warp-item" v-for="(v, k) in environmentList" :key="k">
@@ -52,16 +52,16 @@
 		</el-row>
 		<el-row :gutter="15">
 			<el-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16" class="home-warning-media">
-				<el-card shadow="hover" :header="$t('message.card.title3')" class="home-warning-card">
+				<el-card shadow="hover" header="预警信息" class="home-warning-card">
 					<el-table :data="tableData.data" style="width: 100%" stripe>
-						<el-table-column prop="date" :label="$t('message.table.th1')"></el-table-column>
-						<el-table-column prop="name" :label="$t('message.table.th2')"></el-table-column>
-						<el-table-column prop="address" :label="$t('message.table.th3')"></el-table-column>
+						<el-table-column prop="date" label="时间"></el-table-column>
+						<el-table-column prop="name" label="实验室名称"></el-table-column>
+						<el-table-column prop="address" label="报警内容"></el-table-column>
 					</el-table>
 				</el-card>
 			</el-col>
 			<el-col :xs="24" :sm="10" :md="10" :lg="8" :xl="8" class="home-dynamic-media">
-				<el-card shadow="hover" :header="$t('message.card.title4')">
+				<el-card shadow="hover" header="动态信息">
 					<div class="home-dynamic">
 						<el-scrollbar>
 							<div class="home-dynamic-item" v-for="(v, k) in activitiesList" :key="k">
@@ -87,7 +87,7 @@
 		</el-row>
 		<el-row>
 			<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mt15">
-				<el-card shadow="hover" :header="$t('message.card.title5')">
+				<el-card shadow="hover" header="履约超时预警">
 					<div style="height: 200px" ref="homeOvertimeRef"></div>
 				</el-card>
 			</el-col>
@@ -98,7 +98,6 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted, nextTick, computed, getCurrentInstance, watch, onActivated } from 'vue';
 import * as echarts from 'echarts';
-import { CountUp } from 'countup.js';
 import { formatAxis } from '/@/utils/formatTime';
 import { useStore } from '/@/store/index';
 import { topCardItemList, environmentList, activitiesList } from './mock';
@@ -140,17 +139,6 @@ export default {
 		const currentTime = computed(() => {
 			return formatAxis(new Date());
 		});
-		// 初始化数字滚动
-		const initNumCountUp = () => {
-			nextTick(() => {
-				new CountUp('titleNum1', Math.random() * 10000).start();
-				new CountUp('titleNum2', Math.random() * 10000).start();
-				new CountUp('titleNum3', Math.random() * 10000).start();
-				new CountUp('tipNum1', Math.random() * 1000).start();
-				new CountUp('tipNum2', Math.random() * 1000).start();
-				new CountUp('tipNum3', Math.random() * 1000).start();
-			});
-		};
 		// 商品销售情
 		const initHomeLaboratory = () => {
 			const myChart = echarts.init(proxy.$refs.homeLaboratoryRef);
@@ -303,7 +291,6 @@ export default {
 		};
 		// 页面加载时
 		onMounted(() => {
-			initNumCountUp();
 			initHomeLaboratory();
 			initHomeOvertime();
 			initEchartsResize();

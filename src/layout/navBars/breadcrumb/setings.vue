@@ -1,16 +1,9 @@
 <template>
 	<div class="layout-breadcrumb-seting">
-		<el-drawer
-			:title="$t('message.layout.configTitle')"
-			v-model="getThemeConfig.isDrawer"
-			direction="rtl"
-			destroy-on-close
-			size="240px"
-			@close="onDrawerClose"
-		>
+		<el-drawer title="布局配置" v-model="getThemeConfig.isDrawer" direction="rtl" destroy-on-close size="240px" @close="onDrawerClose">
 			<el-scrollbar class="layout-breadcrumb-seting-bar">
 				<!-- 全局主题 -->
-				<el-divider content-position="left">{{ $t('message.layout.oneTitle') }}</el-divider>
+				<el-divider content-position="left">全局主题</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
 					<div class="layout-breadcrumb-seting-bar-flex-label">primary</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
@@ -43,105 +36,105 @@
 				</div>
 
 				<!-- 菜单 / 顶栏 -->
-				<el-divider content-position="left">{{ $t('message.layout.twoTitle') }}</el-divider>
+				<el-divider content-position="left">菜单 / 顶栏</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoTopBar') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">{{ 顶栏背景 }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.topBar" size="small" @change="onBgColorPickerChange('topBar')"> </el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoMenuBar') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单背景</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.menuBar" size="small" @change="onBgColorPickerChange('menuBar')"> </el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoColumnsMenuBar') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单背景</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.columnsMenuBar" size="small" @change="onBgColorPickerChange('columnsMenuBar')">
 						</el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoTopBarColor') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">顶栏默认字体颜色</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.topBarColor" size="small" @change="onBgColorPickerChange('topBarColor')"> </el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoMenuBarColor') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单默认字体颜色</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.menuBarColor" size="small" @change="onBgColorPickerChange('menuBarColor')"> </el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoColumnsMenuBarColor') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单默认字体颜色</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.columnsMenuBarColor" size="small" @change="onBgColorPickerChange('columnsMenuBarColor')">
 						</el-color-picker>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt10">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsTopBarColorGradual') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景渐变</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isTopBarColorGradual" @change="onTopBarGradualChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsMenuBarColorGradual') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单背景渐变</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isMenuBarColorGradual" @change="onMenuBarGradualChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsColumnsMenuBarColorGradual') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单背景渐变</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isColumnsMenuBarColorGradual" @change="onColumnsMenuBarGradualChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.twoIsMenuBarColorHighlight') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单字体背景高亮</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isMenuBarColorHighlight" @change="onMenuBarHighlightChange"></el-switch>
 					</div>
 				</div>
 
 				<!-- 界面设置 -->
-				<el-divider content-position="left">{{ $t('message.layout.threeTitle') }}</el-divider>
+				<el-divider content-position="left">界面设置</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsCollapse') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单水平折叠</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isCollapse" @change="onThemeConfigChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsUniqueOpened') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单手风琴</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isUniqueOpened" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsFixedHeader') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">固定 Header</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isFixedHeader" @change="onIsFixedHeaderChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout !== 'classic' ? 0.5 : 1 }">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsClassicSplitMenu') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">经典布局分割菜单</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isClassicSplitMenu" :disabled="getThemeConfig.layout !== 'classic'" @change="onClassicSplitMenuChange">
 						</el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsLockScreen') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启锁屏</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isLockScreen" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt11">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeLockScreenTime') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">自动锁屏(s/秒)</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-input-number
 							v-model="getThemeConfig.lockScreenTime"
@@ -157,9 +150,9 @@
 				</div>
 
 				<!-- 界面显示 -->
-				<el-divider content-position="left">{{ $t('message.layout.fourTitle') }}</el-divider>
+				<el-divider content-position="left">界面显示</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsShowLogo') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">侧边栏 Logo</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isShowLogo" @change="onIsShowLogoChange"></el-switch>
 					</div>
@@ -168,7 +161,7 @@
 					class="layout-breadcrumb-seting-bar-flex mt15"
 					:style="{ opacity: getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse' ? 0.5 : 1 }"
 				>
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsBreadcrumb') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 Breadcrumb</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch
 							v-model="getThemeConfig.isBreadcrumb"
@@ -178,82 +171,82 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsBreadcrumbIcon') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 Breadcrumb 图标</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isBreadcrumbIcon" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsTagsview') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isTagsview" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsTagsviewIcon') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 Tagsview 图标</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isTagsviewIcon" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsCacheTagsView') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 TagsView 缓存</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isCacheTagsView" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsSortableTagsView') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 TagsView 拖拽</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isSortableTagsView" @change="onSortableTagsViewChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsShareTagsView') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 TagsView 共用</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isShareTagsView" @change="onShareTagsViewChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsFooter') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启 Footer</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsGrayscale') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">灰色模式</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isGrayscale" @change="onAddFilterChange('grayscale')"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsInvert') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">色弱模式</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isInvert" @change="onAddFilterChange('invert')"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsDark') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">{深色模式</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isIsDark" @change="onAddDarkChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsWartermark') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">开启水印</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-switch v-model="getThemeConfig.isWartermark" @change="onWartermarkChange"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourWartermarkText') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">水印文案</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-input v-model="getThemeConfig.wartermarkText" size="mini" style="width: 90px" @input="onWartermarkTextInput($event)"></el-input>
 					</div>
 				</div>
 
 				<!-- 其它设置 -->
-				<el-divider content-position="left">{{ $t('message.layout.fiveTitle') }}</el-divider>
+				<el-divider content-position="left">其它设置</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveTagsStyle') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">Tagsview 风格</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-select v-model="getThemeConfig.tagsStyle" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
 							<el-option label="风格1" value="tags-style-one"></el-option>
@@ -264,7 +257,7 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveAnimation') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">主页面切换动画</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-select v-model="getThemeConfig.animation" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
 							<el-option label="slide-right" value="slide-right"></el-option>
@@ -274,7 +267,7 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveColumnsAsideStyle') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏高亮风格</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-select v-model="getThemeConfig.columnsAsideStyle" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
 							<el-option label="圆角" value="columns-round"></el-option>
@@ -283,7 +276,7 @@
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15 mb27">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fiveColumnsAsideLayout') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏布局风格</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-select v-model="getThemeConfig.columnsAsideLayout" placeholder="请选择" size="mini" style="width: 90px" @change="setLocalThemeConfig">
 							<el-option label="水平" value="columns-horizontal"></el-option>
@@ -293,7 +286,7 @@
 				</div>
 
 				<!-- 布局切换 -->
-				<el-divider content-position="left">{{ $t('message.layout.sixTitle') }}</el-divider>
+				<el-divider content-position="left">布局切换</el-divider>
 				<div class="layout-drawer-content-flex">
 					<!-- defaults 布局 -->
 					<div class="layout-drawer-content-item" @click="onSetLayout('defaults')">
@@ -306,7 +299,7 @@
 						</section>
 						<div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'defaults' }">
 							<div class="layout-tips-box">
-								<p class="layout-tips-txt">{{ $t('message.layout.sixDefaults') }}</p>
+								<p class="layout-tips-txt">默认</p>
 							</div>
 						</div>
 					</div>
@@ -323,7 +316,7 @@
 						</section>
 						<div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'classic' }">
 							<div class="layout-tips-box">
-								<p class="layout-tips-txt">{{ $t('message.layout.sixClassic') }}</p>
+								<p class="layout-tips-txt">经典</p>
 							</div>
 						</div>
 					</div>
@@ -339,7 +332,7 @@
 						</section>
 						<div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'transverse' }">
 							<div class="layout-tips-box">
-								<p class="layout-tips-txt">{{ $t('message.layout.sixTransverse') }}</p>
+								<p class="layout-tips-txt">横向</p>
 							</div>
 						</div>
 					</div>
@@ -355,13 +348,13 @@
 						</section>
 						<div class="layout-tips-warp" :class="{ 'layout-tips-warp-active': getThemeConfig.layout === 'columns' }">
 							<div class="layout-tips-box">
-								<p class="layout-tips-txt">{{ $t('message.layout.sixColumns') }}</p>
+								<p class="layout-tips-txt">分栏</p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="copy-config">
-					<el-alert :title="$t('message.layout.tipText')" type="warning" :closable="false"> </el-alert>
+					<el-alert title="点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。" type="warning" :closable="false"> </el-alert>
 					<el-button
 						size="small"
 						class="copy-config-btn"
@@ -369,10 +362,11 @@
 						type="primary"
 						ref="copyConfigBtnRef"
 						@click="onCopyConfigClick"
-						>{{ $t('message.layout.copyText') }}
+					>
+						一键复制配置
 					</el-button>
-					<el-button size="small" class="copy-config-btn-reset" icon="el-icon-refresh-right" type="info" @click="onResetConfigClick"
-						>{{ $t('message.layout.resetText') }}
+					<el-button size="small" class="copy-config-btn-reset" icon="el-icon-refresh-right" type="info" @click="onResetConfigClick">
+						一键恢复默认
 					</el-button>
 				</div>
 			</el-scrollbar>
@@ -625,8 +619,6 @@ export default defineComponent({
 					if (getThemeConfig.value.isIsDark) onAddDarkChange();
 					// 开启水印
 					onWartermarkChange();
-					// 语言国际化
-					if (Local.get('themeConfig')) proxy.$i18n.locale = Local.get('themeConfig').globalI18n;
 				}, 100);
 			});
 		});

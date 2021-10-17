@@ -1,14 +1,7 @@
 <template>
 	<el-form class="login-content-form">
 		<el-form-item>
-			<el-input
-				type="text"
-				:placeholder="$t('message.mobile.placeholder1')"
-				prefix-icon="iconfont icon-dianhua"
-				v-model="ruleForm.userName"
-				clearable
-				autocomplete="off"
-			>
+			<el-input type="text" placeholder="请输入手机号" prefix-icon="iconfont icon-dianhua" v-model="ruleForm.userName" clearable autocomplete="off">
 			</el-input>
 		</el-form-item>
 		<el-form-item>
@@ -17,7 +10,7 @@
 					<el-input
 						type="text"
 						maxlength="4"
-						:placeholder="$t('message.mobile.placeholder2')"
+						placeholder="请输入验证码"
 						prefix-icon="el-icon-position"
 						v-model="ruleForm.code"
 						clearable
@@ -25,13 +18,13 @@
 					></el-input>
 				</el-col>
 				<el-col :span="8">
-					<el-button class="login-content-code">{{ $t('message.mobile.codeText') }}</el-button>
+					<el-button class="login-content-code">获取验证码</el-button>
 				</el-col>
 			</el-row>
 		</el-form-item>
 		<el-form-item>
 			<el-button type="primary" class="login-content-submit" round>
-				<span>{{ $t('message.mobile.btnText') }}</span>
+				<span>登 录</span>
 			</el-button>
 		</el-form-item>
 	</el-form>

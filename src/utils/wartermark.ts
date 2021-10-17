@@ -3,8 +3,8 @@ const setWatermark = (str: string) => {
 	const id = '1.23452384164.123412416';
 	if (document.getElementById(id) !== null) document.body.removeChild(document.getElementById(id) as any);
 	const can = document.createElement('canvas');
-	can.width = 250;
-	can.height = 180;
+	can.width = 200;
+	can.height = 130;
 	const cans: any = can.getContext('2d');
 	cans.rotate((-20 * Math.PI) / 180);
 	cans.font = '12px Vedana';
@@ -15,7 +15,7 @@ const setWatermark = (str: string) => {
 	const div = document.createElement('div');
 	div.id = id;
 	div.style.pointerEvents = 'none';
-	div.style.top = '35px';
+	div.style.top = '15px';
 	div.style.left = '0px';
 	div.style.position = 'fixed';
 	div.style.zIndex = '10000000';

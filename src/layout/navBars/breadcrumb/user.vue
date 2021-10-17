@@ -2,40 +2,28 @@
 	<div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onComponentSizeChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
-				<i class="iconfont icon-ziti" :title="$t('message.user.title0')"></i>
+				<i class="iconfont icon-ziti" title="组件大小"></i>
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="" :disabled="disabledSize === ''">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
-					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">{{ $t('message.user.dropdownMedium') }}</el-dropdown-item>
-					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
-					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">{{ $t('message.user.dropdownMini') }}</el-dropdown-item>
-				</el-dropdown-menu>
-			</template>
-		</el-dropdown>
-		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
-			<div class="layout-navbars-breadcrumb-user-icon">
-				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
-			</div>
-			<template #dropdown>
-				<el-dropdown-menu>
-					<el-dropdown-item command="zh-cn" :disabled="disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
-					<el-dropdown-item command="en" :disabled="disabledI18n === 'en'">English</el-dropdown-item>
-					<el-dropdown-item command="zh-tw" :disabled="disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
+					<el-dropdown-item command="" :disabled="disabledSize === ''">默认</el-dropdown-item>
+					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">中等</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">小型</el-dropdown-item>
+					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">超小</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
-			<i class="el-icon-search" :title="$t('message.user.title2')"></i>
+			<i class="el-icon-search" title="菜单搜索"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
-			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
+			<i class="icon-skin iconfont" title="布局配置"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
 			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
 				<template #reference>
 					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
-						<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
+						<i class="el-icon-bell" title="消息"></i>
 					</el-badge>
 				</template>
 				<transition name="el-zoom-in-top">
@@ -44,11 +32,7 @@
 			</el-popover>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
-			<i
-				class="iconfont"
-				:title="isScreenfull ? $t('message.user.title6') : $t('message.user.title5')"
-				:class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
-			></i>
+			<i class="iconfont" :title="isScreenfull ? '开全屏' : '关全屏'" :class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"></i>
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
@@ -58,12 +42,11 @@
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="/home">{{ $t('message.user.dropdown1') }}</el-dropdown-item>
-					<el-dropdown-item command="wareHouse">{{ $t('message.user.dropdown6') }}</el-dropdown-item>
-					<el-dropdown-item command="/personal">{{ $t('message.user.dropdown2') }}</el-dropdown-item>
-					<el-dropdown-item command="/404">{{ $t('message.user.dropdown3') }}</el-dropdown-item>
-					<el-dropdown-item command="/401">{{ $t('message.user.dropdown4') }}</el-dropdown-item>
-					<el-dropdown-item divided command="logOut">{{ $t('message.user.dropdown5') }}</el-dropdown-item>
+					<el-dropdown-item command="/home">首页</el-dropdown-item>
+					<el-dropdown-item command="wareHouse">代码仓库</el-dropdown-item>
+					<el-dropdown-item command="/404">404</el-dropdown-item>
+					<el-dropdown-item command="/401">401</el-dropdown-item>
+					<el-dropdown-item divided command="logOut">退出登录</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -76,10 +59,8 @@ import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted } from '
 import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
-import { useI18n } from 'vue-i18n';
 import { resetRoute } from '/@/router/index';
 import { useStore } from '/@/store/index';
-import { useTitle } from '/@/utils/setWebTitle';
 import { Session, Local } from '/@/utils/storage';
 import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/layout/navBars/breadcrumb/search.vue';
@@ -87,16 +68,13 @@ export default {
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },
 	setup() {
-		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
 		const router = useRouter();
 		const store = useStore();
-		const title = useTitle();
 		const searchRef = ref();
 		const state = reactive({
 			isScreenfull: false,
 			isShowUserNewsPopover: false,
-			disabledI18n: 'zh-cn',
 			disabledSize: '',
 		});
 		// 获取用户信息 vuex
@@ -137,15 +115,15 @@ export default {
 				ElMessageBox({
 					closeOnClickModal: false,
 					closeOnPressEscape: false,
-					title: t('message.user.logOutTitle'),
-					message: t('message.user.logOutMessage'),
+					title: '提示',
+					message: '此操作将退出登录, 是否继续?',
 					showCancelButton: true,
-					confirmButtonText: t('message.user.logOutConfirm'),
-					cancelButtonText: t('message.user.logOutCancel'),
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
 					beforeClose: (action, instance, done) => {
 						if (action === 'confirm') {
 							instance.confirmButtonLoading = true;
-							instance.confirmButtonText = t('message.user.logOutExit');
+							instance.confirmButtonText = '退出中';
 							setTimeout(() => {
 								done();
 								setTimeout(() => {
@@ -162,7 +140,7 @@ export default {
 						resetRoute(); // 删除/重置路由
 						router.push('/login');
 						setTimeout(() => {
-							ElMessage.success(t('message.user.logOutSuccess'));
+							ElMessage.success('安全退出成功！');
 						}, 300);
 					})
 					.catch(() => {});
@@ -185,36 +163,6 @@ export default {
 			initComponentSize();
 			window.location.reload();
 		};
-		// 语言切换
-		const onLanguageChange = (lang: string) => {
-			Local.remove('themeConfig');
-			getThemeConfig.value.globalI18n = lang;
-			Local.set('themeConfig', getThemeConfig.value);
-			proxy.$i18n.locale = lang;
-			initI18n();
-			title();
-		};
-		// 设置 element plus 组件的国际化
-		const setI18nConfig = (locale: string) => {
-			proxy.mittBus.emit('getI18nConfig', proxy.$i18n.messages[locale]);
-		};
-		// 初始化言语国际化
-		const initI18n = () => {
-			switch (Local.get('themeConfig').globalI18n) {
-				case 'zh-cn':
-					state.disabledI18n = 'zh-cn';
-					setI18nConfig('zh-cn');
-					break;
-				case 'en':
-					state.disabledI18n = 'en';
-					setI18nConfig('en');
-					break;
-				case 'zh-tw':
-					state.disabledI18n = 'zh-tw';
-					setI18nConfig('zh-tw');
-					break;
-			}
-		};
 		// 初始化全局组件大小
 		const initComponentSize = () => {
 			switch (Local.get('themeConfig').globalComponentSize) {
@@ -235,7 +183,6 @@ export default {
 		// 页面加载时
 		onMounted(() => {
 			if (Local.get('themeConfig')) {
-				initI18n();
 				initComponentSize();
 			}
 		});
@@ -246,7 +193,6 @@ export default {
 			onScreenfullClick,
 			onSearchClick,
 			onComponentSizeChange,
-			onLanguageChange,
 			searchRef,
 			layoutUserFlexNum,
 			...toRefs(state),

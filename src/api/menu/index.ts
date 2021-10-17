@@ -13,7 +13,7 @@ import request from '/@/utils/request';
  */
 export function getMenuAdmin(params?: object) {
 	return request({
-		url: '/gitee/lyt-top/vue-next-admin-images/raw/master/menu/adminMenu.json',
+		url: '/gitee/lyt-top/vue-next-admin-images/raw/master/menu/adminMenu-template.json',
 		method: 'get',
 		params,
 	});
@@ -27,7 +27,7 @@ export function getMenuAdmin(params?: object) {
  */
 export function getMenuTest(params?: object) {
 	return request({
-		url: '/gitee/lyt-top/vue-next-admin-images/raw/master/menu/testMenu.json',
+		url: '/gitee/lyt-top/vue-next-admin-images/raw/master/menu/testMenu-template.json',
 		method: 'get',
 		params,
 	});

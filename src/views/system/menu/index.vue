@@ -5,7 +5,7 @@
 				<el-table-column label="菜单名称" show-overflow-tooltip>
 					<template #default="scope">
 						<i :class="scope.row.meta.icon"></i>
-						<span class="ml10">{{ $t(scope.row.meta.title) }}</span>
+						<span class="ml10">{{ scope.row.meta.title }}</span>
 					</template>
 				</el-table-column>
 				<el-table-column prop="path" label="路由名称" show-overflow-tooltip width="150"></el-table-column>

@@ -99,13 +99,11 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import IconSelector from '/@/components/iconSelector/index.vue';
-import { useI18n } from 'vue-i18n';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 export default {
 	name: 'systemEditMenu',
 	components: { IconSelector },
 	setup() {
-		const { t } = useI18n();
 		const state = reactive({
 			isShowDialog: false,
 			/**
@@ -137,7 +135,7 @@ export default {
 			state.ruleForm.component = '';
 			state.ruleForm.isLink = row.meta.isLink ? 'true' : '';
 			state.ruleForm.menuSort = '';
-			state.ruleForm.meta.title = t(row.meta.title);
+			state.ruleForm.meta.title = row.meta.title;
 			// 回显时，图标选择器有这个图标才可以回显，菜单中使用了阿里的、element plus的，二者不可共存
 			state.ruleForm.meta.icon = row.meta.icon;
 			state.ruleForm.meta.isHide = row.meta.isHide ? 'true' : 'false';
