@@ -36,8 +36,8 @@ export default defineComponent({
 			if (isTagsViewCurrenFull) {
 				return `0px`;
 			} else {
-				if (isTagsview) return `85px`;
-				else return `50px`;
+				if (isTagsview) return `83px`;
+				else return `49px`;
 			}
 		});
 		// 页面加载时
