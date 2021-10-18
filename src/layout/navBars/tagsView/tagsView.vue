@@ -82,7 +82,7 @@ export default {
 			if (getThemeConfig.value.isShareTagsView) {
 				return v.path === state.routePath;
 			} else {
-				return v.url === state.routeActive;
+				return v.url ? v.url === state.routeActive : v.path === state.routeActive;
 			}
 		};
 		// 存储 tagsViewList 到浏览器临时缓存中，页面刷新时，保留记录
@@ -507,8 +507,6 @@ export default {
 .layout-navbars-tagsview {
 	background-color: var(--el-color-white);
 	border-bottom: 1px solid #f1f2f3;
-	z-index: 1;
-	position: relative;
 	::v-deep(.el-scrollbar__wrap) {
 		overflow-x: auto !important;
 	}
