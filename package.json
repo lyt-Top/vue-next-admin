@@ -2,6 +2,9 @@
 	"name": "vue-prev-admin",
 	"version": "1.0.5",
 	"private": true,
+	"description": "vue2 webpack admin template",
+	"author": "lyt_20201208",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vue-cli-service serve",
 		"build": "vue-cli-service build",
@@ -9,34 +12,58 @@
 		"webpack": "webpack --version"
 	},
 	"dependencies": {
-		"axios": "^0.21.4",
+		"axios": "^0.24.0",
 		"clipboard": "^2.0.8",
-		"core-js": "^3.17.3",
 		"countup.js": "^2.0.8",
-		"echarts": "^5.2.0",
+		"echarts": "^5.2.1",
 		"element-ui": "^2.15.6",
 		"nprogress": "^0.2.0",
 		"screenfull": "^5.1.0",
 		"sign-canvas": "^1.1.4",
 		"vue": "^2.6.14",
-		"vue-i18n": "^8.25.0",
+		"vue-i18n": "^8.26.5",
 		"vue-particles": "^1.0.9",
-		"vue-router": "^3.5.2",
+		"vue-router": "^3.5.3",
 		"vue-seamless-scroll": "^1.1.23",
 		"vuex": "^3.6.2"
 	},
 	"devDependencies": {
-		"@eslint/eslintrc": "^1.0.0",
-		"@vue/cli-plugin-babel": "~4.5.13",
-		"@vue/cli-plugin-eslint": "~4.5.13",
-		"@vue/cli-plugin-router": "~4.5.13",
-		"@vue/cli-plugin-vuex": "~4.5.13",
-		"@vue/cli-service": "~4.5.13",
+		"@eslint/eslintrc": "^1.0.3",
+		"@vue/cli-plugin-babel": "~4.5.15",
+		"@vue/cli-plugin-eslint": "~4.5.15",
+		"@vue/cli-plugin-router": "~4.5.15",
+		"@vue/cli-plugin-vuex": "~4.5.15",
+		"@vue/cli-service": "~4.5.15",
 		"babel-eslint": "^10.1.0",
-		"eslint": "^7.32.0",
-		"eslint-plugin-vue": "^7.17.0",
-		"sass": "^1.39.2",
+		"eslint": "^8.1.0",
+		"eslint-plugin-vue": "^8.0.3",
+		"sass": "^1.43.4",
 		"sass-loader": "^10.1.1",
 		"vue-template-compiler": "^2.6.14"
+	},
+	"browserslist": [
+		"> 1%",
+		"last 2 versions",
+		"not dead"
+	],
+	"bugs": {
+		"url": "https://gitee.com/lyt-top/vue-next-admin/issues"
+	},
+	"engines": {
+		"node": ">=12.0.0",
+		"npm": ">= 6.0.0"
+	},
+	"keywords": [
+		"vue",
+		"vue3",
+		"vuejs/vue-next",
+		"element-ui",
+		"element-plus",
+		"vue-next-admin",
+		"next-admin"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://gitee.com/lyt-top/vue-next-admin.git"
 	}
 }
