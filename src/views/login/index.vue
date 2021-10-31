@@ -45,7 +45,7 @@ import Mobile from '/@/views/login/component/mobile.vue';
 import Scan from '/@/views/login/component/scan.vue';
 import { useStore } from '/@/store/index';
 export default {
-	name: 'login',
+	name: 'loginIndex',
 	components: { Account, Mobile, Scan },
 	setup() {
 		const store = useStore();

@@ -8,7 +8,7 @@
 import { toRefs, reactive, defineComponent, onMounted, getCurrentInstance } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 export default defineComponent({
-	name: 'login11',
+	name: 'loginScan',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const state = reactive({});

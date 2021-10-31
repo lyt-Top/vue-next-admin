@@ -68,7 +68,7 @@ import { useStore } from '/@/store/index';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 export default defineComponent({
-	name: 'login',
+	name: 'loginAccount',
 	setup() {
 		const { t } = useI18n();
 		const { proxy } = getCurrentInstance() as any;
