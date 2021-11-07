@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import NavBarsIndex from '@/views/layout/navBars/index.vue';
+import NavBarsIndex from '@/layout/navBars/index.vue';
 export default {
 	name: 'layoutHeader',
 	components: { NavBarsIndex },

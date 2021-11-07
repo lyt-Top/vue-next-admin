@@ -69,8 +69,8 @@
 import screenfull from 'screenfull';
 import { resetRouter } from '@/router/index.js';
 import { Session, Local } from '@/utils/storage.js';
-import UserNews from '@/views/layout/navBars/breadcrumb/userNews.vue';
-import Search from '@/views/layout/navBars/breadcrumb/search.vue';
+import UserNews from '@/layout/navBars/breadcrumb/userNews.vue';
+import Search from '@/layout/navBars/breadcrumb/search.vue';
 export default {
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },

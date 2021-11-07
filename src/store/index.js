@@ -1,19 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import routesList from '@/store/modules/routesList.js';
-import tagsViewRoutes from '@/store/modules/tagsViewRoutes.js';
-import keepAliveNames from '@/store/modules/keepAliveNames.js';
-import userInfos from '@/store/modules/userInfos.js';
-import themeConfig from '@/store/modules/themeConfig.js';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
-	modules: {
-		routesList,
-		tagsViewRoutes,
-		keepAliveNames,
-		userInfos,
-		themeConfig,
-	},
-});
+let moduleFn = require.context('./modules', false, /\.js$/);
+let modules = moduleFn.keys().reduce((p, c) => {
+	let mod = moduleFn(c).default;
+	mod = { ...mod, namespaced: true };
+	let modName = c.match(/\.\/(\w+)\.js$/)[1];
+	p[modName] = mod;
+	return p;
+}, {});
+
+export default new Vuex.Store({ modules });

@@ -134,7 +134,8 @@ export function keepAliveSplice(to) {
 
 // 处理后端返回的 `component` 路径，拼装实现懒加载
 export function loadView(path) {
-	return () => Promise.resolve(require(`@/views/${path}`));
+	if (path.indexOf('layout') > -1) return () => Promise.resolve(require(`@/${path}`));
+	else return () => Promise.resolve(require(`@/views/${path}`));
 }
 
 // 递归处理每一项 `component` 中的路径
@@ -144,6 +145,7 @@ export function dynamicRouter(view) {
 	return view;
 }
 
+// 添加路由，模拟数据与方法，可自行进行修改 admin
 // 添加动态路由，`{ path: '*', redirect: '/404' }` 防止页面刷新，静态路由丢失问题
 // next({ ...to, replace: true }) 动态路由 addRoute 完毕后才放行，防止刷新时 NProgress 进度条加载2次
 // 文档地址：https://router.vuejs.org/zh/api/#router-addroutes
@@ -164,6 +166,7 @@ export function adminUser(router, to, next) {
 		.catch(() => {});
 }
 
+// 添加路由，模拟数据与方法，可自行进行修改 test
 // 添加动态路由，`{ path: '*', redirect: '/404' }` 防止页面刷新，静态路由丢失问题
 export function testUser(router, to, next) {
 	resetRouter();

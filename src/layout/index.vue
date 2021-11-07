@@ -10,10 +10,10 @@ import { Local } from '@/utils/storage.js';
 export default {
 	name: 'layout',
 	components: {
-		Defaults: () => import('@/views/layout/main/defaults.vue'),
-		Classic: () => import('@/views/layout/main/classic.vue'),
-		Transverse: () => import('@/views/layout/main/transverse.vue'),
-		Columns: () => import('@/views/layout/main/columns.vue'),
+		Defaults: () => import('@/layout/main/defaults.vue'),
+		Classic: () => import('@/layout/main/classic.vue'),
+		Transverse: () => import('@/layout/main/transverse.vue'),
+		Columns: () => import('@/layout/main/columns.vue'),
 	},
 	computed: {
 		// 获取布局配置信息

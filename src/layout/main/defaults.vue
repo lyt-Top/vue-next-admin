@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import Aside from '@/views/layout/component/aside.vue';
-import Header from '@/views/layout/component/header.vue';
-import Main from '@/views/layout/component/main.vue';
+import Aside from '@/layout/component/aside.vue';
+import Header from '@/layout/component/header.vue';
+import Main from '@/layout/component/main.vue';
 export default {
 	name: 'layoutDefaults',
 	components: { Aside, Header, Main },

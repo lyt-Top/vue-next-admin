@@ -8,7 +8,7 @@
 <script>
 import setIntroduction from '@/utils/setIconfont.js';
 import { Local } from '@/utils/storage.js';
-import Setings from '@/views/layout/navBars/breadcrumb/setings.vue';
+import Setings from '@/layout/navBars/breadcrumb/setings.vue';
 export default {
 	name: 'App',
 	components: { Setings },

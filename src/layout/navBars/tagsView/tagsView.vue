@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Contextmenu from '@/views/layout/navBars/tagsView/contextmenu';
+import Contextmenu from '@/layout/navBars/tagsView/contextmenu';
 import { Session } from '@/utils/storage.js';
 export default {
 	name: 'tagsView',

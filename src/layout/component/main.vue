@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import LayoutParentView from '@/views/layout/routerView/parent.vue';
-import Footer from '@/views/layout/footer/index.vue';
-import Link from '@/views/layout/routerView/link.vue';
-import Iframes from '@/views/layout/routerView/iframes.vue';
+import LayoutParentView from '@/layout/routerView/parent.vue';
+import Footer from '@/layout/footer/index.vue';
+import Link from '@/layout/routerView/link.vue';
+import Iframes from '@/layout/routerView/iframes.vue';
 export default {
 	name: 'layoutMain',
 	components: { LayoutParentView, Footer, Link, Iframes },

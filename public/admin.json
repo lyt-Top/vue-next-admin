@@ -282,7 +282,7 @@
 				"component": "layout/routerView/parent",
 				"meta": {
 					"title": "message.router.layoutIfameView",
-					"isLink": "https://gitee.com/lyt-top/vue-next-admin",
+					"isLink": "https://element-plus.gitee.io/zh-CN/#/zh-CN/component/installation",
 					"isHide": false,
 					"isKeepAlive": false,
 					"isAffix": true,

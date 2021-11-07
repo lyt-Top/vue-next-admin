@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import Vertical from '@/views/layout/navMenu/vertical.vue';
-import Logo from '@/views/layout/logo/index.vue';
+import Vertical from '@/layout/navMenu/vertical.vue';
+import Logo from '@/layout/logo/index.vue';
 export default {
 	name: 'layoutAside',
 	components: { Vertical, Logo },

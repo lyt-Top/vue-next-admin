@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import Aside from '@/views/layout/component/aside.vue';
-import Header from '@/views/layout/component/header.vue';
-import Main from '@/views/layout/component/main.vue';
-import TagsView from '@/views/layout/navBars/tagsView/tagsView.vue';
+import Aside from '@/layout/component/aside.vue';
+import Header from '@/layout/component/header.vue';
+import Main from '@/layout/component/main.vue';
+import TagsView from '@/layout/navBars/tagsView/tagsView.vue';
 export default {
 	name: 'layoutClassic',
 	components: { Aside, Header, Main, TagsView },

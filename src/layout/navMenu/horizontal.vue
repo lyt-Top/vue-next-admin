@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import SubItem from '@/views/layout/navMenu/subItem.vue';
+import SubItem from '@/layout/navMenu/subItem.vue';
 export default {
 	name: 'navMenuHorizontal',
 	components: { SubItem },
