@@ -220,6 +220,9 @@ router.beforeEach((to, from, next) => {
 			next('/login');
 			Session.clear();
 			delayNProgressDone();
+		} else if (token && to.path === '/login') {
+			next('/home');
+			delayNProgressDone();
 		} else {
 			if (Object.keys(store.state.routesList.routesList).length <= 0) {
 				getRouterList(router, to, next);
