@@ -48,7 +48,7 @@ export async function initBackEndControlRoutes() {
  */
 export function getBackEndControlRoutes() {
 	// 模拟 admin 与 test
-	const auth = store.state.userInfos.userInfos.authPageList[0];
+	const auth = store.state.userInfos.userInfos.roles[0];
 	// 管理员 admin
 	if (auth === 'admin') return getMenuAdmin();
 	// 其它用户 test

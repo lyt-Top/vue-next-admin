@@ -9,7 +9,6 @@ const setWatermark = (str: string) => {
 	cans.rotate((-20 * Math.PI) / 180);
 	cans.font = '12px Vedana';
 	cans.fillStyle = 'rgba(200, 200, 200, 0.30)';
-	cans.textAlign = 'center';
 	cans.textBaseline = 'Middle';
 	cans.fillText(str, can.width / 10, can.height / 2);
 	const div = document.createElement('div');

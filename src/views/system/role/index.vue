@@ -1,41 +1,38 @@
 <template>
-	<div class="system-user-container">
+	<div class="system-role-container">
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
-				<el-input size="small" placeholder="请输入用户名称" style="max-width: 180px"> </el-input>
+				<el-input size="small" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
 				<el-button size="small" type="primary" class="ml10">
 					<el-icon>
 						<elementSearch />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddUser">
+				<el-button size="small" type="success" class="ml10" @click="onOpenAddRole">
 					<el-icon>
 						<elementFolderAdd />
 					</el-icon>
-					新增用户
+					新增角色
 				</el-button>
 			</div>
 			<el-table :data="tableData.data" style="width: 100%">
 				<el-table-column type="index" label="序号" width="50" />
-				<el-table-column prop="userName" label="账户名称" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="userNickname" label="用户昵称" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="roleSign" label="关联角色" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="department" label="部门" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="phone" label="手机号" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="email" label="邮箱" show-overflow-tooltip></el-table-column>
-				<el-table-column prop="status" label="用户状态" show-overflow-tooltip>
+				<el-table-column prop="roleName" label="角色名称" show-overflow-tooltip></el-table-column>
+				<el-table-column prop="roleSign" label="角色标识" show-overflow-tooltip></el-table-column>
+				<el-table-column prop="sort" label="排序" show-overflow-tooltip></el-table-column>
+				<el-table-column prop="status" label="角色状态" show-overflow-tooltip>
 					<template #default="scope">
 						<el-tag type="success" v-if="scope.row.status">启用</el-tag>
 						<el-tag type="info" v-else>禁用</el-tag>
 					</template>
 				</el-table-column>
-				<el-table-column prop="describe" label="用户描述" show-overflow-tooltip></el-table-column>
+				<el-table-column prop="describe" label="角色描述" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button :disabled="scope.row.userName === 'admin'" size="mini" type="text" @click="onOpenEditUser(scope.row)">修改</el-button>
-						<el-button :disabled="scope.row.userName === 'admin'" size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onOpenEditRole(scope.row)">修改</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -53,22 +50,22 @@
 			>
 			</el-pagination>
 		</el-card>
-		<AddUer ref="addUserRef" />
-		<EditUser ref="editUserRef" />
+		<AddRole ref="addRoleRef" />
+		<EditRole ref="editRoleRef" />
 	</div>
 </template>
 
 <script lang="ts">
 import { toRefs, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddUer from '/@/views/system/user/component/addUser.vue';
-import EditUser from '/@/views/system/user/component/editUser.vue';
+import AddRole from '/@/views/system/role/component/addRole.vue';
+import EditRole from '/@/views/system/role/component/editRole.vue';
 export default {
-	name: 'systemUser',
-	components: { AddUer, EditUser },
+	name: 'systemRole',
+	components: { AddRole, EditRole },
 	setup() {
-		const addUserRef = ref();
-		const editUserRef = ref();
+		const addRoleRef = ref();
+		const editRoleRef = ref();
 		const state: any = reactive({
 			tableData: {
 				data: [],
@@ -85,34 +82,28 @@ export default {
 			const data: Array<object> = [];
 			for (let i = 0; i < 2; i++) {
 				data.push({
-					userName: i === 0 ? 'admin' : 'test',
-					userNickname: i === 0 ? '我是管理员' : '我是普通用户',
+					roleName: i === 0 ? '超级管理员' : '普通用户',
 					roleSign: i === 0 ? 'admin' : 'common',
-					department: i === 0 ? ['vueNextAdmin', 'IT外包服务'] : ['vueNextAdmin', '资本控股'],
-					phone: '12345678910',
-					email: 'vueNextAdmin@123.com',
-					sex: '女',
-					password: '123456',
-					overdueTime: new Date(),
+					describe: `测试角色${i + 1}`,
+					sort: i,
 					status: true,
-					describe: i === 0 ? '不可删除' : '测试用户',
 					createTime: new Date().toLocaleString(),
 				});
 			}
 			state.tableData.data = data;
 			state.tableData.total = state.tableData.data.length;
 		};
-		// 打开新增用户弹窗
-		const onOpenAddUser = () => {
-			addUserRef.value.openDialog();
+		// 打开新增角色弹窗
+		const onOpenAddRole = () => {
+			addRoleRef.value.openDialog();
 		};
-		// 打开修改用户弹窗
-		const onOpenEditUser = (row: Object) => {
-			editUserRef.value.openDialog(row);
+		// 打开修改角色弹窗
+		const onOpenEditRole = (row: Object) => {
+			editRoleRef.value.openDialog(row);
 		};
-		// 删除用户
+		// 删除角色
 		const onRowDel = (row: Object) => {
-			ElMessageBox.confirm(`此操作将永久删除账户名称：“${row.userName}”，是否继续?`, '提示', {
+			ElMessageBox.confirm(`此操作将永久删除角色名称：“${row.roleName}”，是否继续?`, '提示', {
 				confirmButtonText: '确认',
 				cancelButtonText: '取消',
 				type: 'warning',
@@ -135,10 +126,10 @@ export default {
 			initTableData();
 		});
 		return {
-			addUserRef,
-			editUserRef,
-			onOpenAddUser,
-			onOpenEditUser,
+			addRoleRef,
+			editRoleRef,
+			onOpenAddRole,
+			onOpenEditRole,
 			onRowDel,
 			onHandleSizeChange,
 			onHandleCurrentChange,
@@ -149,6 +140,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.system-user-container {
+.system-role-container {
 }
 </style>

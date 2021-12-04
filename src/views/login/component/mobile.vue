@@ -1,21 +1,20 @@
 <template>
 	<el-form class="login-content-form">
 		<el-form-item>
-			<el-input type="text" placeholder="请输入手机号" prefix-icon="iconfont icon-dianhua" v-model="ruleForm.userName" clearable autocomplete="off">
+			<el-input type="text" placeholder="请输入手机号" v-model="ruleForm.userName" clearable autocomplete="off">
+				<template #prefix>
+					<i class="iconfont icon-dianhua el-input__icon"></i>
+				</template>
 			</el-input>
 		</el-form-item>
 		<el-form-item>
 			<el-row :gutter="15">
 				<el-col :span="16">
-					<el-input
-						type="text"
-						maxlength="4"
-						placeholder="请输入验证码"
-						prefix-icon="el-icon-position"
-						v-model="ruleForm.code"
-						clearable
-						autocomplete="off"
-					></el-input>
+					<el-input type="text" maxlength="4" placeholder="请输入验证码" v-model="ruleForm.code" clearable autocomplete="off">
+						<template #prefix>
+							<el-icon class="el-input__icon"><elementPosition /></el-icon>
+						</template>
+					</el-input>
 				</el-col>
 				<el-col :span="8">
 					<el-button class="login-content-code">获取验证码</el-button>
@@ -51,9 +50,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
-	::v-deep(.el-input__icon) {
-		display: inline-block;
-	}
 	.login-content-code {
 		width: 100%;
 		padding: 0;

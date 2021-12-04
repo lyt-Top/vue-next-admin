@@ -14,7 +14,9 @@
 			</template>
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
-			<i class="el-icon-search" title="菜单搜索"></i>
+			<el-icon title="菜单搜索">
+				<elementSearch />
+			</el-icon>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" title="布局配置"></i>
@@ -23,7 +25,9 @@
 			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
 				<template #reference>
 					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
-						<i class="el-icon-bell" title="消息"></i>
+						<el-icon title="消息">
+							<elementBell />
+						</el-icon>
 					</el-badge>
 				</template>
 				<transition name="el-zoom-in-top">
@@ -38,7 +42,9 @@
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
 				{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}
-				<i class="el-icon-arrow-down el-icon--right"></i>
+				<el-icon class="el-icon--right">
+					<elementArrowDown />
+				</el-icon>
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>

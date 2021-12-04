@@ -5,11 +5,15 @@
 				v-model="menuQuery"
 				:fetch-suggestions="menuSearch"
 				placeholder="菜单搜索：支持中文、路由路径"
-				prefix-icon="el-icon-search"
 				ref="layoutMenuAutocompleteRef"
 				@select="onHandleSelect"
 				@blur="onSearchBlur"
 			>
+				<template #prefix>
+					<el-icon class="el-input__icon">
+						<elementSearch />
+					</el-icon>
+				</template>
 				<template #default="{ item }">
 					<div><i :class="item.meta.icon" class="mr10"></i>{{ item.meta.title }}</div>
 				</template>

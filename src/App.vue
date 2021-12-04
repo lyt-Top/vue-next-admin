@@ -9,7 +9,7 @@
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
-import { useTitle } from '/@/utils/setWebTitle';
+import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/layout/lockScreen/index.vue';
@@ -23,7 +23,6 @@ export default defineComponent({
 		const setingsRef = ref();
 		const route = useRoute();
 		const store = useStore();
-		const title = useTitle();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
@@ -61,7 +60,7 @@ export default defineComponent({
 		watch(
 			() => route.path,
 			() => {
-				title();
+				other.useTitle();
 			}
 		);
 		return {

@@ -9,7 +9,7 @@ import { RouteRecordRaw } from 'vue-router';
  *      isKeepAlive：   是否缓存组件状态
  *      isAffix：       是否固定在 tagsView 栏上
  *      isIframe：      是否内嵌窗口，，开启条件，`1、isIframe:true 2、链接地址不为空`
- *      auth：          当前路由权限标识（多个请用逗号隔开），最后转成数组格式，用于与当前用户权限进行对比，控制路由显示、隐藏
+ *      roles：          当前路由权限标识，取角色管理。控制路由显示、隐藏。超级管理员：admin 普通角色：common
  *      icon：          菜单、tagsView 图标，阿里：加 `iconfont xxx`，fontawesome：加 `fa xxx`
  * }
  */
@@ -41,7 +41,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					isKeepAlive: true,
 					isAffix: true,
 					isIframe: false,
-					auth: ['admin', 'test'],
+					roles: ['admin', 'common'],
 					icon: 'iconfont icon-shouye',
 				},
 			},
@@ -57,7 +57,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					isKeepAlive: true,
 					isAffix: false,
 					isIframe: false,
-					auth: ['admin'],
+					roles: ['admin'],
 					icon: 'iconfont icon-xitongshezhi',
 				},
 				children: [
@@ -72,8 +72,23 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isKeepAlive: true,
 							isAffix: false,
 							isIframe: false,
-							auth: ['admin'],
+							roles: ['admin'],
 							icon: 'iconfont icon-caidan',
+						},
+					},
+					{
+						path: '/system/role',
+						name: 'systemRole',
+						component: () => import('/@/views/system/role/index.vue'),
+						meta: {
+							title: '角色管理',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'elementColdDrink',
 						},
 					},
 					{
@@ -87,8 +102,38 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isKeepAlive: true,
 							isAffix: false,
 							isIframe: false,
-							auth: ['admin'],
+							roles: ['admin'],
 							icon: 'iconfont icon-icon-',
+						},
+					},
+					{
+						path: '/system/dept',
+						name: 'systemDept',
+						component: () => import('/@/views/system/dept/index.vue'),
+						meta: {
+							title: '部门管理',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'elementOfficeBuilding',
+						},
+					},
+					{
+						path: '/system/dic',
+						name: 'systemDic',
+						component: () => import('/@/views/system/dic/index.vue'),
+						meta: {
+							title: '字典管理',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin'],
+							icon: 'elementSetUp',
 						},
 					},
 				],

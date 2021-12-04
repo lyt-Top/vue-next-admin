@@ -169,6 +169,25 @@ body,
 	}
 }
 
+/* cursor 鼠标形状
+------------------------------- */
+// 默认
+.cursor-default {
+	cursor: default !important;
+}
+// 帮助
+.cursor-help {
+	cursor: help !important;
+}
+// 手指
+.cursor-pointer {
+	cursor: pointer !important;
+}
+// 移动
+.cursor-move {
+	cursor: move !important;
+}
+
 /* 宽高 100%
 ------------------------------- */
 .w100 {

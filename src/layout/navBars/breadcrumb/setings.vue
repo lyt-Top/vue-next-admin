@@ -38,7 +38,7 @@
 				<!-- 菜单 / 顶栏 -->
 				<el-divider content-position="left">菜单 / 顶栏</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
-					<div class="layout-breadcrumb-seting-bar-flex-label">{{ 顶栏背景 }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-label">顶栏背景</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
 						<el-color-picker v-model="getThemeConfig.topBar" size="small" @change="onBgColorPickerChange('topBar')"> </el-color-picker>
 					</div>
@@ -355,17 +355,16 @@
 				</div>
 				<div class="copy-config">
 					<el-alert title="点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。" type="warning" :closable="false"> </el-alert>
-					<el-button
-						size="small"
-						class="copy-config-btn"
-						icon="el-icon-document-copy"
-						type="primary"
-						ref="copyConfigBtnRef"
-						@click="onCopyConfigClick"
-					>
+					<el-button size="small" class="copy-config-btn" type="primary" ref="copyConfigBtnRef" @click="onCopyConfigClick">
+						<el-icon>
+							<elementCopyDocument />
+						</el-icon>
 						一键复制配置
 					</el-button>
-					<el-button size="small" class="copy-config-btn-reset" icon="el-icon-refresh-right" type="info" @click="onResetConfigClick">
+					<el-button size="small" class="copy-config-btn-reset" type="info" @click="onResetConfigClick">
+						<el-icon>
+							<elementRefreshRight />
+						</el-icon>
 						一键恢复默认
 					</el-button>
 				</div>

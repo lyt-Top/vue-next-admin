@@ -19,7 +19,7 @@
 						v-if="!v.affix"
 						@click="onCurrentContextmenuClick(v.contextMenuClickId)"
 					>
-						<i :class="v.icon"></i>
+						<SvgIcon :name="v.icon" />
 						<span>{{ v.txt }}</span>
 					</li>
 				</template>
@@ -42,10 +42,10 @@ export default defineComponent({
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'el-icon-refresh-right' },
-				{ contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'el-icon-close' },
-				{ contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'el-icon-circle-close' },
-				{ contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'el-icon-folder-delete' },
+				{ contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'elementRefreshRight' },
+				{ contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'elementClose' },
+				{ contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'elementCircleClose' },
+				{ contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'elementFolderDelete' },
 				{ contextMenuClickId: 4, txt: '当前页全屏', affix: false, icon: 'iconfont icon-fullscreen' },
 			],
 			item: {},

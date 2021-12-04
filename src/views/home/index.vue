@@ -20,9 +20,9 @@
 				<div class="home-card-item home-card-item-box" :style="{ background: v.color }">
 					<div class="home-card-item-flex">
 						<div class="home-card-item-title pb3">{{ v.title }}</div>
-						<div class="home-card-item-title-num pb6">{{v.titleNum}}</div>
+						<div class="home-card-item-title-num pb6">{{ v.titleNum }}</div>
 						<div class="home-card-item-tip pb3">{{ v.tip }}</div>
-						<div class="home-card-item-tip-num">{{v.tipNum}}</div>
+						<div class="home-card-item-tip-num">{{ v.tipNum }}</div>
 					</div>
 					<i :class="v.icon" :style="{ color: v.iconColor }"></i>
 				</div>
@@ -74,7 +74,7 @@
 								</div>
 								<div class="home-dynamic-item-right">
 									<div class="home-dynamic-item-right-title mb5">
-										<i class="el-icon-s-comment"></i>
+										<SvgIcon name="elementComment" />
 										<span>{{ v.title }}</span>
 									</div>
 									<div class="home-dynamic-item-right-label">{{ v.label }}</div>

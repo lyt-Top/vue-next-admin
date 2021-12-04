@@ -6,7 +6,7 @@
 					v-for="(v, k) in tagsViewList"
 					:key="k"
 					class="layout-navbars-tagsview-ul-li"
-					:data-name="v.name"
+					:data-name="v.url"
 					:class="{ 'is-active': isActive(v) }"
 					@contextmenu.prevent="onContextmenu(v, $event)"
 					@click="onTagsClick(v, k)"
@@ -20,18 +20,20 @@
 					<i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon"></i>
 					<span>{{ v.meta.title }}</span>
 					<template v-if="isActive(v)">
-						<i class="el-icon-refresh-right ml5" @click.stop="refreshCurrentTagsView($route.fullPath)"></i>
-						<i
-							class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-active"
+						<SvgIcon name="elementRefreshRight" class="ml5" @click.stop="refreshCurrentTagsView($route.fullPath)" />
+						<SvgIcon
+							name="elementClose"
+							class="layout-navbars-tagsview-ul-li-icon layout-icon-active"
 							v-if="!v.meta.isAffix"
 							@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
-						></i>
+						/>
 					</template>
-					<i
-						class="el-icon-close layout-navbars-tagsview-ul-li-icon layout-icon-three"
+					<SvgIcon
+						name="elementClose"
+						class="layout-navbars-tagsview-ul-li-icon layout-icon-three"
 						v-if="!v.meta.isAffix"
 						@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
-					></i>
+					/>
 				</li>
 			</ul>
 		</el-scrollbar>
@@ -324,7 +326,7 @@ export default {
 		};
 		// 鼠标滚轮滚动
 		const onHandleScroll = (e: any) => {
-			proxy.$refs.scrollbarRef.$refs.wrap.scrollLeft += e.wheelDelta / 4;
+			proxy.$refs.scrollbarRef.$refs.wrap$.scrollLeft += e.wheelDelta / 4;
 		};
 		// tagsView 横向滚动
 		const tagsViewmoveToCurrentTag = () => {
@@ -341,7 +343,7 @@ export default {
 				// 最后 li
 				let liLast: any = tagsRefs.value[tagsRefs.value.length - 1];
 				// 当前滚动条的值
-				let scrollRefs = proxy.$refs.scrollbarRef.$refs.wrap;
+				let scrollRefs = proxy.$refs.scrollbarRef.$refs.wrap$;
 				// 当前滚动条滚动宽度
 				let scrollS = scrollRefs.scrollWidth;
 				// 当前滚动条偏移宽度
@@ -401,7 +403,7 @@ export default {
 			state.sortable && state.sortable.destroy();
 			state.sortable = Sortable.create(el, {
 				animation: 300,
-				dataIdAttr: 'data-name',
+				dataIdAttr: 'data-url',
 				disabled: getThemeConfig.value.isSortableTagsView ? false : true,
 				onEnd: () => {
 					const sortEndList: any = [];
