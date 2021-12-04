@@ -1,6 +1,6 @@
 <template>
 	<div class="selector-container">
-		<el-card shadow="hover" header="图标选择器(宽度自动)：简单版本">
+		<el-card shadow="hover" header="图标选择器(宽度自动)：">
 			<IconSelector @get="onGetIcon" @clear="onClearIcon" v-model="modelIcon" />
 		</el-card>
 
@@ -40,7 +40,7 @@ export default defineComponent({
 					a2: '输入框前置内容，只能字体图标',
 					a3: 'string',
 					a4: '',
-					a5: 'el-icon-thumb',
+					a5: 'elementPointer',
 				},
 				{
 					a1: 'placeholder',
@@ -67,7 +67,7 @@ export default defineComponent({
 					a1: 'type',
 					a2: 'icon 图标类型',
 					a3: 'string',
-					a4: 'ali / ele / awe',
+					a4: 'ali / ele / awe / all',
 					a5: 'ele',
 				},
 				{

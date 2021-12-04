@@ -63,8 +63,16 @@
 								<el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" class="mb20">
 									<el-form-item label="年度" :prop="`list[${k}].year`" :rules="[{ required: true, message: `年度不能为空`, trigger: 'blur' }]">
 										<template #label>
-											<el-button type="primary" icon="el-icon-plus" circle size="mini" @click="onAddRow" v-if="k === 0"></el-button>
-											<el-button type="danger" icon="el-icon-delete" circle size="mini" @click="onDelRow(k)" v-else></el-button>
+											<el-button type="primary" circle size="mini" @click="onAddRow" v-if="k === 0">
+												<el-icon>
+													<elementPlus />
+												</el-icon>
+											</el-button>
+											<el-button type="danger" circle size="mini" @click="onDelRow(k)" v-else>
+												<el-icon>
+													<elementDelete />
+												</el-icon>
+											</el-button>
 											<span class="ml10">年度</span>
 										</template>
 										<el-input v-model="form.list[k].year" style="width: 100%" placeholder="请输入"> </el-input>
@@ -88,8 +96,16 @@
 		</el-card>
 		<el-row class="flex mt15">
 			<div class="flex-margin">
-				<el-button size="small" icon="el-icon-refresh-right" @click="onResetForm">重置表单</el-button>
-				<el-button size="small" type="primary" icon="iconfont icon-shuxing" @click="onSubmitForm">验证表单</el-button>
+				<el-button size="small" @click="onResetForm">
+					<el-icon>
+						<elementRefreshRight />
+					</el-icon>
+					重置表单
+				</el-button>
+				<el-button size="small" type="primary" @click="onSubmitForm">
+					<SvgIcon name="iconfont icon-shuxing" />
+					验证表单
+				</el-button>
 			</div>
 		</el-row>
 	</div>

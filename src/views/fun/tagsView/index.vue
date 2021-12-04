@@ -9,27 +9,52 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" icon="el-icon-refresh-right" @click="refreshCurrentTagsView">刷新当前页 </el-button>
+						<el-button type="primary" size="small" @click="refreshCurrentTagsView">
+							<el-icon>
+								<elementRefreshRight />
+							</el-icon>
+							刷新当前页
+						</el-button>
 					</div>
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small" icon="el-icon-close" @click="closeCurrentTagsView">关闭当前页</el-button>
+						<el-button type="info" size="small" @click="closeCurrentTagsView">
+							<el-icon>
+								<elementClose />
+							</el-icon>
+							关闭当前页
+						</el-button>
 					</div>
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="warning" size="small" icon="el-icon-circle-close" @click="closeOtherTagsView">关闭其它 </el-button>
+						<el-button type="warning" size="small" @click="closeOtherTagsView">
+							<el-icon>
+								<elementCircleClose />
+							</el-icon>
+							关闭其它
+						</el-button>
 					</div>
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small" icon="el-icon-folder-delete" @click="closeAllTagsView">全部关闭 </el-button>
+						<el-button type="danger" size="small" @click="closeAllTagsView">
+							<el-icon>
+								<elementFolderDelete />
+							</el-icon>
+							全部关闭
+						</el-button>
 					</div>
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small" icon="el-icon-full-screen" @click="openCurrenFullscreen">当前页全屏 </el-button>
+						<el-button type="success" size="small" @click="openCurrenFullscreen">
+							<el-icon>
+								<elementFullScreen />
+							</el-icon>
+							当前页全屏
+						</el-button>
 					</div>
 				</div>
 			</div>

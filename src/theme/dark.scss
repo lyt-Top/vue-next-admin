@@ -12,6 +12,7 @@
 	.error img {
 		filter: unset;
 	}
+
 	// element plus
 	.el-radio-button__original-radio:checked + .el-radio-button__inner,
 	.el-image-viewer__close,
@@ -20,6 +21,13 @@
 	.el-image-viewer__prev {
 		color: #000000 !important;
 	}
+	.el-overlay {
+		background-color: rgba(0, 0, 0, 0.05) !important;
+	}
+	.el-drawer {
+		box-shadow: 0 8px 10px -5px rgb(0 0 0 / 1%), 0 16px 24px 2px rgb(0 0 0 / 2%), 0 6px 30px 5px rgb(0 0 0 / 1%);
+	}
+
 	// 数据可视化演示
 	.visualizing-container-head {
 		background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.02)) !important;
@@ -39,6 +47,7 @@
 	.cropper-modal {
 		background-color: #ffffff;
 	}
+
 	// 其它菜单等
 	--bg-menuBar: #ffffff !important;
 	--bg-menuBarColor: #303133 !important;

@@ -853,7 +853,7 @@
 	@include generalIcon;
 }
 // element plus 本身字体图标
-.el-sub-menu [class^='el-icon-'] {
+.el-sub-menu .el-icon {
 	font-size: 14px !important;
 }
 // 去掉离开浏览器时，菜单的默认高亮
@@ -1015,6 +1015,9 @@
 
 /* scrollbar
 ------------------------------- */
+.el-scrollbar__bar {
+	z-index: 4;
+}
 .el-scrollbar__wrap {
 	overflow-x: hidden !important;
 	max-height: 100%; /*防止页面切换时，滚动条高度不变的问题（滚动条高度非滚动条滚动高度）*/

@@ -1,15 +1,23 @@
 <template>
 	<div class="drag-container">
 		<el-card shadow="hover" header="拖动指令效果（v-drag）作用于 Dialog 对话框">
-			<el-button type="primary" @click="dialogVisible = true" size="small" icon="el-icon-thumb">点击打开 Dialog</el-button>
+			<el-button type="primary" @click="dialogVisible = true" size="small">
+				<el-icon>
+					<elementPointer />
+				</el-icon>
+				点击打开 Dialog
+			</el-button>
 		</el-card>
 
 		<el-card shadow="hover" header="自定义div" class="mt15">
 			<div class="drag-dom">
 				<div class="drag-header">
-					<el-button type="success" size="small" icon="el-icon-thumb" v-drag="['.drag-container .drag-dom', '.drag-container .drag-header']"
-						>按住进行拖动测试</el-button
-					>
+					<el-button type="success" size="small" v-drag="['.drag-container .drag-dom', '.drag-container .drag-header']">
+						<el-icon>
+							<elementPointer />
+						</el-icon>
+						按住进行拖动测试
+					</el-button>
 				</div>
 			</div>
 		</el-card>

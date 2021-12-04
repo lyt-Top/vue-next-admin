@@ -14,29 +14,33 @@
 					@blur="onIconBlur"
 				>
 					<template #prepend>
-						<i
-							:class="[
-								fontIconPrefix === '' ? prepend : fontIconPrefix,
-								{ iconfont: fontIconTabsIndex === 0 },
-								{ ele: fontIconTabsIndex === 1 },
-								{ fa: fontIconTabsIndex === 2 },
-							]"
+						<SvgIcon
+							:name="fontIconPrefix === '' ? prepend : fontIconPrefix"
 							class="font14"
-						></i>
+							v-if="fontIconPrefix === '' ? prepend?.indexOf('element') > -1 : fontIconPrefix?.indexOf('element') > -1"
+						/>
+						<i v-else :class="fontIconPrefix === '' ? prepend : fontIconPrefix" class="font14"></i>
 					</template>
 				</el-input>
 			</template>
 			<transition name="el-zoom-in-top">
 				<div class="icon-selector-warp" v-show="fontIconVisible">
-					<div class="icon-selector-warp-title">{{ title }}</div>
+					<div class="icon-selector-warp-title flex">
+						<div class="flex-auto">{{ title }}</div>
+						<div class="icon-selector-warp-title-tab" v-if="type === 'all'">
+							<span :class="{ 'span-active': fontIconType === 'ali' }" @click="onIconChange('ali')" class="ml10" title="iconfont 图标">ali</span>
+							<span :class="{ 'span-active': fontIconType === 'ele' }" @click="onIconChange('ele')" class="ml10" title="elementPlus 图标">ele</span>
+							<span :class="{ 'span-active': fontIconType === 'awe' }" @click="onIconChange('awe')" class="ml10" title="fontawesome 图标">awe</span>
+						</div>
+					</div>
 					<div class="icon-selector-warp-row">
-						<el-scrollbar>
+						<el-scrollbar ref="selectorScrollbarRef">
 							<el-row :gutter="10" v-if="fontIconSheetsFilterList.length > 0">
 								<el-col :xs="6" :sm="4" :md="4" :lg="4" :xl="4" @click="onColClick(v)" v-for="(v, k) in fontIconSheetsFilterList" :key="k">
 									<div class="icon-selector-warp-item" :class="{ 'icon-selector-active': fontIconPrefix === v }">
 										<div class="flex-margin">
 											<div class="icon-selector-warp-item-value">
-												<i :class="v"></i>
+												<SvgIcon :name="v" />
 											</div>
 										</div>
 									</div>
@@ -61,7 +65,7 @@ export default {
 		// 输入框前置内容
 		prepend: {
 			type: String,
-			default: () => 'el-icon-thumb',
+			default: () => 'elementPointer',
 		},
 		// 输入框占位文本
 		placeholder: {
@@ -104,6 +108,7 @@ export default {
 	},
 	setup(props, { emit }) {
 		const inputWidthRef = ref();
+		const selectorScrollbarRef = ref();
 		const state: any = reactive({
 			fontIconPrefix: '',
 			fontIconVisible: false,
@@ -112,6 +117,8 @@ export default {
 			fontIconTabsIndex: 0,
 			fontIconSheetsList: [],
 			fontIconPlaceholder: '',
+			fontIconType: 'ali',
+			fontIconShow: true,
 		});
 		// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
 		const onIconFocus = () => {
@@ -153,21 +160,19 @@ export default {
 			});
 		};
 		// 初始化数据
-		const initFontIconData = async () => {
-			if (props.type === 'ali') {
+		const initFontIconData = async (type: string) => {
+			state.fontIconSheetsList = [];
+			if (type === 'ali') {
 				await initIconfont.ali().then((res: any) => {
-					state.fontIconTabsIndex = 0;
 					// 阿里字体图标使用 `iconfont xxx`
 					state.fontIconSheetsList = res.map((i) => `iconfont ${i}`);
 				});
-			} else if (props.type === 'ele') {
+			} else if (type === 'ele') {
 				await initIconfont.ele().then((res: any) => {
-					state.fontIconTabsIndex = 1;
 					state.fontIconSheetsList = res;
 				});
-			} else if (props.type === 'awe') {
+			} else if (type === 'awe') {
 				await initIconfont.awe().then((res: any) => {
-					state.fontIconTabsIndex = 2;
 					// fontawesome字体图标使用 `fa xxx`
 					state.fontIconSheetsList = res.map((i) => `fa ${i}`);
 				});
@@ -177,14 +182,19 @@ export default {
 			state.fontIconPlaceholder = props.placeholder;
 			// 初始化双向绑定回显
 			initModeValueEcho();
+			// 切换时，滚动条置顶。感兴趣可以使用 keep-alive <component :is="xxx"/> 进行缓存
+			selectorScrollbarRef.value.wrap$.scrollTop = 0;
+		};
+		// 图标点击切换
+		const onIconChange = (type: string) => {
+			state.fontIconType = type;
+			initFontIconData(type);
 		};
 		// 获取当前点击的 icon 图标
 		const onColClick = (v: any) => {
 			state.fontIconPlaceholder = v;
 			state.fontIconVisible = false;
-			if (state.fontIconTabsIndex === 0) state.fontIconPrefix = `${v}`;
-			else if (state.fontIconTabsIndex === 1) state.fontIconPrefix = `${v}`;
-			else if (state.fontIconTabsIndex === 2) state.fontIconPrefix = `${v}`;
+			state.fontIconPrefix = v;
 			emit('get', state.fontIconPrefix);
 			emit('update:modelValue', state.fontIconPrefix);
 		};
@@ -196,7 +206,15 @@ export default {
 		};
 		// 页面加载时
 		onMounted(() => {
-			initFontIconData();
+			// 判断默认进来是什么类型图标，进行 tab 回显
+			if (props.type === 'all') {
+				if (props.modelValue?.indexOf('iconfont') > -1) onIconChange('ali');
+				else if (props.modelValue?.indexOf('element') > -1) onIconChange('ele');
+				else if (props.modelValue?.indexOf('fa') > -1) onIconChange('awe');
+				else onIconChange('ali');
+			} else {
+				onIconChange(props.type);
+			}
 			initResize();
 			getInputWidth();
 		});
@@ -209,8 +227,10 @@ export default {
 		);
 		return {
 			inputWidthRef,
+			selectorScrollbarRef,
 			fontIconSheetsFilterList,
 			onColClick,
+			onIconChange,
 			onClearFontIcon,
 			onIconFocus,
 			onIconBlur,

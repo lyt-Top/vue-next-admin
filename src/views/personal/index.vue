@@ -66,7 +66,7 @@
 					<el-row :gutter="15" class="personal-recommend-row">
 						<el-col :sm="6" v-for="(v, k) in recommendList" :key="k" class="personal-recommend-col">
 							<div class="personal-recommend" :style="{ 'background-color': v.bg }">
-								<i :class="v.icon" :style="{ color: v.iconColor }"></i>
+								<SvgIcon :name="v.icon" :style="{ color: v.iconColor }" />
 								<div class="personal-recommend-auto">
 									<div>{{ v.title }}</div>
 									<div class="personal-recommend-msg">{{ v.msg }}</div>
@@ -122,7 +122,12 @@
 							</el-col>
 							<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 								<el-form-item>
-									<el-button type="primary" icon="el-icon-position">更新个人信息</el-button>
+									<el-button type="primary">
+										<el-icon>
+											<elementPosition />
+										</el-icon>
+										更新个人信息
+									</el-button>
 								</el-form-item>
 							</el-col>
 						</el-row>

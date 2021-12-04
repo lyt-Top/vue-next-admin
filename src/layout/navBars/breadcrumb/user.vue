@@ -26,7 +26,9 @@
 			</template>
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
-			<i class="el-icon-search" :title="$t('message.user.title2')"></i>
+			<el-icon :title="$t('message.user.title2')">
+				<elementSearch />
+			</el-icon>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
@@ -35,7 +37,9 @@
 			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
 				<template #reference>
 					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
-						<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
+						<el-icon :title="$t('message.user.title4')">
+							<elementBell />
+						</el-icon>
 					</el-badge>
 				</template>
 				<transition name="el-zoom-in-top">
@@ -54,7 +58,9 @@
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
 				{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}
-				<i class="el-icon-arrow-down el-icon--right"></i>
+				<el-icon class="el-icon--right">
+					<elementArrowDown />
+				</el-icon>
 			</span>
 			<template #dropdown>
 				<el-dropdown-menu>
@@ -79,7 +85,7 @@ import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { resetRoute } from '/@/router/index';
 import { useStore } from '/@/store/index';
-import { useTitle } from '/@/utils/setWebTitle';
+import other from '/@/utils/other';
 import { Session, Local } from '/@/utils/storage';
 import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/layout/navBars/breadcrumb/search.vue';
@@ -91,7 +97,6 @@ export default {
 		const { proxy } = getCurrentInstance() as any;
 		const router = useRouter();
 		const store = useStore();
-		const title = useTitle();
 		const searchRef = ref();
 		const state = reactive({
 			isScreenfull: false,
@@ -192,7 +197,7 @@ export default {
 			Local.set('themeConfig', getThemeConfig.value);
 			proxy.$i18n.locale = lang;
 			initI18n();
-			title();
+			other.useTitle();
 		};
 		// 设置 element plus 组件的国际化
 		const setI18nConfig = (locale: string) => {

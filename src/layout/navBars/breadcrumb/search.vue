@@ -5,13 +5,20 @@
 				v-model="menuQuery"
 				:fetch-suggestions="menuSearch"
 				:placeholder="$t('message.user.searchPlaceholder')"
-				prefix-icon="el-icon-search"
 				ref="layoutMenuAutocompleteRef"
 				@select="onHandleSelect"
 				@blur="onSearchBlur"
 			>
+				<template #prefix>
+					<el-icon class="el-input__icon">
+						<elementSearch />
+					</el-icon>
+				</template>
 				<template #default="{ item }">
-					<div><i :class="item.meta.icon" class="mr10"></i>{{ $t(item.meta.title) }}</div>
+					<div>
+						<SvgIcon :name="item.meta.icon" class="mr5" />
+						{{ $t(item.meta.title) }}
+					</div>
 				</template>
 			</el-autocomplete>
 		</el-dialog>

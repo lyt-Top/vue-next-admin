@@ -2,6 +2,21 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.2.0
+
+`2021.11.28`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 深色模式
+- 🎯 优化 `/@/utils` 文件夹，合并删除单一内容
+- 🎯 优化 系统设置：菜单管理（新增、修改）、角色管理（新增菜单权限）、用户管理、部门管理、字典管理
+- 🎯 优化 登录界面逻辑、权限管理逻辑
+- 🎯 优化 同步 [vue-next-admin-images](https://gitee.com/lyt-top/vue-next-admin-images/tree/master/menu) 后端控制菜单模拟数据
+- 🎉 新增 适配 Font Icon 向 SVG Icon 迁移（改动大，"element-plus": "^1.2.0-beta.4" 谨慎更新）
+- 🐞 修复 热更新问题，感谢@甜蜜蜜
+- 🐞 修复 页面/element 字体图标演示
+- 🐞 修复 功能/图标选择器演示，新增高级功能 [issues #I4GJXQ](https://gitee.com/lyt-top/vue-next-admin/issues/I4GJXQ)
+
 ## 1.1.2
 
 `2021.10.17`

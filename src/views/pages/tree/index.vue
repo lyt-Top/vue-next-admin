@@ -22,7 +22,10 @@
 					</template>
 				</el-tree>
 			</div>
-			<el-button @click="onSelect" class="mt15" size="small" type="primary" icon="iconfont icon-shuxingtu">选择元素</el-button>
+			<el-button @click="onSelect" class="mt15" size="small" type="primary">
+				<SvgIcon name="iconfont icon-shuxingtu" />
+				选择元素
+			</el-button>
 		</el-card>
 	</div>
 </template>
@@ -76,7 +79,7 @@ export default {
 				ElMessage.warning('请选择元素');
 				return;
 			} else {
-				console.log(proxy.$refs.treeTable.getCheckedNodes());
+				// console.log(proxy.$refs.treeTable.getCheckedNodes());
 			}
 		};
 		// 初始化树模拟数据

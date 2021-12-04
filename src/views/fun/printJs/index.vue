@@ -7,7 +7,10 @@
 				:closable="false"
 				class="mb15"
 			></el-alert>
-			<el-button @click="onPrintJs" size="small" type="primary" icon="iconfont icon-dayin">点击打印演示</el-button>
+			<el-button @click="onPrintJs" size="small" type="primary">
+				<SvgIcon name="iconfont icon-dayin" />
+				点击打印演示
+			</el-button>
 		</el-card>
 	</div>
 </template>

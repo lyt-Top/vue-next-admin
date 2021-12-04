@@ -6,7 +6,7 @@
 				<div class="notice-bar-warp-text" ref="noticeBarTextRef" v-if="!scrollable">{{ text }}</div>
 				<div class="notice-bar-warp-slot" v-else><slot /></div>
 			</div>
-			<i v-if="rightIcon" class="notice-bar-warp-right-icon" :class="rightIcon" @click="onRightIconClick"></i>
+			<SvgIcon :name="rightIcon" v-if="rightIcon" class="notice-bar-warp-right-icon" @click="onRightIconClick" />
 		</div>
 	</div>
 </template>

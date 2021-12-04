@@ -19,7 +19,7 @@
 						v-if="!v.affix"
 						@click="onCurrentContextmenuClick(v.contextMenuClickId)"
 					>
-						<i :class="v.icon"></i>
+						<SvgIcon :name="v.icon" />
 						<span>{{ $t(v.txt) }}</span>
 					</li>
 				</template>
@@ -42,10 +42,10 @@ export default defineComponent({
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ contextMenuClickId: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'el-icon-refresh-right' },
-				{ contextMenuClickId: 1, txt: 'message.tagsView.close', affix: false, icon: 'el-icon-close' },
-				{ contextMenuClickId: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'el-icon-circle-close' },
-				{ contextMenuClickId: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'el-icon-folder-delete' },
+				{ contextMenuClickId: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'elementRefreshRight' },
+				{ contextMenuClickId: 1, txt: 'message.tagsView.close', affix: false, icon: 'elementClose' },
+				{ contextMenuClickId: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'elementCircleClose' },
+				{ contextMenuClickId: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'elementFolderDelete' },
 				{
 					contextMenuClickId: 4,
 					txt: 'message.tagsView.fullscreen',

@@ -8,7 +8,7 @@
 			:closable="false"
 		></el-alert>
 		<el-alert
-			:title="`当前用户页面权限：[${getAuthPageList}]，当前用户按钮权限：[${getAuthBtnList}]`"
+			:title="`当前用户页面权限：[${getRoles}]，当前用户按钮权限：[${getAuthBtnList}]`"
 			type="success"
 			:closable="false"
 			class="mt15"
@@ -36,8 +36,8 @@ export default {
 			userAuth: '',
 		});
 		// 获取用户页面权限信息
-		const getAuthPageList = computed(() => {
-			return store.state.userInfos.userInfos.authPageList;
+		const getRoles = computed(() => {
+			return store.state.userInfos.userInfos.roles;
 		});
 		// 获取用户按钮权限信息
 		const getAuthBtnList = computed(() => {
@@ -45,27 +45,28 @@ export default {
 		});
 		// 初始化用户权限
 		const initUserAuth = () => {
-			state.userAuth = store.state.userInfos.userInfos.authPageList[0];
+			state.userAuth = store.state.userInfos.userInfos.roles[0];
 		};
 		// 用户权限改变时
 		const onRadioChange = async () => {
+			// 模拟数据
 			resetRoute();
-			let defaultAuthPageList: Array<string> = [];
+			let defaultRoles: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
-			// admin 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
-			let adminAuthPageList: Array<string> = ['admin'];
+			// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
+			let adminRoles: Array<string> = ['admin'];
 			// admin 按钮权限标识
 			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
-			let testAuthPageList: Array<string> = ['test'];
+			// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
+			let testRoles: Array<string> = ['common'];
 			// test 按钮权限标识
 			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
 			// 不同用户模拟不同的用户权限
 			if (state.userAuth === 'admin') {
-				defaultAuthPageList = adminAuthPageList;
+				defaultRoles = adminRoles;
 				defaultAuthBtnList = adminAuthBtnList;
 			} else {
-				defaultAuthPageList = testAuthPageList;
+				defaultRoles = testRoles;
 				defaultAuthBtnList = testAuthBtnList;
 			}
 			const userInfos = {
@@ -75,7 +76,7 @@ export default {
 						? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
 						: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
 				time: new Date().getTime(),
-				authPageList: defaultAuthPageList,
+				roles: defaultRoles,
 				authBtnList: defaultAuthBtnList,
 			};
 			Session.set('userInfo', userInfos);
@@ -88,7 +89,7 @@ export default {
 			initUserAuth();
 		});
 		return {
-			getAuthPageList,
+			getRoles,
 			getAuthBtnList,
 			onRadioChange,
 			...toRefs(state),

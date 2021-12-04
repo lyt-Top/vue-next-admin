@@ -1,12 +1,12 @@
 <template>
 	<div class="element-container">
-		<el-card shadow="hover" :header="`element plus 字体图标(自动载入)：${sheetsIconList.length - 2}个`">
+		<el-card shadow="hover" :header="`element plus 字体图标(自动载入，增加了 element 前缀，使用时：elementAim)：${sheetsIconList.length}个`">
 			<el-row class="iconfont-row">
 				<el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2" v-for="(v, k) in sheetsIconList" :key="k">
 					<div class="iconfont-warp">
 						<div class="flex-margin">
 							<div class="iconfont-warp-value">
-								<i :class="v"></i>
+								<SvgIcon :name="v" />
 							</div>
 							<div class="iconfont-warp-label mt10">{{ v }}</div>
 						</div>
@@ -26,9 +26,11 @@ export default {
 		const state = reactive({
 			sheetsIconList: [],
 		});
-		// 初始化获取 css 样式，获取 element plus 自带图标
+		// 初始化获取 css 样式，获取 element plus 自带 svg 图标，增加了 element 前缀，使用时：elementAim
 		const initGetStyleSheets = () => {
-			initIconfont.ele().then((res: any) => (state.sheetsIconList = res));
+			initIconfont.ele().then((res: any) => {
+				state.sheetsIconList = res;
+			});
 		};
 		// 页面加载时
 		onMounted(() => {

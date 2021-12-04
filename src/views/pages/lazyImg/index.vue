@@ -54,7 +54,7 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { lazyImgLoading } from '/@/utils/lazyImgLoading';
+import other from '/@/utils/other';
 import { filterList } from './mock';
 export default {
 	name: 'pagesListAdapt',
@@ -88,7 +88,7 @@ export default {
 		};
 		// 页面加载时
 		onMounted(() => {
-			lazyImgLoading('[data-lazy-img-list]', state.tableData.data);
+			other.lazyImg('[data-lazy-img-list]', state.tableData.data);
 		});
 		return {
 			onTableItemClick,

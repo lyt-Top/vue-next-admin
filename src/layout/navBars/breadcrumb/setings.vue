@@ -362,17 +362,17 @@
 				</div>
 				<div class="copy-config">
 					<el-alert :title="$t('message.layout.tipText')" type="warning" :closable="false"> </el-alert>
-					<el-button
-						size="small"
-						class="copy-config-btn"
-						icon="el-icon-document-copy"
-						type="primary"
-						ref="copyConfigBtnRef"
-						@click="onCopyConfigClick"
-						>{{ $t('message.layout.copyText') }}
+					<el-button size="small" class="copy-config-btn" type="primary" ref="copyConfigBtnRef" @click="onCopyConfigClick">
+						<el-icon>
+							<elementCopyDocument />
+						</el-icon>
+						{{ $t('message.layout.copyText') }}
 					</el-button>
-					<el-button size="small" class="copy-config-btn-reset" icon="el-icon-refresh-right" type="info" @click="onResetConfigClick"
-						>{{ $t('message.layout.resetText') }}
+					<el-button size="small" class="copy-config-btn-reset" type="info" @click="onResetConfigClick">
+						<el-icon>
+							<elementRefreshRight />
+						</el-icon>
+						{{ $t('message.layout.resetText') }}
 					</el-button>
 				</div>
 			</el-scrollbar>

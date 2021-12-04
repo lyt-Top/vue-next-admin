@@ -3,7 +3,7 @@
 		<!-- 顶部 -->
 		<div class="big-data-up">
 			<div class="up-left">
-				<i class="el-icon-time mr5"></i>
+				<SvgIcon name="elementTimer" class="mr5" />
 				<span>{{ time.txt }}</span>
 			</div>
 			<div class="up-center">
@@ -13,7 +13,7 @@
 				<el-dropdown size="small">
 					<span class="el-dropdown-link">
 						{{ dropdownActive }}
-						<i class="el-icon-arrow-down el-icon--right"></i>
+						<SvgIcon name="elementArrowDown" class="el-icon--right" />
 					</span>
 					<template #dropdown>
 						<el-dropdown-menu>
@@ -22,15 +22,15 @@
 					</template>
 				</el-dropdown>
 				<div class="ml15">
-					<i class="el-icon-bell mr5"></i>
+					<SvgIcon name="elementBell" class="mr5" />
 					<span>消息</span>
 				</div>
 				<div class="ml15">
-					<i class="el-icon-user mr5"></i>
+					<SvgIcon name="elementUser" class="mr5" />
 					<span>个人</span>
 				</div>
 				<div class="ml15">
-					<i class="el-icon-switch-button mr5"></i>
+					<SvgIcon name="elementSwitchButton" class="mr5" />
 					<span>返回</span>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 						<div class="flex-title">天气预报</div>
 						<div class="flex-content flex-content-overflow">
 							<div class="sky">
-								<i class="sky-left el-icon-cloudy-and-sunny"></i>
+								<SvgIcon name="elementSunny" class="sky-left" />
 								<div class="sky-center">
 									<div class="mb2">
 										<span class="font">多云转晴</span>
@@ -63,7 +63,7 @@
 									<div>{{ v.v1 }}</div>
 									<div v-if="v.type === 'title'">{{ v.v2 }}</div>
 									<div v-else>
-										<i :class="v.v2"></i>
+										<SvgIcon :name="v.v2" />
 									</div>
 									<div>{{ v.v3 }}</div>
 									<div>{{ v.v4 }}</div>
@@ -81,21 +81,21 @@
 						<div class="flex-content flex-content-overflow">
 							<div class="d-states">
 								<div class="d-states-item">
-									<i class="el-icon-odometer i-bg1"></i>
+									<SvgIcon name="elementOdometer" class="i-bg1" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">园区设备数</div>
 										<div class="d-states-item-value">99</div>
 									</div>
 								</div>
 								<div class="d-states-item">
-									<i class="el-icon-first-aid-kit i-bg2"></i>
+									<SvgIcon name="elementFirstAidKit" class="i-bg2" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">预警设备数</div>
 										<div class="d-states-item-value">10</div>
 									</div>
 								</div>
 								<div class="d-states-item">
-									<i class="el-icon-video-play i-bg3"></i>
+									<SvgIcon name="elementVideoPlay" class="i-bg3" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">运行设备数</div>
 										<div class="d-states-item-value">20</div>
@@ -104,7 +104,7 @@
 							</div>
 							<div class="d-btn">
 								<div class="d-btn-item" v-for="(v, k) in dBtnList" :key="k" :class="{ 'd-btn-active': dBtnActive === k }">
-									<i class="d-btn-item-left el-icon-money"></i>
+									<SvgIcon name="elementMoney" class="d-btn-item-left" />
 									<div class="d-btn-item-center">
 										<div>{{ v.v1 }}</div>
 										<div>{{ v.v2 }}|{{ v.v3 }}</div>
@@ -131,7 +131,7 @@
 						<div :class="v.topLevelClass" v-for="(v, k) in earth3DBtnList" :key="k">
 							<div class="circle" v-for="i in 4" :key="i"></div>
 							<div class="text-box">
-								<i :class="v.icon"></i>
+								<SvgIcon :name="v.icon" />
 								<div class="text">{{ v.label }}</div>
 							</div>
 						</div>
@@ -979,6 +979,9 @@ export default defineComponent({
 						text-align: center;
 						border-radius: 100%;
 						flex-shrink: 1;
+						display: flex;
+						align-items: center;
+						justify-content: center;
 					}
 					.i-bg1 {
 						background: #22bc76;

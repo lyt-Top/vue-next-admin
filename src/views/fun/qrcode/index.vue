@@ -11,7 +11,12 @@
 				<div class="mb30 mt30 qrcode-img">
 					<div class="qrcode" ref="qrcodeRef"></div>
 				</div>
-				<el-button type="primary" icon="el-icon-refresh" size="small" @click="onInitQrcode">重新生成</el-button>
+				<el-button type="primary" size="small" @click="onInitQrcode">
+					<el-icon>
+						<elementRefresh />
+					</el-icon>
+					重新生成
+				</el-button>
 			</div>
 		</el-card>
 	</div>

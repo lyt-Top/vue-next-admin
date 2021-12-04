@@ -1,4 +1,5 @@
 import { nextTick } from 'vue';
+import * as svg from '@element-plus/icons';
 
 // 获取阿里字体图标
 const getAlicdnIconfont = () => {
@@ -27,24 +28,16 @@ const getAlicdnIconfont = () => {
 	});
 };
 
-// 初始化获取 css 样式，获取 element plus 自带图标
+// 初始化获取 css 样式，获取 element plus 自带 svg 图标，增加了 element 前缀，使用时：elementAim
 const getElementPlusIconfont = () => {
 	return new Promise((resolve, reject) => {
 		nextTick(() => {
-			const styles: any = document.styleSheets;
-			let sheetsIconList = [];
-			for (let i = 0; i < styles.length; i++) {
-				for (let j = 0; j < styles[i].cssRules.length; j++) {
-					if (styles[i].cssRules[j].selectorText && styles[i].cssRules[j].selectorText.indexOf('.el-icon-') === 0) {
-						if (/::before/.test(styles[i].cssRules[j].selectorText)) {
-							sheetsIconList.push(
-								`${styles[i].cssRules[j].selectorText.substring(1, styles[i].cssRules[j].selectorText.length).replace(/\:\:before/gi, '')}`
-							);
-						}
-					}
-				}
+			const icons = svg as any;
+			const sheetsIconList = [];
+			for (const i in icons) {
+				sheetsIconList.push(`element${icons[i].name}`);
 			}
-			if (sheetsIconList.length > 0) resolve(sheetsIconList.reverse());
+			if (sheetsIconList.length > 0) resolve(sheetsIconList);
 			else reject('未获取到值，请刷新重试');
 		});
 	});

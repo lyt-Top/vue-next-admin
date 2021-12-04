@@ -118,6 +118,9 @@
 							border-radius: 100%;
 							flex-shrink: 1;
 							color: var(--color-whites);
+							display: flex;
+							align-items: center;
+							justify-content: center;
 						}
 						.i-bg1 {
 							background: #22bc76;

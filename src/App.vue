@@ -11,7 +11,7 @@
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch, reactive, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
-import { useTitle } from '/@/utils/setWebTitle';
+import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import LockScreen from '/@/layout/lockScreen/index.vue';
@@ -25,7 +25,6 @@ export default defineComponent({
 		const setingsRef = ref();
 		const route = useRoute();
 		const store = useStore();
-		const title = useTitle();
 		const state = reactive({
 			i18nLocale: null,
 		});
@@ -75,7 +74,7 @@ export default defineComponent({
 		watch(
 			() => route.path,
 			() => {
-				title();
+				other.useTitle();
 			}
 		);
 		return {

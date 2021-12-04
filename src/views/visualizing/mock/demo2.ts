@@ -37,7 +37,7 @@ export const skyList: Array<object> = [
 	},
 	{
 		v1: '今天',
-		v2: 'el-icon-cloudy-and-sunny',
+		v2: 'elementSunny',
 		v3: '20°/26°',
 		v4: '80%',
 		v5: '50%',
@@ -46,7 +46,7 @@ export const skyList: Array<object> = [
 	},
 	{
 		v1: '明天',
-		v2: 'el-icon-lightning',
+		v2: 'elementLightning',
 		v3: '20°/26°',
 		v4: '80%',
 		v5: '50%',
@@ -55,7 +55,7 @@ export const skyList: Array<object> = [
 	},
 	{
 		v1: '后天',
-		v2: 'el-icon-sunny',
+		v2: 'elementSunny',
 		v3: '20°/26°',
 		v4: '80%',
 		v5: '50%',
@@ -106,25 +106,25 @@ export const chartData4List: Array<object> = [
 export const earth3DBtnList: Array<object> = [
 	{
 		topLevelClass: 'fixed-top',
-		icon: 'el-icon-s-marketing',
+		icon: 'elementMagicStick',
 		label: '环境监测',
 		type: 0,
 	},
 	{
 		topLevelClass: 'fixed-right',
-		icon: 'el-icon-s-cooperation',
+		icon: 'elementMoonNight',
 		label: '精准管理',
 		type: 1,
 	},
 	{
 		topLevelClass: 'fixed-bottom',
-		icon: 'el-icon-s-order',
+		icon: 'elementTrendCharts',
 		label: '数据报表',
 		type: 2,
 	},
 	{
 		topLevelClass: 'fixed-left',
-		icon: 'el-icon-s-claim',
+		icon: 'elementVan',
 		label: '产品追溯',
 		type: 3,
 	},

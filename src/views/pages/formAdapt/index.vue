@@ -72,7 +72,10 @@
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
 						<el-form-item>
-							<el-button type="primary" icon="iconfont icon-biaodan">更新个人信息</el-button>
+							<el-button type="primary">
+								<SvgIcon name="iconfont icon-biaodan" />
+								更新个人信息
+							</el-button>
 						</el-form-item>
 					</el-col>
 				</el-row>

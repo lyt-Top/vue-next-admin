@@ -8,7 +8,12 @@
 			type="warning"
 			:closable="false"
 		></el-alert>
-		<el-button type="primary" size="small" class="mt15" icon="el-icon-position" @click="onGoToFrontEndPage">立即前往前端控制路由 </el-button>
+		<el-button type="primary" size="small" class="mt15" @click="onGoToFrontEndPage">
+			<el-icon>
+				<elementPosition />
+			</el-icon>
+			立即前往前端控制路由
+		</el-button>
 	</div>
 </template>
 

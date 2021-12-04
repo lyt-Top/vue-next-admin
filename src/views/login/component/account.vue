@@ -1,24 +1,22 @@
 <template>
 	<el-form class="login-content-form">
 		<el-form-item>
-			<el-input
-				type="text"
-				:placeholder="$t('message.account.accountPlaceholder1')"
-				prefix-icon="el-icon-user"
-				v-model="ruleForm.userName"
-				clearable
-				autocomplete="off"
-			>
+			<el-input type="text" :placeholder="$t('message.account.accountPlaceholder1')" v-model="ruleForm.userName" clearable autocomplete="off">
+				<template #prefix>
+					<el-icon class="el-input__icon"><elementUser /></el-icon>
+				</template>
 			</el-input>
 		</el-form-item>
 		<el-form-item>
 			<el-input
 				:type="isShowPassword ? 'text' : 'password'"
 				:placeholder="$t('message.account.accountPlaceholder2')"
-				prefix-icon="el-icon-lock"
 				v-model="ruleForm.password"
 				autocomplete="off"
 			>
+				<template #prefix>
+					<el-icon class="el-input__icon"><elementUnlock /></el-icon>
+				</template>
 				<template #suffix>
 					<i
 						class="iconfont el-input__icon login-content-password"
@@ -36,11 +34,14 @@
 						type="text"
 						maxlength="4"
 						:placeholder="$t('message.account.accountPlaceholder3')"
-						prefix-icon="el-icon-position"
 						v-model="ruleForm.code"
 						clearable
 						autocomplete="off"
-					></el-input>
+					>
+						<template #prefix>
+							<el-icon class="el-input__icon"><elementPosition /></el-icon>
+						</template>
+					</el-input>
 				</el-col>
 				<el-col :span="8">
 					<div class="login-content-code">
@@ -92,23 +93,24 @@ export default defineComponent({
 		});
 		// 登录
 		const onSignIn = async () => {
+			// 模拟数据
 			state.loading.signIn = true;
-			let defaultAuthPageList: Array<string> = [];
+			let defaultRoles: Array<string> = [];
 			let defaultAuthBtnList: Array<string> = [];
-			// admin 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
-			let adminAuthPageList: Array<string> = ['admin'];
+			// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
+			let adminRoles: Array<string> = ['admin'];
 			// admin 按钮权限标识
 			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.auth，用于控制路由的显示/隐藏
-			let testAuthPageList: Array<string> = ['test'];
+			// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
+			let testRoles: Array<string> = ['common'];
 			// test 按钮权限标识
 			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
 			// 不同用户模拟不同的用户权限
 			if (state.ruleForm.userName === 'admin') {
-				defaultAuthPageList = adminAuthPageList;
+				defaultRoles = adminRoles;
 				defaultAuthBtnList = adminAuthBtnList;
 			} else {
-				defaultAuthPageList = testAuthPageList;
+				defaultRoles = testRoles;
 				defaultAuthBtnList = testAuthBtnList;
 			}
 			// 用户信息模拟数据
@@ -119,7 +121,7 @@ export default defineComponent({
 						? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
 						: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
 				time: new Date().getTime(),
-				authPageList: defaultAuthPageList,
+				roles: defaultRoles,
 				authBtnList: defaultAuthBtnList,
 			};
 			// 存储 token 到浏览器缓存

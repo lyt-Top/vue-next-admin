@@ -1,18 +1,18 @@
 <template>
 	<div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
-		<i
+		<SvgIcon
 			class="layout-navbars-breadcrumb-icon"
-			:class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+			:name="getThemeConfig.isCollapse ? 'elementExpand' : 'elementFold'"
 			@click="onThemeConfigChange"
-		></i>
+		/>
 		<el-breadcrumb class="layout-navbars-breadcrumb-hide">
 			<transition-group name="breadcrumb" mode="out-in">
 				<el-breadcrumb-item v-for="(v, k) in breadcrumbList" :key="v.meta.title">
 					<span v-if="k === breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
-						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ $t(v.meta.title) }}
+						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ $t(v.meta.title) }}
 					</span>
 					<a v-else @click.prevent="onBreadcrumbClick(v)">
-						<i :class="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon"></i>{{ $t(v.meta.title) }}
+						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ $t(v.meta.title) }}
 					</a>
 				</el-breadcrumb-item>
 			</transition-group>

@@ -12,7 +12,7 @@
 				text="🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等，适配手机、平板、pc
 				的后台开源免费模板库（vue2.x请切换vue-prev-admin分支），仓库地址：https://gitee.com/lyt-top/vue-next-admin"
 				leftIcon="iconfont icon-tongzhi2"
-				rightIcon="el-icon-arrow-right"
+				rightIcon="elementArrowRight"
 				background="#ecf5ff"
 				color="#409eff"
 			/>

@@ -11,7 +11,12 @@
 				<div class="mb15 mt15">
 					<img class="cropper-img" :src="cropperImg" />
 				</div>
-				<el-button type="primary" icon="el-icon-crop" size="small" @click="onCropperDialogOpen">更换头像</el-button>
+				<el-button type="primary" size="small" @click="onCropperDialogOpen">
+					<el-icon>
+						<elementCrop />
+					</el-icon>
+					更换头像
+				</el-button>
 			</div>
 		</el-card>
 		<CropperDialog ref="cropperDialogRef" />

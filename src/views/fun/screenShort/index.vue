@@ -8,7 +8,10 @@
 				class="mb15"
 			></el-alert>
 			<ScreenShort ref="screenShortRef" @getBase64="onGetBase64" />
-			<el-button type="primary" size="small" @click="onScreenShortClick" icon="el-icon-crop">点击截屏</el-button>
+			<el-button type="primary" size="small" @click="onScreenShortClick">
+				<SvgIcon name="elementCrop" />
+				点击截屏
+			</el-button>
 		</el-card>
 	</div>
 </template>

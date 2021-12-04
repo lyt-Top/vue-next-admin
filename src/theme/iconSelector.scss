@@ -9,6 +9,19 @@
 			height: 40px;
 			line-height: 40px;
 			padding: 0 15px;
+			.icon-selector-warp-title-tab {
+				span {
+					cursor: pointer;
+					&:hover {
+						color: var(--color-primary);
+						text-decoration: underline;
+					}
+				}
+				.span-active {
+					color: var(--color-primary);
+					text-decoration: underline;
+				}
+			}
 		}
 		.icon-selector-warp-row {
 			height: 230px;
