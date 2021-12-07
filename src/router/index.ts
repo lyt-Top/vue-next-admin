@@ -93,7 +93,7 @@ export function setCacheTagsViewRoutes() {
  * @returns 返回对比后有权限的路由项
  */
 export function hasRoles(roles: any, route: any) {
-	if (route.meta && route.meta.auth) return roles.some((role: any) => route.meta.roles.includes(role));
+	if (route.meta && route.meta.roles) return roles.some((role: any) => route.meta.roles.includes(role));
 	else return true;
 }
 
