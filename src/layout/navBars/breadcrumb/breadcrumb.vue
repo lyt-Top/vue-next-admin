@@ -1,10 +1,10 @@
 <template>
 	<div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
-		<i
+		<SvgIcon
 			class="layout-navbars-breadcrumb-icon"
-			:class="getThemeConfig.isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
+			:name="getThemeConfig.isCollapse ? 'elementExpand' : 'elementFold'"
 			@click="onThemeConfigChange"
-		></i>
+		/>
 		<el-breadcrumb class="layout-navbars-breadcrumb-hide">
 			<transition-group name="breadcrumb" mode="out-in">
 				<el-breadcrumb-item v-for="(v, k) in breadcrumbList" :key="v.meta.title">
