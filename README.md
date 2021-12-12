@@ -98,7 +98,7 @@ cnpm run build
 - <a href="https://github.com/vuejs/vue-next" target="_blank">vue-next</a>
 - <a href="https://github.com/ElemeFE/element" target="_blank">element-ui</a>
 - <a href="https://github.com/element-plus/element-plus" target="_blank">element-plus</a>
-- <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-nex</a>
+- <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-next</a>
 - <a href="https://github.com/vuejs/vuex" target="_blank">vuex</a>
 - <a href="https://github.com/apache/echarts" target="_blank">echarts</a>
 - <a href="https://github.com/axios/axios" target="_blank">axios</a>
