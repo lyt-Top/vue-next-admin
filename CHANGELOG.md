@@ -2,6 +2,17 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 1.2.1
+
+`2021.12.12`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 cropper 裁剪时卡顿问题 [#I4M2VQ](https://gitee.com/lyt-top/vue-next-admin/issues/I4M2VQ)
+- 🎯 优化 Wangeditor 富文本编辑器的问题 [#I4LPC1](https://gitee.com/lyt-top/vue-next-admin/issues/I4LPC1)、[#I4LM7I](https://gitee.com/lyt-top/vue-next-admin/issues/I4LM7I)
+- 🐞 修复 浏览器标题问题
+- 🐞 修复 element plus svg 图标引入
+- 🐞 修复 工作流不可以拖线连接问题
+
 ## 1.2.0
 
 `2021.11.28`

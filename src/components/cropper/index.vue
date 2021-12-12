@@ -42,6 +42,7 @@ export default {
 			isShowDialog: false,
 			cropperImg: '',
 			cropperImgBase64: '',
+			cropper: null,
 		});
 		// 打开弹窗
 		const openDialog = (imgs: any) => {
@@ -59,12 +60,14 @@ export default {
 		const onCancel = () => {
 			closeDialog();
 		};
-		// 新增
-		const onSubmit = () => {};
+		// 更换
+		const onSubmit = () => {
+			// state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+		};
 		// 初始化cropperjs图片裁剪
 		const initCropper = () => {
 			const letImg: any = document.querySelector('.cropper-warp-left-img');
-			const cropper = new Cropper(letImg, {
+			state.cropper = new Cropper(letImg, {
 				viewMode: 1,
 				dragMode: 'none',
 				initialAspectRatio: 1,
@@ -74,7 +77,7 @@ export default {
 				autoCropArea: 0.6,
 				zoomOnWheel: false,
 				crop: () => {
-					state.cropperImgBase64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+					state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
 				},
 			});
 		};
