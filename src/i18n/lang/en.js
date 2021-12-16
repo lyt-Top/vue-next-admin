@@ -51,6 +51,11 @@ export default {
 		layoutLinkView: 'LinkView',
 		layoutIfameView: 'IfameView',
 	},
+	staticRoutes: {
+		signIn: 'signIn',
+		notFound: 'notFound',
+		noPower: 'noPower',
+	},
 	user: {
 		title0: 'Component size',
 		title1: 'Language switching',

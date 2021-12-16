@@ -1,6 +1,6 @@
 {
 	"name": "vue-prev-admin",
-	"version": "1.0.7",
+	"version": "1.0.8",
 	"private": true,
 	"description": "vue2 webpack admin template",
 	"author": "lyt_20201208",
@@ -18,7 +18,7 @@
 		"echarts": "^5.2.2",
 		"element-ui": "^2.15.6",
 		"nprogress": "^0.2.0",
-		"screenfull": "^5.2.0",
+		"screenfull": "5.2.0",
 		"sign-canvas": "^1.1.4",
 		"vue": "^2.6.14",
 		"vue-i18n": "^8.26.7",
@@ -28,17 +28,16 @@
 		"vuex": "^3.6.2"
 	},
 	"devDependencies": {
-		"@babel/eslint-parser": "^7.16.3",
+		"@babel/eslint-parser": "^7.16.5",
 		"@vue/cli-plugin-babel": "~4.5.15",
 		"@vue/cli-plugin-eslint": "~4.5.15",
 		"@vue/cli-plugin-router": "~4.5.15",
 		"@vue/cli-plugin-vuex": "~4.5.15",
 		"@vue/cli-service": "~4.5.15",
-		"eslint": "^8.3.0",
-		"eslint-plugin-vue": "^8.1.1",
-		"sass": "^1.43.5",
-		"sass-loader": "^10.1.1",
-		"screenfull": "^6.0.0",
+		"eslint": "^8.4.1",
+		"eslint-plugin-vue": "^8.2.0",
+		"sass": "1.45.0",
+		"sass-loader": "10.1.1",
 		"vue-template-compiler": "^2.6.14"
 	},
 	"browserslist": [

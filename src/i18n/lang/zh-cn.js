@@ -51,6 +51,11 @@ export default {
 		layoutLinkView: '外链',
 		layoutIfameView: '内嵌 iframe',
 	},
+	staticRoutes: {
+		signIn: '登录',
+		notFound: '找不到此页面',
+		noPower: '没有权限',
+	},
 	user: {
 		title0: '组件大小',
 		title1: '语言切换',

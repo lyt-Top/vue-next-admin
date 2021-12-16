@@ -16,6 +16,20 @@ VueRouter.prototype.push = function push(location) {
 // 安装 VueRouter 插件
 Vue.use(VueRouter);
 
+// 定义动态路由
+const dynamicRoutes = [
+	{
+		path: '/',
+		name: '/',
+		component: 'layout/index',
+		redirect: '/home',
+		meta: {
+			isKeepAlive: true,
+		},
+		children: [],
+	},
+];
+
 // 定义静态路由
 const staticRoutes = [
 	{
@@ -31,7 +45,7 @@ const staticRoutes = [
 		name: 'notFound',
 		component: () => import('@/views/error/404.vue'),
 		meta: {
-			title: '找不到此页面',
+			title: 'message.staticRoutes.notFound',
 		},
 	},
 	{
@@ -39,7 +53,7 @@ const staticRoutes = [
 		name: 'noPower',
 		component: () => import('@/views/error/401.vue'),
 		meta: {
-			title: '没有权限',
+			title: 'message.staticRoutes.noPower',
 		},
 	},
 ];
@@ -81,19 +95,19 @@ export function formatTwoStageRoutes(arr) {
 	return newArr;
 }
 
-// 判断路由 auth 中是否包含当前登录用户权限字段
-export function hasAuth(auths, route) {
-	if (route.meta && route.meta.auth) return auths.some((auth) => route.meta.auth.includes(auth));
+// 判断路由 meta.roles 中是否包含当前登录用户权限字段
+export function hasAuth(roles, route) {
+	if (route.meta && route.meta.roles) return roles.some((role) => route.meta.roles.includes(role));
 	else return true;
 }
 
 // 递归过滤有权限的路由
-export function setFilterMenuFun(routes, auth) {
+export function setFilterMenuFun(routes, role) {
 	const menu = [];
 	routes.forEach((route) => {
 		const item = { ...route };
-		if (hasAuth(auth, item)) {
-			if (item.children) item.children = setFilterMenuFun(item.children, auth);
+		if (hasAuth(role, item)) {
+			if (item.children) item.children = setFilterMenuFun(item.children, role);
 			menu.push(item);
 		}
 	});
@@ -103,9 +117,9 @@ export function setFilterMenuFun(routes, auth) {
 // 缓存多级嵌套数组处理后的一维数组(tagsView、菜单搜索中使用：未过滤隐藏的(isHide))
 export function setCacheTagsViewRoutes(arr) {
 	// 先处理有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
-	let authsRoutes = setFilterMenuFun(arr, store.state.userInfos.userInfos.authPageList);
+	let rolesRoutes = setFilterMenuFun(arr, store.state.userInfos.userInfos.roles);
 	// 添加到 vuex setTagsViewRoutes 中
-	store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(authsRoutes)));
+	store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes)));
 }
 
 // 递归处理多余的 layout : <router-view>，让需要访问的组件保持在第一层 layout 层。
@@ -139,10 +153,12 @@ export function loadView(path) {
 }
 
 // 递归处理每一项 `component` 中的路径
-export function dynamicRouter(view) {
-	if (view.component) view.component = loadView(view.component);
-	if (view.children) view.children.map((item) => dynamicRouter(item));
-	return view;
+export function dynamicRouter(routes) {
+	return routes.map((view) => {
+		if (view.component) view.component = loadView(view.component);
+		if (view.children) dynamicRouter(view.children);
+		return view;
+	});
 }
 
 // 添加路由，模拟数据与方法，可自行进行修改 admin
@@ -152,15 +168,16 @@ export function dynamicRouter(view) {
 export function adminUser(router, to, next) {
 	resetRouter();
 	getMenuAdmin()
-		.then((res) => {
+		.then(async (res) => {
 			// 读取用户信息，获取对应权限进行判断
 			store.dispatch('userInfos/setUserInfos');
-			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data.children, store.state.userInfos.userInfos.authPageList));
-			res.data.children = store.state.routesList.routesList;
-			[dynamicRouter(res.data), { path: '*', redirect: '/404' }].forEach((route) => {
+			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
+			dynamicRoutes[0].children = res.data;
+			const awaitRoute = await dynamicRouter(dynamicRoutes);
+			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 				router.addRoute({ ...route });
 			});
-			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data.children)));
+			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 			next({ ...to, replace: true });
 		})
 		.catch(() => {});
@@ -171,15 +188,16 @@ export function adminUser(router, to, next) {
 export function testUser(router, to, next) {
 	resetRouter();
 	getMenuTest()
-		.then((res) => {
+		.then(async (res) => {
 			// 读取用户信息，获取对应权限进行判断
 			store.dispatch('userInfos/setUserInfos');
-			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data.children, store.state.userInfos.userInfos.authPageList));
-			res.data.children = store.state.routesList.routesList;
-			[dynamicRouter(res.data), { path: '*', redirect: '/404' }].forEach((route) => {
+			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
+			dynamicRoutes[0].children = res.data;
+			const awaitRoute = await dynamicRouter(dynamicRoutes);
+			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 				router.addRoute({ ...route });
 			});
-			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data.children)));
+			setCacheTagsViewRoutes(JSON.parse(JSON.stringify(res.data)));
 			next({ ...to, replace: true });
 		})
 		.catch(() => {});

@@ -17,5 +17,6 @@ module.exports = {
 		'no-extra-semi': 'off',
 		'no-constant-condition': 'off',
 		'no-console': 'error',
+		'vue/multi-word-component-names': 'off',
 	},
 };

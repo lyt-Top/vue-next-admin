@@ -138,43 +138,46 @@ export default {
 		},
 		// 登录按钮点击
 		submitForm() {
-			let defaultAuthPageList = [];
-			let defaultAuthBtnList = [];
-			// admin 页面权限标识，对应路由 meta.auth
-			let adminAuthPageList = ['admin'];
-			// admin 按钮权限标识
-			let adminAuthBtnList = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.auth
-			let testAuthPageList = ['test'];
-			// test 按钮权限标识
-			let testAuthBtnList = ['btn.add', 'btn.link'];
-			if (this.ruleForm.userName === 'admin') {
-				defaultAuthPageList = adminAuthPageList;
-				defaultAuthBtnList = adminAuthBtnList;
-			} else {
-				defaultAuthPageList = testAuthPageList;
-				defaultAuthBtnList = testAuthBtnList;
-			}
-			const userInfos = {
-				userName: this.ruleForm.userName === 'admin' ? 'admin' : 'test',
-				photo:
-					this.ruleForm.userName === 'admin'
-						? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
-						: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
-				time: new Date().getTime(),
-				authPageList: defaultAuthPageList,
-				authBtnList: defaultAuthBtnList,
-			};
-			// 存储 token 到浏览器缓存
-			Session.set('token', Math.random().toString(36).substr(0));
-			// 存储用户信息到浏览器缓存
-			Session.set('userInfo', userInfos);
-			// 存储用户信息到vuex
-			this.$store.dispatch('userInfos/setUserInfos', userInfos);
-			PrevLoading.start();
-			window.location.href = `${window.location.origin}${window.location.pathname}`;
+			this.submit.loading = true;
 			setTimeout(() => {
-				this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
+				let defaultRoles = [];
+				let defaultAuthBtnList = [];
+				// admin 页面权限标识，对应路由 meta.roles
+				let adminRoles = ['admin'];
+				// admin 按钮权限标识
+				let adminAuthBtnList = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
+				// common 页面权限标识，对应路由 meta.roles
+				let testAuthPageList = ['common'];
+				// test 按钮权限标识
+				let testAuthBtnList = ['btn.add', 'btn.link'];
+				if (this.ruleForm.userName === 'admin') {
+					defaultRoles = adminRoles;
+					defaultAuthBtnList = adminAuthBtnList;
+				} else {
+					defaultRoles = testAuthPageList;
+					defaultAuthBtnList = testAuthBtnList;
+				}
+				const userInfos = {
+					userName: this.ruleForm.userName === 'admin' ? 'admin' : 'test',
+					photo:
+						this.ruleForm.userName === 'admin'
+							? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
+							: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
+					time: new Date().getTime(),
+					roles: defaultRoles,
+					authBtnList: defaultAuthBtnList,
+				};
+				// 存储 token 到浏览器缓存
+				Session.set('token', Math.random().toString(36).substr(0));
+				// 存储用户信息到浏览器缓存
+				Session.set('userInfo', userInfos);
+				// 存储用户信息到vuex
+				this.$store.dispatch('userInfos/setUserInfos', userInfos);
+				PrevLoading.start();
+				window.location.href = `${window.location.origin}${window.location.pathname}`;
+				setTimeout(() => {
+					this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
+				}, 300);
 			}, 300);
 		},
 	},
