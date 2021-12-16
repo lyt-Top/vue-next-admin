@@ -68,19 +68,10 @@ cnpm run dev
 cnpm run build
 ```
 
-#### 🍉 git 命令
-
-- 在本地新建一个分支：`git branch newBranch`
-- 切换到你的新分支：`git checkout newBranch`
-- 将新分支发布在 github、gitee 上：`git push origin newBranch`
-- 在本地删除一个分支：`git branch -d newBranch`
-- 在 github 远程端删除一个分支：`git push origin :newBranch (分支名前的冒号代表删除)`
-- 注意删除远程分支后，如果有对应的本地分支，本地分支并不会同步删除！
-
 #### 💯 学习交流加 QQ 群
 
 - 若加群了没同意（一般不会超过一天），那就是群满了，请换一个群试试
-- 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
+- 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
 - 群号码：
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
   2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
@@ -91,6 +82,11 @@ cnpm run build
   <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">
   	<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/user/qq2.png" width="220" height="220" alt="vue-next-admin 讨论群" title="vue-next-admin 讨论群2"/>
   </a>
+
+#### 💒 集成后端
+
+- <a target="_blank" href="https://github.com/PandaGoAdmin/PandaX">@熊猫 PandaGoAdmin</a>
+- <a target="_blank" href="https://www.gnet.top/public">@甜蜜蜜 GoPro 平台</a>
 
 #### ❤️ 鸣谢列表
 

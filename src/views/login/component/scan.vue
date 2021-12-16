@@ -1,6 +1,6 @@
 <template>
 	<div class="login-scan-container">
-		<div class="login-scan-qrcode" ref="qrcodeRef"></div>
+		<div ref="qrcodeRef"></div>
 	</div>
 </template>
 
@@ -36,11 +36,9 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .login-scan-container {
-	.login-scan-qrcode {
-		position: absolute;
-		left: 50%;
-		top: 50%;
-		transform: translate(-50%, -40%);
-	}
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	animation: logoAnimation 0.3s ease;
 }
 </style>

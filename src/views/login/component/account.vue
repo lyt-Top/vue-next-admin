@@ -1,13 +1,13 @@
 <template>
 	<el-form class="login-content-form">
-		<el-form-item>
+		<el-form-item class="login-animation-one">
 			<el-input type="text" :placeholder="$t('message.account.accountPlaceholder1')" v-model="ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
 					<el-icon class="el-input__icon"><elementUser /></el-icon>
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="login-animation-two">
 			<el-input
 				:type="isShowPassword ? 'text' : 'password'"
 				:placeholder="$t('message.account.accountPlaceholder2')"
@@ -27,7 +27,7 @@
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="login-animation-three">
 			<el-row :gutter="15">
 				<el-col :span="16">
 					<el-input
@@ -50,10 +50,14 @@
 				</el-col>
 			</el-row>
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="login-animation-four">
 			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
 				<span>{{ $t('message.account.accountBtnText') }}</span>
 			</el-button>
+		</el-form-item>
+		<el-form-item class="login-animation-five">
+			<el-button type="text" size="small">{{ $t('message.link.one3') }}</el-button>
+			<el-button type="text" size="small">{{ $t('message.link.two4') }}</el-button>
 		</el-form-item>
 	</el-form>
 </template>
@@ -179,6 +183,32 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
+	.login-animation-one,
+	.login-animation-two,
+	.login-animation-three,
+	.login-animation-four,
+	.login-animation-five {
+		opacity: 0;
+		animation-name: error-num;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+	}
+	.login-animation-one {
+		animation-delay: 0.1s;
+	}
+	.login-animation-two {
+		animation-delay: 0.2s;
+	}
+	.login-animation-three {
+		animation-delay: 0.3s;
+	}
+	.login-animation-four {
+		animation-delay: 0.4s;
+		margin-bottom: 5px;
+	}
+	.login-animation-five {
+		animation-delay: 0.5s;
+	}
 	.login-content-password {
 		display: inline-block;
 		width: 25px;
