@@ -1,7 +1,23 @@
 <template>
 	<el-card shadow="hover" header="正则验证（一些项目中常用的正则）">
 		<el-form :model="ruleForm" :rules="rules" class="tools-warp-form" size="small" label-position="top">
-			<el-form-item label="小数或整数:" prop="a1">
+			<el-form-item label="验证百分比（不可以小数）:" prop="a22">
+				<div class="tools-warp-form-msg">验证可以输入大于0小于100的数字</div>
+				<div>
+					<el-input v-model="ruleForm.a22" @input="onVerifyNumberPercentage($event)" placeholder="请输入数字进行测试">
+						<template #append> % </template>
+					</el-input>
+				</div>
+			</el-form-item>
+			<el-form-item label="验证百分比（可以小数）:" prop="a23" class="mt20">
+				<div class="tools-warp-form-msg">验证可以输入大于0小于100的数字</div>
+				<div>
+					<el-input v-model="ruleForm.a23" @input="onVerifyNumberPercentageFloat($event)" placeholder="请输入数字进行测试">
+						<template #append> % </template>
+					</el-input>
+				</div>
+			</el-form-item>
+			<el-form-item label="小数或整数:" prop="a1" class="mt20">
 				<div class="tools-warp-form-msg">
 					验证可以输入小数或整数，0 开始， . 只能出现一次，保留小数点后保留2位小数。(负数时，模拟拼接负号给后台)。
 				</div>
@@ -174,6 +190,8 @@
 <script lang="ts">
 import { reactive, toRefs } from 'vue';
 import {
+	verifyNumberPercentage,
+	verifyNumberPercentageFloat,
 	verifyNumberIntegerAndFloat,
 	verifiyNumberInteger,
 	verifyCnAndSpace,
@@ -241,6 +259,8 @@ export default {
 				a19: '',
 				a20: '',
 				a21: '',
+				a22: '',
+				a23: '',
 			},
 			rules: {
 				a1: [
@@ -318,8 +338,18 @@ export default {
 						trigger: 'change',
 					},
 				],
+				a22: [{ required: true, message: '请输入数字进行测试', trigger: 'change' }],
+				a23: [{ required: true, message: '请输入数字进行测试', trigger: 'change' }],
 			},
 		});
+		// 验证百分比（不可以小数）
+		const onVerifyNumberPercentage = (val: string) => {
+			state.ruleForm.a22 = verifyNumberPercentage(val);
+		};
+		// 验证百分比（可以小数）
+		const onVerifyNumberPercentageFloat = (val: string) => {
+			state.ruleForm.a23 = verifyNumberPercentageFloat(val);
+		};
 		// 小数或整数
 		const onVerifyNumberIntegerAndFloat = (val: string) => {
 			state.ruleForm.a1 = verifyNumberIntegerAndFloat(val);
@@ -419,6 +449,8 @@ export default {
 			state.carNum = verifyCarNum(state.ruleForm.a21);
 		};
 		return {
+			onVerifyNumberPercentage,
+			onVerifyNumberPercentageFloat,
 			onVerifyNumberIntegerAndFloat,
 			onVerifiyNumberInteger,
 			onVerifyCnAndSpace,
