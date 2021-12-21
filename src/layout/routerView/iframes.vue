@@ -34,10 +34,10 @@ export default defineComponent({
 			let { isTagsview } = store.state.themeConfig.themeConfig;
 			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
 			if (isTagsViewCurrenFull) {
-				return `0px`;
+				return `1px`;
 			} else {
-				if (isTagsview) return `83px`;
-				else return `49px`;
+				if (isTagsview) return `85px`;
+				else return `51px`;
 			}
 		});
 		// 页面加载时

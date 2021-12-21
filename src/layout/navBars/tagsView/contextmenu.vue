@@ -24,13 +24,13 @@
 					</li>
 				</template>
 			</ul>
-			<div class="el-popper__arrow" style="left: 10px"></div>
+			<div class="el-popper__arrow" :style="{ left: `${arrowLeft}px` }"></div>
 		</div>
 	</transition>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted } from 'vue';
+import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue';
 export default defineComponent({
 	name: 'layoutTagsViewContextmenu',
 	props: {
@@ -49,10 +49,19 @@ export default defineComponent({
 				{ contextMenuClickId: 4, txt: '当前页全屏', affix: false, icon: 'iconfont icon-fullscreen' },
 			],
 			item: {},
+			arrowLeft: 10,
 		});
 		// 父级传过来的坐标 x,y 值
 		const dropdowns = computed(() => {
-			return props.dropdown;
+			// 117 为 `Dropdown 下拉菜单` 的宽度
+			if (props.dropdown.x + 117 > document.documentElement.clientWidth) {
+				return {
+					x: document.documentElement.clientWidth - 117 - 5,
+					y: props.dropdown.y,
+				};
+			} else {
+				return props.dropdown;
+			}
 		});
 		// 当前项菜单点击
 		const onCurrentContextmenuClick = (contextMenuClickId: number) => {
@@ -79,6 +88,17 @@ export default defineComponent({
 		onUnmounted(() => {
 			document.body.removeEventListener('click', closeContextmenu);
 		});
+		// 监听下拉菜单位置
+		watch(
+			() => props.dropdown,
+			({ x }) => {
+				if (x + 117 > document.documentElement.clientWidth) state.arrowLeft = 117 - (document.documentElement.clientWidth - x);
+				else state.arrowLeft = 10;
+			},
+			{
+				deep: true,
+			}
+		);
 		return {
 			dropdowns,
 			openContextmenu,

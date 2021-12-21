@@ -36,6 +36,13 @@ const viteConfig: UserConfig = {
 		minify: 'esbuild',
 		sourcemap: false,
 		chunkSizeWarningLimit: 1500,
+		rollupOptions: {
+			output: {
+				entryFileNames: `assets/[name]-${new Date().getTime()}.js`,
+				chunkFileNames: `assets/[name]-${new Date().getTime()}.js`,
+				assetFileNames: `assets/[name]-${new Date().getTime()}.[ext]`,
+			},
+		},
 	},
 };
 
