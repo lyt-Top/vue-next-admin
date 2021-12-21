@@ -8,6 +8,7 @@
 
 - 🌟 更新 依赖更新最新版本
 - 🎯 优化 iframes 滚动条问题
+- 🎯 优化 部署后每次都要强制刷新清浏览器缓存问题
 - 🎉 新增 工具类百分比验证演示
 - 🐞 修复 [tag-view 标签右键会超出浏览器 #I4KN78](https://gitee.com/lyt-top/vue-next-admin/issues/I4KN78)
 
