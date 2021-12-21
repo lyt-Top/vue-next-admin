@@ -127,10 +127,5 @@ export default defineComponent({
 			font-size: 12px !important;
 		}
 	}
-	.el-dropdown-menu-arrow {
-		&::before {
-			content: '';
-		}
-	}
 }
 </style>
