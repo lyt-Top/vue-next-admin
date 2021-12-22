@@ -3,7 +3,7 @@
 		<transition name="el-zoom-in-center">
 			<ul
 				class="el-dropdown-menu el-popper el-dropdown-menu--medium custom-contextmenu"
-				:style="`top: ${this.dropdown.y}px;left: ${this.dropdown.x}px;`"
+				:style="`top: ${dropdowns.y}px;left: ${dropdowns.x}px;`"
 				x-placement="bottom-end"
 				id="contextmenu"
 				v-show="isShow"
@@ -14,7 +14,7 @@
 						<span>{{ $t(v.txt) }}</span>
 					</template>
 				</li>
-				<div x-arrow class="popper__arrow" style="left: 5px"></div>
+				<div x-arrow class="popper__arrow" :style="{ left: `${arrowLeft}px` }"></div>
 			</ul>
 		</transition>
 	</div>
@@ -38,7 +38,21 @@ export default {
 				{ id: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'el-icon-folder-delete' },
 			],
 			path: {},
+			arrowLeft: 5,
 		};
+	},
+	computed: {
+		dropdowns() {
+			// 99 为 `Dropdown 下拉菜单` 的宽度
+			if (this.dropdown.x + 99 > document.documentElement.clientWidth) {
+				return {
+					x: document.documentElement.clientWidth - 99 - 5,
+					y: this.dropdown.y,
+				};
+			} else {
+				return this.dropdown;
+			}
+		},
 	},
 	mounted() {
 		// 监听页面监听进行右键菜单的关闭
@@ -66,6 +80,16 @@ export default {
 	destroyed() {
 		// 页面卸载时，移除右键菜单监听事件
 		document.body.removeEventListener('click', this.closeContextmenu);
+	},
+	// 监听下拉菜单位置
+	watch: {
+		dropdown: {
+			handler({ x }) {
+				if (x + 99 > document.documentElement.clientWidth) this.arrowLeft = 99 - (document.documentElement.clientWidth - x);
+				else this.arrowLeft = 10;
+			},
+			deep: true,
+		},
 	},
 };
 </script>

@@ -25,4 +25,16 @@ module.exports = {
 		config.plugins.delete('preload');
 		config.plugins.delete('prefetch');
 	},
+	configureWebpack: {
+		output: {
+			filename: `js/[name].${new Date().getTime()}.js`,
+			chunkFilename: `js/[name].${new Date().getTime()}.js`,
+		},
+	},
+	css: {
+		extract: {
+			filename: `css/[name].${new Date().getTime()}.css`,
+			chunkFilename: `css/[name].${new Date().getTime()}.css`,
+		},
+	},
 };
