@@ -38,9 +38,9 @@ const viteConfig: UserConfig = {
 		chunkSizeWarningLimit: 1500,
 		rollupOptions: {
 			output: {
-				entryFileNames: `assets/[name]-${new Date().getTime()}.js`,
-				chunkFileNames: `assets/[name]-${new Date().getTime()}.js`,
-				assetFileNames: `assets/[name]-${new Date().getTime()}.[ext]`,
+				entryFileNames: `assets/[name].${new Date().getTime()}.js`,
+				chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
+				assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
 			},
 		},
 	},
