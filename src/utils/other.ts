@@ -63,9 +63,8 @@ export const lazyImg = (el: any, arr: any) => {
  * 全局组件大小
  * @returns 返回 `window.localStorage` 中读取的缓存值 `globalComponentSize`
  */
-export function globalComponentSize() {
-	return Local.get('themeConfig')?.globalComponentSize;
-}
+export const globalComponentSize: string = Local.get('themeConfig')?.globalComponentSize || store.state.themeConfig.themeConfig?.globalComponentSize;
+
 
 /**
  * 对象深克隆
@@ -123,9 +122,7 @@ const other = {
 	lazyImg: (el: any, arr: any) => {
 		lazyImg(el, arr);
 	},
-	globalComponentSize: () => {
-		globalComponentSize();
-	},
+	globalComponentSize,
 	deepClone: (obj: any) => {
 		deepClone(obj);
 	},
