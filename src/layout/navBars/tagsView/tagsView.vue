@@ -6,7 +6,7 @@
 					v-for="(v, k) in tagsViewList"
 					:key="k"
 					class="layout-navbars-tagsview-ul-li"
-					:data-name="v.url"
+					:data-url="v.url"
 					:class="{ 'is-active': isActive(v) }"
 					@contextmenu.prevent="onContextmenu(v, $event)"
 					@click="onTagsClick(v, k)"
@@ -410,7 +410,7 @@ export default {
 					const sortEndList: any = [];
 					state.sortable.toArray().map((val: any) => {
 						state.tagsViewList.map((v: any) => {
-							if (v.name === val) sortEndList.push({ ...v });
+							if (v.url === val) sortEndList.push({ ...v });
 						});
 					});
 					addBrowserSetSession(sortEndList);
