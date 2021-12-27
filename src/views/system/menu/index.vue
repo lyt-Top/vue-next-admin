@@ -58,53 +58,36 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { ref, toRefs, reactive, computed } from 'vue';
+<script setup name="systemMenu">
 import { ElMessageBox, ElMessage } from 'element-plus';
-import { useStore } from '/@/store/index';
 import AddMenu from '/@/views/system/menu/component/addMenu.vue';
 import EditMenu from '/@/views/system/menu/component/editMenu.vue';
-export default {
-	name: 'systemMenu',
-	components: { AddMenu, EditMenu },
-	setup() {
-		const store = useStore();
-		const addMenuRef = ref();
-		const editMenuRef = ref();
-		const state = reactive({});
-		// 获取 vuex 中的路由
-		const menuTableData = computed(() => {
-			return store.state.routesList.routesList;
-		});
-		// 打开新增菜单弹窗
-		const onOpenAddMenu = () => {
-			addMenuRef.value.openDialog();
-		};
-		// 打开编辑菜单弹窗
-		const onOpenEditMenu = (row: object) => {
-			editMenuRef.value.openDialog(row);
-		};
-		// 删除当前行
-		const onTabelRowDel = (row: object) => {
-			ElMessageBox.confirm(`此操作将永久删除路由：${row.path}, 是否继续?`, '提示', {
-				confirmButtonText: '删除',
-				cancelButtonText: '取消',
-				type: 'warning',
-			})
-				.then(() => {
-					ElMessage.success('删除成功');
-				})
-				.catch(() => {});
-		};
-		return {
-			addMenuRef,
-			editMenuRef,
-			onOpenAddMenu,
-			onOpenEditMenu,
-			menuTableData,
-			onTabelRowDel,
-			...toRefs(state),
-		};
-	},
+
+const store = useStore();
+const addMenuRef = ref();
+const editMenuRef = ref();
+// 获取 vuex 中的路由
+const menuTableData = computed(() => {
+	return store.state.routesList.routesList;
+});
+// 打开新增菜单弹窗
+const onOpenAddMenu = () => {
+	addMenuRef.value.openDialog();
+};
+// 打开编辑菜单弹窗
+const onOpenEditMenu = (row) => {
+	editMenuRef.value.openDialog(row);
+};
+// 删除当前行
+const onTabelRowDel = (row) => {
+	ElMessageBox.confirm(`此操作将永久删除路由：${row.path}, 是否继续?`, '提示', {
+		confirmButtonText: '删除',
+		cancelButtonText: '取消',
+		type: 'warning',
+	})
+		.then(() => {
+			ElMessage.success('删除成功');
+		})
+		.catch(() => {});
 };
 </script>

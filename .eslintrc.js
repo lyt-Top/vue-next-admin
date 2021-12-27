@@ -6,13 +6,8 @@ module.exports = {
 		node: true,
 	},
 	parser: 'vue-eslint-parser',
-	parserOptions: {
-		ecmaVersion: 12,
-		parser: '@typescript-eslint/parser',
-		sourceType: 'module',
-	},
 	extends: ['plugin:vue/vue3-essential', 'plugin:vue/essential', 'eslint:recommended'],
-	plugins: ['vue', '@typescript-eslint'],
+	plugins: ['vue'],
 	rules: {
 		// http://eslint.cn/docs/rules/
 		// https://eslint.vuejs.org/rules/
@@ -59,5 +54,6 @@ module.exports = {
 		'no-v-model-argument': 'off',
 		'no-case-declarations': 'off',
 		'no-console': 'error',
+		'no-undef': 'off',
 	},
 };

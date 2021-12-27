@@ -22,24 +22,16 @@
 	</template>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
-export default defineComponent({
-	name: 'navMenuSubItem',
-	props: {
-		chil: {
-			type: Array,
-			default: () => [],
-		},
+<script setup name="navMenuSubItem">
+const props = defineProps({
+	chil: {
+		type: Array,
+		default: () => [],
 	},
-	setup(props) {
-		// 获取父级菜单数据
-		const chils = computed(() => {
-			return props.chil;
-		});
-		return {
-			chils,
-		};
-	},
+});
+
+// 获取父级菜单数据
+const chils = computed(() => {
+	return props.chil;
 });
 </script>

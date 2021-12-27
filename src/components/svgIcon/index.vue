@@ -1,6 +1,5 @@
-<script lang="ts">
+<script>
 // 渲染函数：https://v3.cn.vuejs.org/guide/render-function.html
-import { h, resolveComponent, defineComponent } from 'vue';
 export default defineComponent({
 	name: 'svgIcon',
 	props: {

@@ -8,35 +8,23 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { computed, getCurrentInstance } from 'vue';
-import { useStore } from '/@/store/index';
-export default {
-	name: 'layoutLogo',
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 设置 logo 的显示。classic 经典布局默认显示 logo
-		const setShowLogo = computed(() => {
-			let { isCollapse, layout } = store.state.themeConfig.themeConfig;
-			return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000;
-		});
-		// logo 点击实现菜单展开/收起
-		const onThemeConfigChange = () => {
-			if (store.state.themeConfig.themeConfig.layout === 'transverse') return false;
-			proxy.mittBus.emit('onMenuClick');
-			store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
-		};
-		return {
-			setShowLogo,
-			getThemeConfig,
-			onThemeConfigChange,
-		};
-	},
+<script setup name="layoutLogo">
+const { proxy } = getCurrentInstance();
+const store = useStore();
+// 获取布局配置信息
+const getThemeConfig = computed(() => {
+	return store.state.themeConfig.themeConfig;
+});
+// 设置 logo 的显示。classic 经典布局默认显示 logo
+const setShowLogo = computed(() => {
+	let { isCollapse, layout } = store.state.themeConfig.themeConfig;
+	return !isCollapse || layout === 'classic' || document.body.clientWidth < 1000;
+});
+// logo 点击实现菜单展开/收起
+const onThemeConfigChange = () => {
+	if (store.state.themeConfig.themeConfig.layout === 'transverse') return false;
+	proxy.mittBus.emit('onMenuClick');
+	store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
 };
 </script>
 

@@ -18,19 +18,10 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
-export default {
-	name: '404',
-	setup() {
-		const router = useRouter();
-		const onGoHome = () => {
-			router.push('/');
-		};
-		return {
-			onGoHome,
-		};
-	},
+<script setup name="404">
+const router = useRouter();
+const onGoHome = () => {
+	router.push('/');
 };
 </script>
 

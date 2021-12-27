@@ -12,33 +12,22 @@
 	</el-container>
 </template>
 
-<script lang="ts">
-import { computed, getCurrentInstance, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from '/@/store/index';
+<script setup name="layoutDefaults">
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
-export default {
-	name: 'layoutDefaults',
-	components: { Aside, Header, Main },
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
-		const route = useRoute();
-		const isFixedHeader = computed(() => {
-			return store.state.themeConfig.themeConfig.isFixedHeader;
-		});
-		// 监听路由的变化
-		watch(
-			() => route.path,
-			() => {
-				proxy.$refs.layoutDefaultsScrollbarRef.wrap$.scrollTop = 0;
-			}
-		);
-		return {
-			isFixedHeader,
-		};
-	},
-};
+
+const { proxy } = getCurrentInstance();
+const store = useStore();
+const route = useRoute();
+const isFixedHeader = computed(() => {
+	return store.state.themeConfig.themeConfig.isFixedHeader;
+});
+// 监听路由的变化
+watch(
+	() => route.path,
+	() => {
+		proxy.$refs.layoutDefaultsScrollbarRef.wrap$.scrollTop = 0;
+	}
+);
 </script>

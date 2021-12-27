@@ -18,21 +18,13 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
+<script setup name="401">
 import { Session } from '/@/utils/storage';
-export default {
-	name: '401',
-	setup() {
-		const router = useRouter();
-		const onSetAuth = () => {
-			Session.clear();
-			router.push('/login');
-		};
-		return {
-			onSetAuth,
-		};
-	},
+
+const router = useRouter();
+const onSetAuth = () => {
+	Session.clear();
+	router.push('/login');
 };
 </script>
 

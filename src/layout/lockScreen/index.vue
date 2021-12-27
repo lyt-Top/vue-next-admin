@@ -1,7 +1,7 @@
 <template>
 	<div v-show="isShowLockScreen">
 		<div class="layout-lock-screen-mask"></div>
-		<div class="layout-lock-screen-img" :class="{ 'layout-lock-screen-filter': isShowLoockLogin }"></div>
+		<div class="layout-lock-screen-img" :class="{ 'layout-lock-screen-filter': state.isShowLoockLogin }"></div>
 		<div class="layout-lock-screen">
 			<div
 				class="layout-lock-screen-date"
@@ -15,9 +15,9 @@
 			>
 				<div class="layout-lock-screen-date-box">
 					<div class="layout-lock-screen-date-box-time">
-						{{ time.hm }}<span class="layout-lock-screen-date-box-minutes">{{ time.s }}</span>
+						{{ state.time.hm }}<span class="layout-lock-screen-date-box-minutes">{{ state.time.s }}</span>
 					</div>
-					<div class="layout-lock-screen-date-box-info">{{ time.mdq }}</div>
+					<div class="layout-lock-screen-date-box-info">{{ state.time.mdq }}</div>
 				</div>
 				<div class="layout-lock-screen-date-top">
 					<SvgIcon name="elementTop" />
@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<transition name="el-zoom-in-center">
-				<div v-show="isShowLoockLogin" class="layout-lock-screen-login">
+				<div v-show="state.isShowLoockLogin" class="layout-lock-screen-login">
 					<div class="layout-lock-screen-login-box">
 						<div class="layout-lock-screen-login-box-img">
 							<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
@@ -35,7 +35,7 @@
 							<el-input
 								placeholder="请输入密码"
 								ref="layoutLockScreenInputRef"
-								v-model="lockScreenPassword"
+								v-model="state.lockScreenPassword"
 								@keyup.enter.native.stop="onLockScreenSubmit()"
 							>
 								<template #append>
@@ -59,137 +59,123 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+<script setup name="layoutLockScreen">
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
-export default defineComponent({
-	name: 'layoutLockScreen',
-	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const layoutLockScreenInputRef = ref();
-		const store = useStore();
-		const state: any = reactive({
-			transparency: 1,
-			downClientY: 0,
-			moveDifference: 0,
-			isShowLoockLogin: false,
-			isFlags: false,
-			querySelectorEl: '',
-			time: {
-				hm: '',
-				s: '',
-				mdq: '',
-			},
-			setIntervalTime: 0,
-			isShowLockScreen: false,
-			isShowLockScreenIntervalTime: 0,
-			lockScreenPassword: '',
-		});
-		// 鼠标按下
-		const onDown = (down: any) => {
-			state.isFlags = true;
-			state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
-		};
-		// 鼠标移动
-		const onMove = (move: any) => {
-			if (state.isFlags) {
-				const el = state.querySelectorEl;
-				const opacitys = (state.transparency -= 1 / 200);
-				if (move.touches) {
-					state.moveDifference = move.touches[0].clientY - state.downClientY;
-				} else {
-					state.moveDifference = move.clientY - state.downClientY;
-				}
-				if (state.moveDifference >= 0) return false;
-				el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
-				if (state.moveDifference < -400) {
-					el.setAttribute('style', `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`);
-					state.moveDifference = -el.clientHeight;
-					setTimeout(() => {
-						el && el.parentNode?.removeChild(el);
-					}, 300);
-				}
-				if (state.moveDifference === -el.clientHeight) {
-					state.isShowLoockLogin = true;
-					layoutLockScreenInputRef.value.focus();
-				}
-			}
-		};
-		// 鼠标松开
-		const onEnd = () => {
-			state.isFlags = false;
-			state.transparency = 1;
-			if (state.moveDifference >= -400) {
-				state.querySelectorEl.setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
-			}
-		};
-		// 获取要拖拽的初始元素
-		const initGetElement = () => {
-			nextTick(() => {
-				state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
-			});
-		};
-		// 时间初始化
-		const initTime = () => {
-			state.time.hm = formatDate(new Date(), 'HH:MM');
-			state.time.s = formatDate(new Date(), 'SS');
-			state.time.mdq = formatDate(new Date(), 'mm月dd日，WWW');
-		};
-		// 时间初始化定时器
-		const initSetTime = () => {
-			initTime();
-			state.setIntervalTime = window.setInterval(() => {
-				initTime();
-			}, 1000);
-		};
-		// 锁屏时间定时器
-		const initLockScreen = () => {
-			if (store.state.themeConfig.themeConfig.isLockScreen) {
-				state.isShowLockScreenIntervalTime = window.setInterval(() => {
-					if (store.state.themeConfig.themeConfig.lockScreenTime <= 1) {
-						state.isShowLockScreen = true;
-						setLocalThemeConfig();
-						return false;
-					}
-					store.state.themeConfig.themeConfig.lockScreenTime--;
-				}, 1000);
-			} else {
-				clearInterval(state.isShowLockScreenIntervalTime);
-			}
-		};
-		// 存储布局配置
-		const setLocalThemeConfig = () => {
-			store.state.themeConfig.themeConfig.isDrawer = false;
-			Local.set('themeConfig', store.state.themeConfig.themeConfig);
-		};
-		// 密码输入点击事件
-		const onLockScreenSubmit = () => {
-			store.state.themeConfig.themeConfig.isLockScreen = false;
-			store.state.themeConfig.themeConfig.lockScreenTime = 30;
-			setLocalThemeConfig();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initGetElement();
-			initSetTime();
-			initLockScreen();
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			window.clearInterval(state.setIntervalTime);
-			window.clearInterval(state.isShowLockScreenIntervalTime);
-		});
-		return {
-			layoutLockScreenInputRef,
-			onDown,
-			onMove,
-			onEnd,
-			onLockScreenSubmit,
-			...toRefs(state),
-		};
+
+const { proxy } = getCurrentInstance();
+const layoutLockScreenInputRef = ref();
+const store = useStore();
+const state = reactive({
+	transparency: 1,
+	downClientY: 0,
+	moveDifference: 0,
+	isShowLoockLogin: false,
+	isFlags: false,
+	querySelectorEl: '',
+	time: {
+		hm: '',
+		s: '',
+		mdq: '',
 	},
+	setIntervalTime: 0,
+	isShowLockScreen: false,
+	isShowLockScreenIntervalTime: 0,
+	lockScreenPassword: '',
+});
+// 鼠标按下
+const onDown = (down) => {
+	state.isFlags = true;
+	state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
+};
+// 鼠标移动
+const onMove = (move) => {
+	if (state.isFlags) {
+		const el = state.querySelectorEl;
+		const opacitys = (state.transparency -= 1 / 200);
+		if (move.touches) {
+			state.moveDifference = move.touches[0].clientY - state.downClientY;
+		} else {
+			state.moveDifference = move.clientY - state.downClientY;
+		}
+		if (state.moveDifference >= 0) return false;
+		el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
+		if (state.moveDifference < -400) {
+			el.setAttribute('style', `top:${-el.clientHeight}px;cursor:pointer;transition:all 0.3s ease;`);
+			state.moveDifference = -el.clientHeight;
+			setTimeout(() => {
+				el && el.parentNode?.removeChild(el);
+			}, 300);
+		}
+		if (state.moveDifference === -el.clientHeight) {
+			state.isShowLoockLogin = true;
+			layoutLockScreenInputRef.value.focus();
+		}
+	}
+};
+// 鼠标松开
+const onEnd = () => {
+	state.isFlags = false;
+	state.transparency = 1;
+	if (state.moveDifference >= -400) {
+		state.querySelectorEl.setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
+	}
+};
+// 获取要拖拽的初始元素
+const initGetElement = () => {
+	nextTick(() => {
+		state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
+	});
+};
+// 时间初始化
+const initTime = () => {
+	state.time.hm = formatDate(new Date(), 'HH:MM');
+	state.time.s = formatDate(new Date(), 'SS');
+	state.time.mdq = formatDate(new Date(), 'mm月dd日，WWW');
+};
+// 时间初始化定时器
+const initSetTime = () => {
+	initTime();
+	state.setIntervalTime = window.setInterval(() => {
+		initTime();
+	}, 1000);
+};
+// 锁屏时间定时器
+const initLockScreen = () => {
+	if (store.state.themeConfig.themeConfig.isLockScreen) {
+		state.isShowLockScreenIntervalTime = window.setInterval(() => {
+			if (store.state.themeConfig.themeConfig.lockScreenTime <= 1) {
+				state.isShowLockScreen = true;
+				setLocalThemeConfig();
+				return false;
+			}
+			store.state.themeConfig.themeConfig.lockScreenTime--;
+		}, 1000);
+	} else {
+		clearInterval(state.isShowLockScreenIntervalTime);
+	}
+};
+// 存储布局配置
+const setLocalThemeConfig = () => {
+	store.state.themeConfig.themeConfig.isDrawer = false;
+	Local.set('themeConfig', store.state.themeConfig.themeConfig);
+};
+// 密码输入点击事件
+const onLockScreenSubmit = () => {
+	store.state.themeConfig.themeConfig.isLockScreen = false;
+	store.state.themeConfig.themeConfig.lockScreenTime = 30;
+	setLocalThemeConfig();
+};
+// 页面加载时
+onMounted(() => {
+	initGetElement();
+	initSetTime();
+	initLockScreen();
+});
+// 页面卸载时
+onUnmounted(() => {
+	window.clearInterval(state.setIntervalTime);
+	window.clearInterval(state.isShowLockScreenIntervalTime);
 });
 </script>
 

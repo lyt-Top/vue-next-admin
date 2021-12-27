@@ -6,28 +6,15 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, computed } from 'vue';
-import { useStore } from '/@/store/index';
-export default {
-	name: 'layoutCloseFull',
-	setup() {
-		const store = useStore();
-		const state: any = reactive({});
-		// 获取卡片全屏信息
-		const isTagsViewCurrenFull = computed(() => {
-			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
-		});
-		// 关闭当前全屏
-		const onCloseFullscreen = () => {
-			store.dispatch('tagsViewRoutes/setCurrenFullscreen', false);
-		};
-		return {
-			isTagsViewCurrenFull,
-			onCloseFullscreen,
-			...toRefs(state),
-		};
-	},
+<script setup name="layoutCloseFull">
+const store = useStore();
+// 获取卡片全屏信息
+const isTagsViewCurrenFull = computed(() => {
+	return store.state.tagsViewRoutes.isTagsViewCurrenFull;
+});
+// 关闭当前全屏
+const onCloseFullscreen = () => {
+	store.dispatch('tagsViewRoutes/setCurrenFullscreen', false);
 };
 </script>
 

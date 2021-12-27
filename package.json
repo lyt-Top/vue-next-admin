@@ -1,7 +1,7 @@
 {
-	"name": "vue-next-admin-template",
-	"version": "0.2.2",
-	"description": "vue3 vite next admin template",
+	"name": "vue-next-admin-template-js",
+	"version": "0.1.0",
+	"description": "vue3 vite next admin template js setup",
 	"author": "lyt_20201208",
 	"license": "MIT",
 	"scripts": {
@@ -25,12 +25,6 @@
 		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
-		"@types/axios": "^0.14.0",
-		"@types/clipboard": "^2.0.1",
-		"@types/node": "^17.0.2",
-		"@types/nprogress": "^0.2.0",
-		"@typescript-eslint/eslint-plugin": "^5.8.0",
-		"@typescript-eslint/parser": "^5.8.0",
 		"@vitejs/plugin-vue": "^2.0.1",
 		"@vue/compiler-sfc": "^3.2.26",
 		"dotenv": "^10.0.0",
@@ -39,8 +33,9 @@
 		"prettier": "^2.5.1",
 		"sass": "^1.45.1",
 		"sass-loader": "^12.4.0",
-		"typescript": "^4.5.4",
+		"unplugin-auto-import": "^0.5.4",
 		"vite": "^2.7.4",
+		"vite-plugin-vue-setup-extend": "^0.1.0",
 		"vue-eslint-parser": "^8.0.1"
 	},
 	"browserslist": [
@@ -60,6 +55,7 @@
 		"vue3",
 		"vuejs/vue-next",
 		"vuejs/vue-next-template",
+		"vuejs/vue-next-template-js",
 		"element-ui",
 		"element-plus",
 		"vue-next-admin",

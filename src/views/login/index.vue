@@ -3,30 +3,22 @@
 		<div class="login-logo">
 			<span>{{ getThemeConfig.globalViceTitle }}</span>
 		</div>
-		<div class="login-content" :class="{ 'login-content-mobile': tabsActiveName === 'mobile' }">
+		<div class="login-content">
 			<div class="login-content-main">
 				<h4 class="login-content-title">{{ getThemeConfig.globalTitle }}后台模板</h4>
-				<div v-if="!isScan">
-					<el-tabs v-model="tabsActiveName" @tab-click="onTabsClick">
-						<el-tab-pane label="账号密码登录" name="account" :disabled="tabsActiveName === 'account'">
-							<transition name="el-zoom-in-center">
-								<Account v-show="isTabPaneShow" />
-							</transition>
+				<div v-if="!state.isScan">
+					<el-tabs v-model="state.tabsActiveName">
+						<el-tab-pane label="账号密码登录" name="account">
+							<Account />
 						</el-tab-pane>
-						<el-tab-pane label="手机号登录" name="mobile" :disabled="tabsActiveName === 'mobile'">
-							<transition name="el-zoom-in-center">
-								<Mobile v-show="!isTabPaneShow" />
-							</transition>
+						<el-tab-pane label="手机号登录" name="mobile">
+							<Mobile />
 						</el-tab-pane>
 					</el-tabs>
-					<div class="mt10">
-						<el-button type="text" size="small">第三方登录</el-button>
-						<el-button type="text" size="small">友情链接</el-button>
-					</div>
 				</div>
 				<Scan v-else />
-				<div class="login-content-main-sacn" @click="isScan = !isScan">
-					<i class="iconfont" :class="isScan ? 'icon-diannao1' : 'icon-barcode-qr'"></i>
+				<div class="login-content-main-sacn" @click="state.isScan = !state.isScan">
+					<i class="iconfont" :class="state.isScan ? 'icon-diannao1' : 'icon-barcode-qr'"></i>
 					<div class="login-content-main-sacn-delta"></div>
 				</div>
 			</div>
@@ -38,37 +30,21 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, computed } from 'vue';
+<script setup name="login">
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
 import Scan from '/@/views/login/component/scan.vue';
-import { useStore } from '/@/store/index';
-export default {
-	name: 'login',
-	components: { Account, Mobile, Scan },
-	setup() {
-		const store = useStore();
-		const state = reactive({
-			tabsActiveName: 'account',
-			isTabPaneShow: true,
-			isScan: false,
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
-		// 切换密码、手机登录
-		const onTabsClick = () => {
-			state.isTabPaneShow = !state.isTabPaneShow;
-		};
-		return {
-			onTabsClick,
-			getThemeConfig,
-			...toRefs(state),
-		};
-	},
-};
+
+const store = useStore();
+const state = reactive({
+	tabsActiveName: 'account',
+	isTabPaneShow: true,
+	isScan: false,
+});
+// 获取布局配置信息
+const getThemeConfig = computed(() => {
+	return store.state.themeConfig.themeConfig;
+});
 </script>
 
 <style scoped lang="scss">
@@ -100,8 +76,7 @@ export default {
 		background-color: rgba(255, 255, 255, 0.99);
 		border: 5px solid var(--color-primary-light-8);
 		border-radius: 4px;
-		transition: height 0.2s linear;
-		height: 480px;
+		transition: all 0.3s ease;
 		overflow: hidden;
 		z-index: 1;
 		.login-content-main {
@@ -154,9 +129,6 @@ export default {
 				top: -1px;
 			}
 		}
-	}
-	.login-content-mobile {
-		height: 418px;
 	}
 	.login-copyright {
 		position: absolute;
