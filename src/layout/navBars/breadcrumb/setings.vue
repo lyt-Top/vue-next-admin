@@ -260,6 +260,7 @@
 							<el-option label="风格2" value="tags-style-two"></el-option>
 							<el-option label="风格3" value="tags-style-three"></el-option>
 							<el-option label="风格4" value="tags-style-four"></el-option>
+							<el-option label="风格5" value="tags-style-five"></el-option>
 						</el-select>
 					</div>
 				</div>
