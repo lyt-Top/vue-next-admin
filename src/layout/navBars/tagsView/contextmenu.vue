@@ -96,6 +96,11 @@ watch(
 		deep: true,
 	}
 );
+
+// 暴露变量
+defineExpose({
+	openContextmenu,
+});
 </script>
 
 <style scoped lang="scss">
