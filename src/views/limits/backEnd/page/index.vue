@@ -8,9 +8,9 @@
 			type="warning"
 			:closable="false"
 		></el-alert>
-		<el-button type="primary" size="small" class="mt15" @click="onGoToFrontEndPage">
+		<el-button type="primary" size="default" class="mt15" @click="onGoToFrontEndPage">
 			<el-icon>
-				<elementPosition />
+				<ele-Position />
 			</el-icon>
 			立即前往前端控制路由
 		</el-button>
@@ -18,8 +18,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-export default {
+export default defineComponent({
 	name: 'limitsBackEndEndPage',
 	setup() {
 		const router = useRouter();
@@ -31,5 +32,5 @@ export default {
 			onGoToFrontEndPage,
 		};
 	},
-};
+});
 </script>

@@ -18,9 +18,9 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from 'vue';
+import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
-export default {
+export default defineComponent({
 	name: 'pagesAwesome',
 	setup() {
 		const state = reactive({
@@ -38,34 +38,34 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
 .awesome-container {
 	.iconfont-row {
-		border-top: 1px solid #ebeef5;
-		border-left: 1px solid #ebeef5;
+		border-top: 1px solid var(--next-border-color-light);
+		border-left: 1px solid var(--next-border-color-light);
 		.iconfont-warp {
 			text-align: center;
-			border-right: 1px solid #ebeef5;
-			border-bottom: 1px solid #ebeef5;
+			border-right: 1px solid var(--next-border-color-light);
+			border-bottom: 1px solid var(--next-border-color-light);
 			height: 120px;
 			overflow: hidden;
 			display: flex;
 			transition: all 0.3s ease;
 			&:hover {
-				box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+				box-shadow: 0 2px 12px var(--next-color-dark-hover);
 				cursor: pointer;
 				transition: all 0.3s ease;
 				.iconfont-warp-value {
 					i {
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 						transition: all 0.3s ease;
 					}
 				}
 				.iconfont-warp-label {
-					color: var(--color-primary);
+					color: var(--el-color-primary);
 					transition: all 0.3s ease;
 				}
 			}

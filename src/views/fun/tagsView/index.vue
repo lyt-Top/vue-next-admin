@@ -9,9 +9,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" @click="refreshCurrentTagsView">
+						<el-button type="primary" size="default" @click="refreshCurrentTagsView">
 							<el-icon>
-								<elementRefreshRight />
+								<ele-RefreshRight />
 							</el-icon>
 							刷新当前页
 						</el-button>
@@ -19,9 +19,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small" @click="closeCurrentTagsView">
+						<el-button type="info" size="default" @click="closeCurrentTagsView">
 							<el-icon>
-								<elementClose />
+								<ele-Close />
 							</el-icon>
 							关闭当前页
 						</el-button>
@@ -29,9 +29,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="warning" size="small" @click="closeOtherTagsView">
+						<el-button type="warning" size="default" @click="closeOtherTagsView">
 							<el-icon>
-								<elementCircleClose />
+								<ele-CircleClose />
 							</el-icon>
 							关闭其它
 						</el-button>
@@ -39,9 +39,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small" @click="closeAllTagsView">
+						<el-button type="danger" size="default" @click="closeAllTagsView">
 							<el-icon>
-								<elementFolderDelete />
+								<ele-FolderDelete />
 							</el-icon>
 							全部关闭
 						</el-button>
@@ -49,9 +49,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small" @click="openCurrenFullscreen">
+						<el-button type="success" size="default" @click="openCurrenFullscreen">
 							<el-icon>
-								<elementFullScreen />
+								<ele-FullScreen />
 							</el-icon>
 							当前页全屏
 						</el-button>
@@ -63,10 +63,10 @@
 </template>
 
 <script lang="ts">
-import { getCurrentInstance, reactive, toRefs } from 'vue';
+import { getCurrentInstance, reactive, toRefs, defineComponent } from 'vue';
 import NoticeBar from '/@/components/noticeBar/index.vue';
 import { useRoute } from 'vue-router';
-export default {
+export default defineComponent({
 	name: 'funTagsView',
 	components: { NoticeBar },
 	setup() {
@@ -103,7 +103,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

@@ -29,8 +29,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
-export default {
+import { toRefs, reactive, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'FunGridLayout',
 	setup() {
 		const state = reactive({
@@ -48,14 +48,14 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
 .grid-layout-container {
 	.vue-grid-item {
-		background: var(--color-primary);
-		color: var(--color-whites);
+		background: var(--el-color-primary);
+		color: var(--el-color-white);
 	}
 }
 </style>

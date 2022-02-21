@@ -11,9 +11,9 @@
 				<div class="mb30 mt30 qrcode-img">
 					<div class="qrcode" ref="qrcodeRef"></div>
 				</div>
-				<el-button type="primary" size="small" @click="onInitQrcode">
+				<el-button type="primary" size="default" @click="onInitQrcode">
 					<el-icon>
-						<elementRefresh />
+						<ele-Refresh />
 					</el-icon>
 					重新生成
 				</el-button>
@@ -23,9 +23,9 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, getCurrentInstance } from 'vue';
+import { toRefs, reactive, onMounted, getCurrentInstance, defineComponent } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
-export default {
+export default defineComponent({
 	name: 'funQrcode',
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
@@ -56,7 +56,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

@@ -7,7 +7,7 @@
 				:closable="false"
 				class="mb15"
 			></el-alert>
-			<el-button @click="onPrintJs" size="small" type="primary">
+			<el-button @click="onPrintJs" size="default" type="primary">
 				<SvgIcon name="iconfont icon-dayin" />
 				点击打印演示
 			</el-button>
@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, defineComponent } from 'vue';
 import printJs from 'print-js';
-export default {
+export default defineComponent({
 	name: 'funPrintJs',
 	setup() {
 		const state = reactive({});
@@ -27,7 +27,7 @@ export default {
 			printJs({
 				printable: 'printRef',
 				type: 'html',
-				css: ['//at.alicdn.com/t/font_2298093_o73r8wjdhlg.css', 'https://unpkg.com/element-plus/lib/theme-chalk/index.css'],
+				css: ['//at.alicdn.com/t/font_2298093_o73r8wjdhlg.css', '//unpkg.com/element-plus/dist/index.css'],
 				scanStyles: false,
 				style: `@media print{.mb15{margin-bottom:15px;}.el-button--small i.iconfont{font-size: 12px !important;margin-right: 5px;}}`,
 			});
@@ -37,5 +37,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

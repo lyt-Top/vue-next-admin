@@ -2,7 +2,7 @@
 	<div class="system-add-dic-container">
 		<el-dialog title="新增字典" v-model="isShowDialog" width="769px">
 			<el-alert title="半成品，交互过于复杂，请自行扩展！" type="warning" :closable="false" class="mb20"> </el-alert>
-			<el-form :model="ruleForm" size="small" label-width="90px">
+			<el-form :model="ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字典名称">
@@ -24,14 +24,14 @@
 							<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 								<el-form-item :prop="`list[${k}].label`">
 									<template #label>
-										<el-button type="primary" circle size="mini" @click="onAddRow" v-if="k === 0">
+										<el-button type="primary" circle size="small" @click="onAddRow" v-if="k === 0">
 											<el-icon>
-												<elementPlus />
+												<ele-Plus />
 											</el-icon>
 										</el-button>
-										<el-button type="danger" circle size="mini" @click="onDelRow(k)" v-else>
+										<el-button type="danger" circle size="small" @click="onDelRow(k)" v-else>
 											<el-icon>
-												<elementDelete />
+												<ele-Delete />
 											</el-icon>
 										</el-button>
 										<span class="ml10">字段</span>
@@ -55,8 +55,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">新 增</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -64,8 +64,8 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-export default {
+import { reactive, toRefs, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'systemAddDic',
 	setup() {
 		const state = reactive({
@@ -111,7 +111,7 @@ export default {
 			});
 		};
 		// 删除行
-		const onDelRow = (k) => {
+		const onDelRow = (k: number) => {
 			state.ruleForm.list.splice(k, 1);
 		};
 		return {
@@ -124,5 +124,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

@@ -1,13 +1,13 @@
 <template>
-	<el-form class="login-content-form">
-		<el-form-item class="login-animation-one">
+	<el-form size="large" class="login-content-form">
+		<el-form-item class="login-animation1">
 			<el-input type="text" :placeholder="$t('message.account.accountPlaceholder1')" v-model="ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon"><elementUser /></el-icon>
+					<el-icon class="el-input__icon"><ele-User /></el-icon>
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item class="login-animation-two">
+		<el-form-item class="login-animation2">
 			<el-input
 				:type="isShowPassword ? 'text' : 'password'"
 				:placeholder="$t('message.account.accountPlaceholder2')"
@@ -15,7 +15,7 @@
 				autocomplete="off"
 			>
 				<template #prefix>
-					<el-icon class="el-input__icon"><elementUnlock /></el-icon>
+					<el-icon class="el-input__icon"><ele-Unlock /></el-icon>
 				</template>
 				<template #suffix>
 					<i
@@ -27,43 +27,36 @@
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item class="login-animation-three">
-			<el-row :gutter="15">
-				<el-col :span="16">
-					<el-input
-						type="text"
-						maxlength="4"
-						:placeholder="$t('message.account.accountPlaceholder3')"
-						v-model="ruleForm.code"
-						clearable
-						autocomplete="off"
-					>
-						<template #prefix>
-							<el-icon class="el-input__icon"><elementPosition /></el-icon>
-						</template>
-					</el-input>
-				</el-col>
-				<el-col :span="8">
-					<div class="login-content-code">
-						<span class="login-content-code-img">1234</span>
-					</div>
-				</el-col>
-			</el-row>
+		<el-form-item class="login-animation3">
+			<el-col :span="15">
+				<el-input
+					type="text"
+					maxlength="4"
+					:placeholder="$t('message.account.accountPlaceholder3')"
+					v-model="ruleForm.code"
+					clearable
+					autocomplete="off"
+				>
+					<template #prefix>
+						<el-icon class="el-input__icon"><ele-Position /></el-icon>
+					</template>
+				</el-input>
+			</el-col>
+			<el-col :span="1"></el-col>
+			<el-col :span="8">
+				<el-button class="login-content-code">1234</el-button>
+			</el-col>
 		</el-form-item>
-		<el-form-item class="login-animation-four">
+		<el-form-item class="login-animation4">
 			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
 				<span>{{ $t('message.account.accountBtnText') }}</span>
 			</el-button>
-		</el-form-item>
-		<el-form-item class="login-animation-five">
-			<el-button type="text" size="small">{{ $t('message.link.one3') }}</el-button>
-			<el-button type="text" size="small">{{ $t('message.link.two4') }}</el-button>
 		</el-form-item>
 	</el-form>
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent, computed, getCurrentInstance } from 'vue';
+import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
@@ -76,7 +69,6 @@ export default defineComponent({
 	name: 'loginAccount',
 	setup() {
 		const { t } = useI18n();
-		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
@@ -155,24 +147,19 @@ export default defineComponent({
 			// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
 			if (route.query?.redirect) {
 				router.push({
-					path: route.query?.redirect,
-					query: Object.keys(route.query?.params).length > 0 ? JSON.parse(route.query?.params) : '',
+					path: <string>route.query?.redirect,
+					query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
 				});
 			} else {
 				router.push('/');
 			}
 			// 登录成功提示
-			setTimeout(() => {
-				// 关闭 loading
-				state.loading.signIn = true;
-				const signInText = t('message.signInText');
-				ElMessage.success(`${currentTimeInfo}，${signInText}`);
-				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
-				proxy.mittBus.emit('onSignInClick');
-			}, 300);
+			// 关闭 loading
+			state.loading.signIn = true;
+			const signInText = t('message.signInText');
+			ElMessage.success(`${currentTimeInfo}，${signInText}`);
 		};
 		return {
-			currentTime,
 			onSignIn,
 			...toRefs(state),
 		};
@@ -183,65 +170,28 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
-	.login-animation-one,
-	.login-animation-two,
-	.login-animation-three,
-	.login-animation-four,
-	.login-animation-five {
-		opacity: 0;
-		animation-name: error-num;
-		animation-duration: 0.5s;
-		animation-fill-mode: forwards;
-	}
-	.login-animation-one {
-		animation-delay: 0.1s;
-	}
-	.login-animation-two {
-		animation-delay: 0.2s;
-	}
-	.login-animation-three {
-		animation-delay: 0.3s;
-	}
-	.login-animation-four {
-		animation-delay: 0.4s;
-		margin-bottom: 5px;
-	}
-	.login-animation-five {
-		animation-delay: 0.5s;
+	@for $i from 1 through 4 {
+		.login-animation#{$i} {
+			opacity: 0;
+			animation-name: error-num;
+			animation-duration: 0.5s;
+			animation-fill-mode: forwards;
+			animation-delay: calc($i/10) + s;
+		}
 	}
 	.login-content-password {
 		display: inline-block;
-		width: 25px;
+		width: 20px;
 		cursor: pointer;
 		&:hover {
 			color: #909399;
 		}
 	}
 	.login-content-code {
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
-		.login-content-code-img {
-			width: 100%;
-			height: 40px;
-			line-height: 40px;
-			background-color: #ffffff;
-			border: 1px solid rgb(220, 223, 230);
-			color: #333;
-			font-size: 16px;
-			font-weight: 700;
-			letter-spacing: 5px;
-			text-indent: 5px;
-			text-align: center;
-			cursor: pointer;
-			transition: all ease 0.2s;
-			border-radius: 4px;
-			user-select: none;
-			&:hover {
-				border-color: #c0c4cc;
-				transition: all ease 0.2s;
-			}
-		}
+		width: 100%;
+		padding: 0;
+		font-weight: bold;
+		letter-spacing: 5px;
 	}
 	.login-content-submit {
 		width: 100%;

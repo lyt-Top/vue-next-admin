@@ -5,11 +5,11 @@
 		<el-card shadow="hover" header="表单组件3" class="mt15"> <FormRulesThree ref="pagesFormRulesThreeRef" /></el-card>
 		<el-row class="flex mt15">
 			<div class="flex-margin">
-				<el-button size="small" @click="onResetForm">
-					<SvgIcon name="elementRefreshRight" />
+				<el-button size="default" @click="onResetForm">
+					<SvgIcon name="ele-RefreshRight" />
 					重置表单
 				</el-button>
-				<el-button size="small" type="primary" @click="onSubmitForm">
+				<el-button size="default" type="primary" @click="onSubmitForm">
 					<SvgIcon name="iconfont icon-shuxing" />
 					验证表单
 				</el-button>
@@ -32,7 +32,7 @@ export default defineComponent({
 		FormRulesThree,
 	},
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const state = reactive({
 			formRulesOneData: {
 				name: 'lyt',
@@ -42,9 +42,9 @@ export default defineComponent({
 			},
 		});
 		// 表单组件验证
-		const formRulesValidate = (pageRef, sonRef) => {
+		const formRulesValidate = (pageRef: string, sonRef: string) => {
 			return new Promise((resolve) => {
-				proxy.$refs[pageRef].$refs[sonRef].validate((valid) => {
+				proxy.$refs[pageRef].$refs[sonRef].validate((valid: boolean) => {
 					if (valid) resolve(valid);
 				});
 			});

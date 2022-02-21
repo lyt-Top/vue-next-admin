@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onActivated, onMounted } from 'vue';
-export default {
+import { toRefs, reactive, onActivated, onMounted, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'menu13',
 	setup() {
 		const state = reactive({
@@ -22,5 +22,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

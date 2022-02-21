@@ -15,7 +15,7 @@ import SvgIcon from '/@/components/svgIcon/index.vue';
 export function elSvg(app: App) {
 	const icons = svg as any;
 	for (const i in icons) {
-		app.component(`element${icons[i].name}`, icons[i]);
+		app.component(`ele-${icons[i].name}`, icons[i]);
 	}
 	app.component('SvgIcon', SvgIcon);
 }
@@ -64,7 +64,6 @@ export const lazyImg = (el: any, arr: any) => {
  * @returns 返回 `window.localStorage` 中读取的缓存值 `globalComponentSize`
  */
 export const globalComponentSize: string = Local.get('themeConfig')?.globalComponentSize || store.state.themeConfig.themeConfig?.globalComponentSize;
-
 
 /**
  * 对象深克隆

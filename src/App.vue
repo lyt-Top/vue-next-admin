@@ -1,5 +1,5 @@
 <template>
-	<el-config-provider :locale="i18nLocale">
+	<el-config-provider :size="getGlobalComponentSize" :locale="i18nLocale">
 		<router-view v-show="getThemeConfig.lockScreenTime !== 0" />
 		<LockScreen v-if="getThemeConfig.isLockScreen" />
 		<Setings ref="setingsRef" v-show="getThemeConfig.lockScreenTime !== 0" />
@@ -21,7 +21,7 @@ export default defineComponent({
 	name: 'app',
 	components: { LockScreen, Setings, CloseFull },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const setingsRef = ref();
 		const route = useRoute();
 		const store = useStore();
@@ -31,6 +31,10 @@ export default defineComponent({
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
+		});
+		// 获取全局组件大小
+		const getGlobalComponentSize = computed(() => {
+			return other.globalComponentSize;
 		});
 		// 布局配置弹窗打开
 		const openSetingsDrawer = () => {
@@ -52,7 +56,7 @@ export default defineComponent({
 				});
 				// 设置 i18n，App.vue 中的 el-config-provider
 				proxy.mittBus.on('getI18nConfig', (locale: string) => {
-					state.i18nLocale = locale;
+					(state.i18nLocale as string | null) = locale;
 				});
 				// 获取缓存中的布局配置
 				if (Local.get('themeConfig')) {
@@ -80,6 +84,7 @@ export default defineComponent({
 		return {
 			setingsRef,
 			getThemeConfig,
+			getGlobalComponentSize,
 			...toRefs(state),
 		};
 	},

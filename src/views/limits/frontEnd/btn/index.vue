@@ -8,9 +8,9 @@
 				<Auth :value="'btn.add'">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="primary" size="small">
+							<el-button type="primary" size="default">
 								<el-icon>
-									<elementDocumentAdd />
+									<ele-DocumentAdd />
 								</el-icon>
 								新增
 							</el-button>
@@ -20,9 +20,9 @@
 				<Auth :value="'btn.edit'">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="info" size="small">
+							<el-button type="info" size="default">
 								<el-icon>
-									<elementEdit />
+									<ele-Edit />
 								</el-icon>
 								编辑
 							</el-button>
@@ -32,9 +32,9 @@
 				<Auth :value="'btn.del'">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="danger" size="small">
+							<el-button type="danger" size="default">
 								<el-icon>
-									<elementDelete />
+									<ele-Delete />
 								</el-icon>
 								删除
 							</el-button>
@@ -44,9 +44,9 @@
 				<Auth :value="'btn.link'">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="success" size="small">
+							<el-button type="success" size="default">
 								<el-icon>
-									<elementLink />
+									<ele-Link />
 								</el-icon>
 								跳转
 							</el-button>
@@ -60,9 +60,9 @@
 				<Auths :value="['btn.addsss', 'btn.edit', 'btn.delsss', 'btn.linksss']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="primary" size="small">
+							<el-button type="primary" size="default">
 								<el-icon>
-									<elementDocumentAdd />
+									<ele-DocumentAdd />
 								</el-icon>
 								新增
 							</el-button>
@@ -72,9 +72,9 @@
 				<Auths :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="info" size="small">
+							<el-button type="info" size="default">
 								<el-icon>
-									<elementEdit />
+									<ele-Edit />
 								</el-icon>
 								编辑
 							</el-button>
@@ -84,9 +84,9 @@
 				<Auths :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="danger" size="small">
+							<el-button type="danger" size="default">
 								<el-icon>
-									<elementDelete />
+									<ele-Delete />
 								</el-icon>
 								删除
 							</el-button>
@@ -96,9 +96,9 @@
 				<Auths :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="success" size="small">
+							<el-button type="success" size="default">
 								<el-icon>
-									<elementLink />
+									<ele-Link />
 								</el-icon>
 								跳转
 							</el-button>
@@ -112,9 +112,9 @@
 				<AuthAll :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="primary" size="small">
+							<el-button type="primary" size="default">
 								<el-icon>
-									<elementDocumentAdd />
+									<ele-DocumentAdd />
 								</el-icon>
 								新增
 							</el-button>
@@ -124,9 +124,9 @@
 				<AuthAll :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="info" size="small">
+							<el-button type="info" size="default">
 								<el-icon>
-									<elementEdit />
+									<ele-Edit />
 								</el-icon>
 								编辑
 							</el-button>
@@ -136,9 +136,9 @@
 				<AuthAll :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="danger" size="small">
+							<el-button type="danger" size="default">
 								<el-icon>
-									<elementDelete />
+									<ele-Delete />
 								</el-icon>
 								删除
 							</el-button>
@@ -148,9 +148,9 @@
 				<AuthAll :value="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item">
 						<div class="flex-warp-item-box">
-							<el-button type="success" size="small">
+							<el-button type="success" size="default">
 								<el-icon>
-									<elementLink />
+									<ele-Link />
 								</el-icon>
 								跳转
 							</el-button>
@@ -166,9 +166,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item" v-auth="'btn.add'">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small">
+						<el-button type="primary" size="default">
 							<el-icon>
-								<elementDocumentAdd />
+								<ele-DocumentAdd />
 							</el-icon>
 							新增
 						</el-button>
@@ -176,9 +176,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth="'btn.edit'">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small">
+						<el-button type="info" size="default">
 							<el-icon>
-								<elementEdit />
+								<ele-Edit />
 							</el-icon>
 							编辑
 						</el-button>
@@ -186,9 +186,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth="'btn.del'">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small">
+						<el-button type="danger" size="default">
 							<el-icon>
-								<elementDelete />
+								<ele-Delete />
 							</el-icon>
 							删除
 						</el-button>
@@ -196,9 +196,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth="'btn.link'">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small">
+						<el-button type="success" size="default">
 							<el-icon>
-								<elementLink />
+								<ele-Link />
 							</el-icon>
 							跳转
 						</el-button>
@@ -210,9 +210,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item" v-auths="['btn.addsss', 'btn.edit', 'btn.delsss', 'btn.linksss']">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small">
+						<el-button type="primary" size="default">
 							<el-icon>
-								<elementDocumentAdd />
+								<ele-DocumentAdd />
 							</el-icon>
 							新增
 						</el-button>
@@ -220,9 +220,9 @@
 				</div>
 				<div class="flex-warp-item" v-auths="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small">
+						<el-button type="info" size="default">
 							<el-icon>
-								<elementEdit />
+								<ele-Edit />
 							</el-icon>
 							编辑
 						</el-button>
@@ -230,9 +230,9 @@
 				</div>
 				<div class="flex-warp-item" v-auths="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small">
+						<el-button type="danger" size="default">
 							<el-icon>
-								<elementDelete />
+								<ele-Delete />
 							</el-icon>
 							删除
 						</el-button>
@@ -240,9 +240,9 @@
 				</div>
 				<div class="flex-warp-item" v-auths="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small">
+						<el-button type="success" size="default">
 							<el-icon>
-								<elementLink />
+								<ele-Link />
 							</el-icon>
 							跳转
 						</el-button>
@@ -254,9 +254,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item" v-auth-all="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small">
+						<el-button type="primary" size="default">
 							<el-icon>
-								<elementDocumentAdd />
+								<ele-DocumentAdd />
 							</el-icon>
 							新增
 						</el-button>
@@ -264,9 +264,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth-all="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small">
+						<el-button type="info" size="default">
 							<el-icon>
-								<elementEdit />
+								<ele-Edit />
 							</el-icon>
 							编辑
 						</el-button>
@@ -274,9 +274,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth-all="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small">
+						<el-button type="danger" size="default">
 							<el-icon>
-								<elementDelete />
+								<ele-Delete />
 							</el-icon>
 							删除
 						</el-button>
@@ -284,9 +284,9 @@
 				</div>
 				<div class="flex-warp-item" v-auth-all="['btn.add', 'btn.edit', 'btn.del', 'btn.link']">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small">
+						<el-button type="success" size="default">
 							<el-icon>
-								<elementLink />
+								<ele-Link />
 							</el-icon>
 							跳转
 						</el-button>
@@ -301,9 +301,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" @click="onAuthClick">
+						<el-button type="primary" size="default" @click="onAuthClick">
 							<el-icon>
-								<elementDocumentAdd />
+								<ele-DocumentAdd />
 							</el-icon>
 							新增
 						</el-button>
@@ -311,9 +311,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small" @click="onAuthsClick">
+						<el-button type="info" size="default" @click="onAuthsClick">
 							<el-icon>
-								<elementEdit />
+								<ele-Edit />
 							</el-icon>
 							编辑
 						</el-button>
@@ -321,9 +321,9 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small" @click="onAuthAllClick">
+						<el-button type="danger" size="default" @click="onAuthAllClick">
 							<el-icon>
-								<elementDelete />
+								<ele-Delete />
 							</el-icon>
 							删除
 						</el-button>
@@ -335,13 +335,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import { ElMessage } from 'element-plus';
 import LimitsFrontEndPage from '/@/views/limits/frontEnd/page/index.vue';
 import Auth from '/@/components/auth/auth.vue';
 import Auths from '/@/components/auth/auths.vue';
 import AuthAll from '/@/components/auth/authAll.vue';
 import { auth, auths, authAll } from '/@/utils/authFunction';
-export default {
+export default defineComponent({
 	name: 'limitsFrontEndBtn',
 	components: { LimitsFrontEndPage, Auth, Auths, AuthAll },
 	setup() {
@@ -366,7 +367,7 @@ export default {
 			onAuthAllClick,
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

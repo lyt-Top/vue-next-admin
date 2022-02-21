@@ -1,6 +1,6 @@
 <template>
 	<el-card shadow="hover" header="正则验证（一些项目中常用的正则）">
-		<el-form :model="ruleForm" :rules="rules" class="tools-warp-form" size="small" label-position="top">
+		<el-form :model="ruleForm" :rules="rules" class="tools-warp-form" size="default" label-position="top">
 			<el-form-item label="验证百分比（不可以小数）:" prop="a22">
 				<div class="tools-warp-form-msg">验证可以输入大于0小于100的数字</div>
 				<div>
@@ -188,7 +188,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
+import { reactive, toRefs, defineComponent } from 'vue';
 import {
 	verifyNumberPercentage,
 	verifyNumberPercentageFloat,
@@ -214,25 +214,25 @@ import {
 	verifyUrl,
 	verifyCarNum,
 } from '/@/utils/toolsValidate';
-export default {
+export default defineComponent({
 	name: 'tools',
 	setup() {
 		const state = reactive({
 			text: '世间美好，与你环环相扣，祝你开心每一天！',
-			phone: '',
+			phone: false,
 			cnText: '',
-			telePhone: '',
-			account: '',
-			password: '',
-			passwordPowerful: '',
+			telePhone: false,
+			account: false,
+			password: false,
+			passwordPowerful: false,
 			passwordStrength: '',
-			iPAddress: '',
-			email: '',
-			idCard: '',
-			fullName: '',
-			postalCode: '',
-			url: '',
-			carNum: '',
+			iPAddress: false,
+			email: false,
+			idCard: false,
+			fullName: false,
+			postalCode: false,
+			url: false,
+			carNum: false,
 			/**
 			 * 变量名为了方便，随便取了，
 			 * 实际中，按正常程序进行命名
@@ -475,7 +475,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -486,9 +486,13 @@ export default {
 	.tools-warp-form-msg {
 		color: #666666;
 		font-size: 14px;
+		width: 100%;
 		.tools-warp-form-msg-red {
 			color: red;
 		}
+	}
+	.tools-warp-form-msg + div {
+		width: 100%;
 	}
 }
 </style>

@@ -13,14 +13,14 @@ export const skyList = [
 	},
 	{
 		v1: '今天',
-		v2: 'elementSunny',
+		v2: 'ele-Sunny',
 		v3: '20°/26°',
 		v5: '50%',
 		v7: '13m/s',
 	},
 	{
 		v1: '明天',
-		v2: 'elementLightning',
+		v2: 'ele-Lightning',
 		v3: '20°/26°',
 		v5: '50%',
 		v7: '13m/s',

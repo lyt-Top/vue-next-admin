@@ -19,8 +19,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-export default {
+export default defineComponent({
 	name: '404',
 	setup() {
 		const router = useRouter();
@@ -31,7 +32,7 @@ export default {
 			onGoHome,
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

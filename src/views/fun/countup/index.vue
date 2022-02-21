@@ -9,7 +9,7 @@
 			></el-alert>
 			<el-row :gutter="20">
 				<el-col :sm="6" class="mb15" v-for="(v, k) in topCardItemList" :key="k">
-					<div class="countup-card-item countup-card-item-box" :style="{ background: v.color }">
+					<div class="countup-card-item countup-card-item-box" :style="{ background: `var(${v.color})` }">
 						<div class="countup-card-item-flex">
 							<div class="countup-card-item-title pb3">{{ v.title }}</div>
 							<div class="countup-card-item-title-num pb6" :id="`titleNum${k + 1}`"></div>
@@ -23,9 +23,9 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" @click="refreshCurrent">
+						<el-button type="primary" size="default" @click="refreshCurrent">
 							<el-icon>
-								<elementRefreshRight />
+								<ele-RefreshRight />
 							</el-icon>
 							重置/刷新数值
 						</el-button>
@@ -37,9 +37,9 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onMounted, nextTick } from 'vue';
+import { reactive, toRefs, onMounted, nextTick, defineComponent } from 'vue';
 import { CountUp } from 'countup.js';
-export default {
+export default defineComponent({
 	name: 'funCountup',
 	setup() {
 		const state = reactive({
@@ -49,7 +49,7 @@ export default {
 					titleNum: '123',
 					tip: '在场人数',
 					tipNum: '911',
-					color: '#F95959',
+					color: '--el-color-primary',
 					iconColor: '#F86C6B',
 					icon: 'iconfont icon-jinridaiban',
 				},
@@ -58,7 +58,7 @@ export default {
 					titleNum: '123',
 					tip: '使用中',
 					tipNum: '611',
-					color: '#8595F4',
+					color: '--el-color-success',
 					iconColor: '#92A1F4',
 					icon: 'iconfont icon-AIshiyanshi',
 				},
@@ -68,7 +68,7 @@ export default {
 					tip: '通过人数',
 					tipNum: '911',
 					color: '#FEBB50',
-					iconColor: '#FDC566',
+					iconColor: '--el-color-warning',
 					icon: 'iconfont icon-shenqingkaiban',
 				},
 				{
@@ -76,9 +76,9 @@ export default {
 					titleNum: '123',
 					tip: '销售数',
 					tipNum: '911',
-					color: '#41b3c5',
+					color: '--el-color-danger',
 					iconColor: '#1dbcd5',
-					icon: 'el-icon-trophy-1',
+					icon: 'iconfont icon-ditu',
 				},
 			],
 		});
@@ -108,7 +108,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -145,7 +145,7 @@ export default {
 	}
 	.countup-card-item-flex {
 		padding: 0 20px;
-		color: var(--color-whites);
+		color: var(--el-color-white);
 		.countup-card-item-title,
 		.countup-card-item-tip {
 			font-size: 13px;

@@ -17,7 +17,7 @@
 						<SvgIcon
 							:name="fontIconPrefix === '' ? prepend : fontIconPrefix"
 							class="font14"
-							v-if="fontIconPrefix === '' ? prepend?.indexOf('element') > -1 : fontIconPrefix?.indexOf('element') > -1"
+							v-if="fontIconPrefix === '' ? prepend?.indexOf('ele-') > -1 : fontIconPrefix?.indexOf('ele-') > -1"
 						/>
 						<i v-else :class="fontIconPrefix === '' ? prepend : fontIconPrefix" class="font14"></i>
 					</template>
@@ -56,16 +56,16 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, onMounted, nextTick, computed, watch } from 'vue';
+import { ref, toRefs, reactive, onMounted, nextTick, computed, watch, defineComponent } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
-export default {
+export default defineComponent({
 	name: 'iconSelector',
 	emits: ['update:modelValue', 'get', 'clear'],
 	props: {
 		// 输入框前置内容
 		prepend: {
 			type: String,
-			default: () => 'elementPointer',
+			default: () => 'ele-Pointer',
 		},
 		// 输入框占位文本
 		placeholder: {
@@ -75,7 +75,7 @@ export default {
 		// 输入框占位文本
 		size: {
 			type: String,
-			default: () => 'small',
+			default: () => 'default',
 		},
 		// 弹窗标题
 		title: {
@@ -109,7 +109,7 @@ export default {
 	setup(props, { emit }) {
 		const inputWidthRef = ref();
 		const selectorScrollbarRef = ref();
-		const state: any = reactive({
+		const state = reactive({
 			fontIconPrefix: '',
 			fontIconVisible: false,
 			fontIconWidth: 0,
@@ -122,6 +122,7 @@ export default {
 		});
 		// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
 		const onIconFocus = () => {
+			state.fontIconVisible = true;
 			if (!props.modelValue) return false;
 			state.fontIconSearch = '';
 			state.fontIconPlaceholder = props.modelValue;
@@ -136,8 +137,8 @@ export default {
 		// 处理 icon 双向绑定数值回显
 		const initModeValueEcho = () => {
 			if (props.modelValue === '') return false;
-			state.fontIconPlaceholder = props.modelValue;
-			state.fontIconPrefix = props.modelValue;
+			(<string | undefined>state.fontIconPlaceholder) = props.modelValue;
+			(<string | undefined>state.fontIconPrefix) = props.modelValue;
 		};
 		// 图标搜索及图标数据显示
 		const fontIconSheetsFilterList = computed(() => {
@@ -165,7 +166,7 @@ export default {
 			if (type === 'ali') {
 				await initIconfont.ali().then((res: any) => {
 					// 阿里字体图标使用 `iconfont xxx`
-					state.fontIconSheetsList = res.map((i) => `iconfont ${i}`);
+					state.fontIconSheetsList = res.map((i: string) => `iconfont ${i}`);
 				});
 			} else if (type === 'ele') {
 				await initIconfont.ele().then((res: any) => {
@@ -174,7 +175,7 @@ export default {
 			} else if (type === 'awe') {
 				await initIconfont.awe().then((res: any) => {
 					// fontawesome字体图标使用 `fa xxx`
-					state.fontIconSheetsList = res.map((i) => `fa ${i}`);
+					state.fontIconSheetsList = res.map((i: string) => `fa ${i}`);
 				});
 			}
 			// 初始化 input 的 placeholder
@@ -208,9 +209,9 @@ export default {
 		onMounted(() => {
 			// 判断默认进来是什么类型图标，进行 tab 回显
 			if (props.type === 'all') {
-				if (props.modelValue?.indexOf('iconfont') > -1) onIconChange('ali');
-				else if (props.modelValue?.indexOf('element') > -1) onIconChange('ele');
-				else if (props.modelValue?.indexOf('fa') > -1) onIconChange('awe');
+				if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
+				else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
+				else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
 				else onIconChange('ali');
 			} else {
 				onIconChange(props.type);
@@ -237,5 +238,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

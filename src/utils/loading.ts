@@ -1,25 +1,16 @@
 import { nextTick } from 'vue';
-import loadingCss from '/@/theme/loading.scss';
+import '/@/theme/loading.scss';
 
 /**
  * 页面全局 Loading
- * @method setCss 载入 css
  * @method start 创建 loading
  * @method done 移除 loading
  */
 export const NextLoading = {
-	// 载入 css
-	setCss: () => {
-		let link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.href = loadingCss;
-		link.crossOrigin = 'anonymous';
-		document.getElementsByTagName('head')[0].appendChild(link);
-	},
 	// 创建 loading
 	start: () => {
 		const bodys: Element = document.body;
-		const div = document.createElement('div');
+		const div = <HTMLElement>document.createElement('div');
 		div.setAttribute('class', 'loading-next');
 		const htmls = `
 			<div class="loading-next-box">
@@ -43,11 +34,9 @@ export const NextLoading = {
 	// 移除 loading
 	done: () => {
 		nextTick(() => {
-			setTimeout(() => {
-				window.nextLoading = false;
-				const el = document.querySelector('.loading-next');
-				el && el.parentNode?.removeChild(el);
-			}, 1000);
+			window.nextLoading = false;
+			const el = <HTMLElement>document.querySelector('.loading-next');
+			el?.parentNode?.removeChild(el);
 		});
 	},
 };

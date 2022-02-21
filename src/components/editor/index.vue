@@ -5,9 +5,15 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, watch } from 'vue';
+import { toRefs, reactive, onMounted, watch, defineComponent } from 'vue';
 import wangeditor from 'wangeditor';
-export default {
+
+// 定义接口来定义对象的类型
+interface WangeditorState {
+	editor: any;
+}
+
+export default defineComponent({
 	name: 'wngEditor',
 	props: {
 		// 节点 id
@@ -31,7 +37,7 @@ export default {
 		modelValue: String,
 	},
 	setup(props, { emit }) {
-		const state = reactive({
+		const state = reactive<WangeditorState>({
 			editor: null,
 		});
 		// 初始化富文本
@@ -69,5 +75,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

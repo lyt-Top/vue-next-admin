@@ -5,7 +5,7 @@
 			<div class="flex-warp">
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button size="small" v-waves>
+						<el-button size="default" v-waves>
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							默认效果
 						</el-button>
@@ -13,7 +13,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" v-waves="'light'">
+						<el-button type="primary" size="default" v-waves="'light'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							light 效果
 						</el-button>
@@ -21,7 +21,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="success" size="small" v-waves="'red'">
+						<el-button type="success" size="default" v-waves="'red'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							red 效果
 						</el-button>
@@ -29,7 +29,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="info" size="small" v-waves="'orange'">
+						<el-button type="info" size="default" v-waves="'orange'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							orange 效果
 						</el-button>
@@ -37,7 +37,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="warning" size="small" v-waves="'purple'">
+						<el-button type="warning" size="default" v-waves="'purple'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							purple 效果
 						</el-button>
@@ -45,7 +45,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="danger" size="small" v-waves="'green'">
+						<el-button type="danger" size="default" v-waves="'green'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							green 效果
 						</el-button>
@@ -53,7 +53,7 @@
 				</div>
 				<div class="flex-warp-item">
 					<div class="flex-warp-item-box">
-						<el-button type="primary" size="small" v-waves="'teal'">
+						<el-button type="primary" size="default" v-waves="'teal'">
 							<SvgIcon name="iconfont icon-bolangnengshiyanchang" />
 							teal 效果
 						</el-button>
@@ -74,8 +74,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
-export default {
+import { toRefs, reactive, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'pagesWaves',
 	setup() {
 		const state = reactive({});
@@ -83,7 +83,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -109,8 +109,8 @@ export default {
 		grid-auto-rows: 20px;
 		.waterfall-first-item {
 			width: 100%;
-			background: var(--color-primary);
-			color: var(--color-whites);
+			background: var(--el-color-primary);
+			color: var(--el-color-white);
 			transition: all 0.3s ease;
 			border-radius: 3px;
 			&:nth-of-type(3n + 1) {

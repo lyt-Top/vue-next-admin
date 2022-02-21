@@ -6,10 +6,9 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="" :disabled="disabledSize === ''">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
-					<el-dropdown-item command="medium" :disabled="disabledSize === 'medium'">{{ $t('message.user.dropdownMedium') }}</el-dropdown-item>
+					<el-dropdown-item command="large" :disabled="disabledSize === 'large'">{{ $t('message.user.dropdownLarge') }}</el-dropdown-item>
+					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
 					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
-					<el-dropdown-item command="mini" :disabled="disabledSize === 'mini'">{{ $t('message.user.dropdownMini') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -27,24 +26,22 @@
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<el-icon :title="$t('message.user.title2')">
-				<elementSearch />
+				<ele-Search />
 			</el-icon>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
-			<el-popover placement="bottom" trigger="click" v-model:visible="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
+			<el-popover placement="bottom" trigger="click" :width="300">
 				<template #reference>
-					<el-badge :is-dot="true" @click="isShowUserNewsPopover = !isShowUserNewsPopover">
+					<el-badge :is-dot="true">
 						<el-icon :title="$t('message.user.title4')">
-							<elementBell />
+							<ele-Bell />
 						</el-icon>
 					</el-badge>
 				</template>
-				<transition name="el-zoom-in-top">
-					<UserNews v-show="isShowUserNewsPopover" />
-				</transition>
+				<UserNews />
 			</el-popover>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
@@ -57,9 +54,9 @@
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-				{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}
+				{{ getUserInfos.userName === '' ? 'common' : getUserInfos.userName }}
 				<el-icon class="el-icon--right">
-					<elementArrowDown />
+					<ele-ArrowDown />
 				</el-icon>
 			</span>
 			<template #dropdown>
@@ -78,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted } from 'vue';
+import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
@@ -89,24 +86,23 @@ import other from '/@/utils/other';
 import { Session, Local } from '/@/utils/storage';
 import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/layout/navBars/breadcrumb/search.vue';
-export default {
+export default defineComponent({
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },
 	setup() {
 		const { t } = useI18n();
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const router = useRouter();
 		const store = useStore();
 		const searchRef = ref();
 		const state = reactive({
 			isScreenfull: false,
-			isShowUserNewsPopover: false,
 			disabledI18n: 'zh-cn',
-			disabledSize: '',
+			disabledSize: 'large',
 		});
 		// 获取用户信息 vuex
 		const getUserInfos = computed(() => {
-			return store.state.userInfos.userInfos;
+			return <any>store.state.userInfos.userInfos;
 		});
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
@@ -114,10 +110,11 @@ export default {
 		});
 		// 设置分割样式
 		const layoutUserFlexNum = computed(() => {
-			let { layout, isClassicSplitMenu } = getThemeConfig.value;
-			let num = '';
-			if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu) || layout === 'columns') num = 1;
-			else num = null;
+			let num: string | number = '';
+			const { layout, isClassicSplitMenu } = getThemeConfig.value;
+			const layoutArr: string[] = ['defaults', 'columns'];
+			if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
+			else num = '';
 			return num;
 		});
 		// 全屏点击时
@@ -147,6 +144,7 @@ export default {
 					showCancelButton: true,
 					confirmButtonText: t('message.user.logOutConfirm'),
 					cancelButtonText: t('message.user.logOutCancel'),
+					buttonSize: 'default',
 					beforeClose: (action, instance, done) => {
 						if (action === 'confirm') {
 							instance.confirmButtonLoading = true;
@@ -162,13 +160,13 @@ export default {
 						}
 					},
 				})
-					.then(() => {
+					.then(async () => {
 						Session.clear(); // 清除缓存/token等
-						resetRoute(); // 删除/重置路由
-						router.push('/login');
+						await resetRoute(); // 删除/重置路由
+						ElMessage.success(t('message.user.logOutSuccess'));
 						setTimeout(() => {
-							ElMessage.success(t('message.user.logOutSuccess'));
-						}, 300);
+							window.location.href = ''; // 去登录页
+						}, 500);
 					})
 					.catch(() => {});
 			} else if (path === 'wareHouse') {
@@ -186,7 +184,6 @@ export default {
 			Local.remove('themeConfig');
 			getThemeConfig.value.globalComponentSize = size;
 			Local.set('themeConfig', getThemeConfig.value);
-			proxy.$ELEMENT.size = size;
 			initComponentSize();
 			window.location.reload();
 		};
@@ -223,17 +220,14 @@ export default {
 		// 初始化全局组件大小
 		const initComponentSize = () => {
 			switch (Local.get('themeConfig').globalComponentSize) {
-				case '':
-					state.disabledSize = '';
+				case 'large':
+					state.disabledSize = 'large';
 					break;
-				case 'medium':
-					state.disabledSize = 'medium';
+				case 'default':
+					state.disabledSize = 'default';
 					break;
 				case 'small':
 					state.disabledSize = 'small';
-					break;
-				case 'mini':
-					state.disabledSize = 'mini';
 					break;
 			}
 		};
@@ -257,7 +251,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -279,13 +273,13 @@ export default {
 	&-icon {
 		padding: 0 10px;
 		cursor: pointer;
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 		height: 50px;
 		line-height: 50px;
 		display: flex;
 		align-items: center;
 		&:hover {
-			background: rgba(0, 0, 0, 0.04);
+			background: var(--next-color-user-hover);
 			i {
 				display: inline-block;
 				animation: logoAnimation 0.3s ease-in-out;
@@ -293,7 +287,7 @@ export default {
 		}
 	}
 	::v-deep(.el-dropdown) {
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 	}
 	::v-deep(.el-badge) {
 		height: 40px;

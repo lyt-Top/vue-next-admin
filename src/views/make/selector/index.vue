@@ -29,7 +29,7 @@
 import { toRefs, reactive, defineComponent } from 'vue';
 import IconSelector from '/@/components/iconSelector/index.vue';
 export default defineComponent({
-	name: 'funSelector',
+	name: 'makeSelector',
 	components: { IconSelector },
 	setup() {
 		const state = reactive({
@@ -40,7 +40,7 @@ export default defineComponent({
 					a2: '输入框前置内容，只能字体图标',
 					a3: 'string',
 					a4: '',
-					a5: 'elementPointer',
+					a5: 'ele-Pointer',
 				},
 				{
 					a1: 'placeholder',
@@ -53,8 +53,8 @@ export default defineComponent({
 					a1: 'size',
 					a2: '尺寸',
 					a3: 'string',
-					a4: 'medium / small / mini',
-					a5: 'small',
+					a4: 'large / default / small',
+					a5: 'default',
 				},
 				{
 					a1: 'title',

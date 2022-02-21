@@ -81,7 +81,7 @@
 			<el-col :span="24">
 				<el-card shadow="hover" class="mt15 personal-edit" header="更新信息">
 					<div class="personal-edit-title">基本信息</div>
-					<el-form :model="personalForm" size="small" label-width="40px" class="mt35 mb35">
+					<el-form :model="personalForm" size="default" label-width="40px" class="mt35 mb35">
 						<el-row :gutter="35">
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="昵称">
@@ -124,7 +124,7 @@
 								<el-form-item>
 									<el-button type="primary">
 										<el-icon>
-											<elementPosition />
+											<ele-Position />
 										</el-icon>
 										更新个人信息
 									</el-button>
@@ -184,13 +184,21 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed } from 'vue';
+import { toRefs, reactive, computed, defineComponent } from 'vue';
 import { formatAxis } from '/@/utils/formatTime';
 import { newsInfoList, recommendList } from './mock';
-export default {
+
+// 定义接口来定义对象的类型
+interface PersonalState {
+	newsInfoList: any;
+	recommendList: any;
+	personalForm: any;
+}
+
+export default defineComponent({
 	name: 'personal',
 	setup() {
-		const state = reactive({
+		const state = reactive<PersonalState>({
 			newsInfoList,
 			recommendList,
 			personalForm: {
@@ -211,11 +219,11 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
-@import '../../theme/mixins/mixins.scss';
+@import '../../theme/mixins/index.scss';
 .personal {
 	.personal-user {
 		height: 130px;

@@ -18,7 +18,10 @@ export default defineComponent({
 		const route = useRoute();
 		const store = useStore();
 		const state = reactive({
-			params: {},
+			params: {
+				path: '',
+				params: '',
+			},
 		});
 		// 设置 view 的高度
 		const setViewHeight = computed(() => {
@@ -33,7 +36,7 @@ export default defineComponent({
 		});
 		// 页面加载时
 		onMounted(() => {
-			state.params = route;
+			state.params = <any>route;
 		});
 		return {
 			setViewHeight,

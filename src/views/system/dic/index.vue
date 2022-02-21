@@ -2,16 +2,16 @@
 	<div class="system-dic-container">
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
-				<el-input size="small" placeholder="请输入字典名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入字典名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddDic">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddDic">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增字典
 				</el-button>
@@ -30,8 +30,8 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button size="mini" type="text" @click="onOpenEditDic(scope.row)">修改</el-button>
-						<el-button size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
+						<el-button size="small" type="text" @click="onOpenEditDic(scope.row)">修改</el-button>
+						<el-button size="small" type="text" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -55,17 +55,38 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref } from 'vue';
+import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import AddDic from '/@/views/system/dic/component/addDic.vue';
 import EditDic from '/@/views/system/dic/component/editDic.vue';
-export default {
+
+// 定义接口来定义对象的类型
+interface TableDataRow {
+	dicName: string;
+	fieldName: string;
+	describe: string;
+	status: boolean;
+	createTime: string;
+}
+interface TableDataState {
+	tableData: {
+		data: Array<TableDataRow>;
+		total: number;
+		loading: boolean;
+		param: {
+			pageNum: number;
+			pageSize: number;
+		};
+	};
+}
+
+export default defineComponent({
 	name: 'systemDic',
 	components: { AddDic, EditDic },
 	setup() {
 		const addDicRef = ref();
 		const editDicRef = ref();
-		const state: any = reactive({
+		const state = reactive<TableDataState>({
 			tableData: {
 				data: [],
 				total: 0,
@@ -78,7 +99,7 @@ export default {
 		});
 		// 初始化表格数据
 		const initTableData = () => {
-			const data: Array<object> = [];
+			const data: Array<TableDataRow> = [];
 			for (let i = 0; i < 2; i++) {
 				data.push({
 					dicName: i === 0 ? '角色标识' : '用户性别',
@@ -96,11 +117,11 @@ export default {
 			addDicRef.value.openDialog();
 		};
 		// 打开修改字典弹窗
-		const onOpenEditDic = (row: Object) => {
+		const onOpenEditDic = (row: TableDataRow) => {
 			editDicRef.value.openDialog(row);
 		};
 		// 删除字典
-		const onRowDel = (row: Object) => {
+		const onRowDel = (row: TableDataRow) => {
 			ElMessageBox.confirm(`此操作将永久删除字典名称：“${row.dicName}”，是否继续?`, '提示', {
 				confirmButtonText: '确认',
 				cancelButtonText: '取消',
@@ -134,10 +155,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
-
-<style scoped lang="scss">
-.system-dic-container {
-}
-</style>

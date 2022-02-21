@@ -43,17 +43,17 @@ export default defineComponent({
 		},
 		// 通知栏高度，单位px
 		height: {
-			type: [Number, String],
+			type: Number,
 			default: () => 40,
 		},
 		// 动画延迟时间 (s)
 		delay: {
-			type: [Number, String],
+			type: Number,
 			default: () => 1,
 		},
 		// 滚动速率 (px/s)
 		speed: {
-			type: [Number, String],
+			type: Number,
 			default: () => 100,
 		},
 		// 是否开启垂直滚动
@@ -77,10 +77,10 @@ export default defineComponent({
 		const noticeBarTextRef = ref();
 		const state = reactive({
 			order: 1,
-			oneTime: '',
-			twoTime: '',
-			warpOWidth: '',
-			textOWidth: '',
+			oneTime: 0,
+			twoTime: 0,
+			warpOWidth: 0,
+			textOWidth: 0,
 			isMode: false,
 		});
 		// 初始化 animation 各项参数

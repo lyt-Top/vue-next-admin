@@ -36,16 +36,22 @@ export default defineComponent({
 	props: {
 		dropdown: {
 			type: Object,
+			default: () => {
+				return {
+					x: 0,
+					y: 0,
+				};
+			},
 		},
 	},
 	setup(props, { emit }) {
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ contextMenuClickId: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'elementRefreshRight' },
-				{ contextMenuClickId: 1, txt: 'message.tagsView.close', affix: false, icon: 'elementClose' },
-				{ contextMenuClickId: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'elementCircleClose' },
-				{ contextMenuClickId: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'elementFolderDelete' },
+				{ contextMenuClickId: 0, txt: 'message.tagsView.refresh', affix: false, icon: 'ele-RefreshRight' },
+				{ contextMenuClickId: 1, txt: 'message.tagsView.close', affix: false, icon: 'ele-Close' },
+				{ contextMenuClickId: 2, txt: 'message.tagsView.closeOther', affix: false, icon: 'ele-CircleClose' },
+				{ contextMenuClickId: 3, txt: 'message.tagsView.closeAll', affix: false, icon: 'ele-FolderDelete' },
 				{
 					contextMenuClickId: 4,
 					txt: 'message.tagsView.fullscreen',

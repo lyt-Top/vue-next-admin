@@ -15,21 +15,23 @@
 				</template>
 				<SubItem :chil="val.children" />
 			</el-sub-menu>
-			<el-menu-item :index="val.path" :key="val.path" v-else>
-				<SvgIcon :name="val.meta.icon" />
-				<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-					<span>{{ $t(val.meta.title) }}</span>
-				</template>
-				<template #title v-else>
-					<a :href="val.meta.isLink" target="_blank" rel="opener">{{ $t(val.meta.title) }}</a>
-				</template>
-			</el-menu-item>
+			<template v-else>
+				<el-menu-item :index="val.path" :key="val.path">
+					<SvgIcon :name="val.meta.icon" />
+					<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+						<span>{{ $t(val.meta.title) }}</span>
+					</template>
+					<template #title v-else>
+						<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">{{ $t(val.meta.title) }}</a>
+					</template>
+				</el-menu-item>
+			</template>
 		</template>
 	</el-menu>
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, watch } from 'vue';
+import { toRefs, reactive, computed, defineComponent, onMounted, watch } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { useStore } from '/@/store/index';
 import SubItem from '/@/layout/navMenu/subItem.vue';
@@ -43,7 +45,6 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
 		const state = reactive({
@@ -53,14 +54,14 @@ export default defineComponent({
 		});
 		// 获取父级菜单数据
 		const menuLists = computed(() => {
-			return props.menuList;
+			return <any>props.menuList;
 		});
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
 		});
 		// 菜单高亮（详情时，父级高亮）
-		const setParentHighlight = (currentRoute) => {
+		const setParentHighlight = (currentRoute: any) => {
 			const { path, meta } = currentRoute;
 			const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
 			if (pathSplit.length >= 4 && meta.isHide) return pathSplit.splice(0, 3).join('/');
@@ -84,7 +85,6 @@ export default defineComponent({
 		onBeforeRouteUpdate((to) => {
 			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 			state.defaultActive = setParentHighlight(to);
-			proxy.mittBus.emit('onMenuClick');
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) getThemeConfig.value.isCollapse = false;
 		});

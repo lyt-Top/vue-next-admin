@@ -23,8 +23,8 @@
 			</div>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">更 换</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">更 换</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -32,10 +32,10 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, nextTick } from 'vue';
+import { reactive, toRefs, nextTick, defineComponent } from 'vue';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
-export default {
+export default defineComponent({
 	name: 'cropperIndex',
 	setup() {
 		const state = reactive({
@@ -67,7 +67,7 @@ export default {
 		// 初始化cropperjs图片裁剪
 		const initCropper = () => {
 			const letImg: any = document.querySelector('.cropper-warp-left-img');
-			state.cropper = new Cropper(letImg, {
+			(<any>state.cropper) = new Cropper(letImg, {
 				viewMode: 1,
 				dragMode: 'none',
 				initialAspectRatio: 1,
@@ -77,7 +77,7 @@ export default {
 				autoCropArea: 0.6,
 				zoomOnWheel: false,
 				crop: () => {
-					state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
+					state.cropperImgBase64 = (<any>state.cropper).getCroppedCanvas().toDataURL('image/jpeg');
 				},
 			});
 		};
@@ -90,7 +90,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -102,7 +102,7 @@ export default {
 		height: 350px;
 		flex: 1;
 		border: var(--el-border-base);
-		background: var(--color-whites);
+		background: var(--el-color-white);
 		overflow: hidden;
 		background-repeat: no-repeat;
 		cursor: move;

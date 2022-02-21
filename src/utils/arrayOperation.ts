@@ -4,7 +4,7 @@
  * @param old 源数据
  * @returns 两数组相同返回 `true`，反之则反
  */
-export function judementSameArr(news: Array<string>, old: Array<string>): boolean {
+export function judementSameArr(news: unknown[] | string[], old: string[]): boolean {
 	let count = 0;
 	const leng = old.length;
 	for (let i in old) {

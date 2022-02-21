@@ -15,14 +15,14 @@
 						<span class="tree-custom-node">
 							<span style="flex: 1">{{ node.label }}</span>
 							<span v-if="data.isShow" style="flex: 1; display: flex">
-								<span type="text" size="mini" style="flex: 1">{{ data.label1 }}</span>
-								<span type="text" size="mini" style="flex: 1">{{ data.label2 }}</span>
+								<span type="text" size="default" style="flex: 1">{{ data.label1 }}</span>
+								<span type="text" size="default" style="flex: 1">{{ data.label2 }}</span>
 							</span>
 						</span>
 					</template>
 				</el-tree>
 			</div>
-			<el-button @click="onSelect" class="mt15" size="small" type="primary">
+			<el-button @click="onSelect" class="mt15" size="default" type="primary">
 				<SvgIcon name="iconfont icon-shuxingtu" />
 				选择元素
 			</el-button>
@@ -31,13 +31,35 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onBeforeMount, getCurrentInstance } from 'vue';
+import { toRefs, reactive, onBeforeMount, getCurrentInstance, defineComponent } from 'vue';
 import { ElMessage } from 'element-plus';
-export default {
+
+// 定义接口来定义对象的类型
+interface TreeDataState {
+	id: number;
+	label: string;
+	label1: string;
+	label2: string;
+	isShow: boolean;
+	children?: TreeDataState[];
+}
+interface TreeSate {
+	treeCheckAll: boolean;
+	treeLoading: boolean;
+	treeTableData: TreeDataState[];
+	treeDefaultProps: {
+		children: string;
+		label: string;
+	};
+	treeSelArr: TreeDataState[];
+	treeLength: number;
+}
+
+export default defineComponent({
 	name: 'pagesTree',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const state = reactive({
+		const { proxy } = <any>getCurrentInstance();
+		const state = reactive<TreeSate>({
 			treeCheckAll: false,
 			treeLoading: false,
 			treeTableData: [],
@@ -49,7 +71,7 @@ export default {
 			treeLength: 0,
 		});
 		// 初始化树的长度
-		const initTreeLengh = (arr: any) => {
+		const initTreeLengh = (arr: TreeDataState[]) => {
 			let count = 0;
 			arr.map((item) => {
 				if (item.children) {
@@ -97,10 +119,14 @@ export default {
 							label: '一级 1-1',
 							label1: '好滋好味鸡蛋仔',
 							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 						{
 							id: 12,
 							label: '一级 1-2',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 					],
 				},
@@ -114,11 +140,16 @@ export default {
 						{
 							id: 21,
 							label: '二级 2-1',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
 							isShow: false,
 						},
 						{
 							id: 22,
 							label: '二级 2-2',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 					],
 				},
@@ -132,14 +163,23 @@ export default {
 						{
 							id: 31,
 							label: '二级 3-1',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 						{
 							id: 32,
 							label: '二级 3-2',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 						{
 							id: 33,
 							label: '二级 3-3',
+							label1: '好滋好味鸡蛋仔',
+							label2: '荷兰优质淡奶，奶香浓而不腻',
+							isShow: false,
 						},
 					],
 				},
@@ -158,7 +198,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -166,7 +206,7 @@ export default {
 	.tree-head {
 		height: 48px;
 		line-height: 48px;
-		border: 1px solid #ebeef5;
+		border: 1px solid var(--next-border-color-light);
 		border-bottom: none;
 		display: flex;
 		padding-right: 8px;
@@ -187,7 +227,7 @@ export default {
 	}
 	.el-tree {
 		overflow: hidden;
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid var(--next-border-color-light);
 		.tree-custom-node {
 			flex: 1;
 			display: flex;
@@ -197,7 +237,7 @@ export default {
 			width: 100%;
 		}
 		&::v-deep(.el-tree-node) {
-			border: 1px solid #ebeef5;
+			border: 1px solid var(--next-border-color-light);
 			border-bottom: none;
 			color: #606266;
 			.el-tree-node__content {
@@ -209,7 +249,7 @@ export default {
 					border: none;
 				}
 				.el-tree-node__content {
-					border-top: 1px solid #ebeef5;
+					border-top: 1px solid var(--next-border-color-light);
 				}
 			}
 		}

@@ -1,20 +1,22 @@
 <template>
 	<div class="layout-logo" v-if="setShowLogo" @click="onThemeConfigChange">
-		<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-mini.svg" class="layout-logo-medium-img" />
+		<img :src="logoMini" class="layout-logo-medium-img" />
 		<span>{{ getThemeConfig.globalTitle }}</span>
 	</div>
 	<div class="layout-logo-size" v-else @click="onThemeConfigChange">
-		<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-mini.svg" class="layout-logo-size-img" />
+		<img :src="logoMini" class="layout-logo-size-img" />
 	</div>
 </template>
 
 <script lang="ts">
-import { computed, getCurrentInstance } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
-export default {
+
+import logoMini from '/@/assets/logo-mini.svg';
+
+export default defineComponent({
 	name: 'layoutLogo',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
@@ -28,16 +30,16 @@ export default {
 		// logo 点击实现菜单展开/收起
 		const onThemeConfigChange = () => {
 			if (store.state.themeConfig.themeConfig.layout === 'transverse') return false;
-			proxy.mittBus.emit('onMenuClick');
 			store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
 		};
 		return {
+			logoMini,
 			setShowLogo,
 			getThemeConfig,
 			onThemeConfigChange,
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -48,7 +50,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
-	color: var(--color-primary);
+	color: var(--el-color-primary);
 	font-size: 16px;
 	cursor: pointer;
 	animation: logoAnimation 0.3s ease-in-out;

@@ -1,7 +1,7 @@
 <template>
 	<div class="system-add-role-container">
 		<el-dialog title="新增角色" v-model="isShowDialog" width="769px">
-			<el-form :model="ruleForm" size="small" label-width="90px">
+			<el-form :model="ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="角色名称">
@@ -42,8 +42,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">新 增</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -51,11 +51,34 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-export default {
+import { reactive, toRefs, defineComponent } from 'vue';
+
+// 定义接口来定义对象的类型
+interface MenuDataTree {
+	id: number;
+	label: string;
+	children?: MenuDataTree[];
+}
+interface RoleState {
+	isShowDialog: boolean;
+	ruleForm: {
+		roleName: string;
+		roleSign: string;
+		sort: number;
+		status: boolean;
+		describe: string;
+	};
+	menuData: Array<MenuDataTree>;
+	menuProps: {
+		children: string;
+		label: string;
+	};
+}
+
+export default defineComponent({
 	name: 'systemAddRole',
 	setup() {
-		const state = reactive({
+		const state = reactive<RoleState>({
 			isShowDialog: false,
 			ruleForm: {
 				roleName: '', // 角色名称
@@ -202,7 +225,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

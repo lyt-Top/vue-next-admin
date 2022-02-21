@@ -20,7 +20,7 @@
 					<div class="layout-lock-screen-date-box-info">{{ time.mdq }}</div>
 				</div>
 				<div class="layout-lock-screen-date-top">
-					<SvgIcon name="elementTop" />
+					<SvgIcon name="ele-Top" />
 					<div class="layout-lock-screen-date-top-text">上滑解锁</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 								<template #append>
 									<el-button @click="onLockScreenSubmit">
 										<el-icon class="el-input__icon">
-											<elementRight />
+											<ele-Right />
 										</el-icon>
 									</el-button>
 								</template>
@@ -49,9 +49,9 @@
 						</div>
 					</div>
 					<div class="layout-lock-screen-login-icon">
-						<SvgIcon name="elementMicrophone" />
-						<SvgIcon name="elementAlarmClock" />
-						<SvgIcon name="elementSwitchButton" />
+						<SvgIcon name="ele-Microphone" />
+						<SvgIcon name="ele-AlarmClock" />
+						<SvgIcon name="ele-SwitchButton" />
 					</div>
 				</div>
 			</transition>
@@ -64,13 +64,33 @@ import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInst
 import { useStore } from '/@/store/index';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
+
+// 定义接口来定义对象的类型
+interface LockScreenState {
+	transparency: number;
+	downClientY: number;
+	moveDifference: number;
+	isShowLoockLogin: boolean;
+	isFlags: boolean;
+	querySelectorEl: HTMLElement | string;
+	time: {
+		hm: string;
+		s: string;
+		mdq: string;
+	};
+	setIntervalTime: number;
+	isShowLockScreen: boolean;
+	isShowLockScreenIntervalTime: number;
+	lockScreenPassword: string;
+}
+
 export default defineComponent({
 	name: 'layoutLockScreen',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const layoutLockScreenInputRef = ref();
 		const store = useStore();
-		const state: any = reactive({
+		const state = reactive<LockScreenState>({
 			transparency: 1,
 			downClientY: 0,
 			moveDifference: 0,
@@ -95,7 +115,7 @@ export default defineComponent({
 		// 鼠标移动
 		const onMove = (move: any) => {
 			if (state.isFlags) {
-				const el = state.querySelectorEl;
+				const el = <HTMLElement>state.querySelectorEl;
 				const opacitys = (state.transparency -= 1 / 200);
 				if (move.touches) {
 					state.moveDifference = move.touches[0].clientY - state.downClientY;
@@ -122,7 +142,7 @@ export default defineComponent({
 			state.isFlags = false;
 			state.transparency = 1;
 			if (state.moveDifference >= -400) {
-				state.querySelectorEl.setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
+				(<HTMLElement>state.querySelectorEl).setAttribute('style', `top:0px;opacity:1;transition:all 0.3s ease;`);
 			}
 		};
 		// 获取要拖拽的初始元素

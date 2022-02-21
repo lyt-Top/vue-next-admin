@@ -1,6 +1,6 @@
 <template>
 	<div class="form-rules-one-container">
-		<el-form :model="form" :rules="rules" ref="formRulesOneRef" size="small" label-width="100px" class="mt35">
+		<el-form :model="form" :rules="rules" ref="formRulesOneRef" size="default" label-width="100px" class="mt35">
 			<el-row :gutter="35">
 				<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 					<el-form-item label="姓名" prop="name">
@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from 'vue';
-export default {
+import { toRefs, reactive, onMounted, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'pagesFormRulesOne',
 	props: {
 		data: {
@@ -43,7 +43,7 @@ export default {
 	},
 	setup(props) {
 		const state = reactive({
-			form: {},
+			form: { name: '', email: '', autograph: '', occupation: '' },
 			rules: {
 				name: { required: true, message: '请输入姓名', trigger: 'blur' },
 				email: { required: true, message: '请输入用户邮箱', trigger: 'blur' },
@@ -53,7 +53,7 @@ export default {
 		});
 		// 赋值回显
 		const initForm = () => {
-			state.form = props.data;
+			state.form = <any>props.data;
 		};
 		// 页面加载时
 		onMounted(() => {
@@ -63,5 +63,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

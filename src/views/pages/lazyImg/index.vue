@@ -52,11 +52,11 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from 'vue';
+import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import other from '/@/utils/other';
 import { filterList } from './mock';
-export default {
+export default defineComponent({
 	name: 'pagesListAdapt',
 	setup() {
 		const router = useRouter();
@@ -72,7 +72,7 @@ export default {
 			},
 		});
 		// 当前列表项点击
-		const onTableItemClick = (v: object) => {
+		const onTableItemClick = (v: any) => {
 			router.push({
 				path: '/pages/filteringDetails',
 				query: { id: v.id },
@@ -97,7 +97,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -112,7 +112,7 @@ export default {
 			width: 100%;
 			height: 360px;
 			.flex-warp-item-box {
-				border: 1px solid #ebeef5;
+				border: 1px solid var(--next-border-color-light);
 				width: 100%;
 				height: 100%;
 				border-radius: 2px;
@@ -121,11 +121,11 @@ export default {
 				transition: all 0.3s ease;
 				&:hover {
 					cursor: pointer;
-					border: 1px solid var(--color-primary);
+					border: 1px solid var(--el-color-primary);
 					transition: all 0.3s ease;
 					box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
 					.item-txt-title {
-						color: var(--color-primary) !important;
+						color: var(--el-color-primary) !important;
 						transition: all 0.3s ease;
 					}
 					.item-img {
@@ -160,7 +160,7 @@ export default {
 						color: #666666;
 						transition: all 0.3s ease;
 						&:hover {
-							color: var(--color-primary);
+							color: var(--el-color-primary);
 							text-decoration: underline;
 							transition: all 0.3s ease;
 						}

@@ -13,12 +13,12 @@
 				span {
 					cursor: pointer;
 					&:hover {
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 						text-decoration: underline;
 					}
 				}
 				.span-active {
-					color: var(--color-primary);
+					color: var(--el-color-primary);
 					text-decoration: underline;
 				}
 			}
@@ -47,21 +47,21 @@
 				}
 				&:hover {
 					cursor: pointer;
-					background-color: var(--color-primary-light-9);
-					border: 1px solid var(--color-primary-light-6);
+					background-color: var(--el-color-primary-light-9);
+					border: 1px solid var(--el-color-primary-light-6);
 					.icon-selector-warp-item-value {
 						i {
-							color: var(--color-primary);
+							color: var(--el-color-primary);
 						}
 					}
 				}
 			}
 			.icon-selector-active {
-				background-color: var(--color-primary-light-9);
-				border: 1px solid var(--color-primary-light-6);
+				background-color: var(--el-color-primary-light-9);
+				border: 1px solid var(--el-color-primary-light-6);
 				.icon-selector-warp-item-value {
 					i {
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 					}
 				}
 			}

@@ -18,7 +18,7 @@
 					:key="k"
 					@click="onCurrentClick(v.contextMenuClickId)"
 				>
-					<i :class="v.icon"></i>
+					<SvgIcon :name="v.icon" />
 					<span>{{ v.txt }}{{ item.type === 'line' ? '线' : '节点' }}</span>
 				</li>
 			</ul>
@@ -40,8 +40,8 @@ export default defineComponent({
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
-				{ contextMenuClickId: 0, txt: '删除', icon: 'el-icon-delete' },
-				{ contextMenuClickId: 1, txt: '编辑', icon: 'el-icon-edit-outline' },
+				{ contextMenuClickId: 0, txt: '删除', icon: 'ele-Delete' },
+				{ contextMenuClickId: 1, txt: '编辑', icon: 'ele-Edit' },
 			],
 			item: {
 				type: 'node',
@@ -50,7 +50,7 @@ export default defineComponent({
 		});
 		// 父级传过来的坐标 x,y 值
 		const dropdowns = computed(() => {
-			return props.dropdown;
+			return <any>props.dropdown;
 		});
 		// 当前项菜单点击
 		const onCurrentClick = (contextMenuClickId: number) => {

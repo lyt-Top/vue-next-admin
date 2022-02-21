@@ -4,7 +4,7 @@
 			<el-result icon="warning" title="动态路由" subTitle="可 `开启 TagsView 共用` 进行单标签测试">
 				<template #extra>
 					<el-input v-model="value" placeholder="请输入路由参数id值" clearable></el-input>
-					<el-button type="primary" size="small" class="mt15" @click="onGoDetailsClick">
+					<el-button type="primary" size="default" class="mt15" @click="onGoDetailsClick">
 						<SvgIcon name="iconfont icon-dongtai" />
 						动态路由传参
 					</el-button>

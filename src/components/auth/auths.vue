@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
-export default {
+export default defineComponent({
 	name: 'auths',
 	props: {
 		value: {
@@ -18,7 +18,7 @@ export default {
 		// 获取 vuex 中的用户权限
 		const getUserAuthBtnList = computed(() => {
 			let flag = false;
-			store.state.userInfos.userInfos.authBtnList.map((val: any) => {
+			store.state.userInfos.userInfos.authBtnList.map((val: string) => {
 				props.value.map((v) => {
 					if (val === v) flag = true;
 				});
@@ -29,5 +29,5 @@ export default {
 			getUserAuthBtnList,
 		};
 	},
-};
+});
 </script>

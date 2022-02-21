@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onBeforeMount, onUnmounted } from 'vue';
+import { reactive, toRefs, onBeforeMount, onUnmounted, defineComponent } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
-export default {
+export default defineComponent({
 	name: 'chartHead',
 	setup() {
 		const state = reactive({
@@ -41,7 +41,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -51,7 +51,7 @@ export default {
 	display: flex;
 	align-items: center;
 	padding: 0 15px;
-	color: var(--color-primary);
+	color: var(--el-color-primary);
 	overflow: hidden;
 	position: relative;
 	.up-left {
@@ -65,11 +65,11 @@ export default {
 		letter-spacing: 5px;
 		background-image: -webkit-linear-gradient(
 			left,
-			var(--color-primary),
-			var(--color-primary-light-1) 25%,
-			var(--color-primary) 50%,
-			var(--color-primary-light-1) 75%,
-			var(--color-primary)
+			var(--el-color-primary),
+			var(--el-color-primary-light-1) 25%,
+			var(--el-color-primary) 50%,
+			var(--el-color-primary-light-1) 75%,
+			var(--el-color-primary)
 		);
 		-webkit-text-fill-color: transparent;
 		-webkit-background-clip: text;
@@ -96,7 +96,7 @@ export default {
 			left: 50%;
 			transform: translateX(-50%);
 			border: 1px transparent solid;
-			border-image: linear-gradient(to right, var(--color-primary-light-9), var(--color-primary)) 1 10;
+			border-image: linear-gradient(to right, var(--el-color-primary-light-9), var(--el-color-primary)) 1 10;
 		}
 		span {
 			cursor: pointer;

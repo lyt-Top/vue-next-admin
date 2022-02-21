@@ -3,6 +3,7 @@ export const filtering = [
 	{
 		title: '权限',
 		isMore: false,
+		isShowMore: false,
 		id: 0,
 		children: [
 			{
@@ -25,6 +26,7 @@ export const filtering = [
 	{
 		title: '布局',
 		isMore: false,
+		isShowMore: false,
 		id: 1,
 		children: [
 			{
@@ -57,6 +59,7 @@ export const filtering = [
 	{
 		title: '配置',
 		isMore: false,
+		isShowMore: false,
 		id: 2,
 		children: [
 			{

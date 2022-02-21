@@ -13,13 +13,13 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
 import TagsView from '/@/layout/navBars/tagsView/tagsView.vue';
-export default {
+export default defineComponent({
 	name: 'layoutClassic',
 	components: { Aside, Header, Main, TagsView },
 	setup() {
@@ -32,5 +32,5 @@ export default {
 			getThemeConfig,
 		};
 	},
-};
+});
 </script>

@@ -1,12 +1,41 @@
 @import './index.scss';
 
+/* 页面宽度小于992px
+------------------------------- */
+@media screen and (max-width: $lg) {
+	.login-container {
+		.login-icon-group {
+			&::before {
+				content: '';
+				height: 70% !important;
+				transition: all 0.3s ease;
+			}
+			&::after {
+				content: '';
+				width: 100px !important;
+				height: 200px !important;
+				transition: all 0.3s ease;
+			}
+		}
+	}
+}
+
+/* 页面宽度小于992px
+------------------------------- */
+@media screen and (max-width: $md) {
+	.login-content {
+		right: unset !important;
+		left: 50% !important;
+		transform: translate(-50%, -50%) translate3d(0, 0, 0) !important;
+	}
+}
+
 /* 页面宽度小于576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
 	.login-container {
-		background: none !important;
-		.login-logo {
-			display: none;
+		.login-icon-group {
+			display: none !important;
 		}
 		.login-content {
 			width: 100% !important;
@@ -16,9 +45,6 @@
 			box-shadow: unset !important;
 			border: none !important;
 		}
-		.login-copyright {
-			display: none !important;
-		}
 		.el-form-item {
 			display: flex !important;
 		}
@@ -27,7 +53,7 @@
 
 /* 页面宽度小于375px
 ------------------------------- */
-@media screen and (max-width: 376px) {
+@media screen and (max-width: $us) {
 	.login-container {
 		.login-content-title {
 			font-size: 18px !important;

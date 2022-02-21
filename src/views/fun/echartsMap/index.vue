@@ -7,16 +7,16 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted } from 'vue';
+import { toRefs, reactive, computed, onMounted, defineComponent } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import { useStore } from '/@/store/index';
 import { echartsMapList, echartsMapData } from './mock';
-export default {
+export default defineComponent({
 	name: 'funEchartsMap',
 	setup() {
 		const store = useStore();
-		const state = reactive({
+		const state: any = reactive({
 			echartsMapList,
 			echartsMapData,
 		});
@@ -32,7 +32,7 @@ export default {
 			}
 		});
 		// echartsMap 将坐标信息和对应物理量的值合在一起
-		const convertData = (data) => {
+		const convertData = (data: any) => {
 			let res = [];
 			for (let i = 0; i < data.length; i++) {
 				let geoCoord = state.echartsMapData[data[i].name];
@@ -47,7 +47,7 @@ export default {
 		};
 		// 初始化 echartsMap
 		const initEchartsMap = () => {
-			const myChart = echarts.init(document.getElementById('echartsMap'));
+			const myChart = echarts.init(<HTMLElement>document.getElementById('echartsMap'));
 			const option = {
 				tooltip: {
 					trigger: 'item',
@@ -65,7 +65,7 @@ export default {
 						type: 'scatter',
 						coordinateSystem: 'bmap',
 						data: convertData(state.echartsMapList),
-						symbolSize: function (val) {
+						symbolSize: function (val: any) {
 							return val[2] / 10;
 						},
 						encode: {
@@ -88,12 +88,12 @@ export default {
 						coordinateSystem: 'bmap',
 						data: convertData(
 							state.echartsMapList
-								.sort(function (a, b) {
+								.sort(function (a: any, b: any) {
 									return b.value - a.value;
 								})
 								.slice(0, 6)
 						),
-						symbolSize: function (val) {
+						symbolSize: function (val: any) {
 							return val[2] / 10;
 						},
 						encode: {
@@ -131,5 +131,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

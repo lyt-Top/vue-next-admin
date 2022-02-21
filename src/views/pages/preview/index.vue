@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
-export default {
+import { toRefs, reactive, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'pagesPreview',
 	setup() {
 		const state = reactive({
@@ -23,5 +23,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

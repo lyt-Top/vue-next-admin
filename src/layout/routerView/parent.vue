@@ -3,7 +3,7 @@
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
 				<keep-alive :include="keepAliveNameList">
-					<component :is="Component" :key="refreshRouterViewKey" class="w100" />
+					<component :is="Component" :key="refreshRouterViewKey" class="w100" :style="{ minHeight }" />
 				</keep-alive>
 			</transition>
 		</router-view>
@@ -14,16 +14,28 @@
 import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
+
+// 定义接口来定义对象的类型
+interface ParentViewState {
+	refreshRouterViewKey: null | string;
+	keepAliveNameList: string[];
+}
+
 export default defineComponent({
 	name: 'layoutParentView',
+	props: {
+		minHeight: {
+			type: String,
+			default: '',
+		},
+	},
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const route = useRoute();
 		const store = useStore();
-		const state: any = reactive({
+		const state = reactive<ParentViewState>({
 			refreshRouterViewKey: null,
 			keepAliveNameList: [],
-			keepAliveNameNewList: [],
 		});
 		// 设置主界面切换动画
 		const setTransitionName = computed(() => {

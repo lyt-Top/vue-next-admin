@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
+import { toRefs, reactive, defineComponent } from 'vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
-export default {
+export default defineComponent({
 	name: 'funSplitpanes',
 	components: { Splitpanes, Pane },
 	setup() {
@@ -36,7 +36,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -46,7 +46,8 @@ export default {
 	display: flex;
 	position: relative;
 	font-size: 70px;
-	color: var(--color-primary-light-5);
-	border: 1px solid #ebeef5;
+	color: var(--el-color-primary-light-5);
+	border: 1px solid var(--el-border-color-lighter);
+	background-color: var(--el-color-primary) !important;
 }
 </style>

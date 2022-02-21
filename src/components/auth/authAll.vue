@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts">
-import { computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import { judementSameArr } from '/@/utils/arrayOperation';
-export default {
+export default defineComponent({
 	name: 'authAll',
 	props: {
 		value: {
@@ -24,5 +24,5 @@ export default {
 			getUserAuthBtnList,
 		};
 	},
-};
+});
 </script>

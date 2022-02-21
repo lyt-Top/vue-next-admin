@@ -12,7 +12,7 @@
 							<div class="flex-title">天气预报</div>
 							<div class="flex-content">
 								<div class="sky">
-									<SvgIcon name="elementSunny" class="sky-left" />
+									<SvgIcon name="ele-Sunny" class="sky-left" />
 									<div class="sky-center">
 										<div class="mb2">
 											<span>多云转晴</span>
@@ -46,21 +46,21 @@
 							<div class="flex-content flex-content-overflow">
 								<div class="d-states">
 									<div class="d-states-item">
-										<SvgIcon name="elementOdometer" class="i-bg1" />
+										<SvgIcon name="ele-Odometer" class="i-bg1" />
 										<div class="d-states-flex">
 											<div class="d-states-item-label">园区设备数</div>
 											<div class="d-states-item-value">99</div>
 										</div>
 									</div>
 									<div class="d-states-item">
-										<SvgIcon name="elementFirstAidKit" class="i-bg2" />
+										<SvgIcon name="ele-FirstAidKit" class="i-bg2" />
 										<div class="d-states-flex">
 											<div class="d-states-item-label">预警设备数</div>
 											<div class="d-states-item-value">10</div>
 										</div>
 									</div>
 									<div class="d-states-item">
-										<SvgIcon name="elementVideoPlay" class="i-bg3" />
+										<SvgIcon name="ele-VideoPlay" class="i-bg3" />
 										<div class="d-states-flex">
 											<div class="d-states-item-label">运行设备数</div>
 											<div class="d-states-item-value">20</div>
@@ -202,20 +202,19 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick, onActivated } from 'vue';
+import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick, onActivated, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
 import { skyList, dBtnList, chartData4List } from '/@/views/chart/chart';
-export default {
+export default defineComponent({
 	name: 'chartIndex',
 	components: { ChartHead },
 	setup() {
 		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const state = reactive({
-			tagViewHeight: '',
 			skyList,
 			dBtnList,
 			chartData4List,
@@ -291,7 +290,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			state.myCharts.push(myChart);
+			(<any>state.myCharts).push(myChart);
 		};
 		// 初始化近7天产品追溯扫码统计
 		const initChartsSevenDays = () => {
@@ -336,7 +335,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			state.myCharts.push(myChart);
+			(<any>state.myCharts).push(myChart);
 		};
 		// 初始化近30天预警总数
 		const initChartsWarning = () => {
@@ -371,7 +370,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			state.myCharts.push(myChart);
+			(<any>state.myCharts).push(myChart);
 		};
 		// 初始化当前设备监测
 		const initChartsMonitor = () => {
@@ -411,7 +410,7 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			state.myCharts.push(myChart);
+			(<any>state.myCharts).push(myChart);
 		};
 		// 初始化近7天投入品记录
 		const initChartsInvestment = () => {
@@ -441,13 +440,13 @@ export default {
 				],
 			};
 			myChart.setOption(option);
-			state.myCharts.push(myChart);
+			(<any>state.myCharts).push(myChart);
 		};
 		// 批量设置 echarts resize
 		const initEchartsResizeFun = () => {
 			nextTick(() => {
 				for (let i = 0; i < state.myCharts.length; i++) {
-					state.myCharts[i].resize();
+					(<any>state.myCharts[i]).resize();
 				}
 			});
 		};
@@ -480,7 +479,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

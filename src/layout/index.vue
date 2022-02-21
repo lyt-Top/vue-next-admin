@@ -1,23 +1,21 @@
 <template>
-	<Defaults v-if="getThemeConfig.layout === 'defaults'" />
-	<Classic v-else-if="getThemeConfig.layout === 'classic'" />
-	<Transverse v-else-if="getThemeConfig.layout === 'transverse'" />
-	<Columns v-else-if="getThemeConfig.layout === 'columns'" />
+	<component :is="getThemeConfig.layout" />
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, onUnmounted, getCurrentInstance } from 'vue';
+import { computed, onBeforeMount, onUnmounted, getCurrentInstance, defineComponent, defineAsyncComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import { Local } from '/@/utils/storage';
-import Defaults from '/@/layout/main/defaults.vue';
-import Classic from '/@/layout/main/classic.vue';
-import Transverse from '/@/layout/main/transverse.vue';
-import Columns from '/@/layout/main/columns.vue';
-export default {
+export default defineComponent({
 	name: 'layout',
-	components: { Defaults, Classic, Transverse, Columns },
+	components: {
+		defaults: defineAsyncComponent(() => import('/@/layout/main/defaults.vue')),
+		classic: defineAsyncComponent(() => import('/@/layout/main/classic.vue')),
+		transverse: defineAsyncComponent(() => import('/@/layout/main/transverse.vue')),
+		columns: defineAsyncComponent(() => import('/@/layout/main/columns.vue')),
+	},
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const store = useStore();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
@@ -53,5 +51,5 @@ export default {
 			getThemeConfig,
 		};
 	},
-};
+});
 </script>

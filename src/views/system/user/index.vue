@@ -2,22 +2,22 @@
 	<div class="system-user-container">
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
-				<el-input size="small" placeholder="请输入用户名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入用户名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddUser">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddUser">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增用户
 				</el-button>
 			</div>
 			<el-table :data="tableData.data" style="width: 100%">
-				<el-table-column type="index" label="序号" width="50" />
+				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="userName" label="账户名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="userNickname" label="用户昵称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="关联角色" show-overflow-tooltip></el-table-column>
@@ -34,8 +34,8 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button :disabled="scope.row.userName === 'admin'" size="mini" type="text" @click="onOpenEditUser(scope.row)">修改</el-button>
-						<el-button :disabled="scope.row.userName === 'admin'" size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
+						<el-button :disabled="scope.row.userName === 'admin'" size="small" type="text" @click="onOpenEditUser(scope.row)">修改</el-button>
+						<el-button :disabled="scope.row.userName === 'admin'" size="small" type="text" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -59,17 +59,45 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref } from 'vue';
+import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import AddUer from '/@/views/system/user/component/addUser.vue';
 import EditUser from '/@/views/system/user/component/editUser.vue';
-export default {
+
+// 定义接口来定义对象的类型
+interface TableDataRow {
+	userName: string;
+	userNickname: string;
+	roleSign: string;
+	department: string[];
+	phone: string;
+	email: string;
+	sex: string;
+	password: string;
+	overdueTime: Date;
+	status: boolean;
+	describe: string;
+	createTime: string;
+}
+interface TableDataState {
+	tableData: {
+		data: Array<TableDataRow>;
+		total: number;
+		loading: boolean;
+		param: {
+			pageNum: number;
+			pageSize: number;
+		};
+	};
+}
+
+export default defineComponent({
 	name: 'systemUser',
 	components: { AddUer, EditUser },
 	setup() {
 		const addUserRef = ref();
 		const editUserRef = ref();
-		const state: any = reactive({
+		const state = reactive<TableDataState>({
 			tableData: {
 				data: [],
 				total: 0,
@@ -82,7 +110,7 @@ export default {
 		});
 		// 初始化表格数据
 		const initTableData = () => {
-			const data: Array<object> = [];
+			const data: Array<TableDataRow> = [];
 			for (let i = 0; i < 2; i++) {
 				data.push({
 					userName: i === 0 ? 'admin' : 'test',
@@ -107,11 +135,11 @@ export default {
 			addUserRef.value.openDialog();
 		};
 		// 打开修改用户弹窗
-		const onOpenEditUser = (row: Object) => {
+		const onOpenEditUser = (row: TableDataRow) => {
 			editUserRef.value.openDialog(row);
 		};
 		// 删除用户
-		const onRowDel = (row: Object) => {
+		const onRowDel = (row: TableDataRow) => {
 			ElMessageBox.confirm(`此操作将永久删除账户名称：“${row.userName}”，是否继续?`, '提示', {
 				confirmButtonText: '确认',
 				cancelButtonText: '取消',
@@ -145,10 +173,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
-
-<style scoped lang="scss">
-.system-user-container {
-}
-</style>

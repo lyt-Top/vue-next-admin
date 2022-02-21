@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted } from 'vue';
+import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import Editor from '/@/components/editor/index.vue';
-export default {
+export default defineComponent({
 	name: 'funWangEditor',
 	components: { Editor },
 	setup() {
@@ -28,5 +28,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

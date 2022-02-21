@@ -3,7 +3,7 @@
 		<!-- 顶部 -->
 		<div class="big-data-up">
 			<div class="up-left">
-				<SvgIcon name="elementTimer" class="mr5" />
+				<SvgIcon name="ele-Timer" class="mr5" />
 				<span>{{ time.txt }}</span>
 			</div>
 			<div class="up-center">
@@ -13,7 +13,7 @@
 				<el-dropdown size="small">
 					<span class="el-dropdown-link">
 						{{ dropdownActive }}
-						<SvgIcon name="elementArrowDown" class="el-icon--right" />
+						<SvgIcon name="ele-ArrowDown" class="el-icon--right" />
 					</span>
 					<template #dropdown>
 						<el-dropdown-menu>
@@ -22,15 +22,15 @@
 					</template>
 				</el-dropdown>
 				<div class="ml15">
-					<SvgIcon name="elementBell" class="mr5" />
+					<SvgIcon name="ele-Bell" class="mr5" />
 					<span>消息</span>
 				</div>
 				<div class="ml15">
-					<SvgIcon name="elementUser" class="mr5" />
+					<SvgIcon name="ele-User" class="mr5" />
 					<span>个人</span>
 				</div>
 				<div class="ml15">
-					<SvgIcon name="elementSwitchButton" class="mr5" />
+					<SvgIcon name="ele-SwitchButton" class="mr5" />
 					<span>返回</span>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 						<div class="flex-title">天气预报</div>
 						<div class="flex-content flex-content-overflow">
 							<div class="sky">
-								<SvgIcon name="elementSunny" class="sky-left" />
+								<SvgIcon name="ele-Sunny" class="sky-left" />
 								<div class="sky-center">
 									<div class="mb2">
 										<span class="font">多云转晴</span>
@@ -81,21 +81,21 @@
 						<div class="flex-content flex-content-overflow">
 							<div class="d-states">
 								<div class="d-states-item">
-									<SvgIcon name="elementOdometer" class="i-bg1" />
+									<SvgIcon name="ele-Odometer" class="i-bg1" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">园区设备数</div>
 										<div class="d-states-item-value">99</div>
 									</div>
 								</div>
 								<div class="d-states-item">
-									<SvgIcon name="elementFirstAidKit" class="i-bg2" />
+									<SvgIcon name="ele-FirstAidKit" class="i-bg2" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">预警设备数</div>
 										<div class="d-states-item-value">10</div>
 									</div>
 								</div>
 								<div class="d-states-item">
-									<SvgIcon name="elementVideoPlay" class="i-bg3" />
+									<SvgIcon name="ele-VideoPlay" class="i-bg3" />
 									<div class="d-states-flex">
 										<div class="d-states-item-label">运行设备数</div>
 										<div class="d-states-item-value">20</div>
@@ -104,7 +104,7 @@
 							</div>
 							<div class="d-btn">
 								<div class="d-btn-item" v-for="(v, k) in dBtnList" :key="k" :class="{ 'd-btn-active': dBtnActive === k }">
-									<SvgIcon name="elementMoney" class="d-btn-item-left" />
+									<SvgIcon name="ele-Money" class="d-btn-item-left" />
 									<div class="d-btn-item-center">
 										<div>{{ v.v1 }}</div>
 										<div>{{ v.v2 }}|{{ v.v3 }}</div>

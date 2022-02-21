@@ -11,9 +11,9 @@
 				<div class="mb15 mt15">
 					<img class="cropper-img" :src="cropperImg" />
 				</div>
-				<el-button type="primary" size="small" @click="onCropperDialogOpen">
+				<el-button type="primary" size="default" @click="onCropperDialogOpen">
 					<el-icon>
-						<elementCrop />
+						<ele-Crop />
 					</el-icon>
 					更换头像
 				</el-button>
@@ -24,15 +24,15 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive } from 'vue';
+import { ref, toRefs, reactive, defineComponent } from 'vue';
 import CropperDialog from '/@/components/cropper/index.vue';
-export default {
+export default defineComponent({
 	name: 'funCropper',
 	components: { CropperDialog },
 	setup() {
 		const cropperDialogRef = ref();
 		const state = reactive({
-			cropperImg: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg',
+			cropperImg: 'https://img1.baidu.com/it/u=2813520958,2218166536&fm=26&fmt=auto&gp=0.jpg',
 		});
 		// 打开裁剪弹窗
 		const onCropperDialogOpen = () => {
@@ -44,7 +44,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">

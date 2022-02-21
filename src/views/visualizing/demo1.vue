@@ -94,11 +94,21 @@ import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import { formatDate } from '/@/utils/formatTime';
 import { echartsMapList, echartsMapData, echartsMapImgs } from './mock/demo1';
+
+// 定义接口来定义对象的类型
+interface Demo1State {
+	echartsMapList: any;
+	echartsMapData: any;
+	echartsMapImgs: any;
+	time: any;
+	myCharts: any[];
+}
+
 export default defineComponent({
 	name: 'visualizingLinkDemo1',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const state = reactive({
+		const { proxy } = <any>getCurrentInstance();
+		const state = reactive<Demo1State>({
 			echartsMapList,
 			echartsMapData,
 			echartsMapImgs,
@@ -116,7 +126,7 @@ export default defineComponent({
 			}, 1000);
 		};
 		// echartsMap 将坐标信息和对应物理量的值合在一起
-		const convertData = (data) => {
+		const convertData = (data: any) => {
 			let res = [];
 			for (let i = 0; i < data.length; i++) {
 				let geoCoord = state.echartsMapData[data[i].name];
@@ -131,13 +141,13 @@ export default defineComponent({
 		};
 		// 初始化 echartsMap（地图上的点）
 		const initEchartsMap = () => {
-			const myChart = echarts.init(document.getElementById('visualizingDemo1'));
+			const myChart = echarts.init(<HTMLElement>document.getElementById('visualizingDemo1'));
 			const option = {
 				tooltip: {
 					trigger: 'item',
-					formatter(params) {
+					formatter(params: any) {
 						// 自定义鼠标放入样式
-						let item = state.echartsMapImgs.find((v) => v.name === params.name);
+						let item = state.echartsMapImgs.find((v: any) => v.name === params.name);
 						let html = `<div style="width: 240px">
 							<div style="display: flex; align-items: center">
 								<img src="${item?.url}" style="width: 50px; height: 50px; border-radius: 100%; position: relative; border: 4px solid #ffffff; margin-left: -4px" />
@@ -181,7 +191,7 @@ export default defineComponent({
 						type: 'scatter',
 						coordinateSystem: 'bmap',
 						data: convertData(state.echartsMapList),
-						symbolSize: function (val) {
+						symbolSize: function (val: any) {
 							return val[2] / 10;
 						},
 						encode: {
@@ -204,12 +214,12 @@ export default defineComponent({
 						coordinateSystem: 'bmap',
 						data: convertData(
 							state.echartsMapList
-								.sort(function (a, b) {
+								.sort(function (a: any, b: any) {
 									return b.value - a.value;
 								})
 								.slice(0, 6)
 						),
-						symbolSize: function (val) {
+						symbolSize: function (val: any) {
 							return val[2] / 10;
 						},
 						encode: {
@@ -237,7 +247,7 @@ export default defineComponent({
 			state.myCharts.push(myChart);
 
 			// 地图
-			const map = myChart.getModel().getComponent('bmap').getBMap();
+			const map = (<any>myChart).getModel().getComponent('bmap').getBMap();
 			// BMAP_NORMAL_MAP ：此地图类型展示普通街道视图
 			// BMAP_PERSPECTIVE_MAP ：此地图类型展示透视图像视图。（这个还不会用）
 			// BMAP_SATELLITE_MAP：卫星地图 （没有坐标， 绿绿的一片的卫星地图）
@@ -247,7 +257,7 @@ export default defineComponent({
 			// eslint-disable-next-line no-undef
 			let bdary = new BMap.Boundary();
 			// 获取行政区域
-			bdary.get('深圳', function (rs) {
+			bdary.get('深圳', function (rs: any) {
 				// 行政区域的点有多少个
 				let count = rs.boundaries.length;
 				for (let i = 0; i < count; i++) {
@@ -566,7 +576,7 @@ export default defineComponent({
 							normal: {
 								show: true,
 								position: 'top',
-								formatter: function (param) {
+								formatter: function (param: any) {
 									if (param.value == max || param.value == min) {
 										return '';
 									}
@@ -971,7 +981,7 @@ $titleWidth: 240px;
 			left: 0;
 			display: flex;
 			align-items: center;
-			color: var(--color-whites);
+			color: #ffffff;
 			background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.02));
 			z-index: 3;
 			.visualizing-container-head-left {
@@ -1176,11 +1186,11 @@ $titleWidth: 240px;
 		.visualizing-container-title {
 			max-width: $titleWidth;
 			font-size: 14px;
-			color: var(--color-whites);
+			color: #ffffff;
 			opacity: 0.8;
 			padding: 0 5px;
-			border-bottom: 1px solid var(--color-whites);
-			border-image: linear-gradient(to right, var(--color-whites), rgba(22, 207, 208, 0.02)) 1 10;
+			border-bottom: 1px solid #ffffff;
+			border-image: linear-gradient(to right, #ffffff, rgba(22, 207, 208, 0.02)) 1 10;
 			position: relative;
 			i {
 				padding-right: 5px;
@@ -1193,7 +1203,7 @@ $titleWidth: 240px;
 				bottom: 0;
 				width: 1px;
 				height: 10px;
-				background: linear-gradient(to top, var(--color-whites), rgba(255, 255, 255, 0.5));
+				background: linear-gradient(to top, #ffffff, rgba(255, 255, 255, 0.5));
 			}
 		}
 		.visualizing-container-title-colorful {

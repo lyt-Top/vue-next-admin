@@ -85,13 +85,13 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, onMounted, nextTick } from 'vue';
+import { ref, toRefs, reactive, onMounted, nextTick, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { filtering, filterList } from './mock';
-export default {
+export default defineComponent({
 	name: 'pagesFiltering',
 	setup() {
-		const dlRefs = ref([]);
+		const dlRefs: any = ref([]);
 		const router = useRouter();
 		const state = reactive({
 			filtering,
@@ -116,7 +116,7 @@ export default {
 		const initBtnToggle = () => {
 			nextTick(() => {
 				const els = dlRefs.value;
-				els.map((v: any, k: any) => {
+				els.map((v: any, k: number) => {
 					v.scrollHeight < v.lastChild.scrollHeight ? (state.filtering[k].isShowMore = true) : (state.filtering[k].isShowMore = false);
 				});
 			});
@@ -142,7 +142,7 @@ export default {
 			}, 500);
 		};
 		// 当前列表项点击
-		const onTableItemClick = (v: object) => {
+		const onTableItemClick = (v: any) => {
 			if (v.id === 1) {
 				router.push({
 					path: '/pages/filtering/details',
@@ -172,7 +172,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -206,7 +206,7 @@ export default {
 				}
 			}
 			.filtering-list-item {
-				border-bottom: 1px dotted #e0e0e0;
+				border-bottom: 1px dotted var(--next-border-color-light);
 				margin-left: 64px;
 				overflow: hidden;
 				position: relative;
@@ -217,12 +217,12 @@ export default {
 					padding: 0 15px;
 					margin: 15px 0;
 					&:hover {
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 						cursor: pointer;
 					}
 				}
 				.dd-active {
-					color: var(--color-primary);
+					color: var(--el-color-primary);
 				}
 				.dd-more {
 					font-size: 12px;
@@ -250,7 +250,7 @@ export default {
 				width: 100%;
 				height: 360px;
 				.flex-warp-item-box {
-					border: 1px solid #ebeef5;
+					border: 1px solid var(--next-border-color-light);
 					width: 100%;
 					height: 100%;
 					border-radius: 2px;
@@ -259,11 +259,11 @@ export default {
 					transition: all 0.3s ease;
 					&:hover {
 						cursor: pointer;
-						border: 1px solid var(--color-primary);
+						border: 1px solid var(--el-color-primary);
 						transition: all 0.3s ease;
 						box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.03);
 						.item-txt-title {
-							color: var(--color-primary) !important;
+							color: var(--el-color-primary) !important;
 							transition: all 0.3s ease;
 						}
 						.item-img {
@@ -298,7 +298,7 @@ export default {
 							color: #666666;
 							transition: all 0.3s ease;
 							&:hover {
-								color: var(--color-primary);
+								color: var(--el-color-primary);
 								text-decoration: underline;
 								transition: all 0.3s ease;
 							}

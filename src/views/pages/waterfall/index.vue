@@ -22,8 +22,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
-export default {
+import { toRefs, reactive, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'pagesWaterfall',
 	setup() {
 		const state = reactive({});
@@ -31,7 +31,7 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
@@ -44,8 +44,8 @@ export default {
 		grid-auto-rows: 20px;
 		.waterfall-first-item {
 			width: 100%;
-			background: var(--color-primary);
-			color: var(--color-whites);
+			background: var(--el-color-primary);
+			color: var(--el-color-white);
 			transition: all 0.3s ease;
 			border-radius: 3px;
 			&:nth-of-type(3n + 1) {
@@ -72,8 +72,8 @@ export default {
 		grid-template-columns: 1fr;
 		.waterfall-last-item {
 			height: 100%;
-			background: var(--color-primary);
-			color: var(--color-whites);
+			background: var(--el-color-primary);
+			color: var(--el-color-white);
 			transition: all 0.3s ease;
 			border-radius: 3px;
 			&:hover {

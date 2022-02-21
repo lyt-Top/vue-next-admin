@@ -9,15 +9,12 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
-export default {
+export default defineComponent({
 	name: 'pagesFilteringDetails1',
 	setup() {
 		const store = useStore();
-		const state = reactive({
-			tagViewHeight: '',
-		});
 		// 设置主内容的高度
 		const initTagViewHeight = computed(() => {
 			let { isTagsview } = store.state.themeConfig.themeConfig;
@@ -31,8 +28,7 @@ export default {
 		});
 		return {
 			initTagViewHeight,
-			...toRefs(state),
 		};
 	},
-};
+});
 </script>

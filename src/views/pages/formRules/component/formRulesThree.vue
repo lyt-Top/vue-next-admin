@@ -1,6 +1,6 @@
 <template>
 	<div class="form-rules-three-container">
-		<el-form :model="form" :rules="rules" ref="formRulesThreeRef" size="small" label-width="100px" class="mt35">
+		<el-form :model="form" :rules="rules" ref="formRulesThreeRef" size="default" label-width="100px" class="mt35">
 			<el-row :gutter="35">
 				<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 					<el-form-item label="创建用户" prop="createUser">
@@ -28,12 +28,12 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive } from 'vue';
-export default {
+import { toRefs, reactive, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'pagesFormRulesThree',
 	setup() {
 		const state = reactive({
-			form: {},
+			form: { createUser: '', editUser: '', user: '', department: '' },
 			rules: {
 				createUser: { required: true, message: '请输入创建用户', trigger: 'blur' },
 				editUser: { required: true, message: '请输入修改用户', trigger: 'blur' },
@@ -45,5 +45,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

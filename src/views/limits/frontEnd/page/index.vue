@@ -14,20 +14,20 @@
 			class="mt15"
 		></el-alert>
 		<el-card shadow="hover" header="切换用户演示，前端控制不同用户显示不同页面、按钮权限" class="mt15">
-			<el-radio-group v-model="userAuth" size="small" @change="onRadioChange">
+			<el-radio-group v-model="userAuth" size="default" @change="onRadioChange">
 				<el-radio-button label="admin"></el-radio-button>
-				<el-radio-button label="test"></el-radio-button>
+				<el-radio-button label="common"></el-radio-button>
 			</el-radio-group>
 		</el-card>
 	</div>
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted } from 'vue';
+import { toRefs, reactive, computed, onMounted, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import { resetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/index';
 import { Session } from '/@/utils/storage';
-export default {
+export default defineComponent({
 	name: 'limitsFrontEndPage',
 	setup() {
 		const store = useStore();
@@ -51,16 +51,16 @@ export default {
 		const onRadioChange = async () => {
 			// 模拟数据
 			resetRoute();
-			let defaultRoles: Array<string> = [];
-			let defaultAuthBtnList: Array<string> = [];
+			let defaultRoles: string[] = [];
+			let defaultAuthBtnList: string[] = [];
 			// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-			let adminRoles: Array<string> = ['admin'];
+			let adminRoles: string[] = ['admin'];
 			// admin 按钮权限标识
-			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
+			let adminAuthBtnList: string[] = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
 			// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-			let testRoles: Array<string> = ['common'];
+			let testRoles: string[] = ['common'];
 			// test 按钮权限标识
-			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
+			let testAuthBtnList: string[] = ['btn.add', 'btn.link'];
 			// 不同用户模拟不同的用户权限
 			if (state.userAuth === 'admin') {
 				defaultRoles = adminRoles;
@@ -95,5 +95,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

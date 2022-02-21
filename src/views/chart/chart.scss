@@ -20,7 +20,7 @@
 						width: 100%;
 						height: 100%;
 						background: var(--el-color-white);
-						border: 1px solid var(--el-border-color-light, #ebeef5);
+						border: 1px solid var(--el-border-color-lighter);
 						border-radius: 4px;
 						display: flex;
 						flex-direction: column;
@@ -67,7 +67,7 @@
 							background: #22bc76;
 							border-radius: 2px;
 							padding: 0 5px;
-							color: var(--color-whites);
+							color: var(--el-color-white);
 						}
 					}
 					.sky-right {
@@ -99,7 +99,7 @@
 						}
 					}
 					.sky-dl-first {
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 					}
 				}
 				.d-states {
@@ -117,7 +117,7 @@
 							text-align: center;
 							border-radius: 100%;
 							flex-shrink: 1;
-							color: var(--color-whites);
+							color: var(--el-color-white);
 							display: flex;
 							align-items: center;
 							justify-content: center;
@@ -135,7 +135,7 @@
 							overflow: hidden;
 							padding: 0 10px 0;
 							.d-states-item-label {
-								color: var(--color-primary);
+								color: var(--el-color-primary);
 								overflow: hidden;
 								white-space: nowrap;
 								text-overflow: ellipsis;
@@ -144,7 +144,7 @@
 								font-size: 14px;
 								text-align: center;
 								margin-top: 3px;
-								color: var(--color-primary);
+								color: var(--el-color-primary);
 							}
 						}
 					}
@@ -152,7 +152,7 @@
 				.d-btn {
 					margin-top: 5px;
 					.d-btn-item {
-						border: 1px solid var(--color-primary);
+						border: 1px solid var(--el-color-primary);
 						display: flex;
 						width: 100%;
 						border-radius: 35px;
@@ -161,10 +161,10 @@
 						margin-top: 15px;
 						cursor: pointer;
 						transition: all ease 0.3s;
-						color: var(--color-primary);
+						color: var(--el-color-primary);
 						.d-btn-item-left {
 							font-size: 20px;
-							border: 1px solid var(--color-primary);
+							border: 1px solid var(--el-color-primary);
 							width: 25px;
 							height: 25px;
 							line-height: 25px;
@@ -194,7 +194,7 @@
 						height: 100%;
 						background: var(--el-color-white);
 						padding: 15px;
-						border: 1px solid var(--el-border-color-light, #ebeef5);
+						border: 1px solid var(--el-border-color-lighter);
 						border-radius: 4px;
 						transition: all ease 0.3s;
 						&:hover {
@@ -213,7 +213,7 @@
 						display: flex;
 						flex-direction: column;
 						padding: 15px;
-						border: 1px solid var(--el-border-color-light, #ebeef5);
+						border: 1px solid var(--el-border-color-lighter);
 						border-radius: 4px;
 						transition: all ease 0.3s;
 						&:hover {
@@ -222,7 +222,7 @@
 						}
 						.flex-title {
 							margin-bottom: 15px;
-							color: #303133;
+							color: var(--el-text-color-primary);
 							display: flex;
 							justify-content: space-between;
 							.flex-title-small {
@@ -248,7 +248,7 @@
 										width: 40px;
 										height: 40px;
 										position: relative;
-										background-color: var(--color-primary);
+										background-color: var(--el-color-primary);
 										border-radius: 50%;
 										overflow: hidden;
 										text-align: center;
@@ -276,7 +276,7 @@
 										.monitor-z-index {
 											position: relative;
 											z-index: 2;
-											color: var(--color-primary);
+											color: var(--el-color-primary);
 											display: flex;
 											align-items: center;
 											height: 100%;
@@ -312,6 +312,9 @@
 			.big-data-down-right {
 				.flex-warp-item {
 					padding: 0 15px 15px 7.5px;
+					.flex-title {
+						color: var(--el-text-color-primary);
+					}
 					.flex-content {
 						display: flex;
 						flex-direction: column;
@@ -320,7 +323,7 @@
 							height: 45px;
 							.task-item {
 								flex: 1;
-								color: var(--color-whites);
+								color: var(--el-color-white);
 								display: flex;
 								justify-content: center;
 								.task-item-box {
@@ -388,14 +391,14 @@
 							.task-first-item {
 								flex-direction: column;
 								text-align: center;
-								color: var(--color-primary);
+								color: var(--el-color-primary);
 								.task-first {
 									font-size: 20px;
 								}
 							}
 						}
 						.progress {
-							color: #303133;
+							color: var(--el-text-color-primary);
 							display: flex;
 							flex-direction: column;
 							flex: 1;
@@ -410,7 +413,7 @@
 									width: 100%;
 									margin-left: 10px;
 									::v-deep(.el-progress__text) {
-										color: #303133;
+										color: var(--el-text-color-primary);
 										font-size: 12px !important;
 										text-align: right;
 									}
