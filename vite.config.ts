@@ -1,33 +1,30 @@
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
-import type { UserConfig, ConfigEnv } from 'vite';
-import { defineConfig } from 'vite';
-import { loadEnv } from './src/utils/viteBuild';
+import { defineConfig, loadEnv, ConfigEnv } from 'vite';
 
 const pathResolve = (dir: string): any => {
 	return resolve(__dirname, '.', dir);
 };
-
-const { VITE_PORT, VITE_OPEN, VITE_PUBLIC_PATH } = loadEnv();
 
 const alias: Record<string, string> = {
 	'/@': pathResolve('./src/'),
 	'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
 };
 
-export default defineConfig(({ command }: ConfigEnv): UserConfig => {
+const viteConfig = defineConfig((mode: ConfigEnv) => {
+	const env = loadEnv(mode.mode, process.cwd());
 	return {
 		plugins: [vue()],
 		root: process.cwd(),
 		resolve: { alias },
-		base: command === 'build' ? VITE_PUBLIC_PATH : './',
+		base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
 		optimizeDeps: {
 			include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en', 'element-plus/lib/locale/lang/zh-tw'],
 		},
 		server: {
 			host: '0.0.0.0',
-			port: VITE_PORT,
-			open: VITE_OPEN,
+			port: env.VITE_PORT as unknown as number,
+			open: env.VITE_OPEN,
 			proxy: {
 				'/gitee': {
 					target: 'https://gitee.com',
@@ -87,3 +84,5 @@ export default defineConfig(({ command }: ConfigEnv): UserConfig => {
 		},
 	};
 });
+
+export default viteConfig;
