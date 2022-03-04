@@ -2,6 +2,17 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.0.2
+
+`2022.03.04`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 Alert 提示添加边框
+- 🎯 优化 功能 / 数字滚动 演示界面
+- 🐞 修复 全局主题按钮颜色 :active 问题
+- 🐞 修复 Dropdown 下拉菜单样式问题
+- 🐞 修复 SvgIcon 图标组件动态切换时报警告问题，[SvgIcon 改变 name 时可能导致图像不显示](https://gitee.com/lyt-top/vue-next-admin/issues/I4VGE0)，感谢@axcc1234
+
 ## 2.0.1
 
 `2022.02.25`

@@ -50,7 +50,7 @@ export default defineComponent({
 					tip: '在场人数',
 					tipNum: '911',
 					color: '--el-color-primary',
-					iconColor: '#F86C6B',
+					iconColor: '#ffcb47',
 					icon: 'iconfont icon-jinridaiban',
 				},
 				{
@@ -59,7 +59,7 @@ export default defineComponent({
 					tip: '使用中',
 					tipNum: '611',
 					color: '--el-color-success',
-					iconColor: '#92A1F4',
+					iconColor: '#70cf41',
 					icon: 'iconfont icon-AIshiyanshi',
 				},
 				{
@@ -67,8 +67,8 @@ export default defineComponent({
 					titleNum: '123',
 					tip: '通过人数',
 					tipNum: '911',
-					color: '#FEBB50',
-					iconColor: '--el-color-warning',
+					color: '--el-color-warning',
+					iconColor: '#dfae64',
 					icon: 'iconfont icon-shenqingkaiban',
 				},
 				{
@@ -77,7 +77,7 @@ export default defineComponent({
 					tip: '销售数',
 					tipNum: '911',
 					color: '--el-color-danger',
-					iconColor: '#1dbcd5',
+					iconColor: '#e56565',
 					icon: 'iconfont icon-ditu',
 				},
 			],

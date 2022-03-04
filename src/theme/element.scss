@@ -34,6 +34,9 @@
 
 /* Alert 警告
 ------------------------------- */
+.el-alert {
+	border: 1px solid;
+}
 .el-alert__title {
 	word-break: break-all;
 }
@@ -141,6 +144,9 @@
 
 /* Dropdown 下拉菜单
 ------------------------------- */
+.el-dropdown-menu {
+	list-style: none !important; /*修复 Dropdown 下拉菜单样式问题 2022.03.04*/
+}
 .el-dropdown-menu .el-dropdown-menu__item {
 	white-space: nowrap;
 }

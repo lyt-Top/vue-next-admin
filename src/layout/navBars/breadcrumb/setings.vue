@@ -400,7 +400,7 @@
 <script lang="ts">
 import { nextTick, onUnmounted, onMounted, getCurrentInstance, defineComponent, computed, reactive, toRefs } from 'vue';
 import { useStore } from '/@/store/index';
-import { getLightColor } from '/@/utils/theme';
+import { getLightColor, getDarkColor } from '/@/utils/theme';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
 import Watermark from '/@/utils/wartermark';
@@ -421,7 +421,10 @@ export default defineComponent({
 		});
 		// 1、全局主题
 		const onColorPickerChange = () => {
+			// 颜色加深
+			document.documentElement.style.setProperty('--el-color-primary-dark-2', `${getDarkColor(getThemeConfig.value.primary, 0.1)}`);
 			document.documentElement.style.setProperty('--el-color-primary', getThemeConfig.value.primary);
+			// 颜色变浅
 			for (let i = 1; i <= 9; i++) {
 				document.documentElement.style.setProperty(`--el-color-primary-light-${i}`, `${getLightColor(getThemeConfig.value.primary, i / 10)}`);
 			}
@@ -520,7 +523,7 @@ export default defineComponent({
 			setLocalThemeConfig();
 		};
 		// 4、界面显示 --> 水印文案
-		const onWartermarkTextInput = (val: string) => {
+		const onWartermarkTextInput = (val: any) => {
 			getThemeConfig.value.wartermarkText = verifyAndSpace(val);
 			if (getThemeConfig.value.wartermarkText === '') return false;
 			if (getThemeConfig.value.isWartermark) Watermark.set(getThemeConfig.value.wartermarkText);
