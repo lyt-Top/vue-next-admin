@@ -2,6 +2,10 @@
 
 🎉🎉🔥 `vue-next-admin-template` 基于 （vue-next-admin-v1.1.2 版本） vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.0.2
+
+- 🎉 同步 master 分支 v2.0.2 版本内容，具体查看 master CHANGELOG.md
+
 ## 0.2.2
 
 `2021.12.21`

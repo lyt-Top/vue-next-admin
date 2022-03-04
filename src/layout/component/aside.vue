@@ -10,23 +10,19 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, watch, getCurrentInstance, onBeforeMount } from 'vue';
+import { toRefs, reactive, computed, watch, getCurrentInstance, onBeforeMount, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import Logo from '/@/layout/logo/index.vue';
 import Vertical from '/@/layout/navMenu/vertical.vue';
-export default {
+export default defineComponent({
 	name: 'layoutAside',
 	components: { Logo, Vertical },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const store = useStore();
-		const state: any = reactive({
+		const state = reactive({
 			menuList: [],
-			clientWidth: '',
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
+			clientWidth: 0,
 		});
 		// 获取卡片全屏信息
 		const isTagsViewCurrenFull = computed(() => {
@@ -35,8 +31,8 @@ export default {
 		// 设置菜单展开/收起时的宽度
 		const setCollapseStyle = computed(() => {
 			const { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
-			const asideBrColor =
-				menuBar === '#FFFFFF' || menuBar === '#FFF' || menuBar === '#fff' || menuBar === '#ffffff' ? 'layout-el-aside-br-color' : '';
+			const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff'];
+			const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : '';
 			// 判断是否是手机端
 			if (state.clientWidth <= 1000) {
 				if (isCollapse) {
@@ -73,7 +69,10 @@ export default {
 		// 关闭移动端蒙版
 		const closeLayoutAsideMobileMode = () => {
 			const el = document.querySelector('.layout-aside-mobile-mode');
-			el && el.parentNode?.removeChild(el);
+			el?.setAttribute('style', 'animation: error-img-two 0.3s');
+			setTimeout(() => {
+				el?.parentNode?.removeChild(el);
+			}, 300);
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) store.state.themeConfig.themeConfig.isCollapse = false;
 			document.body.setAttribute('class', '');
@@ -86,7 +85,7 @@ export default {
 		// 设置/过滤路由（非静态路由/是否显示在菜单中）
 		const setFilterRoutes = () => {
 			if (store.state.themeConfig.themeConfig.layout === 'columns') return false;
-			state.menuList = filterRoutesFun(store.state.routesList.routesList);
+			(state.menuList as any) = filterRoutesFun(store.state.routesList.routesList);
 		};
 		// 路由过滤递归函数
 		const filterRoutesFun = (arr: Array<object>) => {
@@ -149,11 +148,10 @@ export default {
 		return {
 			setCollapseStyle,
 			setShowLogo,
-			getThemeConfig,
 			isTagsViewCurrenFull,
 			onAsideEnterLeave,
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

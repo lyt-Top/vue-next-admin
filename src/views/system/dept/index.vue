@@ -2,16 +2,16 @@
 	<div class="system-dept-container">
 		<el-card shadow="hover">
 			<div class="system-dept-search mb15">
-				<el-input size="small" placeholder="请输入部门名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入部门名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddDept">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddDept">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增部门
 				</el-button>
@@ -39,9 +39,9 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="mini" type="text" @click="onOpenAddDept(scope.row)">新增</el-button>
-						<el-button size="mini" type="text" @click="onOpenEditDept(scope.row)">修改</el-button>
-						<el-button size="mini" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
+						<el-button size="small" type="text" @click="onOpenAddDept">新增</el-button>
+						<el-button size="small" type="text" @click="onOpenEditDept(scope.row)">修改</el-button>
+						<el-button size="small" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -52,17 +52,40 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, onMounted } from 'vue';
+import { ref, toRefs, reactive, onMounted, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import AddDept from '/@/views/system/dept/component/addDept.vue';
 import EditDept from '/@/views/system/dept/component/editDept.vue';
-export default {
+
+// 定义接口来定义对象的类型
+interface TableDataRow {
+	deptName: string;
+	createTime: string;
+	status: boolean;
+	sort: number;
+	describe: string;
+	id: number;
+	children?: TableDataRow[];
+}
+interface TableDataState {
+	tableData: {
+		data: Array<TableDataRow>;
+		total: number;
+		loading: boolean;
+		param: {
+			pageNum: number;
+			pageSize: number;
+		};
+	};
+}
+
+export default defineComponent({
 	name: 'systemDept',
 	components: { AddDept, EditDept },
 	setup() {
 		const addDeptRef = ref();
 		const editDeptRef = ref();
-		const state = reactive({
+		const state = reactive<TableDataState>({
 			tableData: {
 				data: [],
 				total: 0,
@@ -79,7 +102,7 @@ export default {
 				deptName: 'vueNextAdmin',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '顶级部门',
 				id: Math.random(),
 				children: [
@@ -87,7 +110,7 @@ export default {
 						deptName: 'IT外包服务',
 						createTime: new Date().toLocaleString(),
 						status: true,
-						sort: Number.parseInt(Math.random()),
+						sort: Math.random(),
 						describe: '总部',
 						id: Math.random(),
 					},
@@ -95,7 +118,7 @@ export default {
 						deptName: '资本控股',
 						createTime: new Date().toLocaleString(),
 						status: true,
-						sort: Number.parseInt(Math.random()),
+						sort: Math.random(),
 						describe: '分部',
 						id: Math.random(),
 					},
@@ -108,11 +131,11 @@ export default {
 			addDeptRef.value.openDialog();
 		};
 		// 打开编辑菜单弹窗
-		const onOpenEditDept = (row: object) => {
+		const onOpenEditDept = (row: TableDataRow) => {
 			editDeptRef.value.openDialog(row);
 		};
 		// 删除当前行
-		const onTabelRowDel = (row: object) => {
+		const onTabelRowDel = (row: TableDataRow) => {
 			ElMessageBox.confirm(`此操作将永久删除部门：${row.deptName}, 是否继续?`, '提示', {
 				confirmButtonText: '删除',
 				cancelButtonText: '取消',
@@ -136,5 +159,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

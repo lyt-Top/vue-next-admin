@@ -1,7 +1,7 @@
 // 页面添加水印效果
 const setWatermark = (str: string) => {
 	const id = '1.23452384164.123412416';
-	if (document.getElementById(id) !== null) document.body.removeChild(document.getElementById(id) as any);
+	if (document.getElementById(id) !== null) document.body.removeChild(<HTMLElement>document.getElementById(id));
 	const can = document.createElement('canvas');
 	can.width = 200;
 	can.height = 130;
@@ -39,7 +39,7 @@ const watermark = {
 	// 删除水印
 	del: () => {
 		let id = '1.23452384164.123412416';
-		if (document.getElementById(id) !== null) document.body.removeChild(document.getElementById(id) as any);
+		if (document.getElementById(id) !== null) document.body.removeChild(<HTMLElement>document.getElementById(id));
 	},
 };
 

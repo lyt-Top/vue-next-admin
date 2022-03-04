@@ -1,16 +1,16 @@
 <template>
-	<el-form class="login-content-form">
-		<el-form-item>
-			<el-input type="text" placeholder="用户名 admin 或不输均为 test" v-model="ruleForm.userName" clearable autocomplete="off">
+	<el-form size="large" class="login-content-form">
+		<el-form-item class="login-animation1">
+			<el-input type="text" placeholder="用户名 admin 或不输均为 common" v-model="ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon"><elementUser /></el-icon>
+					<el-icon class="el-input__icon"><ele-User /></el-icon>
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="login-animation2">
 			<el-input :type="isShowPassword ? 'text' : 'password'" placeholder="密码：123456" v-model="ruleForm.password" autocomplete="off">
 				<template #prefix>
-					<el-icon class="el-input__icon"><elementUnlock /></el-icon>
+					<el-icon class="el-input__icon"><ele-Unlock /></el-icon>
 				</template>
 				<template #suffix>
 					<i
@@ -22,23 +22,20 @@
 				</template>
 			</el-input>
 		</el-form-item>
-		<el-form-item>
-			<el-row :gutter="15">
-				<el-col :span="16">
-					<el-input type="text" maxlength="4" placeholder="请输入验证码" v-model="ruleForm.code" clearable autocomplete="off">
-						<template #prefix>
-							<el-icon class="el-input__icon"><elementPosition /></el-icon>
-						</template>
-					</el-input>
-				</el-col>
-				<el-col :span="8">
-					<div class="login-content-code">
-						<span class="login-content-code-img">1234</span>
-					</div>
-				</el-col>
-			</el-row>
+		<el-form-item class="login-animation3">
+			<el-col :span="15">
+				<el-input type="text" maxlength="4" placeholder="请输入验证码" v-model="ruleForm.code" clearable autocomplete="off">
+					<template #prefix>
+						<el-icon class="el-input__icon"><ele-Position /></el-icon>
+					</template>
+				</el-input>
+			</el-col>
+			<el-col :span="1"></el-col>
+			<el-col :span="8">
+				<el-button class="login-content-code">1234</el-button>
+			</el-col>
 		</el-form-item>
-		<el-form-item>
+		<el-form-item class="login-animation4">
 			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
 				<span>登 录</span>
 			</el-button>
@@ -47,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent, computed, getCurrentInstance } from 'vue';
+import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
@@ -56,9 +53,8 @@ import { useStore } from '/@/store/index';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 export default defineComponent({
-	name: 'login',
+	name: 'loginAccount',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
@@ -88,7 +84,7 @@ export default defineComponent({
 			// admin 按钮权限标识
 			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
 			// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-			let testAuthPageList: Array<string> = ['common'];
+			let testRoles: Array<string> = ['common'];
 			// test 按钮权限标识
 			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
 			// 不同用户模拟不同的用户权限
@@ -96,7 +92,7 @@ export default defineComponent({
 				defaultRoles = adminRoles;
 				defaultAuthBtnList = adminAuthBtnList;
 			} else {
-				defaultRoles = testAuthPageList;
+				defaultRoles = testRoles;
 				defaultAuthBtnList = testAuthBtnList;
 			}
 			// 用户信息模拟数据
@@ -137,23 +133,19 @@ export default defineComponent({
 			// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
 			if (route.query?.redirect) {
 				router.push({
-					path: route.query?.redirect,
-					query: Object.keys(route.query?.params).length > 0 ? JSON.parse(route.query?.params) : '',
+					path: <string>route.query?.redirect,
+					query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
 				});
 			} else {
 				router.push('/');
 			}
 			// 登录成功提示
-			setTimeout(() => {
-				// 关闭 loading
-				state.loading.signIn = true;
-				ElMessage.success(`${currentTimeInfo}，欢迎回来！`);
-				// 修复防止退出登录再进入界面时，需要刷新样式才生效的问题，初始化布局样式等(登录的时候触发，目前方案)
-				proxy.mittBus.emit('onSignInClick');
-			}, 300);
+			// 关闭 loading
+			state.loading.signIn = true;
+			const signInText = '欢迎回来！';
+			ElMessage.success(`${currentTimeInfo}，${signInText}`);
 		};
 		return {
-			currentTime,
 			onSignIn,
 			...toRefs(state),
 		};
@@ -164,39 +156,28 @@ export default defineComponent({
 <style scoped lang="scss">
 .login-content-form {
 	margin-top: 20px;
+	@for $i from 1 through 4 {
+		.login-animation#{$i} {
+			opacity: 0;
+			animation-name: error-num;
+			animation-duration: 0.5s;
+			animation-fill-mode: forwards;
+			animation-delay: calc($i/10) + s;
+		}
+	}
 	.login-content-password {
 		display: inline-block;
-		width: 25px;
+		width: 20px;
 		cursor: pointer;
 		&:hover {
 			color: #909399;
 		}
 	}
 	.login-content-code {
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
-		.login-content-code-img {
-			width: 100%;
-			height: 40px;
-			line-height: 40px;
-			background-color: #ffffff;
-			border: 1px solid rgb(220, 223, 230);
-			color: #333;
-			font-size: 16px;
-			font-weight: 700;
-			letter-spacing: 5px;
-			text-indent: 5px;
-			text-align: center;
-			cursor: pointer;
-			transition: all ease 0.2s;
-			border-radius: 4px;
-			user-select: none;
-			&:hover {
-				border-color: #c0c4cc;
-				transition: all ease 0.2s;
-			}
-		}
+		width: 100%;
+		padding: 0;
+		font-weight: bold;
+		letter-spacing: 5px;
 	}
 	.login-content-submit {
 		width: 100%;

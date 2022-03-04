@@ -43,19 +43,32 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, ref, computed, onMounted, nextTick, getCurrentInstance, watch, onUnmounted } from 'vue';
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
+import { reactive, toRefs, ref, computed, onMounted, nextTick, getCurrentInstance, watch, onUnmounted, defineComponent } from 'vue';
+import { useRoute, useRouter, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { useStore } from '/@/store/index';
-export default {
+
+// 定义接口来定义对象的类型
+interface ColumnsAsideState {
+	columnsAsideList: any[];
+	liIndex: number;
+	liOldIndex: null | number;
+	liHoverIndex: null | number;
+	liOldPath: null | string;
+	difference: number;
+	routeSplit: string[];
+	isNavHover: boolean;
+}
+
+export default defineComponent({
 	name: 'layoutColumnsAside',
 	setup() {
 		const columnsAsideOffsetTopRefs: any = ref([]);
 		const columnsAsideActiveRef = ref();
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
-		const state: any = reactive({
+		const state = reactive<ColumnsAsideState>({
 			columnsAsideList: [],
 			liIndex: 0,
 			liOldIndex: null,
@@ -86,7 +99,7 @@ export default {
 			else router.push(path);
 		};
 		// 鼠标移入时，显示当前的子级菜单
-		const onColumnsAsideMenuMouseenter = (v: Object, k: number) => {
+		const onColumnsAsideMenuMouseenter = (v: RouteRecordRaw, k: number) => {
 			let { path } = v;
 			state.liOldPath = path;
 			state.liOldIndex = k;
@@ -153,7 +166,7 @@ export default {
 			if (!currentSplitRoute) return false;
 			// 延迟拿值，防止取不到
 			setTimeout(() => {
-				onColumnsAsideDown(currentSplitRoute.k);
+				onColumnsAsideDown((<any>currentSplitRoute).k);
 			}, 0);
 		};
 		// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
@@ -198,18 +211,18 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
 .layout-columns-aside {
 	width: 70px;
 	height: 100%;
-	background: var(--bg-columnsMenuBar);
+	background: var(--next-bg-columnsMenuBar);
 	ul {
 		position: relative;
 		li {
-			color: var(--bg-columnsMenuBarColor);
+			color: var(--next-bg-columnsMenuBarColor);
 			width: 100%;
 			height: 50px;
 			text-align: center;
@@ -241,22 +254,22 @@ export default {
 			}
 			a {
 				text-decoration: none;
-				color: var(--bg-columnsMenuBarColor);
+				color: var(--next-bg-columnsMenuBarColor);
 			}
 		}
 		.layout-columns-active {
-			color: var(--color-whites) !important;
+			color: var(--el-color-white);
 			transition: 0.3s ease-in-out;
 		}
 		.layout-columns-hover {
-			color: var(--color-primary);
+			color: var(--el-color-primary);
 			a {
-				color: var(--color-primary);
+				color: var(--el-color-primary);
 			}
 		}
 		.columns-round {
-			background: var(--color-primary);
-			color: var(--color-whites);
+			background: var(--el-color-primary);
+			color: var(--el-color-white);
 			position: absolute;
 			left: 50%;
 			top: 2px;

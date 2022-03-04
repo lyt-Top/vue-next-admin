@@ -16,20 +16,24 @@
 						}
 					"
 				>
-					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont font14" v-if="isActive(v)"></i>
-					<i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon"></i>
+					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v)"></i>
+					<SvgIcon :name="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon" class="pr5" />
 					<span>{{ v.meta.title }}</span>
 					<template v-if="isActive(v)">
-						<SvgIcon name="elementRefreshRight" class="ml5" @click.stop="refreshCurrentTagsView($route.fullPath)" />
 						<SvgIcon
-							name="elementClose"
+							name="ele-RefreshRight"
+							class="ml5 layout-navbars-tagsview-ul-li-refresh"
+							@click.stop="refreshCurrentTagsView($route.fullPath)"
+						/>
+						<SvgIcon
+							name="ele-Close"
 							class="layout-navbars-tagsview-ul-li-icon layout-icon-active"
 							v-if="!v.meta.isAffix"
 							@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
 						/>
 					</template>
 					<SvgIcon
-						name="elementClose"
+						name="ele-Close"
 						class="layout-navbars-tagsview-ul-li-icon layout-icon-three"
 						v-if="!v.meta.isAffix"
 						@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
@@ -42,7 +46,20 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, computed, ref, nextTick, onBeforeUpdate, onBeforeMount, onUnmounted, getCurrentInstance, watch } from 'vue';
+import {
+	toRefs,
+	reactive,
+	onMounted,
+	computed,
+	ref,
+	nextTick,
+	onBeforeUpdate,
+	onBeforeMount,
+	onUnmounted,
+	getCurrentInstance,
+	watch,
+	defineComponent,
+} from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import Sortable from 'sortablejs';
 import { ElMessage } from 'element-plus';
@@ -51,19 +68,47 @@ import { Session } from '/@/utils/storage';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
 import Contextmenu from '/@/layout/navBars/tagsView/contextmenu.vue';
-export default {
+
+// 定义接口来定义对象的类型
+interface TagsViewState {
+	routeActive: string;
+	routePath: string | unknown;
+	dropdown: {
+		x: string | number;
+		y: string | number;
+	};
+	tagsRefsIndex: number;
+	tagsViewList: any[];
+	sortable: any;
+	tagsViewRoutesList: any[];
+}
+interface RouteParams {
+	path: string;
+	url: string;
+}
+interface CurrentContextmenu {
+	meta: {
+		isDynamic: boolean;
+	};
+	params: any;
+	query: any;
+	path: string;
+	contextMenuClickId: string | number;
+}
+
+export default defineComponent({
 	name: 'layoutTagsView',
 	components: { Contextmenu },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const tagsRefs = ref([]);
+		const { proxy } = <any>getCurrentInstance();
+		const tagsRefs = ref<any[]>([]);
 		const scrollbarRef = ref();
 		const contextmenuRef = ref();
 		const tagsUlRef = ref();
 		const store = useStore();
 		const route = useRoute();
 		const router = useRouter();
-		const state: any = reactive({
+		const state = reactive<TagsViewState>({
 			routeActive: '',
 			routePath: route.path,
 			dropdown: { x: '', y: '' },
@@ -81,7 +126,7 @@ export default {
 			return store.state.themeConfig.themeConfig;
 		});
 		// 设置 tagsView 高亮
-		const isActive = (v) => {
+		const isActive = (v: RouteParams) => {
 			if (getThemeConfig.value.isShareTagsView) {
 				return v.path === state.routePath;
 			} else {
@@ -160,7 +205,7 @@ export default {
 			// 防止拿取不到路由信息
 			nextTick(async () => {
 				// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-				let item = '';
+				let item: any = '';
 				if (to && to.meta.isDynamic) {
 					// 动态路由（xxx/:id/:name"）：参数不同，开启多个 tagsview
 					if (!getThemeConfig.value.isShareTagsView) await solveAddTagsView(path, to);
@@ -250,7 +295,7 @@ export default {
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
 		// 防止 tagsView 非当前页演示时，操作异常
-		const getCurrentRouteItem = (path: string, cParams: { [key: string]: any }) => {
+		const getCurrentRouteItem = (path: string, cParams: any) => {
 			const itemRoute = Session.get('tagsViewList') ? Session.get('tagsViewList') : state.tagsViewList;
 			return itemRoute.find((v: any) => {
 				if (
@@ -267,7 +312,7 @@ export default {
 			});
 		};
 		// 当前项右键菜单点击
-		const onCurrentContextmenuClick = async (item) => {
+		const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
 			const cParams = item.meta.isDynamic ? item.params : item.query;
 			if (!getCurrentRouteItem(item.path, cParams)) return ElMessage({ type: 'warning', message: '请正确输入路径及完整参数（query、params）' });
 			const { path, name, params, query, meta, url } = getCurrentRouteItem(item.path, cParams);
@@ -382,7 +427,7 @@ export default {
 			});
 		};
 		// 获取 tagsView 的下标：用于处理 tagsView 点击时的横向滚动
-		const getTagsRefsIndex = (path: string) => {
+		const getTagsRefsIndex = (path: string | unknown) => {
 			nextTick(async () => {
 				// await 使用该写法，防止拿取不到 tagsViewList 列表数据不完整
 				let tagsViewList = await state.tagsViewList;
@@ -399,7 +444,7 @@ export default {
 		};
 		// 设置 tagsView 可以进行拖拽
 		const initSortable = async () => {
-			const el = document.querySelector('.layout-navbars-tagsview-ul') as HTMLElement;
+			const el = <HTMLElement>document.querySelector('.layout-navbars-tagsview-ul');
 			if (!el) return false;
 			state.sortable.el && state.sortable.destroy();
 			state.sortable = Sortable.create(el, {
@@ -429,7 +474,7 @@ export default {
 			// 拖动问题，https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI
 			window.addEventListener('resize', onSortableResize);
 			// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
-			proxy.mittBus.on('onCurrentContextmenuClick', (data: object) => {
+			proxy.mittBus.on('onCurrentContextmenuClick', (data: CurrentContextmenu) => {
 				onCurrentContextmenuClick(data);
 			});
 			// 监听布局配置界面开启/关闭拖拽
@@ -486,7 +531,6 @@ export default {
 		return {
 			isActive,
 			onContextmenu,
-			getTagsViewRoutes,
 			onTagsClick,
 			tagsRefs,
 			contextmenuRef,
@@ -501,13 +545,15 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
 .layout-navbars-tagsview {
 	background-color: var(--el-color-white);
-	border-bottom: 1px solid #f1f2f3;
+	border-bottom: 1px solid var(--next-border-color-light);
+	position: relative;
+	z-index: 4;
 	::v-deep(.el-scrollbar__wrap) {
 		overflow-x: auto !important;
 	}
@@ -536,9 +582,9 @@ export default {
 			cursor: pointer;
 			justify-content: space-between;
 			&:hover {
-				background-color: var(--color-primary-light-9);
-				color: var(--color-primary);
-				border-color: var(--color-primary-light-6);
+				background-color: var(--el-color-primary-light-9);
+				color: var(--el-color-primary);
+				border-color: var(--el-color-primary-light-6);
 			}
 			&-iconfont {
 				position: relative;
@@ -554,8 +600,8 @@ export default {
 				line-height: 14px;
 				right: -5px;
 				&:hover {
-					color: var(--color-whites);
-					background-color: var(--color-primary-light-3);
+					color: var(--el-color-white);
+					background-color: var(--el-color-primary-light-3);
 				}
 			}
 			.layout-icon-active {
@@ -566,62 +612,10 @@ export default {
 			}
 		}
 		.is-active {
-			color: var(--color-whites);
-			background: var(--color-primary);
-			border-color: var(--color-primary);
+			color: var(--el-color-white);
+			background: var(--el-color-primary);
+			border-color: var(--el-color-primary);
 			transition: border-color 3s ease;
-		}
-	}
-	// 风格2
-	.tags-style-two {
-		.layout-navbars-tagsview-ul-li {
-			height: 34px !important;
-			line-height: 34px !important;
-			border: none !important;
-			.layout-navbars-tagsview-ul-li-iconfont {
-				display: none;
-			}
-			.layout-icon-active {
-				display: none;
-			}
-			.layout-icon-three {
-				display: block;
-			}
-		}
-		.is-active {
-			background: none !important;
-			color: var(--color-primary) !important;
-			border-bottom: 2px solid !important;
-			border-color: var(--color-primary) !important;
-			border-radius: 0 !important;
-		}
-	}
-	// 风格3
-	.tags-style-three {
-		.layout-navbars-tagsview-ul-li {
-			height: 34px !important;
-			line-height: 34px !important;
-			border-right: 1px solid #f6f6f6 !important;
-			border-top: none !important;
-			border-bottom: none !important;
-			border-left: none !important;
-			border-radius: 0 !important;
-			margin-right: 0 !important;
-			&:first-of-type {
-				border-left: 1px solid #f6f6f6 !important;
-			}
-			.layout-icon-active {
-				display: none;
-			}
-			.layout-icon-three {
-				display: block;
-			}
-		}
-		.is-active {
-			background: var(--el-color-white) !important;
-			color: var(--color-primary) !important;
-			border-top: 1px solid !important;
-			border-top-color: var(--color-primary) !important;
 		}
 	}
 	// 风格4
@@ -643,7 +637,41 @@ export default {
 		}
 		.is-active {
 			background: none !important;
-			color: var(--color-primary) !important;
+			color: var(--el-color-primary) !important;
+		}
+	}
+	// 风格5
+	.tags-style-five {
+		align-items: flex-end;
+		.tags-style-five-svg {
+			-webkit-mask-box-image: url("data:image/svg+xml,%3Csvg width='68' height='34' viewBox='0 0 68 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='m27,0c-7.99582,0 -11.95105,0.00205 -12,12l0,6c0,8.284 -0.48549,16.49691 -8.76949,16.49691l54.37857,-0.11145c-8.284,0 -8.60908,-8.10146 -8.60908,-16.38546l0,-6c0.11145,-12.08445 -4.38441,-12 -12,-12l-13,0z' fill='%23409eff'/%3E%3C/svg%3E")
+				12 27 15;
+		}
+		.layout-navbars-tagsview-ul-li {
+			padding: 0 5px;
+			border-width: 15px 27px 15px;
+			border-style: solid;
+			border-color: transparent;
+			margin: 0 -15px;
+			.layout-icon-active,
+			.layout-navbars-tagsview-ul-li-iconfont,
+			.layout-navbars-tagsview-ul-li-refresh {
+				display: none;
+			}
+			.layout-icon-three {
+				display: block;
+			}
+			&:hover {
+				@extend .tags-style-five-svg;
+				background: var(--el-color-primary-light-9);
+				color: unset;
+			}
+		}
+		.is-active {
+			@extend .tags-style-five-svg;
+			background: var(--el-color-primary-light-9) !important;
+			color: var(--el-color-primary) !important;
+			z-index: 1;
 		}
 	}
 }

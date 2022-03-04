@@ -7,6 +7,19 @@
 	outline: none !important;
 }
 
+:root {
+	--next-bg-main-color: #f8f8f8;
+	--next-bg-color: #f5f5ff;
+	--next-border-color-light: #f1f2f3;
+	--next-color-primary-lighter: #ecf5ff;
+	--next-color-dark-hover: #0000001a;
+	--next-color-menu-hover: rgba(0, 0, 0, 0.1);
+	--next-color-user-hover: rgba(0, 0, 0, 0.04);
+	--next-color-seting-main: #e9eef3;
+	--next-color-seting-aside: #d3dce6;
+	--next-color-seting-header: #b3c0d1;
+}
+
 html,
 body,
 #app {
@@ -18,7 +31,7 @@ body,
 	font-weight: 400;
 	-webkit-font-smoothing: antialiased;
 	-webkit-tap-highlight-color: transparent;
-	background-color: #f8f8f8;
+	background-color: var(--next-bg-main-color);
 	font-size: 14px;
 	overflow: hidden;
 	position: relative;
@@ -30,7 +43,7 @@ body,
 	width: 100%;
 	height: 100%;
 	.layout-aside {
-		background: var(--bg-menuBar);
+		background: var(--next-bg-menuBar);
 		box-shadow: 2px 0 6px rgb(0 21 41 / 1%);
 		height: inherit;
 		position: relative;
@@ -49,7 +62,7 @@ body,
 		padding: 0 !important;
 		overflow: hidden;
 		width: 100%;
-		background-color: #f8f8f8;
+		background-color: var(--next-bg-main-color);
 	}
 	.el-scrollbar {
 		width: 100%;
@@ -63,7 +76,7 @@ body,
 		border: 1px solid var(--el-border-color-light, #ebeef5);
 	}
 	.layout-el-aside-br-color {
-		border-right: 1px solid rgb(238, 238, 238);
+		border-right: 1px solid var(--el-border-color-light, #ebeef5);
 	}
 	// pc端左侧导航样式
 	.layout-aside-pc-220 {
@@ -88,11 +101,11 @@ body,
 	}
 	.layout-aside-mobile-close {
 		left: -220px;
-		transition: all 0.3s cubic-bezier(1, -0.04, 0, 1.32);
+		transition: all 0.3s cubic-bezier(0.39, 0.58, 0.57, 1);
 	}
 	.layout-aside-mobile-open {
 		left: 0;
-		transition: all 0.3s cubic-bezier(0.53, -0.26, 0.42, 1.18);
+		transition: all 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
 	}
 	.layout-aside-mobile-mode {
 		position: fixed;
@@ -103,6 +116,7 @@ body,
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.5);
 		z-index: 9999998;
+		animation: error-img 0.3s;
 	}
 	.layout-scrollbar {
 		@extend .el-scrollbar;
@@ -133,7 +147,7 @@ body,
 ------------------------------- */
 #nprogress {
 	.bar {
-		background: var(--color-primary) !important;
+		background: var(--el-color-primary) !important;
 		z-index: 9999999 !important;
 	}
 }
@@ -145,6 +159,7 @@ body,
 }
 .flex-auto {
 	flex: 1;
+	overflow: hidden;
 }
 .flex-center {
 	@extend .flex;
@@ -209,19 +224,19 @@ body,
 /* 颜色值
 ------------------------------- */
 .color-primary {
-	color: var(--color-primary);
+	color: var(--el-color-primary);
 }
 .color-success {
-	color: var(--color-success);
+	color: var(--el-color-success);
 }
 .color-warning {
-	color: var(--color-warning);
+	color: var(--el-color-warning);
 }
 .color-danger {
-	color: var(--color-danger);
+	color: var(--el-color-danger);
 }
 .color-info {
-	color: var(--color-info);
+	color: var(--el-color-info);
 }
 
 /* 字体大小全局样式

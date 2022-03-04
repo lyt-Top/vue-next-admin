@@ -5,20 +5,15 @@ export interface ThemeConfigState {
 	themeConfig: {
 		isDrawer: boolean;
 		primary: string;
-		success: string;
-		info: string;
-		warning: string;
-		danger: string;
 		topBar: string;
-		menuBar: string;
-		columnsMenuBar: string;
 		topBarColor: string;
-		menuBarColor: string;
-		columnsMenuBarColor: string;
 		isTopBarColorGradual: boolean;
+		menuBar: string;
+		menuBarColor: string;
 		isMenuBarColorGradual: boolean;
+		columnsMenuBar: string;
+		columnsMenuBarColor: string;
 		isColumnsMenuBarColorGradual: boolean;
-		isMenuBarColorHighlight: boolean;
 		isCollapse: boolean;
 		isUniqueOpened: boolean;
 		isFixedHeader: boolean;
@@ -55,30 +50,36 @@ export interface ThemeConfigState {
 
 // 路由列表
 export interface RoutesListState {
-	routesList: Array<object>;
+	routesList: object[];
 	isColumnsMenuHover: Boolean;
 	isColumnsNavHover: Boolean;
 }
 
 // 路由缓存列表
 export interface KeepAliveNamesState {
-	keepAliveNames: Array<string>;
+	keepAliveNames: string[];
 }
 
 // TagsView 路由列表
 export interface TagsViewRoutesState {
-	tagsViewRoutes: Array<object>;
+	tagsViewRoutes: object[];
 	isTagsViewCurrenFull: Boolean;
 }
 
 // 用户信息
 export interface UserInfosState {
-	userInfos: object;
+	userInfos: {
+		authBtnList: string[];
+		photo: string;
+		roles: string[];
+		time: number;
+		userName: string;
+	};
 }
 
 // 后端返回原始路由(未处理时)
 export interface RequestOldRoutesState {
-	requestOldRoutes: Array<object>;
+	requestOldRoutes: object[];
 }
 
 // 主接口(顶级类型声明)

@@ -13,17 +13,17 @@
 </template>
 
 <script lang="ts">
-import { computed, getCurrentInstance, watch } from 'vue';
+import { computed, getCurrentInstance, watch, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
-export default {
+export default defineComponent({
 	name: 'layoutDefaults',
 	components: { Aside, Header, Main },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const store = useStore();
 		const route = useRoute();
 		const isFixedHeader = computed(() => {
@@ -40,5 +40,5 @@ export default {
 			isFixedHeader,
 		};
 	},
-};
+});
 </script>

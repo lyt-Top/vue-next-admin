@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-export default {
+import { reactive, toRefs, defineComponent } from 'vue';
+export default defineComponent({
 	name: 'layoutBreadcrumbUserNews',
 	setup() {
 		const state = reactive({
@@ -53,21 +53,21 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
 
 <style scoped lang="scss">
 .layout-navbars-breadcrumb-user-news {
 	.head-box {
 		display: flex;
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid var(--el-border-color-lighter);
 		box-sizing: border-box;
-		color: #333333;
+		color: var(--el-text-color-primary);
 		justify-content: space-between;
 		height: 35px;
 		align-items: center;
 		.head-box-btn {
-			color: var(--color-primary);
+			color: var(--el-color-primary);
 			font-size: 13px;
 			cursor: pointer;
 			opacity: 0.8;
@@ -84,25 +84,25 @@ export default {
 				padding-bottom: 12px;
 			}
 			.content-box-msg {
-				color: #999999;
+				color: var(--el-text-color-secondary);
 				margin-top: 5px;
 				margin-bottom: 5px;
 			}
 			.content-box-time {
-				color: #999999;
+				color: var(--el-text-color-secondary);
 			}
 		}
 	}
 	.foot-box {
 		height: 35px;
-		color: var(--color-primary);
+		color: var(--el-color-primary);
 		font-size: 13px;
 		cursor: pointer;
 		opacity: 0.8;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-top: 1px solid #ebeef5;
+		border-top: 1px solid var(--el-border-color-lighter);
 		&:hover {
 			opacity: 1;
 		}

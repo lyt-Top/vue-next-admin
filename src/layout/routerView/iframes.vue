@@ -19,7 +19,7 @@ export default defineComponent({
 		});
 		// 初始化页面加载 loading
 		const initIframeLoad = () => {
-			state.iframeUrl = route.meta.isLink;
+			state.iframeUrl = <any>route.meta.isLink;
 			nextTick(() => {
 				state.iframeLoading = true;
 				const iframe = document.getElementById('iframe');

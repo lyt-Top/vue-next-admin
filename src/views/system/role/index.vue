@@ -2,22 +2,22 @@
 	<div class="system-role-container">
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
-				<el-input size="small" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddRole">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddRole">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增角色
 				</el-button>
 			</div>
 			<el-table :data="tableData.data" style="width: 100%">
-				<el-table-column type="index" label="序号" width="50" />
+				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="roleName" label="角色名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="角色标识" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="sort" label="排序" show-overflow-tooltip></el-table-column>
@@ -31,8 +31,8 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onOpenEditRole(scope.row)">修改</el-button>
-						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" type="text" @click="onOpenEditRole(scope.row)">修改</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" type="text" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -56,17 +56,39 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref } from 'vue';
+import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import AddRole from '/@/views/system/role/component/addRole.vue';
 import EditRole from '/@/views/system/role/component/editRole.vue';
-export default {
+
+// 定义接口来定义对象的类型
+interface TableData {
+	roleName: string;
+	roleSign: string;
+	describe: string;
+	sort: number;
+	status: boolean;
+	createTime: string;
+}
+interface TableDataState {
+	tableData: {
+		data: Array<TableData>;
+		total: number;
+		loading: boolean;
+		param: {
+			pageNum: number;
+			pageSize: number;
+		};
+	};
+}
+
+export default defineComponent({
 	name: 'systemRole',
 	components: { AddRole, EditRole },
 	setup() {
 		const addRoleRef = ref();
 		const editRoleRef = ref();
-		const state: any = reactive({
+		const state = reactive<TableDataState>({
 			tableData: {
 				data: [],
 				total: 0,
@@ -79,7 +101,7 @@ export default {
 		});
 		// 初始化表格数据
 		const initTableData = () => {
-			const data: Array<object> = [];
+			const data: Array<TableData> = [];
 			for (let i = 0; i < 2; i++) {
 				data.push({
 					roleName: i === 0 ? '超级管理员' : '普通用户',
@@ -102,7 +124,7 @@ export default {
 			editRoleRef.value.openDialog(row);
 		};
 		// 删除角色
-		const onRowDel = (row: Object) => {
+		const onRowDel = (row: any) => {
 			ElMessageBox.confirm(`此操作将永久删除角色名称：“${row.roleName}”，是否继续?`, '提示', {
 				confirmButtonText: '确认',
 				cancelButtonText: '取消',
@@ -136,10 +158,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>
-
-<style scoped lang="scss">
-.system-role-container {
-}
-</style>

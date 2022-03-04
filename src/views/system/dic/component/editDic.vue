@@ -2,7 +2,7 @@
 	<div class="system-edit-dic-container">
 		<el-dialog title="修改字典" v-model="isShowDialog" width="769px">
 			<el-alert title="半成品，交互过于复杂，请自行扩展！" type="warning" :closable="false" class="mb20"> </el-alert>
-			<el-form :model="ruleForm" size="small" label-width="90px">
+			<el-form :model="ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字典名称">
@@ -24,14 +24,14 @@
 							<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 								<el-form-item :prop="`list[${k}].label`">
 									<template #label>
-										<el-button type="primary" circle size="mini" @click="onAddRow" v-if="k === 0">
+										<el-button type="primary" circle size="small" @click="onAddRow" v-if="k === 0">
 											<el-icon>
-												<elementPlus />
+												<ele-Plus />
 											</el-icon>
 										</el-button>
-										<el-button type="danger" circle size="mini" @click="onDelRow(k)" v-else>
+										<el-button type="danger" circle size="small" @click="onDelRow(k)" v-else>
 											<el-icon>
-												<elementDelete />
+												<ele-Delete />
 											</el-icon>
 										</el-button>
 										<span class="ml10">字段</span>
@@ -55,8 +55,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">修 改</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">修 改</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -64,11 +64,31 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from 'vue';
-export default {
+import { reactive, toRefs, defineComponent } from 'vue';
+
+// 定义接口来定义对象的类型
+interface RuleFormList {
+	id: number;
+	label: string;
+	value: string;
+}
+interface RuleFormState {
+	dicName: string;
+	fieldName: string;
+	status: boolean;
+	list: RuleFormList[];
+	describe: string;
+	fieldNameList: Array<any>;
+}
+interface DicState {
+	isShowDialog: boolean;
+	ruleForm: RuleFormState;
+}
+
+export default defineComponent({
 	name: 'systemEditDic',
 	setup() {
-		const state = reactive({
+		const state = reactive<DicState>({
 			isShowDialog: false,
 			ruleForm: {
 				dicName: '', // 字典名称
@@ -87,7 +107,7 @@ export default {
 			},
 		});
 		// 打开弹窗
-		const openDialog = (row: Object) => {
+		const openDialog = (row: RuleFormState) => {
 			if (row.fieldName === 'SYS_UERINFO') {
 				row.list = [
 					{ id: Math.random(), label: 'sex', value: '1' },
@@ -125,7 +145,7 @@ export default {
 			});
 		};
 		// 删除行
-		const onDelRow = (k) => {
+		const onDelRow = (k: number) => {
 			state.ruleForm.list.splice(k, 1);
 		};
 		return {
@@ -138,5 +158,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

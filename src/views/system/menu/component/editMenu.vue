@@ -1,7 +1,7 @@
 <template>
 	<div class="system-edit-menu-container">
 		<el-dialog title="修改菜单" v-model="isShowDialog" width="769px">
-			<el-form :model="ruleForm" size="small" label-width="80px">
+			<el-form :model="ruleForm" size="default" label-width="80px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级菜单">
@@ -61,12 +61,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="链接地址">
-								<el-input
-									v-model="ruleForm.meta.isLink"
-									placeholder="外链/内嵌时链接地址（http:xxx.com）"
-									clearable
-									:disabled="ruleForm.isLink === '' || !ruleForm.isLink"
-								>
+								<el-input v-model="ruleForm.meta.isLink" placeholder="外链/内嵌时链接地址（http:xxx.com）" clearable :disabled="!ruleForm.isLink">
 								</el-input>
 							</el-form-item>
 						</el-col>
@@ -137,8 +132,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">修 改</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">修 改</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -146,11 +141,11 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onMounted } from 'vue';
+import { reactive, toRefs, onMounted, defineComponent } from 'vue';
 import { useStore } from '/@/store/index';
 import IconSelector from '/@/components/iconSelector/index.vue';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
-export default {
+export default defineComponent({
 	name: 'systemEditMenu',
 	components: { IconSelector },
 	setup() {
@@ -182,9 +177,9 @@ export default {
 			menuData: [], // 上级菜单数据
 		});
 		// 获取 vuex 中的路由
-		const getMenuData = (routes) => {
-			const arr = [];
-			routes.map((val) => {
+		const getMenuData = (routes: any) => {
+			const arr: any = [];
+			routes.map((val: any) => {
 				val['title'] = val.meta.title;
 				val['id'] = Math.random();
 				arr.push({ ...val });
@@ -193,7 +188,7 @@ export default {
 			return arr;
 		};
 		// 打开弹窗
-		const openDialog = (row: Object) => {
+		const openDialog = (row: any) => {
 			row.menuType = 'menu';
 			row.menuSort = Math.random();
 			state.ruleForm = row;
@@ -205,11 +200,8 @@ export default {
 		};
 		// 是否内嵌下拉改变
 		const onSelectIframeChange = () => {
-			if (state.ruleForm.meta.isIframe) {
-				state.ruleForm.isLink = true;
-			} else {
-				state.ruleForm.isLink = '';
-			}
+			if (state.ruleForm.meta.isIframe) state.ruleForm.isLink = true;
+			else state.ruleForm.isLink = false;
 		};
 		// 取消
 		const onCancel = () => {
@@ -233,5 +225,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

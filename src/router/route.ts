@@ -88,7 +88,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementColdDrink',
+							icon: 'ele-ColdDrink',
 						},
 					},
 					{
@@ -118,7 +118,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementOfficeBuilding',
+							icon: 'ele-OfficeBuilding',
 						},
 					},
 					{
@@ -133,7 +133,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementSetUp',
+							icon: 'ele-SetUp',
 						},
 					},
 				],

@@ -1,7 +1,7 @@
 <template>
 	<div class="system-edit-dept-container">
 		<el-dialog title="修改部门" v-model="isShowDialog" width="769px">
-			<el-form :model="ruleForm" size="small" label-width="90px">
+			<el-form :model="ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级部门">
@@ -59,8 +59,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">修 改</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">修 改</el-button>
 				</span>
 			</template>
 		</el-dialog>
@@ -68,11 +68,38 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs, onMounted } from 'vue';
-export default {
+import { reactive, toRefs, onMounted, defineComponent } from 'vue';
+
+// 定义接口来定义对象的类型
+interface TableDataRow {
+	deptName: string;
+	createTime: string;
+	status: boolean;
+	sort: number;
+	describe: string;
+	id: number;
+	children?: TableDataRow[];
+}
+interface RuleFormState {
+	deptLevel: Array<string>;
+	deptName: string;
+	person: string;
+	phone: string | number;
+	email: string;
+	sort: number;
+	status: boolean;
+	describe: string;
+}
+interface DeptSate {
+	isShowDialog: boolean;
+	ruleForm: RuleFormState;
+	deptData: Array<TableDataRow>;
+}
+
+export default defineComponent({
 	name: 'systemEditDept',
 	setup() {
-		const state = reactive({
+		const state = reactive<DeptSate>({
 			isShowDialog: false,
 			ruleForm: {
 				deptLevel: [], // 上级部门
@@ -87,7 +114,7 @@ export default {
 			deptData: [], // 部门数据
 		});
 		// 打开弹窗
-		const openDialog = (row: Object) => {
+		const openDialog = (row: RuleFormState) => {
 			row.deptLevel = ['vueNextAdmin'];
 			row.person = 'lyt';
 			row.phone = '12345678910';
@@ -113,7 +140,7 @@ export default {
 				deptName: 'vueNextAdmin',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '顶级部门',
 				id: Math.random(),
 				children: [
@@ -121,7 +148,7 @@ export default {
 						deptName: 'IT外包服务',
 						createTime: new Date().toLocaleString(),
 						status: true,
-						sort: Number.parseInt(Math.random()),
+						sort: Math.random(),
 						describe: '总部',
 						id: Math.random(),
 					},
@@ -129,7 +156,7 @@ export default {
 						deptName: '资本控股',
 						createTime: new Date().toLocaleString(),
 						status: true,
-						sort: Number.parseInt(Math.random()),
+						sort: Math.random(),
 						describe: '分部',
 						id: Math.random(),
 					},
@@ -148,5 +175,5 @@ export default {
 			...toRefs(state),
 		};
 	},
-};
+});
 </script>

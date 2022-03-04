@@ -11,7 +11,7 @@
 			>
 				<template #prefix>
 					<el-icon class="el-input__icon">
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 				</template>
 				<template #default="{ item }">
@@ -26,13 +26,27 @@
 import { reactive, toRefs, defineComponent, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from '/@/store/index';
+
+// 定义接口来定义对象的类型
+interface SearchState {
+	isShowSearch: boolean;
+	menuQuery: string;
+	tagsViewList: object[];
+}
+interface Restaurant {
+	path: string;
+	meta: {
+		title: string;
+	};
+}
+
 export default defineComponent({
 	name: 'layoutBreadcrumbSearch',
 	setup() {
 		const layoutMenuAutocompleteRef = ref();
 		const store = useStore();
 		const router = useRouter();
-		const state: any = reactive({
+		const state = reactive<SearchState>({
 			isShowSearch: false,
 			menuQuery: '',
 			tagsViewList: [],
@@ -51,13 +65,13 @@ export default defineComponent({
 			state.isShowSearch = false;
 		};
 		// 菜单搜索数据过滤
-		const menuSearch = (queryString: any, cb: any) => {
+		const menuSearch = (queryString: string, cb: Function) => {
 			let results = queryString ? state.tagsViewList.filter(createFilter(queryString)) : state.tagsViewList;
 			cb(results);
 		};
 		// 菜单搜索过滤
-		const createFilter = (queryString: any) => {
-			return (restaurant: any) => {
+		const createFilter: any = (queryString: string) => {
+			return (restaurant: Restaurant) => {
 				return (
 					restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
 					restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1

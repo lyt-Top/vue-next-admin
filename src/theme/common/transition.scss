@@ -38,7 +38,7 @@
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
-	transition: all 0.3s;
+	transition: all 0.5s ease;
 }
 .breadcrumb-enter-from,
 .breadcrumb-leave-active {
@@ -47,6 +47,7 @@
 }
 .breadcrumb-leave-active {
 	position: absolute;
+	z-index: -1;
 }
 
 /* logo 过渡动画
@@ -81,5 +82,13 @@
 	}
 	100% {
 		opacity: 1;
+	}
+}
+@keyframes error-img-two {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }

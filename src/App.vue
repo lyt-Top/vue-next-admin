@@ -1,14 +1,17 @@
 <template>
-	<router-view v-show="getThemeConfig.lockScreenTime !== 0" />
-	<LockScreen v-if="getThemeConfig.isLockScreen" />
-	<Setings ref="setingsRef" v-show="getThemeConfig.lockScreenTime !== 0" />
-	<CloseFull />
+	<el-config-provider :size="getGlobalComponentSize" :locale="zhCn">
+		<router-view v-show="getThemeConfig.lockScreenTime !== 0" />
+		<LockScreen v-if="getThemeConfig.isLockScreen" />
+		<Setings ref="setingsRef" v-show="getThemeConfig.lockScreenTime !== 0" />
+		<CloseFull />
+	</el-config-provider>
 </template>
 
 <script lang="ts">
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from '/@/store/index';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
@@ -19,13 +22,17 @@ export default defineComponent({
 	name: 'app',
 	components: { LockScreen, Setings, CloseFull },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const { proxy } = <any>getCurrentInstance();
 		const setingsRef = ref();
 		const route = useRoute();
 		const store = useStore();
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return store.state.themeConfig.themeConfig;
+		});
+		// 获取全局组件大小
+		const getGlobalComponentSize = computed(() => {
+			return other.globalComponentSize;
 		});
 		// 布局配置弹窗打开
 		const openSetingsDrawer = () => {
@@ -64,7 +71,9 @@ export default defineComponent({
 			}
 		);
 		return {
+			zhCn,
 			setingsRef,
+			getGlobalComponentSize,
 			getThemeConfig,
 		};
 	},

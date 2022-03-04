@@ -1,5 +1,4 @@
 import { Module } from 'vuex';
-// 此处加上 `.ts` 后缀报错，具体原因不详
 import { ThemeConfigState, RootStateTypes } from '/@/store/interface/index';
 
 /**
@@ -17,16 +16,8 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			/**
 			 * 全局主题
 			 */
-			// 默认 primary 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认 primary 主题颜色
 			primary: '#409eff',
-			// 默认 success 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			success: '#67c23a',
-			// 默认 info 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			info: '#909399',
-			// 默认 warning 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			warning: '#e6a23c',
-			// 默认 danger 颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			danger: '#f56c6c',
 
 			/**
 			 * 菜单 / 顶栏
@@ -34,26 +25,24 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			 * 切换布局需手动设置样式，设置的样式自动同步各布局，
 			 * 代码位置：/@/layout/navBars/breadcrumb/setings.vue
 			 */
-			// 默认顶栏导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认顶栏导航背景颜色
 			topBar: '#ffffff',
-			// 默认菜单导航背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			menuBar: '#545c64',
-			// 默认分栏菜单背景颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			columnsMenuBar: '#545c64',
-			// 默认顶栏导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
+			// 默认顶栏导航字体颜色
 			topBarColor: '#606266',
-			// 默认菜单导航字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			menuBarColor: '#eaeaea',
-			// 默认分栏菜单字体颜色，请注意：需要同时修改 `/@/theme/common/var.scss` 对应的值
-			columnsMenuBarColor: '#e6e6e6',
 			// 是否开启顶栏背景颜色渐变
 			isTopBarColorGradual: false,
+			// 默认菜单导航背景颜色
+			menuBar: '#545c64',
+			// 默认菜单导航字体颜色
+			menuBarColor: '#eaeaea',
 			// 是否开启菜单背景颜色渐变
 			isMenuBarColorGradual: false,
+			// 默认分栏菜单背景颜色
+			columnsMenuBar: '#545c64',
+			// 默认分栏菜单字体颜色
+			columnsMenuBarColor: '#e6e6e6',
 			// 是否开启分栏菜单背景颜色渐变
 			isColumnsMenuBarColorGradual: false,
-			// 是否开启菜单字体背景高亮
-			isMenuBarColorHighlight: false,
 
 			/**
 			 * 界面设置
@@ -110,9 +99,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			/**
 			 * 其它设置
 			 */
-			// Tagsview 风格：可选值"<tags-style-one|tags-style-two|tags-style-three|tags-style-four>"，默认 tags-style-one
+			// Tagsview 风格：可选值"<tags-style-one|tags-style-four|tags-style-five>"，默认 tags-style-five
 			// 定义的值与 `/src/layout/navBars/tagsView/tagsView.vue` 中的 class 同名
-			tagsStyle: 'tags-style-one',
+			tagsStyle: 'tags-style-five',
 			// 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
 			animation: 'slide-right',
 			// 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
@@ -140,9 +129,9 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 网站主标题（菜单导航、浏览器当前网页标题）
 			globalTitle: 'vue-next-admin',
 			// 网站副标题（登录页顶部文字）
-			globalViceTitle: 'SMALL@小柒',
-			// 默认全局组件大小，可选值"<|medium|small|mini>"，默认 ''
-			globalComponentSize: '',
+			globalViceTitle: 'vueNextAdmin',
+			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'
+			globalComponentSize: 'large',
 		},
 	},
 	mutations: {
