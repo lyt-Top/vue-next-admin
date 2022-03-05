@@ -33,16 +33,22 @@
 const props = defineProps({
 	dropdown: {
 		type: Object,
+		default: () => {
+			return {
+				x: 0,
+				y: 0,
+			};
+		},
 	},
 });
 const emit = defineEmits(['currentContextmenuClick']);
 const state = reactive({
 	isShow: false,
 	dropdownList: [
-		{ contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'elementRefreshRight' },
-		{ contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'elementClose' },
-		{ contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'elementCircleClose' },
-		{ contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'elementFolderDelete' },
+		{ contextMenuClickId: 0, txt: '刷新', affix: false, icon: 'ele-RefreshRight' },
+		{ contextMenuClickId: 1, txt: '关闭', affix: false, icon: 'ele-Close' },
+		{ contextMenuClickId: 2, txt: '关闭其它', affix: false, icon: 'ele-CircleClose' },
+		{ contextMenuClickId: 3, txt: '全部关闭', affix: false, icon: 'ele-FolderDelete' },
 		{ contextMenuClickId: 4, txt: '当前页全屏', affix: false, icon: 'iconfont icon-fullscreen' },
 	],
 	item: {},

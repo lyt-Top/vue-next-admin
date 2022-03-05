@@ -3,7 +3,9 @@ import { Session } from '/@/utils/storage';
 import { NextLoading } from '/@/utils/loading';
 import { setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/index';
 import { dynamicRoutes } from '/@/router/route';
-import { getMenuAdmin, getMenuTest } from '/@/api/menu/index';
+import { useMenuApi } from '/@/api/menu/index';
+
+const menuApi = useMenuApi();
 
 const layouModules = import.meta.glob('../layout/routerView/*.{vue,tsx}');
 const viewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
@@ -50,9 +52,9 @@ export function getBackEndControlRoutes() {
 	// 模拟 admin 与 test
 	const auth = store.state.userInfos.userInfos.roles[0];
 	// 管理员 admin
-	if (auth === 'admin') return getMenuAdmin();
+	if (auth === 'admin') return menuApi.getMenuAdmin();
 	// 其它用户 test
-	else return getMenuTest();
+	else return menuApi.getMenuTest();
 }
 
 /**

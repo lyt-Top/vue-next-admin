@@ -15,15 +15,17 @@
 				</template>
 				<SubItem :chil="val.children" />
 			</el-sub-menu>
-			<el-menu-item :index="val.path" :key="val.path" v-else>
-				<SvgIcon :name="val.meta.icon" />
-				<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-					<span>{{ val.meta.title }}</span>
-				</template>
-				<template #title v-else>
-					<a :href="val.meta.isLink" target="_blank" rel="opener">{{ val.meta.title }}</a></template
-				>
-			</el-menu-item>
+			<template v-else>
+				<el-menu-item :index="val.path" :key="val.path">
+					<SvgIcon :name="val.meta.icon" />
+					<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+						<span>{{ val.meta.title }}</span>
+					</template>
+					<template #title v-else>
+						<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">{{ val.meta.title }}</a>
+					</template>
+				</el-menu-item>
+			</template>
 		</template>
 	</el-menu>
 </template>
@@ -38,7 +40,6 @@ const props = defineProps({
 		default: () => [],
 	},
 });
-const { proxy } = getCurrentInstance();
 const store = useStore();
 const route = useRoute();
 const state = reactive({
@@ -79,7 +80,6 @@ onMounted(() => {
 onBeforeRouteUpdate((to) => {
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	state.defaultActive = setParentHighlight(to);
-	proxy.mittBus.emit('onMenuClick');
 	const clientWidth = document.body.clientWidth;
 	if (clientWidth < 1000) getThemeConfig.value.isCollapse = false;
 });

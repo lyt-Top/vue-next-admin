@@ -1,7 +1,7 @@
 <template>
 	<div class="layout-navbars-close-full" v-if="isTagsViewCurrenFull">
 		<div class="layout-navbars-close-full-box" title="关闭全屏" @click="onCloseFullscreen">
-			<SvgIcon name="elementClose" />
+			<SvgIcon name="ele-Close" />
 		</div>
 	</div>
 </template>
@@ -43,7 +43,7 @@ const onCloseFullscreen = () => {
 			background: rgba(0, 0, 0, 0.2);
 			transition: all 0.3s ease;
 			i {
-				color: var(--color-primary);
+				color: var(--el-color-primary);
 				transition: all 0.3s ease;
 			}
 		}

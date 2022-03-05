@@ -184,11 +184,11 @@ onBeforeRouteUpdate((to) => {
 .layout-columns-aside {
 	width: 70px;
 	height: 100%;
-	background: var(--bg-columnsMenuBar);
+	background: var(--next-bg-columnsMenuBar);
 	ul {
 		position: relative;
 		li {
-			color: var(--bg-columnsMenuBarColor);
+			color: var(--next-bg-columnsMenuBarColor);
 			width: 100%;
 			height: 50px;
 			text-align: center;
@@ -220,22 +220,22 @@ onBeforeRouteUpdate((to) => {
 			}
 			a {
 				text-decoration: none;
-				color: var(--bg-columnsMenuBarColor);
+				color: var(--next-bg-columnsMenuBarColor);
 			}
 		}
 		.layout-columns-active {
-			color: var(--color-whites) !important;
+			color: var(--el-color-white);
 			transition: 0.3s ease-in-out;
 		}
 		.layout-columns-hover {
-			color: var(--color-primary);
+			color: var(--el-color-primary);
 			a {
-				color: var(--color-primary);
+				color: var(--el-color-primary);
 			}
 		}
 		.columns-round {
-			background: var(--color-primary);
-			color: var(--color-whites);
+			background: var(--el-color-primary);
+			color: var(--el-color-white);
 			position: absolute;
 			left: 50%;
 			top: 2px;

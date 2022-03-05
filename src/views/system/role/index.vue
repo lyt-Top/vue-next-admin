@@ -2,16 +2,16 @@
 	<div class="system-role-container">
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
-				<el-input size="small" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddRole">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddRole">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增角色
 				</el-button>
@@ -31,8 +31,8 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onOpenEditRole(scope.row)">修改</el-button>
-						<el-button :disabled="scope.row.roleName === '超级管理员'" size="mini" type="text" @click="onRowDel(scope.row)">删除</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" type="text" @click="onOpenEditRole(scope.row)">修改</el-button>
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" type="text" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -122,8 +122,3 @@ onMounted(() => {
 	initTableData();
 });
 </script>
-
-<style scoped lang="scss">
-.system-role-container {
-}
-</style>

@@ -16,20 +16,24 @@
 						}
 					"
 				>
-					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont font14" v-if="isActive(v)"></i>
-					<i class="layout-navbars-tagsview-ul-li-iconfont" :class="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon"></i>
+					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v)"></i>
+					<SvgIcon :name="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon" class="pr5" />
 					<span>{{ v.meta.title }}</span>
 					<template v-if="isActive(v)">
-						<SvgIcon name="elementRefreshRight" class="ml5" @click.stop="refreshCurrentTagsView($route.fullPath)" />
 						<SvgIcon
-							name="elementClose"
+							name="ele-RefreshRight"
+							class="ml5 layout-navbars-tagsview-ul-li-refresh"
+							@click.stop="refreshCurrentTagsView($route.fullPath)"
+						/>
+						<SvgIcon
+							name="ele-Close"
 							class="layout-navbars-tagsview-ul-li-icon layout-icon-active"
 							v-if="!v.meta.isAffix"
 							@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
 						/>
 					</template>
 					<SvgIcon
-						name="elementClose"
+						name="ele-Close"
 						class="layout-navbars-tagsview-ul-li-icon layout-icon-three"
 						v-if="!v.meta.isAffix"
 						@click.stop="closeCurrentTagsView(getThemeConfig.isShareTagsView ? v.path : v.url)"
@@ -483,7 +487,9 @@ watch(store.state, (val) => {
 <style scoped lang="scss">
 .layout-navbars-tagsview {
 	background-color: var(--el-color-white);
-	border-bottom: 1px solid #f1f2f3;
+	border-bottom: 1px solid var(--next-border-color-light);
+	position: relative;
+	z-index: 4;
 	::v-deep(.el-scrollbar__wrap) {
 		overflow-x: auto !important;
 	}
@@ -512,9 +518,9 @@ watch(store.state, (val) => {
 			cursor: pointer;
 			justify-content: space-between;
 			&:hover {
-				background-color: var(--color-primary-light-9);
-				color: var(--color-primary);
-				border-color: var(--color-primary-light-6);
+				background-color: var(--el-color-primary-light-9);
+				color: var(--el-color-primary);
+				border-color: var(--el-color-primary-light-6);
 			}
 			&-iconfont {
 				position: relative;
@@ -530,8 +536,8 @@ watch(store.state, (val) => {
 				line-height: 14px;
 				right: -5px;
 				&:hover {
-					color: var(--color-whites);
-					background-color: var(--color-primary-light-3);
+					color: var(--el-color-white);
+					background-color: var(--el-color-primary-light-3);
 				}
 			}
 			.layout-icon-active {
@@ -542,62 +548,10 @@ watch(store.state, (val) => {
 			}
 		}
 		.is-active {
-			color: var(--color-whites);
-			background: var(--color-primary);
-			border-color: var(--color-primary);
+			color: var(--el-color-white);
+			background: var(--el-color-primary);
+			border-color: var(--el-color-primary);
 			transition: border-color 3s ease;
-		}
-	}
-	// 风格2
-	.tags-style-two {
-		.layout-navbars-tagsview-ul-li {
-			height: 34px !important;
-			line-height: 34px !important;
-			border: none !important;
-			.layout-navbars-tagsview-ul-li-iconfont {
-				display: none;
-			}
-			.layout-icon-active {
-				display: none;
-			}
-			.layout-icon-three {
-				display: block;
-			}
-		}
-		.is-active {
-			background: none !important;
-			color: var(--color-primary) !important;
-			border-bottom: 2px solid !important;
-			border-color: var(--color-primary) !important;
-			border-radius: 0 !important;
-		}
-	}
-	// 风格3
-	.tags-style-three {
-		.layout-navbars-tagsview-ul-li {
-			height: 34px !important;
-			line-height: 34px !important;
-			border-right: 1px solid #f6f6f6 !important;
-			border-top: none !important;
-			border-bottom: none !important;
-			border-left: none !important;
-			border-radius: 0 !important;
-			margin-right: 0 !important;
-			&:first-of-type {
-				border-left: 1px solid #f6f6f6 !important;
-			}
-			.layout-icon-active {
-				display: none;
-			}
-			.layout-icon-three {
-				display: block;
-			}
-		}
-		.is-active {
-			background: var(--el-color-white) !important;
-			color: var(--color-primary) !important;
-			border-top: 1px solid !important;
-			border-top-color: var(--color-primary) !important;
 		}
 	}
 	// 风格4
@@ -619,7 +573,41 @@ watch(store.state, (val) => {
 		}
 		.is-active {
 			background: none !important;
-			color: var(--color-primary) !important;
+			color: var(--el-color-primary) !important;
+		}
+	}
+	// 风格5
+	.tags-style-five {
+		align-items: flex-end;
+		.tags-style-five-svg {
+			-webkit-mask-box-image: url("data:image/svg+xml,%3Csvg width='68' height='34' viewBox='0 0 68 34' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='m27,0c-7.99582,0 -11.95105,0.00205 -12,12l0,6c0,8.284 -0.48549,16.49691 -8.76949,16.49691l54.37857,-0.11145c-8.284,0 -8.60908,-8.10146 -8.60908,-16.38546l0,-6c0.11145,-12.08445 -4.38441,-12 -12,-12l-13,0z' fill='%23409eff'/%3E%3C/svg%3E")
+				12 27 15;
+		}
+		.layout-navbars-tagsview-ul-li {
+			padding: 0 5px;
+			border-width: 15px 27px 15px;
+			border-style: solid;
+			border-color: transparent;
+			margin: 0 -15px;
+			.layout-icon-active,
+			.layout-navbars-tagsview-ul-li-iconfont,
+			.layout-navbars-tagsview-ul-li-refresh {
+				display: none;
+			}
+			.layout-icon-three {
+				display: block;
+			}
+			&:hover {
+				@extend .tags-style-five-svg;
+				background: var(--el-color-primary-light-9);
+				color: unset;
+			}
+		}
+		.is-active {
+			@extend .tags-style-five-svg;
+			background: var(--el-color-primary-light-9) !important;
+			color: var(--el-color-primary) !important;
+			z-index: 1;
 		}
 	}
 }

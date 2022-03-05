@@ -26,7 +26,8 @@ const isTagsViewCurrenFull = computed(() => {
 // 设置菜单展开/收起时的宽度
 const setCollapseStyle = computed(() => {
 	const { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
-	const asideBrColor = menuBar === '#FFFFFF' || menuBar === '#FFF' || menuBar === '#fff' || menuBar === '#ffffff' ? 'layout-el-aside-br-color' : '';
+	const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff'];
+	const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : '';
 	// 判断是否是手机端
 	if (state.clientWidth <= 1000) {
 		if (isCollapse) {

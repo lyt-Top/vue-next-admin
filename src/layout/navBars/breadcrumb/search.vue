@@ -11,7 +11,7 @@
 			>
 				<template #prefix>
 					<el-icon class="el-input__icon">
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 				</template>
 				<template #default="{ item }">

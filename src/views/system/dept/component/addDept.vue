@@ -1,7 +1,7 @@
 <template>
 	<div class="system-add-dept-container">
 		<el-dialog title="新增部门" v-model="state.isShowDialog" width="769px">
-			<el-form :model="state.ruleForm" size="small" label-width="90px">
+			<el-form :model="state.ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级部门">
@@ -59,8 +59,8 @@
 			</el-form>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="onCancel" size="small">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="small">新 增</el-button>
+					<el-button @click="onCancel" size="default">取 消</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
 				</span>
 			</template>
 		</el-dialog>

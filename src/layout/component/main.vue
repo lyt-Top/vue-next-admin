@@ -3,13 +3,9 @@
 		<el-scrollbar
 			class="layout-scrollbar"
 			ref="layoutScrollbarRef"
-			:style="{
-				minHeight: `calc(100vh - ${state.headerHeight})`,
-				padding: state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe ? 0 : '',
-				transition: 'padding 0.3s ease-in-out',
-			}"
+			:style="{ padding: state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe ? 0 : '', transition: 'padding 0.3s ease-in-out' }"
 		>
-			<LayoutParentView />
+			<LayoutParentView :style="{ minHeight: `calc(100vh - ${state.headerHeight})` }" />
 			<Footer v-if="getThemeConfig.isFooter" />
 		</el-scrollbar>
 	</el-main>
@@ -58,6 +54,19 @@ watch(
 	() => route.path,
 	() => {
 		state.currentRouteMeta = route.meta;
+		const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
+		state.headerHeight = bool ? `85px` : `114px`;
+		proxy.$refs.layoutScrollbarRef.update();
 	}
 );
+// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
+watch(store.state.themeConfig.themeConfig, (val) => {
+	state.currentRouteMeta = route.meta;
+	const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
+	state.headerHeight = val.isTagsview ? (bool ? `85px` : `114px`) : '51px';
+	if (val.isFixedHeaderChange !== val.isFixedHeader) {
+		if (!proxy.$refs.layoutScrollbarRef) return false;
+		proxy.$refs.layoutScrollbarRef.update();
+	}
+});
 </script>

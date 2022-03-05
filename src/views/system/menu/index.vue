@@ -2,16 +2,16 @@
 	<div class="system-menu-container">
 		<el-card shadow="hover">
 			<div class="system-menu-search mb15">
-				<el-input size="small" placeholder="请输入菜单名称" style="max-width: 180px"> </el-input>
-				<el-button size="small" type="primary" class="ml10">
+				<el-input size="default" placeholder="请输入菜单名称" style="max-width: 180px"> </el-input>
+				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
-						<elementSearch />
+						<ele-Search />
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="small" type="success" class="ml10" @click="onOpenAddMenu">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddMenu">
 					<el-icon>
-						<elementFolderAdd />
+						<ele-FolderAdd />
 					</el-icon>
 					新增菜单
 				</el-button>
@@ -46,9 +46,9 @@
 				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="mini" type="text" @click="onOpenAddMenu(scope.row)">新增</el-button>
-						<el-button size="mini" type="text" @click="onOpenEditMenu(scope.row)">修改</el-button>
-						<el-button size="mini" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
+						<el-button size="small" type="text" @click="onOpenAddMenu(scope.row)">新增</el-button>
+						<el-button size="small" type="text" @click="onOpenEditMenu(scope.row)">修改</el-button>
+						<el-button size="small" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

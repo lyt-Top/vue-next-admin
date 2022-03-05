@@ -3,7 +3,7 @@
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
 				<keep-alive :include="state.keepAliveNameList">
-					<component :is="Component" :key="state.refreshRouterViewKey" class="w100" />
+					<component :is="Component" :key="state.refreshRouterViewKey" class="w100" :style="{ minHeight }" />
 				</keep-alive>
 			</transition>
 		</router-view>
@@ -11,6 +11,13 @@
 </template>
 
 <script setup name="layoutParentView">
+const props = defineProps({
+	minHeight: {
+		type: String,
+		default: '',
+	},
+});
+
 const { proxy } = getCurrentInstance();
 const route = useRoute();
 const store = useStore();
@@ -21,6 +28,10 @@ const state = reactive({
 // 设置主界面切换动画
 const setTransitionName = computed(() => {
 	return store.state.themeConfig.themeConfig.animation;
+});
+// 设置最小高度
+const minHeight = computed(() => {
+	return props.minHeight;
 });
 // 获取组件缓存列表(name值)
 const getKeepAliveNames = computed(() => {

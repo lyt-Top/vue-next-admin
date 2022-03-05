@@ -17,7 +17,7 @@
 						<SvgIcon
 							:name="state.fontIconPrefix === '' ? prepend : state.fontIconPrefix"
 							class="font14"
-							v-if="state.fontIconPrefix === '' ? prepend?.indexOf('element') > -1 : state.fontIconPrefix?.indexOf('element') > -1"
+							v-if="state.fontIconPrefix === '' ? prepend?.indexOf('ele-') > -1 : state.fontIconPrefix?.indexOf('ele-') > -1"
 						/>
 						<i v-else :class="state.fontIconPrefix === '' ? prepend : state.fontIconPrefix" class="font14"></i>
 					</template>
@@ -69,7 +69,7 @@ const props = defineProps({
 	// 输入框前置内容
 	prepend: {
 		type: String,
-		default: () => 'elementPointer',
+		default: () => 'ele-Pointer',
 	},
 	// 输入框占位文本
 	placeholder: {
@@ -79,7 +79,7 @@ const props = defineProps({
 	// 输入框占位文本
 	size: {
 		type: String,
-		default: () => 'small',
+		default: () => 'default',
 	},
 	// 弹窗标题
 	title: {
@@ -128,6 +128,7 @@ const state = reactive({
 
 // 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
 const onIconFocus = () => {
+	state.fontIconVisible = true;
 	if (!props.modelValue) return false;
 	state.fontIconSearch = '';
 	state.fontIconPlaceholder = props.modelValue;

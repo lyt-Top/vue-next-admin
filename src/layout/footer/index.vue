@@ -15,10 +15,12 @@ const state = reactive({
 });
 // 路由改变时，等主界面动画加载完毕再显示 footer
 onBeforeRouteUpdate(() => {
-	state.isDelayFooter = false;
 	setTimeout(() => {
-		state.isDelayFooter = true;
-	}, 800);
+		state.isDelayFooter = false;
+		setTimeout(() => {
+			state.isDelayFooter = true;
+		}, 800);
+	}, 0);
 });
 </script>
 

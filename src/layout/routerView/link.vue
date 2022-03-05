@@ -1,8 +1,8 @@
 <template>
 	<div class="layout-view-bg-white flex layout-view-link" :style="{ height: `calc(100vh - ${setLinkHeight}` }">
-		<a :href="state.currentRouteMeta.isLink" target="_blank" rel="opener" class="flex-margin"
-			>{{ state.currentRouteMeta.title }}：{{ state.currentRouteMeta.isLink }}</a
-		>
+		<a :href="state.currentRouteMeta.isLink" target="_blank" rel="opener" class="flex-margin">
+			{{ state.currentRouteMeta.title }}：{{ state.currentRouteMeta.isLink }}
+		</a>
 	</div>
 </template>
 
@@ -10,7 +10,10 @@
 const route = useRoute();
 const store = useStore();
 const state = reactive({
-	currentRouteMeta: {},
+	currentRouteMeta: {
+		isLink: '',
+		title: '',
+	},
 });
 // 设置 link 的高度
 const setLinkHeight = computed(() => {

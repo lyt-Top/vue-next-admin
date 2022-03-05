@@ -86,7 +86,7 @@ export const dynamicRoutes = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementColdDrink',
+							icon: 'ele-ColdDrink',
 						},
 					},
 					{
@@ -116,7 +116,7 @@ export const dynamicRoutes = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementOfficeBuilding',
+							icon: 'ele-OfficeBuilding',
 						},
 					},
 					{
@@ -131,7 +131,7 @@ export const dynamicRoutes = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'elementSetUp',
+							icon: 'ele-SetUp',
 						},
 					},
 				],

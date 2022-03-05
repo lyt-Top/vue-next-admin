@@ -20,7 +20,7 @@
 					<div class="layout-lock-screen-date-box-info">{{ state.time.mdq }}</div>
 				</div>
 				<div class="layout-lock-screen-date-top">
-					<SvgIcon name="elementTop" />
+					<SvgIcon name="ele-Top" />
 					<div class="layout-lock-screen-date-top-text">上滑解锁</div>
 				</div>
 			</div>
@@ -41,7 +41,7 @@
 								<template #append>
 									<el-button @click="onLockScreenSubmit">
 										<el-icon>
-											<elementRight />
+											<ele-Right />
 										</el-icon>
 									</el-button>
 								</template>
@@ -49,9 +49,9 @@
 						</div>
 					</div>
 					<div class="layout-lock-screen-login-icon">
-						<SvgIcon name="elementMicrophone" />
-						<SvgIcon name="elementClock" />
-						<SvgIcon name="elementSwitchButton" />
+						<SvgIcon name="ele-Microphone" />
+						<SvgIcon name="ele-AlarmClock" />
+						<SvgIcon name="ele-SwitchButton" />
 					</div>
 				</div>
 			</transition>

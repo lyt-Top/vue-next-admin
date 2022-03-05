@@ -6,39 +6,30 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="" :disabled="state.disabledSize === ''">默认</el-dropdown-item>
-					<el-dropdown-item command="medium" :disabled="state.disabledSize === 'medium'">中等</el-dropdown-item>
-					<el-dropdown-item command="small" :disabled="state.disabledSize === 'small'">小型</el-dropdown-item>
-					<el-dropdown-item command="mini" :disabled="state.disabledSize === 'mini'">超小</el-dropdown-item>
+					<el-dropdown-item command="medium" :disabled="state.disabledSize === 'large'">大型</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="state.disabledSize === 'default'">默认</el-dropdown-item>
+					<el-dropdown-item command="mini" :disabled="state.disabledSize === 'small'">小型</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onSearchClick">
 			<el-icon title="菜单搜索">
-				<elementSearch />
+				<ele-Search />
 			</el-icon>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" title="布局配置"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
-			<el-popover
-				placement="bottom"
-				trigger="click"
-				v-model:visible="state.isShowUserNewsPopover"
-				:width="300"
-				popper-class="el-popover-pupop-user-news"
-			>
+			<el-popover placement="bottom" trigger="click">
 				<template #reference>
-					<el-badge :is-dot="true" @click="state.isShowUserNewsPopover = !state.isShowUserNewsPopover">
+					<el-badge :is-dot="true">
 						<el-icon title="消息">
-							<elementBell />
+							<ele-Bell />
 						</el-icon>
 					</el-badge>
 				</template>
-				<transition name="el-zoom-in-top">
-					<UserNews v-show="state.isShowUserNewsPopover" />
-				</transition>
+				<UserNews />
 			</el-popover>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
@@ -51,9 +42,9 @@
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
 				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-				{{ getUserInfos.userName === '' ? 'test' : getUserInfos.userName }}
+				{{ getUserInfos.userName === '' ? 'common' : getUserInfos.userName }}
 				<el-icon class="el-icon--right">
-					<elementArrowDown />
+					<ele-ArrowDown />
 				</el-icon>
 			</span>
 			<template #dropdown>
@@ -97,10 +88,11 @@ const getThemeConfig = computed(() => {
 });
 // 设置分割样式
 const layoutUserFlexNum = computed(() => {
-	let { layout, isClassicSplitMenu } = getThemeConfig.value;
 	let num = '';
-	if (layout === 'defaults' || (layout === 'classic' && !isClassicSplitMenu) || layout === 'columns') num = 1;
-	else num = null;
+	const { layout, isClassicSplitMenu } = getThemeConfig.value;
+	const layoutArr = ['defaults', 'columns'];
+	if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
+	else num = '';
 	return num;
 });
 // 全屏点击时
@@ -130,6 +122,7 @@ const onHandleCommandClick = (path) => {
 			showCancelButton: true,
 			confirmButtonText: '确定',
 			cancelButtonText: '取消',
+			buttonSize: 'default',
 			beforeClose: (action, instance, done) => {
 				if (action === 'confirm') {
 					instance.confirmButtonLoading = true;
@@ -145,12 +138,12 @@ const onHandleCommandClick = (path) => {
 				}
 			},
 		})
-			.then(() => {
+			.then(async () => {
 				Session.clear(); // 清除缓存/token等
 				resetRoute(); // 删除/重置路由
-				router.push('/login');
+				ElMessage.success('安全退出成功！');
 				setTimeout(() => {
-					ElMessage.success('安全退出成功！');
+					window.location.href = '';
 				}, 300);
 			})
 			.catch(() => {});
@@ -176,17 +169,15 @@ const onComponentSizeChange = (size) => {
 // 初始化全局组件大小
 const initComponentSize = () => {
 	switch (Local.get('themeConfig').globalComponentSize) {
-		case '':
-			state.disabledSize = '';
+		case 'large':
+			state.disabledSize = 'large';
 			break;
-		case 'medium':
-			state.disabledSize = 'medium';
+		case 'default':
+			state.disabledSize = 'default';
 			break;
 		case 'small':
 			state.disabledSize = 'small';
 			break;
-		case 'mini':
-			state.disabledSize = 'mini';
 			break;
 	}
 };
@@ -217,13 +208,13 @@ onMounted(() => {
 	&-icon {
 		padding: 0 10px;
 		cursor: pointer;
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 		height: 50px;
 		line-height: 50px;
 		display: flex;
 		align-items: center;
 		&:hover {
-			background: rgba(0, 0, 0, 0.04);
+			background: var(--next-color-user-hover);
 			i {
 				display: inline-block;
 				animation: logoAnimation 0.3s ease-in-out;
@@ -231,7 +222,7 @@ onMounted(() => {
 		}
 	}
 	::v-deep(.el-dropdown) {
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 	}
 	::v-deep(.el-badge) {
 		height: 40px;

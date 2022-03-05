@@ -49,14 +49,14 @@ const onGoToGiteeClick = () => {
 .layout-navbars-breadcrumb-user-news {
 	.head-box {
 		display: flex;
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid var(--el-border-color-lighter);
 		box-sizing: border-box;
-		color: #333333;
+		color: var(--el-text-color-primary);
 		justify-content: space-between;
 		height: 35px;
 		align-items: center;
 		.head-box-btn {
-			color: var(--color-primary);
+			color: var(--el-color-primary);
 			font-size: 13px;
 			cursor: pointer;
 			opacity: 0.8;
@@ -73,25 +73,25 @@ const onGoToGiteeClick = () => {
 				padding-bottom: 12px;
 			}
 			.content-box-msg {
-				color: #999999;
 				margin-top: 5px;
 				margin-bottom: 5px;
+				color: var(--el-text-color-secondary);
 			}
 			.content-box-time {
-				color: #999999;
+				color: var(--el-text-color-secondary);
 			}
 		}
 	}
 	.foot-box {
 		height: 35px;
-		color: var(--color-primary);
+		color: var(--el-color-primary);
 		font-size: 13px;
 		cursor: pointer;
 		opacity: 0.8;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-top: 1px solid #ebeef5;
+		border-top: 1px solid var(--el-border-color-lighter);
 		&:hover {
 			opacity: 1;
 		}

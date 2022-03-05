@@ -22,7 +22,6 @@
 
 <script setup name="layoutBreadcrumb">
 import { onBeforeRouteUpdate } from 'vue-router';
-const { proxy } = getCurrentInstance();
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -40,11 +39,8 @@ const getThemeConfig = computed(() => {
 const isShowBreadcrumb = computed(() => {
 	initRouteSplit(route.path);
 	const { layout, isBreadcrumb } = store.state.themeConfig.themeConfig;
-	if (layout === 'classic' || layout === 'transverse') {
-		return 'none';
-	} else {
-		return isBreadcrumb ? '' : 'none';
-	}
+	if (layout === 'classic' || layout === 'transverse') return 'none';
+	else return isBreadcrumb ? '' : 'none';
 });
 // 面包屑点击时
 const onBreadcrumbClick = (v) => {
@@ -54,8 +50,13 @@ const onBreadcrumbClick = (v) => {
 };
 // 展开/收起左侧菜单点击
 const onThemeConfigChange = () => {
-	proxy.mittBus.emit('onMenuClick');
 	store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
+	setLocalThemeConfig();
+};
+// 存储布局配置
+const setLocalThemeConfig = () => {
+	Local.remove('themeConfig');
+	Local.set('themeConfig', getThemeConfig.value);
 };
 // 处理面包屑数据
 const getBreadcrumbList = (arr) => {
@@ -101,11 +102,11 @@ onBeforeRouteUpdate((to) => {
 		cursor: pointer;
 		font-size: 18px;
 		margin-right: 15px;
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 	}
 	.layout-navbars-breadcrumb-span {
 		opacity: 0.7;
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
 	}
 	.layout-navbars-breadcrumb-iconfont {
 		font-size: 14px;
@@ -113,7 +114,14 @@ onBeforeRouteUpdate((to) => {
 	}
 	::v-deep(.el-breadcrumb__separator) {
 		opacity: 0.7;
-		color: var(--bg-topBarColor);
+		color: var(--next-bg-topBarColor);
+	}
+	::v-deep(.el-breadcrumb__inner a, .el-breadcrumb__inner.is-link) {
+		font-weight: unset !important;
+		color: var(--next-bg-topBarColor);
+		&:hover {
+			color: var(--el-color-primary) !important;
+		}
 	}
 }
 </style>

@@ -11,15 +11,16 @@ import SvgIcon from '/@/components/svgIcon/index.vue';
  * @description 使用：https://element-plus.gitee.io/zh-CN/component/icon.html
  */
 export function elSvg(app) {
-	for (const i in svg) {
-		app.component(`element${svg[i].name}`, svg[i]);
+	const icons = svg;
+	for (const i in icons) {
+		app.component(`ele-${icons[i].name}`, icons[i]);
 	}
 	app.component('SvgIcon', SvgIcon);
 }
 
 /**
- * 设置浏览器标题
- * @method other.useTitle();
+ * 设置浏览器标题国际化
+ * @method const title = useTitle(); ==> title()
  */
 export function useTitle() {
 	nextTick(() => {
@@ -98,6 +99,27 @@ export function isMobile() {
 }
 
 /**
+ * 判断数组对象中所有属性是否为空，为空则删除当前行对象
+ * @description @感谢大黄
+ * @param list 数组对象
+ * @returns 删除空值后的数组对象
+ */
+export function handleEmpty(list) {
+	const arr = [];
+	for (const i in list) {
+		const d = [];
+		for (const j in list[i]) {
+			d.push(list[i][j]);
+		}
+		const leng = d.filter((item) => item === '').length;
+		if (leng !== d.length) {
+			arr.push(list[i]);
+		}
+	}
+	return arr;
+}
+
+/**
  * 统一批量导出
  * @method elSvg 导出全局注册 element plus svg 图标
  * @method useTitle 设置浏览器标题国际化
@@ -105,6 +127,7 @@ export function isMobile() {
  * @method globalComponentSize element plus 全局组件大小
  * @method deepClone 对象深克隆
  * @method isMobile 判断是否是移动端
+ * @method handleEmpty 判断数组对象中所有属性是否为空，为空则删除当前行对象
  */
 const other = {
 	elSvg: (app) => {
@@ -122,6 +145,9 @@ const other = {
 	},
 	isMobile: () => {
 		return isMobile();
+	},
+	handleEmpty: (list) => {
+		return handleEmpty(list);
 	},
 };
 

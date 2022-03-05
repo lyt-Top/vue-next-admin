@@ -90,7 +90,7 @@ onUnmounted(() => {
 	display: flex;
 	align-items: center;
 	padding-right: 15px;
-	background: var(--bg-topBar);
-	border-bottom: 1px solid #f1f2f3;
+	background: var(--next-bg-topBar);
+	border-bottom: 1px solid var(--next-border-color-light);
 }
 </style>
