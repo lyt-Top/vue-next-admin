@@ -6,9 +6,9 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="medium" :disabled="disabledSize === 'large'">大型</el-dropdown-item>
-					<el-dropdown-item command="small" :disabled="disabledSize === 'default'">默认</el-dropdown-item>
-					<el-dropdown-item command="mini" :disabled="disabledSize === 'small'">小型</el-dropdown-item>
+					<el-dropdown-item command="large" :disabled="disabledSize === 'large'">大型</el-dropdown-item>
+					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">默认</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">小型</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -163,7 +163,6 @@ export default defineComponent({
 			Local.remove('themeConfig');
 			getThemeConfig.value.globalComponentSize = size;
 			Local.set('themeConfig', getThemeConfig.value);
-			proxy.$ELEMENT.size = size;
 			initComponentSize();
 			window.location.reload();
 		};
