@@ -13,6 +13,7 @@
 - 🎯 优化 各界面方法引入与逻辑之间添加一行空行，方便区分内容
 - 🎯 优化 图标选择器 [#I4YAHB](https://gitee.com/lyt-top/vue-next-admin/issues/I4YAHB)，感谢[@真有你的](https://gitee.com/sunliusen)
 - 🎯 优化 去掉开发环境 i18n 控制台警告，页面代码：[i18n/index.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/i18n/index.ts)
+- 🎯 优化 登录页添加 `NextLoading.start()` 方法，防止第一次进入界面时出现短暂空白
 - 🎉 新增 [vuex](https://vuex.vuejs.org/) 替换成 [pinia](https://pinia.vuejs.org/getting-started.html)
 - 🎉 新增 tagsView 支持自定义 tagsView 名称（文章详情时有用），前往体验：[路由参数/普通路由](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)
 - 🐞 修复 适配 `"element-plus": "^2.1.9"` 版本

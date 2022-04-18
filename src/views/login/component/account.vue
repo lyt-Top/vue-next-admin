@@ -67,6 +67,7 @@ import { initBackEndControlRoutes } from '/@/router/backEnd';
 import { useUserInfo } from '/@/stores/userInfo';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
+import { NextLoading } from '/@/utils/loading';
 
 export default defineComponent({
 	name: 'loginAccount',
@@ -162,6 +163,8 @@ export default defineComponent({
 			state.loading.signIn = true;
 			const signInText = t('message.signInText');
 			ElMessage.success(`${currentTimeInfo}，${signInText}`);
+			// 添加 loading，防止第一次进入界面时出现短暂空白
+			NextLoading.start();
 		};
 		return {
 			onSignIn,
