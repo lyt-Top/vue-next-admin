@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted, watch } from 'vue';
+
 export default defineComponent({
 	name: 'layoutTagsViewContextmenu',
 	props: {

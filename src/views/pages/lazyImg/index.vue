@@ -56,6 +56,7 @@ import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import other from '/@/utils/other';
 import { filterList } from './mock';
+
 export default defineComponent({
 	name: 'pagesListAdapt',
 	setup() {

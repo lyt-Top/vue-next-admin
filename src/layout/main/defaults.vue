@@ -15,19 +15,22 @@
 <script lang="ts">
 import { computed, getCurrentInstance, watch, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
+
 export default defineComponent({
 	name: 'layoutDefaults',
 	components: { Aside, Header, Main },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
+		const { proxy } = <any>getCurrentInstance();
 		const route = useRoute();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const isFixedHeader = computed(() => {
-			return store.state.themeConfig.themeConfig.isFixedHeader;
+			return themeConfig.value.isFixedHeader;
 		});
 		// 监听路由的变化
 		watch(

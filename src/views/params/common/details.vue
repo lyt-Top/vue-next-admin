@@ -11,12 +11,18 @@
 <script lang="ts">
 import { defineComponent, toRefs, reactive, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+
 export default defineComponent({
 	name: 'paramsCommonDetails',
 	setup() {
 		const route = useRoute();
-		const store = useStore();
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
+		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		const state = reactive({
 			params: {
 				path: '',
@@ -25,9 +31,8 @@ export default defineComponent({
 		});
 		// 设置 view 的高度
 		const setViewHeight = computed(() => {
-			let { isTagsview } = store.state.themeConfig.themeConfig;
-			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
-			if (isTagsViewCurrenFull) {
+			let { isTagsview } = themeConfig.value;
+			if (isTagsViewCurrenFull.value) {
 				return `30px`;
 			} else {
 				if (isTagsview) return `114px`;

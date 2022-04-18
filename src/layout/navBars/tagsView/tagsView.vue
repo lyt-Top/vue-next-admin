@@ -18,7 +18,9 @@
 				>
 					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v)"></i>
 					<SvgIcon :name="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon" class="pr5" />
-					<span>{{ $t(v.meta.title) }}</span>
+					<span>
+						{{ v.meta.title.indexOf('message') > -1 ? $t(v.meta.title) : v.query ? v.query.tagsViewName : v.params.tagsViewName }}
+					</span>
 					<template v-if="isActive(v)">
 						<SvgIcon
 							name="ele-RefreshRight"
@@ -63,7 +65,10 @@ import {
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import Sortable from 'sortablejs';
 import { ElMessage } from 'element-plus';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import pinia from '/@/stores/index';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
@@ -105,7 +110,11 @@ export default defineComponent({
 		const scrollbarRef = ref();
 		const contextmenuRef = ref();
 		const tagsUlRef = ref();
-		const store = useStore();
+		const stores = useTagsViewRoutes();
+		const storesThemeConfig = useThemeConfig();
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
+		const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 		const route = useRoute();
 		const router = useRouter();
 		const state = reactive<TagsViewState>({
@@ -119,11 +128,11 @@ export default defineComponent({
 		});
 		// 动态设置 tagsView 风格样式
 		const setTagsStyle = computed(() => {
-			return store.state.themeConfig.themeConfig.tagsStyle;
+			return themeConfig.value.tagsStyle;
 		});
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
+			return themeConfig.value;
 		});
 		// 设置 tagsView 高亮
 		const isActive = (v: RouteParams) => {
@@ -142,7 +151,7 @@ export default defineComponent({
 			state.routeActive = await setTagsViewHighlight(route);
 			state.routePath = (await route.meta.isDynamic) ? route.meta.isDynamicPath : route.path;
 			state.tagsViewList = [];
-			state.tagsViewRoutesList = store.state.tagsViewRoutes.tagsViewRoutes;
+			state.tagsViewRoutesList = tagsViewRoutes.value;
 			initTagsView();
 		};
 		// vuex 中获取路由信息：如果是设置了固定的（isAffix），进行初始化显示
@@ -291,7 +300,7 @@ export default defineComponent({
 			const item = state.tagsViewList.find((v: any) => (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path));
 			if (item.meta.isDynamic) await router.push({ name: item.name, params: item.params });
 			else await router.push({ name: item.name, query: item.query });
-			store.dispatch('tagsViewRoutes/setCurrenFullscreen', true);
+			stores.setCurrenFullscreen(true);
 		};
 		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
 		// 防止 tagsView 非当前页演示时，操作异常
@@ -524,10 +533,28 @@ export default defineComponent({
 			getTagsRefsIndex(getThemeConfig.value.isShareTagsView ? state.routePath : state.routeActive);
 		});
 		// 监听路由的变化，动态赋值给 tagsView
-		watch(store.state, (val) => {
+		watch(pinia.state, (val) => {
 			if (val.tagsViewRoutes.tagsViewRoutes.length === state.tagsViewRoutesList.length) return false;
 			getTagsViewRoutes();
 		});
+		// 监听路由的变化，用于设置不同的 tagsViewName
+		watch(
+			() => route,
+			(route: any) => {
+				setTimeout(() => {
+					// 区分 "动态路由" 与 "普通路由"
+					state.tagsViewList.forEach((tagsItem: any) => {
+						const path = route.meta.isDynamic ? route.meta.isDynamicPath : route.path;
+						const tagsName = route.meta.isDynamic ? route.params.tagsViewName : route.query.tagsViewName;
+						if (path === tagsItem.path && tagsName) tagsItem.meta.title = tagsName;
+					});
+				});
+			},
+			{
+				deep: true,
+				immediate: true,
+			}
+		);
 		return {
 			isActive,
 			onContextmenu,
@@ -584,7 +611,7 @@ export default defineComponent({
 			&:hover {
 				background-color: var(--el-color-primary-light-9);
 				color: var(--el-color-primary);
-				border-color: var(--el-color-primary-light-6);
+				border-color: var(--el-color-primary-light-5);
 			}
 			&-iconfont {
 				position: relative;

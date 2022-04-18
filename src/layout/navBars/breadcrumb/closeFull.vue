@@ -7,19 +7,18 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { defineComponent } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+
 export default defineComponent({
 	name: 'layoutCloseFull',
 	setup() {
-		const store = useStore();
-		// 获取卡片全屏信息
-		const isTagsViewCurrenFull = computed(() => {
-			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
-		});
+		const stores = useTagsViewRoutes();
+		const { isTagsViewCurrenFull } = storeToRefs(stores);
 		// 关闭当前全屏
 		const onCloseFullscreen = () => {
-			store.dispatch('tagsViewRoutes/setCurrenFullscreen', false);
+			stores.setCurrenFullscreen(false);
 		};
 		return {
 			isTagsViewCurrenFull,

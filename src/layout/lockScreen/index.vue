@@ -61,9 +61,10 @@
 
 <script lang="ts">
 import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 
 // 定义接口来定义对象的类型
 interface LockScreenState {
@@ -89,7 +90,8 @@ export default defineComponent({
 	setup() {
 		const { proxy } = <any>getCurrentInstance();
 		const layoutLockScreenInputRef = ref();
-		const store = useStore();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const state = reactive<LockScreenState>({
 			transparency: 1,
 			downClientY: 0,
@@ -166,14 +168,14 @@ export default defineComponent({
 		};
 		// 锁屏时间定时器
 		const initLockScreen = () => {
-			if (store.state.themeConfig.themeConfig.isLockScreen) {
+			if (themeConfig.value.isLockScreen) {
 				state.isShowLockScreenIntervalTime = window.setInterval(() => {
-					if (store.state.themeConfig.themeConfig.lockScreenTime <= 1) {
+					if (themeConfig.value.lockScreenTime <= 1) {
 						state.isShowLockScreen = true;
 						setLocalThemeConfig();
 						return false;
 					}
-					store.state.themeConfig.themeConfig.lockScreenTime--;
+					themeConfig.value.lockScreenTime--;
 				}, 1000);
 			} else {
 				clearInterval(state.isShowLockScreenIntervalTime);
@@ -181,13 +183,13 @@ export default defineComponent({
 		};
 		// 存储布局配置
 		const setLocalThemeConfig = () => {
-			store.state.themeConfig.themeConfig.isDrawer = false;
-			Local.set('themeConfig', store.state.themeConfig.themeConfig);
+			themeConfig.value.isDrawer = false;
+			Local.set('themeConfig', themeConfig.value);
 		};
 		// 密码输入点击事件
 		const onLockScreenSubmit = () => {
-			store.state.themeConfig.themeConfig.isLockScreen = false;
-			store.state.themeConfig.themeConfig.lockScreenTime = 30;
+			themeConfig.value.isLockScreen = false;
+			themeConfig.value.lockScreenTime = 30;
 			setLocalThemeConfig();
 		};
 		// 页面加载时

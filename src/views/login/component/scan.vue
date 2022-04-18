@@ -8,6 +8,7 @@
 <script lang="ts">
 import { ref, defineComponent, onMounted } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
+
 export default defineComponent({
 	name: 'loginScan',
 	setup() {

@@ -6,15 +6,16 @@
 			:style="{ padding: currentRouteMeta.isLink && currentRouteMeta.isIframe ? 0 : '', transition: 'padding 0.3s ease-in-out' }"
 		>
 			<LayoutParentView :style="{ minHeight: `calc(100vh - ${headerHeight})` }" />
-			<Footer v-if="getThemeConfig.isFooter" />
+			<Footer v-if="themeConfig.isFooter" />
 		</el-scrollbar>
 	</el-main>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs, reactive, getCurrentInstance, watch, onMounted } from 'vue';
-import { useStore } from '/@/store/index';
+import { defineComponent, toRefs, reactive, getCurrentInstance, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import LayoutParentView from '/@/layout/routerView/parent.vue';
 import Footer from '/@/layout/footer/index.vue';
 
@@ -29,20 +30,17 @@ export default defineComponent({
 	components: { LayoutParentView, Footer },
 	setup() {
 		const { proxy } = <any>getCurrentInstance();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const route = useRoute();
-		const store = useStore();
 		const state = reactive<MainState>({
 			headerHeight: '',
 			currentRouteMeta: {},
 		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
 		// 设置 main 的高度
 		const initHeaderHeight = () => {
 			const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-			let { isTagsview } = store.state.themeConfig.themeConfig;
+			let { isTagsview } = themeConfig.value;
 			if (isTagsview) return (state.headerHeight = bool ? `85px` : `114px`);
 			else return (state.headerHeight = `51px`);
 		};
@@ -66,7 +64,7 @@ export default defineComponent({
 			}
 		);
 		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-		watch(store.state.themeConfig.themeConfig, (val) => {
+		watch(themeConfig, (val) => {
 			state.currentRouteMeta = route.meta;
 			const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
 			state.headerHeight = val.isTagsview ? (bool ? `85px` : `114px`) : '51px';
@@ -76,7 +74,7 @@ export default defineComponent({
 			}
 		});
 		return {
-			getThemeConfig,
+			themeConfig,
 			...toRefs(state),
 		};
 	},

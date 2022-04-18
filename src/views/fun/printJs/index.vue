@@ -18,6 +18,7 @@
 <script lang="ts">
 import { reactive, toRefs, defineComponent } from 'vue';
 import printJs from 'print-js';
+
 export default defineComponent({
 	name: 'funPrintJs',
 	setup() {

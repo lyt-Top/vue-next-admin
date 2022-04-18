@@ -24,6 +24,7 @@ import { ElMessage } from 'element-plus';
 import FormRulesOne from '/@/views/pages/formRules/component/formRulesOne.vue';
 import FormRulesTwo from '/@/views/pages/formRules/component/formRulesTwo.vue';
 import FormRulesThree from '/@/views/pages/formRules/component/formRulesThree.vue';
+
 export default defineComponent({
 	name: 'pagesFormRules',
 	components: {

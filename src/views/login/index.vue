@@ -32,11 +32,11 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, defineComponent } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
 import Scan from '/@/views/login/component/scan.vue';
-import { useStore } from '/@/store/index';
-
 import logoMini from '/@/assets/logo-mini.svg';
 import loginIconTwo from '/@/assets/login-icon-two.svg';
 
@@ -50,14 +50,15 @@ export default defineComponent({
 	name: 'loginIndex',
 	components: { Account, Mobile, Scan },
 	setup() {
-		const store = useStore();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const state = reactive<LoginState>({
 			tabsActiveName: 'account',
 			isScan: false,
 		});
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
+			return themeConfig.value;
 		});
 		return {
 			logoMini,

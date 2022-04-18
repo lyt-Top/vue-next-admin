@@ -203,17 +203,23 @@
 
 <script lang="ts">
 import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick, onActivated, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { skyList, dBtnList, chartData4List } from '/@/views/chart/chart';
+
 export default defineComponent({
 	name: 'chartIndex',
 	components: { ChartHead },
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
-		const store = useStore();
+		const { proxy } = <any>getCurrentInstance();
+		const storesThemeConfig = useThemeConfig();
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
+		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		const state = reactive({
 			skyList,
 			dBtnList,
@@ -222,9 +228,8 @@ export default defineComponent({
 		});
 		// 设置主内容的高度
 		const initTagViewHeight = computed(() => {
-			let { isTagsview } = store.state.themeConfig.themeConfig;
-			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
-			if (isTagsViewCurrenFull) {
+			let { isTagsview } = themeConfig.value;
+			if (isTagsViewCurrenFull.value) {
 				return `30px`;
 			} else {
 				if (isTagsview) return `114px`;
@@ -469,7 +474,7 @@ export default defineComponent({
 		});
 		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
 		watch(
-			() => store.state.tagsViewRoutes.isTagsViewCurrenFull,
+			() => isTagsViewCurrenFull.value,
 			() => {
 				initEchartsResizeFun();
 			}

@@ -25,6 +25,7 @@
 import { toRefs, reactive, defineComponent } from 'vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
+
 export default defineComponent({
 	name: 'funSplitpanes',
 	components: { Splitpanes, Pane },

@@ -13,6 +13,7 @@
 <script lang="ts">
 import { reactive, toRefs, onBeforeMount, onUnmounted, defineComponent } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
+
 export default defineComponent({
 	name: 'chartHead',
 	setup() {
@@ -66,9 +67,9 @@ export default defineComponent({
 		background-image: -webkit-linear-gradient(
 			left,
 			var(--el-color-primary),
-			var(--el-color-primary-light-1) 25%,
+			var(--el-color-primary-light-3) 25%,
 			var(--el-color-primary) 50%,
-			var(--el-color-primary-light-1) 75%,
+			var(--el-color-primary-light-3) 75%,
 			var(--el-color-primary)
 		);
 		-webkit-text-fill-color: transparent;

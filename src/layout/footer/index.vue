@@ -10,6 +10,7 @@
 <script lang="ts">
 import { toRefs, reactive, defineComponent } from 'vue';
 import { onBeforeRouteUpdate } from 'vue-router';
+
 export default defineComponent({
 	name: 'layoutFooter',
 	setup() {

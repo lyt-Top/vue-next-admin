@@ -1,7 +1,7 @@
 <template>
 	<div class="el-menu-horizontal-warp">
 		<el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-			<el-menu router :default-active="defaultActive" background-color="transparent" mode="horizontal">
+			<el-menu router :default-active="defaultActive" :ellipsis="false" background-color="transparent" mode="horizontal">
 				<template v-for="val in menuLists">
 					<el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
 						<template #title>
@@ -33,8 +33,11 @@
 <script lang="ts">
 import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, nextTick, onBeforeMount } from 'vue';
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import SubItem from '/@/layout/navMenu/subItem.vue';
+
 export default defineComponent({
 	name: 'navMenuHorizontal',
 	components: { SubItem },
@@ -46,8 +49,11 @@ export default defineComponent({
 	},
 	setup(props) {
 		const { proxy } = <any>getCurrentInstance();
+		const stores = useRoutesList();
+		const storesThemeConfig = useThemeConfig();
+		const { routesList } = storeToRefs(stores);
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const route = useRoute();
-		const store = useStore();
 		const state = reactive({
 			defaultActive: null,
 		});
@@ -69,7 +75,7 @@ export default defineComponent({
 			});
 		};
 		// 路由过滤递归函数
-		const filterRoutesFun = (arr: Array<object>) => {
+		const filterRoutesFun = (arr: Array<string>) => {
 			return arr
 				.filter((item: any) => !item.meta.isHide)
 				.map((item: any) => {
@@ -82,7 +88,7 @@ export default defineComponent({
 		const setSendClassicChildren = (path: string) => {
 			const currentPathSplit = path.split('/');
 			let currentData: any = {};
-			filterRoutesFun(store.state.routesList.routesList).map((v, k) => {
+			filterRoutesFun(routesList.value).map((v, k) => {
 				if (v.path === `/${currentPathSplit[1]}`) {
 					v['k'] = k;
 					currentData['item'] = [{ ...v }];
@@ -95,7 +101,7 @@ export default defineComponent({
 		// 设置页面当前路由高亮
 		const setCurrentRouterHighlight = (currentRoute: any) => {
 			const { path, meta } = currentRoute;
-			if (store.state.themeConfig.themeConfig.layout === 'classic') {
+			if (themeConfig.value.layout === 'classic') {
 				(<any>state.defaultActive) = `/${path.split('/')[1]}`;
 			} else {
 				const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
@@ -116,7 +122,7 @@ export default defineComponent({
 			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 			setCurrentRouterHighlight(to);
 			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
-			let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+			let { layout, isClassicSplitMenu } = themeConfig.value;
 			if (layout === 'classic' && isClassicSplitMenu) {
 				proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
 			}

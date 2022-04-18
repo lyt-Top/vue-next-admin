@@ -71,7 +71,9 @@ import { defineComponent, toRefs, reactive, computed, onMounted, onUnmounted, ne
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { jsPlumb } from 'jsplumb';
 import Sortable from 'sortablejs';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import Tool from './component/tool/index.vue';
 import Help from './component/tool/help.vue';
 import Contextmenu from './component/contextmenu/index.vue';
@@ -124,7 +126,10 @@ export default defineComponent({
 		const contextmenuLineRef = ref();
 		const drawerRef = ref();
 		const helpRef = ref();
-		const store = useStore();
+		const stores = useTagsViewRoutes();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
+		const { isTagsViewCurrenFull } = storeToRefs(stores);
 		const { copyText } = commonFunction();
 		const state = reactive<WorkflowState>({
 			leftNavList: [],
@@ -144,9 +149,8 @@ export default defineComponent({
 		});
 		// 设置 view 的高度
 		const setViewHeight = computed(() => {
-			let { isTagsview } = store.state.themeConfig.themeConfig;
-			let { isTagsViewCurrenFull } = store.state.tagsViewRoutes;
-			if (isTagsViewCurrenFull) {
+			let { isTagsview } = themeConfig.value;
+			if (isTagsViewCurrenFull.value) {
 				return `30px`;
 			} else {
 				if (isTagsview) return `114px`;
@@ -456,7 +460,7 @@ export default defineComponent({
 		};
 		// 顶部工具栏-下载
 		const onToolDownload = () => {
-			const { globalTitle } = store.state.themeConfig.themeConfig;
+			const { globalTitle } = themeConfig.value;
 			const href = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state.jsplumbData, null, '\t'));
 			const aLink = document.createElement('a');
 			aLink.setAttribute('href', href);
@@ -496,7 +500,7 @@ export default defineComponent({
 		};
 		// 顶部工具栏-全屏
 		const onToolFullscreen = () => {
-			store.dispatch('tagsViewRoutes/setCurrenFullscreen', true);
+			stores.setCurrenFullscreen(true);
 		};
 		// 页面加载时
 		onMounted(async () => {

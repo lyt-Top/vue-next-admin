@@ -33,6 +33,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, onMounted, defineComponent } from 'vue';
+
 export default defineComponent({
 	name: 'pagesFormRulesOne',
 	props: {

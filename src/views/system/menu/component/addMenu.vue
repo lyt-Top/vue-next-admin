@@ -142,15 +142,18 @@
 
 <script lang="ts">
 import { reactive, toRefs, onMounted, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useRoutesList } from '/@/stores/routesList';
 import { i18n } from '/@/i18n/index';
 import IconSelector from '/@/components/iconSelector/index.vue';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
+
 export default defineComponent({
 	name: 'systemAddMenu',
 	components: { IconSelector },
 	setup() {
-		const store = useStore();
+		const stores = useRoutesList();
+		const { routesList } = storeToRefs(stores);
 		const state = reactive({
 			isShowDialog: false,
 			// 参数请参考 `/src/router/route.ts` 中的 `dynamicRoutes` 路由菜单格式
@@ -212,7 +215,7 @@ export default defineComponent({
 		};
 		// 页面加载时
 		onMounted(() => {
-			state.menuData = getMenuData(store.state.routesList.routesList);
+			state.menuData = getMenuData(routesList.value);
 		});
 		return {
 			openDialog,

@@ -28,6 +28,7 @@
 <script lang="ts">
 import { toRefs, reactive, defineComponent } from 'vue';
 import IconSelector from '/@/components/iconSelector/index.vue';
+
 export default defineComponent({
 	name: 'makeSelector',
 	components: { IconSelector },

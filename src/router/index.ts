@@ -1,7 +1,13 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { store } from '/@/store/index.ts';
+import pinia from '/@/stores/index';
+import { storeToRefs } from 'pinia';
+import { useUserInfo } from '/@/stores/userInfo';
+import { useKeepALiveNames } from '/@/stores/keepAliveNames';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import { NextLoading } from '/@/utils/loading';
 import { staticRoutes, dynamicRoutes } from '/@/router/route';
@@ -68,7 +74,8 @@ export function formatTwoStageRoutes(arr: any) {
 			// 路径：/@/layout/routerView/parent.vue
 			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
 				cacheList.push(v.name);
-				store.dispatch('keepAliveNames/setCacheKeepAlive', cacheList);
+				const stores = useKeepALiveNames(pinia);
+				stores.setCacheKeepAlive(cacheList);
 			}
 		}
 	});
@@ -81,9 +88,12 @@ export function formatTwoStageRoutes(arr: any) {
  */
 export function setCacheTagsViewRoutes() {
 	// 获取有权限的路由，否则 tagsView、菜单搜索中无权限的路由也将显示
-	let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, store.state.userInfos.userInfos.roles);
-	// 添加到 vuex setTagsViewRoutes 中
-	store.dispatch('tagsViewRoutes/setTagsViewRoutes', formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children);
+	const stores = useUserInfo(pinia);
+	const storesTagsView = useTagsViewRoutes(pinia);
+	const { userInfos } = storeToRefs(stores);
+	let rolesRoutes = setFilterHasRolesMenu(dynamicRoutes, userInfos.value.roles);
+	// 添加到 pinia setTagsViewRoutes 中
+	storesTagsView.setTagsViewRoutes(formatTwoStageRoutes(formatFlatteningRoutes(rolesRoutes))[0].children);
 }
 
 /**
@@ -121,7 +131,10 @@ export function setFilterHasRolesMenu(routes: any, roles: any) {
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
 export function setFilterMenuAndCacheTagsViewRoutes() {
-	store.dispatch('routesList/setRoutesList', setFilterHasRolesMenu(dynamicRoutes[0].children, store.state.userInfos.userInfos.roles));
+	const stores = useUserInfo(pinia);
+	const storesRoutesList = useRoutesList(pinia);
+	const { userInfos } = storeToRefs(stores);
+	storesRoutesList.setRoutesList(setFilterHasRolesMenu(dynamicRoutes[0].children, userInfos.value.roles));
 	setCacheTagsViewRoutes();
 }
 
@@ -133,11 +146,13 @@ export function setFilterMenuAndCacheTagsViewRoutes() {
  * @returns 返回有当前用户权限标识的路由数组
  */
 export function setFilterRoute(chil: any) {
+	const stores = useUserInfo(pinia);
+	const { userInfos } = storeToRefs(stores);
 	let filterRoute: any = [];
 	chil.forEach((route: any) => {
 		if (route.meta.roles) {
 			route.meta.roles.forEach((metaRoles: any) => {
-				store.state.userInfos.userInfos.roles.forEach((roles: any) => {
+				userInfos.value.roles.forEach((roles: any) => {
 					if (metaRoles === roles) filterRoute.push({ ...route });
 				});
 			});
@@ -183,10 +198,12 @@ export async function resetRoute() {
 	});
 }
 
-// isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/store/modules/themeConfig.ts`
-const { isRequestRoutes } = store.state.themeConfig.themeConfig;
+// isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/stores/themeConfig.ts`
+const storesThemeConfig = useThemeConfig(pinia);
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const { isRequestRoutes } = themeConfig.value;
 // 前端控制路由：初始化方法，防止刷新时路由丢失
-if (!isRequestRoutes) initFrontEndControlRoutes();
+if (!isRequestRoutes) await initFrontEndControlRoutes();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
@@ -206,7 +223,9 @@ router.beforeEach(async (to, from, next) => {
 			next('/home');
 			NProgress.done();
 		} else {
-			if (store.state.routesList.routesList.length === 0) {
+			const storesRoutesList = useRoutesList(pinia);
+			const { routesList } = storeToRefs(storesRoutesList);
+			if (routesList.value.length === 0) {
 				if (isRequestRoutes) {
 					// 后端控制路由：路由数据初始化，防止刷新时丢失
 					await initBackEndControlRoutes();

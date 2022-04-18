@@ -233,7 +233,8 @@ export default defineComponent({
 <style scoped lang="scss">
 .system-edit-role-container {
 	.menu-data-tree {
-		border: var(--el-input-border, var(--el-border-base));
+		width: 100%;
+		border: 1px solid var(--el-border-color);
 		border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
 		padding: 5px;
 	}

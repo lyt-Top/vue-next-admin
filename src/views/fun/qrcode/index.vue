@@ -25,6 +25,7 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted, getCurrentInstance, defineComponent } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
+
 export default defineComponent({
 	name: 'funQrcode',
 	setup() {

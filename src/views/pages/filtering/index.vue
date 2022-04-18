@@ -88,6 +88,7 @@
 import { ref, toRefs, reactive, onMounted, nextTick, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { filtering, filterList } from './mock';
+
 export default defineComponent({
 	name: 'pagesFiltering',
 	setup() {

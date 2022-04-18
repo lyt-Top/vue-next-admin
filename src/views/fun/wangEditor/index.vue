@@ -15,6 +15,7 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import Editor from '/@/components/editor/index.vue';
+
 export default defineComponent({
 	name: 'funWangEditor',
 	components: { Editor },

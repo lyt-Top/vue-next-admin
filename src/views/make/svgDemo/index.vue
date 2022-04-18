@@ -20,7 +20,6 @@
 
 <script lang="ts">
 import { toRefs, reactive, defineComponent } from 'vue';
-
 import logoMini from '/@/assets/logo-mini.svg';
 
 export default defineComponent({

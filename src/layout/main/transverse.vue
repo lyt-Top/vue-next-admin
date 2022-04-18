@@ -9,6 +9,7 @@
 <script lang="ts">
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
+
 export default {
 	name: 'layoutTransverse',
 	components: { Header, Main },

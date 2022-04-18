@@ -39,6 +39,7 @@
 <script lang="ts">
 import { reactive, toRefs, onMounted, nextTick, defineComponent } from 'vue';
 import { CountUp } from 'countup.js';
+
 export default defineComponent({
 	name: 'funCountup',
 	setup() {

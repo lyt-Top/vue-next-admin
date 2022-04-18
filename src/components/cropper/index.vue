@@ -35,6 +35,7 @@
 import { reactive, toRefs, nextTick, defineComponent } from 'vue';
 import Cropper from 'cropperjs';
 import 'cropperjs/dist/cropper.css';
+
 export default defineComponent({
 	name: 'cropperIndex',
 	setup() {
@@ -101,7 +102,7 @@ export default defineComponent({
 		display: inline-block;
 		height: 350px;
 		flex: 1;
-		border: var(--el-border-base);
+		border: 1px solid var(--el-border-color);
 		background: var(--el-color-white);
 		overflow: hidden;
 		background-repeat: no-repeat;

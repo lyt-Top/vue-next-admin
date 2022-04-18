@@ -66,6 +66,7 @@
 import { getCurrentInstance, reactive, toRefs, defineComponent } from 'vue';
 import NoticeBar from '/@/components/noticeBar/index.vue';
 import { useRoute } from 'vue-router';
+
 export default defineComponent({
 	name: 'funTagsView',
 	components: { NoticeBar },

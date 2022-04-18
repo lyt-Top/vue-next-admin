@@ -1,14 +1,15 @@
-import { Module } from 'vuex';
-import { ThemeConfigState, RootStateTypes } from '/@/store/interface/index';
+import { defineStore } from 'pinia';
+import { ThemeConfigStates, ThemeConfigState } from './interface';
 
 /**
- * 2020.05.28 by lyt 优化
- * 修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效
- * 哪个大佬有解决办法，欢迎pr，感谢💕！
+ * 布局配置
+ * 2020.05.28 by lyt 优化。开发时配置不生效问题
+ * 修改配置时：
+ * 1、需要每次都清理 `window.localStorage` 浏览器永久缓存
+ * 2、或者点击布局配置最底部 `一键恢复默认` 按钮即可看到效果
  */
-const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
-	namespaced: true,
-	state: {
+export const useThemeConfig = defineStore('themeConfig', {
+	state: (): ThemeConfigStates => ({
 		themeConfig: {
 			// 是否开启布局配置抽屉
 			isDrawer: false,
@@ -135,19 +136,10 @@ const themeConfigModule: Module<ThemeConfigState, RootStateTypes> = {
 			// 默认全局组件大小，可选值"<large|'default'|small>"，默认 'large'
 			globalComponentSize: 'large',
 		},
-	},
-	mutations: {
-		// 设置布局配置
-		getThemeConfig(state: any, data: object) {
-			state.themeConfig = data;
-		},
-	},
+	}),
 	actions: {
-		// 设置布局配置
-		setThemeConfig({ commit }, data: object) {
-			commit('getThemeConfig', data);
+		setThemeConfig(data: ThemeConfigState) {
+			this.themeConfig = data;
 		},
 	},
-};
-
-export default themeConfigModule;
+});

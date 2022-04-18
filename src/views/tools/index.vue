@@ -214,6 +214,7 @@ import {
 	verifyUrl,
 	verifyCarNum,
 } from '/@/utils/toolsValidate';
+
 export default defineComponent({
 	name: 'tools',
 	setup() {

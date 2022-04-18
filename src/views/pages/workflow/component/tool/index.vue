@@ -11,11 +11,14 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive, toRefs } from 'vue';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+
 export default defineComponent({
 	name: 'pagesWorkflowTool',
 	setup(props, { emit }) {
-		const store = useStore();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const state = reactive({
 			toolList: [
 				{ icon: 'ele-Help', title: '帮助', fnName: 'help' },
@@ -28,7 +31,7 @@ export default defineComponent({
 		});
 		// 设置 tool 标题
 		const setToolTitle = computed(() => {
-			let { globalTitle } = store.state.themeConfig.themeConfig;
+			let { globalTitle } = themeConfig.value;
 			return `${globalTitle}工作流`;
 		});
 		// 顶部工具栏

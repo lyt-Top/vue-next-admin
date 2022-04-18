@@ -29,7 +29,8 @@
 import { reactive, toRefs, defineComponent, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
 // 定义接口来定义对象的类型
 interface SearchState {
@@ -47,9 +48,10 @@ interface Restaurant {
 export default defineComponent({
 	name: 'layoutBreadcrumbSearch',
 	setup() {
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 		const layoutMenuAutocompleteRef = ref();
 		const { t } = useI18n();
-		const store = useStore();
 		const router = useRouter();
 		const state = reactive<SearchState>({
 			isShowSearch: false,
@@ -87,7 +89,7 @@ export default defineComponent({
 		// 初始化菜单数据
 		const initTageView = () => {
 			if (state.tagsViewList.length > 0) return false;
-			store.state.tagsViewRoutes.tagsViewRoutes.map((v: any) => {
+			tagsViewRoutes.value.map((v: any) => {
 				if (!v.meta.isHide) state.tagsViewList.push({ ...v });
 			});
 		};

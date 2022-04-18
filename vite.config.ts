@@ -18,6 +18,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 		root: process.cwd(),
 		resolve: { alias },
 		base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
+		hmr: true,
 		optimizeDeps: {
 			include: ['element-plus/lib/locale/lang/zh-cn', 'element-plus/lib/locale/lang/en', 'element-plus/lib/locale/lang/zh-tw'],
 		},
@@ -48,16 +49,6 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 						vue: ['vue', 'vue-router', 'vuex'],
 						echarts: ['echarts'],
 					},
-				},
-			},
-			terserOptions: {
-				compress: {
-					drop_console: true,
-					drop_debugger: true,
-				},
-				ie8: true,
-				output: {
-					comments: true,
 				},
 			},
 		},

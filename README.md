@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/logo/logo-text.svg">
+	<img src="https://img-blog.csdnimg.cn/9efd5420327a46b7bd6d93524a97229d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_14,color_FFFFFF,t_70,g_se,x_16">
 	<p align="center">
 	    <a href="https://v3.vuejs.org/" target="_blank">
 	        <img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
@@ -70,7 +70,7 @@ cnpm run build
 
 #### 💯 学习交流加 QQ 群
 
-- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试，3 群未满
+- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。
 - 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
 - 群号码：
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
@@ -90,7 +90,8 @@ cnpm run build
 #### 💒 集成后端
 
 - <a target="_blank" href="https://github.com/PandaGoAdmin/PandaX">@熊猫 PandaGoAdmin</a>
-- <a target="_blank" href="https://www.gnet.top/public">@甜蜜蜜 GoPro 平台</a>
+- <a target="_blank" href="https://toscode.gitee.com/GionConnection/gopro_free">@甜蜜蜜 GoPro 平台</a>
+- <a target="_blank" href="https://gitee.com/GionConnection/niupi-free">@甜蜜蜜 NiuPi 平台</a>
 
 #### ❤️ 鸣谢列表
 
@@ -115,10 +116,8 @@ cnpm run build
 - <a href="https://github.com/fengyuanchen/cropperjs" target="_blank">cropperjs</a>
 - <a href="https://github.com/davidshimjs/qrcodejs" target="_blank">qrcodejs</a>
 - <a href="https://github.com/crabbly/Print.js" target="_blank">print-js</a>
-- <a href="https://github.com/likaia/screen-shot" target="_blank">vue-web-screen-shot</a>
 - <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
-- <a href="https://github.com/yimijianfang/vue-drag-verify" target="_blank">vue-drag-verify</a>
 - <a href="https://github.com/jsplumb/jsplumb" target="_blank">jsplumb</a>
 
 #### 💕 特别感谢

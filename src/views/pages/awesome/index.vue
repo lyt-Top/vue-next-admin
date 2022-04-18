@@ -20,6 +20,7 @@
 <script lang="ts">
 import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
+
 export default defineComponent({
 	name: 'pagesAwesome',
 	setup() {

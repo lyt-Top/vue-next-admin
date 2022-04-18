@@ -4,7 +4,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useUserInfo } from '/@/stores/userInfo';
+
 export default defineComponent({
 	name: 'auth',
 	props: {
@@ -14,10 +16,11 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const store = useStore();
+		const stores = useUserInfo();
+		const { userInfos } = storeToRefs(stores);
 		// 获取 vuex 中的用户权限
 		const getUserAuthBtnList = computed(() => {
-			return store.state.userInfos.userInfos.authBtnList.some((v: string) => v === props.value);
+			return userInfos.value.authBtnList.some((v: string) => v === props.value);
 		});
 		return {
 			getUserAuthBtnList,

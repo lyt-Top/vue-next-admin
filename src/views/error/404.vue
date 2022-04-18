@@ -12,7 +12,9 @@
 				</div>
 			</div>
 			<div class="right">
-				<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/error/404.png" />
+				<img
+					src="https://img-blog.csdnimg.cn/9eb1d85a417f4ed1ba7107f149ce3da1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
+				/>
 			</div>
 		</div>
 	</div>
@@ -21,6 +23,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
+
 export default defineComponent({
 	name: '404',
 	setup() {

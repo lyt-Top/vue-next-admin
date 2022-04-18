@@ -1,6 +1,6 @@
 <template>
-	<div class="icon-selector">
-		<el-popover placement="bottom" :width="fontIconWidth" v-model:visible="fontIconVisible" popper-class="icon-selector-popper">
+	<div class="icon-selector w100">
+		<el-popover placement="bottom" :width="fontIconWidth" trigger="click" transition="el-zoom-in-top" popper-class="icon-selector-popper">
 			<template #reference>
 				<el-input
 					v-model="fontIconSearch"
@@ -23,8 +23,8 @@
 					</template>
 				</el-input>
 			</template>
-			<transition name="el-zoom-in-top">
-				<div class="icon-selector-warp" v-show="fontIconVisible">
+			<template #default>
+				<div class="icon-selector-warp">
 					<div class="icon-selector-warp-title flex">
 						<div class="flex-auto">{{ title }}</div>
 						<div class="icon-selector-warp-title-tab" v-if="type === 'all'">
@@ -50,7 +50,7 @@
 						</el-scrollbar>
 					</div>
 				</div>
-			</transition>
+			</template>
 		</el-popover>
 	</div>
 </template>
@@ -58,6 +58,7 @@
 <script lang="ts">
 import { ref, toRefs, reactive, onMounted, nextTick, computed, watch, defineComponent } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
+
 export default defineComponent({
 	name: 'iconSelector',
 	emits: ['update:modelValue', 'get', 'clear'],
@@ -111,7 +112,6 @@ export default defineComponent({
 		const selectorScrollbarRef = ref();
 		const state = reactive({
 			fontIconPrefix: '',
-			fontIconVisible: false,
 			fontIconWidth: 0,
 			fontIconSearch: '',
 			fontIconTabsIndex: 0,
@@ -122,7 +122,6 @@ export default defineComponent({
 		});
 		// 处理 input 获取焦点时，modelValue 有值时，改变 input 的 placeholder 值
 		const onIconFocus = () => {
-			state.fontIconVisible = true;
 			if (!props.modelValue) return false;
 			state.fontIconSearch = '';
 			state.fontIconPlaceholder = props.modelValue;
@@ -194,7 +193,6 @@ export default defineComponent({
 		// 获取当前点击的 icon 图标
 		const onColClick = (v: any) => {
 			state.fontIconPlaceholder = v;
-			state.fontIconVisible = false;
 			state.fontIconPrefix = v;
 			emit('get', state.fontIconPrefix);
 			emit('update:modelValue', state.fontIconPrefix);

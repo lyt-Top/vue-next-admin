@@ -6,22 +6,24 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import NavBarsIndex from '/@/layout/navBars/index.vue';
+
 export default defineComponent({
 	name: 'layoutHeader',
 	components: { NavBarsIndex },
 	setup() {
-		const store = useStore();
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
+		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		// 设置 header 的高度
 		const setHeaderHeight = computed(() => {
-			let { isTagsview, layout } = store.state.themeConfig.themeConfig;
+			let { isTagsview, layout } = themeConfig.value;
 			if (isTagsview && layout !== 'classic') return '84px';
 			else return '50px';
-		});
-		// 获取卡片全屏信息
-		const isTagsViewCurrenFull = computed(() => {
-			return store.state.tagsViewRoutes.isTagsViewCurrenFull;
 		});
 		return {
 			setHeaderHeight,

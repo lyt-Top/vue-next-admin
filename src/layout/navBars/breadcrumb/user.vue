@@ -1,5 +1,5 @@
 <template>
-	<div class="layout-navbars-breadcrumb-user" :style="{ flex: layoutUserFlexNum }">
+	<div class="layout-navbars-breadcrumb-user pr15" :style="{ flex: layoutUserFlexNum }">
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onComponentSizeChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
 				<i class="iconfont icon-ziti" :title="$t('message.user.title0')"></i>
@@ -33,7 +33,7 @@
 			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon">
-			<el-popover placement="bottom" trigger="click" :width="300">
+			<el-popover placement="bottom" trigger="click" transition="el-zoom-in-top" :width="300">
 				<template #reference>
 					<el-badge :is-dot="true">
 						<el-icon :title="$t('message.user.title4')">
@@ -41,7 +41,9 @@
 						</el-icon>
 					</el-badge>
 				</template>
-				<UserNews />
+				<template #default>
+					<UserNews />
+				</template>
 			</el-popover>
 		</div>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
@@ -53,8 +55,8 @@
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
 			<span class="layout-navbars-breadcrumb-user-link">
-				<img :src="getUserInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
-				{{ getUserInfos.userName === '' ? 'common' : getUserInfos.userName }}
+				<img :src="userInfos.photo" class="layout-navbars-breadcrumb-user-link-photo mr5" />
+				{{ userInfos.userName === '' ? 'common' : userInfos.userName }}
 				<el-icon class="el-icon--right">
 					<ele-ArrowDown />
 				</el-icon>
@@ -81,11 +83,14 @@ import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
 import { resetRoute } from '/@/router/index';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useUserInfo } from '/@/stores/userInfo';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import { Session, Local } from '/@/utils/storage';
 import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '/@/layout/navBars/breadcrumb/search.vue';
+
 export default defineComponent({
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },
@@ -93,25 +98,20 @@ export default defineComponent({
 		const { t } = useI18n();
 		const { proxy } = <any>getCurrentInstance();
 		const router = useRouter();
-		const store = useStore();
+		const stores = useUserInfo();
+		const storesThemeConfig = useThemeConfig();
+		const { userInfos } = storeToRefs(stores);
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const searchRef = ref();
 		const state = reactive({
 			isScreenfull: false,
 			disabledI18n: 'zh-cn',
 			disabledSize: 'large',
 		});
-		// 获取用户信息 vuex
-		const getUserInfos = computed(() => {
-			return <any>store.state.userInfos.userInfos;
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
 		// 设置分割样式
 		const layoutUserFlexNum = computed(() => {
 			let num: string | number = '';
-			const { layout, isClassicSplitMenu } = getThemeConfig.value;
+			const { layout, isClassicSplitMenu } = themeConfig.value;
 			const layoutArr: string[] = ['defaults', 'columns'];
 			if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
 			else num = '';
@@ -182,16 +182,16 @@ export default defineComponent({
 		// 组件大小改变
 		const onComponentSizeChange = (size: string) => {
 			Local.remove('themeConfig');
-			getThemeConfig.value.globalComponentSize = size;
-			Local.set('themeConfig', getThemeConfig.value);
+			themeConfig.value.globalComponentSize = size;
+			Local.set('themeConfig', themeConfig.value);
 			initComponentSize();
 			window.location.reload();
 		};
 		// 语言切换
 		const onLanguageChange = (lang: string) => {
 			Local.remove('themeConfig');
-			getThemeConfig.value.globalI18n = lang;
-			Local.set('themeConfig', getThemeConfig.value);
+			themeConfig.value.globalI18n = lang;
+			Local.set('themeConfig', themeConfig.value);
 			proxy.$i18n.locale = lang;
 			initI18n();
 			other.useTitle();
@@ -239,7 +239,7 @@ export default defineComponent({
 			}
 		});
 		return {
-			getUserInfos,
+			userInfos,
 			onLayoutSetingClick,
 			onHandleCommandClick,
 			onScreenfullClick,

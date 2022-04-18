@@ -1,8 +1,10 @@
 import { createI18n } from 'vue-i18n';
+import pinia from '/@/stores/index';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import zhcnLocale from 'element-plus/lib/locale/lang/zh-cn';
 import enLocale from 'element-plus/lib/locale/lang/en';
 import zhtwLocale from 'element-plus/lib/locale/lang/zh-tw';
-import { store } from '/@/store/index';
 
 import nextZhcn from '/@/i18n/lang/zh-cn';
 import nextEn from '/@/i18n/lang/en';
@@ -48,9 +50,18 @@ const messages = {
 	},
 };
 
+// 读取 pinia 默认语言
+const stores = useThemeConfig(pinia);
+const { themeConfig } = storeToRefs(stores);
+
 // 导出语言国际化
+// https://vue-i18n.intlify.dev/guide/essentials/fallback.html#explicit-fallback-with-one-locale
 export const i18n = createI18n({
-	locale: store.state.themeConfig.themeConfig.globalI18n,
+	silentTranslationWarn: true,
+	missingWarn: false,
+	silentFallbackWarn: true,
+	fallbackWarn: false,
+	locale: themeConfig.value.globalI18n,
 	fallbackLocale: zhcnLocale.name,
 	messages,
 });

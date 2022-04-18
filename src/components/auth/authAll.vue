@@ -4,8 +4,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useUserInfo } from '/@/stores/userInfo';
 import { judementSameArr } from '/@/utils/arrayOperation';
+
 export default defineComponent({
 	name: 'authAll',
 	props: {
@@ -15,10 +17,11 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const store = useStore();
+		const stores = useUserInfo();
+		const { userInfos } = storeToRefs(stores);
 		// 获取 vuex 中的用户权限
 		const getUserAuthBtnList = computed(() => {
-			return judementSameArr(props.value, store.state.userInfos.userInfos.authBtnList);
+			return judementSameArr(props.value, userInfos.value.authBtnList);
 		});
 		return {
 			getUserAuthBtnList,

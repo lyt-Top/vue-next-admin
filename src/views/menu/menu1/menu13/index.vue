@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, onActivated, onMounted, defineComponent } from 'vue';
+
 export default defineComponent({
 	name: 'menu13',
 	setup() {

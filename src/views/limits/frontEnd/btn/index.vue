@@ -342,6 +342,7 @@ import Auth from '/@/components/auth/auth.vue';
 import Auths from '/@/components/auth/auths.vue';
 import AuthAll from '/@/components/auth/authAll.vue';
 import { auth, auths, authAll } from '/@/utils/authFunction';
+
 export default defineComponent({
 	name: 'limitsFrontEndBtn',
 	components: { LimitsFrontEndPage, Auth, Auths, AuthAll },

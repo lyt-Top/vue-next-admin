@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, defineComponent, ref, onMounted, nextTick } from 'vue';
+
 export default defineComponent({
 	name: 'noticeBar',
 	props: {
@@ -29,12 +30,12 @@ export default defineComponent({
 		// 通知文本颜色
 		color: {
 			type: String,
-			default: () => 'var(--color-warning)',
+			default: () => 'var(--el-color-warning)',
 		},
 		// 通知背景色
 		background: {
 			type: String,
-			default: () => 'var(--color-warning-light-9)',
+			default: () => 'var(--el-color-warning-light-9)',
 		},
 		// 字体大小，单位px
 		size: {

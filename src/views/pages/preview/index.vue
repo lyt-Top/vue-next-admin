@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import { toRefs, reactive, defineComponent } from 'vue';
+
 export default defineComponent({
 	name: 'pagesPreview',
 	setup() {
