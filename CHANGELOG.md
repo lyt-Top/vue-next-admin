@@ -23,6 +23,7 @@
 - 🐞 修复 [vuex 里面改了颜色 但是不生效 #I4WFMA](https://gitee.com/lyt-top/vue-next-admin/issues/I4WFMA)
 - 🐞 修复 全局主题 primary 清空颜色后报错，[#I4X0LG](https://gitee.com/lyt-top/vue-next-admin/issues/I4X0LG)，感谢[面向 BUG 编程](https://gitee.com/fhtfy)
 - 🐞 修复 [模拟动态路由时刷新会丢失路由 #I4PR9S](https://gitee.com/lyt-top/vue-next-admin/issues/I4PR9S)，感谢[tottimctj](https://gitee.com/tottimctj)
+- 🐞 修复 [.eslintrc.js 文件 rules 标签名错误 #I53IPK](https://gitee.com/lyt-top/vue-next-admin/issues/I53IPK)，感谢[yuyong1566](https://gitee.com/yuyong1566)
 
 ## 2.0.2
 

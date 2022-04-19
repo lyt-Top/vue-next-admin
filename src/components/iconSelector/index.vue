@@ -1,5 +1,5 @@
 <template>
-	<div class="icon-selector w100">
+	<div class="icon-selector w100 h100">
 		<el-popover placement="bottom" :width="fontIconWidth" trigger="click" transition="el-zoom-in-top" popper-class="icon-selector-popper">
 			<template #reference>
 				<el-input
