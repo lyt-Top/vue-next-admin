@@ -46,7 +46,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 					assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
 					compact: true,
 					manualChunks: {
-						vue: ['vue', 'vue-router', 'vuex'],
+						vue: ['vue', 'vue-router', 'pinia'],
 						echarts: ['echarts'],
 					},
 				},

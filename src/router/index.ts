@@ -203,7 +203,7 @@ const storesThemeConfig = useThemeConfig(pinia);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isRequestRoutes } = themeConfig.value;
 // 前端控制路由：初始化方法，防止刷新时路由丢失
-if (!isRequestRoutes) await initFrontEndControlRoutes();
+if (!isRequestRoutes) initFrontEndControlRoutes();
 
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
