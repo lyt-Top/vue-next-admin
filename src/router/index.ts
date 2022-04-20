@@ -25,13 +25,29 @@ const router = createRouter({
 });
 
 /**
- * 定义404界面
+ * 定义404、401界面
  * @link 参考：https://next.router.vuejs.org/zh/guide/essentials/history-mode.html#netlify
  */
-const pathMatch = {
-	path: '/:path(.*)*',
-	redirect: '/404',
-};
+const notFoundAndNoPower = [
+	{
+		path: '/:path(.*)*',
+		name: 'notFound',
+		component: () => import('/@/views/error/404.vue'),
+		meta: {
+			title: 'message.staticRoutes.notFound',
+			isHide: true,
+		},
+	},
+	{
+		path: '/401',
+		name: 'noPower',
+		component: () => import('/@/views/error/401.vue'),
+		meta: {
+			title: 'message.staticRoutes.noPower',
+			isHide: true,
+		},
+	},
+];
 
 /**
  * 路由多级嵌套数组处理成一维数组
@@ -168,7 +184,7 @@ export function setFilterRoute(chil: any) {
  */
 export function setFilterRouteEnd() {
 	let filterRouteEnd: any = formatTwoStageRoutes(formatFlatteningRoutes(dynamicRoutes));
-	filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), { ...pathMatch }];
+	filterRouteEnd[0].children = [...setFilterRoute(filterRouteEnd[0].children), ...notFoundAndNoPower];
 	return filterRouteEnd;
 }
 
