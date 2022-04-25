@@ -2,7 +2,10 @@ import { defineStore } from 'pinia';
 import { UserInfosStates, UserInfosState } from './interface';
 import { Session } from '/@/utils/storage';
 
-// 用户信息
+/**
+ * 用户信息
+ * @methods setUserInfos 设置用户信息
+ */
 export const useUserInfo = defineStore('userInfo', {
 	state: (): UserInfosStates => ({
 		userInfos: {

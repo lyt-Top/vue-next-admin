@@ -106,7 +106,7 @@ export default defineComponent({
 					num3: '月度计划信息',
 					num4: 'iconfont icon-ditu',
 					color1: '#6690F9',
-					color2: '--el-color-success-light-9',
+					color2: '--next-color-success-lighter',
 					color3: '--el-color-success',
 				},
 				{
@@ -115,7 +115,7 @@ export default defineComponent({
 					num3: '年度计划信息',
 					num4: 'iconfont icon-zaosheng',
 					color1: '#6690F9',
-					color2: '--el-color-warning-light-9',
+					color2: '--next-color-warning-lighter',
 					color3: '--el-color-warning',
 				},
 				{
@@ -124,7 +124,7 @@ export default defineComponent({
 					num3: '访问统计信息',
 					num4: 'fa fa-github-alt',
 					color1: '#FF6462',
-					color2: '--el-color-danger-light-9',
+					color2: '--next-color-danger-lighter',
 					color3: '--el-color-danger',
 				},
 			],

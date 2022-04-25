@@ -19,6 +19,8 @@ export const useThemeConfig = defineStore('themeConfig', {
 			 */
 			// 默认 primary 主题颜色
 			primary: '#409eff',
+			// 是否开启深色模式
+			isIsDark: false,
 
 			/**
 			 * 菜单 / 顶栏
@@ -90,8 +92,6 @@ export const useThemeConfig = defineStore('themeConfig', {
 			isGrayscale: false,
 			// 是否开启色弱模式
 			isInvert: false,
-			// 是否开启深色模式
-			isIsDark: false,
 			// 是否开启水印
 			isWartermark: false,
 			// 水印文案
