@@ -125,6 +125,7 @@ export default defineComponent({
 			if (!props.modelValue) return false;
 			state.fontIconSearch = '';
 			state.fontIconPlaceholder = props.modelValue;
+			initFontTypeEcho();
 		};
 		// 处理 input 失去焦点时，为空将清空 input 值，为点击选中图标时，将取原先值
 		const onIconBlur = () => {
@@ -138,6 +139,13 @@ export default defineComponent({
 			if (props.modelValue === '') return false;
 			(<string | undefined>state.fontIconPlaceholder) = props.modelValue;
 			(<string | undefined>state.fontIconPrefix) = props.modelValue;
+		};
+		// 处理 icon type 类型为 all 时，类型 ali、ele、awe 回显问题
+		const initFontTypeEcho = () => {
+			if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
+			else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
+			else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
+			else onIconChange('ali');
 		};
 		// 图标搜索及图标数据显示
 		const fontIconSheetsFilterList = computed(() => {
@@ -206,14 +214,8 @@ export default defineComponent({
 		// 页面加载时
 		onMounted(() => {
 			// 判断默认进来是什么类型图标，进行 tab 回显
-			if (props.type === 'all') {
-				if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
-				else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
-				else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
-				else onIconChange('ali');
-			} else {
-				onIconChange(props.type);
-			}
+			if (props.type === 'all') initFontTypeEcho();
+			else onIconChange(props.type);
 			initResize();
 			getInputWidth();
 		});
