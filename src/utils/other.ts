@@ -152,10 +152,10 @@ const other = {
 		lazyImg(el, arr);
 	},
 	globalComponentSize: () => {
-		globalComponentSize();
+		return globalComponentSize();
 	},
 	deepClone: (obj: any) => {
-		deepClone(obj);
+		return deepClone(obj);
 	},
 	isMobile: () => {
 		return isMobile();
