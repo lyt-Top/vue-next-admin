@@ -78,7 +78,7 @@
 
 <script lang="ts">
 import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted, defineComponent } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
@@ -97,7 +97,6 @@ export default defineComponent({
 	setup() {
 		const { t } = useI18n();
 		const { proxy } = <any>getCurrentInstance();
-		const route = useRoute();
 		const router = useRouter();
 		const stores = useUserInfo();
 		const storesThemeConfig = useThemeConfig();
@@ -165,9 +164,7 @@ export default defineComponent({
 						Session.clear(); // 清除缓存/token等
 						await resetRoute(); // 删除/重置路由
 						ElMessage.success(t('message.user.logOutSuccess'));
-						setTimeout(() => {
-							window.location.href = `#/login?redirect=${route.path}&params=${JSON.stringify(route.query ? route.query : route.params)}`; // 去登录页
-						}, 500);
+						window.location.reload();
 					})
 					.catch(() => {});
 			} else if (path === 'wareHouse') {
