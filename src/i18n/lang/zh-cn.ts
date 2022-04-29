@@ -172,7 +172,7 @@ export default {
 		sixClassic: '经典',
 		sixTransverse: '横向',
 		sixColumns: '分栏',
-		tipText: '点击下方按钮，复制布局配置去 `src/store/modules/themeConfig.ts` 中修改。',
+		tipText: '点击下方按钮，复制布局配置去 `src/stores/themeConfig.ts` 中修改。',
 		copyText: '一键复制配置',
 		resetText: '一键恢复默认',
 		copyTextSuccess: '复制成功！',

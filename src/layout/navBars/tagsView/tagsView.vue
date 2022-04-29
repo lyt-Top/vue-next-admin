@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-navbars-tagsview" :class="{ 'layout-navbars-tagsview-shadow': getThemeConfig.layout === 'classic' }">
-		<el-scrollbar ref="scrollbarRef" @wheel.native.prevent="onHandleScroll">
+		<el-scrollbar ref="scrollbarRef" @wheel.prevent="onHandleScroll">
 			<ul class="layout-navbars-tagsview-ul" :class="setTagsStyle" ref="tagsUlRef">
 				<li
 					v-for="(v, k) in tagsViewList"
@@ -90,6 +90,8 @@ interface TagsViewState {
 interface RouteParams {
 	path: string;
 	url: string;
+	query: object;
+	params: object;
 }
 interface CurrentContextmenu {
 	meta: {
@@ -139,7 +141,14 @@ export default defineComponent({
 			if (getThemeConfig.value.isShareTagsView) {
 				return v.path === state.routePath;
 			} else {
-				return v.url ? v.url === state.routeActive : v.path === state.routeActive;
+				if ((v.query && Object.keys(v.query).length) || (v.params && Object.keys(v.params).length)) {
+					// 普通传参
+					return v.url ? v.url === state.routeActive : v.path === state.routeActive;
+				} else {
+					// 通过 name 传参，params 取值，刷新页面参数消失
+					// https://gitee.com/lyt-top/vue-next-admin/issues/I51RS9
+					return v.path === state.routePath;
+				}
 			}
 		};
 		// 存储 tagsViewList 到浏览器临时缓存中，页面刷新时，保留记录
@@ -229,7 +238,7 @@ export default defineComponent({
 					if (state.tagsViewList.some((v: any) => v.path === path)) return false;
 					item = state.tagsViewRoutesList.find((v: any) => v.path === path);
 				}
-				if (!item) return false
+				if (!item) return false;
 				if (item.meta.isLink && !item.meta.isIframe) return false;
 				if (to && to.meta.isDynamic) item.params = to?.params ? to?.params : route.params;
 				else item.query = to?.query ? to?.query : route.query;
@@ -280,22 +289,31 @@ export default defineComponent({
 		};
 		// 4、关闭其它 tagsView：如果是设置了固定的（isAffix），不进行关闭
 		const closeOtherTagsView = (path: string) => {
-			state.tagsViewList = [];
-			state.tagsViewRoutesList.map((v: any) => {
-				if (v.meta.isAffix && !v.meta.isHide) state.tagsViewList.push({ ...v });
-			});
-			addTagsView(path, route);
+			if (Session.get('tagsViewList')) {
+				state.tagsViewList = [];
+				Session.get('tagsViewList').map((v: any) => {
+					if (v.meta.isAffix && !v.meta.isHide) {
+						v.url = setTagsViewHighlight(v);
+						state.tagsViewList.push({ ...v });
+					}
+				});
+				addTagsView(path, route);
+				addBrowserSetSession(state.tagsViewList);
+			}
 		};
 		// 5、关闭全部 tagsView：如果是设置了固定的（isAffix），不进行关闭
 		const closeAllTagsView = () => {
-			state.tagsViewList = [];
-			state.tagsViewRoutesList.map((v: any) => {
-				if (v.meta.isAffix && !v.meta.isHide) {
-					state.tagsViewList.push({ ...v });
-					router.push({ path: state.tagsViewList[state.tagsViewList.length - 1].path });
-				}
-			});
-			addBrowserSetSession(state.tagsViewList);
+			if (Session.get('tagsViewList')) {
+				state.tagsViewList = [];
+				Session.get('tagsViewList').map((v: any) => {
+					if (v.meta.isAffix && !v.meta.isHide) {
+						v.url = setTagsViewHighlight(v);
+						state.tagsViewList.push({ ...v });
+						router.push({ path: state.tagsViewList[state.tagsViewList.length - 1].path });
+					}
+				});
+				addBrowserSetSession(state.tagsViewList);
+			}
 		};
 		// 6、开启当前页面全屏
 		const openCurrenFullscreen = async (path: string) => {

@@ -1,10 +1,10 @@
 <template>
 	<div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
-		<div class="flex-margin">
+		<div class="flex-margin" style="width: 400px">
 			<el-result icon="success" title="普通路由" subTitle="可 `开启 TagsView 共用` 进行单标签测试">
 				<template #extra>
-					<el-input v-model="tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15"></el-input>
-					<el-input v-model="value" placeholder="请输入路由参数 id 值" clearable></el-input>
+					<el-input v-model="tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15" style="width: 400px"></el-input>
+					<el-input v-model="value" placeholder="请输入路由参数 id 值" clearable style="width: 400px"></el-input>
 					<el-button type="primary" size="default" class="mt15" @click="onGoDetailsClick">
 						<SvgIcon name="iconfont icon-putong" />
 						普通路由传参
