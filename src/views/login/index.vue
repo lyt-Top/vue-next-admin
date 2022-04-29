@@ -31,14 +31,15 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent } from 'vue';
+import { toRefs, reactive, computed, defineComponent, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import logoMini from '/@/assets/logo-mini.svg';
+import loginIconTwo from '/@/assets/login-icon-two.svg';
+import { NextLoading } from '/@/utils/loading';
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
 import Scan from '/@/views/login/component/scan.vue';
-import logoMini from '/@/assets/logo-mini.svg';
-import loginIconTwo from '/@/assets/login-icon-two.svg';
 
 // 定义接口来定义对象的类型
 interface LoginState {
@@ -59,6 +60,10 @@ export default defineComponent({
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return themeConfig.value;
+		});
+		// 页面加载时
+		onMounted(() => {
+			NextLoading.done();
 		});
 		return {
 			logoMini,

@@ -24,6 +24,7 @@ import { defineComponent, toRefs, reactive, getCurrentInstance, watch, onMounted
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import { NextLoading } from '/@/utils/loading';
 import LayoutParentView from '/@/layout/routerView/parent.vue';
 import Footer from '/@/layout/footer/index.vue';
 
@@ -65,6 +66,7 @@ export default defineComponent({
 		onMounted(async () => {
 			await initGetMeta();
 			initHeaderHeight();
+			NextLoading.done();
 		});
 		// 监听路由变化
 		watch(

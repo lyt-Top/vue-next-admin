@@ -9,7 +9,6 @@ import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
-import { NextLoading } from '/@/utils/loading';
 import { staticRoutes, dynamicRoutes } from '/@/router/route';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
 import { initBackEndControlRoutes } from '/@/router/backEnd';
@@ -259,7 +258,6 @@ router.beforeEach(async (to, from, next) => {
 // 路由加载后
 router.afterEach(() => {
 	NProgress.done();
-	NextLoading.done();
 });
 
 // 导出路由
