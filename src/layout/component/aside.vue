@@ -57,18 +57,12 @@ export default defineComponent({
 			} else {
 				if (layout === 'columns') {
 					// 分栏布局，菜单收起时宽度给 1px
-					if (isCollapse) {
-						return [asideBrColor, 'layout-aside-pc-1'];
-					} else {
-						return [asideBrColor, 'layout-aside-pc-220'];
-					}
+					if (isCollapse) return [asideBrColor, 'layout-aside-pc-1'];
+					else return [asideBrColor, 'layout-aside-pc-220'];
 				} else {
 					// 其它布局给 64px
-					if (isCollapse) {
-						return [asideBrColor, 'layout-aside-pc-64'];
-					} else {
-						return [asideBrColor, 'layout-aside-pc-220'];
-					}
+					if (isCollapse) return [asideBrColor, 'layout-aside-pc-64'];
+					else return [asideBrColor, 'layout-aside-pc-220'];
 				}
 			}
 		});
@@ -122,11 +116,17 @@ export default defineComponent({
 			}
 		});
 		// 监听vuex值的变化，动态赋值给菜单中
-		watch(pinia.state, (val) => {
-			let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
-			if (layout === 'classic' && isClassicSplitMenu) return false;
-			setFilterRoutes();
-		});
+		watch(
+			pinia.state,
+			(val) => {
+				let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
+				if (layout === 'classic' && isClassicSplitMenu) return false;
+				setFilterRoutes();
+			},
+			{
+				deep: true,
+			}
+		);
 		// 页面加载前
 		onBeforeMount(() => {
 			initMenuFixed(document.body.clientWidth);

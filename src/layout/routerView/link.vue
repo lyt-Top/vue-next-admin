@@ -39,7 +39,7 @@ export default defineComponent({
 		// 设置 link 的高度
 		const setLinkHeight = computed(() => {
 			let { isTagsview } = themeConfig.value;
-			if (isTagsview) return `114px`;
+			if (isTagsview) return `115px`;
 			else return `80px`;
 		});
 		// 监听路由的变化，设置内容

@@ -553,10 +553,16 @@ export default defineComponent({
 			getTagsRefsIndex(getThemeConfig.value.isShareTagsView ? state.routePath : state.routeActive);
 		});
 		// 监听路由的变化，动态赋值给 tagsView
-		watch(pinia.state, (val) => {
-			if (val.tagsViewRoutes.tagsViewRoutes.length === state.tagsViewRoutesList.length) return false;
-			getTagsViewRoutes();
-		});
+		watch(
+			pinia.state,
+			(val) => {
+				if (val.tagsViewRoutes.tagsViewRoutes.length === state.tagsViewRoutesList.length) return false;
+				getTagsViewRoutes();
+			},
+			{
+				deep: true,
+			}
+		);
 		// 监听路由的变化，用于设置不同的 tagsViewName
 		watch(
 			() => route,

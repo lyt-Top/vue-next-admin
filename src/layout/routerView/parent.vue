@@ -3,7 +3,7 @@
 		<router-view v-slot="{ Component }">
 			<transition :name="setTransitionName" mode="out-in">
 				<keep-alive :include="keepAliveNameList">
-					<component :is="Component" :key="refreshRouterViewKey" class="w100" :style="{ minHeight }" />
+					<component :is="Component" :key="refreshRouterViewKey" class="w100" />
 				</keep-alive>
 			</transition>
 		</router-view>
@@ -25,12 +25,6 @@ interface ParentViewState {
 
 export default defineComponent({
 	name: 'layoutParentView',
-	props: {
-		minHeight: {
-			type: String,
-			default: '',
-		},
-	},
 	setup() {
 		const { proxy } = <any>getCurrentInstance();
 		const route = useRoute();

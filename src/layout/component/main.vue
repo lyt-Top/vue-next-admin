@@ -1,18 +1,26 @@
 <template>
 	<el-main class="layout-main">
 		<el-scrollbar
-			class="layout-scrollbar"
 			ref="layoutScrollbarRef"
-			:style="{ padding: currentRouteMeta.isLink && currentRouteMeta.isIframe ? 0 : '', transition: 'padding 0.3s ease-in-out' }"
+			:class="{
+				'layout-scrollbar':
+					(!isClassicOrTransverse && !currentRouteMeta.isLink && !currentRouteMeta.isIframe) ||
+					(!isClassicOrTransverse && currentRouteMeta.isLink && !currentRouteMeta.isIframe),
+			}"
 		>
-			<LayoutParentView :style="{ minHeight: `calc(100vh - ${headerHeight})` }" />
+			<LayoutParentView
+				:style="{
+					padding: !isClassicOrTransverse || (currentRouteMeta.isLink && currentRouteMeta.isIframe) ? '0' : '15px',
+					transition: 'padding 0.3s ease-in-out',
+				}"
+			/>
 			<Footer v-if="themeConfig.isFooter" />
 		</el-scrollbar>
 	</el-main>
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, reactive, getCurrentInstance, watch, onMounted } from 'vue';
+import { defineComponent, toRefs, reactive, getCurrentInstance, watch, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -37,12 +45,17 @@ export default defineComponent({
 			headerHeight: '',
 			currentRouteMeta: {},
 		});
+		// 判断布局
+		const isClassicOrTransverse = computed(() => {
+			const { layout } = themeConfig.value;
+			return layout === 'classic' || layout === 'transverse';
+		});
 		// 设置 main 的高度
 		const initHeaderHeight = () => {
 			const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
 			let { isTagsview } = themeConfig.value;
-			if (isTagsview) return (state.headerHeight = bool ? `85px` : `114px`);
-			else return (state.headerHeight = `51px`);
+			if (isTagsview) return (state.headerHeight = bool ? `86px` : `115px`);
+			else return (state.headerHeight = `80px`);
 		};
 		// 初始化获取当前路由 meta，用于设置 iframes padding
 		const initGetMeta = () => {
@@ -59,22 +72,26 @@ export default defineComponent({
 			() => {
 				state.currentRouteMeta = route.meta;
 				const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-				state.headerHeight = bool ? `85px` : `114px`;
+				state.headerHeight = bool ? `86px` : `115px`;
 				proxy.$refs.layoutScrollbarRef.update();
 			}
 		);
 		// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-		watch(themeConfig, (val) => {
-			state.currentRouteMeta = route.meta;
-			const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-			state.headerHeight = val.isTagsview ? (bool ? `85px` : `114px`) : '51px';
-			if (val.isFixedHeaderChange !== val.isFixedHeader) {
-				if (!proxy.$refs.layoutScrollbarRef) return false;
-				proxy.$refs.layoutScrollbarRef.update();
+		watch(
+			themeConfig,
+			(val) => {
+				state.currentRouteMeta = route.meta;
+				const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
+				state.headerHeight = val.isTagsview ? (bool ? `86px` : `115px`) : '51px';
+				proxy.$refs?.layoutScrollbarRef?.update();
+			},
+			{
+				deep: true,
 			}
-		});
+		);
 		return {
 			themeConfig,
+			isClassicOrTransverse,
 			...toRefs(state),
 		};
 	},

@@ -61,7 +61,6 @@ interface ColumnsAsideState {
 	liOldPath: null | string;
 	difference: number;
 	routeSplit: string[];
-	isNavHover: boolean;
 }
 
 export default defineComponent({
@@ -84,7 +83,6 @@ export default defineComponent({
 			liOldPath: null,
 			difference: 0,
 			routeSplit: [],
-			isNavHover: false,
 		});
 		// 设置菜单高亮位置移动
 		const setColumnsAsideMove = (k: number) => {
@@ -107,7 +105,6 @@ export default defineComponent({
 			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(path));
 			stores.setColumnsMenuHover(false);
 			stores.setColumnsNavHover(true);
-			state.isNavHover = true;
 		};
 		// 鼠标移走时，显示原来的子级菜单
 		const onColumnsAsideMenuMouseleave = async () => {
@@ -116,7 +113,6 @@ export default defineComponent({
 			setTimeout(() => {
 				if (!isColumnsMenuHover && !isColumnsNavHover) proxy.mittBus.emit('restoreDefault');
 			}, 100);
-			// state.isNavHover = false;
 		};
 		// 设置高亮动态位置
 		const onColumnsAsideDown = (k: number) => {
@@ -169,17 +165,23 @@ export default defineComponent({
 			}, 0);
 		};
 		// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
-		watch(pinia.state, (val) => {
-			val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-			if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
-				state.liHoverIndex = null;
-				proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
-			} else {
-				state.liHoverIndex = state.liOldIndex;
-				if (!state.liOldPath) return false;
-				proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+		watch(
+			pinia.state,
+			(val) => {
+				val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
+				if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
+					state.liHoverIndex = null;
+					proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
+				} else {
+					state.liHoverIndex = state.liOldIndex;
+					if (!state.liOldPath) return false;
+					proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+				}
+			},
+			{
+				deep: true,
 			}
-		});
+		);
 		// 页面加载时
 		onMounted(() => {
 			setFilterRoutes();
@@ -256,7 +258,7 @@ export default defineComponent({
 			}
 		}
 		.layout-columns-active {
-			color: var(--el-color-white) !important;
+			color: var(--next-bg-columnsMenuBarColor) !important;
 			transition: 0.3s ease-in-out;
 		}
 		.layout-columns-hover {

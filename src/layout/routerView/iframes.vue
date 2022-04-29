@@ -41,7 +41,7 @@ export default defineComponent({
 			if (isTagsViewCurrenFull.value) {
 				return `1px`;
 			} else {
-				if (isTagsview) return `85px`;
+				if (isTagsview) return `86px`;
 				else return `51px`;
 			}
 		});
