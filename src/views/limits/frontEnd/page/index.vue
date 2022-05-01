@@ -26,7 +26,7 @@
 import { toRefs, reactive, onMounted, defineComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
-import { resetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/index';
+import { frontEndsResetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/frontEnd';
 import { Session } from '/@/utils/storage';
 
 export default defineComponent({
@@ -45,7 +45,7 @@ export default defineComponent({
 		// 用户权限改变时
 		const onRadioChange = async () => {
 			// 模拟数据
-			resetRoute();
+			frontEndsResetRoute();
 			let defaultRoles: string[] = [];
 			let defaultAuthBtnList: string[] = [];
 			// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏

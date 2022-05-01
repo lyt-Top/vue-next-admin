@@ -233,6 +233,7 @@ import { toRefs, reactive, onMounted, onUnmounted, getCurrentInstance, defineCom
 import * as echarts from 'echarts';
 import 'echarts-gl';
 import { formatDate } from '/@/utils/formatTime';
+import { NextLoading } from '/@/utils/loading';
 import { dropdownList, skyList, dBtnList, earth3DBtnList, chartData4List } from './mock/demo2';
 import worldImg from './images/world.jpg';
 import bathymetryImg from './images/bathymetry.jpg';
@@ -765,6 +766,7 @@ export default defineComponent({
 		};
 		// 页面加载时
 		onMounted(async () => {
+			NextLoading.done();
 			initTime();
 			await initRightChartData1();
 			await initRightChartData4();

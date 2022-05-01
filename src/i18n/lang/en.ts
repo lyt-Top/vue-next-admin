@@ -105,7 +105,6 @@ export default {
 		logOutConfirm: 'determine',
 		logOutCancel: 'cancel',
 		logOutExit: 'Exiting',
-		logOutSuccess: 'Exit successfully!',
 	},
 	tagsView: {
 		refresh: 'refresh',

@@ -105,7 +105,6 @@ export default {
 		logOutConfirm: '确定',
 		logOutCancel: '取消',
 		logOutExit: '退出中',
-		logOutSuccess: '安全退出成功！',
 	},
 	tagsView: {
 		refresh: '刷新',

@@ -10,7 +10,7 @@ export const useRequestOldRoutes = defineStore('requestOldRoutes', {
 		requestOldRoutes: [],
 	}),
 	actions: {
-		async setCacheKeepAlive(routes: Array<string>) {
+		async setRequestOldRoutes(routes: Array<string>) {
 			this.requestOldRoutes = routes;
 		},
 	},

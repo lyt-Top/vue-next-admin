@@ -93,6 +93,7 @@ import { toRefs, reactive, onMounted, onUnmounted, getCurrentInstance, defineCom
 import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import { formatDate } from '/@/utils/formatTime';
+import { NextLoading } from '/@/utils/loading';
 import { echartsMapList, echartsMapData, echartsMapImgs } from './mock/demo1';
 
 // 定义接口来定义对象的类型
@@ -934,6 +935,7 @@ export default defineComponent({
 		};
 		// 页面加载时
 		onMounted(async () => {
+			NextLoading.done();
 			initTime();
 			await initEchartsMap();
 			await initVisualizingContentLeftTop();

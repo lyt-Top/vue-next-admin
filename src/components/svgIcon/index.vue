@@ -1,11 +1,9 @@
 <template>
-	<div class="svg-icon-container">
-		<i v-if="isShowIconSvg" class="el-icon" :style="setIconSvgStyle">
-			<component :is="getIconName" />
-		</i>
-		<img v-else-if="isShowIconImg" :src="getIconName" :style="setIconImgStyle" />
-		<i v-else :class="getIconName" :style="setIconSvgStyle" />
-	</div>
+	<i v-if="isShowIconSvg" class="el-icon" :style="setIconSvgStyle">
+		<component :is="getIconName" />
+	</i>
+	<img v-else-if="isShowIconImg" :src="getIconName" :style="setIconImgStyle" />
+	<i v-else :class="getIconName" :style="setIconSvgStyle" />
 </template>
 
 <script lang="ts">
@@ -46,7 +44,7 @@ export default defineComponent({
 		});
 		// 设置图标样式
 		const setIconSvgStyle = computed(() => {
-			return `font-size: ${props.size}px;color: ${props.color};height: 100%;display: flex;align-items: center;`;
+			return `font-size: ${props.size}px;color: ${props.color};`;
 		});
 		// 设置图片样式
 		const setIconImgStyle = computed(() => {
@@ -62,9 +60,3 @@ export default defineComponent({
 	},
 });
 </script>
-
-<style scoped lang="scss">
-.svg-icon-container {
-	display: inline-block;
-}
-</style>

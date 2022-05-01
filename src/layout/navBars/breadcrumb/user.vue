@@ -82,7 +82,6 @@ import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { useI18n } from 'vue-i18n';
-import { resetRoute } from '/@/router/index';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -162,8 +161,7 @@ export default defineComponent({
 				})
 					.then(async () => {
 						Session.clear(); // 清除缓存/token等
-						await resetRoute(); // 删除/重置路由
-						ElMessage.success(t('message.user.logOutSuccess'));
+						// 使用 reload 时，不需要调用 resetRoute() 重置路由
 						window.location.reload();
 					})
 					.catch(() => {});
