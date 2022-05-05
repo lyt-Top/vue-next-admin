@@ -16,7 +16,8 @@
 - 🎯 优化 去掉开发环境 i18n 控制台警告，页面代码：[i18n/index.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/i18n/index.ts)
 - 🎯 优化 `NextLoading.start()` 方法，防止第一次进入界面时出现短暂空白
 - 🎯 优化 地址栏有参数退出登录，再次登录不跳之前界面问题 `src/layout/navBars/breadcrumb/user.vue`
-- 🎯 优化 `SvgIcon` 组件，防止 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题，工作流不可连线问题
+- 🎯 优化 `SvgIcon` 组件，防止 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题，工作流不可连线、全屏时关闭按钮消失问题
+- 🎯 优化 [如果 url 中有中文等特殊字符，第一次切换该 tab 时 keep-alive 失效#I55JS7](https://gitee.com/lyt-top/vue-next-admin/issues/I55JS7),感谢[yuyong1566](https://gitee.com/yuyong1566)
 - 🎯 优化 [wangEditor](https://www.wangeditor.com/) 更新到 v5，[vue3 版本线上示例中 wangeditor 富文本编辑器 demo 实例,无法换行#I5565B](https://gitee.com/lyt-top/vue-next-admin/issues/I5565B)，感谢@[jenchih](https://gitee.com/jenchih)
 - 🎯 优化 [在关闭 tagview 时，高度刷新时会会变化，出现滚动条](https://gitee.com/lyt-top/vue-next-admin/issues/I55FHM)，感谢[张松](https://gitee.com/zs310071113)
 - 🎉 新增 [vuex](https://vuex.vuejs.org/) 替换成 [pinia](https://pinia.vuejs.org/getting-started.html)

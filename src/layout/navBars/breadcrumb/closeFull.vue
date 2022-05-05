@@ -1,6 +1,8 @@
 <template>
 	<div class="layout-navbars-close-full" v-if="isTagsViewCurrenFull">
-		<SvgIcon name="ele-Close" :title="$t('message.tagsView.closeFullscreen')" @click="onCloseFullscreen" />
+		<div class="layout-navbars-close-full-icon">
+			<SvgIcon name="ele-Close" :title="$t('message.tagsView.closeFullscreen')" @click="onCloseFullscreen" />
+		</div>
 	</div>
 </template>
 
@@ -32,7 +34,7 @@ export default defineComponent({
 	z-index: 9999999999;
 	right: -30px;
 	top: -30px;
-	.svg-icon-container {
+	.layout-navbars-close-full-icon {
 		width: 60px;
 		height: 60px;
 		border-radius: 100%;
@@ -43,7 +45,7 @@ export default defineComponent({
 		::v-deep(i) {
 			position: absolute;
 			left: 10px;
-			top: 12px;
+			top: 35px;
 			color: #333333;
 			transition: all 0.3s ease;
 		}

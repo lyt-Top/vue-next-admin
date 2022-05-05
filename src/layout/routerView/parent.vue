@@ -60,7 +60,7 @@ export default defineComponent({
 		watch(
 			() => route.fullPath,
 			() => {
-				state.refreshRouterViewKey = route.fullPath;
+				state.refreshRouterViewKey = decodeURI(route.fullPath);
 			}
 		);
 		return {
