@@ -3,6 +3,7 @@ import { ThemeConfigStates, ThemeConfigState } from './interface';
 
 /**
  * 布局配置
+ * 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I567R1，感谢@lanbao123
  * 2020.05.28 by lyt 优化。开发时配置不生效问题
  * 修改配置时：
  * 1、需要每次都清理 `window.localStorage` 浏览器永久缓存

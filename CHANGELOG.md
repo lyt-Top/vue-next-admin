@@ -32,6 +32,7 @@
 - 🐞 修复 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题
 - 🐞 修复 `router.push` 路径找不到时报错问题，`404、401 界面` 已移入到 `main` 主布局里（之前全屏）
 - 🐞 修复 [全局修改组件大小失效了](https://gitee.com/lyt-top/vue-next-admin/issues/I551RP)，感谢[lg_boy](https://gitee.com/lg_boy)
+- 🐞 修复 [修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效，问题解决#I567R1](https://gitee.com/lyt-top/vue-next-admin/issues/I567R1),感谢[@lanbao123](https://gitee.com/lanbao123)
 - 🌈 重构 路由（`/src/router/index.ts`）解决 No match found for location with path "xxx"(前端控制，后端控制未解决) 问题
 
 ## 2.0.2

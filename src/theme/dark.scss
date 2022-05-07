@@ -220,4 +220,14 @@
 	.layout-columns-aside {
 		border-right: 1px solid var(--next-border-columns);
 	}
+
+	// tagsView
+	.tags-style-one {
+		.is-active {
+			color: var(--el-text-color-primary) !important;
+		}
+		.layout-navbars-tagsview-ul-li:hover {
+			border-color: var(--el-border-color-lighter) !important;
+		}
+	}
 }

@@ -626,7 +626,7 @@ export default defineComponent({
 			line-height: 26px;
 			display: flex;
 			align-items: center;
-			border: 1px solid #e6e6e6;
+			border: 1px solid var(--el-border-color-lighter);
 			padding: 0 15px;
 			margin-right: 5px;
 			border-radius: 2px;
