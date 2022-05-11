@@ -103,8 +103,9 @@ export default defineComponent({
 			type: String,
 			default: () => '无相关图标',
 		},
-		// 双向绑定值，字段名为固定，改了之后将不生效
+		// 双向绑定值，默认为 modelValue，
 		// 参考：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
+		// 参考：https://v3.cn.vuejs.org/guide/component-custom-events.html#%E5%A4%9A%E4%B8%AA-v-model-%E7%BB%91%E5%AE%9A
 		modelValue: String,
 	},
 	setup(props, { emit }) {

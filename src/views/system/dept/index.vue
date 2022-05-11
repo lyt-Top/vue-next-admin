@@ -39,9 +39,9 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="small" type="text" @click="onOpenAddDept">新增</el-button>
-						<el-button size="small" type="text" @click="onOpenEditDept(scope.row)">修改</el-button>
-						<el-button size="small" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
+						<el-button size="small" text type="primary" @click="onOpenAddDept">新增</el-button>
+						<el-button size="small" text type="primary" @click="onOpenEditDept(scope.row)">修改</el-button>
+						<el-button size="small" text type="primary" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

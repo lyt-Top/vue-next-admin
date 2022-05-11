@@ -37,10 +37,6 @@ export default defineComponent({
 		const getGlobalComponentSize = computed(() => {
 			return other.globalComponentSize();
 		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return themeConfig.value;
-		});
 		// 布局配置弹窗打开
 		const openSetingsDrawer = () => {
 			setingsRef.value.openDrawer();
@@ -54,11 +50,6 @@ export default defineComponent({
 		});
 		// 页面加载时
 		onMounted(() => {
-			// https://gitee.com/lyt-top/vue-next-admin/issues/I567R1，感谢@lanbao123
-			if (import.meta.env.MODE === 'development') {
-				Local.remove('themeConfig');
-				Local.set('themeConfig', getThemeConfig.value);
-			}
 			nextTick(() => {
 				// 监听布局配置弹窗点击打开
 				proxy.mittBus.on('openSetingsDrawer', () => {

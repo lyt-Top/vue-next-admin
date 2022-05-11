@@ -22,7 +22,7 @@
 - 🎯 优化 [在关闭 tagview 时，高度刷新时会会变化，出现滚动条](https://gitee.com/lyt-top/vue-next-admin/issues/I55FHM)，感谢[张松](https://gitee.com/zs310071113)
 - 🎉 新增 [vuex](https://vuex.vuejs.org/) 替换成 [pinia](https://pinia.vuejs.org/getting-started.html)
 - 🎉 新增 tagsView 支持自定义 tagsView 名称（文章详情时有用），前往体验：[路由参数/普通路由](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)
-- 🐞 修复 适配 `"element-plus": "^2.1.9"` 版本
+- 🐞 修复 适配 `"element-plus": "^2.1.9"，2.2.0` 版本
 - 🐞 修复 [导航栏横向布局后，一级菜单显示问题#I4Z3M3](https://gitee.com/lyt-top/vue-next-admin/issues/I4Z3M3)
 - 🐞 修复 横向布局三级及以上导航菜单高亮、导航高度不统一问题
 - 🐞 修复 分栏模式下,选中的菜单是 primary 样式,鼠标移入字也变成 primary 色了，感谢群友@孤夜-流殇
