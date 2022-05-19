@@ -70,7 +70,7 @@ cnpm run build
 
 #### 💯 学习交流加 QQ 群
 
-- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。
+- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！
 - 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
 - 群号码：
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
@@ -94,6 +94,8 @@ cnpm run build
 - <a target="_blank" href="https://gitee.com/GionConnection/niupi-free">@甜蜜蜜 NiuPi 平台</a>
 - <a target="_blank" href="https://gitee.com/tiger1103/gfast/tree/os-v3/">@游子 GFast-V3</a>
 - <a target="_blank" href="https://gitee.com/diygw/diygw-ui-php/">@diygw.com gw-ui-php</a>
+- <a target="_blank" href="https://gitee.com/zsvg/vboot-net">@zsvg vboot-net</a>
+- <a target="_blank" href="https://gitee.com/zsvg/vboot-java">@zsvg vboot-java</a>
 
 #### ❤️ 鸣谢列表
 

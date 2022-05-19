@@ -80,6 +80,9 @@ export default defineComponent({
 			() => route.path,
 			() => {
 				other.useTitle();
+			},
+			{
+				deep: true,
 			}
 		);
 		return {

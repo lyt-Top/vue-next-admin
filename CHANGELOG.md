@@ -20,8 +20,9 @@
 - 🎯 优化 [如果 url 中有中文等特殊字符，第一次切换该 tab 时 keep-alive 失效#I55JS7](https://gitee.com/lyt-top/vue-next-admin/issues/I55JS7),感谢[yuyong1566](https://gitee.com/yuyong1566)
 - 🎯 优化 [wangEditor](https://www.wangeditor.com/) 更新到 v5，[vue3 版本线上示例中 wangeditor 富文本编辑器 demo 实例,无法换行#I5565B](https://gitee.com/lyt-top/vue-next-admin/issues/I5565B)，感谢@[jenchih](https://gitee.com/jenchih)
 - 🎯 优化 [在关闭 tagview 时，高度刷新时会会变化，出现滚动条](https://gitee.com/lyt-top/vue-next-admin/issues/I55FHM)，感谢[张松](https://gitee.com/zs310071113)
+- 🎯 优化 [路由参数](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)演示
 - 🎉 新增 [vuex](https://vuex.vuejs.org/) 替换成 [pinia](https://pinia.vuejs.org/getting-started.html)
-- 🎉 新增 tagsView 支持自定义 tagsView 名称（文章详情时有用），前往体验：[路由参数/普通路由](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)
+- 🎉 新增 tagsView 支持自定义 tagsView 名称（文章详情时有用），前往体验：[路由参数/普通路由](https://lyt-top.gitee.io/vue-next-admin-preview/#/params/common)。新增 tagsView 支持自定义名称国际化，感谢[@q7but](https://gitee.com/q7but)、[!22 add 添加自定义 tagVIewName 拓展,支持国际化](https://gitee.com/lyt-top/vue-next-admin/pulls/22/files)、感谢[@tony_tong_xin](https://gitee.com/tony_tong_xin)
 - 🐞 修复 适配 `"element-plus": "^2.1.9"，2.2.0` 版本
 - 🐞 修复 [导航栏横向布局后，一级菜单显示问题#I4Z3M3](https://gitee.com/lyt-top/vue-next-admin/issues/I4Z3M3)
 - 🐞 修复 横向布局三级及以上导航菜单高亮、导航高度不统一问题

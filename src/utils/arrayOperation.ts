@@ -1,15 +1,17 @@
 /**
- * 判断两数组是否相同
+ * 判断两数组字符串是否相同（用于按钮权限验证），数组字符串中存在相同时会自动去重（按钮权限标识不会重复）
  * @param news 新数据
  * @param old 源数据
  * @returns 两数组相同返回 `true`，反之则反
  */
-export function judementSameArr(news: unknown[] | string[], old: string[]): boolean {
+export function judementSameArr(newArr: unknown[] | string[], oldArr: string[]): boolean {
+	const news = removeDuplicate(newArr);
+	const olds = removeDuplicate(oldArr);
 	let count = 0;
-	const leng = old.length;
-	for (let i in old) {
+	const leng = olds.length;
+	for (let i in olds) {
 		for (let j in news) {
-			if (old[i] === news[j]) count++;
+			if (olds[i] === news[j]) count++;
 		}
 	}
 	return count === leng ? true : false;
@@ -38,4 +40,27 @@ export function isObjectValueEqual(a: { [key: string]: any }, b: { [key: string]
 		}
 	}
 	return true;
+}
+
+/**
+ * 数组、数组对象去重
+ * @param arr 数组内容
+ * @param attr 需要去重的键值（数组对象）
+ * @returns
+ */
+export function removeDuplicate(arr: any, attr?: string) {
+	if (!arr && !arr.length) {
+		return arr;
+	} else {
+		if (attr) {
+			const obj: any = {};
+			const newArr = arr.reduce((cur: any, item: any) => {
+				obj[item[attr]] ? '' : (obj[item[attr]] = true && item[attr] && cur.push(item));
+				return cur;
+			}, []);
+			return newArr;
+		} else {
+			return Array.from(new Set([...arr]));
+		}
+	}
 }

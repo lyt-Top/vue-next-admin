@@ -18,9 +18,7 @@
 				>
 					<i class="iconfont icon-webicon318 layout-navbars-tagsview-ul-li-iconfont" v-if="isActive(v)"></i>
 					<SvgIcon :name="v.meta.icon" v-if="!isActive(v) && getThemeConfig.isTagsviewIcon" class="pr5" />
-					<span>
-						{{ v.meta.title.indexOf('message') > -1 ? $t(v.meta.title) : v.query ? v.query.tagsViewName : v.params.tagsViewName }}
-					</span>
+					<span>{{ setTagsViewNameI18n(v) }}</span>
 					<template v-if="isActive(v)">
 						<SvgIcon
 							name="ele-RefreshRight"
@@ -82,9 +80,9 @@ interface TagsViewState {
 		x: string | number;
 		y: string | number;
 	};
+	sortable: any;
 	tagsRefsIndex: number;
 	tagsViewList: any[];
-	sortable: any;
 	tagsViewRoutesList: any[];
 }
 interface RouteParams {
@@ -123,9 +121,9 @@ export default defineComponent({
 			routeActive: '',
 			routePath: route.path,
 			dropdown: { x: '', y: '' },
+			sortable: '',
 			tagsRefsIndex: 0,
 			tagsViewList: [],
-			sortable: '',
 			tagsViewRoutesList: [],
 		});
 		// 动态设置 tagsView 风格样式
@@ -135,6 +133,12 @@ export default defineComponent({
 		// 获取布局配置信息
 		const getThemeConfig = computed(() => {
 			return themeConfig.value;
+		});
+		// 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
+		const setTagsViewNameI18n = computed(() => {
+			return (v: any) => {
+				return other.setTagsViewNameI18n(v);
+			};
 		});
 		// 设置 tagsView 高亮
 		const isActive = (v: RouteParams) => {
@@ -541,11 +545,11 @@ export default defineComponent({
 		});
 		// 页面加载时
 		onMounted(() => {
-			// 初始化 vuex 中的 tagsViewRoutes 列表
+			// 初始化 pinia 中的 tagsViewRoutes 列表
 			getTagsViewRoutes();
 			initSortable();
 		});
-		// 路由更新时
+		// 路由更新时（组件内生命钩子）
 		onBeforeRouteUpdate(async (to) => {
 			state.routeActive = setTagsViewHighlight(to);
 			state.routePath = to.meta.isDynamic ? to.meta.isDynamicPath : to.path;
@@ -563,24 +567,6 @@ export default defineComponent({
 				deep: true,
 			}
 		);
-		// 监听路由的变化，用于设置不同的 tagsViewName
-		watch(
-			() => route,
-			(route: any) => {
-				setTimeout(() => {
-					// 区分 "动态路由" 与 "普通路由"
-					state.tagsViewList.forEach((tagsItem: any) => {
-						const path = route.meta.isDynamic ? route.meta.isDynamicPath : route.path;
-						const tagsName = route.meta.isDynamic ? route.params.tagsViewName : route.query.tagsViewName;
-						if (path === tagsItem.path && tagsName) tagsItem.meta.title = tagsName;
-					});
-				});
-			},
-			{
-				deep: true,
-				immediate: true,
-			}
-		);
 		return {
 			isActive,
 			onContextmenu,
@@ -592,6 +578,7 @@ export default defineComponent({
 			onHandleScroll,
 			getThemeConfig,
 			setTagsStyle,
+			setTagsViewNameI18n,
 			refreshCurrentTagsView,
 			closeCurrentTagsView,
 			onCurrentContextmenuClick,

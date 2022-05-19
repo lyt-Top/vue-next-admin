@@ -32,11 +32,38 @@ export function useTitle() {
 	nextTick(() => {
 		let webTitle = '';
 		let globalTitle: string = themeConfig.value.globalTitle;
-		router.currentRoute.value.path === '/login'
-			? (webTitle = router.currentRoute.value.meta.title as any)
-			: (webTitle = i18n.global.t(router.currentRoute.value.meta.title as any));
+		const { path, meta } = router.currentRoute.value;
+		if (path === '/login') {
+			webTitle = <any>meta.title;
+		} else {
+			webTitle = setTagsViewNameI18n(router.currentRoute.value);
+		}
 		document.title = `${webTitle} - ${globalTitle}` || globalTitle;
 	});
+}
+
+/**
+ * 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
+ * @param params 路由 query、params 中的 tagsViewName
+ * @returns 返回当前 tagsViewName 名称
+ */
+export function setTagsViewNameI18n(item: any) {
+	let tagsViewName: any = '';
+	const { query, params, meta } = item;
+	if (query?.tagsViewName || params?.tagsViewName) {
+		if (/zh-cn|en|zh-tw/.test(query?.tagsViewName) || /zh-cn|en|zh-tw/.test(params?.tagsViewName)) {
+			// 国际化
+			const urlTagsParams = (query?.tagsViewName && JSON.parse(query?.tagsViewName)) || (params?.tagsViewName && JSON.parse(params?.tagsViewName));
+			tagsViewName = urlTagsParams[i18n.global.locale];
+		} else {
+			// 非国际化
+			tagsViewName = query?.tagsViewName || params?.tagsViewName;
+		}
+	} else {
+		// 非自定义 tagsView 名称
+		tagsViewName = i18n.global.t(<any>meta.title);
+	}
+	return tagsViewName;
 }
 
 /**
@@ -135,6 +162,7 @@ export function handleEmpty(list: any) {
  * 统一批量导出
  * @method elSvg 导出全局注册 element plus svg 图标
  * @method useTitle 设置浏览器标题国际化
+ * @method setTagsViewNameI18n 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
  * @method lazyImg 图片懒加载
  * @method globalComponentSize() element plus 全局组件大小
  * @method deepClone 对象深克隆
@@ -147,6 +175,9 @@ const other = {
 	},
 	useTitle: () => {
 		useTitle();
+	},
+	setTagsViewNameI18n(route: any) {
+		return setTagsViewNameI18n(route);
 	},
 	lazyImg: (el: any, arr: any) => {
 		lazyImg(el, arr);
