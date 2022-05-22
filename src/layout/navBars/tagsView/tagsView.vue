@@ -67,6 +67,7 @@ import { storeToRefs } from 'pinia';
 import pinia from '/@/stores/index';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import { useKeepALiveNames } from '/@/stores/keepAliveNames';
 import { Session } from '/@/utils/storage';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
@@ -115,6 +116,7 @@ export default defineComponent({
 		const storesTagsViewRoutes = useTagsViewRoutes();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
+		const storesKeepALiveNames = useKeepALiveNames();
 		const route = useRoute();
 		const router = useRouter();
 		const state = reactive<TagsViewState>({
@@ -176,6 +178,7 @@ export default defineComponent({
 					if (v.meta.isAffix && !v.meta.isHide) {
 						v.url = setTagsViewHighlight(v);
 						state.tagsViewList.push({ ...v });
+						storesKeepALiveNames.addCachedView(v);
 					}
 				});
 				await addTagsView(route.path, route);
@@ -202,6 +205,7 @@ export default defineComponent({
 				if (findItem.meta.isLink && !findItem.meta.isIframe) return false;
 				to.meta.isDynamic ? (findItem.params = to.params) : (findItem.query = to.query);
 				findItem.url = setTagsViewHighlight(findItem);
+				await storesKeepALiveNames.addCachedView(findItem);
 				state.tagsViewList.push({ ...findItem });
 				addBrowserSetSession(state.tagsViewList);
 			}
@@ -247,19 +251,26 @@ export default defineComponent({
 				if (to && to.meta.isDynamic) item.params = to?.params ? to?.params : route.params;
 				else item.query = to?.query ? to?.query : route.query;
 				item.url = setTagsViewHighlight(item);
+				await storesKeepALiveNames.addCachedView(item);
 				await state.tagsViewList.push({ ...item });
 				await addBrowserSetSession(state.tagsViewList);
 			});
 		};
 		// 2、刷新当前 tagsView：
-		const refreshCurrentTagsView = (fullPath: string) => {
-			proxy.mittBus.emit('onTagsViewRefreshRouterView', fullPath);
+		const refreshCurrentTagsView = async (fullPath: string) => {
+			const item = state.tagsViewList.find((v: any) => (getThemeConfig.value.isShareTagsView ? v.path === fullPath : v.url === fullPath));
+			if (item != null) {
+				await storesKeepALiveNames.delCachedView(item);
+				proxy.mittBus.emit('onTagsViewRefreshRouterView', fullPath);
+				if (item.meta.isKeepAlive) storesKeepALiveNames.addCachedView(item);
+			}
 		};
 		// 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
 		const closeCurrentTagsView = (path: string) => {
 			state.tagsViewList.map((v: any, k: number, arr: any) => {
 				if (!v.meta.isAffix) {
 					if (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path) {
+						storesKeepALiveNames.delCachedView(v);
 						state.tagsViewList.splice(k, 1);
 						setTimeout(() => {
 							if (state.tagsViewList.length === k && getThemeConfig.value.isShareTagsView ? state.routePath === path : state.routeActive === path) {
@@ -298,6 +309,7 @@ export default defineComponent({
 				Session.get('tagsViewList').map((v: any) => {
 					if (v.meta.isAffix && !v.meta.isHide) {
 						v.url = setTagsViewHighlight(v);
+						storesKeepALiveNames.delOthersCachedViews(v);
 						state.tagsViewList.push({ ...v });
 					}
 				});
@@ -308,6 +320,7 @@ export default defineComponent({
 		// 5、关闭全部 tagsView：如果是设置了固定的（isAffix），不进行关闭
 		const closeAllTagsView = () => {
 			if (Session.get('tagsViewList')) {
+				storesKeepALiveNames.delAllCachedViews();
 				state.tagsViewList = [];
 				Session.get('tagsViewList').map((v: any) => {
 					if (v.meta.isAffix && !v.meta.isHide) {
@@ -531,11 +544,11 @@ export default defineComponent({
 		// 页面卸载时
 		onUnmounted(() => {
 			// 取消非本页面调用监听
-			proxy.mittBus.off('onCurrentContextmenuClick');
+			proxy.mittBus.off('onCurrentContextmenuClick', () => {});
 			// 取消监听布局配置界面开启/关闭拖拽
-			proxy.mittBus.off('openOrCloseSortable');
+			proxy.mittBus.off('openOrCloseSortable', () => {});
 			// 取消监听布局配置开启 TagsView 共用
-			proxy.mittBus.off('openShareTagsView');
+			proxy.mittBus.off('openShareTagsView', () => {});
 			// 取消窗口 resize 监听
 			window.removeEventListener('resize', onSortableResize);
 		});

@@ -60,11 +60,11 @@ import { toRefs, reactive, defineComponent, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
+import Cookies from 'js-cookie';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
 import { initBackEndControlRoutes } from '/@/router/backEnd';
-import { useUserInfo } from '/@/stores/userInfo';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { NextLoading } from '/@/utils/loading';
@@ -73,7 +73,6 @@ export default defineComponent({
 	name: 'loginAccount',
 	setup() {
 		const { t } = useI18n();
-		const stores = useUserInfo();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const route = useRoute();
@@ -95,43 +94,11 @@ export default defineComponent({
 		});
 		// 登录
 		const onSignIn = async () => {
-			// 模拟数据
 			state.loading.signIn = true;
-			let defaultRoles: Array<string> = [];
-			let defaultAuthBtnList: Array<string> = [];
-			// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-			let adminRoles: Array<string> = ['admin'];
-			// admin 按钮权限标识
-			let adminAuthBtnList: Array<string> = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-			// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-			let testRoles: Array<string> = ['common'];
-			// test 按钮权限标识
-			let testAuthBtnList: Array<string> = ['btn.add', 'btn.link'];
-			// 不同用户模拟不同的用户权限
-			if (state.ruleForm.userName === 'admin') {
-				defaultRoles = adminRoles;
-				defaultAuthBtnList = adminAuthBtnList;
-			} else {
-				defaultRoles = testRoles;
-				defaultAuthBtnList = testAuthBtnList;
-			}
-			// 用户信息模拟数据
-			const userInfos = {
-				userName: state.ruleForm.userName,
-				photo:
-					state.ruleForm.userName === 'admin'
-						? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
-						: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
-				time: new Date().getTime(),
-				roles: defaultRoles,
-				authBtnList: defaultAuthBtnList,
-			};
 			// 存储 token 到浏览器缓存
 			Session.set('token', Math.random().toString(36).substr(0));
-			// 存储用户信息到浏览器缓存
-			Session.set('userInfo', userInfos);
-			// 1、请注意执行顺序(存储用户信息到vuex)
-			stores.setUserInfos({ ...userInfos });
+			// 模拟数据，对接接口时，记得删除多余代码及对应依赖的引入。用于 `/src/stores/userInfo.ts` 中不同用户登录判断（模拟数据）
+			Cookies.set('userName', state.ruleForm.userName);
 			if (!themeConfig.value.isRequestRoutes) {
 				// 前端控制路由，2、请注意执行顺序
 				await initFrontEndControlRoutes();

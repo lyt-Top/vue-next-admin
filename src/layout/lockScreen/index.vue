@@ -49,9 +49,9 @@
 						</div>
 					</div>
 					<div class="layout-lock-screen-login-icon">
-						<SvgIcon name="ele-Microphone" />
-						<SvgIcon name="ele-AlarmClock" />
-						<SvgIcon name="ele-SwitchButton" />
+						<SvgIcon name="ele-Microphone" :size="20" />
+						<SvgIcon name="ele-AlarmClock" :size="20" />
+						<SvgIcon name="ele-SwitchButton" :size="20" />
 					</div>
 				</div>
 			</transition>
@@ -255,11 +255,11 @@ export default defineComponent({
 			bottom: 50px;
 			&-time {
 				font-size: 100px;
-				color: var(--color-whites);
+				color: var(--el-color-white);
 			}
 			&-info {
 				font-size: 40px;
-				color: var(--color-whites);
+				color: var(--el-color-white);
 			}
 			&-minutes {
 				font-size: 16px;
@@ -272,7 +272,7 @@ export default defineComponent({
 			border-radius: 100%;
 			border: 1px solid var(--el-border-color-light, #ebeef5);
 			background: rgba(255, 255, 255, 0.1);
-			color: var(--color-whites);
+			color: var(--el-color-white);
 			opacity: 0.8;
 			position: absolute;
 			right: 30px;
@@ -288,7 +288,7 @@ export default defineComponent({
 				position: absolute;
 				top: 150%;
 				font-size: 12px;
-				color: var(--color-whites);
+				color: var(--el-color-white);
 				left: 50%;
 				line-height: 1.2;
 				transform: translate(-50%, -50%);
@@ -299,7 +299,7 @@ export default defineComponent({
 				border: 1px solid rgba(255, 255, 255, 0.5);
 				background: rgba(255, 255, 255, 0.2);
 				box-shadow: 0 0 12px 0 rgba(255, 255, 255, 0.5);
-				color: var(--color-whites);
+				color: var(--el-color-white);
 				opacity: 1;
 				transition: all 0.3s ease;
 				i {
@@ -324,7 +324,7 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		color: var(--color-whites);
+		color: var(--el-color-white);
 		&-box {
 			text-align: center;
 			margin: auto;

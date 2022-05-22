@@ -1,9 +1,9 @@
 <template>
 	<el-config-provider :size="getGlobalComponentSize" :locale="i18nLocale">
-		<router-view v-show="themeConfig.lockScreenTime !== 0" />
+		<router-view v-show="themeConfig.lockScreenTime > 1" />
 		<LockScreen v-if="themeConfig.isLockScreen" />
-		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime !== 0" />
-		<CloseFull />
+		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
+		<CloseFull v-if="!themeConfig.isLockScreen" />
 	</el-config-provider>
 </template>
 

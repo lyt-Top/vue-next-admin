@@ -643,7 +643,7 @@ export default defineComponent({
 			});
 		});
 		onUnmounted(() => {
-			proxy.mittBus.off('layoutMobileResize');
+			proxy.mittBus.off('layoutMobileResize', () => {});
 		});
 		return {
 			openDrawer,

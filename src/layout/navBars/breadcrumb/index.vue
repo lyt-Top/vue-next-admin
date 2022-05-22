@@ -97,7 +97,7 @@ export default defineComponent({
 		});
 		// 页面卸载时
 		onUnmounted(() => {
-			proxy.mittBus.off('getBreadcrumbIndexSetFilterRoutes');
+			proxy.mittBus.off('getBreadcrumbIndexSetFilterRoutes', () => {});
 		});
 		return {
 			setIsShowLogo,

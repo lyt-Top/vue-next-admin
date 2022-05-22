@@ -93,7 +93,6 @@ export default defineComponent({
 		};
 		// 当前路由字符串切割成数组，并删除第一项空内容
 		const initRouteSplit = (path: string) => {
-			state.breadcrumbList = [];
 			if (!themeConfig.value.isBreadcrumb) return false;
 			state.breadcrumbList = [routesList.value[0]];
 			state.routeSplit = path.split('/');
@@ -129,12 +128,16 @@ export default defineComponent({
 	height: inherit;
 	display: flex;
 	align-items: center;
-	padding-left: 15px;
 	.layout-navbars-breadcrumb-icon {
 		cursor: pointer;
 		font-size: 18px;
-		margin-right: 15px;
 		color: var(--next-bg-topBarColor);
+		height: 100%;
+		width: 40px;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
 	}
 	.layout-navbars-breadcrumb-span {
 		opacity: 0.7;

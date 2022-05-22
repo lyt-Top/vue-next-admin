@@ -34,6 +34,7 @@
 - 🐞 修复 `router.push` 路径找不到时报错问题，`404、401 界面` 已移入到 `main` 主布局里（之前全屏）
 - 🐞 修复 [全局修改组件大小失效了](https://gitee.com/lyt-top/vue-next-admin/issues/I551RP)，感谢[lg_boy](https://gitee.com/lg_boy)
 - 🐞 修复 [修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效，问题解决#I567R1](https://gitee.com/lyt-top/vue-next-admin/issues/I567R1),感谢[@lanbao123](https://gitee.com/lanbao123)
+- 🐞 修复 [标记为需要缓存的 tab 页后，再次从左侧菜单打开，还是显示被缓存的页面内容#I4UY3G](https://gitee.com/lyt-top/vue-next-admin/issues/I4UY3G)，感谢@axcc1234、特别感谢群友@华仔
 - 🌈 重构 路由（`/src/router/index.ts`）解决 No match found for location with path "xxx"(前端控制，后端控制未解决) 问题
 
 ## 2.0.2
