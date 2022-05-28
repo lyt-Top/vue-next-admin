@@ -52,10 +52,12 @@
 	--el-text-color-placeholder: var(--next-text-color-placeholder) !important;
 	--el-disabled-bg-color: var(--next-color-disabled) !important;
 	--el-fill-base: var(--next-color-white) !important;
+	--el-fill-colo: var(--next-color-hover-rgba) !important;
+	--el-fill-color: var(--next-color-hover-rgba) !important;
 	--el-fill-color-blank: var(--next-color-disabled) !important;
 	--el-fill-color-light: var(--next-color-hover-rgba) !important;
 	--el-bg-color-overlay: var(--el-color-primary-light-9) !important;
-    --el-mask-color:rgb(42 42 42 / 80%);
+	--el-mask-color: rgb(42 42 42 / 80%);
 
 	// button
 	.el-button {

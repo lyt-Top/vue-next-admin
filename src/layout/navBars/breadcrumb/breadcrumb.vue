@@ -100,8 +100,8 @@ export default defineComponent({
 			state.routeSplitFirst = `/${state.routeSplit[0]}`;
 			state.routeSplitIndex = 1;
 			getBreadcrumbList(routesList.value);
-			if (route.name === 'home') state.breadcrumbList.shift();
-			state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setTagsViewNameI18n(route);
+			if (route.name === 'home' || (route.name === 'notFound' && state.breadcrumbList.length > 1)) state.breadcrumbList.shift();
+			if (state.breadcrumbList.length > 0) state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setTagsViewNameI18n(route);
 		};
 		// 页面加载时
 		onMounted(() => {
@@ -140,6 +140,7 @@ export default defineComponent({
 		}
 	}
 	.layout-navbars-breadcrumb-span {
+		display: flex;
 		opacity: 0.7;
 		color: var(--next-bg-topBarColor);
 	}

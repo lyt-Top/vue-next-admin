@@ -205,8 +205,8 @@ export default defineComponent({
 				if (findItem.meta.isLink && !findItem.meta.isIframe) return false;
 				to.meta.isDynamic ? (findItem.params = to.params) : (findItem.query = to.query);
 				findItem.url = setTagsViewHighlight(findItem);
-				await storesKeepALiveNames.addCachedView(findItem);
 				state.tagsViewList.push({ ...findItem });
+				await storesKeepALiveNames.addCachedView(findItem);
 				addBrowserSetSession(state.tagsViewList);
 			}
 		};

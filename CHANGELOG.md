@@ -2,6 +2,20 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.1.1
+
+`2022.05.27`
+
+- 🌟 更新 依赖更新最新版本
+- 🎯 优化 深色模式下，`<el-button text></el-button>` 时，`:active` 样式
+- 🎯 优化 [页面缓存在刷新之后失效 #I58U75](https://gitee.com/lyt-top/vue-next-admin/issues/I58U75))，感谢[@ls0428](https://gitee.com/ls0428)
+- 🎯 优化 [SvgIcon 对下载的 Svg 图像设置颜色无效 #I59ND0](https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0))，感谢[@elus_z](https://gitee.com/elus_z)
+- 🎯 优化 `/src/utils/toolsValidate.ts` 工具类
+- 🐞 修复 [布局切换，TagsView 显示的 tab 会多一个出来 #I58WGM](https://gitee.com/lyt-top/vue-next-admin/issues/I58WGM)，感谢[@lg_boy](https://gitee.com/lg_boy)
+- 🐞 修复 [如果设置顶部面包屑导航开启图标 isBreadcrumbIcon=true 后，样式有点问题 如果不开启就是正常的 #I58VB8](https://gitee.com/lyt-top/vue-next-admin/issues/I58VB8)
+- 🐞 修复 地址栏路由地址输入错误时，返回首页后，再次输入路由地址错误时，不跳转 404 问题
+- 🐞 修复 [2.1.0 版本的图标选择组件多次点击后功能失效 #I590TH](https://gitee.com/lyt-top/vue-next-admin/issues/I590TH)，感谢[@quber](https://gitee.com/quber)
+
 ## 2.1.0
 
 `2022.04.18`

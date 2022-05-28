@@ -2,7 +2,9 @@
 	<i v-if="isShowIconSvg" class="el-icon" :style="setIconSvgStyle">
 		<component :is="getIconName" />
 	</i>
-	<img v-else-if="isShowIconImg" :src="getIconName" :style="setIconImgStyle" />
+	<div v-else-if="isShowIconImg" :style="setIconImgOutStyle">
+		<img :src="getIconName" :style="setIconSvgInsStyle" />
+	</div>
 	<i v-else :class="getIconName" :style="setIconSvgStyle" />
 </template>
 
@@ -47,15 +49,24 @@ export default defineComponent({
 			return `font-size: ${props.size}px;color: ${props.color};`;
 		});
 		// 设置图片样式
-		const setIconImgStyle = computed(() => {
-			return `width: ${props.size}px;height: ${props.size}px`;
+		const setIconImgOutStyle = computed(() => {
+			return `width: ${props.size}px;height: ${props.size}px;display: inline-block;overflow: hidden;`;
+		});
+		// 设置图片样式
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0
+		const setIconSvgInsStyle = computed(() => {
+			const filterStyle: string[] = [];
+			const compatibles: string[] = ['-webkit', '-ms', '-o', '-moz'];
+			compatibles.forEach((j) => filterStyle.push(`${j}-filter: drop-shadow(${props.color} 30px 0);`));
+			return `width: ${props.size}px;height: ${props.size}px;position: relative;left: -${props.size}px;${filterStyle.join('')}`;
 		});
 		return {
 			getIconName,
 			isShowIconSvg,
 			isShowIconImg,
 			setIconSvgStyle,
-			setIconImgStyle,
+			setIconImgOutStyle,
+			setIconSvgInsStyle,
 		};
 	},
 });

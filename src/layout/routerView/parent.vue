@@ -16,6 +16,7 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useKeepALiveNames } from '/@/stores/keepAliveNames';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import { Session } from '/@/utils/storage';
 
 // 定义接口来定义对象的类型
 interface ParentViewState {
@@ -46,6 +47,8 @@ export default defineComponent({
 		});
 		// 页面加载前，处理缓存，页面刷新时路由缓存处理
 		onBeforeMount(() => {
+			// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
+			if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList').map((item: any) => item.name);
 			state.keepAliveNameList = keepAliveNames.value;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (fullPath: string) => {
 				state.keepAliveNameList = keepAliveNames.value.filter((name: string) => route.name !== name);

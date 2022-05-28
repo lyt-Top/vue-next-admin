@@ -1,6 +1,13 @@
 <template>
 	<div class="icon-selector w100 h100">
-		<el-popover placement="bottom" :width="fontIconWidth" trigger="click" transition="el-zoom-in-top" popper-class="icon-selector-popper">
+		<el-popover
+			placement="bottom"
+			:width="fontIconWidth"
+			trigger="click"
+			transition="el-zoom-in-top"
+			popper-class="icon-selector-popper"
+			@show="onPopoverShow"
+		>
 			<template #reference>
 				<el-input
 					v-model="fontIconSearch"
@@ -126,7 +133,6 @@ export default defineComponent({
 			if (!props.modelValue) return false;
 			state.fontIconSearch = '';
 			state.fontIconPlaceholder = props.modelValue;
-			initFontIconTypeEcho();
 		};
 		// 处理 input 失去焦点时，为空将清空 input 值，为点击选中图标时，将取原先值
 		const onIconBlur = () => {
@@ -137,7 +143,7 @@ export default defineComponent({
 		};
 		// 处理 icon 双向绑定数值回显
 		const initModeValueEcho = () => {
-			if (props.modelValue === '') return false;
+			if (props.modelValue === '') return ((<string | undefined>state.fontIconPlaceholder) = props.placeholder);
 			(<string | undefined>state.fontIconPlaceholder) = props.modelValue;
 			(<string | undefined>state.fontIconPrefix) = props.modelValue;
 		};
@@ -191,8 +197,6 @@ export default defineComponent({
 			state.fontIconPlaceholder = props.placeholder;
 			// 初始化双向绑定回显
 			initModeValueEcho();
-			// 切换时，滚动条置顶。感兴趣可以使用 keep-alive <component :is="xxx"/> 进行缓存
-			selectorScrollbarRef.value.wrap$.scrollTop = 0;
 		};
 		// 图标点击切换
 		const onIconChange = (type: string) => {
@@ -212,14 +216,18 @@ export default defineComponent({
 			emit('clear', state.fontIconPrefix);
 			emit('update:modelValue', state.fontIconPrefix);
 		};
+		// 监听 Popover 打开，用于双向绑定值回显
+		const onPopoverShow = () => {
+			initModeValueEcho();
+			initFontIconTypeEcho();
+		};
 		// 页面加载时
 		onMounted(() => {
-			// 判断默认进来是什么类型图标，进行 tab 回显
-			if (props.type === 'all') initFontIconTypeEcho();
-			else onIconChange(props.type);
+			initModeValueEcho();
 			initResize();
 			getInputWidth();
 		});
+
 		// 监听双向绑定 modelValue 的变化
 		watch(
 			() => props.modelValue,
@@ -236,6 +244,7 @@ export default defineComponent({
 			onClearFontIcon,
 			onIconFocus,
 			onIconBlur,
+			onPopoverShow,
 			...toRefs(state),
 		};
 	},
