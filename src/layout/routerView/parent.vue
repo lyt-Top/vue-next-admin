@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick, watch } from 'vue';
+import { computed, defineComponent, toRefs, reactive, getCurrentInstance, onBeforeMount, onUnmounted, nextTick, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useKeepALiveNames } from '/@/stores/keepAliveNames';
@@ -47,8 +47,6 @@ export default defineComponent({
 		});
 		// 页面加载前，处理缓存，页面刷新时路由缓存处理
 		onBeforeMount(() => {
-			// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
-			if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList').map((item: any) => item.name);
 			state.keepAliveNameList = keepAliveNames.value;
 			proxy.mittBus.on('onTagsViewRefreshRouterView', (fullPath: string) => {
 				state.keepAliveNameList = keepAliveNames.value.filter((name: string) => route.name !== name);
@@ -57,6 +55,16 @@ export default defineComponent({
 					state.refreshRouterViewKey = fullPath;
 					state.keepAliveNameList = keepAliveNames.value;
 				});
+			});
+		});
+		// 页面加载时
+		onMounted(() => {
+			// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
+			// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
+			nextTick(() => {
+				setTimeout(() => {
+					if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList').map((item: any) => item.name);
+				}, 0);
 			});
 		});
 		// 页面卸载时
