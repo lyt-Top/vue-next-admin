@@ -1,5 +1,5 @@
 <template>
-	<div id="printRef">
+	<div ref="printRef">
 		<el-card shadow="hover" header="打印演示">
 			<el-alert
 				title="感谢优秀的 `print-js`，项目地址：https://github.com/crabbly/Print.js。请在打印弹窗 `更多设置` 中开启 `背景图形。`"
@@ -22,11 +22,13 @@ import printJs from 'print-js';
 export default defineComponent({
 	name: 'funPrintJs',
 	setup() {
-		const state = reactive({});
+		const state = reactive({
+			printRef: null as null | HTMLDivElement,
+		});
 		// 打印点击
 		const onPrintJs = () => {
 			printJs({
-				printable: 'printRef',
+				printable: state.printRef,
 				type: 'html',
 				css: ['//at.alicdn.com/t/font_2298093_o73r8wjdhlg.css', '//unpkg.com/element-plus/dist/index.css'],
 				scanStyles: false,

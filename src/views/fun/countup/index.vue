@@ -10,11 +10,11 @@
 			<el-row :gutter="20">
 				<el-col :sm="6" class="mb15" v-for="(v, k) in topCardItemList" :key="k">
 					<div class="countup-card-item countup-card-item-box" :style="{ background: `var(${v.color})` }">
-						<div class="countup-card-item-flex">
+						<div class="countup-card-item-flex" ref="topCardItemRefs">
 							<div class="countup-card-item-title pb3">{{ v.title }}</div>
-							<div class="countup-card-item-title-num pb6" :id="`titleNum${k + 1}`"></div>
+							<div class="countup-card-item-title-num pb6"></div>
 							<div class="countup-card-item-tip pb3">{{ v.tip }}</div>
-							<div class="countup-card-item-tip-num" :id="`tipNum${k + 1}`"></div>
+							<div class="countup-card-item-tip-num"></div>
 						</div>
 						<i :class="v.icon" :style="{ color: v.iconColor }"></i>
 					</div>
@@ -44,6 +44,7 @@ export default defineComponent({
 	name: 'funCountup',
 	setup() {
 		const state = reactive({
+			topCardItemRefs: null as any,
 			topCardItemList: [
 				{
 					title: '今日访问人数',
@@ -86,14 +87,10 @@ export default defineComponent({
 		// 初始化数字滚动
 		const initNumCountUp = () => {
 			nextTick(() => {
-				new CountUp('titleNum1', Math.random() * 10000).start();
-				new CountUp('titleNum2', Math.random() * 10000).start();
-				new CountUp('titleNum3', Math.random() * 10000).start();
-				new CountUp('titleNum4', Math.random() * 10000).start();
-				new CountUp('tipNum1', Math.random() * 1000).start();
-				new CountUp('tipNum2', Math.random() * 1000).start();
-				new CountUp('tipNum3', Math.random() * 1000).start();
-				new CountUp('tipNum4', Math.random() * 1000).start();
+				state.topCardItemRefs.forEach((v: HTMLDivElement) => {
+					new CountUp(v.querySelector('.countup-card-item-title-num') as HTMLDivElement, Math.random() * 10000).start();
+					new CountUp(v.querySelector('.countup-card-item-tip-num') as HTMLDivElement, Math.random() * 1000).start();
+				});
 			});
 		};
 		// 重置/刷新数值

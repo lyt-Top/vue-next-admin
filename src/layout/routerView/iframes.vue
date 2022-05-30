@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-view-bg-white flex mt1" :style="{ height: `calc(100vh - ${setIframeHeight}`, border: 'none' }" v-loading="iframeLoading">
-		<iframe :src="iframeUrl" frameborder="0" height="100%" width="100%" id="iframe" v-show="!iframeLoading"></iframe>
+		<iframe :src="iframeUrl" frameborder="0" height="100%" width="100%" ref="iframeDom" v-show="!iframeLoading"></iframe>
 	</div>
 </template>
 
@@ -20,6 +20,7 @@ export default defineComponent({
 		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		const route = useRoute();
 		const state = reactive({
+			iframeDom: null as HTMLIFrameElement | null,
 			iframeLoading: true,
 			iframeUrl: '',
 		});
@@ -28,7 +29,7 @@ export default defineComponent({
 			state.iframeUrl = <any>route.meta.isLink;
 			nextTick(() => {
 				state.iframeLoading = true;
-				const iframe = document.getElementById('iframe');
+				const iframe = state.iframeDom;
 				if (!iframe) return false;
 				iframe.onload = () => {
 					state.iframeLoading = false;

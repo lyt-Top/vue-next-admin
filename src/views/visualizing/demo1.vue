@@ -1,7 +1,7 @@
 <template>
 	<div class="visualizing-demo1">
 		<!-- 地图 -->
-		<div id="visualizingDemo1" style="height: 100%"></div>
+		<div ref="visualizingDemo1" style="height: 100%"></div>
 		<div class="visualizing-container">
 			<!-- 头部 -->
 			<div class="visualizing-container-head">
@@ -98,6 +98,7 @@ import { echartsMapList, echartsMapData, echartsMapImgs } from './mock/demo1';
 
 // 定义接口来定义对象的类型
 interface Demo1State {
+	visualizingDemo1: any;
 	echartsMapList: any;
 	echartsMapData: any;
 	echartsMapImgs: any;
@@ -110,6 +111,7 @@ export default defineComponent({
 	setup() {
 		const { proxy } = <any>getCurrentInstance();
 		const state = reactive<Demo1State>({
+			visualizingDemo1: null,
 			echartsMapList,
 			echartsMapData,
 			echartsMapImgs,
@@ -142,7 +144,7 @@ export default defineComponent({
 		};
 		// 初始化 echartsMap（地图上的点）
 		const initEchartsMap = () => {
-			const myChart = echarts.init(<HTMLElement>document.getElementById('visualizingDemo1'));
+			const myChart = echarts.init(<HTMLElement>state.visualizingDemo1);
 			const option = {
 				tooltip: {
 					trigger: 'item',

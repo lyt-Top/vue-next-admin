@@ -1,7 +1,7 @@
 <template>
 	<div class="editor-container">
-		<div id="editor-toolbar"></div>
-		<div :id="id" :style="{ height }"></div>
+		<div ref="editorToolbar"></div>
+		<div ref="editorContent" :style="{ height }"></div>
 	</div>
 </template>
 
@@ -13,6 +13,8 @@ import { toolbarKeys } from './toolbar';
 
 // 定义接口来定义对象的类型
 interface WangeditorState {
+	editorToolbar: HTMLDivElement | null;
+	editorContent: HTMLDivElement | null;
 	editor: any;
 }
 
@@ -51,7 +53,9 @@ export default defineComponent({
 	},
 	setup(props, { emit }) {
 		const state = reactive<WangeditorState>({
+			editorToolbar: null,
 			editor: null,
+			editorContent: null,
 		});
 		// 富文本配置
 		const wangeditorConfig = () => {
@@ -79,13 +83,13 @@ export default defineComponent({
 		const initWangeditor = () => {
 			state.editor = createEditor({
 				html: props.modelValue,
-				selector: `#${props.id}`,
+				selector: state.editorContent!,
 				config: wangeditorConfig(),
 				mode: props.mode,
 			});
 			createToolbar({
 				editor: state.editor,
-				selector: '#editor-toolbar',
+				selector: state.editorToolbar!,
 				mode: props.mode,
 				config: toolbarConfig(),
 			});

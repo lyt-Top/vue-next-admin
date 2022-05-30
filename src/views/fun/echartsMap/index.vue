@@ -1,7 +1,7 @@
 <template>
 	<div :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
 		<div class="layout-view-bg-white">
-			<div id="echartsMap" style="height: 100%"></div>
+			<div ref="echartsMap" style="height: 100%"></div>
 		</div>
 	</div>
 </template>
@@ -23,6 +23,7 @@ export default defineComponent({
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		const state: any = reactive({
+			echartsMap: null,
 			echartsMapList,
 			echartsMapData,
 		});
@@ -52,7 +53,7 @@ export default defineComponent({
 		};
 		// 初始化 echartsMap
 		const initEchartsMap = () => {
-			const myChart = echarts.init(<HTMLElement>document.getElementById('echartsMap'));
+			const myChart = echarts.init(<HTMLElement>state.echartsMap);
 			const option = {
 				tooltip: {
 					trigger: 'item',

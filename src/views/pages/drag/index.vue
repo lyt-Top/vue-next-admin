@@ -23,7 +23,7 @@
 		</el-card>
 
 		<el-dialog v-model="dialogVisible" width="769px">
-			<template #title>
+			<template #header>
 				<div v-drag="['.drag-container .el-dialog', '.drag-container .el-dialog__header']">拖动指令效果（v-drag）</div>
 			</template>
 			<p>鼠标放标题头进行 Dialog 对话框拖动</p>
