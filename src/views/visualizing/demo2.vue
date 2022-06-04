@@ -127,7 +127,7 @@
 			<div class="big-data-down-center">
 				<div class="big-data-down-center-one">
 					<div class="big-data-down-center-one-content" ref="rightChartData5">
-						<div id="3DEarth"></div>
+						<div ref="the3DEarth"></div>
 						<div :class="v.topLevelClass" v-for="(v, k) in earth3DBtnList" :key="k">
 							<div class="circle" v-for="i in 4" :key="i"></div>
 							<div class="text-box">
@@ -256,6 +256,7 @@ export default defineComponent({
 			earth3DBtnList,
 			chartData4List,
 			myCharts: [],
+			the3DEarth: null as HTMLDivElement | null,
 		});
 		// 初始化时间
 		const initTime = () => {
@@ -685,7 +686,7 @@ export default defineComponent({
 		};
 		// 3DEarth 地图
 		const init3DEarth = (globeRadius) => {
-			let el = document.getElementById('3DEarth');
+			let el = state.the3DEarth!;
 			el.style.height = `${proxy.$refs.rightChartData5.offsetHeight}px`;
 			const myChart = echarts.init(el);
 			const option = {

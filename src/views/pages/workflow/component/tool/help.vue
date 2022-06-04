@@ -1,7 +1,7 @@
 <template>
 	<div class="workflow-tool-help">
 		<el-dialog v-model="isShow" width="769px">
-			<template #title>
+			<template #header>
 				<div v-drag="['.workflow-tool-help .el-dialog', '.workflow-tool-help .el-dialog__header']">使用帮助</div>
 			</template>
 			<div>1、拖入：鼠标移入左侧导航中，鼠标形状改变时拖动到右侧网格状的视图中。</div>

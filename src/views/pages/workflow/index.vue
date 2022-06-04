@@ -8,10 +8,10 @@
 
 				<!-- 左侧导航区 -->
 				<div class="workflow-content">
-					<div id="workflow-left">
+					<div class="workflow-left">
 						<el-scrollbar>
 							<div
-								:id="`left${key}`"
+								ref="leftNavRefs"
 								v-for="(val, key) in leftNavList"
 								:key="val.id"
 								:style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
@@ -32,11 +32,12 @@
 					</div>
 
 					<!-- 右侧绘画区 -->
-					<div id="workflow-right">
+					<div class="workflow-right" ref="workflowRightRef">
 						<div
 							v-for="(v, k) in jsplumbData.nodeList"
 							:key="v.nodeId"
 							:id="v.nodeId"
+							:data-node-id="v.nodeId"
 							:class="v.class"
 							:style="{ left: v.left, top: v.top }"
 							@click="onItemCloneClick(k)"
@@ -102,6 +103,8 @@ interface XyState {
 	y: string | number;
 }
 interface WorkflowState {
+	workflowRightRef: HTMLDivElement | null;
+	leftNavRefs: any[];
 	leftNavList: any[];
 	dropdownNode: XyState;
 	dropdownLine: XyState;
@@ -132,6 +135,8 @@ export default defineComponent({
 		const { isTagsViewCurrenFull } = storeToRefs(stores);
 		const { copyText } = commonFunction();
 		const state = reactive<WorkflowState>({
+			workflowRightRef: null as HTMLDivElement | null,
+			leftNavRefs: [],
 			leftNavList: [],
 			dropdownNode: { x: '', y: '' },
 			dropdownLine: { x: '', y: '' },
@@ -195,8 +200,8 @@ export default defineComponent({
 		};
 		// 左侧导航-初始化拖动
 		const initSortable = () => {
-			state.leftNavList.forEach((v, k) => {
-				Sortable.create(document.getElementById(`left${k}`) as HTMLElement, {
+			state.leftNavRefs.forEach(v => {
+				Sortable.create(v as HTMLDivElement, {
 					group: {
 						name: 'vue-next-admin-1',
 						pull: 'clone',
@@ -209,7 +214,7 @@ export default defineComponent({
 					onEnd: function (evt: any) {
 						const { name, icon, id } = evt.clone.dataset;
 						const { layerX, layerY, clientX, clientY } = evt.originalEvent;
-						const el = document.querySelector('#workflow-right') as HTMLElement;
+						const el = state.workflowRightRef!;
 						const { x, y, width, height } = el.getBoundingClientRect();
 						if (clientX < x || clientX > width + x || clientY < y || y > y + height) {
 							ElMessage.warning('请把节点拖入到画布中');
@@ -546,7 +551,7 @@ export default defineComponent({
 		.workflow-content {
 			display: flex;
 			height: calc(100% - 35px);
-			#workflow-left {
+			.workflow-left {
 				width: 220px;
 				height: 100%;
 				border-right: 1px solid var(--el-border-color-light, #ebeef5);
@@ -607,7 +612,7 @@ export default defineComponent({
 					}
 				}
 			}
-			#workflow-right {
+			.workflow-right {
 				flex: 1;
 				position: relative;
 				overflow: hidden;
