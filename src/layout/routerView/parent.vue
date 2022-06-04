@@ -63,7 +63,7 @@ export default defineComponent({
 			// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
 			nextTick(() => {
 				setTimeout(() => {
-					if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList').map((item: any) => item.name);
+					if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList')?.map((item: any) => item.name);
 				}, 0);
 			});
 		});
