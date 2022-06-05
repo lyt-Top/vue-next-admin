@@ -1,5 +1,5 @@
 <template>
-	<el-config-provider :size="getGlobalComponentSize" :locale="i18nLocale">
+	<el-config-provider :size="getGlobalComponentSize" :locale="zhCn">
 		<router-view v-show="themeConfig.lockScreenTime > 1" />
 		<LockScreen v-if="themeConfig.isLockScreen" />
 		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
@@ -10,6 +10,7 @@
 <script lang="ts">
 import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch, reactive, toRefs } from 'vue';
 import { useRoute } from 'vue-router';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -30,9 +31,6 @@ export default defineComponent({
 		const stores = useTagsViewRoutes();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
-		const state = reactive({
-			i18nLocale: null,
-		});
 		// 获取全局组件大小
 		const getGlobalComponentSize = computed(() => {
 			return other.globalComponentSize();
@@ -55,10 +53,6 @@ export default defineComponent({
 				proxy.mittBus.on('openSetingsDrawer', () => {
 					openSetingsDrawer();
 				});
-				// 设置 i18n，App.vue 中的 el-config-provider
-				proxy.mittBus.on('getI18nConfig', (locale: string) => {
-					(state.i18nLocale as string | null) = locale;
-				});
 				// 获取缓存中的布局配置
 				if (Local.get('themeConfig')) {
 					storesThemeConfig.setThemeConfig(Local.get('themeConfig'));
@@ -73,7 +67,6 @@ export default defineComponent({
 		// 页面销毁时，关闭监听布局配置/i18n监听
 		onUnmounted(() => {
 			proxy.mittBus.off('openSetingsDrawer', () => {});
-			proxy.mittBus.off('getI18nConfig', () => {});
 		});
 		// 监听路由的变化，设置网站标题
 		watch(
@@ -86,10 +79,10 @@ export default defineComponent({
 			}
 		);
 		return {
+			zhCn,
 			themeConfig,
 			setingsRef,
 			getGlobalComponentSize,
-			...toRefs(state),
 		};
 	},
 });
