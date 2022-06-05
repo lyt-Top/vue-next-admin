@@ -23,8 +23,7 @@
 		"sortablejs": "^1.15.0",
 		"vue": "^3.2.36",
 		"vue-clipboard3": "^2.0.0",
-		"vue-router": "^4.0.15",
-		"vuex": "^4.0.2"
+		"vue-router": "^4.0.15"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
