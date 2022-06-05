@@ -19,6 +19,9 @@
 
 /* Input 输入框、InputNumber 计数器
 ------------------------------- */
+.el-input {
+	height: 100%;
+}
 // 菜单搜索
 .el-autocomplete-suggestion__wrap {
 	max-height: 280px !important;
@@ -60,20 +63,17 @@
 	border-right: none !important;
 	width: 220px;
 }
-// 修复点击左侧菜单折叠再展开时，宽度不跟随问题
-.el-menu--collapse {
-	width: 64px !important;
+.el-menu-item {
+	height: 56px !important;
+	line-height: 56px !important;
 }
 .el-menu-item,
 .el-sub-menu__title {
 	color: var(--next-bg-menuBarColor);
 }
-.el-menu.el-menu--horizontal {
-	border-bottom: none !important;
-}
-.el-menu-item {
-	height: 56px !important;
-	line-height: 56px !important;
+// 修复点击左侧菜单折叠再展开时，宽度不跟随问题
+.el-menu--collapse {
+	width: 64px !important;
 }
 // 外部链接时
 .el-menu-item a,
@@ -90,49 +90,87 @@
 .el-sub-menu .fa {
 	@include generalIcon;
 }
-// 高亮时
+// 水平菜单、横向菜单高亮 背景色，鼠标 hover 时，有子级菜单的背景色
 .el-menu-item.is-active,
-.el-sub-menu.is-active .el-sub-menu__title {
-	@extend .el-menu-hover-bg-color;
-	i,
-	span {
-		color: var(--el-menu-active-color) !important;
-	}
-}
-.el-sub-menu.is-active.is-opened {
-	.el-sub-menu__title {
-		background-color: unset !important;
-	}
-	i,
-	span {
-		color: unset !important;
-	}
-}
-// 鼠标 hover 时
-.el-menu-item:hover,
-.el-sub-menu__title:hover {
+.el-sub-menu.is-active .el-sub-menu__title,
+.el-sub-menu:not(.is-opened):hover .el-sub-menu__title {
 	@extend .el-menu-hover-bg-color;
 }
-// 菜单收起时且时 a 链接
+.el-sub-menu.is-active.is-opened .el-sub-menu__title {
+	background-color: unset !important;
+}
+// 子级菜单背景颜色
+// .el-menu--inline {
+// 	background: var(--next-bg-menuBar-light-1);
+// }
+// 水平菜单、横向菜单折叠 a 标签
 .el-popper.is-dark a {
 	color: var(--el-color-white) !important;
 	text-decoration: none;
 }
-// 菜单收起时鼠标经过背景颜色/字体颜色
-.el-popper.is-light {
+// 水平菜单、横向菜单折叠背景色
+.el-popper.is-pure.is-light {
+	// 水平菜单
 	.el-menu--vertical {
-		.el-menu {
-			background: var(--next-bg-menuBar);
+		background: var(--next-bg-menuBar);
+		.el-sub-menu.is-active .el-sub-menu__title {
+			color: var(--el-menu-active-color);
+		}
+		.el-popper.is-pure.is-light {
+			.el-menu--vertical {
+				.el-sub-menu .el-sub-menu__title {
+					background-color: unset !important;
+					color: var(--next-bg-menuBarColor);
+				}
+				.el-sub-menu.is-active .el-sub-menu__title {
+					color: var(--el-menu-active-color);
+				}
+			}
 		}
 	}
+	// 横向菜单
 	.el-menu--horizontal {
 		background: var(--next-bg-topBar);
-		.el-menu,
 		.el-menu-item,
-		.el-sub-menu__title {
+		.el-sub-menu {
+			height: 50px !important;
+			line-height: 50px !important;
 			color: var(--next-bg-topBarColor);
-			background: var(--next-bg-topBar);
+			.el-sub-menu__title {
+				height: 50px !important;
+				line-height: 50px !important;
+				color: var(--next-bg-topBarColor);
+			}
+			.el-popper.is-pure.is-light {
+				.el-menu--horizontal {
+					.el-sub-menu .el-sub-menu__title {
+						background-color: unset !important;
+						color: var(--next-bg-topBarColor);
+					}
+					.el-sub-menu.is-active .el-sub-menu__title {
+						color: var(--el-menu-active-color);
+					}
+				}
+			}
 		}
+		.el-menu-item.is-active,
+		.el-sub-menu.is-active .el-sub-menu__title {
+			color: var(--el-menu-active-color);
+		}
+	}
+}
+// 横向菜单（经典、横向）布局
+.el-menu.el-menu--horizontal {
+	border-bottom: none !important;
+	width: 100% !important;
+	.el-menu-item,
+	.el-sub-menu__title {
+		height: 50px !important;
+		color: var(--next-bg-topBarColor);
+	}
+	.el-menu-item:not(.is-active):hover,
+	.el-sub-menu:not(.is-active):hover .el-sub-menu__title {
+		color: var(--next-bg-topBarColor);
 	}
 }
 
@@ -149,6 +187,10 @@
 }
 .el-dropdown-menu .el-dropdown-menu__item {
 	white-space: nowrap;
+	&:not(.is-disabled):hover {
+		background-color: var(--el-dropdown-menuItem-hover-fill);
+		color: var(--el-dropdown-menuItem-hover-color);
+	}
 }
 
 /* Steps 步骤条
@@ -193,6 +235,14 @@
 	padding: 15px 20px;
 }
 
+/* Table 表格 element plus 2.2.0 版本
+------------------------------- */
+.el-table {
+	.el-button.is-text {
+		padding: 0;
+	}
+}
+
 /* scrollbar
 ------------------------------- */
 .el-scrollbar__bar {
@@ -221,7 +271,7 @@
 		display: flex;
 		align-items: center;
 		margin-bottom: 0 !important;
-		border-bottom: 1px solid var(--el-border-color-base);
+		border-bottom: 1px solid var(--el-border-color);
 		color: var(--el-text-color-primary);
 	}
 	.el-drawer__body {

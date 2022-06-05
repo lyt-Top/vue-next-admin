@@ -1,11 +1,11 @@
 <template>
 	<el-container class="layout-container flex-center">
-		<Header />
+		<Headers />
 		<el-container class="layout-mian-height-50">
-			<Aside />
+			<Asides />
 			<div class="flex-center layout-backtop">
-				<TagsView v-if="getThemeConfig.isTagsview" />
-				<Main />
+				<TagsView v-if="themeConfig.isTagsview" />
+				<Mains />
 			</div>
 		</el-container>
 		<el-backtop target=".layout-backtop .el-main .el-scrollbar__wrap"></el-backtop>
@@ -13,23 +13,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
-import Aside from '/@/layout/component/aside.vue';
-import Header from '/@/layout/component/header.vue';
-import Main from '/@/layout/component/main.vue';
+import { defineComponent } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import Asides from '/@/layout/component/aside.vue';
+import Headers from '/@/layout/component/header.vue';
+import Mains from '/@/layout/component/main.vue';
 import TagsView from '/@/layout/navBars/tagsView/tagsView.vue';
+
 export default defineComponent({
 	name: 'layoutClassic',
-	components: { Aside, Header, Main, TagsView },
+	components: { Asides, Headers, Mains, TagsView },
 	setup() {
-		const store = useStore();
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		return {
-			getThemeConfig,
+			themeConfig,
 		};
 	},
 });

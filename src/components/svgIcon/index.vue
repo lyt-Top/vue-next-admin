@@ -1,15 +1,17 @@
+<template>
+	<i v-if="isShowIconSvg" class="el-icon" :style="setIconSvgStyle">
+		<component :is="getIconName" />
+	</i>
+	<div v-else-if="isShowIconImg" :style="setIconImgOutStyle">
+		<img :src="getIconName" :style="setIconSvgInsStyle" />
+	</div>
+	<i v-else :class="getIconName" :style="setIconSvgStyle" />
+</template>
+
 <script lang="ts">
-// 渲染函数：https://v3.cn.vuejs.org/guide/render-function.html
-import { h, resolveComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
-// 定义接口来定义对象的类型
-interface SvgIconProps {
-	name: string;
-	size: number;
-	color: string;
-}
-
-export default {
+export default defineComponent({
 	name: 'svgIcon',
 	props: {
 		// svg 图标组件名字
@@ -26,17 +28,46 @@ export default {
 			type: String,
 		},
 	},
-	setup(props: SvgIconProps) {
-		// 定义变量
-		const linesString: any[] = ['https', 'http', '/src', '/assets', import.meta.env.VITE_PUBLIC_PATH];
-		const onLineStyle: string = `font-size: ${props.size}px;color: ${props.color}`;
-		const localsStyle: string = `width: ${props.size}px;height: ${props.size}px`;
-		const eleSetStyle = { class: 'el-icon', style: onLineStyle };
+	setup(props) {
+		// 在线链接、本地引入地址前缀
+		const linesString = ['https', 'http', '/src', '/assets', import.meta.env.VITE_PUBLIC_PATH];
 
-		// 逻辑判断
-		if (props.name?.startsWith('ele-')) return () => h('i', eleSetStyle, [props.name === 'ele-' ? '' : h(resolveComponent(props.name))]);
-		else if (linesString.find((str) => props.name?.startsWith(str))) return () => h('img', { src: props.name, style: localsStyle });
-		else return () => h('i', { class: props.name, style: onLineStyle });
+		// 获取 icon 图标名称
+		const getIconName = computed(() => {
+			return props?.name;
+		});
+		// 用于判断 element plus 自带 svg 图标的显示、隐藏
+		const isShowIconSvg = computed(() => {
+			return props?.name?.startsWith('ele-');
+		});
+		// 用于判断在线链接、本地引入等图标显示、隐藏
+		const isShowIconImg = computed(() => {
+			return linesString.find((str) => props.name?.startsWith(str));
+		});
+		// 设置图标样式
+		const setIconSvgStyle = computed(() => {
+			return `font-size: ${props.size}px;color: ${props.color};`;
+		});
+		// 设置图片样式
+		const setIconImgOutStyle = computed(() => {
+			return `width: ${props.size}px;height: ${props.size}px;display: inline-block;overflow: hidden;`;
+		});
+		// 设置图片样式
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I59ND0
+		const setIconSvgInsStyle = computed(() => {
+			const filterStyle: string[] = [];
+			const compatibles: string[] = ['-webkit', '-ms', '-o', '-moz'];
+			compatibles.forEach((j) => filterStyle.push(`${j}-filter: drop-shadow(${props.color} 30px 0);`));
+			return `width: ${props.size}px;height: ${props.size}px;position: relative;left: -${props.size}px;${filterStyle.join('')}`;
+		});
+		return {
+			getIconName,
+			isShowIconSvg,
+			isShowIconImg,
+			setIconSvgStyle,
+			setIconImgOutStyle,
+			setIconSvgInsStyle,
+		};
 	},
-};
+});
 </script>

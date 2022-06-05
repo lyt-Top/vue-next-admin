@@ -1,11 +1,13 @@
 <template>
-	<component :is="getThemeConfig.layout" />
+	<component :is="themeConfig.layout" />
 </template>
 
 <script lang="ts">
-import { computed, onBeforeMount, onUnmounted, getCurrentInstance, defineComponent, defineAsyncComponent } from 'vue';
-import { useStore } from '/@/store/index';
+import { onBeforeMount, onUnmounted, getCurrentInstance, defineComponent, defineAsyncComponent } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
+
 export default defineComponent({
 	name: 'layout',
 	components: {
@@ -16,24 +18,21 @@ export default defineComponent({
 	},
 	setup() {
 		const { proxy } = <any>getCurrentInstance();
-		const store = useStore();
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return store.state.themeConfig.themeConfig;
-		});
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		// 窗口大小改变时(适配移动端)
 		const onLayoutResize = () => {
-			if (!Local.get('oldLayout')) Local.set('oldLayout', getThemeConfig.value.layout);
+			if (!Local.get('oldLayout')) Local.set('oldLayout', themeConfig.value.layout);
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
-				getThemeConfig.value.isCollapse = false;
+				themeConfig.value.isCollapse = false;
 				proxy.mittBus.emit('layoutMobileResize', {
 					layout: 'defaults',
 					clientWidth,
 				});
 			} else {
 				proxy.mittBus.emit('layoutMobileResize', {
-					layout: Local.get('oldLayout') ? Local.get('oldLayout') : getThemeConfig.value.layout,
+					layout: Local.get('oldLayout') ? Local.get('oldLayout') : themeConfig.value.layout,
 					clientWidth,
 				});
 			}
@@ -48,7 +47,7 @@ export default defineComponent({
 			window.removeEventListener('resize', onLayoutResize);
 		});
 		return {
-			getThemeConfig,
+			themeConfig,
 		};
 	},
 });

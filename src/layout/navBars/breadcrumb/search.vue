@@ -15,7 +15,10 @@
 					</el-icon>
 				</template>
 				<template #default="{ item }">
-					<div><i :class="item.meta.icon" class="mr10"></i>{{ item.meta.title }}</div>
+					<div>
+						<SvgIcon :name="item.meta.icon" class="mr5" />
+						{{ item.meta.title }}
+					</div>
 				</template>
 			</el-autocomplete>
 		</el-dialog>
@@ -25,7 +28,8 @@
 <script lang="ts">
 import { reactive, toRefs, defineComponent, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
-import { useStore } from '/@/store/index';
+import { storeToRefs } from 'pinia';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
 // 定义接口来定义对象的类型
 interface SearchState {
@@ -43,8 +47,9 @@ interface Restaurant {
 export default defineComponent({
 	name: 'layoutBreadcrumbSearch',
 	setup() {
+		const storesTagsViewRoutes = useTagsViewRoutes();
+		const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 		const layoutMenuAutocompleteRef = ref();
-		const store = useStore();
 		const router = useRouter();
 		const state = reactive<SearchState>({
 			isShowSearch: false,
@@ -57,7 +62,9 @@ export default defineComponent({
 			state.isShowSearch = true;
 			initTageView();
 			nextTick(() => {
-				layoutMenuAutocompleteRef.value.focus();
+				setTimeout(() => {
+					layoutMenuAutocompleteRef.value.focus();
+				});
 			});
 		};
 		// 搜索弹窗关闭
@@ -74,14 +81,15 @@ export default defineComponent({
 			return (restaurant: Restaurant) => {
 				return (
 					restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-					restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1
+					restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
+					restaurant.meta.title.indexOf(queryString.toLowerCase()) > -1
 				);
 			};
 		};
 		// 初始化菜单数据
 		const initTageView = () => {
 			if (state.tagsViewList.length > 0) return false;
-			store.state.tagsViewRoutes.tagsViewRoutes.map((v: any) => {
+			tagsViewRoutes.value.map((v: any) => {
 				if (!v.meta.isHide) state.tagsViewList.push({ ...v });
 			});
 		};

@@ -33,3 +33,13 @@
 		}
 	}
 }
+
+/* 页面宽度小于1200px
+------------------------------- */
+@media screen and (max-width: $lg) {
+	.error {
+		.error-flex {
+			padding: 0 30px;
+		}
+	}
+}

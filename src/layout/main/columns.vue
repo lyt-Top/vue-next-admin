@@ -2,12 +2,12 @@
 	<el-container class="layout-container">
 		<ColumnsAside />
 		<div class="layout-columns-warp">
-			<Aside />
+			<Asides />
 			<el-container class="flex-center layout-backtop" :class="{ 'layout-backtop': !isFixedHeader }">
-				<Header v-if="isFixedHeader" />
+				<Headers v-if="isFixedHeader" />
 				<el-scrollbar :class="{ 'layout-backtop': isFixedHeader }">
-					<Header v-if="!isFixedHeader" />
-					<Main />
+					<Headers v-if="!isFixedHeader" />
+					<Mains />
 				</el-scrollbar>
 			</el-container>
 		</div>
@@ -17,18 +17,21 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { useStore } from '/@/store/index';
-import Aside from '/@/layout/component/aside.vue';
-import Header from '/@/layout/component/header.vue';
-import Main from '/@/layout/component/main.vue';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import Asides from '/@/layout/component/aside.vue';
+import Headers from '/@/layout/component/header.vue';
+import Mains from '/@/layout/component/main.vue';
 import ColumnsAside from '/@/layout/component/columnsAside.vue';
+
 export default defineComponent({
 	name: 'layoutColumns',
-	components: { Aside, Header, Main, ColumnsAside },
+	components: { Asides, Headers, Mains, ColumnsAside },
 	setup() {
-		const store = useStore();
+		const storesThemeConfig = useThemeConfig();
+		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const isFixedHeader = computed(() => {
-			return store.state.themeConfig.themeConfig.isFixedHeader;
+			return themeConfig.value.isFixedHeader;
 		});
 		return {
 			isFixedHeader,
