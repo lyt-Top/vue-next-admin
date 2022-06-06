@@ -108,6 +108,7 @@ cnpm run build
 - <a target="_blank" href="https://gitee.com/diygw/diygw-ui-php/">@diygw.com gw-ui-php</a>
 - <a target="_blank" href="https://gitee.com/zsvg/vboot-net">@zsvg vboot-net</a>
 - <a target="_blank" href="https://gitee.com/zsvg/vboot-java">@zsvg vboot-java</a>
+- <a target="_blank" href="https://gitee.com/wonderful-code/buildadmin">@青红造了个白 buildadmin</a>
 
 #### ❤️ 鸣谢列表
 
