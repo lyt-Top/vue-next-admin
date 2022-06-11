@@ -20,20 +20,20 @@
 	<p>&nbsp;</p>
 </div>
 
-#### 介绍
+#### 🌈 介绍
 
 这是 vue3.x + vite2.x + typescript，配置了 eslint、prettier 的通用项目模板。可 clone 后直接使用。js 版本参考官方文档 [vite 创建项目](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)。
 
-#### 代码仓库
+#### 💒 代码仓库
 
 - vue3.x 版本 <a href="https://gitee.com/lyt-top/vue-next-admin/tree/vue-next-admin-mould" target="_blank">https://gitee.com/lyt-top/vue-next-admin/tree/vue-next-admin-mould</a>
 
-#### 安装 cnpm、yarn
+#### 🚧 安装 cnpm、yarn
 
 - 复制代码(桌面 cmd 运行) `npm install -g cnpm --registry=https://registry.npm.taobao.org`
 - 复制代码(桌面 cmd 运行) `npm install -g yarn`
 
-#### 使用说明
+#### ⚡ 使用说明
 
 建议使用 cnpm，因为 yarn 有时会报错。
 
@@ -57,7 +57,7 @@ cnpm run dev
 cnpm run build
 ```
 
-#### 学习交流加 QQ 群
+#### 💯 学习交流加 QQ 群
 
 - 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！
 - 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
@@ -76,7 +76,7 @@ cnpm run build
   	<img src="https://img-blog.csdnimg.cn/70c8a012dd304246bddeac2184c4ab3a.png" width="220" height="220" alt="vue-next-admin 讨论群3" title="vue-next-admin 讨论群3"/>
   </a>
 
-  #### 💒 集成后端
+#### 💒 集成后端
 
 - <a target="_blank" href="https://github.com/PandaGoAdmin/PandaX">@熊猫 PandaGoAdmin</a>
 - <a target="_blank" href="https://toscode.gitee.com/GionConnection/gopro_free">@甜蜜蜜 GoPro 平台</a>
@@ -87,7 +87,7 @@ cnpm run build
 - <a target="_blank" href="https://gitee.com/zsvg/vboot-java">@zsvg vboot-java</a>
 - <a target="_blank" href="https://gitee.com/wonderful-code/buildadmin">@青红造了个白 buildadmin</a>
 
-#### 特别感谢
+#### 💕 特别感谢
 
 特别感谢群里老哥的建议、指导与帮忙，谢谢！
 
@@ -96,7 +96,7 @@ cnpm run build
 - <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
 - @华仔
 
-#### 支持作者
+#### 💌 支持作者
 
 如果觉得框架不错，或者已经在使用了，希望你可以去 <a target="_blank" href="https://github.com/lyt-Top/vue-next-admin">Github</a> 或者
 <a target="_blank" href="https://gitee.com/lyt-top/vue-next-admin">Gitee</a> 帮我点个 ⭐ Star，这将是对我极大的鼓励与支持。
