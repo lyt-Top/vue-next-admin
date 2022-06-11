@@ -7,7 +7,7 @@ const pathResolve = (dir: string) => {
 };
 
 const alias: Record<string, string> = {
-	'/@': pathResolve('/src/'),
+	'/@': pathResolve('./src/'),
 };
 
 const viteConfig: UserConfig = {
@@ -30,8 +30,19 @@ const viteConfig: UserConfig = {
 	},
 	build: {
 		outDir: 'dist',
-		minify: 'esbuild',
 		sourcemap: false,
+		chunkSizeWarningLimit: 1500,
+		rollupOptions: {
+			output: {
+				entryFileNames: `assets/[name].${new Date().getTime()}.js`,
+				chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
+				assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
+				compact: true,
+				manualChunks: {
+					vue: ['vue', 'vue-router'],
+				},
+			},
+		},
 	},
 };
 

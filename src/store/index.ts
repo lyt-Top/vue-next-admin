@@ -1,8 +1,8 @@
-import { createStore } from 'vuex';
+// https://pinia.vuejs.org/
+import { createPinia } from 'pinia';
 
-export default createStore({
-	state: {},
-	mutations: {},
-	actions: {},
-	modules: {},
-});
+// 创建
+const pinia = createPinia();
+
+// 导出
+export default pinia;
