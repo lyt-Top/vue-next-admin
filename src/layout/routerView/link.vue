@@ -7,8 +7,12 @@
 </template>
 
 <script setup name="layoutLinkView">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+
 const route = useRoute();
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	currentRouteMeta: {
 		isLink: '',
@@ -17,8 +21,8 @@ const state = reactive({
 });
 // 设置 link 的高度
 const setLinkHeight = computed(() => {
-	let { isTagsview } = store.state.themeConfig.themeConfig;
-	if (isTagsview) return `114px`;
+	let { isTagsview } = themeConfig.value;
+	if (isTagsview) return `115px`;
 	else return `80px`;
 });
 // 监听路由的变化，设置内容

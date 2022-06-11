@@ -1,5 +1,5 @@
 <template>
-	<div class="error">
+	<div class="error layout-view-bg-white" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
 		<div class="error-flex">
 			<div class="left">
 				<div class="left-item">
@@ -12,16 +12,36 @@
 				</div>
 			</div>
 			<div class="right">
-				<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/error/401.png" />
+				<img
+					src="https://img-blog.csdnimg.cn/3333f265772a4fa89287993500ecbf96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
+				/>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup name="401">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { Session } from '/@/utils/storage';
 
 const router = useRouter();
+const storesThemeConfig = useThemeConfig();
+const storesTagsViewRoutes = useTagsViewRoutes();
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
+// 设置主内容的高度
+const initTagViewHeight = computed(() => {
+	let { isTagsview } = themeConfig.value;
+	if (isTagsViewCurrenFull.value) {
+		return `30px`;
+	} else {
+		if (isTagsview) return `114px`;
+		else return `80px`;
+	}
+});
+// 重新授权
 const onSetAuth = () => {
 	Session.clear();
 	router.push('/login');

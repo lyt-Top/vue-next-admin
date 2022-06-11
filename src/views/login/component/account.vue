@@ -1,7 +1,7 @@
 <template>
 	<el-form size="large" class="login-content-form">
 		<el-form-item class="login-animation1">
-			<el-input type="text" placeholder="用户名 admin 或不输均为 common" v-model="state.ruleForm.userName" clearable autocomplete="off">
+			<el-input text placeholder="用户名 admin 或不输均为 common" v-model="state.ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
 					<el-icon class="el-input__icon"><ele-User /></el-icon>
 				</template>
@@ -24,7 +24,7 @@
 		</el-form-item>
 		<el-form-item class="login-animation3">
 			<el-col :span="15">
-				<el-input type="text" maxlength="4" placeholder="请输入验证码" v-model="state.ruleForm.code" clearable autocomplete="off">
+				<el-input text maxlength="4" placeholder="请输入验证码" v-model="state.ruleForm.code" clearable autocomplete="off">
 					<template #prefix>
 						<el-icon class="el-input__icon"><ele-Position /></el-icon>
 					</template>
@@ -45,14 +45,19 @@
 
 <script setup name="loginAccount">
 import { ElMessage } from 'element-plus';
+import Cookies from 'js-cookie';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { initFrontEndControlRoutes } from '/@/router/frontEnd';
 import { initBackEndControlRoutes } from '/@/router/backEnd';
 import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
+import { NextLoading } from '/@/utils/loading';
 
-const store = useStore();
 const route = useRoute();
 const router = useRouter();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	isShowPassword: false,
 	ruleForm: {
@@ -70,50 +75,16 @@ const currentTime = computed(() => {
 });
 // 登录
 const onSignIn = async () => {
-	// 模拟数据
-	state.loading.signIn = true;
-	let defaultRoles = [];
-	let defaultAuthBtnList = [];
-	// admin 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-	let adminRoles = ['admin'];
-	// admin 按钮权限标识
-	let adminAuthBtnList = ['btn.add', 'btn.del', 'btn.edit', 'btn.link'];
-	// test 页面权限标识，对应路由 meta.roles，用于控制路由的显示/隐藏
-	let testRoles = ['common'];
-	// test 按钮权限标识
-	let testAuthBtnList = ['btn.add', 'btn.link'];
-	// 不同用户模拟不同的用户权限
-	if (state.ruleForm.userName === 'admin') {
-		defaultRoles = adminRoles;
-		defaultAuthBtnList = adminAuthBtnList;
-	} else {
-		defaultRoles = testRoles;
-		defaultAuthBtnList = testAuthBtnList;
-	}
-	// 用户信息模拟数据
-	const userInfos = {
-		userName: state.ruleForm.userName,
-		photo:
-			state.ruleForm.userName === 'admin'
-				? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
-				: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
-		time: new Date().getTime(),
-		roles: defaultRoles,
-		authBtnList: defaultAuthBtnList,
-	};
 	// 存储 token 到浏览器缓存
 	Session.set('token', Math.random().toString(36).substr(0));
-	// 存储用户信息到浏览器缓存
-	Session.set('userInfo', userInfos);
-	// 1、请注意执行顺序(存储用户信息到vuex)
-	store.dispatch('userInfos/setUserInfos', userInfos);
-	if (!store.state.themeConfig.themeConfig.isRequestRoutes) {
+	// 模拟数据，对接接口时，记得删除多余代码及对应依赖的引入。用于 `/src/stores/userInfo.js` 中不同用户登录判断（模拟数据）
+	Cookies.set('userName', state.ruleForm.userName);
+	if (!themeConfig.value.isRequestRoutes) {
 		// 前端控制路由，2、请注意执行顺序
 		await initFrontEndControlRoutes();
 		signInSuccess();
 	} else {
 		// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
-		// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
 		await initBackEndControlRoutes();
 		// 执行完 initBackEndControlRoutes，再执行 signInSuccess
 		signInSuccess();
@@ -139,6 +110,7 @@ const signInSuccess = () => {
 	state.loading.signIn = true;
 	const signInText = '欢迎回来！';
 	ElMessage.success(`${currentTimeInfo}，${signInText}`);
+	NextLoading.start();
 };
 </script>
 

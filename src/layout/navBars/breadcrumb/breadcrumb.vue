@@ -1,18 +1,21 @@
 <template>
-	<div class="layout-navbars-breadcrumb" :style="{ display: isShowBreadcrumb }">
+	<div v-if="isShowBreadcrumb" class="layout-navbars-breadcrumb">
 		<SvgIcon
 			class="layout-navbars-breadcrumb-icon"
-			:name="getThemeConfig.isCollapse ? 'elementExpand' : 'elementFold'"
+			:name="themeConfig.isCollapse ? 'ele-Expand' : 'ele-Fold'"
+			:size="16"
 			@click="onThemeConfigChange"
 		/>
 		<el-breadcrumb class="layout-navbars-breadcrumb-hide">
 			<transition-group name="breadcrumb" mode="out-in">
-				<el-breadcrumb-item v-for="(v, k) in state.breadcrumbList" :key="v.meta.title">
+				<el-breadcrumb-item v-for="(v, k) in state.breadcrumbList" :key="!v.meta.tagsViewName ? v.meta.title : v.meta.tagsViewName">
 					<span v-if="k === state.breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
-						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ v.meta.title }}
+						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="themeConfig.isBreadcrumbIcon" />
+						<div v-if="!v.meta.tagsViewName">{{ v.meta.title }}</div>
+						<div v-else>{{ v.meta.tagsViewName }}</div>
 					</span>
 					<a v-else @click.prevent="onBreadcrumbClick(v)">
-						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="getThemeConfig.isBreadcrumbIcon" />{{ v.meta.title }}
+						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="themeConfig.isBreadcrumbIcon" />{{ v.meta.title }}
 					</a>
 				</el-breadcrumb-item>
 			</transition-group>
@@ -22,7 +25,17 @@
 
 <script setup name="layoutBreadcrumb">
 import { onBeforeRouteUpdate } from 'vue-router';
-const store = useStore();
+import { Local } from '/@/utils/storage';
+import other from '/@/utils/other';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useRoutesList } from '/@/stores/routesList';
+Local;
+
+const stores = useRoutesList();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const { routesList } = storeToRefs(stores);
 const route = useRoute();
 const router = useRouter();
 const state = reactive({
@@ -31,16 +44,12 @@ const state = reactive({
 	routeSplitFirst: '',
 	routeSplitIndex: 1,
 });
-// 获取布局配置信息
-const getThemeConfig = computed(() => {
-	return store.state.themeConfig.themeConfig;
-});
 // 动态设置经典、横向布局不显示
 const isShowBreadcrumb = computed(() => {
 	initRouteSplit(route.path);
-	const { layout, isBreadcrumb } = store.state.themeConfig.themeConfig;
-	if (layout === 'classic' || layout === 'transverse') return 'none';
-	else return isBreadcrumb ? '' : 'none';
+	const { layout, isBreadcrumb } = themeConfig.value;
+	if (layout === 'classic' || layout === 'transverse') return false;
+	else return isBreadcrumb ? true : false;
 });
 // 面包屑点击时
 const onBreadcrumbClick = (v) => {
@@ -50,18 +59,18 @@ const onBreadcrumbClick = (v) => {
 };
 // 展开/收起左侧菜单点击
 const onThemeConfigChange = () => {
-	store.state.themeConfig.themeConfig.isCollapse = !store.state.themeConfig.themeConfig.isCollapse;
+	themeConfig.value.isCollapse = !themeConfig.value.isCollapse;
 	setLocalThemeConfig();
 };
 // 存储布局配置
 const setLocalThemeConfig = () => {
 	Local.remove('themeConfig');
-	Local.set('themeConfig', getThemeConfig.value);
+	Local.set('themeConfig', themeConfig.value);
 };
 // 处理面包屑数据
 const getBreadcrumbList = (arr) => {
-	arr.map((item) => {
-		state.routeSplit.map((v, k, arrs) => {
+	arr.forEach((item) => {
+		state.routeSplit.forEach((v, k, arrs) => {
 			if (state.routeSplitFirst === item.path) {
 				state.routeSplitFirst += `/${arrs[state.routeSplitIndex]}`;
 				state.breadcrumbList.push(item);
@@ -73,13 +82,15 @@ const getBreadcrumbList = (arr) => {
 };
 // 当前路由字符串切割成数组，并删除第一项空内容
 const initRouteSplit = (path) => {
-	if (!store.state.themeConfig.themeConfig.isBreadcrumb) return false;
-	state.breadcrumbList = [store.state.routesList.routesList[0]];
+	if (!themeConfig.value.isBreadcrumb) return false;
+	state.breadcrumbList = [routesList.value[0]];
 	state.routeSplit = path.split('/');
 	state.routeSplit.shift();
 	state.routeSplitFirst = `/${state.routeSplit[0]}`;
 	state.routeSplitIndex = 1;
-	getBreadcrumbList(store.state.routesList.routesList);
+	getBreadcrumbList(routesList.value);
+	if (route.name === 'home' || (route.name === 'notFound' && state.breadcrumbList.length > 1)) state.breadcrumbList.shift();
+	if (state.breadcrumbList.length > 0) state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setTagsViewNameI18n(route);
 };
 // 页面加载时
 onMounted(() => {
@@ -97,14 +108,20 @@ onBeforeRouteUpdate((to) => {
 	height: inherit;
 	display: flex;
 	align-items: center;
-	padding-left: 15px;
 	.layout-navbars-breadcrumb-icon {
 		cursor: pointer;
 		font-size: 18px;
 		margin-right: 15px;
 		color: var(--next-bg-topBarColor);
+		height: 100%;
+		width: 40px;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
 	}
 	.layout-navbars-breadcrumb-span {
+		display: flex;
 		opacity: 0.7;
 		color: var(--next-bg-topBarColor);
 	}

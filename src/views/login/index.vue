@@ -31,21 +31,28 @@
 </template>
 
 <script setup name="login">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { NextLoading } from '/@/utils/loading';
 import Account from '/@/views/login/component/account.vue';
 import Mobile from '/@/views/login/component/mobile.vue';
 import Scan from '/@/views/login/component/scan.vue';
-
 import logoMini from '/@/assets/logo-mini.svg';
 import loginIconTwo from '/@/assets/login-icon-two.svg';
 
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	tabsActiveName: 'account',
 	isScan: false,
 });
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
-	return store.state.themeConfig.themeConfig;
+	return themeConfig.value;
+});
+// 页面加载时
+onMounted(() => {
+	NextLoading.done();
 });
 </script>
 

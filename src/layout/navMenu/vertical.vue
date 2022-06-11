@@ -31,6 +31,8 @@
 </template>
 
 <script setup name="navMenuVertical">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { onBeforeRouteUpdate } from 'vue-router';
 import SubItem from '/@/layout/navMenu/subItem.vue';
 
@@ -40,7 +42,8 @@ const props = defineProps({
 		default: () => [],
 	},
 });
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
 const state = reactive({
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
@@ -53,7 +56,7 @@ const menuLists = computed(() => {
 });
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
-	return store.state.themeConfig.themeConfig;
+	return themeConfig.value;
 });
 // 菜单高亮（详情时，父级高亮）
 const setParentHighlight = (currentRoute) => {
@@ -64,9 +67,9 @@ const setParentHighlight = (currentRoute) => {
 };
 // 设置菜单的收起/展开
 watch(
-	store.state.themeConfig.themeConfig,
+	themeConfig.value,
 	() => {
-		document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = getThemeConfig.value.isCollapse);
+		document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = themeConfig.value.isCollapse);
 	},
 	{
 		immediate: true,
@@ -81,6 +84,6 @@ onBeforeRouteUpdate((to) => {
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	state.defaultActive = setParentHighlight(to);
 	const clientWidth = document.body.clientWidth;
-	if (clientWidth < 1000) getThemeConfig.value.isCollapse = false;
+	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
 });
 </script>

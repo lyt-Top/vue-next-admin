@@ -146,10 +146,13 @@
 </template>
 
 <script setup name="systemAddMenu">
+import { storeToRefs } from 'pinia';
+import { useRoutesList } from '/@/stores/routesList';
 import IconSelector from '/@/components/iconSelector/index.vue';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 
-const store = useStore();
+const stores = useRoutesList();
+const { routesList } = storeToRefs(stores);
 const state = reactive({
 	isShowDialog: false,
 	// 参数请参考 `/src/router/route.ts` 中的 `dynamicRoutes` 路由菜单格式
@@ -168,9 +171,8 @@ const state = reactive({
 			isHide: false, // 是否隐藏
 			isKeepAlive: true, // 是否缓存
 			isAffix: false, // 是否固定
-			isLink: '', // 外链/内嵌时链接地址（http:xxx.com），开启外链条件，`1、isLink:true 2、链接地址不为空`
-			isIframe: false, // 是否内嵌，开启条件，`1、isIframe:true 2、链接地址不为空`
-			roles: '', // 权限标识，取角色管理
+			isLink: '', // 外链/内嵌时链接地址（http:xxx.com），开启外链条件，`1、isLink: 链接地址不为空`
+			isIframe: false, // 是否内嵌，开启条件，`1、isIframe:true 2、isLink：链接地址不为空`
 		},
 		btnPower: '', // 菜单类型为按钮时，权限标识
 	},
@@ -214,7 +216,7 @@ const onSubmit = () => {
 };
 // 页面加载时
 onMounted(() => {
-	state.menuData = getMenuData(store.state.routesList.routesList);
+	state.menuData = getMenuData(routesList.value);
 });
 
 // 暴露变量

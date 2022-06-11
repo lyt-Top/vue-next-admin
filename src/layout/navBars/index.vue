@@ -6,13 +6,16 @@
 </template>
 
 <script setup name="layoutNavBars">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import BreadcrumbIndex from '/@/layout/navBars/breadcrumb/index.vue';
 import TagsView from '/@/layout/navBars/tagsView/tagsView.vue';
 
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 // 是否显示 tagsView
 const setShowTagsView = computed(() => {
-	let { layout, isTagsview } = store.state.themeConfig.themeConfig;
+	let { layout, isTagsview } = themeConfig.value;
 	return layout !== 'classic' && isTagsview;
 });
 </script>

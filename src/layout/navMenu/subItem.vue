@@ -14,7 +14,7 @@
 					<span>{{ val.meta.title }}</span>
 				</template>
 				<template v-else>
-					<a :href="val.meta.isLink" target="_blank" rel="opener">
+					<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
 						<SvgIcon :name="val.meta.icon" />
 						{{ val.meta.title }}
 					</a>

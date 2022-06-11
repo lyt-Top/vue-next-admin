@@ -15,7 +15,10 @@
 					</el-icon>
 				</template>
 				<template #default="{ item }">
-					<div><i :class="item.meta.icon" class="mr10"></i>{{ item.meta.title }}</div>
+					<div>
+						<SvgIcon :name="item.meta.icon" class="mr5" />
+						{{ item.meta.title }}
+					</div>
 				</template>
 			</el-autocomplete>
 		</el-dialog>
@@ -23,8 +26,12 @@
 </template>
 
 <script setup name="layoutBreadcrumbSearch">
+import { storeToRefs } from 'pinia';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
+
+const storesTagsViewRoutes = useTagsViewRoutes();
+const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 const layoutMenuAutocompleteRef = ref();
-const store = useStore();
 const router = useRouter();
 const state = reactive({
 	isShowSearch: false,
@@ -37,7 +44,9 @@ const openSearch = () => {
 	state.isShowSearch = true;
 	initTageView();
 	nextTick(() => {
-		layoutMenuAutocompleteRef.value.focus();
+		setTimeout(() => {
+			layoutMenuAutocompleteRef.value.focus();
+		});
 	});
 };
 // 搜索弹窗关闭
@@ -54,14 +63,15 @@ const createFilter = (queryString) => {
 	return (restaurant) => {
 		return (
 			restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-			restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1
+			restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
+			restaurant.meta.title.indexOf(queryString.toLowerCase()) > -1
 		);
 	};
 };
 // 初始化菜单数据
 const initTageView = () => {
 	if (state.tagsViewList.length > 0) return false;
-	store.state.tagsViewRoutes.tagsViewRoutes.map((v) => {
+	tagsViewRoutes.value.map((v) => {
 		if (!v.meta.isHide) state.tagsViewList.push({ ...v });
 	});
 };

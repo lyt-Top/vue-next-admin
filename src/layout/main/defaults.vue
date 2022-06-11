@@ -13,15 +13,19 @@
 </template>
 
 <script setup name="layoutDefaults">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
 
 const { proxy } = getCurrentInstance();
-const store = useStore();
 const route = useRoute();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
+// 是否固定顶栏
 const isFixedHeader = computed(() => {
-	return store.state.themeConfig.themeConfig.isFixedHeader;
+	return themeConfig.value.isFixedHeader;
 });
 // 监听路由的变化
 watch(

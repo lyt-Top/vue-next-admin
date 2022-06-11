@@ -10,22 +10,28 @@
 </template>
 
 <script setup name="layoutAside">
+import { storeToRefs } from 'pinia';
+import pinia from '/@/stores/index';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import Logo from '/@/layout/logo/index.vue';
 import Vertical from '/@/layout/navMenu/vertical.vue';
 
 const { proxy } = getCurrentInstance();
-const store = useStore();
+const stores = useRoutesList();
+const storesThemeConfig = useThemeConfig();
+const storesTagsViewRoutes = useTagsViewRoutes();
+const { routesList } = storeToRefs(stores);
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 const state = reactive({
 	menuList: [],
 	clientWidth: '',
 });
-// 获取卡片全屏信息
-const isTagsViewCurrenFull = computed(() => {
-	return store.state.tagsViewRoutes.isTagsViewCurrenFull;
-});
 // 设置菜单展开/收起时的宽度
 const setCollapseStyle = computed(() => {
-	const { layout, isCollapse, menuBar } = store.state.themeConfig.themeConfig;
+	const { layout, isCollapse, menuBar } = themeConfig.value;
 	const asideBrTheme = ['#FFFFFF', '#FFF', '#fff', '#ffffff'];
 	const asideBrColor = asideBrTheme.includes(menuBar) ? 'layout-el-aside-br-color' : '';
 	// 判断是否是手机端
@@ -46,18 +52,12 @@ const setCollapseStyle = computed(() => {
 	} else {
 		if (layout === 'columns') {
 			// 分栏布局，菜单收起时宽度给 1px
-			if (isCollapse) {
-				return [asideBrColor, 'layout-aside-pc-1'];
-			} else {
-				return [asideBrColor, 'layout-aside-pc-220'];
-			}
+			if (isCollapse) return [asideBrColor, 'layout-aside-pc-1'];
+			else return [asideBrColor, 'layout-aside-pc-220'];
 		} else {
 			// 其它布局给 64px
-			if (isCollapse) {
-				return [asideBrColor, 'layout-aside-pc-64'];
-			} else {
-				return [asideBrColor, 'layout-aside-pc-220'];
-			}
+			if (isCollapse) return [asideBrColor, 'layout-aside-pc-64'];
+			else return [asideBrColor, 'layout-aside-pc-220'];
 		}
 	}
 });
@@ -66,18 +66,18 @@ const closeLayoutAsideMobileMode = () => {
 	const el = document.querySelector('.layout-aside-mobile-mode');
 	el && el.parentNode?.removeChild(el);
 	const clientWidth = document.body.clientWidth;
-	if (clientWidth < 1000) store.state.themeConfig.themeConfig.isCollapse = false;
+	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
 	document.body.setAttribute('class', '');
 };
 // 设置显示/隐藏 logo
 const setShowLogo = computed(() => {
-	let { layout, isShowLogo } = store.state.themeConfig.themeConfig;
+	let { layout, isShowLogo } = themeConfig.value;
 	return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
 });
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
-	if (store.state.themeConfig.themeConfig.layout === 'columns') return false;
-	state.menuList = filterRoutesFun(store.state.routesList.routesList);
+	if (themeConfig.value.layout === 'columns') return false;
+	state.menuList = filterRoutesFun(routesList.value);
 };
 // 路由过滤递归函数
 const filterRoutesFun = (arr) => {
@@ -95,24 +95,30 @@ const initMenuFixed = (clientWidth) => {
 };
 // 鼠标移入、移出
 const onAsideEnterLeave = (bool) => {
-	let { layout } = store.state.themeConfig.themeConfig;
+	let { layout } = themeConfig.value;
 	if (layout !== 'columns') return false;
 	if (!bool) proxy.mittBus.emit('restoreDefault');
-	store.dispatch('routesList/setColumnsMenuHover', bool);
+	stores.setColumnsMenuHover(bool);
 };
 // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-watch(store.state.themeConfig.themeConfig, (val) => {
+watch(themeConfig.value, (val) => {
 	if (val.isShowLogoChange !== val.isShowLogo) {
 		if (!proxy.$refs.layoutAsideScrollbarRef) return false;
 		proxy.$refs.layoutAsideScrollbarRef.update();
 	}
 });
 // 监听vuex值的变化，动态赋值给菜单中
-watch(store.state, (val) => {
-	let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
-	if (layout === 'classic' && isClassicSplitMenu) return false;
-	setFilterRoutes();
-});
+watch(
+	pinia.state,
+	(val) => {
+		let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
+		if (layout === 'classic' && isClassicSplitMenu) return false;
+		setFilterRoutes();
+	},
+	{
+		deep: true,
+	}
+);
 // 页面加载前
 onBeforeMount(() => {
 	initMenuFixed(document.body.clientWidth);
@@ -123,7 +129,7 @@ onBeforeMount(() => {
 		state.menuList = res.children;
 	});
 	proxy.mittBus.on('setSendClassicChildren', (res) => {
-		let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+		let { layout, isClassicSplitMenu } = themeConfig.value;
 		if (layout === 'classic' && isClassicSplitMenu) {
 			state.menuList = [];
 			state.menuList = res.children;

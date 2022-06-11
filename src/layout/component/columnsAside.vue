@@ -15,28 +15,30 @@
 					:class="{ 'layout-columns-active': state.liIndex === k, 'layout-columns-hover': state.liHoverIndex === k }"
 					:title="v.meta.title"
 				>
-					<div :class="setColumnsAsidelayout" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
+					<div :class="themeConfig.columnsAsideLayout" v-if="!v.meta.isLink || (v.meta.isLink && v.meta.isIframe)">
 						<SvgIcon :name="v.meta.icon" />
 						<div class="columns-vertical-title font12">
 							{{
-								v.meta.title && v.meta.title.length >= 4 ? v.meta.title.substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3) : v.meta.title
+								v.meta.title && v.meta.title.length >= 4
+									? v.meta.title.substr(0, themeConfig.columnsAsideLayout === 'columns-vertical' ? 4 : 3)
+									: v.meta.title
 							}}
 						</div>
 					</div>
-					<div :class="setColumnsAsidelayout" v-else>
+					<div :class="themeConfig.columnsAsideLayout" v-else>
 						<a :href="v.meta.isLink" target="_blank">
 							<SvgIcon :name="v.meta.icon" />
 							<div class="columns-vertical-title font12">
 								{{
 									v.meta.title && v.meta.title.length >= 4
-										? v.meta.title.substr(0, setColumnsAsidelayout === 'columns-vertical' ? 4 : 3)
+										? v.meta.title.substr(0, themeConfig.columnsAsideLayout === 'columns-vertical' ? 4 : 3)
 										: v.meta.title
 								}}
 							</div>
 						</a>
 					</div>
 				</li>
-				<div ref="columnsAsideActiveRef" :class="setColumnsAsideStyle"></div>
+				<div ref="columnsAsideActiveRef" :class="themeConfig.columnsAsideStyle"></div>
 			</ul>
 		</el-scrollbar>
 	</div>
@@ -44,10 +46,18 @@
 
 <script setup name="layoutColumnsAside">
 import { onBeforeRouteUpdate } from 'vue-router';
+import { storeToRefs } from 'pinia';
+import pinia from '/@/stores/index';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
+
 const columnsAsideOffsetTopRefs = ref([]);
 const columnsAsideActiveRef = ref();
 const { proxy } = getCurrentInstance();
-const store = useStore();
+const stores = useRoutesList();
+const storesThemeConfig = useThemeConfig();
+const { routesList, isColumnsMenuHover, isColumnsNavHover } = storeToRefs(stores);
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
 const router = useRouter();
 const state = reactive({
@@ -58,14 +68,6 @@ const state = reactive({
 	liOldPath: null,
 	difference: 0,
 	routeSplit: [],
-});
-// 设置分栏高亮风格
-const setColumnsAsideStyle = computed(() => {
-	return store.state.themeConfig.themeConfig.columnsAsideStyle;
-});
-// 设置分栏布局风格
-const setColumnsAsidelayout = computed(() => {
-	return store.state.themeConfig.themeConfig.columnsAsideLayout;
 });
 // 设置菜单高亮位置移动
 const setColumnsAsideMove = (k) => {
@@ -86,15 +88,14 @@ const onColumnsAsideMenuMouseenter = (v, k) => {
 	state.liOldIndex = k;
 	state.liHoverIndex = k;
 	proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(path));
-	store.dispatch('routesList/setColumnsMenuHover', false);
-	store.dispatch('routesList/setColumnsNavHover', true);
+	stores.setColumnsMenuHover(false);
+	stores.setColumnsNavHover(true);
 };
 // 鼠标移走时，显示原来的子级菜单
 const onColumnsAsideMenuMouseleave = async () => {
-	await store.dispatch('routesList/setColumnsNavHover', false);
+	await stores.setColumnsNavHover(false);
 	// 添加延时器，防止拿到的 store.state.routesList 值不是最新的
 	setTimeout(() => {
-		const { isColumnsMenuHover, isColumnsNavHover } = store.state.routesList;
 		if (!isColumnsMenuHover && !isColumnsNavHover) proxy.mittBus.emit('restoreDefault');
 	}, 100);
 };
@@ -106,7 +107,7 @@ const onColumnsAsideDown = (k) => {
 };
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
-	state.columnsAsideList = filterRoutesFun(store.state.routesList.routesList);
+	state.columnsAsideList = filterRoutesFun(routesList.value);
 	const resData = setSendChildren(route.path);
 	if (Object.keys(resData).length <= 0) return false;
 	onColumnsAsideDown(resData.item[0].k);
@@ -149,17 +150,23 @@ const setColumnsMenuHighlight = (path) => {
 	}, 0);
 };
 // 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
-watch(store.state, (val) => {
-	val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-	if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
-		state.liHoverIndex = null;
-		proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
-	} else {
-		state.liHoverIndex = state.liOldIndex;
-		if (!state.liOldPath) return false;
-		proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+watch(
+	pinia.state,
+	(val) => {
+		val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
+		if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
+			state.liHoverIndex = null;
+			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
+		} else {
+			state.liHoverIndex = state.liOldIndex;
+			if (!state.liOldPath) return false;
+			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+		}
+	},
+	{
+		deep: true,
 	}
-});
+);
 // 页面加载时
 onMounted(() => {
 	setFilterRoutes();
@@ -224,7 +231,7 @@ onBeforeRouteUpdate((to) => {
 			}
 		}
 		.layout-columns-active {
-			color: var(--el-color-white);
+			color: var(--next-bg-columnsMenuBarColor) !important;
 			transition: 0.3s ease-in-out;
 		}
 		.layout-columns-hover {

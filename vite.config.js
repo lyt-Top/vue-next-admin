@@ -19,7 +19,7 @@ const viteConfig = defineConfig((mode) => {
 			vue(),
 			vueSetupExtend(),
 			AutoImport({
-				imports: ['vue', 'vue-router', 'vuex'],
+				imports: ['vue', 'vue-router'],
 			}),
 		],
 		root: process.cwd(),
@@ -49,7 +49,7 @@ const viteConfig = defineConfig((mode) => {
 					assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
 					compact: true,
 					manualChunks: {
-						vue: ['vue', 'vue-router', 'vuex'],
+						vue: ['vue', 'vue-router', 'pinia'],
 						echarts: ['echarts'],
 					},
 				},

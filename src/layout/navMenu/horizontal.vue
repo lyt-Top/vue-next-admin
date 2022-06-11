@@ -1,7 +1,7 @@
 <template>
 	<div class="el-menu-horizontal-warp">
 		<el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-			<el-menu router :default-active="state.defaultActive" background-color="transparent" mode="horizontal">
+			<el-menu router :default-active="state.defaultActive" :ellipsis="false" background-color="transparent" mode="horizontal">
 				<template v-for="val in menuLists">
 					<el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
 						<template #title>
@@ -17,7 +17,7 @@
 								{{ val.meta.title }}
 							</template>
 							<template #title v-else>
-								<a :href="val.meta.isLink" target="_blank" rel="opener">
+								<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
 									<SvgIcon :name="val.meta.icon" />
 									{{ val.meta.title }}
 								</a>
@@ -31,6 +31,9 @@
 </template>
 
 <script setup name="navMenuHorizontal">
+import { storeToRefs } from 'pinia';
+import { useRoutesList } from '/@/stores/routesList';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { onBeforeRouteUpdate } from 'vue-router';
 import SubItem from '/@/layout/navMenu/subItem.vue';
 
@@ -41,8 +44,11 @@ const props = defineProps({
 	},
 });
 const { proxy } = getCurrentInstance();
+const stores = useRoutesList();
+const storesThemeConfig = useThemeConfig();
+const { routesList } = storeToRefs(stores);
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
-const store = useStore();
 const state = reactive({
 	defaultActive: null,
 });
@@ -77,7 +83,7 @@ const filterRoutesFun = (arr) => {
 const setSendClassicChildren = (path) => {
 	const currentPathSplit = path.split('/');
 	let currentData = {};
-	filterRoutesFun(store.state.routesList.routesList).map((v, k) => {
+	filterRoutesFun(routesList.value).map((v, k) => {
 		if (v.path === `/${currentPathSplit[1]}`) {
 			v['k'] = k;
 			currentData['item'] = [{ ...v }];
@@ -90,7 +96,7 @@ const setSendClassicChildren = (path) => {
 // 设置页面当前路由高亮
 const setCurrentRouterHighlight = (currentRoute) => {
 	const { path, meta } = currentRoute;
-	if (store.state.themeConfig.themeConfig.layout === 'classic') {
+	if (themeConfig.value.layout === 'classic') {
 		state.defaultActive = `/${path.split('/')[1]}`;
 	} else {
 		const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
@@ -111,7 +117,7 @@ onBeforeRouteUpdate((to) => {
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	setCurrentRouterHighlight(to);
 	// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
-	let { layout, isClassicSplitMenu } = store.state.themeConfig.themeConfig;
+	let { layout, isClassicSplitMenu } = themeConfig.value;
 	if (layout === 'classic' && isClassicSplitMenu) {
 		proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
 	}

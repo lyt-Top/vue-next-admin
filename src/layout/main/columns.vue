@@ -16,13 +16,17 @@
 </template>
 
 <script setup name="layoutColumns">
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import Aside from '/@/layout/component/aside.vue';
 import Header from '/@/layout/component/header.vue';
 import Main from '/@/layout/component/main.vue';
 import ColumnsAside from '/@/layout/component/columnsAside.vue';
 
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
+// 是否固定顶栏
 const isFixedHeader = computed(() => {
-	return store.state.themeConfig.themeConfig.isFixedHeader;
+	return themeConfig.value.isFixedHeader;
 });
 </script>

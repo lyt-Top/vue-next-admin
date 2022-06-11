@@ -8,12 +8,16 @@
 }
 
 :root {
+	--next-color-white: #ffffff;
 	--next-bg-main-color: #f8f8f8;
 	--next-bg-color: #f5f5ff;
 	--next-border-color-light: #f1f2f3;
 	--next-color-primary-lighter: #ecf5ff;
+	--next-color-success-lighter: #f0f9eb;
+	--next-color-warning-lighter: #fdf6ec;
+	--next-color-danger-lighter: #fef0f0;
 	--next-color-dark-hover: #0000001a;
-	--next-color-menu-hover: rgba(0, 0, 0, 0.1);
+	--next-color-menu-hover: rgba(0, 0, 0, 0.2);
 	--next-color-user-hover: rgba(0, 0, 0, 0.04);
 	--next-color-seting-main: #e9eef3;
 	--next-color-seting-aside: #d3dce6;

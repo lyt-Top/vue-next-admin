@@ -99,16 +99,26 @@
 
 				<!-- 界面设置 -->
 				<el-divider content-position="left">界面设置</el-divider>
-				<div class="layout-breadcrumb-seting-bar-flex">
+				<div class="layout-breadcrumb-seting-bar-flex" :style="{ opacity: getThemeConfig.layout === 'transverse' ? 0.5 : 1 }">
 					<div class="layout-breadcrumb-seting-bar-flex-label">菜单水平折叠</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isCollapse" size="small" @change="onThemeConfigChange"></el-switch>
+						<el-switch
+							v-model="getThemeConfig.isCollapse"
+							:disabled="getThemeConfig.layout === 'transverse'"
+							size="small"
+							@change="onThemeConfigChange"
+						></el-switch>
 					</div>
 				</div>
-				<div class="layout-breadcrumb-seting-bar-flex mt15">
+				<div class="layout-breadcrumb-seting-bar-flex mt15" :style="{ opacity: getThemeConfig.layout === 'transverse' ? 0.5 : 1 }">
 					<div class="layout-breadcrumb-seting-bar-flex-label">菜单手风琴</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isUniqueOpened" size="small" @change="setLocalThemeConfig"></el-switch>
+						<el-switch
+							v-model="getThemeConfig.isUniqueOpened"
+							:disabled="getThemeConfig.layout === 'transverse'"
+							size="small"
+							@change="setLocalThemeConfig"
+						></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
@@ -389,6 +399,9 @@
 </template>
 
 <script setup name="layoutBreadcrumbSeting">
+import { ElMessage } from 'element-plus';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 import { getLightColor, getDarkColor } from '/@/utils/theme';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
@@ -397,17 +410,19 @@ import commonFunction from '/@/utils/commonFunction';
 import other from '/@/utils/other';
 
 const { proxy } = getCurrentInstance();
-const store = useStore();
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
 const state = reactive({
 	isMobile: false,
 });
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
-	return store.state.themeConfig.themeConfig;
+	return themeConfig.value;
 });
 // 1、全局主题
 const onColorPickerChange = () => {
+	if (!getThemeConfig.value.primary) return ElMessage.warning('全局主题 primary 颜色值不能为空');
 	// 颜色加深
 	document.documentElement.style.setProperty('--el-color-primary-dark-2', `${getDarkColor(getThemeConfig.value.primary, 0.1)}`);
 	document.documentElement.style.setProperty('--el-color-primary', getThemeConfig.value.primary);
@@ -420,6 +435,9 @@ const onColorPickerChange = () => {
 // 2、菜单 / 顶栏
 const onBgColorPickerChange = (bg) => {
 	document.documentElement.style.setProperty(`--next-bg-${bg}`, getThemeConfig.value[bg]);
+	if (bg === 'menuBar') {
+		document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, getLightColor(getThemeConfig.value.menuBar, 0.05));
+	}
 	onTopBarGradualChange();
 	onMenuBarGradualChange();
 	onColumnsMenuBarGradualChange();
@@ -519,7 +537,7 @@ const onWartermarkTextInput = (val) => {
 // 5、布局切换
 const onSetLayout = (layout) => {
 	Local.set('oldLayout', layout);
-	if (getThemeConfig.value.layout === layout) return false;
+	if (layout === 'transverse') getThemeConfig.value.isCollapse = false;
 	getThemeConfig.value.layout = layout;
 	getThemeConfig.value.isDrawer = false;
 	initLayoutChangeFun();
@@ -609,7 +627,7 @@ onMounted(() => {
 	});
 });
 onUnmounted(() => {
-	proxy.mittBus.off('layoutMobileResize');
+	proxy.mittBus.off('layoutMobileResize', () => {});
 });
 
 // 暴露变量
@@ -680,7 +698,7 @@ defineExpose({
 				top: 50%;
 				transform: translate(-50%, -50%);
 				border: 1px solid;
-				border-color: var(--el-color-primary-light-4);
+				border-color: var(--el-color-primary-light-5);
 				border-radius: 100%;
 				padding: 4px;
 				.layout-tips-box {
@@ -689,7 +707,7 @@ defineExpose({
 					height: 30px;
 					z-index: 9;
 					border: 1px solid;
-					border-color: var(--el-color-primary-light-4);
+					border-color: var(--el-color-primary-light-5);
 					border-radius: 100%;
 					.layout-tips-txt {
 						transition: inherit;

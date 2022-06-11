@@ -46,9 +46,9 @@
 				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="small" type="text" @click="onOpenAddMenu(scope.row)">新增</el-button>
-						<el-button size="small" type="text" @click="onOpenEditMenu(scope.row)">修改</el-button>
-						<el-button size="small" type="text" @click="onTabelRowDel(scope.row)">删除</el-button>
+						<el-button size="small" text type="primary" @click="onOpenAddMenu(scope.row)">新增</el-button>
+						<el-button size="small" text type="primary" @click="onOpenEditMenu(scope.row)">修改</el-button>
+						<el-button size="small" text type="primary" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
@@ -59,16 +59,19 @@
 </template>
 
 <script setup name="systemMenu">
+import { storeToRefs } from 'pinia';
+import { useRoutesList } from '/@/stores/routesList';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import AddMenu from '/@/views/system/menu/component/addMenu.vue';
 import EditMenu from '/@/views/system/menu/component/editMenu.vue';
 
-const store = useStore();
 const addMenuRef = ref();
 const editMenuRef = ref();
-// 获取 vuex 中的路由
+const stores = useRoutesList();
+const { routesList } = storeToRefs(stores);
+// 获取 pinia 中的路由
 const menuTableData = computed(() => {
-	return store.state.routesList.routesList;
+	return routesList.value;
 });
 // 打开新增菜单弹窗
 const onOpenAddMenu = () => {
