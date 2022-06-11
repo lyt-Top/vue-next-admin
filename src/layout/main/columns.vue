@@ -2,12 +2,12 @@
 	<el-container class="layout-container">
 		<ColumnsAside />
 		<div class="layout-columns-warp">
-			<Aside />
+			<Asides />
 			<el-container class="flex-center layout-backtop">
-				<Header v-if="isFixedHeader" />
+				<Headers v-if="isFixedHeader" />
 				<el-scrollbar>
-					<Header v-if="!isFixedHeader" />
-					<Main />
+					<Headers v-if="!isFixedHeader" />
+					<Mains />
 				</el-scrollbar>
 			</el-container>
 		</div>
@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import Aside from '@/layout/component/aside.vue';
-import Header from '@/layout/component/header.vue';
-import Main from '@/layout/component/main.vue';
+import Asides from '@/layout/component/aside.vue';
+import Headers from '@/layout/component/header.vue';
+import Mains from '@/layout/component/main.vue';
 import ColumnsAside from '@/layout/component/columnsAside.vue';
 export default {
 	name: 'layoutColumns',
-	components: { Aside, Header, Main, ColumnsAside },
+	components: { Asides, Headers, Mains, ColumnsAside },
 	computed: {
 		// 是否开启固定 header
 		isFixedHeader() {

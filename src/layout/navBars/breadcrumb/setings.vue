@@ -212,6 +212,9 @@
 						@click="onCopyConfigClick"
 						>{{ $t('message.layout.copyText') }}
 					</el-button>
+					<el-button size="small" class="copy-config-btn-reset" type="info" icon="el-icon-refresh-right" @click="onResetConfigClick">
+						{{ $t('message.layout.resetText') }}
+					</el-button>
 				</div>
 			</el-scrollbar>
 		</el-drawer>
@@ -348,6 +351,11 @@ export default {
 				this.$message.error('配置复制失败');
 			});
 		},
+		// 一键恢复默认
+		onResetConfigClick() {
+			Local.clear();
+			window.location.reload();
+		},
 	},
 };
 </script>
@@ -483,7 +491,8 @@ export default {
 			width: 100%;
 			margin-top: 15px;
 		}
-		.copy-config-last-btn {
+		.copy-config-btn-reset {
+			width: 100%;
 			margin: 10px 0 0;
 		}
 	}

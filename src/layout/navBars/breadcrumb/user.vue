@@ -122,6 +122,8 @@ export default {
 				if (screenfull.isFullscreen) this.isScreenfull = true;
 				else this.isScreenfull = false;
 			});
+			// 监听菜单 horizontal.vue 滚动条高度更新
+			this.bus.$emit('updateElScrollBar');
 		},
 		// 组件大小改变
 		onComponentSizeChange(size) {

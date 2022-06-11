@@ -7,9 +7,13 @@
 			:style="{ minHeight: `calc(100vh - ${headerHeight}` }"
 		>
 			<LayoutParentView />
-			<Footer v-if="getThemeConfig.isFooter" />
+			<Footers v-if="getThemeConfig.isFooter" />
 		</el-scrollbar>
-		<Link :style="{ height: `calc(100vh - ${headerHeight}` }" :meta="currentRouteMeta" v-if="currentRouteMeta.isLink && !currentRouteMeta.isIframe" />
+		<Links
+			:style="{ height: `calc(100vh - ${headerHeight}` }"
+			:meta="currentRouteMeta"
+			v-if="currentRouteMeta.isLink && !currentRouteMeta.isIframe"
+		/>
 		<Iframes
 			:style="{ height: `calc(100vh - ${headerHeight}` }"
 			:meta="currentRouteMeta"
@@ -21,12 +25,12 @@
 
 <script>
 import LayoutParentView from '@/layout/routerView/parent.vue';
-import Footer from '@/layout/footer/index.vue';
-import Link from '@/layout/routerView/link.vue';
+import Footers from '@/layout/footer/index.vue';
+import Links from '@/layout/routerView/link.vue';
 import Iframes from '@/layout/routerView/iframes.vue';
 export default {
 	name: 'layoutMain',
-	components: { LayoutParentView, Footer, Link, Iframes },
+	components: { LayoutParentView, Footers, Links, Iframes },
 	data() {
 		return {
 			headerHeight: '',

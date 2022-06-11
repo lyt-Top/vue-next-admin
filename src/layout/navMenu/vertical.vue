@@ -15,15 +15,17 @@
 				</template>
 				<SubItem :chil="val.children" />
 			</el-submenu>
-			<el-menu-item :index="val.path" :key="val.path" v-else>
-				<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-				<template slot="title" v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-					<span>{{ $t(val.meta.title) }}</span>
-				</template>
-				<template slot="title" v-else>
-					<a :href="val.meta.isLink" target="_blank">{{ $t(val.meta.title) }}</a></template
-				>
-			</el-menu-item>
+			<template v-else>
+				<el-menu-item :index="val.path" :key="val.path">
+					<i :class="val.meta.icon ? val.meta.icon : ''"></i>
+					<template slot="title" v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+						<span>{{ $t(val.meta.title) }}</span>
+					</template>
+					<template slot="title" v-else>
+						<a :href="val.meta.isLink" target="_blank">{{ $t(val.meta.title) }}</a>
+					</template>
+				</el-menu-item>
+			</template>
 		</template>
 	</el-menu>
 </template>

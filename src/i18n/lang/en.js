@@ -148,6 +148,7 @@ export default {
 		sixColumns: 'Four',
 		tipText: 'Click the button below to copy the layout configuration to `/src/store/modules/themeConfig.js` It has been modified in.',
 		copyText: 'replication configuration',
+		resetText: 'restore default',
 		copyTextSuccess: 'Copy succeeded!',
 		copyTextError: 'Copy failed!',
 	},

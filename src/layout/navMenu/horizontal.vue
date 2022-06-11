@@ -10,18 +10,20 @@
 						</template>
 						<SubItem :chil="val.children" />
 					</el-submenu>
-					<el-menu-item :index="val.path" :key="val.path" v-else>
-						<template slot="title" v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
-							<i :class="val.meta.icon ? val.meta.icon : ''"></i>
-							{{ $t(val.meta.title) }}
-						</template>
-						<template slot="title" v-else>
-							<a :href="val.meta.isLink" target="_blank">
+					<template v-else>
+						<el-menu-item :index="val.path" :key="val.path">
+							<template slot="title" v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 								<i :class="val.meta.icon ? val.meta.icon : ''"></i>
 								{{ $t(val.meta.title) }}
-							</a>
-						</template>
-					</el-menu-item>
+							</template>
+							<template slot="title" v-else>
+								<a :href="val.meta.isLink" target="_blank">
+									<i :class="val.meta.icon ? val.meta.icon : ''"></i>
+									{{ $t(val.meta.title) }}
+								</a>
+							</template>
+						</el-menu-item>
+					</template>
 				</template>
 			</el-menu>
 		</el-scrollbar>

@@ -1,14 +1,14 @@
 <template>
 	<el-aside class="layout-aside" :class="setCollapseWidth" v-if="clientWidth > 1000">
 		<Logo v-if="setShowLogo" />
-		<el-scrollbar class="flex-auto">
+		<el-scrollbar class="flex-auto" ref="layoutAsideRef">
 			<Vertical :menuList="menuList" :class="setCollapseWidth" />
 		</el-scrollbar>
 	</el-aside>
 	<el-drawer :visible.sync="getThemeConfig.isCollapse" :with-header="false" direction="ltr" size="220px" v-else>
 		<el-aside class="layout-aside w100 h100">
 			<Logo v-if="setShowLogo" />
-			<el-scrollbar class="flex-auto">
+			<el-scrollbar class="flex-auto" ref="layoutAsideRef">
 				<Vertical :menuList="menuList" />
 			</el-scrollbar>
 		</el-aside>
@@ -69,6 +69,12 @@ export default {
 		this.bus.$on('layoutMobileResize', (res) => {
 			this.initMenuFixed(res.clientWidth);
 		});
+		// 菜单滚动条监听
+		this.bus.$on('updateElScrollBar', () => {
+			setTimeout(() => {
+				this.$refs.layoutAsideRef.update();
+			}, 300);
+		});
 	},
 	methods: {
 		// 设置/过滤路由（非静态路由/是否显示在菜单中）
@@ -90,6 +96,11 @@ export default {
 		initMenuFixed(clientWidth) {
 			this.clientWidth = clientWidth;
 		},
+	},
+	// 页面销毁时
+	destroyed() {
+		// 取消菜单滚动条监听
+		this.bus.$off('updateElScrollBar', () => {});
 	},
 };
 </script>
