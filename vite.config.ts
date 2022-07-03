@@ -52,22 +52,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 				},
 			},
 		},
-		css: {
-			postcss: {
-				plugins: [
-					{
-						postcssPlugin: 'internal:charset-removal',
-						AtRule: {
-							charset: (atRule) => {
-								if (atRule.name === 'charset') {
-									atRule.remove();
-								}
-							},
-						},
-					},
-				],
-			},
-		},
+		css: { preprocessorOptions: { css: { charset: false } } },
 		define: {
 			__VUE_I18N_LEGACY_API__: JSON.stringify(false),
 			__VUE_I18N_FULL_INSTALL__: JSON.stringify(false),
