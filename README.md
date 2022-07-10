@@ -76,6 +76,7 @@ cnpm run build
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
   2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
   3 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">795345435</a>
+  4 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">736626228</a>
 
   <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
   	<img src="https://img-blog.csdnimg.cn/35e00f12a3fe4820892ec630ca72f15f.png" width="220" height="220" alt="vue-next-admin 讨论群1" title="vue-next-admin 讨论群1"/>
@@ -85,6 +86,9 @@ cnpm run build
   </a>
   <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">
   	<img src="https://img-blog.csdnimg.cn/70c8a012dd304246bddeac2184c4ab3a.png" width="220" height="220" alt="vue-next-admin 讨论群3" title="vue-next-admin 讨论群3"/>
+  </a>
+  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">
+  	<img src="https://img-blog.csdnimg.cn/e5c9704eed1342bc9d9e74b37203402d.png" width="220" height="220" alt="vue-next-admin 讨论群4" title="vue-next-admin 讨论群4"/>
   </a>
 
 #### 💒 集成后端
@@ -97,6 +101,7 @@ cnpm run build
 - <a target="_blank" href="https://gitee.com/zsvg/vboot-net">@zsvg vboot-net</a>
 - <a target="_blank" href="https://gitee.com/zsvg/vboot-java">@zsvg vboot-java</a>
 - <a target="_blank" href="https://gitee.com/wonderful-code/buildadmin">@青红造了个白 buildadmin</a>
+- <a target="_blank" href="https://github.com/xiaodingding/iotfast">@Goodwell iotfast(一个开源的物联网平台)</a>
 
 #### ❤️ 鸣谢列表
 
@@ -130,7 +135,7 @@ cnpm run build
 特别感谢老哥们的建议、指导与帮忙。谢谢！
 
 - <a href="https://gitee.com/click33/sa-plus" target="_blank">@省长</a>
-- <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参
+- <a href="https://gitee.com/jskz/Jskz-SpringCloud" target="_blank">@唐参</a>
 - <a href="https://gitee.com/chuange" target="_blank">@川歌</a>
 - @华仔
 

@@ -970,10 +970,10 @@ $titleWidth: 240px;
 	height: 100%;
 	width: 100%;
 	position: relative;
-	::v-deep(.BMap_cpyCtrl) {
+	:deep(.BMap_cpyCtrl) {
 		display: none;
 	}
-	::v-deep(.anchorBL) {
+	:deep(.anchorBL) {
 		display: none;
 	}
 	.visualizing-container {

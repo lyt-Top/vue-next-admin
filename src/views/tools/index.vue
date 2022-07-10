@@ -481,7 +481,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .tools-warp-form {
-	::v-deep(.el-form-item--small.el-form-item) {
+	:deep(.el-form-item--small.el-form-item) {
 		margin-bottom: 0 !important;
 	}
 	.tools-warp-form-msg {

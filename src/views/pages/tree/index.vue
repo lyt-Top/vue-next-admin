@@ -236,7 +236,7 @@ export default defineComponent({
 			padding-right: 8px;
 			width: 100%;
 		}
-		&::v-deep(.el-tree-node) {
+		&:deep(.el-tree-node) {
 			border: 1px solid var(--next-border-color-light);
 			border-bottom: none;
 			color: #606266;

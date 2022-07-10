@@ -2,6 +2,17 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.2.0
+
+`2022.07.10`
+
+⚡⚡⚡ [/sec/stores/userInfo.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/stores/userInfo.ts) 下添加了 `getApiUserInfo` 接口模拟数据 `setTimeout` 为 3 秒
+
+- 🌟 更新 依赖更新最新版本
+- 🐞 修复 [主界面重新授权按钮点击卡死不跳转登录界面#I5C3JS](https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS)，感谢[@Hero-Typ](https://gitee.com/tian_yu_peng)
+- 🐞 修复 编译警告[#I5CVSB](https://gitee.com/lyt-top/vue-next-admin/issues/I5CVSB)，全局替换成 `:deep(attr)`，感谢[@Linvas](https://gitee.com/linvas)。参考文档：[vue3 sfc-style](https://v3.cn.vuejs.org/api/sfc-style.html#style-scoped)。`node_modules\print-js\dist\print.js` 需 `print-js` 作者适配或去除 `package.json` 中的 `"print-js": "^1.6.0"`
+- 🐞 修复 [vue-next-admin-template-js 版本前端控制路由：userInfo.js 请求用户信息接口报错，加载不到路由 可以写个定时器模拟一下接口 一样的报错#I5F1HP](https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP)，感谢[@白开水](https://gitee.com/libin951223)
+
 ## 2.1.1
 
 `2022.05.27`

@@ -328,7 +328,7 @@ export default defineComponent({
 				}
 			}
 		}
-		::v-deep(.el-card__body) {
+		:deep(.el-card__body) {
 			height: 100%;
 			.filtering-no-data {
 				display: flex;

@@ -679,7 +679,7 @@ export default defineComponent({
 .layout-breadcrumb-seting-bar {
 	height: calc(100vh - 50px);
 	padding: 0 15px;
-	::v-deep(.el-scrollbar__view) {
+	:deep(.el-scrollbar__view) {
 		overflow-x: hidden !important;
 	}
 	.layout-breadcrumb-seting-bar-flex {

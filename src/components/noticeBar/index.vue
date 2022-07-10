@@ -172,7 +172,7 @@ export default defineComponent({
 			.notice-bar-warp-slot {
 				width: 100%;
 				white-space: nowrap;
-				::v-deep(.el-carousel__item) {
+				:deep(.el-carousel__item) {
 					display: flex;
 					align-items: center;
 				}

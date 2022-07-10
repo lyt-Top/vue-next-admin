@@ -200,7 +200,7 @@ export default defineComponent({
 		};
 		// 左侧导航-初始化拖动
 		const initSortable = () => {
-			state.leftNavRefs.forEach(v => {
+			state.leftNavRefs.forEach((v) => {
 				Sortable.create(v as HTMLDivElement, {
 					group: {
 						name: 'vue-next-admin-1',
@@ -555,7 +555,7 @@ export default defineComponent({
 				width: 220px;
 				height: 100%;
 				border-right: 1px solid var(--el-border-color-light, #ebeef5);
-				::v-deep(.el-collapse-item__content) {
+				:deep(.el-collapse-item__content) {
 					padding-bottom: 0;
 				}
 				.workflow-left-title {
@@ -654,7 +654,7 @@ export default defineComponent({
 						color: var(--el-color-primary);
 					}
 				}
-				::v-deep(.jtk-overlay):not(.aLabel) {
+				:deep(.jtk-overlay):not(.aLabel) {
 					padding: 4px 10px;
 					border: 1px solid var(--el-border-color-light, #ebeef5) !important;
 					color: var(--el-text-color-secondary) !important;
@@ -662,7 +662,7 @@ export default defineComponent({
 					border-radius: 3px;
 					font-size: 10px;
 				}
-				::v-deep(.jtk-overlay.workflow-right-empty-label) {
+				:deep(.jtk-overlay.workflow-right-empty-label) {
 					display: none;
 				}
 			}

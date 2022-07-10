@@ -853,7 +853,7 @@ export default defineComponent({
 			.ml15:hover {
 				cursor: pointer;
 			}
-			::v-deep(.el-dropdown) {
+			:deep(.el-dropdown) {
 				font-size: 13px !important;
 				color: #43bdf0;
 				cursor: pointer;

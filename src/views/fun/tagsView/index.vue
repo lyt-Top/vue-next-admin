@@ -110,7 +110,7 @@ export default defineComponent({
 <style scoped lang="scss">
 .fun-tagsview {
 	.fun-tagsview-from-item {
-		::v-deep(.el-form-item__content) {
+		:deep(.el-form-item__content) {
 			margin-left: 0 !important;
 		}
 	}

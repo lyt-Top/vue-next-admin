@@ -7,7 +7,7 @@
 					<div class="personal-user">
 						<div class="personal-user-left">
 							<el-upload class="h100 personal-user-left-upload" action="https://jsonplaceholder.typicode.com/posts/" multiple :limit="1">
-								<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
+								<img src="https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500" />
 							</el-upload>
 						</div>
 						<div class="personal-user-right">
@@ -233,7 +233,7 @@ export default defineComponent({
 			width: 100px;
 			height: 130px;
 			border-radius: 3px;
-			::v-deep(.el-upload) {
+			:deep(.el-upload) {
 				height: 100%;
 			}
 			.personal-user-left-upload {

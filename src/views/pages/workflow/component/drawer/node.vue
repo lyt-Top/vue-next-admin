@@ -240,7 +240,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .workflow-drawer-node {
-	::v-deep {
+	:deep {
 		.el-tabs {
 			box-shadow: unset;
 			border: unset;

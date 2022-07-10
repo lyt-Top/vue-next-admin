@@ -48,7 +48,7 @@ export default defineComponent({
 			frontEndsResetRoute();
 			Cookies.set('userName', state.userAuth);
 			// 模拟切换不同权限用户
-			storesUserInfo.setUserInfos();
+			await storesUserInfo.setUserInfos();
 			await setAddRoute();
 			setFilterMenuAndCacheTagsViewRoutes();
 		};
