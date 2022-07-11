@@ -28,7 +28,7 @@
 				<div v-show="isShowLoockLogin" class="layout-lock-screen-login">
 					<div class="layout-lock-screen-login-box">
 						<div class="layout-lock-screen-login-box-img">
-							<img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg" />
+							<img src="https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500" />
 						</div>
 						<div class="layout-lock-screen-login-box-name">Administrator</div>
 						<div class="layout-lock-screen-login-box-value">
@@ -359,11 +359,11 @@ export default defineComponent({
 		}
 	}
 }
-::v-deep(.el-input-group__append) {
+:deep(.el-input-group__append) {
 	background: var(--el-color-white);
 	padding: 0px 15px;
 }
-::v-deep(.el-input__inner) {
+:deep(.el-input__inner) {
 	border-right-color: var(--el-border-color-extra-light);
 	&:hover {
 		border-color: var(--el-border-color-extra-light);

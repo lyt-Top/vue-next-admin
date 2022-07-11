@@ -176,18 +176,6 @@ export const notFoundAndNoPower = [
  */
 export const staticRoutes: Array<RouteRecordRaw> = [
 	{
-		path: '/',
-		name: '/',
-		component: () => import('/@/layout/index.vue'),
-		meta: {
-			title: '布局界面',
-		},
-		children: [
-			// 请不要往这里 `children` 中添加内容，此内容为了防止 No match found for location with path "xxx" 问题
-			...notFoundAndNoPower,
-		],
-	},
-	{
 		path: '/login',
 		name: 'login',
 		component: () => import('/@/views/login/index.vue'),

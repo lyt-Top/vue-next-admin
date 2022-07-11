@@ -24,7 +24,6 @@ import { initBackEndControlRoutes } from '/@/router/backEnd';
 const storesThemeConfig = useThemeConfig(pinia);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isRequestRoutes } = themeConfig.value;
-if (isRequestRoutes) staticRoutes.splice(0, 1);
 
 /**
  * 创建一个可以被 Vue 应用程序使用的路由实例
@@ -85,9 +84,6 @@ export function formatTwoStageRoutes(arr: any) {
 	return newArr;
 }
 
-// isRequestRoutes 为 true，则开启后端控制路由，路径：`/src/stores/themeConfig.ts`
-if (!isRequestRoutes) initFrontEndControlRoutes();
-
 // 路由加载前
 router.beforeEach(async (to, from, next) => {
 	NProgress.configure({ showSpinner: false });
@@ -113,6 +109,10 @@ router.beforeEach(async (to, from, next) => {
 					await initBackEndControlRoutes();
 					// 动态添加路由：防止非首页刷新时跳转回首页的问题
 					// 确保 addRoute() 时动态添加的路由已经被完全加载上去
+					next({ ...to, replace: true });
+				} else {
+					// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
+					await initFrontEndControlRoutes();
 					next({ ...to, replace: true });
 				}
 			} else {
