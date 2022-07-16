@@ -129,10 +129,10 @@ onBeforeRouteUpdate((to) => {
 	flex: 1;
 	overflow: hidden;
 	margin-right: 30px;
-	::v-deep(.el-scrollbar__bar.is-vertical) {
+	:deep(.el-scrollbar__bar.is-vertical) {
 		display: none;
 	}
-	::v-deep(a) {
+	:deep(a) {
 		width: 100%;
 	}
 	.el-menu.el-menu--horizontal {

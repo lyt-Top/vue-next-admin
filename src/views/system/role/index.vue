@@ -1,5 +1,19 @@
 <template>
 	<div class="system-role-container">
+		<el-form :inline="true" :model="state.formInline" class="demo-form-inline" size="default">
+			<el-form-item label="Approved by">
+				<el-input v-model="state.formInline.user" placeholder="Approved by" />
+			</el-form-item>
+			<el-form-item label="Activity zone">
+				<el-select v-model="state.formInline.region" placeholder="Activity zone">
+					<el-option label="Zone one" value="shanghai" />
+					<el-option label="Zone two" value="beijing" />
+				</el-select>
+			</el-form-item>
+			<el-form-item>
+				<el-button type="primary">Query</el-button>
+			</el-form-item>
+		</el-form>
 		<el-card shadow="hover">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
@@ -73,6 +87,10 @@ const state = reactive({
 			pageNum: 1,
 			pageSize: 10,
 		},
+	},
+	formInline: {
+		user: '',
+		region: '',
 	},
 });
 // 初始化表格数据

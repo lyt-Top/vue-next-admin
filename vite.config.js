@@ -54,33 +54,8 @@ const viteConfig = defineConfig((mode) => {
 					},
 				},
 			},
-			terserOptions: {
-				compress: {
-					drop_console: true,
-					drop_debugger: true,
-				},
-				ie8: true,
-				output: {
-					comments: true,
-				},
-			},
 		},
-		css: {
-			postcss: {
-				plugins: [
-					{
-						postcssPlugin: 'internal:charset-removal',
-						AtRule: {
-							charset: (atRule) => {
-								if (atRule.name === 'charset') {
-									atRule.remove();
-								}
-							},
-						},
-					},
-				],
-			},
-		},
+		css: { preprocessorOptions: { css: { charset: false } } },
 	};
 });
 

@@ -40,7 +40,7 @@ onMounted(() => {
 	text-align: center;
 	@extend .login-scan-animation;
 	animation-delay: 0.1s;
-	::v-deep(img) {
+	:deep(img) {
 		margin: auto;
 	}
 	.login-msg {

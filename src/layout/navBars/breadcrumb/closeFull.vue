@@ -34,7 +34,7 @@ const onCloseFullscreen = () => {
 		background: rgba(0, 0, 0, 0.1);
 		transition: all 0.3s ease;
 		position: relative;
-		::v-deep(i) {
+		:deep(i) {
 			position: absolute;
 			left: 10px;
 			top: 35px;
@@ -43,7 +43,7 @@ const onCloseFullscreen = () => {
 		}
 		&:hover {
 			transition: all 0.3s ease;
-			::v-deep(i) {
+			:deep(i) {
 				color: var(--el-color-primary);
 				transition: all 0.3s ease;
 			}

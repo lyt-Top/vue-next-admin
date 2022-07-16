@@ -26,7 +26,6 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { Session } from '/@/utils/storage';
 
-const router = useRouter();
 const storesThemeConfig = useThemeConfig();
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -43,8 +42,11 @@ const initTagViewHeight = computed(() => {
 });
 // 重新授权
 const onSetAuth = () => {
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
+	// 清除缓存/token等
 	Session.clear();
-	router.push('/login');
+	// 使用 reload 时，不需要调用 resetRoute() 重置路由
+	window.location.reload();
 };
 </script>
 
