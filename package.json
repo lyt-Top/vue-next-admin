@@ -17,22 +17,22 @@
 		"js-cookie": "^3.0.1",
 		"mitt": "^3.0.0",
 		"nprogress": "^0.2.0",
-		"pinia": "^2.0.14",
+		"pinia": "^2.0.16",
 		"qrcodejs2-fixes": "^0.0.2",
 		"screenfull": "^6.0.2",
 		"sortablejs": "^1.15.0",
 		"vue": "^3.2.37",
 		"vue-clipboard3": "^2.0.0",
-		"vue-router": "^4.1.1"
+		"vue-router": "^4.1.2"
 	},
 	"devDependencies": {
 		"@types/axios": "^0.14.0",
 		"@types/clipboard": "^2.0.1",
-		"@types/node": "^18.0.3",
+		"@types/node": "^18.0.5",
 		"@types/nprogress": "^0.2.0",
-		"@typescript-eslint/eslint-plugin": "^5.30.5",
-		"@typescript-eslint/parser": "^5.30.5",
-		"@vitejs/plugin-vue": "^2.3.3",
+		"@typescript-eslint/eslint-plugin": "^5.30.6",
+		"@typescript-eslint/parser": "^5.30.6",
+		"@vitejs/plugin-vue": "^3.0.0",
 		"@vue/compiler-sfc": "^3.2.37",
 		"dotenv": "^16.0.1",
 		"eslint": "^8.19.0",
@@ -41,7 +41,7 @@
 		"sass": "^1.53.0",
 		"sass-loader": "^13.0.2",
 		"typescript": "^4.7.4",
-		"vite": "^2.9.14",
+		"vite": "^3.0.0",
 		"vue-eslint-parser": "^9.0.3"
 	},
 	"browserslist": [
