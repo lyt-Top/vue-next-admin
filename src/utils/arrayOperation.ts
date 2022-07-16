@@ -8,7 +8,7 @@ export function judementSameArr(newArr: unknown[] | string[], oldArr: string[]):
 	const news = removeDuplicate(newArr);
 	const olds = removeDuplicate(oldArr);
 	let count = 0;
-	const leng = olds.length;
+	const leng = news.length;
 	for (let i in olds) {
 		for (let j in news) {
 			if (olds[i] === news[j]) count++;

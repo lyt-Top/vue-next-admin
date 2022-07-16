@@ -24,7 +24,6 @@ import { initBackEndControlRoutes } from '/@/router/backEnd';
 const storesThemeConfig = useThemeConfig(pinia);
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isRequestRoutes } = themeConfig.value;
-if (isRequestRoutes) staticRoutes.splice(0, 1);
 
 /**
  * 创建一个可以被 Vue 应用程序使用的路由实例
