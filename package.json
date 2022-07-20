@@ -32,7 +32,7 @@
 		"@types/nprogress": "^0.2.0",
 		"@typescript-eslint/eslint-plugin": "^5.30.6",
 		"@typescript-eslint/parser": "^5.30.6",
-		"@vitejs/plugin-vue": "^3.0.0",
+		"@vitejs/plugin-vue": "^2.3.3",
 		"@vue/compiler-sfc": "^3.2.37",
 		"dotenv": "^16.0.1",
 		"eslint": "^8.19.0",
@@ -41,7 +41,7 @@
 		"sass": "^1.53.0",
 		"sass-loader": "^13.0.2",
 		"typescript": "^4.7.4",
-		"vite": "^3.0.0",
+		"vite": "^2.9.14",
 		"vue-eslint-parser": "^9.0.3"
 	},
 	"browserslist": [
