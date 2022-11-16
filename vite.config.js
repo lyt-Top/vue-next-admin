@@ -44,9 +44,9 @@ const viteConfig = defineConfig((mode) => {
 			chunkSizeWarningLimit: 1500,
 			rollupOptions: {
 				output: {
-					entryFileNames: `assets/[name].${new Date().getTime()}.js`,
-					chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
-					assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
+					entryFileNames: `assets/[name].[hash].js`,
+					chunkFileNames: `assets/[name].[hash].js`,
+					assetFileNames: `assets/[name].[hash].[ext]`,
 					compact: true,
 					manualChunks: {
 						vue: ['vue', 'vue-router', 'pinia'],
