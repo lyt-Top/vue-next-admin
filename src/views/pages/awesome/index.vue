@@ -1,5 +1,5 @@
 <template>
-	<div class="awesome-container">
+	<div class="awesome-container layout-pd">
 		<el-card shadow="hover" :header="`fontawesome 字体图标(自动载入)：${sheetsIconList.length - 24}个`">
 			<el-row class="iconfont-row">
 				<el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2" v-for="(v, k) in sheetsIconList" :key="k">

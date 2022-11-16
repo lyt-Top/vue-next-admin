@@ -1,5 +1,5 @@
 <template>
-	<div class="form-rules-container">
+	<div class="form-rules-container layout-pd">
 		<el-card shadow="hover" header="表单组件1"> <FormRulesOne :data="formRulesOneData" ref="pagesFormRulesOneRef" /></el-card>
 		<el-card shadow="hover" header="表单组件2" class="mt15"><FormRulesTwo ref="pagesFormRulesTwoRef" /> </el-card>
 		<el-card shadow="hover" header="表单组件3" class="mt15"> <FormRulesThree ref="pagesFormRulesThreeRef" /></el-card>
@@ -19,21 +19,20 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent, getCurrentInstance } from 'vue';
+import { defineAsyncComponent, toRefs, reactive, defineComponent, ref } from 'vue';
 import { ElMessage } from 'element-plus';
-import FormRulesOne from '/@/views/pages/formRules/component/formRulesOne.vue';
-import FormRulesTwo from '/@/views/pages/formRules/component/formRulesTwo.vue';
-import FormRulesThree from '/@/views/pages/formRules/component/formRulesThree.vue';
 
 export default defineComponent({
 	name: 'pagesFormRules',
 	components: {
-		FormRulesOne,
-		FormRulesTwo,
-		FormRulesThree,
+		FormRulesOne: defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesOne.vue')),
+		FormRulesTwo: defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesTwo.vue')),
+		FormRulesThree: defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesThree.vue')),
 	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const pagesFormRulesOneRef = ref();
+		const pagesFormRulesTwoRef = ref();
+		const pagesFormRulesThreeRef = ref();
 		const state = reactive({
 			formRulesOneData: {
 				name: 'lyt',
@@ -43,25 +42,25 @@ export default defineComponent({
 			},
 		});
 		// 表单组件验证
-		const formRulesValidate = (pageRef: string, sonRef: string) => {
+		const formRulesValidate = (pageRef: any, sonRef: string) => {
 			return new Promise((resolve) => {
-				proxy.$refs[pageRef].$refs[sonRef].validate((valid: boolean) => {
+				pageRef.value.$refs[sonRef].validate((valid: boolean) => {
 					if (valid) resolve(valid);
 				});
 			});
 		};
 		// 表单组件重置
 		const formRulesResetFields = () => {
-			proxy.$refs.pagesFormRulesOneRef.$refs.formRulesOneRef.resetFields();
-			proxy.$refs.pagesFormRulesTwoRef.$refs.formRulesTwoRef.resetFields();
-			proxy.$refs.pagesFormRulesThreeRef.$refs.formRulesThreeRef.resetFields();
+			pagesFormRulesOneRef.value.$refs.formRulesOneRef.resetFields();
+			pagesFormRulesTwoRef.value.$refs.formRulesTwoRef.resetFields();
+			pagesFormRulesThreeRef.value.$refs.formRulesThreeRef.resetFields();
 		};
 		// 验证表单
 		const onSubmitForm = () => {
 			Promise.all([
-				formRulesValidate('pagesFormRulesOneRef', 'formRulesOneRef'),
-				formRulesValidate('pagesFormRulesTwoRef', 'formRulesTwoRef'),
-				formRulesValidate('pagesFormRulesThreeRef', 'formRulesThreeRef'),
+				formRulesValidate(pagesFormRulesOneRef, 'formRulesOneRef'),
+				formRulesValidate(pagesFormRulesTwoRef, 'formRulesTwoRef'),
+				formRulesValidate(pagesFormRulesThreeRef, 'formRulesThreeRef'),
 			]).then(() => {
 				ElMessage.success('表单全部验证成功');
 			});
@@ -71,6 +70,9 @@ export default defineComponent({
 			formRulesResetFields();
 		};
 		return {
+			pagesFormRulesOneRef,
+			pagesFormRulesTwoRef,
+			pagesFormRulesThreeRef,
 			onSubmitForm,
 			onResetForm,
 			...toRefs(state),

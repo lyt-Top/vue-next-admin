@@ -1,6 +1,6 @@
 <template>
-	<div class="system-user-container">
-		<el-card shadow="hover">
+	<div class="system-user-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入用户名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -59,10 +59,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
+import { defineAsyncComponent, toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddUer from '/@/views/system/user/component/addUser.vue';
-import EditUser from '/@/views/system/user/component/editUser.vue';
 
 // 定义接口来定义对象的类型
 interface TableDataRow {
@@ -93,7 +91,10 @@ interface TableDataState {
 
 export default defineComponent({
 	name: 'systemUser',
-	components: { AddUer, EditUser },
+	components: {
+		AddUer: defineAsyncComponent(() => import('/@/views/system/user/component/addUser.vue')),
+		EditUser: defineAsyncComponent(() => import('/@/views/system/user/component/editUser.vue')),
+	},
 	setup() {
 		const addUserRef = ref();
 		const editUserRef = ref();
@@ -175,3 +176,17 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style scoped lang="scss">
+.system-user-container {
+	:deep(.el-card__body) {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		overflow: auto;
+		.el-table {
+			flex: 1;
+		}
+	}
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-	<div class="form-adapt-container">
+	<div class="form-adapt-container layout-pd">
 		<el-card shadow="hover" header="表单自适应演示(改变窗口查看效果)">
 			<el-form :model="form" size="default" label-width="100px" class="mt35 mb35">
 				<el-row :gutter="35">

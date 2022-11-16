@@ -17,7 +17,7 @@
 								{{ $t(val.meta.title) }}
 							</template>
 							<template #title v-else>
-								<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
+								<a class="w100" @click.prevent="onALinkClick(val)">
 									<SvgIcon :name="val.meta.icon" />
 									{{ $t(val.meta.title) }}
 								</a>
@@ -31,16 +31,19 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent, getCurrentInstance, onMounted, nextTick, onBeforeMount } from 'vue';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { defineAsyncComponent, toRefs, reactive, computed, defineComponent, onMounted, nextTick, onBeforeMount, ref } from 'vue';
+import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import SubItem from '/@/layout/navMenu/subItem.vue';
+import { verifyUrl } from '/@/utils/toolsValidate';
+import mittBus from '/@/utils/mitt';
 
 export default defineComponent({
 	name: 'navMenuHorizontal',
-	components: { SubItem },
+	components: {
+		SubItem: defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue')),
+	},
 	props: {
 		menuList: {
 			type: Array,
@@ -48,12 +51,13 @@ export default defineComponent({
 		},
 	},
 	setup(props) {
-		const { proxy } = <any>getCurrentInstance();
+		const elMenuHorizontalScrollRef = ref();
 		const stores = useRoutesList();
 		const storesThemeConfig = useThemeConfig();
 		const { routesList } = storeToRefs(stores);
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const route = useRoute();
+		const router = useRouter();
 		const state = reactive({
 			defaultActive: null,
 		});
@@ -64,14 +68,14 @@ export default defineComponent({
 		// 设置横向滚动条可以鼠标滚轮滚动
 		const onElMenuHorizontalScroll = (e: any) => {
 			const eventDelta = e.wheelDelta || -e.deltaY * 40;
-			proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft = proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft + eventDelta / 4;
+			elMenuHorizontalScrollRef.value.$refs.wrap$.scrollLeft = elMenuHorizontalScrollRef.value.$refs.wrap$.scrollLeft + eventDelta / 4;
 		};
 		// 初始化数据，页面刷新时，滚动条滚动到对应位置
 		const initElMenuOffsetLeft = () => {
 			nextTick(() => {
 				let els: any = document.querySelector('.el-menu.el-menu--horizontal li.is-active');
 				if (!els) return false;
-				proxy.$refs.elMenuHorizontalScrollRef.$refs.wrap$.scrollLeft = els.offsetLeft;
+				elMenuHorizontalScrollRef.value.$refs.wrap$.scrollLeft = els.offsetLeft;
 			});
 		};
 		// 路由过滤递归函数
@@ -109,6 +113,13 @@ export default defineComponent({
 				else state.defaultActive = path;
 			}
 		};
+		// 打开外部链接
+		const onALinkClick = (val: any) => {
+			const { origin, pathname } = window.location;
+			router.push(val.path);
+			if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
+			else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+		};
 		// 页面加载前
 		onBeforeMount(() => {
 			setCurrentRouterHighlight(route);
@@ -124,12 +135,14 @@ export default defineComponent({
 			// 修复经典布局开启切割菜单时，点击tagsView后左侧导航菜单数据不变的问题
 			let { layout, isClassicSplitMenu } = themeConfig.value;
 			if (layout === 'classic' && isClassicSplitMenu) {
-				proxy.mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
+				mittBus.emit('setSendClassicChildren', setSendClassicChildren(to.path));
 			}
 		});
 		return {
+			elMenuHorizontalScrollRef,
 			menuLists,
 			onElMenuHorizontalScroll,
+			onALinkClick,
 			...toRefs(state),
 		};
 	},

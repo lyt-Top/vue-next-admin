@@ -9,6 +9,7 @@
 					:data-url="v.url"
 					:class="{ 'is-active': isActive(v) }"
 					@contextmenu.prevent="onContextmenu(v, $event)"
+					@mousedown="onMousedownMenu(v, $event)"
 					@click="onTagsClick(v, k)"
 					:ref="
 						(el) => {
@@ -47,6 +48,7 @@
 
 <script lang="ts">
 import {
+	defineAsyncComponent,
 	toRefs,
 	reactive,
 	onMounted,
@@ -56,7 +58,6 @@ import {
 	onBeforeUpdate,
 	onBeforeMount,
 	onUnmounted,
-	getCurrentInstance,
 	watch,
 	defineComponent,
 } from 'vue';
@@ -71,7 +72,7 @@ import { useKeepALiveNames } from '/@/stores/keepAliveNames';
 import { Session } from '/@/utils/storage';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
-import Contextmenu from '/@/layout/navBars/tagsView/contextmenu.vue';
+import mittBus from '/@/utils/mitt';
 
 // 定义接口来定义对象的类型
 interface TagsViewState {
@@ -104,9 +105,10 @@ interface CurrentContextmenu {
 
 export default defineComponent({
 	name: 'layoutTagsView',
-	components: { Contextmenu },
+	components: {
+		Contextmenu: defineAsyncComponent(() => import('/@/layout/navBars/tagsView/contextmenu.vue')),
+	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const tagsRefs = ref<any[]>([]);
 		const scrollbarRef = ref();
 		const contextmenuRef = ref();
@@ -237,13 +239,21 @@ export default defineComponent({
 					// 动态路由（xxx/:id/:name"）：参数不同，开启多个 tagsview
 					if (!getThemeConfig.value.isShareTagsView) await solveAddTagsView(path, to);
 					else await singleAddTagsView(path, to);
-					if (state.tagsViewList.some((v: any) => v.path === to.meta.isDynamicPath)) return false;
+					if (state.tagsViewList.some((v: any) => v.path === to.meta.isDynamicPath)) {
+						// 防止首次进入界面时(登录进入) tagsViewList 不存浏览器中
+						addBrowserSetSession(state.tagsViewList);
+						return false;
+					}
 					item = state.tagsViewRoutesList.find((v: any) => v.path === to.meta.isDynamicPath);
 				} else {
 					// 普通路由：参数不同，开启多个 tagsview
 					if (!getThemeConfig.value.isShareTagsView) await solveAddTagsView(path, to);
 					else await singleAddTagsView(path, to);
-					if (state.tagsViewList.some((v: any) => v.path === path)) return false;
+					if (state.tagsViewList.some((v: any) => v.path === path)) {
+						// 防止首次进入界面时(登录进入) tagsViewList 不存浏览器中
+						addBrowserSetSession(state.tagsViewList);
+						return false;
+					}
 					item = state.tagsViewRoutesList.find((v: any) => v.path === path);
 				}
 				if (!item) return false;
@@ -258,12 +268,20 @@ export default defineComponent({
 		};
 		// 2、刷新当前 tagsView：
 		const refreshCurrentTagsView = async (fullPath: string) => {
-			const item = state.tagsViewList.find((v: any) => (getThemeConfig.value.isShareTagsView ? v.path === fullPath : v.url === fullPath));
-			if (item != null) {
-				await storesKeepALiveNames.delCachedView(item);
-				proxy.mittBus.emit('onTagsViewRefreshRouterView', fullPath);
-				if (item.meta.isKeepAlive) storesKeepALiveNames.addCachedView(item);
-			}
+			const decodeURIPath = decodeURI(fullPath);
+			let item: any = {};
+			state.tagsViewList.forEach((v: any) => {
+				v.transUrl = transUrlParams(v);
+				if (v.transUrl) {
+					if (v.transUrl === transUrlParams(v)) item = v;
+				} else {
+					if (v.path === decodeURIPath) item = v;
+				}
+			});
+			if (!item) return false;
+			await storesKeepALiveNames.delCachedView(item);
+			mittBus.emit('onTagsViewRefreshRouterView', fullPath);
+			if (item.meta.isKeepAlive) storesKeepALiveNames.addCachedView(item);
 		};
 		// 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
 		const closeCurrentTagsView = (path: string) => {
@@ -396,10 +414,30 @@ export default defineComponent({
 			state.dropdown.y = clientY;
 			contextmenuRef.value.openContextmenu(v);
 		};
+		// 鼠标按下时，判断是鼠标中键就关闭当前 tasgview
+		const onMousedownMenu = (v: any, e: any) => {
+			if (!v.meta.isAffix && e.which === 2) {
+				const item = Object.assign({}, { contextMenuClickId: 1, ...v });
+				onCurrentContextmenuClick(item);
+			}
+		};
 		// 当前的 tagsView 项点击时
 		const onTagsClick = (v: any, k: number) => {
 			state.tagsRefsIndex = k;
 			router.push(v);
+		};
+		// 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I5K3YO
+		const transUrlParams = (v: any) => {
+			let params = v.query && Object.keys(v.query).length > 0 ? v.query : v.params;
+			if (!params) return '';
+			let path = '';
+			for (let [key, value] of Object.entries(params)) {
+				if (v.meta.isDynamic) path += `/${value}`;
+				else path += `&${key}=${value}`;
+			}
+			// 判断是否是动态路由（xxx/:id/:name"）isDynamic
+			return v.meta.isDynamic ? `${v.path.split(':')[0]}${path.replace(/^\//, '')}` : `${v.path}${path.replace(/^&/, '?')}`;
 		};
 		// 处理 tagsView 高亮（多标签详情时使用，单标签详情未使用）
 		const setTagsViewHighlight = (v: any) => {
@@ -412,13 +450,9 @@ export default defineComponent({
 			// 判断是否是动态路由（xxx/:id/:name"）
 			return `${v.meta.isDynamic ? v.meta.isDynamicPath : v.path}-${path}`;
 		};
-		// 更新滚动条显示
-		const updateScrollbar = () => {
-			proxy.$refs.scrollbarRef.update();
-		};
 		// 鼠标滚轮滚动
 		const onHandleScroll = (e: any) => {
-			proxy.$refs.scrollbarRef.$refs.wrap$.scrollLeft += e.wheelDelta / 4;
+			scrollbarRef.value.$refs.wrap$.scrollLeft += e.wheelDelta / 4;
 		};
 		// tagsView 横向滚动
 		const tagsViewmoveToCurrentTag = () => {
@@ -435,7 +469,7 @@ export default defineComponent({
 				// 最后 li
 				let liLast: any = tagsRefs.value[tagsRefs.value.length - 1];
 				// 当前滚动条的值
-				let scrollRefs = proxy.$refs.scrollbarRef.$refs.wrap$;
+				let scrollRefs = scrollbarRef.value.$refs.wrap$;
 				// 当前滚动条滚动宽度
 				let scrollS = scrollRefs.scrollWidth;
 				// 当前滚动条偏移宽度
@@ -469,7 +503,7 @@ export default defineComponent({
 					}
 				}
 				// 更新滚动条，防止不出现
-				updateScrollbar();
+				scrollbarRef.value.update();
 			});
 		};
 		// 获取 tagsView 的下标：用于处理 tagsView 点击时的横向滚动
@@ -520,15 +554,15 @@ export default defineComponent({
 			// 拖动问题，https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI
 			window.addEventListener('resize', onSortableResize);
 			// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
-			proxy.mittBus.on('onCurrentContextmenuClick', (data: CurrentContextmenu) => {
+			mittBus.on('onCurrentContextmenuClick', (data: CurrentContextmenu) => {
 				onCurrentContextmenuClick(data);
 			});
 			// 监听布局配置界面开启/关闭拖拽
-			proxy.mittBus.on('openOrCloseSortable', () => {
+			mittBus.on('openOrCloseSortable', () => {
 				initSortable();
 			});
 			// 监听布局配置开启 TagsView 共用，为了演示还原默认值
-			proxy.mittBus.on('openShareTagsView', () => {
+			mittBus.on('openShareTagsView', () => {
 				if (getThemeConfig.value.isShareTagsView) {
 					router.push('/home');
 					state.tagsViewList = [];
@@ -544,11 +578,11 @@ export default defineComponent({
 		// 页面卸载时
 		onUnmounted(() => {
 			// 取消非本页面调用监听
-			proxy.mittBus.off('onCurrentContextmenuClick', () => {});
+			mittBus.off('onCurrentContextmenuClick', () => {});
 			// 取消监听布局配置界面开启/关闭拖拽
-			proxy.mittBus.off('openOrCloseSortable', () => {});
+			mittBus.off('openOrCloseSortable', () => {});
 			// 取消监听布局配置开启 TagsView 共用
-			proxy.mittBus.off('openShareTagsView', () => {});
+			mittBus.off('openShareTagsView', () => {});
 			// 取消窗口 resize 监听
 			window.removeEventListener('resize', onSortableResize);
 		});
@@ -583,6 +617,7 @@ export default defineComponent({
 		return {
 			isActive,
 			onContextmenu,
+			onMousedownMenu,
 			onTagsClick,
 			tagsRefs,
 			contextmenuRef,

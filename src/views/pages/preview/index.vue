@@ -1,5 +1,5 @@
 <template>
-	<div class="preview-container">
+	<div class="preview-container layout-pd">
 		<el-card shadow="hover" header="element-plus 大图预览">
 			<el-image style="width: 100px; height: 100px; border-radius: 5px" :src="url" :preview-src-list="srcList" title="点击查看大图预览"> </el-image>
 		</el-card>

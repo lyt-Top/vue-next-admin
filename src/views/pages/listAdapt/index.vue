@@ -1,5 +1,5 @@
 <template>
-	<div class="list-adapt-container">
+	<div class="list-adapt-container layout-pd">
 		<el-card shadow="hover" header="列表自适应演示(改变窗口查看效果)">
 			<div class="flex-warp" v-if="tableData.data.length > 0">
 				<el-row :gutter="15">

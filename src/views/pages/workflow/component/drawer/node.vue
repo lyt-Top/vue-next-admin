@@ -93,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, nextTick, getCurrentInstance } from 'vue';
+import { defineComponent, reactive, toRefs, ref, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import * as echarts from 'echarts';
 
@@ -111,7 +111,6 @@ interface WorkflowDrawerNodeState {
 export default defineComponent({
 	name: 'pagesWorkflowDrawerNode',
 	setup(props, { emit }) {
-		const { proxy } = <any>getCurrentInstance();
 		const nodeFormRef = ref();
 		const extendFormRef = ref();
 		const chartsMonitorRef = ref();
@@ -177,7 +176,7 @@ export default defineComponent({
 		};
 		// 图表可视化-初始化
 		const initChartsMonitor = () => {
-			const myChart = echarts.init(proxy.$refs.chartsMonitorRef);
+			const myChart = echarts.init(chartsMonitorRef.value);
 			const numsOne = [];
 			const numsTwo = [];
 			for (let i = 0; i < 7; i++) {

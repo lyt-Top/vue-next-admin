@@ -1,5 +1,5 @@
 <template>
-	<div class="fun-tagsview">
+	<div class="fun-tagsview layout-pd">
 		<NoticeBar
 			text="已删除非当前页 tagsView 演示，后续有时间可以再加回来！，tagsview 支持多标签（参数不同）、单标签共用（参数不同）"
 			background="#ecf5ff"
@@ -63,37 +63,38 @@
 </template>
 
 <script lang="ts">
-import { getCurrentInstance, reactive, toRefs, defineComponent } from 'vue';
-import NoticeBar from '/@/components/noticeBar/index.vue';
+import { defineAsyncComponent, reactive, toRefs, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
+import mittBus from '/@/utils/mitt';
 
 export default defineComponent({
 	name: 'funTagsView',
-	components: { NoticeBar },
+	components: {
+		NoticeBar: defineAsyncComponent(() => import('/@/components/noticeBar/index.vue')),
+	},
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
 		const route = useRoute();
 		const state = reactive({});
 		// 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
 		// 1、刷新当前 tagsView
 		const refreshCurrentTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 0, ...route }));
+			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 0, ...route }));
 		};
 		// 2、关闭当前 tagsView
 		const closeCurrentTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 1, ...route }));
+			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 1, ...route }));
 		};
 		// 3、关闭其它 tagsView
 		const closeOtherTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 2, ...route }));
+			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 2, ...route }));
 		};
 		// 4、关闭全部 tagsView
 		const closeAllTagsView = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 3, ...route }));
+			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 3, ...route }));
 		};
 		// 5、开启当前页面全屏
 		const openCurrenFullscreen = () => {
-			proxy.mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 4, ...route }));
+			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 4, ...route }));
 		};
 		return {
 			refreshCurrentTagsView,

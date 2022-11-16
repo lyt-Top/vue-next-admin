@@ -22,7 +22,7 @@
 						<span>{{ $t(val.meta.title) }}</span>
 					</template>
 					<template #title v-else>
-						<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">{{ $t(val.meta.title) }}</a>
+						<a class="w100" @click.prevent="onALinkClick(val)">{{ $t(val.meta.title) }}</a>
 					</template>
 				</el-menu-item>
 			</template>
@@ -31,15 +31,17 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, defineComponent, onMounted, watch } from 'vue';
-import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { defineAsyncComponent, toRefs, reactive, computed, defineComponent, onMounted, watch } from 'vue';
+import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import SubItem from '/@/layout/navMenu/subItem.vue';
+import { verifyUrl } from '/@/utils/toolsValidate';
 
 export default defineComponent({
 	name: 'navMenuVertical',
-	components: { SubItem },
+	components: {
+		SubItem: defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue')),
+	},
 	props: {
 		menuList: {
 			type: Array,
@@ -50,6 +52,7 @@ export default defineComponent({
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const route = useRoute();
+		const router = useRouter();
 		const state = reactive({
 			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 			defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
@@ -69,6 +72,13 @@ export default defineComponent({
 			const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
 			if (pathSplit.length >= 4 && meta.isHide) return pathSplit.splice(0, 3).join('/');
 			else return path;
+		};
+		// 打开外部链接
+		const onALinkClick = (val: any) => {
+			const { origin, pathname } = window.location;
+			router.push(val.path);
+			if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
+			else window.open(`${origin}${pathname}#${val.meta.isLink}`);
 		};
 		// 设置菜单的收起/展开
 		watch(
@@ -94,6 +104,7 @@ export default defineComponent({
 		return {
 			menuLists,
 			getThemeConfig,
+			onALinkClick,
 			...toRefs(state),
 		};
 	},

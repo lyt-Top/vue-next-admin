@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="layout-pd">
 		<el-input v-model="val" placeholder="menu13：请输入内容测试路由缓存"></el-input>
 	</div>
 </template>

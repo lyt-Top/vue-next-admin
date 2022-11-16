@@ -6,15 +6,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { defineAsyncComponent, computed, defineComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import BreadcrumbIndex from '/@/layout/navBars/breadcrumb/index.vue';
-import TagsView from '/@/layout/navBars/tagsView/tagsView.vue';
 
 export default defineComponent({
 	name: 'layoutNavBars',
-	components: { BreadcrumbIndex, TagsView },
+	components: {
+		BreadcrumbIndex: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/index.vue')),
+		TagsView: defineAsyncComponent(() => import('/@/layout/navBars/tagsView/tagsView.vue')),
+	},
 	setup() {
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);

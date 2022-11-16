@@ -1,5 +1,5 @@
 <template>
-	<div class="personal">
+	<div class="personal layout-pd">
 		<el-row>
 			<!-- 个人信息 -->
 			<el-col :xs="24" :sm="16">
@@ -210,6 +210,7 @@ export default defineComponent({
 				sex: '',
 			},
 		});
+
 		// 当前时间提示语
 		const currentTime = computed(() => {
 			return formatAxis(new Date());

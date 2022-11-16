@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="layout-pd">
 		<el-card shadow="hover" header="数字滚动演示">
 			<el-alert
 				title="感谢优秀的 `countup.js`，项目地址：https://github.com/inorganik/countUp.js"

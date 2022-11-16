@@ -131,7 +131,7 @@
 						<div :class="v.topLevelClass" v-for="(v, k) in earth3DBtnList" :key="k">
 							<div class="circle" v-for="i in 4" :key="i"></div>
 							<div class="text-box">
-								<SvgIcon :name="v.icon" />
+								<SvgIcon :name="v.icon" :size="22" />
 								<div class="text">{{ v.label }}</div>
 							</div>
 						</div>
@@ -229,7 +229,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
+import { toRefs, reactive, onMounted, onUnmounted, defineComponent, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts-gl';
 import { formatDate } from '/@/utils/formatTime';
@@ -241,7 +241,12 @@ import bathymetryImg from './images/bathymetry.jpg';
 export default defineComponent({
 	name: 'visualizingLinkDemo2',
 	setup() {
-		const { proxy } = getCurrentInstance() as any;
+		const rightChartData1 = ref();
+		const rightChartData2 = ref();
+		const rightChartData3 = ref();
+		const rightChartData4 = ref();
+		const rightChartData5 = ref();
+		const rightChartData6 = ref();
 		const state = reactive({
 			time: {
 				txt: '',
@@ -267,7 +272,7 @@ export default defineComponent({
 		};
 		// 近30天预警总数
 		const initRightChartData1 = () => {
-			const myChart = echarts.init(proxy.$refs.rightChartData1);
+			const myChart = echarts.init(rightChartData1.value);
 			const option = {
 				tooltip: {
 					trigger: 'item',
@@ -299,7 +304,7 @@ export default defineComponent({
 		};
 		// 当前设备监测
 		const initRightChartData4 = () => {
-			const myChart = echarts.init(proxy.$refs.rightChartData4);
+			const myChart = echarts.init(rightChartData4.value);
 			const option = {
 				grid: {
 					top: 10,
@@ -387,7 +392,7 @@ export default defineComponent({
 		};
 		// 近7天产品追溯扫码统计
 		const initRightChartData3 = () => {
-			const myChart = echarts.init(proxy.$refs.rightChartData3);
+			const myChart = echarts.init(rightChartData3.value);
 			const option = {
 				grid: {
 					top: 10,
@@ -466,7 +471,7 @@ export default defineComponent({
 		};
 		// 当前任务统计
 		const initRightChartData6 = () => {
-			const myChart = echarts.init(proxy.$refs.rightChartData6);
+			const myChart = echarts.init(rightChartData6.value);
 			const option = {
 				tooltip: {
 					trigger: 'axis',
@@ -553,7 +558,7 @@ export default defineComponent({
 		};
 		// 近7天投入品记录
 		const initRightChartData2 = () => {
-			const myChart = echarts.init(proxy.$refs.rightChartData2);
+			const myChart = echarts.init(rightChartData2.value);
 			const option = {
 				grid: {
 					top: 10,
@@ -687,7 +692,7 @@ export default defineComponent({
 		// 3DEarth 地图
 		const init3DEarth = (globeRadius) => {
 			let el = state.the3DEarth!;
-			el.style.height = `${proxy.$refs.rightChartData5.offsetHeight}px`;
+			el.style.height = `${rightChartData5.value.offsetHeight}px`;
 			const myChart = echarts.init(el);
 			const option = {
 				globe: {
@@ -781,6 +786,12 @@ export default defineComponent({
 			window.clearInterval(state.time.fun);
 		});
 		return {
+			rightChartData1,
+			rightChartData2,
+			rightChartData3,
+			rightChartData4,
+			rightChartData5,
+			rightChartData6,
 			...toRefs(state),
 		};
 	},

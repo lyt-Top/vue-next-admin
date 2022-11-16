@@ -1,5 +1,5 @@
 <template>
-	<div class="lazy-img-container">
+	<div class="lazy-img-container layout-pd">
 		<el-card shadow="hover" header="图片懒加载演示（F12 切换到 Network Img下进行图片加载查看）">
 			<div class="flex-warp" v-if="tableData.data.length > 0">
 				<el-row :gutter="15">

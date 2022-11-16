@@ -1,7 +1,7 @@
 <template>
-	<div class="workflow-container">
+	<div class="workflow-container layout-padding">
 		<div class="workflow-mask" v-if="isShow"></div>
-		<div class="layout-view-bg-white flex" :style="{ height: `calc(100vh - ${setViewHeight}` }">
+		<div class="layout-padding-auto layout-padding-view workflow-warp">
 			<div class="workflow">
 				<!-- 顶部工具栏 -->
 				<Tool @tool="onToolClick" />
@@ -12,7 +12,7 @@
 						<el-scrollbar>
 							<div
 								ref="leftNavRefs"
-								v-for="(val, key) in leftNavList"
+								v-for="val in leftNavList"
 								:key="val.id"
 								:style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
 								class="workflow-left-id"
@@ -68,17 +68,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, reactive, computed, onMounted, onUnmounted, nextTick, ref } from 'vue';
+import { defineAsyncComponent, defineComponent, toRefs, reactive, computed, onMounted, onUnmounted, nextTick, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { jsPlumb } from 'jsplumb';
 import Sortable from 'sortablejs';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-import Tool from './component/tool/index.vue';
-import Help from './component/tool/help.vue';
-import Contextmenu from './component/contextmenu/index.vue';
-import Drawer from './component/drawer/index.vue';
 import commonFunction from '/@/utils/commonFunction';
 import { leftNavList } from './js/mock';
 import { jsplumbDefaults, jsplumbMakeSource, jsplumbMakeTarget, jsplumbConnect } from './js/config';
@@ -123,7 +119,12 @@ interface WorkflowState {
 
 export default defineComponent({
 	name: 'pagesWorkflow',
-	components: { Tool, Contextmenu, Drawer, Help },
+	components: {
+		Tool: defineAsyncComponent(() => import('./component/tool/index.vue')),
+		Contextmenu: defineAsyncComponent(() => import('./component/contextmenu/index.vue')),
+		Drawer: defineAsyncComponent(() => import('./component/drawer/index.vue')),
+		Help: defineAsyncComponent(() => import('./component/tool/help.vue')),
+	},
 	setup() {
 		const contextmenuNodeRef = ref();
 		const contextmenuLineRef = ref();
@@ -543,11 +544,17 @@ export default defineComponent({
 <style scoped lang="scss">
 .workflow-container {
 	position: relative;
+	.workflow-warp {
+		position: relative;
+	}
 	.workflow {
 		display: flex;
 		height: 100%;
 		width: 100%;
 		flex-direction: column;
+		position: absolute;
+		top: 0;
+		left: 0;
 		.workflow-content {
 			display: flex;
 			height: calc(100% - 35px);

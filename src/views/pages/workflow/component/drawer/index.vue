@@ -2,17 +2,15 @@
 	<div>
 		<el-drawer :title="`${nodeData.type === 'line' ? '线' : '节点'}操作`" v-model="isOpen" size="320px">
 			<el-scrollbar>
-				<Line v-if="nodeData.type === 'line'" @change="onLineChange" @close="close" ref="lineRef" />
-				<Node v-else @submit="onNodeSubmit" @close="close" ref="nodeRef" />
+				<Lines v-if="nodeData.type === 'line'" @change="onLineChange" @close="close" ref="lineRef" />
+				<Nodes v-else @submit="onNodeSubmit" @close="close" ref="nodeRef" />
 			</el-scrollbar>
 		</el-drawer>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref, nextTick } from 'vue';
-import Line from './line.vue';
-import Node from './node.vue';
+import { defineAsyncComponent, defineComponent, reactive, toRefs, ref, nextTick } from 'vue';
 
 // 定义接口来定义对象的类型
 interface WorkflowDrawerState {
@@ -25,7 +23,10 @@ interface WorkflowDrawerState {
 
 export default defineComponent({
 	name: 'pagesWorkflowDrawer',
-	components: { Line, Node },
+	components: {
+		Lines: defineAsyncComponent(() => import('./line.vue')),
+		Nodes: defineAsyncComponent(() => import('./node.vue')),
+	},
 	setup(props, { emit }) {
 		const lineRef = ref();
 		const nodeRef = ref();
@@ -42,8 +43,10 @@ export default defineComponent({
 			state.jsplumbConn = conn;
 			state.nodeData = item;
 			nextTick(() => {
-				if (item.type === 'line') lineRef.value.getParentData(item);
-				else nodeRef.value.getParentData(item);
+				setTimeout(() => {
+					if (item.type === 'line') lineRef.value.getParentData(item);
+					else nodeRef.value.getParentData(item);
+				}, 300);
 			});
 		};
 		// 关闭

@@ -1,5 +1,5 @@
 <template>
-	<div class="dynamic-form-container">
+	<div class="dynamic-form-container layout-pd">
 		<el-card shadow="hover" header="动态复杂表单">
 			<el-form :model="form" ref="formRulesOneRef" size="default" label-width="100px" class="mt35">
 				<el-row :gutter="35">
@@ -112,7 +112,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, getCurrentInstance, defineComponent } from 'vue';
+import { toRefs, reactive, onMounted, defineComponent, ref } from 'vue';
+import { ElMessage } from 'element-plus';
 import { formData } from './mock';
 
 // 定义接口来定义对象的类型
@@ -146,7 +147,7 @@ interface DynamicFormState {
 export default defineComponent({
 	name: 'pagesDynamicForm',
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const formRulesOneRef = ref();
 		const state = reactive<DynamicFormState>({
 			formData,
 			form: {
@@ -178,9 +179,9 @@ export default defineComponent({
 		};
 		// 表单验证
 		const onSubmitForm = () => {
-			proxy.$refs.formRulesOneRef.validate((valid: boolean) => {
+			formRulesOneRef.value.validate((valid: boolean) => {
 				if (valid) {
-					proxy.$message.success('验证成功');
+					ElMessage.success('验证成功');
 				} else {
 					return false;
 				}
@@ -188,11 +189,12 @@ export default defineComponent({
 		};
 		// 重置表单
 		const onResetForm = () => {
-			proxy.$refs.formRulesOneRef.resetFields();
+			formRulesOneRef.value.resetFields();
 		};
 		// 页面加载时
 		onMounted(() => {});
 		return {
+			formRulesOneRef,
 			onAddRow,
 			onDelRow,
 			onSubmitForm,

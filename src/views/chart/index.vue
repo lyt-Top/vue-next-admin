@@ -1,6 +1,6 @@
 <template>
-	<div class="chart-scrollbar layout-view-bg-white" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
-		<div class="chart-warp">
+	<div class="chart-scrollbar layout-padding">
+		<div class="chart-warp layout-padding-auto layout-padding-view">
 			<div class="chart-warp-top">
 				<ChartHead />
 			</div>
@@ -202,12 +202,11 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, computed, onMounted, getCurrentInstance, watch, nextTick, onActivated, defineComponent } from 'vue';
+import { toRefs, reactive, onMounted, watch, nextTick, onActivated, defineComponent, ref } from 'vue';
 import ChartHead from '/@/views/chart/head.vue';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
 import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { skyList, dBtnList, chartData4List } from '/@/views/chart/chart';
 
@@ -215,10 +214,12 @@ export default defineComponent({
 	name: 'chartIndex',
 	components: { ChartHead },
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
-		const storesThemeConfig = useThemeConfig();
+		const chartsCenterOneRef = ref();
+		const chartsSevenDaysRef = ref();
+		const chartsWarningRef = ref();
+		const chartsMonitorRef = ref();
+		const chartsInvestmentRef = ref();
 		const storesTagsViewRoutes = useTagsViewRoutes();
-		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 		const state = reactive({
 			skyList,
@@ -226,19 +227,9 @@ export default defineComponent({
 			chartData4List,
 			myCharts: [],
 		});
-		// 设置主内容的高度
-		const initTagViewHeight = computed(() => {
-			let { isTagsview } = themeConfig.value;
-			if (isTagsViewCurrenFull.value) {
-				return `30px`;
-			} else {
-				if (isTagsview) return `114px`;
-				else return `80px`;
-			}
-		});
 		// 初始化中间图表1
 		const initChartsCenterOne = () => {
-			const myChart = echarts.init(proxy.$refs.chartsCenterOneRef);
+			const myChart = echarts.init(chartsCenterOneRef.value);
 			const option = {
 				grid: {
 					top: 15,
@@ -299,7 +290,7 @@ export default defineComponent({
 		};
 		// 初始化近7天产品追溯扫码统计
 		const initChartsSevenDays = () => {
-			const myChart = echarts.init(proxy.$refs.chartsSevenDaysRef);
+			const myChart = echarts.init(chartsSevenDaysRef.value);
 			const option = {
 				grid: {
 					top: 15,
@@ -344,7 +335,7 @@ export default defineComponent({
 		};
 		// 初始化近30天预警总数
 		const initChartsWarning = () => {
-			const myChart = echarts.init(proxy.$refs.chartsWarningRef);
+			const myChart = echarts.init(chartsWarningRef.value);
 			const option = {
 				grid: {
 					top: 50,
@@ -379,7 +370,7 @@ export default defineComponent({
 		};
 		// 初始化当前设备监测
 		const initChartsMonitor = () => {
-			const myChart = echarts.init(proxy.$refs.chartsMonitorRef);
+			const myChart = echarts.init(chartsMonitorRef.value);
 			const option = {
 				grid: {
 					top: 15,
@@ -419,7 +410,7 @@ export default defineComponent({
 		};
 		// 初始化近7天投入品记录
 		const initChartsInvestment = () => {
-			const myChart = echarts.init(proxy.$refs.chartsInvestmentRef);
+			const myChart = echarts.init(chartsInvestmentRef.value);
 			const option = {
 				grid: {
 					top: 15,
@@ -480,7 +471,11 @@ export default defineComponent({
 			}
 		);
 		return {
-			initTagViewHeight,
+			chartsCenterOneRef,
+			chartsSevenDaysRef,
+			chartsWarningRef,
+			chartsMonitorRef,
+			chartsInvestmentRef,
 			...toRefs(state),
 		};
 	},

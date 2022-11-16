@@ -71,7 +71,8 @@ export default {
 		personal: 'personal',
 		tools: 'tools',
 		layoutLinkView: 'LinkView',
-		layoutIfameView: 'IfameView',
+		layoutIframeViewOne: 'IframeViewOne',
+		layoutIframeViewTwo: 'IframeViewTwo',
 	},
 	staticRoutes: {
 		signIn: 'signIn',
@@ -139,6 +140,7 @@ export default {
 		twoColumnsMenuBar: 'Column menu background',
 		twoColumnsMenuBarColor: 'Default font color bar menu',
 		twoIsColumnsMenuBarColorGradual: 'Column gradient',
+		twoIsColumnsMenuHoverPreload: 'Column Menu Hover Preload',
 		threeTitle: 'Interface settings',
 		threeIsCollapse: 'Menu horizontal collapse',
 		threeIsUniqueOpened: 'Menu accordion',

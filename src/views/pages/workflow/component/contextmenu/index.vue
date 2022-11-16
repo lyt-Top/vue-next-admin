@@ -1,5 +1,5 @@
 <template>
-	<transition name="el-zoom-in-center">
+	<transition name="el-zoom-in-center" ref="contextmenuRef">
 		<div
 			aria-hidden="true"
 			class="el-dropdown__popper el-popper is-light is-pure custom-contextmenu"
@@ -28,16 +28,21 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted } from 'vue';
+import { computed, defineComponent, reactive, toRefs, onMounted, onUnmounted, ref } from 'vue';
 
 export default defineComponent({
 	name: 'pagesWorkflowContextmenu',
 	props: {
 		dropdown: {
 			type: Object,
+			default: () => {
+				return { x: '', y: '' };
+			},
 		},
 	},
+	emits: ['current'],
 	setup(props, { emit }) {
+		const contextmenuRef = ref();
 		const state = reactive({
 			isShow: false,
 			dropdownList: [
@@ -81,6 +86,7 @@ export default defineComponent({
 			document.body.removeEventListener('contextmenu', closeContextmenu);
 		});
 		return {
+			contextmenuRef,
 			dropdowns,
 			openContextmenu,
 			closeContextmenu,

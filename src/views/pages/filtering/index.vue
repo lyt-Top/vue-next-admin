@@ -1,5 +1,5 @@
 <template>
-	<div class="filtering">
+	<div class="filtering layout-pd">
 		<el-card
 			shadow="hover"
 			class="filtering-list br-top-no"

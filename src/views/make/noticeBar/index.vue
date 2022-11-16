@@ -1,5 +1,5 @@
 <template>
-	<div class="notice-bar-container">
+	<div class="notice-bar-container layout-pd">
 		<el-card shadow="hover" header="滚动通知栏：默认">
 			<NoticeBar
 				text="🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等，适配手机、平板、pc
@@ -48,12 +48,13 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
-import NoticeBar from '/@/components/noticeBar/index.vue';
+import { defineAsyncComponent, toRefs, reactive, defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'makeNoticeBar',
-	components: { NoticeBar },
+	components: {
+		NoticeBar: defineAsyncComponent(() => import('/@/components/noticeBar/index.vue')),
+	},
 	setup() {
 		const state = reactive({
 			noticeList: [

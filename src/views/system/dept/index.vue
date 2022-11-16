@@ -1,6 +1,6 @@
 <template>
-	<div class="system-dept-container">
-		<el-card shadow="hover">
+	<div class="system-dept-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-dept-search mb15">
 				<el-input size="default" placeholder="请输入部门名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -52,10 +52,8 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, onMounted, defineComponent } from 'vue';
+import { defineAsyncComponent, ref, toRefs, reactive, onMounted, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddDept from '/@/views/system/dept/component/addDept.vue';
-import EditDept from '/@/views/system/dept/component/editDept.vue';
 
 // 定义接口来定义对象的类型
 interface TableDataRow {
@@ -81,7 +79,10 @@ interface TableDataState {
 
 export default defineComponent({
 	name: 'systemDept',
-	components: { AddDept, EditDept },
+	components: {
+		AddDept: defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue')),
+		EditDept: defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue')),
+	},
 	setup() {
 		const addDeptRef = ref();
 		const editDeptRef = ref();

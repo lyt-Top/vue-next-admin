@@ -65,7 +65,7 @@ export const useUserInfo = defineStore('userInfo', {
 						authBtnList: defaultAuthBtnList,
 					};
 					resolve(userInfos);
-				}, 3000);
+				}, 0);
 			});
 		},
 	},

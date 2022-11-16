@@ -1,5 +1,5 @@
 <template>
-	<div class="form-i18n-container">
+	<div class="form-i18n-container layout-pd">
 		<el-card shadow="hover" header="表单国际化演示(不适用于动态项 form-item)">
 			<div style="text-align: center; margin-top: 15px">
 				<el-radio-group v-model="radio" size="default" @change="onRadioChange">
@@ -32,12 +32,13 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent, getCurrentInstance } from 'vue';
+import { toRefs, reactive, defineComponent } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
 	name: 'pagesFormI18n',
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const { locale } = useI18n();
 		const state = reactive({
 			radio: 'zh-cn',
 			form: {
@@ -48,7 +49,7 @@ export default defineComponent({
 		});
 		// 单选框改变时
 		const onRadioChange = () => {
-			proxy.$i18n.locale = state.radio;
+			locale.value = state.radio;
 		};
 		return {
 			onRadioChange,

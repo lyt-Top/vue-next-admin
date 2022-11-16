@@ -1,5 +1,5 @@
 <template>
-	<el-config-provider :size="getGlobalComponentSize" :locale="i18nLocale">
+	<el-config-provider :size="getGlobalComponentSize" :locale="getGlobalI18n">
 		<router-view v-show="themeConfig.lockScreenTime > 1" />
 		<LockScreen v-if="themeConfig.isLockScreen" />
 		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
@@ -8,39 +8,39 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch, reactive, toRefs } from 'vue';
+import { defineAsyncComponent, computed, ref, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
+import mittBus from '/@/utils/mitt';
 import setIntroduction from '/@/utils/setIconfont';
-import LockScreen from '/@/layout/lockScreen/index.vue';
-import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
-import CloseFull from '/@/layout/navBars/breadcrumb/closeFull.vue';
 
 export default defineComponent({
 	name: 'app',
-	components: { LockScreen, Setings, CloseFull },
+	components: {
+		LockScreen: defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue')),
+		Setings: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue')),
+		CloseFull: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue')),
+	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const { messages, locale } = useI18n();
 		const setingsRef = ref();
 		const route = useRoute();
 		const stores = useTagsViewRoutes();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
-		const state = reactive({
-			i18nLocale: null,
-		});
 		// 获取全局组件大小
 		const getGlobalComponentSize = computed(() => {
 			return other.globalComponentSize();
 		});
-		// 布局配置弹窗打开
-		const openSetingsDrawer = () => {
-			setingsRef.value.openDrawer();
-		};
+		// 获取全局 i18n
+		const getGlobalI18n = computed(() => {
+			return messages.value[locale.value];
+		});
 		// 设置初始化，防止刷新时恢复默认
 		onBeforeMount(() => {
 			// 设置批量第三方 icon 图标
@@ -52,12 +52,8 @@ export default defineComponent({
 		onMounted(() => {
 			nextTick(() => {
 				// 监听布局配置弹窗点击打开
-				proxy.mittBus.on('openSetingsDrawer', () => {
-					openSetingsDrawer();
-				});
-				// 设置 i18n，App.vue 中的 el-config-provider
-				proxy.mittBus.on('getI18nConfig', (locale: string) => {
-					(state.i18nLocale as string | null) = locale;
+				mittBus.on('openSetingsDrawer', () => {
+					setingsRef.value.openDrawer();
 				});
 				// 获取缓存中的布局配置
 				if (Local.get('themeConfig')) {
@@ -72,8 +68,7 @@ export default defineComponent({
 		});
 		// 页面销毁时，关闭监听布局配置/i18n监听
 		onUnmounted(() => {
-			proxy.mittBus.off('openSetingsDrawer', () => {});
-			proxy.mittBus.off('getI18nConfig', () => {});
+			mittBus.off('openSetingsDrawer', () => {});
 		});
 		// 监听路由的变化，设置网站标题
 		watch(
@@ -89,7 +84,7 @@ export default defineComponent({
 			themeConfig,
 			setingsRef,
 			getGlobalComponentSize,
-			...toRefs(state),
+			getGlobalI18n,
 		};
 	},
 });

@@ -1,5 +1,5 @@
 <template>
-	<div class="preview-container">
+	<div class="preview-container layout-pd">
 		<el-card shadow="hover" header="波浪指令效果（v-waves）作用于 btn">
 			<el-row class="mb10" style="color: #808080">可选参数 v-waves=" |light|red|orange|purple|green|teal"</el-row>
 			<div class="flex-warp">

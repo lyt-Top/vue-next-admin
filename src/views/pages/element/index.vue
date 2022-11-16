@@ -1,5 +1,5 @@
 <template>
-	<div class="element-container">
+	<div class="element-container layout-pd">
 		<el-card shadow="hover" :header="`element plus 字体图标(自动载入，增加了 ele- 前缀，使用时：ele-Aim)：${sheetsIconList.length}个`">
 			<el-row class="iconfont-row">
 				<el-col :xs="12" :sm="8" :md="6" :lg="4" :xl="2" v-for="(v, k) in sheetsIconList" :key="k">

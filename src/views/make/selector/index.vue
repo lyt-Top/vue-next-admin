@@ -1,5 +1,5 @@
 <template>
-	<div class="selector-container">
+	<div class="selector-container layout-pd">
 		<el-card shadow="hover" header="图标选择器(宽度自动)：">
 			<IconSelector @get="onGetIcon" @clear="onClearIcon" v-model="modelIcon" />
 		</el-card>
@@ -26,12 +26,13 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
-import IconSelector from '/@/components/iconSelector/index.vue';
+import { defineAsyncComponent, toRefs, reactive, defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'makeSelector',
-	components: { IconSelector },
+	components: {
+		IconSelector: defineAsyncComponent(() => import('/@/components/iconSelector/index.vue')),
+	},
 	setup() {
 		const state = reactive({
 			modelIcon: '',

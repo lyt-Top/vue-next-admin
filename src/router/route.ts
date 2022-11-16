@@ -4,7 +4,7 @@ import { RouteRecordRaw } from 'vue-router';
  * 路由meta对象参数说明
  * meta: {
  *      title:          菜单栏及 tagsView 栏、菜单搜索名称（国际化）
- *      isLink：        是否超链接菜单，开启外链条件，`1、isLink: 链接地址不为空`
+ *      isLink：        是否超链接菜单，开启外链条件，`1、isLink: 链接地址不为空 2、isIframe:false`
  *      isHide：        是否隐藏此路由
  *      isKeepAlive：   是否缓存组件状态
  *      isAffix：       是否固定在 tagsView 栏上
@@ -1020,6 +1020,11 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 					roles: ['admin'],
 					icon: 'ele-ChatLineRound',
 				},
+				/**
+				 * 打开内置全屏
+				 * component 都为 `() => import('/@/layout/routerView/link.vue')`
+				 * isLink 链接为内置的路由地址，地址为 staticRoutes 中定义
+				 */
 				children: [
 					{
 						path: '/visualizing/visualizingLinkDemo1',
@@ -1027,7 +1032,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						component: () => import('/@/layout/routerView/link.vue'),
 						meta: {
 							title: 'message.router.visualizingLinkDemo1',
-							isLink: `${import.meta.env.VITE_API_URL}#/visualizingDemo1`,
+							isLink: '/visualizingDemo1',
 							isHide: false,
 							isKeepAlive: false,
 							isAffix: false,
@@ -1042,7 +1047,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 						component: () => import('/@/layout/routerView/link.vue'),
 						meta: {
 							title: 'message.router.visualizingLinkDemo2',
-							isLink: `${import.meta.env.VITE_API_URL}#/visualizingDemo2`,
+							isLink: '/visualizingDemo2',
 							isHide: false,
 							isKeepAlive: false,
 							isAffix: false,
@@ -1114,14 +1119,29 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 				},
 			},
 			{
-				path: '/iframes',
-				name: 'layoutIfameView',
+				path: '/iframesOne',
+				name: 'layoutIframeViewOne',
 				component: () => import('/@/layout/routerView/iframes.vue'),
 				meta: {
-					title: 'message.router.layoutIfameView',
+					title: 'message.router.layoutIframeViewOne',
 					isLink: 'https://nodejs.org/zh-cn/',
 					isHide: false,
-					isKeepAlive: false,
+					isKeepAlive: true,
+					isAffix: true,
+					isIframe: true,
+					roles: ['admin'],
+					icon: 'iconfont icon-neiqianshujuchucun',
+				},
+			},
+			{
+				path: '/iframesTwo',
+				name: 'layoutIframeViewTwo',
+				component: () => import('/@/layout/routerView/iframes.vue'),
+				meta: {
+					title: 'message.router.layoutIframeViewTwo',
+					isLink: 'https://undraw.co/illustrations',
+					isHide: false,
+					isKeepAlive: true,
 					isAffix: true,
 					isIframe: true,
 					roles: ['admin'],

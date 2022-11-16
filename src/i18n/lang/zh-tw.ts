@@ -71,7 +71,8 @@ export default {
 		personal: '個人中心',
 		tools: '工具類集合',
 		layoutLinkView: '外鏈',
-		layoutIfameView: '内嵌 iframe',
+		layoutIframeViewOne: '内嵌 iframe1',
+		layoutIframeViewTwo: '内嵌 iframe2',
 	},
 	staticRoutes: {
 		signIn: '登入',
@@ -139,6 +140,7 @@ export default {
 		twoColumnsMenuBar: '分欄選單背景',
 		twoColumnsMenuBarColor: '分欄選單默認字體顏色',
 		twoIsColumnsMenuBarColorGradual: '分欄選單背景漸變',
+		twoIsColumnsMenuHoverPreload: '分欄選單滑鼠懸停預加載',
 		threeTitle: '介面設定',
 		threeIsCollapse: '選單水准折疊',
 		threeIsUniqueOpened: '選單手風琴',

@@ -1,26 +1,28 @@
 <template>
 	<div class="layout-search-dialog">
-		<el-dialog v-model="isShowSearch" width="300px" destroy-on-close :modal="false" fullscreen :show-close="false">
-			<el-autocomplete
-				v-model="menuQuery"
-				:fetch-suggestions="menuSearch"
-				:placeholder="$t('message.user.searchPlaceholder')"
-				ref="layoutMenuAutocompleteRef"
-				@select="onHandleSelect"
-				@blur="onSearchBlur"
-			>
-				<template #prefix>
-					<el-icon class="el-input__icon">
-						<ele-Search />
-					</el-icon>
-				</template>
-				<template #default="{ item }">
-					<div>
-						<SvgIcon :name="item.meta.icon" class="mr5" />
-						{{ $t(item.meta.title) }}
-					</div>
-				</template>
-			</el-autocomplete>
+		<el-dialog v-model="isShowSearch" destroy-on-close :show-close="false">
+			<template #footer>
+				<el-autocomplete
+					v-model="menuQuery"
+					:fetch-suggestions="menuSearch"
+					:placeholder="$t('message.user.searchPlaceholder')"
+					ref="layoutMenuAutocompleteRef"
+					@select="onHandleSelect"
+					:fit-input-width="true"
+				>
+					<template #prefix>
+						<el-icon class="el-input__icon">
+							<ele-Search />
+						</el-icon>
+					</template>
+					<template #default="{ item }">
+						<div>
+							<SvgIcon :name="item.meta.icon" class="mr5" />
+							{{ $t(item.meta.title) }}
+						</div>
+					</template>
+				</el-autocomplete>
+			</template>
 		</el-dialog>
 	</div>
 </template>
@@ -103,17 +105,12 @@ export default defineComponent({
 			else router.push(path);
 			closeSearch();
 		};
-		// input 失去焦点时
-		const onSearchBlur = () => {
-			closeSearch();
-		};
 		return {
 			layoutMenuAutocompleteRef,
 			openSearch,
 			closeSearch,
 			menuSearch,
 			onHandleSelect,
-			onSearchBlur,
 			...toRefs(state),
 		};
 	},
@@ -122,15 +119,23 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .layout-search-dialog {
+	position: relative;
 	:deep(.el-dialog) {
-		box-shadow: unset !important;
-		border-radius: 0 !important;
-		background: rgba(0, 0, 0, 0.5);
+		.el-dialog__header,
+		.el-dialog__body {
+			display: none;
+		}
+		.el-dialog__footer {
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			top: -53vh;
+		}
 	}
 	:deep(.el-autocomplete) {
 		width: 560px;
 		position: absolute;
-		top: 100px;
+		top: 150px;
 		left: 50%;
 		transform: translateX(-50%);
 	}

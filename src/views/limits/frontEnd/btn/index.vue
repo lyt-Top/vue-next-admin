@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<LimitsFrontEndPage />
+	<div class="layout-pd">
+		<LimitsFrontEndPage style="padding: 0 !important" />
 		<!-- 演示1：组件方式 -->
 		<el-card shadow="hover" header="演示1：组件方式" class="mt15">
 			<el-row class="mb10" style="color: #808080">单个权限验证（:value="xxx"）：</el-row>
@@ -335,17 +335,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineAsyncComponent, defineComponent } from 'vue';
 import { ElMessage } from 'element-plus';
-import LimitsFrontEndPage from '/@/views/limits/frontEnd/page/index.vue';
-import Auth from '/@/components/auth/auth.vue';
-import Auths from '/@/components/auth/auths.vue';
-import AuthAll from '/@/components/auth/authAll.vue';
 import { auth, auths, authAll } from '/@/utils/authFunction';
 
 export default defineComponent({
 	name: 'limitsFrontEndBtn',
-	components: { LimitsFrontEndPage, Auth, Auths, AuthAll },
+	components: {
+		LimitsFrontEndPage: defineAsyncComponent(() => import('/@/views/limits/frontEnd/page/index.vue')),
+		Auth: defineAsyncComponent(() => import('/@/components/auth/auth.vue')),
+		Auths: defineAsyncComponent(() => import('/@/components/auth/auths.vue')),
+		AuthAll: defineAsyncComponent(() => import('/@/components/auth/authAll.vue')),
+	},
 	setup() {
 		// 单个权限验证
 		const onAuthClick = () => {

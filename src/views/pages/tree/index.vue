@@ -1,5 +1,5 @@
 <template>
-	<div class="tree-container">
+	<div class="tree-container layout-pd">
 		<el-card shadow="hover" header="element plus Tree 树形控件改成表格">
 			<div v-loading="treeLoading">
 				<div class="tree-head">
@@ -10,7 +10,7 @@
 						<div class="tree-head-three">描述</div>
 					</div>
 				</div>
-				<el-tree :data="treeTableData" show-checkbox node-key="id" ref="treeTable" :props="treeDefaultProps" @check="onCheckTree">
+				<el-tree :data="treeTableData" show-checkbox node-key="id" ref="treeTableRef" :props="treeDefaultProps" @check="onCheckTree">
 					<template #default="{ node, data }">
 						<span class="tree-custom-node">
 							<span style="flex: 1">{{ node.label }}</span>
@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onBeforeMount, getCurrentInstance, defineComponent } from 'vue';
+import { toRefs, reactive, onBeforeMount, defineComponent, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
 // 定义接口来定义对象的类型
@@ -58,7 +58,7 @@ interface TreeSate {
 export default defineComponent({
 	name: 'pagesTree',
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const treeTableRef = ref();
 		const state = reactive<TreeSate>({
 			treeCheckAll: false,
 			treeLoading: false,
@@ -83,25 +83,25 @@ export default defineComponent({
 		// 全选改变时
 		const onCheckAllChange = () => {
 			if (state.treeCheckAll) {
-				proxy.$refs.treeTable.setCheckedNodes(state.treeTableData);
+				treeTableRef.value.setCheckedNodes(state.treeTableData);
 			} else {
-				proxy.$refs.treeTable.setCheckedKeys([]);
+				treeTableRef.value.setCheckedKeys([]);
 			}
 		};
 		// 节点选中状态发生变化时的回调
 		const onCheckTree = () => {
 			state.treeSelArr = [];
-			state.treeSelArr = proxy.$refs.treeTable.getCheckedNodes();
+			state.treeSelArr = treeTableRef.value.getCheckedNodes();
 			state.treeSelArr.length == state.treeLength ? (state.treeCheckAll = true) : (state.treeCheckAll = false);
 		};
 		// 选择元素按钮
 		const onSelect = () => {
-			let treeArr = proxy.$refs.treeTable.getCheckedNodes();
+			let treeArr = treeTableRef.value.getCheckedNodes();
 			if (treeArr.length <= 0) {
 				ElMessage.warning('请选择元素');
 				return;
 			} else {
-				// console.log(proxy.$refs.treeTable.getCheckedNodes());
+				// console.log(treeTableRef.value.getCheckedNodes());
 			}
 		};
 		// 初始化树模拟数据
@@ -191,6 +191,7 @@ export default defineComponent({
 			getTreeData();
 		});
 		return {
+			treeTableRef,
 			getTreeData,
 			onCheckAllChange,
 			onCheckTree,

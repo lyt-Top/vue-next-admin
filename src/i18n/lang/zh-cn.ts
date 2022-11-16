@@ -71,7 +71,8 @@ export default {
 		personal: '个人中心',
 		tools: '工具类集合',
 		layoutLinkView: '外链',
-		layoutIfameView: '内嵌 iframe',
+		layoutIframeViewOne: '内嵌 iframe1',
+		layoutIframeViewTwo: '内嵌 iframe2',
 	},
 	staticRoutes: {
 		signIn: '登录',
@@ -139,6 +140,7 @@ export default {
 		twoColumnsMenuBar: '分栏菜单背景',
 		twoColumnsMenuBarColor: '分栏菜单默认字体颜色',
 		twoIsColumnsMenuBarColorGradual: '分栏菜单背景渐变',
+		twoIsColumnsMenuHoverPreload: '分栏菜单鼠标悬停预加载',
 		threeTitle: '界面设置',
 		threeIsCollapse: '菜单水平折叠',
 		threeIsUniqueOpened: '菜单手风琴',

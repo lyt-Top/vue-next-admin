@@ -32,11 +32,13 @@ export const NextLoading = {
 		window.nextLoading = true;
 	},
 	// 移除 loading
-	done: () => {
+	done: (time: number = 0) => {
 		nextTick(() => {
-			window.nextLoading = false;
-			const el = <HTMLElement>document.querySelector('.loading-next');
-			el?.parentNode?.removeChild(el);
+			setTimeout(() => {
+				window.nextLoading = false;
+				const el = <HTMLElement>document.querySelector('.loading-next');
+				el?.parentNode?.removeChild(el);
+			}, time);
 		});
 	},
 };

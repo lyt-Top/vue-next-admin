@@ -1,20 +1,20 @@
 <template>
-	<div class="steps-container">
+	<div class="steps-container layout-pd">
 		<el-card shadow="hover" header="element-plus 步骤条">
 			<el-steps :active="stepsActive">
 				<el-step title="第一步">
 					<template #icon>
-						<SvgIcon name="iconfont icon-0_round_solid" :size="20" />
+						<SvgIcon name="iconfont icon-0_round_solid" :size="40" />
 					</template>
 				</el-step>
 				<el-step title="第二步">
 					<template #icon>
-						<SvgIcon name="iconfont icon-2_round_solid" :size="20" />
+						<SvgIcon name="iconfont icon-2_round_solid" :size="40" />
 					</template>
 				</el-step>
 				<el-step title="第三步">
 					<template #icon>
-						<SvgIcon name="iconfont icon-3_round_solid" :size="20" />
+						<SvgIcon name="iconfont icon-3_round_solid" :size="40" />
 					</template>
 				</el-step>
 			</el-steps>

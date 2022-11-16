@@ -1,5 +1,5 @@
 <template>
-	<div class="drag-container">
+	<div class="drag-container layout-pd">
 		<el-card shadow="hover" header="拖动指令效果（v-drag）作用于 Dialog 对话框">
 			<el-button type="primary" @click="dialogVisible = true" size="default">
 				<el-icon>

@@ -1,55 +1,57 @@
 <template>
-	<el-card shadow="hover" header="表单表格验证">
-		<el-form ref="tableRulesRef" :model="tableData" size="default">
-			<el-table :data="tableData.data" border class="module-table-uncollected">
-				<el-table-column
-					v-for="(item, index) in tableData.header"
-					:key="index"
-					show-overflow-tooltip
-					:prop="item.prop"
-					:width="item.width"
-					:label="item.label"
-				>
-					<template v-slot:header>
-						<span v-if="item.isRequired" class="color-danger">*</span>
-						<span class="pl5">{{ item.label }}</span>
-						<el-tooltip v-if="item.isTooltip" effect="dark" content="这是tooltip" placement="top">
-							<i class="iconfont icon-quanxian" />
-						</el-tooltip>
-					</template>
-					<template v-slot="scope">
-						<el-form-item
-							:prop="`data.${scope.$index}.${item.prop}`"
-							:rules="[{ required: item.isRequired, message: '不能为空', trigger: `${item.type}` == 'input' ? 'blur' : 'change' }]"
-						>
-							<el-select v-if="item.type === 'select'" v-model="scope.row[item.prop]" placeholder="请选择">
-								<el-option v-for="sel in tableData.option" :key="sel.id" :label="sel.label" :value="sel.value" />
-							</el-select>
-							<el-date-picker
-								v-else-if="item.type === 'date'"
-								v-model="scope.row[item.prop]"
-								type="date"
-								placeholder="选择日期"
-								style="width: 100%"
-							/>
-							<el-input v-else-if="item.type === 'input'" v-model="scope.row[item.prop]" placeholder="请输入内容" />
-							<el-input v-else-if="item.type === 'dialog'" v-model="scope.row[item.prop]" readonly placeholder="请输入内容">
-								<template v-slot:suffix>
-									<i class="iconfont icon-shouye_dongtaihui" />
-								</template>
-							</el-input>
-						</el-form-item>
-					</template>
-				</el-table-column>
-			</el-table>
-		</el-form>
-		<el-row class="flex mt15">
-			<div class="flex-margin">
-				<el-button size="default" type="success" @click="onValidate">表格验证</el-button>
-				<el-button size="default" type="primary" @click="onAddRow">新增一行</el-button>
-			</div>
-		</el-row>
-	</el-card>
+	<div class="layout-pd">
+		<el-card shadow="hover" header="表单表格验证">
+			<el-form ref="tableRulesRef" :model="tableData" size="default">
+				<el-table :data="tableData.data" border class="module-table-uncollected">
+					<el-table-column
+						v-for="(item, index) in tableData.header"
+						:key="index"
+						show-overflow-tooltip
+						:prop="item.prop"
+						:width="item.width"
+						:label="item.label"
+					>
+						<template v-slot:header>
+							<span v-if="item.isRequired" class="color-danger">*</span>
+							<span class="pl5">{{ item.label }}</span>
+							<el-tooltip v-if="item.isTooltip" effect="dark" content="这是tooltip" placement="top">
+								<i class="iconfont icon-quanxian" />
+							</el-tooltip>
+						</template>
+						<template v-slot="scope">
+							<el-form-item
+								:prop="`data.${scope.$index}.${item.prop}`"
+								:rules="[{ required: item.isRequired, message: '不能为空', trigger: `${item.type}` == 'input' ? 'blur' : 'change' }]"
+							>
+								<el-select v-if="item.type === 'select'" v-model="scope.row[item.prop]" placeholder="请选择">
+									<el-option v-for="sel in tableData.option" :key="sel.id" :label="sel.label" :value="sel.value" />
+								</el-select>
+								<el-date-picker
+									v-else-if="item.type === 'date'"
+									v-model="scope.row[item.prop]"
+									type="date"
+									placeholder="选择日期"
+									style="width: 100%"
+								/>
+								<el-input v-else-if="item.type === 'input'" v-model="scope.row[item.prop]" placeholder="请输入内容" />
+								<el-input v-else-if="item.type === 'dialog'" v-model="scope.row[item.prop]" readonly placeholder="请输入内容">
+									<template v-slot:suffix>
+										<i class="iconfont icon-shouye_dongtaihui" />
+									</template>
+								</el-input>
+							</el-form-item>
+						</template>
+					</el-table-column>
+				</el-table>
+			</el-form>
+			<el-row class="flex mt15">
+				<div class="flex-margin">
+					<el-button size="default" type="success" @click="onValidate">表格验证</el-button>
+					<el-button size="default" type="primary" @click="onAddRow">新增一行</el-button>
+				</div>
+			</el-row>
+		</el-card>
+	</div>
 </template>
 
 <script lang="ts">

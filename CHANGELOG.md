@@ -2,6 +2,27 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.3.0
+
+`2022.11.16`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 新版登录页
+- 🎉 新增 tagsview 鼠标中键 `关闭当前 tagsview`
+- 🎉 新增 `分栏菜单鼠标悬停预加载`。[分栏模式如何去掉鼠标悬浮父级菜单，分栏菜单自动加载的功能啊](https://gitee.com/lyt-top/vue-next-admin/issues/I5RUY7)。操作路径：`布局配置 -> 分栏设置`
+- 🐞 修复 [vue-i18n](https://vue-i18n.intlify.dev/api/general.html#createi18n) 报错，[!39 修复 i18n 兼容性问题](https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/39/files)，感谢[@随心](https://toscode.gitee.com/jiangqiang1996)
+- 🐞 修复 顶栏搜索功能点击蒙蔽弹窗不关闭
+- 🐞 修复 [!38 fix: bug refreshRouterViewKey 值为 null 导致路由缓存第一次无效](https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/38/files)，感谢[@P)](https://toscode.gitee.com/foxp8y)
+- 🐞 修复 `路由参数 -> 普通路由/动态路由` 国际化演示时，`tagsView` 和 `浏览器标题` 显示异常。[演示中：路由参数界面 -> 动态路由，国际化显示时面包屑、浏览器标题有 bug](https://gitee.com/lyt-top/vue-next-admin/issues/I5JRJG)
+- 🐞 修复 `路由参数 -> 普通路由/动态路由` 动态设置 `tagsViewName` 时，`tagsView 右键菜单刷新` 功能失效（也就是路由后面有参数时，query、params）。[普通或动态路由新建页面后点击 tagview 刷新无效](https://gitee.com/lyt-top/vue-next-admin/issues/I5K3YO)，感谢[@dejavuuuuu](https://gitee.com/zc19951010)
+- 🐞 修复 [表单（el-form）中，字体图标偏移问题](https://gitee.com/lyt-top/vue-next-admin/issues/I5K1PM)
+- 🐞 修复 路由 `router.addRoute` 时，一直提示 `No match found for location with path 'xxx'`
+- 🎯 优化 全局 `getCurrentInstance` 替换成 [`provide/inject`](https://cn.vuejs.org/api/application.html#app-provide) 或通过 `ref` 处理
+- 🎯 优化 引入组件方式 `(import xxx from xxx)` 改成 `defineAsyncComponent(() => import(xxx))`
+- 🎯 优化 页面高度 100% 问题，重写布局配置 `界面设置 -> 固定 Header` 多余的 `el-scrollbar` 逻辑、重写各界面需 `计算属性 computed` 设置动态高度问题（改为 css `flex` 设置自适应高度，具体查看文档：[设置可视区高度 100%](https://lyt-top.gitee.io/vue-next-admin-doc-preview/config/otherIssues/#%E8%AE%BE%E7%BD%AE%E5%8F%AF%E8%A7%86%E5%8C%BA%E9%AB%98%E5%BA%A6-100)。[!31 修复页面样式无法通过百分比设置的问题](https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/31)，感谢[@LostDeer](https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/31/files)。`（改动较大，删除多余代码）`
+- 🎯 优化 [wangeditor](https://www.wangeditor.com/) 组件，`@wangeditor/editor-for-vue`。可自行修改，组件位置：`/src/components/editor`。相关 Issues：[wangeditor 编辑器多个菜单不能回弹](https://gitee.com/lyt-top/vue-next-admin/issues/I5M5H7)
+- 🌈 重构 外链、内嵌 iframe 逻辑 + 美化，iframe 支持缓存
+
 ## 2.2.0
 
 `2022.07.10`

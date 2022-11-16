@@ -1,40 +1,29 @@
 <template>
 	<div class="editor-container">
-		<div ref="editorToolbar"></div>
-		<div ref="editorContent" :style="{ height }"></div>
+		<Toolbar :editor="editorRef" :mode="mode" />
+		<Editor :mode="mode" :defaultConfig="editorConfig" :style="{ height }" v-model="editorVal" @onCreated="handleCreated" @onChange="handleChange" />
 	</div>
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, watch, defineComponent } from 'vue';
-import { createEditor, createToolbar, IEditorConfig, IToolbarConfig, IDomEditor } from '@wangeditor/editor';
+// https://www.wangeditor.com/v5/for-frame.html#vue3
 import '@wangeditor/editor/dist/css/style.css';
-import { toolbarKeys } from './toolbar';
-
-// 定义接口来定义对象的类型
-interface WangeditorState {
-	editorToolbar: HTMLDivElement | null;
-	editorContent: HTMLDivElement | null;
-	editor: any;
-}
+import { defineComponent, reactive, toRefs, shallowRef, watch, onBeforeUnmount } from 'vue';
+import { Toolbar, Editor } from '@wangeditor/editor-for-vue';
 
 export default defineComponent({
 	name: 'wngEditor',
+	components: { Toolbar, Editor },
 	props: {
-		// 节点 id
-		id: {
-			type: String,
-			default: () => 'wangeditor',
-		},
 		// 是否禁用
-		isDisable: {
+		disable: {
 			type: Boolean,
-			default: () => false,
+			default: () => true,
 		},
 		// 内容框默认 placeholder
 		placeholder: {
 			type: String,
-			default: () => '请输入内容',
+			default: () => '请输入内容...',
 		},
 		// 双向绑定：双向绑定值，字段名为固定，改了之后将不生效
 		// 参考：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
@@ -52,62 +41,46 @@ export default defineComponent({
 		},
 	},
 	setup(props, { emit }) {
-		const state = reactive<WangeditorState>({
-			editorToolbar: null,
-			editor: null,
-			editorContent: null,
+		const editorRef = shallowRef();
+		const state = reactive({
+			editorConfig: {
+				placeholder: props.placeholder,
+			},
+			editorVal: props.modelValue,
 		});
-		// 富文本配置
-		const wangeditorConfig = () => {
-			const editorConfig: Partial<IEditorConfig> = { MENU_CONF: {} };
-			props.isDisable ? (editorConfig.readOnly = true) : (editorConfig.readOnly = false);
-			editorConfig.placeholder = props.placeholder;
-			editorConfig.onChange = (editor: IDomEditor) => {
-				// console.log('content', editor.children);
-				// console.log('html', editor.getHtml());
-				emit('update:modelValue', editor.getHtml());
-			};
-			(<any>editorConfig).MENU_CONF['uploadImage'] = {
-				base64LimitSize: 10 * 1024 * 1024,
-			};
-			return editorConfig;
+		// 编辑器回调函数
+		const handleCreated = (editor: any) => {
+			editorRef.value = editor;
 		};
-		//
-		const toolbarConfig = () => {
-			const toolbarConfig: Partial<IToolbarConfig> = {};
-			toolbarConfig.toolbarKeys = toolbarKeys;
-			return toolbarConfig;
+		// 编辑器内容改变时
+		const handleChange = (editor: any) => {
+			// console.log(editor.getText());
+			// console.log(editor.getHtml());
+			emit('update:modelValue', editor.getHtml());
 		};
-		// 初始化富文本
-		// https://www.wangeditor.com/
-		const initWangeditor = () => {
-			state.editor = createEditor({
-				html: props.modelValue,
-				selector: state.editorContent!,
-				config: wangeditorConfig(),
-				mode: props.mode,
-			});
-			createToolbar({
-				editor: state.editor,
-				selector: state.editorToolbar!,
-				mode: props.mode,
-				config: toolbarConfig(),
-			});
-		};
-		// 页面加载时
-		onMounted(() => {
-			initWangeditor();
-		});
-		// 监听双向绑定值的改变
+		// 监听是否禁用改变
 		// https://gitee.com/lyt-top/vue-next-admin/issues/I4LM7I
 		watch(
-			() => props.modelValue,
-			(value) => {
-				state.editor.clear();
-				state.editor.dangerouslyInsertHtml(value);
+			() => props.disable,
+			(bool) => {
+				const editor = editorRef.value;
+				if (editor == null) return;
+				bool ? editor.disable() : editor.enable();
+			},
+			{
+				deep: true,
 			}
 		);
+		// 页面销毁时
+		onBeforeUnmount(() => {
+			const editor = editorRef.value;
+			if (editor == null) return;
+			editor.destroy();
+		});
 		return {
+			editorRef,
+			handleCreated,
+			handleChange,
 			...toRefs(state),
 		};
 	},

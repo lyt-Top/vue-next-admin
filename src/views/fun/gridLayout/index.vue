@@ -1,5 +1,5 @@
 <template>
-	<div class="grid-layout-container">
+	<div class="grid-layout-container layout-pd">
 		<el-card shadow="hover" header="vue-grid-layout 拖拽布局演示">
 			<el-alert
 				title="感谢优秀的 `vue-grid-layout`，项目地址：https://github.com/jbaysolutions/vue-grid-layout"

@@ -1,5 +1,5 @@
 <template>
-	<div class="waterfall-container">
+	<div class="waterfall-container layout-pd">
 		<el-card shadow="hover" header="瀑布屏（布局一）" class="mb15">
 			<div class="waterfall-first">
 				<div class="waterfall-first-item" v-for="v in 30" :key="v" v-waves>
