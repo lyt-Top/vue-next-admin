@@ -1,6 +1,6 @@
 <template>
-	<div class="system-dic-container">
-		<el-card shadow="hover">
+	<div class="system-dic-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入字典名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -56,8 +56,9 @@
 
 <script setup name="systemDic">
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddDic from '/@/views/system/dic/component/addDic.vue';
-import EditDic from '/@/views/system/dic/component/editDic.vue';
+
+const AddDic = defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue'));
+const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue'));
 
 const addDicRef = ref();
 const editDicRef = ref();

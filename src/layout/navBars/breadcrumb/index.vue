@@ -11,12 +11,13 @@
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import Breadcrumb from '/@/layout/navBars/breadcrumb/breadcrumb.vue';
-import User from '/@/layout/navBars/breadcrumb/user.vue';
-import Logo from '/@/layout/logo/index.vue';
-import Horizontal from '/@/layout/navMenu/horizontal.vue';
+import mittBus from '/@/utils/mitt';
 
-const { proxy } = getCurrentInstance();
+const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
+const User = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue'));
+const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
+const Horizontal = defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue'));
+
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -41,7 +42,7 @@ const setFilterRoutes = () => {
 	if (layout === 'classic' && isClassicSplitMenu) {
 		state.menuList = delClassicChildren(filterRoutesFun(routesList.value));
 		const resData = setSendClassicChildren(route.path);
-		proxy.mittBus.emit('setSendClassicChildren', resData);
+		mittBus.emit('setSendClassicChildren', resData);
 	} else {
 		state.menuList = filterRoutesFun(routesList.value);
 	}
@@ -80,13 +81,13 @@ const setSendClassicChildren = (path) => {
 // 页面加载时
 onMounted(() => {
 	setFilterRoutes();
-	proxy.mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
+	mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
 		setFilterRoutes();
 	});
 });
 // 页面卸载时
 onUnmounted(() => {
-	proxy.mittBus.off('getBreadcrumbIndexSetFilterRoutes', () => {});
+	mittBus.off('getBreadcrumbIndexSetFilterRoutes', () => {});
 });
 </script>
 

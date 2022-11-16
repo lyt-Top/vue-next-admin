@@ -1,6 +1,6 @@
 <template>
-	<div class="system-dept-container">
-		<el-card shadow="hover">
+	<div class="system-dept-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-dept-search mb15">
 				<el-input size="default" placeholder="请输入部门名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -53,8 +53,9 @@
 
 <script setup name="systemDept">
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddDept from '/@/views/system/dept/component/addDept.vue';
-import EditDept from '/@/views/system/dept/component/editDept.vue';
+
+const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
+const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
 
 const addDeptRef = ref();
 const editDeptRef = ref();

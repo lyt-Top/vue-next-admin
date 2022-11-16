@@ -50,10 +50,10 @@ import { storeToRefs } from 'pinia';
 import pinia from '/@/stores/index';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import mittBus from '/@/utils/mitt';
 
 const columnsAsideOffsetTopRefs = ref([]);
 const columnsAsideActiveRef = ref();
-const { proxy } = getCurrentInstance();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { routesList, isColumnsMenuHover, isColumnsNavHover } = storeToRefs(stores);
@@ -83,11 +83,12 @@ const onColumnsAsideMenuClick = (v, k) => {
 };
 // 鼠标移入时，显示当前的子级菜单
 const onColumnsAsideMenuMouseenter = (v, k) => {
+	if (!themeConfig.value.isColumnsMenuHoverPreload) return false;
 	let { path } = v;
 	state.liOldPath = path;
 	state.liOldIndex = k;
 	state.liHoverIndex = k;
-	proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(path));
+	mittBus.emit('setSendColumnsChildren', setSendChildren(path));
 	stores.setColumnsMenuHover(false);
 	stores.setColumnsNavHover(true);
 };
@@ -96,7 +97,7 @@ const onColumnsAsideMenuMouseleave = async () => {
 	await stores.setColumnsNavHover(false);
 	// 添加延时器，防止拿到的 store.state.routesList 值不是最新的
 	setTimeout(() => {
-		if (!isColumnsMenuHover && !isColumnsNavHover) proxy.mittBus.emit('restoreDefault');
+		if (!isColumnsMenuHover && !isColumnsNavHover) mittBus.emit('restoreDefault');
 	}, 100);
 };
 // 设置高亮动态位置
@@ -111,7 +112,7 @@ const setFilterRoutes = () => {
 	const resData = setSendChildren(route.path);
 	if (Object.keys(resData).length <= 0) return false;
 	onColumnsAsideDown(resData.item[0].k);
-	proxy.mittBus.emit('setSendColumnsChildren', resData);
+	mittBus.emit('setSendColumnsChildren', resData);
 };
 // 传送当前子级数据到菜单中
 const setSendChildren = (path) => {
@@ -156,11 +157,11 @@ watch(
 		val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
 		if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
 			state.liHoverIndex = null;
-			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
+			mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
 		} else {
 			state.liHoverIndex = state.liOldIndex;
 			if (!state.liOldPath) return false;
-			proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+			mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
 		}
 	},
 	{
@@ -171,19 +172,19 @@ watch(
 onMounted(() => {
 	setFilterRoutes();
 	// 销毁变量，防止鼠标再次移入时，保留了上次的记录
-	proxy.mittBus.on('restoreDefault', () => {
+	mittBus.on('restoreDefault', () => {
 		state.liOldIndex = null;
 		state.liOldPath = null;
 	});
 });
 // 页面卸载时
 onUnmounted(() => {
-	proxy.mittBus.off('restoreDefault', () => {});
+	mittBus.off('restoreDefault', () => {});
 });
 // 路由更新时
 onBeforeRouteUpdate((to) => {
 	setColumnsMenuHighlight(to.path);
-	proxy.mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
+	mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
 });
 </script>
 
@@ -194,6 +195,16 @@ onBeforeRouteUpdate((to) => {
 	background: var(--next-bg-columnsMenuBar);
 	ul {
 		position: relative;
+		.layout-columns-active {
+			color: var(--next-bg-columnsMenuBarColor) !important;
+			transition: 0.3s ease-in-out;
+		}
+		.layout-columns-hover {
+			color: var(--el-color-primary);
+			a {
+				color: var(--el-color-primary);
+			}
+		}
 		li {
 			color: var(--next-bg-columnsMenuBarColor);
 			width: 100%;
@@ -203,6 +214,9 @@ onBeforeRouteUpdate((to) => {
 			cursor: pointer;
 			position: relative;
 			z-index: 1;
+			&:hover {
+				@extend .layout-columns-hover;
+			}
 			.columns-vertical {
 				margin: auto;
 				.columns-vertical-title {
@@ -228,16 +242,6 @@ onBeforeRouteUpdate((to) => {
 			a {
 				text-decoration: none;
 				color: var(--next-bg-columnsMenuBarColor);
-			}
-		}
-		.layout-columns-active {
-			color: var(--next-bg-columnsMenuBarColor) !important;
-			transition: 0.3s ease-in-out;
-		}
-		.layout-columns-hover {
-			color: var(--el-color-primary);
-			a {
-				color: var(--el-color-primary);
 			}
 		}
 		.columns-round {

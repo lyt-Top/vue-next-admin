@@ -1,82 +1,50 @@
 <template>
-	<el-main class="layout-main">
-		<el-scrollbar
-			ref="layoutScrollbarRef"
-			:class="{
-				'layout-scrollbar':
-					(!isClassicOrTransverse && !state.currentRouteMeta.isLink && !state.currentRouteMeta.isIframe) ||
-					(!isClassicOrTransverse && currentRouteMeta.isLink && !state.currentRouteMeta.isIframe),
-			}"
-		>
-			<LayoutParentView
-				:style="{
-					padding: !isClassicOrTransverse || (state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe) ? '0' : '15px',
-					transition: 'padding 0.3s ease-in-out',
-				}"
-			/>
-			<Footer v-if="themeConfig.isFooter" />
+	<el-main class="layout-main" :style="isFixedHeader ? `height: calc(100% - ${setMainHeight})` : `minHeight: calc(100% - ${setMainHeight})`">
+		<el-scrollbar ref="layoutMainScrollbarRef" class="layout-main-scroll" wrap-class="layout-main-scroll" view-class="layout-main-scroll">
+			<LayoutParentView />
+			<LayoutFooter v-if="isFooter" />
 		</el-scrollbar>
+		<el-backtop target=".layout-backtop .el-scrollbar__wrap" />
 	</el-main>
 </template>
 
 <script setup name="layoutMain">
 import { storeToRefs } from 'pinia';
+import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';
-import LayoutParentView from '/@/layout/routerView/parent.vue';
-import Footer from '/@/layout/footer/index.vue';
 
-const { proxy } = getCurrentInstance();
+const LayoutParentView = defineAsyncComponent(() => import('/@/layout/routerView/parent.vue'));
+const LayoutFooter = defineAsyncComponent(() => import('/@/layout/footer/index.vue'));
+
+const layoutMainScrollbarRef = ref('');
+const route = useRoute();
+const storesTagsViewRoutes = useTagsViewRoutes();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
-const route = useRoute();
-const state = reactive({
-	headerHeight: '',
-	currentRouteMeta: {},
+const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
+// 设置 footer 显示/隐藏
+const isFooter = computed(() => {
+	return themeConfig.value.isFooter && !route.meta.isIframe;
 });
-// 判断布局
-const isClassicOrTransverse = computed(() => {
-	const { layout } = themeConfig.value;
-	return layout === 'classic' || layout === 'transverse';
+// 设置 header 固定
+const isFixedHeader = computed(() => {
+	return themeConfig.value.isFixedHeader;
 });
-// 设置 main 的高度
-const initHeaderHeight = () => {
-	const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-	let { isTagsview } = themeConfig.value;
-	if (isTagsview) return (state.headerHeight = bool ? `86px` : `115px`);
-	else return (state.headerHeight = `80px`);
-};
-// 初始化获取当前路由 meta，用于设置 iframes padding
-const initGetMeta = () => {
-	state.currentRouteMeta = route.meta;
-};
+// 设置主内容区的高度
+const setMainHeight = computed(() => {
+	if (isTagsViewCurrenFull.value) return '0px';
+	const { isTagsview, layout } = themeConfig.value;
+	if (isTagsview && layout !== 'classic') return '85px';
+	else return '51px';
+});
 // 页面加载时
 onMounted(async () => {
-	await initGetMeta();
-	initHeaderHeight();
 	NextLoading.done();
 });
-// 监听路由变化
-watch(
-	() => route.path,
-	() => {
-		state.currentRouteMeta = route.meta;
-		const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-		state.headerHeight = bool ? `86px` : `115px`;
-		proxy.$refs.layoutScrollbarRef.update();
-	}
-);
-// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-watch(
-	themeConfig,
-	(val) => {
-		state.currentRouteMeta = route.meta;
-		const bool = state.currentRouteMeta.isLink && state.currentRouteMeta.isIframe;
-		state.headerHeight = val.isTagsview ? (bool ? `86px` : `115px`) : '51px';
-		proxy.$refs?.layoutScrollbarRef?.update();
-	},
-	{
-		deep: true,
-	}
-);
+
+// 暴露变量
+defineExpose({
+	layoutMainScrollbarRef,
+});
 </script>

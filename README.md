@@ -20,7 +20,7 @@
 	<p>&nbsp;</p>
 </div>
 
-#### 🌈 介绍 基础版 js（不带国际化，基于 vue-next-admin-template V2.2.0 版）
+#### 🌈 介绍 基础版 js（不带国际化，基于 vue-next-admin-template V2.3.0 版，setup 语法糖）
 
 基于 vue3.x + CompositionAPI + vite + element plus + vue-router-next，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
 
@@ -71,9 +71,13 @@ cnpm run dev
 cnpm run build
 ```
 
+#### 📚 开发文档
+
+- 查看开发文档：<a href="https://lyt-top.gitee.io/vue-next-admin-doc-preview" target="_blank">vue-next-admin-doc</a>
+
 #### 💯 学习交流加 QQ 群
 
-- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！
+- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！微信群由于只有 `7天有效` 就不放这里了。
 - 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
 - 群号码：
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>

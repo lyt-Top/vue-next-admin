@@ -1,5 +1,5 @@
 <template>
-	<div class="system-menu-container">
+	<div class="system-menu-container layout-pd">
 		<el-card shadow="hover">
 			<div class="system-menu-search mb15">
 				<el-input size="default" placeholder="请输入菜单名称" style="max-width: 180px"> </el-input>
@@ -62,8 +62,9 @@
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddMenu from '/@/views/system/menu/component/addMenu.vue';
-import EditMenu from '/@/views/system/menu/component/editMenu.vue';
+
+const AddMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue'));
+const EditMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue'));
 
 const addMenuRef = ref();
 const editMenuRef = ref();

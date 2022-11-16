@@ -1,6 +1,6 @@
 <template>
-	<div class="system-user-container">
-		<el-card shadow="hover">
+	<div class="system-user-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入用户名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -60,8 +60,9 @@
 
 <script setup name="systemUser">
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddUer from '/@/views/system/user/component/addUser.vue';
-import EditUser from '/@/views/system/user/component/editUser.vue';
+
+const AddUer = defineAsyncComponent(() => import('/@/views/system/user/component/addUser.vue'));
+const EditUser = defineAsyncComponent(() => import('/@/views/system/user/component/editUser.vue'));
 
 const addUserRef = ref();
 const editUserRef = ref();

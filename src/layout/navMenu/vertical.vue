@@ -22,7 +22,7 @@
 						<span>{{ val.meta.title }}</span>
 					</template>
 					<template #title v-else>
-						<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">{{ val.meta.title }}</a>
+						<a class="w100" @click.prevent="onALinkClick(val)">{{ val.meta.title }}</a>
 					</template>
 				</el-menu-item>
 			</template>
@@ -34,7 +34,9 @@
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { onBeforeRouteUpdate } from 'vue-router';
-import SubItem from '/@/layout/navMenu/subItem.vue';
+import { verifyUrl } from '/@/utils/toolsValidate';
+
+const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
 const props = defineProps({
 	menuList: {
@@ -45,6 +47,7 @@ const props = defineProps({
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
+const router = useRouter();
 const state = reactive({
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
@@ -75,6 +78,13 @@ watch(
 		immediate: true,
 	}
 );
+// 打开外部链接
+const onALinkClick = (val) => {
+	const { origin, pathname } = window.location;
+	router.push(val.path);
+	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
+	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+};
 // 页面加载时
 onMounted(() => {
 	state.defaultActive = setParentHighlight(route);

@@ -1,45 +1,29 @@
 <template>
-	<div class="error layout-view-bg-white" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
-		<div class="error-flex">
-			<div class="left">
-				<div class="left-item">
-					<div class="left-item-animation left-item-num">404</div>
-					<div class="left-item-animation left-item-title">地址输入错误，请重新输入地址~</div>
-					<div class="left-item-animation left-item-msg">您可以先检查网址，然后重新输入或给我们反馈问题。</div>
-					<div class="left-item-animation left-item-btn">
-						<el-button type="primary" round @click="onGoHome">返回首页</el-button>
+	<div class="error layout-padding">
+		<div class="layout-padding-auto layout-padding-view">
+			<div class="error-flex">
+				<div class="left">
+					<div class="left-item">
+						<div class="left-item-animation left-item-num">404</div>
+						<div class="left-item-animation left-item-title">地址输入错误，请重新输入地址~</div>
+						<div class="left-item-animation left-item-msg">您可以先检查网址，然后重新输入或给我们反馈问题。</div>
+						<div class="left-item-animation left-item-btn">
+							<el-button type="primary" size="default" round @click="onGoHome">返回首页</el-button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="right">
-				<img
-					src="https://img-blog.csdnimg.cn/9eb1d85a417f4ed1ba7107f149ce3da1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
-				/>
+				<div class="right">
+					<img
+						src="https://img-blog.csdnimg.cn/9eb1d85a417f4ed1ba7107f149ce3da1.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup name="404">
-import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-
 const router = useRouter();
-const storesThemeConfig = useThemeConfig();
-const storesTagsViewRoutes = useTagsViewRoutes();
-const { themeConfig } = storeToRefs(storesThemeConfig);
-const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
-// 设置主内容的高度
-const initTagViewHeight = computed(() => {
-	let { isTagsview } = themeConfig.value;
-	if (isTagsViewCurrenFull.value) {
-		return `30px`;
-	} else {
-		if (isTagsview) return `114px`;
-		else return `80px`;
-	}
-});
 // 返回首页
 const onGoHome = () => {
 	router.push('/');
@@ -49,8 +33,6 @@ const onGoHome = () => {
 <style scoped lang="scss">
 .error {
 	height: 100%;
-	background-color: var(--el-color-white);
-	display: flex;
 	.error-flex {
 		margin: auto;
 		display: flex;

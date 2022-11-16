@@ -8,8 +8,9 @@
 <script setup name="layoutNavBars">
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import BreadcrumbIndex from '/@/layout/navBars/breadcrumb/index.vue';
-import TagsView from '/@/layout/navBars/tagsView/tagsView.vue';
+
+const BreadcrumbIndex = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/index.vue'));
+const TagsView = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/tagsView.vue'));
 
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

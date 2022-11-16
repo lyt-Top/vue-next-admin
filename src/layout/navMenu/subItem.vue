@@ -14,7 +14,7 @@
 					<span>{{ val.meta.title }}</span>
 				</template>
 				<template v-else>
-					<a :href="val.meta.isLink" target="_blank" rel="opener" class="w100">
+					<a class="w100" @click.prevent="onALinkClick(val)">
 						<SvgIcon :name="val.meta.icon" />
 						{{ val.meta.title }}
 					</a>
@@ -25,15 +25,25 @@
 </template>
 
 <script setup name="navMenuSubItem">
+import { useRouter } from 'vue-router';
+import { verifyUrl } from '/@/utils/toolsValidate';
+
 const props = defineProps({
 	chil: {
 		type: Array,
 		default: () => [],
 	},
 });
-
+const router = useRouter();
 // 获取父级菜单数据
 const chils = computed(() => {
 	return props.chil;
 });
+// 打开外部链接
+const onALinkClick = (val) => {
+	const { origin, pathname } = window.location;
+	router.push(val.path);
+	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
+	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+};
 </script>

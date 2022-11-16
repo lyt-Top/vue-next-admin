@@ -15,10 +15,12 @@ import pinia from '/@/stores/index';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-import Logo from '/@/layout/logo/index.vue';
-import Vertical from '/@/layout/navMenu/vertical.vue';
+import mittBus from '/@/utils/mitt';
 
-const { proxy } = getCurrentInstance();
+const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
+const Vertical = defineAsyncComponent(() => import('/@/layout/navMenu/vertical.vue'));
+
+const layoutAsideScrollbarRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const storesTagsViewRoutes = useTagsViewRoutes();
@@ -97,14 +99,13 @@ const initMenuFixed = (clientWidth) => {
 const onAsideEnterLeave = (bool) => {
 	let { layout } = themeConfig.value;
 	if (layout !== 'columns') return false;
-	if (!bool) proxy.mittBus.emit('restoreDefault');
+	if (!bool) mittBus.emit('restoreDefault');
 	stores.setColumnsMenuHover(bool);
 };
 // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
 watch(themeConfig.value, (val) => {
 	if (val.isShowLogoChange !== val.isShowLogo) {
-		if (!proxy.$refs.layoutAsideScrollbarRef) return false;
-		proxy.$refs.layoutAsideScrollbarRef.update();
+		if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
 	}
 });
 // 监听vuex值的变化，动态赋值给菜单中
@@ -123,22 +124,22 @@ watch(
 onBeforeMount(() => {
 	initMenuFixed(document.body.clientWidth);
 	setFilterRoutes();
-	// 此界面不需要取消监听(proxy.mittBus.off('setSendColumnsChildren))
+	// 此界面不需要取消监听(mittBus.off('setSendColumnsChildren))
 	// 因为切换布局时有的监听需要使用，取消了监听，某些操作将不生效
-	proxy.mittBus.on('setSendColumnsChildren', (res) => {
+	mittBus.on('setSendColumnsChildren', (res) => {
 		state.menuList = res.children;
 	});
-	proxy.mittBus.on('setSendClassicChildren', (res) => {
+	mittBus.on('setSendClassicChildren', (res) => {
 		let { layout, isClassicSplitMenu } = themeConfig.value;
 		if (layout === 'classic' && isClassicSplitMenu) {
 			state.menuList = [];
 			state.menuList = res.children;
 		}
 	});
-	proxy.mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
+	mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
 		setFilterRoutes();
 	});
-	proxy.mittBus.on('layoutMobileResize', (res) => {
+	mittBus.on('layoutMobileResize', (res) => {
 		initMenuFixed(res.clientWidth);
 		closeLayoutAsideMobileMode();
 	});

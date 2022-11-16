@@ -15,11 +15,12 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
-import LockScreen from '/@/layout/lockScreen/index.vue';
-import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
-import CloseFull from '/@/layout/navBars/breadcrumb/closeFull.vue';
+import mittBus from './utils/mitt';
 
-const { proxy } = getCurrentInstance();
+const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
+const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
+const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
+
 const setingsRef = ref();
 const route = useRoute();
 const stores = useTagsViewRoutes();
@@ -29,10 +30,6 @@ const { themeConfig } = storeToRefs(storesThemeConfig);
 const getGlobalComponentSize = computed(() => {
 	return other.globalComponentSize();
 });
-// 布局配置弹窗打开
-const openSetingsDrawer = () => {
-	setingsRef.value.openDrawer();
-};
 // 设置初始化，防止刷新时恢复默认
 onBeforeMount(() => {
 	// 设置批量第三方 icon 图标
@@ -44,8 +41,8 @@ onBeforeMount(() => {
 onMounted(() => {
 	nextTick(() => {
 		// 监听布局配置弹窗点击打开
-		proxy.mittBus.on('openSetingsDrawer', () => {
-			openSetingsDrawer();
+		mittBus.on('openSetingsDrawer', () => {
+			setingsRef.value.openDrawer();
 		});
 		// 获取缓存中的布局配置
 		if (Local.get('themeConfig')) {
@@ -60,7 +57,7 @@ onMounted(() => {
 });
 // 页面销毁时，关闭监听布局配置/i18n监听
 onUnmounted(() => {
-	proxy.mittBus.off('openSetingsDrawer', () => {});
+	mittBus.off('openSetingsDrawer', () => {});
 });
 // 监听路由的变化，设置网站标题
 watch(

@@ -65,7 +65,6 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
 
-const { proxy } = getCurrentInstance();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const layoutLockScreenInputRef = ref();
@@ -127,7 +126,7 @@ const onEnd = () => {
 // 获取要拖拽的初始元素
 const initGetElement = () => {
 	nextTick(() => {
-		state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
+		state.querySelectorEl = layoutLockScreenDateRef.value;
 	});
 };
 // 时间初始化

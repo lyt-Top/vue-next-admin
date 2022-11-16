@@ -1,20 +1,6 @@
 <template>
-	<div class="system-role-container">
-		<el-form :inline="true" :model="state.formInline" class="demo-form-inline" size="default">
-			<el-form-item label="Approved by">
-				<el-input v-model="state.formInline.user" placeholder="Approved by" />
-			</el-form-item>
-			<el-form-item label="Activity zone">
-				<el-select v-model="state.formInline.region" placeholder="Activity zone">
-					<el-option label="Zone one" value="shanghai" />
-					<el-option label="Zone two" value="beijing" />
-				</el-select>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary">Query</el-button>
-			</el-form-item>
-		</el-form>
-		<el-card shadow="hover">
+	<div class="system-role-container layout-padding">
+		<div class="system-role-padding layout-padding-auto layout-padding-view">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -65,16 +51,17 @@
 				:total="state.tableData.total"
 			>
 			</el-pagination>
-		</el-card>
-		<AddRole ref="addRoleRef" />
-		<EditRole ref="editRoleRef" />
+			<AddRole ref="addRoleRef" />
+			<EditRole ref="editRoleRef" />
+		</div>
 	</div>
 </template>
 
 <script setup name="systemRole">
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddRole from '/@/views/system/role/component/addRole.vue';
-import EditRole from '/@/views/system/role/component/editRole.vue';
+
+const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
+const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
 
 const addRoleRef = ref();
 const editRoleRef = ref();
@@ -142,3 +129,14 @@ onMounted(() => {
 	initTableData();
 });
 </script>
+
+<style scoped lang="scss">
+.system-role-container {
+	.system-role-padding {
+		padding: 15px;
+		.el-table {
+			flex: 1;
+		}
+	}
+}
+</style>

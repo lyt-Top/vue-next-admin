@@ -17,11 +17,11 @@
 			</el-col>
 			<el-col :span="1"></el-col>
 			<el-col :span="8">
-				<el-button class="login-content-code">获取验证码</el-button>
+				<el-button v-waves class="login-content-code">获取验证码</el-button>
 			</el-col>
 		</el-form-item>
 		<el-form-item class="login-animation3">
-			<el-button round type="primary" class="login-content-submit">
+			<el-button round type="primary" v-waves class="login-content-submit">
 				<span>登 录</span>
 			</el-button>
 		</el-form-item>

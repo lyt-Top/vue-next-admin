@@ -62,7 +62,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script>
 import { ref, toRefs, reactive, onMounted, nextTick, computed, watch, defineComponent } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
 

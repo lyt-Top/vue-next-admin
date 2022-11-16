@@ -70,10 +70,11 @@ import { Session, Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
-import Search from '/@/layout/navBars/breadcrumb/search.vue';
+import mittBus from '/@/utils/mitt';
 
-const { proxy } = getCurrentInstance();
+const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
+const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
+
 const router = useRouter();
 const stores = useUserInfo();
 const storesThemeConfig = useThemeConfig();
@@ -108,7 +109,7 @@ const onScreenfullClick = () => {
 };
 // 布局配置 icon 点击时
 const onLayoutSetingClick = () => {
-	proxy.mittBus.emit('openSetingsDrawer');
+	mittBus.emit('openSetingsDrawer');
 };
 // 下拉菜单点击时
 const onHandleCommandClick = (path) => {
@@ -159,28 +160,18 @@ const onComponentSizeChange = (size) => {
 	Local.remove('themeConfig');
 	themeConfig.value.globalComponentSize = size;
 	Local.set('themeConfig', themeConfig.value);
-	initComponentSize();
+	initI18nOrSize('globalComponentSize', 'disabledSize');
 	window.location.reload();
 };
-// 初始化全局组件大小
-const initComponentSize = () => {
-	switch (Local.get('themeConfig').globalComponentSize) {
-		case 'large':
-			state.disabledSize = 'large';
-			break;
-		case 'default':
-			state.disabledSize = 'default';
-			break;
-		case 'small':
-			state.disabledSize = 'small';
-			break;
-			break;
-	}
+
+// 初始化组件大小/i18n
+const initI18nOrSize = (value, attr) => {
+	state[attr] = Local.get('themeConfig')[value];
 };
 // 页面加载时
 onMounted(() => {
 	if (Local.get('themeConfig')) {
-		initComponentSize();
+		initI18nOrSize('globalComponentSize', 'disabledSize');
 	}
 });
 </script>

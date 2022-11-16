@@ -8,7 +8,7 @@
 	<i v-else :class="getIconName" :style="setIconSvgStyle" />
 </template>
 
-<script lang="ts">
+<script>
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent({

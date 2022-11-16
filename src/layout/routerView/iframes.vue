@@ -1,54 +1,77 @@
 <template>
-	<div class="layout-view-bg-white flex mt1" :style="{ height: `calc(100vh - ${setIframeHeight}`, border: 'none' }" v-loading="state.iframeLoading">
-		<iframe :src="iframeUrl" frameborder="0" height="100%" width="100%" ref="iframeDom" v-show="!iframeLoading"></iframe>
+	<div class="layout-padding layout-padding-unset layout-iframe">
+		<div class="layout-padding-auto layout-padding-view">
+			<div class="w100" v-for="v in setIframeList" :key="v.path" v-loading="v.meta.loading" element-loading-background="white">
+				<transition-group :name="name" mode="out-in">
+					<iframe
+						:src="v.meta.isLink"
+						:key="v.path"
+						frameborder="0"
+						height="100%"
+						width="100%"
+						style="position: absolute"
+						:data-url="v.path"
+						v-show="getRoutePath === v.path"
+						ref="iframeRef"
+					/>
+				</transition-group>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script setup name="layoutIfameView">
-import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
-
+const props = defineProps({
+	refreshKey: {
+		type: String,
+		default: () => '',
+	},
+	name: {
+		type: String,
+		default: () => 'slide-right',
+	},
+	list: {
+		type: Array,
+		default: () => [],
+	},
+});
+const iframeRef = ref();
 const route = useRoute();
-const storesThemeConfig = useThemeConfig();
-const storesTagsViewRoutes = useTagsViewRoutes();
-const { themeConfig } = storeToRefs(storesThemeConfig);
-const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
-const state = reactive({
-	iframeLoading: true,
-	iframeUrl: '',
+// 处理 list 列表，当打开时，才进行加载
+const setIframeList = computed(() => {
+	return props.list.filter((v) => v.meta.isIframeOpen);
 });
-// 初始化页面加载 loading
-const initIframeLoad = () => {
-	state.iframeUrl = route.meta.isLink;
-	nextTick(() => {
-		state.iframeLoading = true;
-		const iframe = state.iframeDom;
-		if (!iframe) return false;
-		iframe.onload = () => {
-			state.iframeLoading = false;
-		};
-	});
-};
-// 设置 iframe 的高度
-const setIframeHeight = computed(() => {
-	let { isTagsview } = themeConfig.value;
-	if (isTagsViewCurrenFull.value) {
-		return `1px`;
-	} else {
-		if (isTagsview) return `86px`;
-		else return `51px`;
-	}
+// 获取 iframe 当前路由 path
+const getRoutePath = computed(() => {
+	return route.path;
 });
-// 页面加载时
-onMounted(() => {
-	initIframeLoad();
-});
-// 监听路由变化，多个 iframe 时使用
+// 监听路由变化，初始化 iframe 数据，防止多个 iframe 时，切换不生效
 watch(
-	() => route.path,
-	() => {
-		initIframeLoad();
+	() => route.fullPath,
+	(val) => {
+		const item = props.list.find((v) => v.path === val);
+		if (item && !item.meta.isIframeOpen) item.meta.isIframeOpen = true;
+		nextTick(() => {
+			if (!iframeRef.value) return false;
+			iframeRef.value.forEach((v) => {
+				if (v.dataset.url === val) {
+					v.onload = () => {
+						if (item && item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+					};
+				}
+			});
+		});
+	},
+	{
+		immediate: true,
+	}
+);
+// 监听 iframe refreshKey 变化，用于 tagsview 右键菜单刷新
+watch(
+	() => props.refreshKey,
+	() => {},
+	{
+		deep: true,
 	}
 );
 </script>

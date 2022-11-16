@@ -1,45 +1,30 @@
 <template>
-	<div class="error layout-view-bg-white" :style="{ height: `calc(100vh - ${initTagViewHeight}` }">
-		<div class="error-flex">
-			<div class="left">
-				<div class="left-item">
-					<div class="left-item-animation left-item-num">401</div>
-					<div class="left-item-animation left-item-title">您未被授权，没有操作权限~</div>
-					<div class="left-item-animation left-item-msg">联系方式：加QQ群探讨 665452019</div>
-					<div class="left-item-animation left-item-btn">
-						<el-button type="primary" round @click="onSetAuth">重新授权</el-button>
+	<div class="error layout-padding">
+		<div class="layout-padding-auto layout-padding-view">
+			<div class="error-flex">
+				<div class="left">
+					<div class="left-item">
+						<div class="left-item-animation left-item-num">401</div>
+						<div class="left-item-animation left-item-title">您未被授权，没有操作权限~</div>
+						<div class="left-item-animation left-item-msg">联系方式：加QQ群探讨 665452019</div>
+						<div class="left-item-animation left-item-btn">
+							<el-button type="primary" size="default" round @click="onSetAuth">重新授权</el-button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="right">
-				<img
-					src="https://img-blog.csdnimg.cn/3333f265772a4fa89287993500ecbf96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
-				/>
+				<div class="right">
+					<img
+						src="https://img-blog.csdnimg.cn/3333f265772a4fa89287993500ecbf96.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_16,color_FFFFFF,t_70,g_se,x_16"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup name="401">
-import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
-import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { Session } from '/@/utils/storage';
 
-const storesThemeConfig = useThemeConfig();
-const storesTagsViewRoutes = useTagsViewRoutes();
-const { themeConfig } = storeToRefs(storesThemeConfig);
-const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
-// 设置主内容的高度
-const initTagViewHeight = computed(() => {
-	let { isTagsview } = themeConfig.value;
-	if (isTagsViewCurrenFull.value) {
-		return `30px`;
-	} else {
-		if (isTagsview) return `114px`;
-		else return `80px`;
-	}
-});
 // 重新授权
 const onSetAuth = () => {
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
@@ -53,8 +38,6 @@ const onSetAuth = () => {
 <style scoped lang="scss">
 .error {
 	height: 100%;
-	background-color: var(--el-color-white);
-	display: flex;
 	.error-flex {
 		margin: auto;
 		display: flex;

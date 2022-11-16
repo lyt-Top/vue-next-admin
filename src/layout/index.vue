@@ -1,8 +1,5 @@
 <template>
-	<Defaults v-if="themeConfig.layout === 'defaults'" />
-	<Classic v-else-if="themeConfig.layout === 'classic'" />
-	<Transverse v-else-if="themeConfig.layout === 'transverse'" />
-	<Columns v-else-if="themeConfig.layout === 'columns'" />
+	<component :is="layouts[themeConfig.layout]"></component>
 </template>
 
 <script setup name="layout">
@@ -10,13 +7,15 @@ import { defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
+import mittBus from '/@/utils/mitt';
 
-const Defaults = defineAsyncComponent(() => import('/@/layout/main/defaults.vue'));
-const Classic = defineAsyncComponent(() => import('/@/layout/main/classic.vue'));
-const Transverse = defineAsyncComponent(() => import('/@/layout/main/transverse.vue'));
-const Columns = defineAsyncComponent(() => import('/@/layout/main/columns.vue'));
+const layouts = {
+	defaults: defineAsyncComponent(() => import('/@/layout/main/defaults.vue')),
+	classic: defineAsyncComponent(() => import('/@/layout/main/classic.vue')),
+	transverse: defineAsyncComponent(() => import('/@/layout/main/transverse.vue')),
+	columns: defineAsyncComponent(() => import('/@/layout/main/columns.vue')),
+};
 
-const { proxy } = getCurrentInstance();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 // 窗口大小改变时(适配移动端)
@@ -25,12 +24,12 @@ const onLayoutResize = () => {
 	const clientWidth = document.body.clientWidth;
 	if (clientWidth < 1000) {
 		themeConfig.value.isCollapse = false;
-		proxy.mittBus.emit('layoutMobileResize', {
+		mittBus.emit('layoutMobileResize', {
 			layout: 'defaults',
 			clientWidth,
 		});
 	} else {
-		proxy.mittBus.emit('layoutMobileResize', {
+		mittBus.emit('layoutMobileResize', {
 			layout: Local.get('oldLayout') ? Local.get('oldLayout') : themeConfig.value.layout,
 			clientWidth,
 		});

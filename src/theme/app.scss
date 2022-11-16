@@ -46,6 +46,14 @@ body,
 .layout-container {
 	width: 100%;
 	height: 100%;
+	.layout-pd {
+		padding: 15px !important;
+	}
+	.layout-flex {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+	}
 	.layout-aside {
 		background: var(--next-bg-menuBar);
 		box-shadow: 2px 0 6px rgb(0 21 41 / 1%);
@@ -61,23 +69,62 @@ body,
 	}
 	.layout-header {
 		padding: 0 !important;
+		height: auto !important;
 	}
 	.layout-main {
 		padding: 0 !important;
 		overflow: hidden;
 		width: 100%;
 		background-color: var(--next-bg-main-color);
+		display: flex;
+		flex-direction: column;
+		// 内层 el-scrollbar样式，用于界面高度自适应（main.vue）
+		.layout-main-scroll {
+			@extend .layout-flex;
+			.layout-parent {
+				@extend .layout-flex;
+				position: relative;
+			}
+		}
+	}
+	// 用于界面高度自适应
+	.layout-padding {
+		@extend .layout-pd;
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		overflow: hidden;
+		@extend .layout-flex;
+		&-auto {
+			height: inherit;
+			@extend .layout-flex;
+		}
+		&-view {
+			background: var(--el-color-white);
+			width: 100%;
+			height: 100%;
+			border-radius: 4px;
+			border: 1px solid var(--el-border-color-light, #ebeef5);
+			overflow: hidden;
+		}
+	}
+	// 用于界面高度自适应，主视图区 main 的内边距，用于 iframe
+	.layout-padding-unset {
+		padding: 0 !important;
+		&-view {
+			border-radius: 0 !important;
+			border: none !important;
+		}
+	}
+	// 用于设置 iframe loading 时的高度（loading 垂直居中显示）
+	.layout-iframe {
+		.el-loading-parent--relative {
+			height: 100%;
+		}
 	}
 	.el-scrollbar {
 		width: 100%;
-	}
-	// 此字段多次用到，建议不删除，如需修改，请重写覆盖样式
-	.layout-view-bg-white {
-		background: var(--el-color-white);
-		width: 100%;
-		height: 100%;
-		border-radius: 4px;
-		border: 1px solid var(--el-border-color-light, #ebeef5);
 	}
 	.layout-el-aside-br-color {
 		border-right: 1px solid var(--el-border-color-light, #ebeef5);
@@ -121,10 +168,6 @@ body,
 		background-color: rgba(0, 0, 0, 0.5);
 		z-index: 9999998;
 		animation: error-img 0.3s;
-	}
-	.layout-scrollbar {
-		@extend .el-scrollbar;
-		padding: 15px;
 	}
 	.layout-mian-height-50 {
 		height: calc(100vh - 50px);

@@ -1,32 +1,23 @@
 @import './index.scss';
 
-/* 页面宽度小于992px
+/* 页面宽度小于1200px
 ------------------------------- */
-@media screen and (max-width: $lg) {
+@media screen and (max-width: $lg) and (min-width: $xs) {
 	.login-container {
-		.login-icon-group {
-			&::before {
-				content: '';
-				height: 70% !important;
-				transition: all 0.3s ease;
-			}
-			&::after {
-				content: '';
-				width: 100px !important;
-				height: 200px !important;
-				transition: all 0.3s ease;
+		.login-left {
+			.login-left-img {
+				top: 90% !important;
+				left: 12% !important;
+				width: 30% !important;
+				height: 18% !important;
 			}
 		}
-	}
-}
-
-/* 页面宽度小于992px
-------------------------------- */
-@media screen and (max-width: $md) {
-	.login-content {
-		right: unset !important;
-		left: 50% !important;
-		transform: translate(-50%, -50%) translate3d(0, 0, 0) !important;
+		.login-right {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 }
 
@@ -34,19 +25,34 @@
 ------------------------------- */
 @media screen and (max-width: $xs) {
 	.login-container {
-		.login-icon-group {
-			display: none !important;
+		.login-left {
+			display: none;
 		}
-		.login-content {
+		.login-right {
 			width: 100% !important;
-			height: 100% !important;
-			padding: 20px 0 !important;
-			border-radius: 0 !important;
-			box-shadow: unset !important;
-			border: none !important;
-		}
-		.el-form-item {
-			display: flex !important;
+			.login-right-warp {
+				width: 100% !important;
+				height: 100% !important;
+				border: none !important;
+				.login-right-warp-mian {
+					.el-form-item {
+						display: flex !important;
+					}
+					.login-right-warp-main-title {
+						font-size: 20px !important;
+					}
+				}
+				.login-right-warp-one {
+					&::after {
+						right: 0 !important;
+					}
+				}
+				.login-right-warp-two {
+					&::before {
+						bottom: 1px !important;
+					}
+				}
+			}
 		}
 	}
 }
@@ -55,9 +61,14 @@
 ------------------------------- */
 @media screen and (max-width: $us) {
 	.login-container {
-		.login-content-title {
-			font-size: 18px !important;
-			transition: all 0.3s ease;
+		.login-right {
+			.login-right-warp {
+				.login-right-warp-mian {
+					.login-right-warp-main-title {
+						font-size: 18px !important;
+					}
+				}
+			}
 		}
 	}
 }
