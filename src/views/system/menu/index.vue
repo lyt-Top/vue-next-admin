@@ -1,5 +1,5 @@
 <template>
-	<div class="system-menu-container">
+	<div class="system-menu-container layout-pd">
 		<el-card shadow="hover">
 			<div class="system-menu-search mb15">
 				<el-input size="default" placeholder="请输入菜单名称" style="max-width: 180px"> </el-input>
@@ -59,17 +59,18 @@
 </template>
 
 <script lang="ts">
-import { ref, toRefs, reactive, computed, defineComponent } from 'vue';
+import { defineAsyncComponent, ref, toRefs, reactive, computed, defineComponent } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
-import AddMenu from '/@/views/system/menu/component/addMenu.vue';
-import EditMenu from '/@/views/system/menu/component/editMenu.vue';
 
 export default defineComponent({
 	name: 'systemMenu',
-	components: { AddMenu, EditMenu },
+	components: {
+		AddMenu: defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue')),
+		EditMenu: defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue')),
+	},
 	setup() {
 		const stores = useRoutesList();
 		const { routesList } = storeToRefs(stores);

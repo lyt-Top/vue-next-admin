@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
+import { nextTick, onMounted, reactive, toRefs, ref, onUnmounted, defineComponent } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
@@ -88,7 +88,7 @@ interface LockScreenState {
 export default defineComponent({
 	name: 'layoutLockScreen',
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
+		const layoutLockScreenDateRef = ref();
 		const layoutLockScreenInputRef = ref();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -150,7 +150,7 @@ export default defineComponent({
 		// 获取要拖拽的初始元素
 		const initGetElement = () => {
 			nextTick(() => {
-				state.querySelectorEl = proxy.$refs.layoutLockScreenDateRef;
+				state.querySelectorEl = layoutLockScreenDateRef.value;
 			});
 		};
 		// 时间初始化
@@ -204,6 +204,7 @@ export default defineComponent({
 			window.clearInterval(state.isShowLockScreenIntervalTime);
 		});
 		return {
+			layoutLockScreenDateRef,
 			layoutLockScreenInputRef,
 			onDown,
 			onMove,

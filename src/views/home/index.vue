@@ -1,5 +1,5 @@
 <template>
-	<div class="home-container">
+	<div class="home-container layout-pd">
 		<el-row :gutter="15" class="home-card-one mb15">
 			<el-col
 				:xs="24"

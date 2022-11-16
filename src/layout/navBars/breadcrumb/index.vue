@@ -8,15 +8,12 @@
 </template>
 
 <script lang="ts">
-import { computed, reactive, toRefs, onMounted, onUnmounted, getCurrentInstance, defineComponent } from 'vue';
+import { defineAsyncComponent, computed, reactive, toRefs, onMounted, onUnmounted, defineComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import Breadcrumb from '/@/layout/navBars/breadcrumb/breadcrumb.vue';
-import User from '/@/layout/navBars/breadcrumb/user.vue';
-import Logo from '/@/layout/logo/index.vue';
-import Horizontal from '/@/layout/navMenu/horizontal.vue';
+import mittBus from '/@/utils/mitt';
 
 // 定义接口来定义对象的类型
 interface IndexState {
@@ -25,9 +22,13 @@ interface IndexState {
 
 export default defineComponent({
 	name: 'layoutBreadcrumbIndex',
-	components: { Breadcrumb, User, Logo, Horizontal },
+	components: {
+		Breadcrumb: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue')),
+		User: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue')),
+		Logo: defineAsyncComponent(() => import('/@/layout/logo/index.vue')),
+		Horizontal: defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue')),
+	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const stores = useRoutesList();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -52,7 +53,7 @@ export default defineComponent({
 			if (layout === 'classic' && isClassicSplitMenu) {
 				state.menuList = delClassicChildren(filterRoutesFun(routesList.value));
 				const resData = setSendClassicChildren(route.path);
-				proxy.mittBus.emit('setSendClassicChildren', resData);
+				mittBus.emit('setSendClassicChildren', resData);
 			} else {
 				state.menuList = filterRoutesFun(routesList.value);
 			}
@@ -91,13 +92,13 @@ export default defineComponent({
 		// 页面加载时
 		onMounted(() => {
 			setFilterRoutes();
-			proxy.mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
+			mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
 				setFilterRoutes();
 			});
 		});
 		// 页面卸载时
 		onUnmounted(() => {
-			proxy.mittBus.off('getBreadcrumbIndexSetFilterRoutes', () => {});
+			mittBus.off('getBreadcrumbIndexSetFilterRoutes', () => {});
 		});
 		return {
 			setIsShowLogo,

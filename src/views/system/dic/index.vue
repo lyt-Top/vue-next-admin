@@ -1,6 +1,6 @@
 <template>
-	<div class="system-dic-container">
-		<el-card shadow="hover">
+	<div class="system-dic-container layout-padding">
+		<el-card shadow="hover" class="layout-padding-auto">
 			<div class="system-user-search mb15">
 				<el-input size="default" placeholder="请输入字典名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
@@ -55,10 +55,8 @@
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
+import { defineAsyncComponent, toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddDic from '/@/views/system/dic/component/addDic.vue';
-import EditDic from '/@/views/system/dic/component/editDic.vue';
 
 // 定义接口来定义对象的类型
 interface TableDataRow {
@@ -82,7 +80,10 @@ interface TableDataState {
 
 export default defineComponent({
 	name: 'systemDic',
-	components: { AddDic, EditDic },
+	components: {
+		AddDic: defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue')),
+		EditDic: defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue')),
+	},
 	setup() {
 		const addDicRef = ref();
 		const editDicRef = ref();

@@ -1,8 +1,8 @@
 <template>
-	<div class="system-role-container">
-		<el-card shadow="hover">
+	<div class="system-role-container layout-padding">
+		<div class="system-role-padding layout-padding-auto layout-padding-view">
 			<div class="system-user-search mb15">
-				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
+				<el-input v-model="tableData.param.search" size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
 						<ele-Search />
@@ -51,17 +51,15 @@
 				:total="tableData.total"
 			>
 			</el-pagination>
-		</el-card>
+		</div>
 		<AddRole ref="addRoleRef" />
 		<EditRole ref="editRoleRef" />
 	</div>
 </template>
 
 <script lang="ts">
-import { toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
+import { defineAsyncComponent, toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
-import AddRole from '/@/views/system/role/component/addRole.vue';
-import EditRole from '/@/views/system/role/component/editRole.vue';
 
 // 定义接口来定义对象的类型
 interface TableData {
@@ -78,6 +76,7 @@ interface TableDataState {
 		total: number;
 		loading: boolean;
 		param: {
+			search: string;
 			pageNum: number;
 			pageSize: number;
 		};
@@ -86,7 +85,10 @@ interface TableDataState {
 
 export default defineComponent({
 	name: 'systemRole',
-	components: { AddRole, EditRole },
+	components: {
+		AddRole: defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue')),
+		EditRole: defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue')),
+	},
 	setup() {
 		const addRoleRef = ref();
 		const editRoleRef = ref();
@@ -96,6 +98,7 @@ export default defineComponent({
 				total: 0,
 				loading: false,
 				param: {
+					search: '',
 					pageNum: 1,
 					pageSize: 10,
 				},
@@ -104,7 +107,7 @@ export default defineComponent({
 		// 初始化表格数据
 		const initTableData = () => {
 			const data: Array<TableData> = [];
-			for (let i = 0; i < 2; i++) {
+			for (let i = 0; i < 20; i++) {
 				data.push({
 					roleName: i === 0 ? '超级管理员' : '普通用户',
 					roleSign: i === 0 ? 'admin' : 'common',
@@ -162,3 +165,14 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style scoped lang="scss">
+.system-role-container {
+	.system-role-padding {
+		padding: 15px;
+		.el-table {
+			flex: 1;
+		}
+	}
+}
+</style>

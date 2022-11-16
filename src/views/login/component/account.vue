@@ -1,7 +1,7 @@
 <template>
 	<el-form size="large" class="login-content-form">
-		<el-form-item class="login-animation1"
-			><el-input type="text" placeholder="用户名 admin 或不输均为 common" v-model="ruleForm.userName" clearable autocomplete="off">
+		<el-form-item class="login-animation1">
+			<el-input text placeholder="用户名 admin 或不输均为 common" v-model="ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
 					<el-icon class="el-input__icon"><ele-User /></el-icon>
 				</template>
@@ -24,7 +24,7 @@
 		</el-form-item>
 		<el-form-item class="login-animation3">
 			<el-col :span="15">
-				<el-input type="text" maxlength="4" placeholder="请输入验证码" v-model="ruleForm.code" clearable autocomplete="off">
+				<el-input text maxlength="4" placeholder="请输入验证码" v-model="ruleForm.code" clearable autocomplete="off">
 					<template #prefix>
 						<el-icon class="el-input__icon"><ele-Position /></el-icon>
 					</template>
@@ -32,11 +32,11 @@
 			</el-col>
 			<el-col :span="1"></el-col>
 			<el-col :span="8">
-				<el-button class="login-content-code">1234</el-button>
+				<el-button class="login-content-code" v-waves>1234</el-button>
 			</el-col>
 		</el-form-item>
 		<el-form-item class="login-animation4">
-			<el-button type="primary" class="login-content-submit" round @click="onSignIn" :loading="loading.signIn">
+			<el-button type="primary" class="login-content-submit" round v-waves @click="onSignIn" :loading="loading.signIn">
 				<span>登 录</span>
 			</el-button>
 		</el-form-item>
@@ -116,6 +116,7 @@ export default defineComponent({
 			state.loading.signIn = true;
 			const signInText = '欢迎回来！';
 			ElMessage.success(`${currentTimeInfo}，${signInText}`);
+			// 添加 loading，防止第一次进入界面时出现短暂空白
 			NextLoading.start();
 		};
 		return {

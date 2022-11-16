@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { computed, ref, getCurrentInstance, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch, reactive, toRefs } from 'vue';
+import { defineAsyncComponent, computed, ref, onBeforeMount, onMounted, onUnmounted, nextTick, defineComponent, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { storeToRefs } from 'pinia';
@@ -16,16 +16,17 @@ import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import other from '/@/utils/other';
 import { Local, Session } from '/@/utils/storage';
+import mittBus from '/@/utils/mitt';
 import setIntroduction from '/@/utils/setIconfont';
-import LockScreen from '/@/layout/lockScreen/index.vue';
-import Setings from '/@/layout/navBars/breadcrumb/setings.vue';
-import CloseFull from '/@/layout/navBars/breadcrumb/closeFull.vue';
 
 export default defineComponent({
 	name: 'app',
-	components: { LockScreen, Setings, CloseFull },
+	components: {
+		LockScreen: defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue')),
+		Setings: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue')),
+		CloseFull: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue')),
+	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const setingsRef = ref();
 		const route = useRoute();
 		const stores = useTagsViewRoutes();
@@ -35,10 +36,6 @@ export default defineComponent({
 		const getGlobalComponentSize = computed(() => {
 			return other.globalComponentSize();
 		});
-		// 布局配置弹窗打开
-		const openSetingsDrawer = () => {
-			setingsRef.value.openDrawer();
-		};
 		// 设置初始化，防止刷新时恢复默认
 		onBeforeMount(() => {
 			// 设置批量第三方 icon 图标
@@ -50,8 +47,8 @@ export default defineComponent({
 		onMounted(() => {
 			nextTick(() => {
 				// 监听布局配置弹窗点击打开
-				proxy.mittBus.on('openSetingsDrawer', () => {
-					openSetingsDrawer();
+				mittBus.on('openSetingsDrawer', () => {
+					setingsRef.value.openDrawer();
 				});
 				// 获取缓存中的布局配置
 				if (Local.get('themeConfig')) {
@@ -66,7 +63,7 @@ export default defineComponent({
 		});
 		// 页面销毁时，关闭监听布局配置/i18n监听
 		onUnmounted(() => {
-			proxy.mittBus.off('openSetingsDrawer', () => {});
+			mittBus.off('openSetingsDrawer', () => {});
 		});
 		// 监听路由的变化，设置网站标题
 		watch(

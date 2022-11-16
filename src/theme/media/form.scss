@@ -13,6 +13,7 @@
 		margin-left: 0 !important;
 	}
 	.el-form-item {
+		// 响应式表单时，登录页需要重新处理
 		display: unset !important;
 	}
 }

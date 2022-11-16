@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { ref, getCurrentInstance, computed, reactive, toRefs, onMounted, defineComponent } from 'vue';
+import { defineAsyncComponent, ref, computed, reactive, toRefs, onMounted, defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
@@ -68,14 +68,15 @@ import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session, Local } from '/@/utils/storage';
-import UserNews from '/@/layout/navBars/breadcrumb/userNews.vue';
-import Search from '/@/layout/navBars/breadcrumb/search.vue';
+import mittBus from '/@/utils/mitt';
 
 export default defineComponent({
 	name: 'layoutBreadcrumbUser',
-	components: { UserNews, Search },
+	components: {
+		UserNews: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue')),
+		Search: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue')),
+	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const router = useRouter();
 		const stores = useUserInfo();
 		const storesThemeConfig = useThemeConfig();
@@ -110,7 +111,7 @@ export default defineComponent({
 		};
 		// 布局配置 icon 点击时
 		const onLayoutSetingClick = () => {
-			proxy.mittBus.emit('openSetingsDrawer');
+			mittBus.emit('openSetingsDrawer');
 		};
 		// 下拉菜单点击时
 		const onHandleCommandClick = (path: string) => {
@@ -161,27 +162,17 @@ export default defineComponent({
 			Local.remove('themeConfig');
 			themeConfig.value.globalComponentSize = size;
 			Local.set('themeConfig', themeConfig.value);
-			initComponentSize();
+			initI18nOrSize('globalComponentSize', 'disabledSize');
 			window.location.reload();
 		};
-		// 初始化全局组件大小
-		const initComponentSize = () => {
-			switch (Local.get('themeConfig').globalComponentSize) {
-				case 'large':
-					state.disabledSize = 'large';
-					break;
-				case 'default':
-					state.disabledSize = 'default';
-					break;
-				case 'small':
-					state.disabledSize = 'small';
-					break;
-			}
+		// 初始化组件大小/i18n
+		const initI18nOrSize = (value: string, attr: string) => {
+			(<any>state)[attr] = Local.get('themeConfig')[value];
 		};
 		// 页面加载时
 		onMounted(() => {
 			if (Local.get('themeConfig')) {
-				initComponentSize();
+				initI18nOrSize('globalComponentSize', 'disabledSize');
 			}
 		});
 		return {

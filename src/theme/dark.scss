@@ -233,4 +233,9 @@
 			border-color: var(--el-border-color-lighter) !important;
 		}
 	}
+
+	// loading
+	.el-loading-mask {
+		background-color: var(--next-bg-main) !important;
+	}
 }

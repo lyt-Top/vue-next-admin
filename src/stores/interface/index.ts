@@ -52,6 +52,7 @@ export interface ThemeConfigState {
 	columnsMenuBar: string;
 	columnsMenuBarColor: string;
 	isColumnsMenuBarColorGradual: boolean;
+	isColumnsMenuHoverPreload: boolean;
 	isCollapse: boolean;
 	isUniqueOpened: boolean;
 	isFixedHeader: boolean;
@@ -82,6 +83,7 @@ export interface ThemeConfigState {
 	isRequestRoutes: boolean;
 	globalTitle: string;
 	globalViceTitle: string;
+	globalViceTitleMsg: string;
 	globalI18n: string;
 	globalComponentSize: string;
 }

@@ -1,12 +1,15 @@
 <template>
 	<div class="login-scan-container">
 		<div ref="qrcodeRef"></div>
-		<div class="font12 mt20 login-msg">打开手机扫一扫，快速登录/注册</div>
+		<div class="font12 mt20 login-msg">
+			<i class="iconfont icon-saoyisao mr5"></i>
+			<span>打开手机扫一扫，快速登录/注册</span>
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { ref, defineComponent, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, nextTick } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 
 export default defineComponent({
@@ -15,20 +18,24 @@ export default defineComponent({
 		const qrcodeRef = ref<HTMLElement | null>(null);
 		// 初始化生成二维码
 		const initQrcode = () => {
-			(qrcodeRef.value as HTMLElement).innerHTML = '';
-			new QRCode(qrcodeRef.value, {
-				text: `https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi`,
-				width: 260,
-				height: 260,
-				colorDark: '#000000',
-				colorLight: '#ffffff',
+			nextTick(() => {
+				(<HTMLElement>qrcodeRef.value).innerHTML = '';
+				new QRCode(qrcodeRef.value, {
+					text: `https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi`,
+					width: 260,
+					height: 260,
+					colorDark: '#000000',
+					colorLight: '#ffffff',
+				});
 			});
 		};
 		// 页面加载时
 		onMounted(() => {
 			initQrcode();
 		});
-		return { qrcodeRef };
+		return {
+			qrcodeRef,
+		};
 	},
 });
 </script>
@@ -41,7 +48,7 @@ export default defineComponent({
 	animation-fill-mode: forwards;
 }
 .login-scan-container {
-	padding: 20px;
+	padding: 0 20px 20px;
 	display: flex;
 	flex-direction: column;
 	text-align: center;
@@ -51,6 +58,9 @@ export default defineComponent({
 		margin: auto;
 	}
 	.login-msg {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		color: var(--el-text-color-placeholder);
 		@extend .login-scan-animation;
 		animation-delay: 0.2s;

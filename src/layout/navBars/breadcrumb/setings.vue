@@ -96,6 +96,17 @@
 						></el-switch>
 					</div>
 				</div>
+				<div class="layout-breadcrumb-seting-bar-flex mt14" :style="{ opacity: getThemeConfig.layout !== 'columns' ? 0.5 : 1 }">
+					<div class="layout-breadcrumb-seting-bar-flex-label">分栏菜单鼠标悬停预加载</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-switch
+							v-model="getThemeConfig.isColumnsMenuHoverPreload"
+							size="small"
+							@change="onColumnsMenuHoverPreloadChange"
+							:disabled="getThemeConfig.layout !== 'columns'"
+						></el-switch>
+					</div>
+				</div>
 
 				<!-- 界面设置 -->
 				<el-divider content-position="left">界面设置</el-divider>
@@ -399,7 +410,7 @@
 </template>
 
 <script lang="ts">
-import { nextTick, onUnmounted, onMounted, getCurrentInstance, defineComponent, computed, reactive, toRefs } from 'vue';
+import { nextTick, onUnmounted, onMounted, defineComponent, computed, reactive, toRefs } from 'vue';
 import { ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -409,11 +420,11 @@ import { Local } from '/@/utils/storage';
 import Watermark from '/@/utils/wartermark';
 import commonFunction from '/@/utils/commonFunction';
 import other from '/@/utils/other';
+import mittBus from '/@/utils/mitt';
 
 export default defineComponent({
 	name: 'layoutBreadcrumbSeting',
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		const { copyText } = commonFunction();
@@ -470,6 +481,10 @@ export default defineComponent({
 				setLocalThemeConfig();
 			}, 200);
 		};
+		// 2、分栏设置 ->
+		const onColumnsMenuHoverPreloadChange = () => {
+			setLocalThemeConfig();
+		};
 		// 3、界面设置 --> 菜单水平折叠
 		const onThemeConfigChange = () => {
 			setDispatchThemeConfig();
@@ -483,7 +498,7 @@ export default defineComponent({
 		const onClassicSplitMenuChange = () => {
 			getThemeConfig.value.isBreadcrumb = false;
 			setLocalThemeConfig();
-			proxy.mittBus.emit('getBreadcrumbIndexSetFilterRoutes');
+			mittBus.emit('getBreadcrumbIndexSetFilterRoutes');
 		};
 		// 4、界面显示 --> 侧边栏 Logo
 		const onIsShowLogoChange = () => {
@@ -499,12 +514,12 @@ export default defineComponent({
 		};
 		// 4、界面显示 --> 开启 TagsView 拖拽
 		const onSortableTagsViewChange = () => {
-			proxy.mittBus.emit('openOrCloseSortable');
+			mittBus.emit('openOrCloseSortable');
 			setLocalThemeConfig();
 		};
 		// 4、界面显示 --> 开启 TagsView 共用
 		const onShareTagsViewChange = () => {
-			proxy.mittBus.emit('openShareTagsView');
+			mittBus.emit('openShareTagsView');
 			setLocalThemeConfig();
 		};
 		// 4、界面显示 --> 灰色模式/色弱模式
@@ -556,7 +571,7 @@ export default defineComponent({
 			onBgColorPickerChange('columnsMenuBar');
 			onBgColorPickerChange('columnsMenuBarColor');
 		};
-		// 关闭弹窗时，初始化变量。变量用于处理 proxy.$refs.layoutScrollbarRef.update()
+		// 关闭弹窗时，初始化变量。变量用于处理 layoutScrollbarRef.value.update()
 		const onDrawerClose = () => {
 			getThemeConfig.value.isFixedHeaderChange = false;
 			getThemeConfig.value.isShowLogoChange = false;
@@ -609,7 +624,7 @@ export default defineComponent({
 				if (!Local.get('frequency')) initLayoutChangeFun();
 				Local.set('frequency', 1);
 				// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
-				proxy.mittBus.on('layoutMobileResize', (res: any) => {
+				mittBus.on('layoutMobileResize', (res: any) => {
 					getThemeConfig.value.layout = res.layout;
 					getThemeConfig.value.isDrawer = false;
 					initLayoutChangeFun();
@@ -632,7 +647,7 @@ export default defineComponent({
 			});
 		});
 		onUnmounted(() => {
-			proxy.mittBus.off('layoutMobileResize', () => {});
+			mittBus.off('layoutMobileResize', () => {});
 		});
 		return {
 			openDrawer,
@@ -641,6 +656,7 @@ export default defineComponent({
 			onTopBarGradualChange,
 			onMenuBarGradualChange,
 			onColumnsMenuBarGradualChange,
+			onColumnsMenuHoverPreloadChange,
 			onThemeConfigChange,
 			onIsFixedHeaderChange,
 			onIsShowLogoChange,

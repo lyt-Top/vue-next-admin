@@ -66,7 +66,7 @@ export const useUserInfo = defineStore('userInfo', {
 					// 存储用户信息到浏览器缓存
 					Session.set('userInfo', userInfos);
 					resolve(userInfos);
-				}, 3000);
+				}, 0);
 			});
 		},
 	},

@@ -3,10 +3,11 @@
 </template>
 
 <script lang="ts">
-import { onBeforeMount, onUnmounted, getCurrentInstance, defineComponent, defineAsyncComponent } from 'vue';
+import { onBeforeMount, onUnmounted, defineComponent, defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
+import mittBus from '/@/utils/mitt';
 
 export default defineComponent({
 	name: 'layout',
@@ -17,7 +18,6 @@ export default defineComponent({
 		columns: defineAsyncComponent(() => import('/@/layout/main/columns.vue')),
 	},
 	setup() {
-		const { proxy } = <any>getCurrentInstance();
 		const storesThemeConfig = useThemeConfig();
 		const { themeConfig } = storeToRefs(storesThemeConfig);
 		// 窗口大小改变时(适配移动端)
@@ -26,12 +26,12 @@ export default defineComponent({
 			const clientWidth = document.body.clientWidth;
 			if (clientWidth < 1000) {
 				themeConfig.value.isCollapse = false;
-				proxy.mittBus.emit('layoutMobileResize', {
+				mittBus.emit('layoutMobileResize', {
 					layout: 'defaults',
 					clientWidth,
 				});
 			} else {
-				proxy.mittBus.emit('layoutMobileResize', {
+				mittBus.emit('layoutMobileResize', {
 					layout: Local.get('oldLayout') ? Local.get('oldLayout') : themeConfig.value.layout,
 					clientWidth,
 				});
