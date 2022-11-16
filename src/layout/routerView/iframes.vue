@@ -76,12 +76,12 @@ export default defineComponent({
 		watch(
 			() => props.refreshKey,
 			() => {
-                const item: any = props.list.find((v: any) => v.path === route.path);
+        const item: any = props.list.find((v: any) => v.path === route.path);
 				if (item && item.meta.isIframeOpen) item.meta.isIframeOpen = false;
 				nextTick(() => {
 					item.meta.isIframeOpen = true;
 				});
-            },
+      },
 			{
 				deep: true,
 			}
