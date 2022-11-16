@@ -45,22 +45,26 @@ const setIframeList = computed(() => {
 const getRoutePath = computed(() => {
 	return route.path;
 });
+// 关闭 iframe loading
+const closeIframeLoading = (val, item) => {
+	nextTick(() => {
+		if (!iframeRef.value) return false;
+		iframeRef.value.forEach((v) => {
+			if (v.dataset.url === val) {
+				v.onload = () => {
+					if (item && item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+				};
+			}
+		});
+	});
+};
 // 监听路由变化，初始化 iframe 数据，防止多个 iframe 时，切换不生效
 watch(
 	() => route.fullPath,
 	(val) => {
 		const item = props.list.find((v) => v.path === val);
 		if (item && !item.meta.isIframeOpen) item.meta.isIframeOpen = true;
-		nextTick(() => {
-			if (!iframeRef.value) return false;
-			iframeRef.value.forEach((v) => {
-				if (v.dataset.url === val) {
-					v.onload = () => {
-						if (item && item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
-					};
-				}
-			});
-		});
+		closeIframeLoading(val, item);
 	},
 	{
 		immediate: true,
@@ -72,8 +76,10 @@ watch(
 	() => {
 		const item = props.list.find((v) => v.path === route.path);
 		if (item && item.meta.isIframeOpen) item.meta.isIframeOpen = false;
-		nextTick(() => {
+		setTimeout(() => {
 			item.meta.isIframeOpen = true;
+			item.meta.loading = true;
+			closeIframeLoading(route.fullPath, item);
 		});
 	},
 	{
