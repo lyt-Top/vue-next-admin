@@ -69,7 +69,13 @@ watch(
 // 监听 iframe refreshKey 变化，用于 tagsview 右键菜单刷新
 watch(
 	() => props.refreshKey,
-	() => {},
+	() => {
+		const item = props.list.find((v) => v.path === route.path);
+		if (item && item.meta.isIframeOpen) item.meta.isIframeOpen = false;
+		nextTick(() => {
+			item.meta.isIframeOpen = true;
+		});
+	},
 	{
 		deep: true,
 	}
