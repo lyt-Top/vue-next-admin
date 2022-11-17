@@ -14,7 +14,7 @@ const setWatermark = (str: string) => {
 	const div = document.createElement('div');
 	div.id = id;
 	div.style.pointerEvents = 'none';
-	div.style.top = '15px';
+	div.style.top = '0px';
 	div.style.left = '0px';
 	div.style.position = 'fixed';
 	div.style.zIndex = '10000000';
