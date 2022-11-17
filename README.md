@@ -78,7 +78,6 @@ cnpm run build
 #### 💯 学习交流加 QQ 群
 
 - 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！微信群由于只有 `7天有效` 就不放这里了。
-- 查看开发文档、<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">vue-next-admin</a> 开发文档正在编写中...
 - 群号码：
   1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
   2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
