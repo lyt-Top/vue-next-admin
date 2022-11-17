@@ -52,7 +52,7 @@ const closeIframeLoading = (val, item) => {
 		iframeRef.value.forEach((v) => {
 			if (v.dataset.url === val) {
 				v.onload = () => {
-					if (item && item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+					if (item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
 				};
 			}
 		});
@@ -63,7 +63,8 @@ watch(
 	() => route.fullPath,
 	(val) => {
 		const item = props.list.find((v) => v.path === val);
-		if (item && !item.meta.isIframeOpen) item.meta.isIframeOpen = true;
+		if (!item) return false;
+		if (!item.meta.isIframeOpen) item.meta.isIframeOpen = true;
 		closeIframeLoading(val, item);
 	},
 	{
@@ -75,7 +76,8 @@ watch(
 	() => props.refreshKey,
 	() => {
 		const item = props.list.find((v) => v.path === route.path);
-		if (item && item.meta.isIframeOpen) item.meta.isIframeOpen = false;
+		if (!item) return false;
+		if (item.meta.isIframeOpen) item.meta.isIframeOpen = false;
 		setTimeout(() => {
 			item.meta.isIframeOpen = true;
 			item.meta.loading = true;
