@@ -58,7 +58,7 @@ export default defineComponent({
 				iframeRef.value.forEach((v: any) => {
 					if (v.dataset.url === val) {
 						v.onload = () => {
-							if (item && item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+							if (item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
 						};
 					}
 				});
@@ -69,7 +69,8 @@ export default defineComponent({
 			() => route.fullPath,
 			(val) => {
 				const item: any = props.list.find((v: any) => v.path === val);
-				if (item && !item.meta.isIframeOpen) item.meta.isIframeOpen = true;
+				if (!item) return false;
+				if (!item.meta.isIframeOpen) item.meta.isIframeOpen = true;
 				closeIframeLoading(val, item);
 			},
 			{
@@ -81,7 +82,8 @@ export default defineComponent({
 			() => props.refreshKey,
 			() => {
 				const item: any = props.list.find((v: any) => v.path === route.path);
-				if (item && item.meta.isIframeOpen) item.meta.isIframeOpen = false;
+				if (!item) return false;
+				if (item.meta.isIframeOpen) item.meta.isIframeOpen = false;
 				setTimeout(() => {
 					item.meta.isIframeOpen = true;
 					item.meta.loading = true;
