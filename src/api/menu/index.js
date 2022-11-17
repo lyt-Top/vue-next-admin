@@ -9,30 +9,40 @@ import request from '@/utils/request';
  * json 格式地址：https://gitee.com/lyt-top/vue-next-admin-images/tree/master/vue2
  * 本地菜单地址：public/xxx.json
  */
-// 获取后端动态路由菜单(超级管理)
-export function getMenuAdmin() {
-	// 本地数据，路径：`/public/xxx.json`
-	return request({
-		url: './admin.json',
-		method: 'get',
-	});
-	// 模拟跨域
-	// return request({
-	// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/admin.json',
-	// 	method: 'get',
-	// });
-}
 
-// 获取后端动态路由菜单(普通用户)
-export function getMenuTest() {
-	// 本地数据，路径：`/public/xxx.json`
-	return request({
-		url: './test.json',
-		method: 'get',
-	});
-	// 模拟跨域
-	// return request({
-	// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/test.json',
-	// 	method: 'get',
-	// });
+/**
+ * 后端控制菜单模拟json，路径在 https://gitee.com/lyt-top/vue-next-admin-images/tree/master/menu
+ * 后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
+ * @method getMenuAdmin 获取后端动态路由菜单(admin)
+ * @method getMenuTest 获取后端动态路由菜单(test)
+ */
+export function useMenuApi() {
+	return {
+		getMenuAdmin: (params) => {
+			// 本地数据，路径：`/public/xxx.json`
+			return request({
+				url: './admin.json',
+				method: 'get',
+				params,
+			});
+			// 模拟跨域
+			// return request({
+			// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/admin.json',
+			// 	method: 'get',
+			// });
+		},
+		getMenuTest: (params) => {
+			// 本地数据，路径：`/public/xxx.json`
+			return request({
+				url: './test.json',
+				method: 'get',
+				params,
+			});
+			// 模拟跨域
+			// return request({
+			// 	url: '/gitee/lyt-top/vue-next-admin-images/raw/master/vue2/test.json',
+			// 	method: 'get',
+			// });
+		},
+	};
 }

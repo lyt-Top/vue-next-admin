@@ -2,6 +2,12 @@
 
 🎉🎉🔥 `vue-prev-admin` 基于 vue2.x + webpack + element ui，适配手机、平板、pc 的后台开源免费模板库（vue3.x 请切换 master 分支）
 
+## 1.1.1
+
+`2022.11.17`
+
+- 🐞 优化 [vue2 版本打包出来配置路由懒加载无效。](https://gitee.com/lyt-top/vue-next-admin/issues/I5RFQT)，感谢[@林建生](https://gitee.com/ljsshuai)
+
 ## 1.1.0
 
 `2022.06.12`

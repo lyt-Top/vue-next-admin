@@ -5,7 +5,9 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { Session } from '@/utils/storage';
 import { PrevLoading } from '@/utils/loading.js';
-import { getMenuAdmin, getMenuTest } from '@/api/menu';
+import { useMenuApi } from '@/api/menu';
+
+const menuApi = useMenuApi();
 
 // 解决 `element ui` 导航栏重复点菜单报错问题
 const originalPush = VueRouter.prototype.push;
@@ -148,8 +150,17 @@ export function keepAliveSplice(to) {
 
 // 处理后端返回的 `component` 路径，拼装实现懒加载
 export function loadView(path) {
-	if (path.indexOf('layout') > -1) return () => Promise.resolve(require(`@/${path}`));
-	else return () => Promise.resolve(require(`@/views/${path}`));
+	/**
+	 * 打包成一个 js、一个 css
+	 */
+	// if (path.indexOf('layout') > -1) return () => Promise.resolve(require(`@/${path}`));
+	// else return () => Promise.resolve(require(`@/views/${path}`));
+
+	/**
+	 * 打包成多个 js、多个 css
+	 */
+	if (path.indexOf('layout') > -1) return () => import(`@/${path}`);
+	else return () => import(`@/views/${path}`);
 }
 
 // 递归处理每一项 `component` 中的路径
@@ -167,13 +178,15 @@ export function dynamicRouter(routes) {
 // 文档地址：https://router.vuejs.org/zh/api/#router-addroutes
 export function adminUser(router, to, next) {
 	resetRouter();
-	getMenuAdmin()
+	menuApi
+		.getMenuAdmin()
 		.then(async (res) => {
 			// 读取用户信息，获取对应权限进行判断
 			store.dispatch('userInfos/setUserInfos');
 			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
 			dynamicRoutes[0].children = res.data;
 			const awaitRoute = await dynamicRouter(dynamicRoutes);
+			console.log(awaitRoute);
 			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 				router.addRoute({ ...route });
 			});
@@ -187,7 +200,8 @@ export function adminUser(router, to, next) {
 // 添加动态路由，`{ path: '*', redirect: '/404' }` 防止页面刷新，静态路由丢失问题
 export function testUser(router, to, next) {
 	resetRouter();
-	getMenuTest()
+	menuApi
+		.getMenuTest()
 		.then(async (res) => {
 			// 读取用户信息，获取对应权限进行判断
 			store.dispatch('userInfos/setUserInfos');
