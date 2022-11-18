@@ -144,7 +144,6 @@
 import { defineAsyncComponent, reactive, toRefs, onMounted, defineComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
-import { i18n } from '/@/i18n/index';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 
 export default defineComponent({
@@ -185,7 +184,7 @@ export default defineComponent({
 		const getMenuData = (routes: any) => {
 			const arr: any = [];
 			routes.map((val: any) => {
-				val['title'] = i18n.global.t(val.meta.title);
+				val['title'] = val.meta.title;
 				val['id'] = Math.random();
 				arr.push({ ...val });
 				if (val.children) getMenuData(val.children);

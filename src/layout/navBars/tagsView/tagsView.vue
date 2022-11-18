@@ -101,6 +101,7 @@ interface CurrentContextmenu {
 	query: any;
 	path: string;
 	contextMenuClickId: string | number;
+	commonUrl: string;
 }
 
 export default defineComponent({
@@ -357,29 +358,34 @@ export default defineComponent({
 			else await router.push({ name: item.name, query: item.query });
 			stores.setCurrenFullscreen(true);
 		};
-		// 当前项右键菜单点击，拿当前点击的路由路径对比 浏览器缓存中的 tagsView 路由数组，取当前点击项的详细路由信息
+		// 当前项右键菜单点击，拿 `当前点击的路由路径` 对比 `tagsView 路由数组`，取当前点击项的详细路由信息
 		// 防止 tagsView 非当前页演示时，操作异常
-		const getCurrentRouteItem = (path: string, cParams: any) => {
-			const itemRoute = Session.get('tagsViewList') ? Session.get('tagsViewList') : state.tagsViewList;
-			return itemRoute.find((v: any) => {
-				if (
-					v.path === path &&
-					isObjectValueEqual(
-						v.meta.isDynamic ? (v.params ? v.params : null) : v.query ? v.query : null,
-						cParams && Object.keys(cParams ? cParams : {}).length > 0 ? cParams : null
-					)
-				) {
-					return v;
-				} else if (v.path === path && Object.keys(cParams ? cParams : {}).length <= 0) {
-					return v;
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I61VS9
+		const getCurrentRouteItem = (item: any) => {
+			let resItem: any = {};
+			state.tagsViewList.forEach((v: any) => {
+				v.transUrl = transUrlParams(v);
+				if (v.transUrl) {
+					if (v.meta.isDynamic) {
+						// 路由带参数：动态路由（xxx/:id/:name"）isDynamic
+						if (v.transUrl === transUrlParams(v) && v.transUrl === decodeURI(item.path)) resItem = v;
+					} else {
+						// 路由带参数：普通路由，因为有 tagsView 共用/不共用
+						if (v.transUrl === transUrlParams(v) && v.transUrl === item.commonUrl) resItem = v;
+					}
+				} else {
+					// 路由不带参数
+					if (v.path === decodeURI(item.path)) resItem = v;
 				}
 			});
+			if (!resItem) return null;
+			else return resItem;
 		};
 		// 当前项右键菜单点击
 		const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
-			const cParams = item.meta.isDynamic ? item.params : item.query;
-			if (!getCurrentRouteItem(item.path, cParams)) return ElMessage({ type: 'warning', message: '请正确输入路径及完整参数（query、params）' });
-			const { path, name, params, query, meta, url } = getCurrentRouteItem(item.path, cParams);
+			item.commonUrl = transUrlParams(item);
+			if (!getCurrentRouteItem(item)) return ElMessage({ type: 'warning', message: '请正确输入路径及完整参数（query、params）' });
+			const { path, name, params, query, meta, url } = getCurrentRouteItem(item);
 			switch (item.contextMenuClickId) {
 				case 0:
 					// 刷新当前
