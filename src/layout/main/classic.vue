@@ -43,7 +43,7 @@ export default defineComponent({
 			nextTick(() => {
 				setTimeout(() => {
 					updateScrollbar();
-					layoutMainRef.value.layoutMainScrollbarRef.wrap$.scrollTop = 0;
+					layoutMainRef.value.layoutMainScrollbarRef.wrapRef.scrollTop = 0;
 				}, 500);
 			});
 		};

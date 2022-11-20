@@ -164,7 +164,7 @@ export default defineComponent({
 		const addBrowserSetSession = (tagsViewList: Array<object>) => {
 			Session.set('tagsViewList', tagsViewList);
 		};
-		// 获取 vuex 中的 tagsViewRoutes 列表
+		// 获取 pinia 中的 tagsViewRoutes 列表
 		const getTagsViewRoutes = async () => {
 			state.routeActive = await setTagsViewHighlight(route);
 			state.routePath = (await route.meta.isDynamic) ? route.meta.isDynamicPath : route.path;
@@ -172,7 +172,7 @@ export default defineComponent({
 			state.tagsViewRoutesList = tagsViewRoutes.value;
 			initTagsView();
 		};
-		// vuex 中获取路由信息：如果是设置了固定的（isAffix），进行初始化显示
+		// pinia 中获取路由信息：如果是设置了固定的（isAffix），进行初始化显示
 		const initTagsView = async () => {
 			if (Session.get('tagsViewList') && getThemeConfig.value.isCacheTagsView) {
 				state.tagsViewList = await Session.get('tagsViewList');
@@ -458,7 +458,7 @@ export default defineComponent({
 		};
 		// 鼠标滚轮滚动
 		const onHandleScroll = (e: any) => {
-			scrollbarRef.value.$refs.wrap$.scrollLeft += e.wheelDelta / 4;
+			scrollbarRef.value.$refs.wrapRef.scrollLeft += e.wheelDelta / 4;
 		};
 		// tagsView 横向滚动
 		const tagsViewmoveToCurrentTag = () => {
@@ -475,7 +475,7 @@ export default defineComponent({
 				// 最后 li
 				let liLast: any = tagsRefs.value[tagsRefs.value.length - 1];
 				// 当前滚动条的值
-				let scrollRefs = scrollbarRef.value.$refs.wrap$;
+				let scrollRefs = scrollbarRef.value.$refs.wrapRef;
 				// 当前滚动条滚动宽度
 				let scrollS = scrollRefs.scrollWidth;
 				// 当前滚动条偏移宽度

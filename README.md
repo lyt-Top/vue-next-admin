@@ -22,7 +22,7 @@
 
 #### 🌈 介绍
 
-基于 vue3.x + CompositionAPI + typescript + vite + element plus + vue-router-next + next.vuex，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
+基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
 
 #### ⛱️ 线上预览
 
@@ -43,7 +43,7 @@
 
 | Edge      | Firefox      | Chrome      | Safari      |
 | --------- | ------------ | ----------- | ----------- |
-| Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 64 | Safari ≥ 12 |
+| Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 72 | Safari ≥ 12 |
 
 > 由于 Vue3 不再支持 IE11，故而 ElementPlus 也不支持 IE11 及之前版本。
 
@@ -113,7 +113,7 @@ cnpm run build
 - <a href="https://github.com/ElemeFE/element" target="_blank">element-ui</a>
 - <a href="https://github.com/element-plus/element-plus" target="_blank">element-plus</a>
 - <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-next</a>
-- <a href="https://github.com/vuejs/vuex" target="_blank">vuex</a>
+- <a href="https://github.com/vuejs/pinia" target="_blank">pinia</a>
 - <a href="https://github.com/apache/echarts" target="_blank">echarts</a>
 - <a href="https://github.com/axios/axios" target="_blank">axios</a>
 - <a href="https://github.com/zenorocha/clipboard.js" target="_blank">clipboard</a>

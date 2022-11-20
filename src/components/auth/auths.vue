@@ -18,7 +18,7 @@ export default defineComponent({
 	setup(props) {
 		const stores = useUserInfo();
 		const { userInfos } = storeToRefs(stores);
-		// 获取 vuex 中的用户权限
+		// 获取 pinia 中的用户权限
 		const getUserAuthBtnList = computed(() => {
 			let flag = false;
 			userInfos.value.authBtnList.map((val: string) => {

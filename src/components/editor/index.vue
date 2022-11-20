@@ -18,16 +18,13 @@ export default defineComponent({
 		// 是否禁用
 		disable: {
 			type: Boolean,
-			default: () => true,
+			default: () => false,
 		},
 		// 内容框默认 placeholder
 		placeholder: {
 			type: String,
 			default: () => '请输入内容...',
 		},
-		// 双向绑定：双向绑定值，字段名为固定，改了之后将不生效
-		// 参考：https://v3.cn.vuejs.org/guide/migration/v-model.html#%E8%BF%81%E7%A7%BB%E7%AD%96%E7%95%A5
-		modelValue: String,
 		// https://www.wangeditor.com/v5/getting-started.html#mode-%E6%A8%A1%E5%BC%8F
 		// 模式，可选 <default|simple>，默认 default
 		mode: {
@@ -39,14 +36,19 @@ export default defineComponent({
 			type: String,
 			default: () => '310px',
 		},
+		// 双向绑定，用于获取 editor.getHtml()
+		getHtml: String,
+		// 双向绑定，用于获取 editor.getText()
+		getText: String,
 	},
+	emits: ['update:getHtml', 'update:getText'],
 	setup(props, { emit }) {
 		const editorRef = shallowRef();
 		const state = reactive({
 			editorConfig: {
 				placeholder: props.placeholder,
 			},
-			editorVal: props.modelValue,
+			editorVal: props.getHtml,
 		});
 		// 编辑器回调函数
 		const handleCreated = (editor: any) => {
@@ -54,9 +56,8 @@ export default defineComponent({
 		};
 		// 编辑器内容改变时
 		const handleChange = (editor: any) => {
-			// console.log(editor.getText());
-			// console.log(editor.getHtml());
-			emit('update:modelValue', editor.getHtml());
+			emit('update:getHtml', editor.getHtml());
+			emit('update:getText', editor.getText());
 		};
 		// 监听是否禁用改变
 		// https://gitee.com/lyt-top/vue-next-admin/issues/I4LM7I

@@ -77,7 +77,7 @@ export default defineComponent({
 		const addMenuRef = ref();
 		const editMenuRef = ref();
 		const state = reactive({});
-		// 获取 vuex 中的路由
+		// 获取 pinia 中的路由
 		const menuTableData = computed(() => {
 			return routesList.value;
 		});

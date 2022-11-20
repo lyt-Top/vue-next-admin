@@ -463,7 +463,7 @@ export default defineComponent({
 		onActivated(() => {
 			initEchartsResizeFun();
 		});
-		// 监听 vuex 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
+		// 监听 pinia 中的 tagsview 开启全屏变化，重新 resize 图表，防止不出现/大小不变等
 		watch(
 			() => isTagsViewCurrenFull.value,
 			() => {

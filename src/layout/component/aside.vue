@@ -116,7 +116,7 @@ export default defineComponent({
 				if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
 			}
 		});
-		// 监听vuex值的变化，动态赋值给菜单中
+		// 监听 pinia 值的变化，动态赋值给菜单中
 		watch(
 			pinia.state,
 			(val) => {

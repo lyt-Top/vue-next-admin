@@ -181,7 +181,7 @@ export default defineComponent({
 			},
 			menuData: [], // 上级菜单数据
 		});
-		// 获取 vuex 中的路由
+		// 获取 pinia 中的路由
 		const getMenuData = (routes: any) => {
 			const arr: any = [];
 			routes.map((val: any) => {
