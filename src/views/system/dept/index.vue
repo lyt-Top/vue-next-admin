@@ -17,7 +17,7 @@
 				</el-button>
 			</div>
 			<el-table
-				:data="tableData.data"
+				:data="state.tableData.data"
 				style="width: 100%"
 				row-key="id"
 				default-expand-all
@@ -51,8 +51,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, ref, toRefs, reactive, onMounted, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 定义接口来定义对象的类型
@@ -77,88 +77,75 @@ interface TableDataState {
 	};
 }
 
-export default defineComponent({
-	name: 'systemDept',
-	components: {
-		AddDept: defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue')),
-		EditDept: defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue')),
+const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
+const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
+
+const addDeptRef = ref();
+const editDeptRef = ref();
+const state = reactive<TableDataState>({
+	tableData: {
+		data: [],
+		total: 0,
+		loading: false,
+		param: {
+			pageNum: 1,
+			pageSize: 10,
+		},
 	},
-	setup() {
-		const addDeptRef = ref();
-		const editDeptRef = ref();
-		const state = reactive<TableDataState>({
-			tableData: {
-				data: [],
-				total: 0,
-				loading: false,
-				param: {
-					pageNum: 1,
-					pageSize: 10,
-				},
-			},
-		});
-		// 初始化表格数据
-		const initTableData = () => {
-			state.tableData.data.push({
-				deptName: 'vueNextAdmin',
+});
+
+// 初始化表格数据
+const initTableData = () => {
+	state.tableData.data.push({
+		deptName: 'vueNextAdmin',
+		createTime: new Date().toLocaleString(),
+		status: true,
+		sort: Math.random(),
+		describe: '顶级部门',
+		id: Math.random(),
+		children: [
+			{
+				deptName: 'IT外包服务',
 				createTime: new Date().toLocaleString(),
 				status: true,
 				sort: Math.random(),
-				describe: '顶级部门',
+				describe: '总部',
 				id: Math.random(),
-				children: [
-					{
-						deptName: 'IT外包服务',
-						createTime: new Date().toLocaleString(),
-						status: true,
-						sort: Math.random(),
-						describe: '总部',
-						id: Math.random(),
-					},
-					{
-						deptName: '资本控股',
-						createTime: new Date().toLocaleString(),
-						status: true,
-						sort: Math.random(),
-						describe: '分部',
-						id: Math.random(),
-					},
-				],
-			});
-			state.tableData.total = state.tableData.data.length;
-		};
-		// 打开新增菜单弹窗
-		const onOpenAddDept = () => {
-			addDeptRef.value.openDialog();
-		};
-		// 打开编辑菜单弹窗
-		const onOpenEditDept = (row: TableDataRow) => {
-			editDeptRef.value.openDialog(row);
-		};
-		// 删除当前行
-		const onTabelRowDel = (row: TableDataRow) => {
-			ElMessageBox.confirm(`此操作将永久删除部门：${row.deptName}, 是否继续?`, '提示', {
-				confirmButtonText: '删除',
-				cancelButtonText: '取消',
-				type: 'warning',
-			})
-				.then(() => {
-					ElMessage.success('删除成功');
-				})
-				.catch(() => {});
-		};
-		// 页面加载时
-		onMounted(() => {
-			initTableData();
-		});
-		return {
-			addDeptRef,
-			editDeptRef,
-			onOpenAddDept,
-			onOpenEditDept,
-			onTabelRowDel,
-			...toRefs(state),
-		};
-	},
+			},
+			{
+				deptName: '资本控股',
+				createTime: new Date().toLocaleString(),
+				status: true,
+				sort: Math.random(),
+				describe: '分部',
+				id: Math.random(),
+			},
+		],
+	});
+	state.tableData.total = state.tableData.data.length;
+};
+// 打开新增菜单弹窗
+const onOpenAddDept = () => {
+	addDeptRef.value.openDialog();
+};
+// 打开编辑菜单弹窗
+const onOpenEditDept = (row: TableDataRow) => {
+	editDeptRef.value.openDialog(row);
+};
+// 删除当前行
+const onTabelRowDel = (row: TableDataRow) => {
+	ElMessageBox.confirm(`此操作将永久删除部门：${row.deptName}, 是否继续?`, '提示', {
+		confirmButtonText: '删除',
+		cancelButtonText: '取消',
+		type: 'warning',
+	})
+		.then(() => {
+			ElMessage.success('删除成功');
+		})
+		.catch(() => {});
+};
+// 页面加载时
+onMounted(() => {
+	initTableData();
 });
 </script>

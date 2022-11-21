@@ -8,10 +8,4 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'pagesFilteringDetails1',
-});
-</script>
+<script lang="ts" setup></script>

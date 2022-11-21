@@ -1,16 +1,16 @@
 <template>
 	<div>
-		<el-drawer :title="`${nodeData.type === 'line' ? '线' : '节点'}操作`" v-model="isOpen" size="320px">
+		<el-drawer :title="`${state.nodeData.type === 'line' ? '线' : '节点'}操作`" v-model="state.isOpen" size="320px">
 			<el-scrollbar>
-				<Lines v-if="nodeData.type === 'line'" @change="onLineChange" @close="close" ref="lineRef" />
+				<Lines v-if="state.nodeData.type === 'line'" @change="onLineChange" @close="close" ref="lineRef" />
 				<Nodes v-else @submit="onNodeSubmit" @close="close" ref="nodeRef" />
 			</el-scrollbar>
 		</el-drawer>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, defineComponent, reactive, toRefs, ref, nextTick } from 'vue';
+<script lang="ts" setup>
+import { defineAsyncComponent, reactive, ref, nextTick } from 'vue';
 
 // 定义接口来定义对象的类型
 interface WorkflowDrawerState {
@@ -21,56 +21,49 @@ interface WorkflowDrawerState {
 	jsplumbConn: any;
 }
 
-export default defineComponent({
-	name: 'pagesWorkflowDrawer',
-	components: {
-		Lines: defineAsyncComponent(() => import('./line.vue')),
-		Nodes: defineAsyncComponent(() => import('./node.vue')),
+const emit = defineEmits(['label', 'node']);
+
+const Lines = defineAsyncComponent(() => import('./line.vue'));
+const Nodes = defineAsyncComponent(() => import('./node.vue'));
+
+const lineRef = ref();
+const nodeRef = ref();
+const state = reactive<WorkflowDrawerState>({
+	isOpen: false,
+	nodeData: {
+		type: 'node',
 	},
-	setup(props, { emit }) {
-		const lineRef = ref();
-		const nodeRef = ref();
-		const state = reactive<WorkflowDrawerState>({
-			isOpen: false,
-			nodeData: {
-				type: 'node',
-			},
-			jsplumbConn: {},
-		});
-		// 打开抽屉
-		const open = (item: any, conn: any) => {
-			state.isOpen = true;
-			state.jsplumbConn = conn;
-			state.nodeData = item;
-			nextTick(() => {
-				setTimeout(() => {
-					if (item.type === 'line') lineRef.value.getParentData(item);
-					else nodeRef.value.getParentData(item);
-				}, 300);
-			});
-		};
-		// 关闭
-		const close = () => {
-			state.isOpen = false;
-		};
-		// 线 label 内容改变时
-		const onLineChange = (label: any) => {
-			state.jsplumbConn.label = label;
-			emit('label', state.jsplumbConn);
-		};
-		// 节点内容改变时
-		const onNodeSubmit = (data: object) => {
-			emit('node', data);
-		};
-		return {
-			lineRef,
-			nodeRef,
-			open,
-			close,
-			onLineChange,
-			onNodeSubmit,
-			...toRefs(state),
-		};
-	},
+	jsplumbConn: {},
+});
+
+// 打开抽屉
+const open = (item: any, conn: any) => {
+	state.isOpen = true;
+	state.jsplumbConn = conn;
+	state.nodeData = item;
+	nextTick(() => {
+		setTimeout(() => {
+			if (item.type === 'line') lineRef.value.getParentData(item);
+			else nodeRef.value.getParentData(item);
+		}, 300);
+	});
+};
+// 关闭
+const close = () => {
+	state.isOpen = false;
+};
+// 线 label 内容改变时
+const onLineChange = (label: any) => {
+	state.jsplumbConn.label = label;
+	emit('label', state.jsplumbConn);
+};
+// 节点内容改变时
+const onNodeSubmit = (data: object) => {
+	emit('node', data);
+};
+
+// 暴露变量
+defineExpose({
+	open,
 });
 </script>

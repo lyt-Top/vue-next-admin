@@ -102,6 +102,7 @@ interface CurrentContextmenu {
 	path: string;
 	contextMenuClickId: string | number;
 	commonUrl: string;
+	isFnClick: boolean;
 }
 
 export default defineComponent({
@@ -366,13 +367,8 @@ export default defineComponent({
 			state.tagsViewList.forEach((v: any) => {
 				v.transUrl = transUrlParams(v);
 				if (v.transUrl) {
-					if (v.meta.isDynamic) {
-						// 路由带参数：动态路由（xxx/:id/:name"）isDynamic
-						if (v.transUrl === transUrlParams(v) && v.transUrl === decodeURI(item.path)) resItem = v;
-					} else {
-						// 路由带参数：普通路由，因为有 tagsView 共用/不共用
-						if (v.transUrl === transUrlParams(v) && v.transUrl === item.commonUrl) resItem = v;
-					}
+					// 动态路由、普通路由带参数
+					if (v.transUrl === transUrlParams(v) && v.transUrl === item.commonUrl) resItem = v;
 				} else {
 					// 路由不带参数
 					if (v.path === decodeURI(item.path)) resItem = v;
@@ -432,8 +428,9 @@ export default defineComponent({
 			state.tagsRefsIndex = k;
 			router.push(v);
 		};
-		// 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题
+		// 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题，感谢 @ZzZz-RIPPER、@dejavuuuuu
 		// https://gitee.com/lyt-top/vue-next-admin/issues/I5K3YO
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I61VS9
 		const transUrlParams = (v: any) => {
 			let params = v.query && Object.keys(v.query).length > 0 ? v.query : v.params;
 			if (!params) return '';
@@ -443,7 +440,20 @@ export default defineComponent({
 				else path += `&${key}=${value}`;
 			}
 			// 判断是否是动态路由（xxx/:id/:name"）isDynamic
-			return v.meta.isDynamic ? `${v.path.split(':')[0]}${path.replace(/^\//, '')}` : `${v.path}${path.replace(/^&/, '?')}`;
+			if (v.meta.isDynamic) {
+				/**
+				 *
+				 * isFnClick 用于判断是通过方法调用，还是直接右键菜单点击（此处只针对动态路由）
+				 * 原因：
+				 * 1、右键菜单点击时，路由的 path 还是原始定义的路由格式，如：/params/dynamic/details/:t/:id/:tagsViewName
+				 * 2、通过事件调用时，路由的 path 不是原始定义的路由格式，如：/params/dynamic/details/vue-next-admin/111/我是动态路由测试tagsViewName(非国际化)
+				 *
+				 * 所以右侧菜单点击时，需要处理路径拼接 v.path.split(':')[0]，得到路径 + 参数的完整路径
+				 */
+				return v.isFnClick ? decodeURI(v.path) : `${v.path.split(':')[0]}${path.replace(/^\//, '')}`;
+			} else {
+				return `${v.path}${path.replace(/^&/, '?')}`;
+			}
 		};
 		// 处理 tagsView 高亮（多标签详情时使用，单标签详情未使用）
 		const setTagsViewHighlight = (v: any) => {
@@ -561,6 +571,8 @@ export default defineComponent({
 			window.addEventListener('resize', onSortableResize);
 			// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
 			mittBus.on('onCurrentContextmenuClick', (data: CurrentContextmenu) => {
+				// 通过方法点击关闭 tagsView
+				data.isFnClick = true;
 				onCurrentContextmenuClick(data);
 			});
 			// 监听布局配置界面开启/关闭拖拽

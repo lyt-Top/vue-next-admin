@@ -4,18 +4,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-export default defineComponent({
-	name: 'menu121',
-	setup() {
-		const state = reactive({
-			val: '',
-		});
-		return {
-			...toRefs(state),
-		};
-	},
-});
+const val = ref('');
 </script>

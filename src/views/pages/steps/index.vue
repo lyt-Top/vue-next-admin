@@ -29,23 +29,13 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { ref } from 'vue';
 
-export default defineComponent({
-	name: 'pagesSteps',
-	setup() {
-		const state = reactive({
-			stepsActive: 1,
-		});
-		// 下一步点击
-		const onNextSteps = () => {
-			if (state.stepsActive++ > 2) state.stepsActive = 1;
-		};
-		return {
-			onNextSteps,
-			...toRefs(state),
-		};
-	},
-});
+const stepsActive = ref(1);
+
+// 下一步点击
+const onNextSteps = () => {
+	if (stepsActive.value++ > 2) stepsActive.value = 1;
+};
 </script>

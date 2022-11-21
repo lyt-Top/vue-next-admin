@@ -73,19 +73,7 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'pagesWaves',
-	setup() {
-		const state = reactive({});
-		return {
-			...toRefs(state),
-		};
-	},
-});
-</script>
+<script lang="ts" setup></script>
 
 <style scoped lang="scss">
 .preview-container {

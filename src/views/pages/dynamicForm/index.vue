@@ -1,7 +1,7 @@
 <template>
 	<div class="dynamic-form-container layout-pd">
 		<el-card shadow="hover" header="动态复杂表单">
-			<el-form :model="form" ref="formRulesOneRef" size="default" label-width="100px" class="mt35">
+			<el-form :model="state.form" ref="formRulesOneRef" size="default" label-width="100px" class="mt35">
 				<el-row :gutter="35">
 					<el-col
 						:xs="val.xs"
@@ -22,7 +22,7 @@
 								v-if="val.type !== ''"
 							>
 								<el-input
-									v-model="form[val.prop]"
+									v-model="state.form[val.prop]"
 									:placeholder="val.placeholder"
 									clearable
 									v-if="val.type === 'input'"
@@ -30,7 +30,7 @@
 									:disabled="val.disabled"
 								></el-input>
 								<el-date-picker
-									v-model="form[val.prop]"
+									v-model="state.form[val.prop]"
 									type="date"
 									:placeholder="val.placeholder"
 									v-else-if="val.type === 'date'"
@@ -39,7 +39,7 @@
 								>
 								</el-date-picker>
 								<el-select
-									v-model="form[val.prop]"
+									v-model="state.form[val.prop]"
 									:placeholder="val.placeholder"
 									v-else-if="val.type === 'select'"
 									style="width: 100%"
@@ -49,7 +49,7 @@
 								</el-select>
 								<el-input
 									type="textarea"
-									v-model="form[val.prop]"
+									v-model="state.form[val.prop]"
 									:placeholder="val.placeholder"
 									clearable
 									v-if="val.type === 'textarea'"
@@ -59,7 +59,7 @@
 							</el-form-item>
 						</template>
 						<template v-else>
-							<el-row :gutter="35" v-for="(v, k) in form.list" :key="k">
+							<el-row :gutter="35" v-for="(v, k) in state.form.list" :key="k">
 								<el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" class="mb20">
 									<el-form-item label="年度" :prop="`list[${k}].year`" :rules="[{ required: true, message: `年度不能为空`, trigger: 'blur' }]">
 										<template #label>
@@ -75,17 +75,17 @@
 											</el-button>
 											<span class="ml10">年度</span>
 										</template>
-										<el-input v-model="form.list[k].year" style="width: 100%" placeholder="请输入"> </el-input>
+										<el-input v-model="state.form.list[k].year" style="width: 100%" placeholder="请输入"> </el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" class="mb20">
 									<el-form-item label="月度" :prop="`list[${k}].month`" :rules="[{ required: true, message: `月度不能为空`, trigger: 'blur' }]">
-										<el-input v-model="form.list[k].month" style="width: 100%" placeholder="请输入"> </el-input>
+										<el-input v-model="state.form.list[k].month" style="width: 100%" placeholder="请输入"> </el-input>
 									</el-form-item>
 								</el-col>
 								<el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" class="mb20">
 									<el-form-item label="日度" :prop="`list[${k}].day`" :rules="[{ required: true, message: `日度不能为空`, trigger: 'blur' }]">
-										<el-input v-model="form.list[k].day" style="width: 100%" placeholder="请输入"> </el-input>
+										<el-input v-model="state.form.list[k].day" style="width: 100%" placeholder="请输入"> </el-input>
 									</el-form-item>
 								</el-col>
 							</el-row>
@@ -111,8 +111,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, onMounted, defineComponent, ref } from 'vue';
+<script lang="ts" setup>
+import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { formData } from './mock';
 
@@ -144,63 +144,49 @@ interface DynamicFormState {
 	form: any;
 }
 
-export default defineComponent({
-	name: 'pagesDynamicForm',
-	setup() {
-		const formRulesOneRef = ref();
-		const state = reactive<DynamicFormState>({
-			formData,
-			form: {
-				name: '',
-				email: '',
-				autograph: '',
-				occupation: '',
-				list: [
-					{
-						year: '',
-						month: '',
-						day: '',
-					},
-				],
-				remarks: '',
-			},
-		});
-		// 新增行
-		const onAddRow = () => {
-			state.form.list.push({
+const formRulesOneRef = ref();
+const state = reactive<DynamicFormState>({
+	formData,
+	form: {
+		name: '',
+		email: '',
+		autograph: '',
+		occupation: '',
+		list: [
+			{
 				year: '',
 				month: '',
 				day: '',
-			});
-		};
-		// 删除行
-		const onDelRow = (k: number) => {
-			state.form.list.splice(k, 1);
-		};
-		// 表单验证
-		const onSubmitForm = () => {
-			formRulesOneRef.value.validate((valid: boolean) => {
-				if (valid) {
-					ElMessage.success('验证成功');
-				} else {
-					return false;
-				}
-			});
-		};
-		// 重置表单
-		const onResetForm = () => {
-			formRulesOneRef.value.resetFields();
-		};
-		// 页面加载时
-		onMounted(() => {});
-		return {
-			formRulesOneRef,
-			onAddRow,
-			onDelRow,
-			onSubmitForm,
-			onResetForm,
-			...toRefs(state),
-		};
+			},
+		],
+		remarks: '',
 	},
 });
+
+// 新增行
+const onAddRow = () => {
+	state.form.list.push({
+		year: '',
+		month: '',
+		day: '',
+	});
+};
+// 删除行
+const onDelRow = (k: number) => {
+	state.form.list.splice(k, 1);
+};
+// 表单验证
+const onSubmitForm = () => {
+	formRulesOneRef.value.validate((valid: boolean) => {
+		if (valid) {
+			ElMessage.success('验证成功');
+		} else {
+			return false;
+		}
+	});
+};
+// 重置表单
+const onResetForm = () => {
+	formRulesOneRef.value.resetFields();
+};
 </script>

@@ -2,7 +2,7 @@
 	<div class="system-role-container layout-padding">
 		<div class="system-role-padding layout-padding-auto layout-padding-view">
 			<div class="system-user-search mb15">
-				<el-input v-model="tableData.param.search" size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
+				<el-input v-model="state.tableData.param.search" size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
 						<ele-Search />
@@ -16,7 +16,7 @@
 					新增角色
 				</el-button>
 			</div>
-			<el-table :data="tableData.data" style="width: 100%">
+			<el-table :data="state.tableData.data" style="width: 100%">
 				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="roleName" label="角色名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="角色标识" show-overflow-tooltip></el-table-column>
@@ -44,11 +44,11 @@
 				class="mt15"
 				:pager-count="5"
 				:page-sizes="[10, 20, 30]"
-				v-model:current-page="tableData.param.pageNum"
+				v-model:current-page="state.tableData.param.pageNum"
 				background
-				v-model:page-size="tableData.param.pageSize"
+				v-model:page-size="state.tableData.param.pageSize"
 				layout="total, sizes, prev, pager, next, jumper"
-				:total="tableData.total"
+				:total="state.tableData.total"
 			>
 			</el-pagination>
 		</div>
@@ -57,8 +57,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, toRefs, reactive, onMounted, ref, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 定义接口来定义对象的类型
@@ -83,86 +83,70 @@ interface TableDataState {
 	};
 }
 
-export default defineComponent({
-	name: 'systemRole',
-	components: {
-		AddRole: defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue')),
-		EditRole: defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue')),
+const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
+const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
+
+const addRoleRef = ref();
+const editRoleRef = ref();
+const state = reactive<TableDataState>({
+	tableData: {
+		data: [],
+		total: 0,
+		loading: false,
+		param: {
+			search: '',
+			pageNum: 1,
+			pageSize: 10,
+		},
 	},
-	setup() {
-		const addRoleRef = ref();
-		const editRoleRef = ref();
-		const state = reactive<TableDataState>({
-			tableData: {
-				data: [],
-				total: 0,
-				loading: false,
-				param: {
-					search: '',
-					pageNum: 1,
-					pageSize: 10,
-				},
-			},
+});
+// 初始化表格数据
+const initTableData = () => {
+	const data: Array<TableData> = [];
+	for (let i = 0; i < 20; i++) {
+		data.push({
+			roleName: i === 0 ? '超级管理员' : '普通用户',
+			roleSign: i === 0 ? 'admin' : 'common',
+			describe: `测试角色${i + 1}`,
+			sort: i,
+			status: true,
+			createTime: new Date().toLocaleString(),
 		});
-		// 初始化表格数据
-		const initTableData = () => {
-			const data: Array<TableData> = [];
-			for (let i = 0; i < 20; i++) {
-				data.push({
-					roleName: i === 0 ? '超级管理员' : '普通用户',
-					roleSign: i === 0 ? 'admin' : 'common',
-					describe: `测试角色${i + 1}`,
-					sort: i,
-					status: true,
-					createTime: new Date().toLocaleString(),
-				});
-			}
-			state.tableData.data = data;
-			state.tableData.total = state.tableData.data.length;
-		};
-		// 打开新增角色弹窗
-		const onOpenAddRole = () => {
-			addRoleRef.value.openDialog();
-		};
-		// 打开修改角色弹窗
-		const onOpenEditRole = (row: Object) => {
-			editRoleRef.value.openDialog(row);
-		};
-		// 删除角色
-		const onRowDel = (row: any) => {
-			ElMessageBox.confirm(`此操作将永久删除角色名称：“${row.roleName}”，是否继续?`, '提示', {
-				confirmButtonText: '确认',
-				cancelButtonText: '取消',
-				type: 'warning',
-			})
-				.then(() => {
-					ElMessage.success('删除成功');
-				})
-				.catch(() => {});
-		};
-		// 分页改变
-		const onHandleSizeChange = (val: number) => {
-			state.tableData.param.pageSize = val;
-		};
-		// 分页改变
-		const onHandleCurrentChange = (val: number) => {
-			state.tableData.param.pageNum = val;
-		};
-		// 页面加载时
-		onMounted(() => {
-			initTableData();
-		});
-		return {
-			addRoleRef,
-			editRoleRef,
-			onOpenAddRole,
-			onOpenEditRole,
-			onRowDel,
-			onHandleSizeChange,
-			onHandleCurrentChange,
-			...toRefs(state),
-		};
-	},
+	}
+	state.tableData.data = data;
+	state.tableData.total = state.tableData.data.length;
+};
+// 打开新增角色弹窗
+const onOpenAddRole = () => {
+	addRoleRef.value.openDialog();
+};
+// 打开修改角色弹窗
+const onOpenEditRole = (row: Object) => {
+	editRoleRef.value.openDialog(row);
+};
+// 删除角色
+const onRowDel = (row: any) => {
+	ElMessageBox.confirm(`此操作将永久删除角色名称：“${row.roleName}”，是否继续?`, '提示', {
+		confirmButtonText: '确认',
+		cancelButtonText: '取消',
+		type: 'warning',
+	})
+		.then(() => {
+			ElMessage.success('删除成功');
+		})
+		.catch(() => {});
+};
+// 分页改变
+const onHandleSizeChange = (val: number) => {
+	state.tableData.param.pageSize = val;
+};
+// 分页改变
+const onHandleCurrentChange = (val: number) => {
+	state.tableData.param.pageNum = val;
+};
+// 页面加载时
+onMounted(() => {
+	initTableData();
 });
 </script>
 

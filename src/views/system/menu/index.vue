@@ -58,58 +58,43 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, ref, toRefs, reactive, computed, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineAsyncComponent, ref, computed } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 
-export default defineComponent({
-	name: 'systemMenu',
-	components: {
-		AddMenu: defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue')),
-		EditMenu: defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue')),
-	},
-	setup() {
-		const stores = useRoutesList();
-		const { routesList } = storeToRefs(stores);
-		const addMenuRef = ref();
-		const editMenuRef = ref();
-		const state = reactive({});
-		// 获取 pinia 中的路由
-		const menuTableData = computed(() => {
-			return routesList.value;
-		});
-		// 打开新增菜单弹窗
-		const onOpenAddMenu = () => {
-			addMenuRef.value.openDialog();
-		};
-		// 打开编辑菜单弹窗
-		const onOpenEditMenu = (row: RouteRecordRaw) => {
-			editMenuRef.value.openDialog(row);
-		};
-		// 删除当前行
-		const onTabelRowDel = (row: RouteRecordRaw) => {
-			ElMessageBox.confirm(`此操作将永久删除路由：${row.path}, 是否继续?`, '提示', {
-				confirmButtonText: '删除',
-				cancelButtonText: '取消',
-				type: 'warning',
-			})
-				.then(() => {
-					ElMessage.success('删除成功');
-				})
-				.catch(() => {});
-		};
-		return {
-			addMenuRef,
-			editMenuRef,
-			onOpenAddMenu,
-			onOpenEditMenu,
-			menuTableData,
-			onTabelRowDel,
-			...toRefs(state),
-		};
-	},
+const AddMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue'));
+const EditMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue'));
+
+const stores = useRoutesList();
+const { routesList } = storeToRefs(stores);
+const addMenuRef = ref();
+const editMenuRef = ref();
+
+// 获取 pinia 中的路由
+const menuTableData = computed(() => {
+	return routesList.value;
 });
+// 打开新增菜单弹窗
+const onOpenAddMenu = () => {
+	addMenuRef.value.openDialog();
+};
+// 打开编辑菜单弹窗
+const onOpenEditMenu = (row: RouteRecordRaw) => {
+	editMenuRef.value.openDialog(row);
+};
+// 删除当前行
+const onTabelRowDel = (row: RouteRecordRaw) => {
+	ElMessageBox.confirm(`此操作将永久删除路由：${row.path}, 是否继续?`, '提示', {
+		confirmButtonText: '删除',
+		cancelButtonText: '取消',
+		type: 'warning',
+	})
+		.then(() => {
+			ElMessage.success('删除成功');
+		})
+		.catch(() => {});
+};
 </script>
