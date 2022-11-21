@@ -24,36 +24,30 @@
 	</template>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
 
-export default defineComponent({
-	name: 'navMenuSubItem',
-	props: {
-		chil: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	setup(props) {
-		const router = useRouter();
-		// 获取父级菜单数据
-		const chils = computed(() => {
-			return <any>props.chil;
-		});
-		// 打开外部链接
-		const onALinkClick = (val: any) => {
-			const { origin, pathname } = window.location;
-			router.push(val.path);
-			if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
-			else window.open(`${origin}${pathname}#${val.meta.isLink}`);
-		};
-		return {
-			chils,
-			onALinkClick,
-		};
+const props = defineProps({
+	// 菜单列表
+	chil: {
+		type: Array,
+		default: () => [],
 	},
 });
+
+const router = useRouter();
+
+// 获取父级菜单数据
+const chils = computed(() => {
+	return <any>props.chil;
+});
+// 打开外部链接
+const onALinkClick = (val: any) => {
+	const { origin, pathname } = window.location;
+	router.push(val.path);
+	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
+	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+};
 </script>

@@ -6,26 +6,17 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
-export default defineComponent({
-	name: 'layoutCloseFull',
-	setup() {
-		const stores = useTagsViewRoutes();
-		const { isTagsViewCurrenFull } = storeToRefs(stores);
-		// 关闭当前全屏
-		const onCloseFullscreen = () => {
-			stores.setCurrenFullscreen(false);
-		};
-		return {
-			isTagsViewCurrenFull,
-			onCloseFullscreen,
-		};
-	},
-});
+const stores = useTagsViewRoutes();
+const { isTagsViewCurrenFull } = storeToRefs(stores);
+
+// 关闭当前全屏
+const onCloseFullscreen = () => {
+	stores.setCurrenFullscreen(false);
+};
 </script>
 
 <style scoped lang="scss">

@@ -6,21 +6,25 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="large" :disabled="disabledSize === 'large'">{{ $t('message.user.dropdownLarge') }}</el-dropdown-item>
-					<el-dropdown-item command="default" :disabled="disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
-					<el-dropdown-item command="small" :disabled="disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
+					<el-dropdown-item command="large" :disabled="state.disabledSize === 'large'">{{ $t('message.user.dropdownLarge') }}</el-dropdown-item>
+					<el-dropdown-item command="default" :disabled="state.disabledSize === 'default'">{{ $t('message.user.dropdownDefault') }}</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="state.disabledSize === 'small'">{{ $t('message.user.dropdownSmall') }}</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" trigger="click" @command="onLanguageChange">
 			<div class="layout-navbars-breadcrumb-user-icon">
-				<i class="iconfont" :class="disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'" :title="$t('message.user.title1')"></i>
+				<i
+					class="iconfont"
+					:class="state.disabledI18n === 'en' ? 'icon-fuhao-yingwen' : 'icon-fuhao-zhongwen'"
+					:title="$t('message.user.title1')"
+				></i>
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="zh-cn" :disabled="disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
-					<el-dropdown-item command="en" :disabled="disabledI18n === 'en'">English</el-dropdown-item>
-					<el-dropdown-item command="zh-tw" :disabled="disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
+					<el-dropdown-item command="zh-cn" :disabled="state.disabledI18n === 'zh-cn'">简体中文</el-dropdown-item>
+					<el-dropdown-item command="en" :disabled="state.disabledI18n === 'en'">English</el-dropdown-item>
+					<el-dropdown-item command="zh-tw" :disabled="state.disabledI18n === 'zh-tw'">繁體中文</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -49,8 +53,8 @@
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
 			<i
 				class="iconfont"
-				:title="isScreenfull ? $t('message.user.title6') : $t('message.user.title5')"
-				:class="!isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
+				:title="state.isScreenfull ? $t('message.user.title6') : $t('message.user.title5')"
+				:class="!state.isScreenfull ? 'icon-fullscreen' : 'icon-tuichuquanping'"
 			></i>
 		</div>
 		<el-dropdown :show-timeout="70" :hide-timeout="50" @command="onHandleCommandClick">
@@ -76,8 +80,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, ref, computed, reactive, toRefs, onMounted, defineComponent } from 'vue';
+<script lang="ts" setup>
+import { defineAsyncComponent, ref, computed, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
@@ -89,135 +93,118 @@ import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 import { Session, Local } from '/@/utils/storage';
 
-export default defineComponent({
-	name: 'layoutBreadcrumbUser',
-	components: {
-		UserNews: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue')),
-		Search: defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue')),
-	},
-	setup() {
-		const { locale, t } = useI18n();
-		const router = useRouter();
-		const stores = useUserInfo();
-		const storesThemeConfig = useThemeConfig();
-		const { userInfos } = storeToRefs(stores);
-		const { themeConfig } = storeToRefs(storesThemeConfig);
-		const searchRef = ref();
-		const state = reactive({
-			isScreenfull: false,
-			disabledI18n: 'zh-cn',
-			disabledSize: 'large',
-		});
-		// 设置分割样式
-		const layoutUserFlexNum = computed(() => {
-			let num: string | number = '';
-			const { layout, isClassicSplitMenu } = themeConfig.value;
-			const layoutArr: string[] = ['defaults', 'columns'];
-			if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
-			else num = '';
-			return num;
-		});
-		// 全屏点击时
-		const onScreenfullClick = () => {
-			if (!screenfull.isEnabled) {
-				ElMessage.warning('暂不不支持全屏');
-				return false;
-			}
-			screenfull.toggle();
-			screenfull.on('change', () => {
-				if (screenfull.isFullscreen) state.isScreenfull = true;
-				else state.isScreenfull = false;
-			});
-		};
-		// 布局配置 icon 点击时
-		const onLayoutSetingClick = () => {
-			mittBus.emit('openSetingsDrawer');
-		};
-		// 下拉菜单点击时
-		const onHandleCommandClick = (path: string) => {
-			if (path === 'logOut') {
-				ElMessageBox({
-					closeOnClickModal: false,
-					closeOnPressEscape: false,
-					title: t('message.user.logOutTitle'),
-					message: t('message.user.logOutMessage'),
-					showCancelButton: true,
-					confirmButtonText: t('message.user.logOutConfirm'),
-					cancelButtonText: t('message.user.logOutCancel'),
-					buttonSize: 'default',
-					beforeClose: (action, instance, done) => {
-						if (action === 'confirm') {
-							instance.confirmButtonLoading = true;
-							instance.confirmButtonText = t('message.user.logOutExit');
-							setTimeout(() => {
-								done();
-								setTimeout(() => {
-									instance.confirmButtonLoading = false;
-								}, 300);
-							}, 700);
-						} else {
-							done();
-						}
-					},
-				})
-					.then(async () => {
-						// 清除缓存/token等
-						Session.clear();
-						// 使用 reload 时，不需要调用 resetRoute() 重置路由
-						window.location.reload();
-					})
-					.catch(() => {});
-			} else if (path === 'wareHouse') {
-				window.open('https://gitee.com/lyt-top/vue-next-admin');
-			} else {
-				router.push(path);
-			}
-		};
-		// 菜单搜索点击
-		const onSearchClick = () => {
-			searchRef.value.openSearch();
-		};
-		// 组件大小改变
-		const onComponentSizeChange = (size: string) => {
-			Local.remove('themeConfig');
-			themeConfig.value.globalComponentSize = size;
-			Local.set('themeConfig', themeConfig.value);
-			initI18nOrSize('globalComponentSize', 'disabledSize');
-			window.location.reload();
-		};
-		// 语言切换
-		const onLanguageChange = (lang: string) => {
-			Local.remove('themeConfig');
-			themeConfig.value.globalI18n = lang;
-			Local.set('themeConfig', themeConfig.value);
-			locale.value = lang;
-			other.useTitle();
-			initI18nOrSize('globalI18n', 'disabledI18n');
-		};
-		// 初始化组件大小/i18n
-		const initI18nOrSize = (value: string, attr: string) => {
-			(<any>state)[attr] = Local.get('themeConfig')[value];
-		};
-		// 页面加载时
-		onMounted(() => {
-			if (Local.get('themeConfig')) {
-				initI18nOrSize('globalComponentSize', 'disabledSize');
-				initI18nOrSize('globalI18n', 'disabledI18n');
-			}
-		});
-		return {
-			userInfos,
-			onLayoutSetingClick,
-			onHandleCommandClick,
-			onScreenfullClick,
-			onSearchClick,
-			onComponentSizeChange,
-			onLanguageChange,
-			searchRef,
-			layoutUserFlexNum,
-			...toRefs(state),
-		};
-	},
+const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
+const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
+
+const { locale, t } = useI18n();
+const router = useRouter();
+const stores = useUserInfo();
+const storesThemeConfig = useThemeConfig();
+const { userInfos } = storeToRefs(stores);
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const searchRef = ref();
+const state = reactive({
+	isScreenfull: false,
+	disabledI18n: 'zh-cn',
+	disabledSize: 'large',
+});
+
+// 设置分割样式
+const layoutUserFlexNum = computed(() => {
+	let num: string | number = '';
+	const { layout, isClassicSplitMenu } = themeConfig.value;
+	const layoutArr: string[] = ['defaults', 'columns'];
+	if (layoutArr.includes(layout) || (layout === 'classic' && !isClassicSplitMenu)) num = '1';
+	else num = '';
+	return num;
+});
+// 全屏点击时
+const onScreenfullClick = () => {
+	if (!screenfull.isEnabled) {
+		ElMessage.warning('暂不不支持全屏');
+		return false;
+	}
+	screenfull.toggle();
+	screenfull.on('change', () => {
+		if (screenfull.isFullscreen) state.isScreenfull = true;
+		else state.isScreenfull = false;
+	});
+};
+// 布局配置 icon 点击时
+const onLayoutSetingClick = () => {
+	mittBus.emit('openSetingsDrawer');
+};
+// 下拉菜单点击时
+const onHandleCommandClick = (path: string) => {
+	if (path === 'logOut') {
+		ElMessageBox({
+			closeOnClickModal: false,
+			closeOnPressEscape: false,
+			title: t('message.user.logOutTitle'),
+			message: t('message.user.logOutMessage'),
+			showCancelButton: true,
+			confirmButtonText: t('message.user.logOutConfirm'),
+			cancelButtonText: t('message.user.logOutCancel'),
+			buttonSize: 'default',
+			beforeClose: (action, instance, done) => {
+				if (action === 'confirm') {
+					instance.confirmButtonLoading = true;
+					instance.confirmButtonText = t('message.user.logOutExit');
+					setTimeout(() => {
+						done();
+						setTimeout(() => {
+							instance.confirmButtonLoading = false;
+						}, 300);
+					}, 700);
+				} else {
+					done();
+				}
+			},
+		})
+			.then(async () => {
+				// 清除缓存/token等
+				Session.clear();
+				// 使用 reload 时，不需要调用 resetRoute() 重置路由
+				window.location.reload();
+			})
+			.catch(() => {});
+	} else if (path === 'wareHouse') {
+		window.open('https://gitee.com/lyt-top/vue-next-admin');
+	} else {
+		router.push(path);
+	}
+};
+// 菜单搜索点击
+const onSearchClick = () => {
+	searchRef.value.openSearch();
+};
+// 组件大小改变
+const onComponentSizeChange = (size: string) => {
+	Local.remove('themeConfig');
+	themeConfig.value.globalComponentSize = size;
+	Local.set('themeConfig', themeConfig.value);
+	initI18nOrSize('globalComponentSize', 'disabledSize');
+	window.location.reload();
+};
+// 语言切换
+const onLanguageChange = (lang: string) => {
+	Local.remove('themeConfig');
+	themeConfig.value.globalI18n = lang;
+	Local.set('themeConfig', themeConfig.value);
+	locale.value = lang;
+	other.useTitle();
+	initI18nOrSize('globalI18n', 'disabledI18n');
+};
+// 初始化组件大小/i18n
+const initI18nOrSize = (value: string, attr: string) => {
+	(<any>state)[attr] = Local.get('themeConfig')[value];
+};
+// 页面加载时
+onMounted(() => {
+	if (Local.get('themeConfig')) {
+		initI18nOrSize('globalComponentSize', 'disabledSize');
+		initI18nOrSize('globalI18n', 'disabledI18n');
+	}
 });
 </script>
 

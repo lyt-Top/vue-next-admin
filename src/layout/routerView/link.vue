@@ -3,7 +3,7 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<div class="layout-link-warp">
 				<i class="layout-link-icon iconfont icon-xingqiu"></i>
-				<div class="layout-link-msg">页面 "{{ $t(currentRouteMeta.title) }}" 已在新窗口中打开</div>
+				<div class="layout-link-msg">页面 "{{ $t(state.currentRouteMeta.title) }}" 已在新窗口中打开</div>
 				<el-button class="mt30" round size="default" @click="onGotoFullPage">
 					<i class="iconfont icon-lianjie"></i>
 					<span>立即前往体验</span>
@@ -13,8 +13,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs, reactive, watch } from 'vue';
+<script lang="ts" setup>
+import { reactive, watch } from 'vue';
 import { useRoute, RouteMeta } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
 
@@ -30,38 +30,30 @@ interface LinkViewRouteMeta extends RouteMeta {
 	title: string;
 }
 
-export default defineComponent({
-	name: 'layoutLinkView',
-	setup() {
-		const route = useRoute();
-		const state = reactive<LinkViewState>({
-			currentRouteMeta: {
-				isLink: '',
-				title: '',
-			},
-		});
-		// 立即前往
-		const onGotoFullPage = () => {
-			const { origin, pathname } = window.location;
-			if (verifyUrl(state.currentRouteMeta.isLink)) window.open(state.currentRouteMeta.isLink);
-			else window.open(`${origin}${pathname}#${state.currentRouteMeta.isLink}`);
-		};
-		// 监听路由的变化，设置内容
-		watch(
-			() => route.path,
-			() => {
-				state.currentRouteMeta = <LinkViewRouteMeta>route.meta;
-			},
-			{
-				immediate: true,
-			}
-		);
-		return {
-			onGotoFullPage,
-			...toRefs(state),
-		};
+const route = useRoute();
+const state = reactive<LinkViewState>({
+	currentRouteMeta: {
+		isLink: '',
+		title: '',
 	},
 });
+
+// 立即前往
+const onGotoFullPage = () => {
+	const { origin, pathname } = window.location;
+	if (verifyUrl(state.currentRouteMeta.isLink)) window.open(state.currentRouteMeta.isLink);
+	else window.open(`${origin}${pathname}#${state.currentRouteMeta.isLink}`);
+};
+// 监听路由的变化，设置内容
+watch(
+	() => route.path,
+	() => {
+		state.currentRouteMeta = <LinkViewRouteMeta>route.meta;
+	},
+	{
+		immediate: true,
+	}
+);
 </script>
 
 <style scoped lang="scss">
