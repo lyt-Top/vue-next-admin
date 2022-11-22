@@ -418,7 +418,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutBreadcrumbSeting">
 import { nextTick, onUnmounted, onMounted, computed, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
@@ -432,6 +432,7 @@ import commonFunction from '/@/utils/commonFunction';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 
+// 定义变量内容
 const { locale } = useI18n();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -439,6 +440,7 @@ const { copyText } = commonFunction();
 const state = reactive({
 	isMobile: false,
 });
+
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
 	return themeConfig.value;

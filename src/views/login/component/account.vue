@@ -55,7 +55,7 @@
 	</el-form>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="loginAccount">
 import { reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
@@ -69,6 +69,7 @@ import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { NextLoading } from '/@/utils/loading';
 
+// 定义变量内容
 const { t } = useI18n();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

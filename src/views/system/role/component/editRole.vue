@@ -57,7 +57,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemEditRole">
 import { reactive } from 'vue';
 
 // 定义接口来定义对象的类型
@@ -83,6 +83,7 @@ interface RoleState {
 	};
 }
 
+// 定义变量内容
 const state = reactive<RoleState>({
 	isShowDialog: false,
 	ruleForm: {

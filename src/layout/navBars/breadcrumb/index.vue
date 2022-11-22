@@ -7,7 +7,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutBreadcrumbIndex">
 import { defineAsyncComponent, computed, reactive, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -20,11 +20,13 @@ interface IndexState {
 	menuList: object[];
 }
 
+// 引入组件
 const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
 const User = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue'));
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Horizontal = defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue'));
 
+// 定义变量内容
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

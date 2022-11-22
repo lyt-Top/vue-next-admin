@@ -35,11 +35,12 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="paramsDynamic">
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 
+// 定义变量内容
 const router = useRouter();
 const state = reactive({
 	value: '',

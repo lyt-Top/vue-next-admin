@@ -13,9 +13,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesWorkflowToolHelp">
 import { ref } from 'vue';
 
+// 定义变量内容
 const isShow = ref(false);
 
 // 打开弹窗

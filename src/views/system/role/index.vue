@@ -57,7 +57,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemRole">
 import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
@@ -83,9 +83,11 @@ interface TableDataState {
 	};
 }
 
+// 引入组件
 const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
 const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
 
+// 定义变量内容
 const addRoleRef = ref();
 const editRoleRef = ref();
 const state = reactive<TableDataState>({

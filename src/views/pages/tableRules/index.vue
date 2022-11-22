@@ -54,7 +54,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesTableRules">
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
@@ -75,6 +75,7 @@ interface TableRulesState {
 	};
 }
 
+// 定义变量内容
 const tableRulesRef = ref();
 const state = reactive<TableRulesState>({
 	tableData: {

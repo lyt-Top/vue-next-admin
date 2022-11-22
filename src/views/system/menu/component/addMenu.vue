@@ -145,15 +145,17 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemAddMenu">
 import { defineAsyncComponent, reactive, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { i18n } from '/@/i18n/index';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 
+// 引入组件
 const IconSelector = defineAsyncComponent(() => import('/@/components/iconSelector/index.vue'));
 
+// 定义变量内容
 const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
 const state = reactive({

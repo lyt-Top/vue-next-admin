@@ -31,9 +31,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesFormRulesOne">
 import { reactive, onMounted } from 'vue';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	data: {
 		type: Object,
@@ -41,6 +42,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const state = reactive({
 	form: { name: '', email: '', autograph: '', occupation: '' },
 	rules: {

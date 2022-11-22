@@ -46,7 +46,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutTagsView">
 import { defineAsyncComponent, reactive, onMounted, computed, ref, nextTick, onBeforeUpdate, onBeforeMount, onUnmounted, watch } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import Sortable from 'sortablejs';
@@ -92,8 +92,10 @@ interface CurrentContextmenu {
 	isFnClick: boolean;
 }
 
+// 引入组件
 const Contextmenu = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/contextmenu.vue'));
 
+// 定义变量内容
 const tagsRefs = ref<any[]>([]);
 const scrollbarRef = ref();
 const contextmenuRef = ref();

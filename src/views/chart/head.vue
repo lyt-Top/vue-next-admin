@@ -10,10 +10,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="chartHead">
 import { reactive, onBeforeMount, onUnmounted } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
 
+// 定义变量内容
 const state = reactive({
 	time: {
 		txt: '',

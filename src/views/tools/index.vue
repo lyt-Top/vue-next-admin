@@ -192,7 +192,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="tools">
 import { reactive } from 'vue';
 import {
 	verifyNumberPercentage,
@@ -220,6 +220,7 @@ import {
 	verifyCarNum,
 } from '/@/utils/toolsValidate';
 
+// 定义变量内容
 const state = reactive({
 	text: '世间美好，与你环环相扣，祝你开心每一天！',
 	phone: false,

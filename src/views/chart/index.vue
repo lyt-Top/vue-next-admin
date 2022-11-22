@@ -201,7 +201,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="chartIndex">
 import { defineAsyncComponent, reactive, onMounted, watch, nextTick, onActivated, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
@@ -209,8 +209,10 @@ import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { skyList, dBtnList, chartData4List } from '/@/views/chart/chart';
 
+// 引入组件
 const ChartHead = defineAsyncComponent(() => import('/@/views/chart/head.vue'));
 
+// 定义变量内容
 const chartsCenterOneRef = ref();
 const chartsSevenDaysRef = ref();
 const chartsWarningRef = ref();

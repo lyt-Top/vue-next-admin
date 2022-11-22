@@ -12,12 +12,13 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="wngEditor">
 // https://www.wangeditor.com/v5/for-frame.html#vue3
 import '@wangeditor/editor/dist/css/style.css';
 import { reactive, shallowRef, watch, onBeforeUnmount } from 'vue';
 import { Toolbar, Editor } from '@wangeditor/editor-for-vue';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 是否禁用
 	disable: {
@@ -46,8 +47,10 @@ const props = defineProps({
 	getText: String,
 });
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:getHtml', 'update:getText']);
 
+// 定义变量内容
 const editorRef = shallowRef();
 const state = reactive({
 	editorConfig: {

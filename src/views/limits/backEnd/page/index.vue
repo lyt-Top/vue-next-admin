@@ -17,9 +17,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="limitsBackEndEndPage">
 import { useRouter } from 'vue-router';
 
+// 定义变量内容
 const router = useRouter();
 
 // 立即前往前端控制路由

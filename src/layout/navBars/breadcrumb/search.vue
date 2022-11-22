@@ -27,7 +27,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutBreadcrumbSearch">
 import { reactive, ref, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -47,6 +47,7 @@ interface Restaurant {
 	};
 }
 
+// 定义变量内容
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 const layoutMenuAutocompleteRef = ref();

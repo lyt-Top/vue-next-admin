@@ -22,10 +22,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funQrcode">
 import { onMounted, ref } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 
+// 定义变量内容
 const qrcodeRef = ref();
 
 // 初始化生成二维码

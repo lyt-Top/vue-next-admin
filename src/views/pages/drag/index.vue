@@ -37,9 +37,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesDrag">
 import { reactive } from 'vue';
 
+// 定义变量内容
 const state = reactive({
 	dialogVisible: false,
 });

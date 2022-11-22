@@ -18,14 +18,16 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesFormRules">
 import { defineAsyncComponent, reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
+// 引入组件
 const FormRulesOne = defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesOne.vue'));
 const FormRulesTwo = defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesTwo.vue'));
 const FormRulesThree = defineAsyncComponent(() => import('/@/views/pages/formRules/component/formRulesThree.vue'));
 
+// 定义变量内容
 const pagesFormRulesOneRef = ref();
 const pagesFormRulesTwoRef = ref();
 const pagesFormRulesThreeRef = ref();

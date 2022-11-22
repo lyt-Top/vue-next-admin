@@ -54,7 +54,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemDic">
 import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
@@ -78,9 +78,11 @@ interface TableDataState {
 	};
 }
 
+// 引入组件
 const AddDic = defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue'));
 const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue'));
 
+// 定义变量内容
 const addDicRef = ref();
 const editDicRef = ref();
 const state = reactive<TableDataState>({

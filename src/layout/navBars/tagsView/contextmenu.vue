@@ -29,9 +29,10 @@
 	</transition>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutTagsViewContextmenu">
 import { computed, reactive, onMounted, onUnmounted, watch } from 'vue';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	dropdown: {
 		type: Object,
@@ -44,8 +45,10 @@ const props = defineProps({
 	},
 });
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['currentContextmenuClick']);
 
+// 定义变量内容
 const state = reactive({
 	isShow: false,
 	dropdownList: [

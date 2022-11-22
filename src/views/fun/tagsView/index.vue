@@ -62,13 +62,15 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funTagsView">
 import { defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const NoticeBar = defineAsyncComponent(() => import('/@/components/noticeBar/index.vue'));
 
+// 定义变量内容
 const route = useRoute();
 
 // 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏

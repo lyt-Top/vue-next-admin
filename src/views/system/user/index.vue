@@ -58,7 +58,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemUser">
 import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
@@ -89,9 +89,11 @@ interface TableDataState {
 	};
 }
 
+// 引入组件
 const AddUer = defineAsyncComponent(() => import('/@/views/system/user/component/addUser.vue'));
 const EditUser = defineAsyncComponent(() => import('/@/views/system/user/component/editUser.vue'));
 
+// 定义变量内容
 const addUserRef = ref();
 const editUserRef = ref();
 const state = reactive<TableDataState>({

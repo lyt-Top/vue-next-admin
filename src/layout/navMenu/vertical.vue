@@ -30,15 +30,17 @@
 	</el-menu>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="navMenuVertical">
 import { defineAsyncComponent, reactive, computed, onMounted, watch } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { verifyUrl } from '/@/utils/toolsValidate';
 
+// 引入组件
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 菜单列表
 	menuList: {
@@ -47,6 +49,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();

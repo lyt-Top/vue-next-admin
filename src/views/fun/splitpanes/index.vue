@@ -21,11 +21,12 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funSplitpanes">
 import { reactive } from 'vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
+// 定义变量内容
 const state = reactive({
 	paneSize: 50,
 });

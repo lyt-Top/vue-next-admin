@@ -11,9 +11,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="noticeBar">
 import { reactive, ref, onMounted, nextTick } from 'vue';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 通知栏模式，可选值为 closeable link
 	mode: {
@@ -72,8 +73,10 @@ const props = defineProps({
 	},
 });
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['close', 'link']);
 
+// 定义变量内容
 const noticeBarWarpRef = ref();
 const noticeBarTextRef = ref();
 const state = reactive({

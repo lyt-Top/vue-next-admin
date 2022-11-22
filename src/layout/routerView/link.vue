@@ -13,7 +13,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutLinkView">
 import { reactive, watch } from 'vue';
 import { useRoute, RouteMeta } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
@@ -30,6 +30,7 @@ interface LinkViewRouteMeta extends RouteMeta {
 	title: string;
 }
 
+// 定义变量内容
 const route = useRoute();
 const state = reactive<LinkViewState>({
 	currentRouteMeta: {

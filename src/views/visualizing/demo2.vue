@@ -228,7 +228,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="visualizingLinkDemo2">
 import { reactive, onMounted, onUnmounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts-gl';
@@ -253,6 +253,7 @@ interface Demo2State {
 	the3DEarth: null | HTMLDivElement;
 }
 
+// 定义变量内容
 const rightChartData1 = ref();
 const rightChartData2 = ref();
 const rightChartData3 = ref();

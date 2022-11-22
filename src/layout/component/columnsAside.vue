@@ -44,7 +44,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutColumnsAside">
 import { reactive, ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -64,6 +64,7 @@ interface ColumnsAsideState {
 	routeSplit: string[];
 }
 
+// 定义变量内容
 const columnsAsideOffsetTopRefs: any = ref([]);
 const columnsAsideActiveRef = ref();
 const stores = useRoutesList();

@@ -68,10 +68,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="iconSelector">
 import { ref, reactive, onMounted, nextTick, computed, watch } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 输入框前置内容
 	prepend: {
@@ -119,8 +120,10 @@ const props = defineProps({
 	modelValue: String,
 });
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['update:modelValue', 'get', 'clear']);
 
+// 定义变量内容
 const inputWidthRef = ref();
 const selectorScrollbarRef = ref();
 const state = reactive({

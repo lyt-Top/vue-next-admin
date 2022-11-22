@@ -24,11 +24,12 @@
 	</template>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="navMenuSubItem">
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 菜单列表
 	chil: {
@@ -37,6 +38,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const router = useRouter();
 
 // 获取父级菜单数据

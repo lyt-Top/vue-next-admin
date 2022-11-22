@@ -88,7 +88,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="visualizingLinkDemo1">
 import { reactive, onMounted, onUnmounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
@@ -105,6 +105,7 @@ interface Demo1State {
 	myCharts: any[];
 }
 
+// 定义变量内容
 const visualizingDemo1 = ref();
 const visualizingContentLeftTop = ref();
 const visualizingContentLeftBottom = ref();

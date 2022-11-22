@@ -9,7 +9,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesWorkflowDrawer">
 import { defineAsyncComponent, reactive, ref, nextTick } from 'vue';
 
 // 定义接口来定义对象的类型
@@ -21,11 +21,14 @@ interface WorkflowDrawerState {
 	jsplumbConn: any;
 }
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['label', 'node']);
 
+// 引入组件
 const Lines = defineAsyncComponent(() => import('./line.vue'));
 const Nodes = defineAsyncComponent(() => import('./node.vue'));
 
+// 定义变量内容
 const lineRef = ref();
 const nodeRef = ref();
 const state = reactive<WorkflowDrawerState>({

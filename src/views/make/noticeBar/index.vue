@@ -47,11 +47,13 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="makeNoticeBar">
 import { defineAsyncComponent, reactive } from 'vue';
 
+// 引入组件
 const NoticeBar = defineAsyncComponent(() => import('/@/components/noticeBar/index.vue'));
 
+// 定义变量内容
 const state = reactive({
 	noticeList: [
 		'🎉🎉🔥基于vue3.x 、Typescript、vite、Element plus等',

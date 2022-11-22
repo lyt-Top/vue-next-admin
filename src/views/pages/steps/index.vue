@@ -29,9 +29,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesSteps">
 import { ref } from 'vue';
 
+// 定义变量内容
 const stepsActive = ref(1);
 
 // 下一步点击

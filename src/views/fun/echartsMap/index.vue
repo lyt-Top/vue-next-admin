@@ -6,12 +6,13 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funEchartsMap">
 import { reactive, onMounted } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import { echartsMapList, echartsMapData } from './mock';
 
+// 定义变量内容
 const state: any = reactive({
 	echartsMap: null,
 	echartsMapList,

@@ -30,7 +30,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesTree">
 import { reactive, onBeforeMount, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
@@ -55,6 +55,7 @@ interface TreeSate {
 	treeLength: number;
 }
 
+// 定义变量内容
 const treeTableRef = ref();
 const state = reactive<TreeSate>({
 	treeCheckAll: false,

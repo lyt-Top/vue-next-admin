@@ -334,11 +334,12 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="limitsFrontEndBtn">
 import { defineAsyncComponent } from 'vue';
 import { ElMessage } from 'element-plus';
 import { auth, auths, authAll } from '/@/utils/authFunction';
 
+// 引入组件
 const LimitsFrontEndPage = defineAsyncComponent(() => import('/@/views/limits/frontEnd/page/index.vue'));
 const Auth = defineAsyncComponent(() => import('/@/components/auth/auth.vue'));
 const Auths = defineAsyncComponent(() => import('/@/components/auth/auths.vue'));

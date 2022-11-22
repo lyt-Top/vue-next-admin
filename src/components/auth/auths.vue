@@ -2,11 +2,12 @@
 	<slot v-if="getUserAuthBtnList" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="auths">
 import { computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	value: {
 		type: Array,
@@ -14,6 +15,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const stores = useUserInfo();
 const { userInfos } = storeToRefs(stores);
 

@@ -183,7 +183,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="personal">
 import { reactive, computed } from 'vue';
 import { formatAxis } from '/@/utils/formatTime';
 import { newsInfoList, recommendList } from './mock';
@@ -195,6 +195,7 @@ interface PersonalState {
 	personalForm: any;
 }
 
+// 定义变量内容
 const state = reactive<PersonalState>({
 	newsInfoList,
 	recommendList,

@@ -28,9 +28,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funGridLayout">
 import { reactive } from 'vue';
 
+// 定义变量内容
 const state = reactive({
 	layouts: [
 		{ x: 0, y: 0, w: 2, h: 2, i: '0' },

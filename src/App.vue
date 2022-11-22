@@ -7,7 +7,7 @@
 	</el-config-provider>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="app">
 import { defineAsyncComponent, computed, ref, onBeforeMount, onMounted, onUnmounted, nextTick, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -19,10 +19,12 @@ import { Local, Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 import setIntroduction from '/@/utils/setIconfont';
 
+// 引入组件
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
 const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
 const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
 
+// 定义变量内容
 const { messages, locale } = useI18n();
 const setingsRef = ref();
 const route = useRoute();

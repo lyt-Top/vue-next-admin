@@ -27,9 +27,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesFormRulesThree">
 import { reactive } from 'vue';
 
+// 定义变量内容
 const state = reactive({
 	form: { createUser: '', editUser: '', user: '', department: '' },
 	rules: {

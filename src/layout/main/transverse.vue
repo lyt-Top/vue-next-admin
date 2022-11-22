@@ -5,15 +5,17 @@
 	</el-container>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutTransverse">
 import { defineAsyncComponent, ref, watch, nextTick, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
+// 引入组件
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));
 
+// 定义变量内容
 const layoutMainRef = ref<any>('');
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);

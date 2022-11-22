@@ -30,7 +30,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="navMenuHorizontal">
 import { defineAsyncComponent, reactive, computed, onMounted, nextTick, onBeforeMount, ref } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -39,8 +39,10 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { verifyUrl } from '/@/utils/toolsValidate';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 菜单列表
 	menuList: {
@@ -49,6 +51,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const elMenuHorizontalScrollRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();

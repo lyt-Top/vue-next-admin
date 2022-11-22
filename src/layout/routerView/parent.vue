@@ -13,7 +13,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutParentView">
 import { defineAsyncComponent, computed, reactive, onBeforeMount, onUnmounted, nextTick, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia';
@@ -30,8 +30,10 @@ interface ParentViewState {
 	iframeList: string[];
 }
 
+// 引入组件
 const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.vue'));
 
+// 定义变量内容
 const route = useRoute();
 const router = useRouter();
 const storesKeepAliveNames = useKeepALiveNames();

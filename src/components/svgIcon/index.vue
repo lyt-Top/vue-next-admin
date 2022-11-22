@@ -8,9 +8,10 @@
 	<i v-else :class="getIconName" :style="setIconSvgStyle" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="svgIcon">
 import { computed } from 'vue';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// svg 图标组件名字
 	name: {

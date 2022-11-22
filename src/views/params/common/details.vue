@@ -10,10 +10,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="paramsCommonDetails">
 import { reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
+// 定义变量内容
 const route = useRoute();
 const state = reactive({
 	params: {

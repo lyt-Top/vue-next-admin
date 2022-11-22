@@ -58,16 +58,18 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemMenu">
 import { defineAsyncComponent, ref, computed } from 'vue';
 import { RouteRecordRaw } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 
+// 引入组件
 const AddMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue'));
 const EditMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue'));
 
+// 定义变量内容
 const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
 const addMenuRef = ref();

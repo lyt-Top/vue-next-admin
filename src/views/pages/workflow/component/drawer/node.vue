@@ -92,7 +92,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesWorkflowDrawerNode">
 import { reactive, ref, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import * as echarts from 'echarts';
@@ -108,8 +108,10 @@ interface WorkflowDrawerNodeState {
 	};
 }
 
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['submit', 'close']);
 
+// 定义变量内容
 const nodeFormRef = ref();
 const extendFormRef = ref();
 const chartsMonitorRef = ref();
@@ -132,6 +134,7 @@ const state = reactive<WorkflowDrawerNodeState>({
 		extend: false,
 	},
 });
+
 // 获取父组件数据
 const getParentData = (data: object) => {
 	state.tabsActive = '1';

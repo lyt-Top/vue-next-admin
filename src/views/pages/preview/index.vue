@@ -6,9 +6,10 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesPreview">
 import { reactive } from 'vue';
 
+// 定义变量内容
 const state = reactive({
 	url: 'https://img2.baidu.com/it/u=1978192862,2048448374&fm=253&fmt=auto&app=138&f=JPEG?w=504&h=500',
 	srcList: [

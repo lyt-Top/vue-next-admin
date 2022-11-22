@@ -9,7 +9,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutAside">
 import { defineAsyncComponent, reactive, computed, watch, onBeforeMount, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import pinia from '/@/stores/index';
@@ -18,9 +18,11 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Vertical = defineAsyncComponent(() => import('/@/layout/navMenu/vertical.vue'));
 
+// 定义变量内容
 const layoutAsideScrollbarRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();

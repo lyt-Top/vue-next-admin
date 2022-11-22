@@ -73,7 +73,9 @@
 	</div>
 </template>
 
-<script lang="ts" setup></script>
+<script setup lang="ts" name="pagesWaves">
+// 此处需有内容（注释也得），否则缓存将失败
+</script>
 
 <style scoped lang="scss">
 .preview-container {

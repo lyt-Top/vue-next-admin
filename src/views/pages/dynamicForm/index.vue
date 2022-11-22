@@ -111,7 +111,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesDynamicForm">
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import { formData } from './mock';
@@ -144,6 +144,7 @@ interface DynamicFormState {
 	form: any;
 }
 
+// 定义变量内容
 const formRulesOneRef = ref();
 const state = reactive<DynamicFormState>({
 	formData,

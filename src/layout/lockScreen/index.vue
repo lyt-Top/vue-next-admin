@@ -59,7 +59,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutLockScreen">
 import { nextTick, onMounted, reactive, ref, onUnmounted } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
@@ -85,6 +85,7 @@ interface LockScreenState {
 	lockScreenPassword: string;
 }
 
+// 定义变量内容
 const layoutLockScreenDateRef = ref();
 const layoutLockScreenInputRef = ref();
 const storesThemeConfig = useThemeConfig();

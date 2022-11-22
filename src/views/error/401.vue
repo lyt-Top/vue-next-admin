@@ -22,7 +22,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="noPower">
 import { Session } from '/@/utils/storage';
 
 const onSetAuth = () => {

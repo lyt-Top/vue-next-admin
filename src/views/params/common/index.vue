@@ -35,10 +35,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="paramsCommon">
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
+// 定义变量内容
 const router = useRouter();
 const state = reactive({
 	value: '',

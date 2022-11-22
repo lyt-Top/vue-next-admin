@@ -88,7 +88,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemAddUser">
 import { reactive, onMounted } from 'vue';
 
 // 定义接口来定义对象的类型
@@ -119,6 +119,7 @@ interface UserState {
 	deptData: Array<DeptData>;
 }
 
+// 定义变量内容
 const state = reactive<UserState>({
 	isShowDialog: false,
 	ruleForm: {

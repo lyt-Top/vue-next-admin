@@ -15,10 +15,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="funPrintJs">
 import { reactive } from 'vue';
 import printJs from 'print-js';
 
+// 定义变量内容
 const state = reactive({
 	printRef: null as null | HTMLDivElement,
 });

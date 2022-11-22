@@ -20,10 +20,11 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutIframeView">
 import { computed, watch, ref, nextTick } from 'vue';
 import { useRoute } from 'vue-router';
 
+// 定义父组件传过来的值
 const props = defineProps({
 	// 刷新 iframe
 	refreshKey: {
@@ -42,6 +43,7 @@ const props = defineProps({
 	},
 });
 
+// 定义变量内容
 const iframeRef = ref();
 const route = useRoute();
 

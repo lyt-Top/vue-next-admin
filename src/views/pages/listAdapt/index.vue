@@ -51,7 +51,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesListAdapt">
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { filterList } from './mock';
@@ -78,6 +78,7 @@ interface TableDataState {
 	};
 }
 
+// 定义变量内容
 const router = useRouter();
 const state = reactive<TableDataState>({
 	tableData: {

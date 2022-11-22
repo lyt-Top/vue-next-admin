@@ -11,17 +11,19 @@
 	</el-container>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="layoutClassic">
 import { defineAsyncComponent, computed, ref, watch, nextTick, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
+// 引入组件
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));
 const LayoutTagsView = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/tagsView.vue'));
 
+// 定义变量内容
 const layoutMainRef = ref<any>('');
 const route = useRoute();
 const storesThemeConfig = useThemeConfig();

@@ -67,7 +67,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="pagesWorkflow">
 import { defineAsyncComponent, reactive, onMounted, onUnmounted, nextTick, ref } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { jsPlumb } from 'jsplumb';
@@ -117,11 +117,13 @@ interface WorkflowState {
 	};
 }
 
+// 引入组件
 const Tool = defineAsyncComponent(() => import('./component/tool/index.vue'));
 const Contextmenu = defineAsyncComponent(() => import('./component/contextmenu/index.vue'));
 const Drawer = defineAsyncComponent(() => import('./component/drawer/index.vue'));
 const Help = defineAsyncComponent(() => import('./component/tool/help.vue'));
 
+// 定义变量内容
 const contextmenuNodeRef = ref();
 const contextmenuLineRef = ref();
 const drawerRef = ref();

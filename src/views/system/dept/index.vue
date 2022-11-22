@@ -51,7 +51,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="systemDept">
 import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
@@ -77,9 +77,11 @@ interface TableDataState {
 	};
 }
 
+// 引入组件
 const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
 const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
 
+// 定义变量内容
 const addDeptRef = ref();
 const editDeptRef = ref();
 const state = reactive<TableDataState>({

@@ -65,7 +65,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="home">
 import { reactive, onMounted, ref, watch, nextTick, onActivated } from 'vue';
 import * as echarts from 'echarts';
 import { storeToRefs } from 'pinia';
@@ -79,6 +79,7 @@ let global: any = {
 	dispose: [null, '', undefined],
 };
 
+// 定义变量内容
 const homeLineRef = ref();
 const homePieRef = ref();
 const homeBarRef = ref();

@@ -8,11 +8,13 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="loginScan">
 import { ref, onMounted, nextTick } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 
+// 定义变量内容
 const qrcodeRef = ref<HTMLElement | null>(null);
+
 // 初始化生成二维码
 const initQrcode = () => {
 	nextTick(() => {

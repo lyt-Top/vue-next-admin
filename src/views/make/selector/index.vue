@@ -25,11 +25,13 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts" name="makeSelector">
 import { defineAsyncComponent, reactive } from 'vue';
 
+// 引入组件
 const IconSelector = defineAsyncComponent(() => import('/@/components/iconSelector/index.vue'));
 
+// 定义变量内容
 const state = reactive({
 	modelIcon: '',
 	tableData: [
