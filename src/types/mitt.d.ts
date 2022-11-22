@@ -10,5 +10,4 @@ export type MittType = {
 	openShareTagsView?: string; // 布局设置弹窗，开启 TagsView 共用
 	onTagsViewRefreshRouterView?: any; // tagsview 刷新界面
 	onCurrentContextmenuClick?: any; // tagsview 右键菜单每项点击时
-	setHoverPreload?: string; // 分栏菜单鼠标悬停预加载
 };

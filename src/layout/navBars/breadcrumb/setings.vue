@@ -493,7 +493,6 @@ const setGraduaFun = (el: string, bool: boolean, color: string) => {
 };
 // 2、分栏设置 ->
 const onColumnsMenuHoverPreloadChange = () => {
-	mittBus.emit('setHoverPreload');
 	setLocalThemeConfig();
 };
 // 3、界面设置 --> 菜单水平折叠
