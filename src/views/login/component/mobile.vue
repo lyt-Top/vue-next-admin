@@ -32,19 +32,13 @@
 <script setup lang="ts" name="loginMobile">
 import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface LoginMobileState {
-	userName: any;
-	code: string | number | undefined;
-}
-// 定义对象与类型
-const ruleForm: LoginMobileState = {
-	userName: '',
-	code: '',
-};
-
 // 定义变量内容
-const state = reactive({ ruleForm });
+const state = reactive({
+	ruleForm: {
+		userName: '',
+		code: '',
+	},
+});
 </script>
 
 <style scoped lang="scss">

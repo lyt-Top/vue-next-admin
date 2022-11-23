@@ -33,3 +33,9 @@ declare module '*.vue' {
 interface Window {
 	nextLoading: boolean;
 }
+
+/**
+ * 定义公共数组类型
+ */
+declare type globalStringArray = string[];
+declare type globalNumberArray = number[];

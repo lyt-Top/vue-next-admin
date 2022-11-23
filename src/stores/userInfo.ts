@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import Cookies from 'js-cookie';
-import { UserInfosStates } from './interface';
 import { Session } from '/@/utils/storage';
 
 /**
@@ -8,7 +7,7 @@ import { Session } from '/@/utils/storage';
  * @methods setUserInfos 设置用户信息
  */
 export const useUserInfo = defineStore('userInfo', {
-	state: (): UserInfosStates => ({
+	state: (): UserInfosState => ({
 		userInfos: {
 			userName: '',
 			photo: '',

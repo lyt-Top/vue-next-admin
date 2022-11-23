@@ -29,7 +29,8 @@ const props = defineProps({
 });
 
 // 在线链接、本地引入地址前缀
-const linesString = ['https', 'http', '/src', '/assets', import.meta.env.VITE_PUBLIC_PATH];
+// https://gitee.com/lyt-top/vue-next-admin/issues/I62OVL
+const linesString = ['https', 'http', '/src', '/assets', 'data:image', import.meta.env.VITE_PUBLIC_PATH];
 
 // 获取 icon 图标名称
 const getIconName = computed(() => {

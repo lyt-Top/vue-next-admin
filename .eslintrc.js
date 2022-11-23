@@ -13,9 +13,18 @@ module.exports = {
 	},
 	extends: ['plugin:vue/vue3-essential', 'plugin:vue/essential', 'eslint:recommended'],
 	plugins: ['vue', '@typescript-eslint'],
+	overrides: [
+		{
+			files: ['*.ts', '*.tsx', '*.vue'],
+			rules: {
+				'no-undef': 'off',
+			},
+		},
+	],
 	rules: {
 		// http://eslint.cn/docs/rules/
 		// https://eslint.vuejs.org/rules/
+		// https://typescript-eslint.io/rules/no-unused-vars/
 		'@typescript-eslint/ban-ts-ignore': 'off',
 		'@typescript-eslint/explicit-function-return-type': 'off',
 		'@typescript-eslint/no-explicit-any': 'off',
@@ -26,6 +35,9 @@ module.exports = {
 		'@typescript-eslint/ban-types': 'off',
 		'@typescript-eslint/no-non-null-assertion': 'off',
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-redeclare': 'error',
+		'@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+		'@typescript-eslint/no-unused-vars': [2],
 		'vue/custom-event-name-casing': 'off',
 		'vue/attributes-order': 'off',
 		'vue/one-component-per-file': 'off',
@@ -59,5 +71,6 @@ module.exports = {
 		'no-v-model-argument': 'off',
 		'no-case-declarations': 'off',
 		'no-console': 'error',
+		'no-redeclare': 'off',
 	},
 };
