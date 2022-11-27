@@ -70,33 +70,8 @@
 <script setup lang="ts" name="systemAddDept">
 import { reactive, onMounted } from 'vue';
 
-// 定义接口来定义对象的类型
-interface TableDataRow {
-	deptName: string;
-	createTime: string;
-	status: boolean;
-	sort: number;
-	describe: string;
-	id: number;
-	children?: TableDataRow[];
-}
-interface DeptSate {
-	isShowDialog: boolean;
-	ruleForm: {
-		deptLevel: Array<string>;
-		deptName: string;
-		person: string;
-		phone: string | number;
-		email: string;
-		sort: number;
-		status: boolean;
-		describe: string;
-	};
-	deptData: Array<TableDataRow>;
-}
-
 // 定义变量内容
-const state = reactive<DeptSate>({
+const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		deptLevel: [], // 上级部门
@@ -108,7 +83,7 @@ const state = reactive<DeptSate>({
 		status: true, // 部门状态
 		describe: '', // 部门描述
 	},
-	deptData: [], // 部门数据
+	deptData: [] as DeptTreeType[], // 部门数据
 });
 
 // 打开弹窗

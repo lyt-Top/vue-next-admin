@@ -24,7 +24,7 @@
 								:rules="[{ required: item.isRequired, message: '不能为空', trigger: `${item.type}` == 'input' ? 'blur' : 'change' }]"
 							>
 								<el-select v-if="item.type === 'select'" v-model="scope.row[item.prop]" placeholder="请选择">
-									<el-option v-for="sel in state.tableData.option" :key="sel.id" :label="sel.label" :value="sel.value" />
+									<el-option v-for="sel in state.tableData.option" :key="sel.value" :label="sel.label" :value="sel.value" />
 								</el-select>
 								<el-date-picker
 									v-else-if="item.type === 'date'"
@@ -46,7 +46,7 @@
 			</el-form>
 			<el-row class="flex mt15">
 				<div class="flex-margin">
-					<el-button size="default" type="success" @click="onValidate">表格验证</el-button>
+					<el-button size="default" type="success" @click="onValidate(tableRulesRef)">表格验证</el-button>
 					<el-button size="default" type="primary" @click="onAddRow">新增一行</el-button>
 				</div>
 			</el-row>
@@ -57,26 +57,10 @@
 <script setup lang="ts" name="pagesTableRules">
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
-
-// 定义接口来定义对象的类型
-interface TableHeader {
-	prop: string;
-	width: string | number;
-	label: string;
-	isRequired?: boolean;
-	isTooltip?: boolean;
-	type: string;
-}
-interface TableRulesState {
-	tableData: {
-		data: any[];
-		header: TableHeader[];
-		option: any[];
-	};
-}
+import type { FormInstance } from 'element-plus';
 
 // 定义变量内容
-const tableRulesRef = ref();
+const tableRulesRef = ref<FormInstance>();
 const state = reactive<TableRulesState>({
 	tableData: {
 		data: [],
@@ -99,9 +83,10 @@ const state = reactive<TableRulesState>({
 });
 
 // 表格验证
-const onValidate = () => {
+const onValidate = (formEl: FormInstance | undefined) => {
 	if (state.tableData.data.length <= 0) return ElMessage.warning('请先点击增加一行');
-	tableRulesRef.value.validate((valid: any) => {
+	if (!formEl) return;
+	formEl.validate((valid) => {
 		if (!valid) return ElMessage.warning('表格项必填未填');
 		ElMessage.success('全部验证通过');
 	});

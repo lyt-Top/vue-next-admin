@@ -238,21 +238,6 @@ import { dropdownList, skyList, dBtnList, earth3DBtnList, chartData4List } from 
 import worldImg from './images/world.jpg';
 import bathymetryImg from './images/bathymetry.jpg';
 
-// 定义接口来定义对象的类型
-interface Demo2State {
-	time: any;
-	dropdownList: any;
-	dropdownActive: string;
-	skyList: any[];
-	dBtnList: any[];
-	chartData4Index: number;
-	dBtnActive: number;
-	earth3DBtnList: any[];
-	chartData4List: any[];
-	myCharts: any[];
-	the3DEarth: null | HTMLDivElement;
-}
-
 // 定义变量内容
 const rightChartData1 = ref();
 const rightChartData2 = ref();
@@ -274,7 +259,7 @@ const state = reactive<Demo2State>({
 	earth3DBtnList,
 	chartData4List,
 	myCharts: [],
-	the3DEarth: null as HTMLDivElement | null,
+	the3DEarth: null,
 });
 
 // 初始化时间

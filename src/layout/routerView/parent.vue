@@ -22,14 +22,6 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
-// 定义接口来定义对象的类型
-interface ParentViewState {
-	refreshRouterViewKey: string;
-	iframeRefreshKey: string;
-	keepAliveNameList: string[];
-	iframeList: string[];
-}
-
 // 引入组件
 const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.vue'));
 
@@ -61,7 +53,7 @@ const isIframePage = computed(() => {
 });
 // 获取 iframe 组件列表(未进行渲染)
 const getIframeListRoutes = async () => {
-	router.getRoutes().forEach((v: any) => {
+	router.getRoutes().forEach((v) => {
 		if (v.meta.isIframe) {
 			v.meta.isIframeOpen = false;
 			v.meta.loading = true;
@@ -90,7 +82,7 @@ onMounted(() => {
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
 	nextTick(() => {
 		setTimeout(() => {
-			if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList')?.map((item: any) => item.name);
+			if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList')?.map((item: RouteItem) => item.name);
 		}, 0);
 	});
 });

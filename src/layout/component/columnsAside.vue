@@ -53,19 +53,8 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
-// 定义接口来定义对象的类型
-interface ColumnsAsideState {
-	columnsAsideList: any[];
-	liIndex: number;
-	liOldIndex: null | number;
-	liHoverIndex: null | number;
-	liOldPath: null | string;
-	difference: number;
-	routeSplit: string[];
-}
-
 // 定义变量内容
-const columnsAsideOffsetTopRefs: any = ref([]);
+const columnsAsideOffsetTopRefs = ref<RefType>([]);
 const columnsAsideActiveRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
@@ -89,9 +78,9 @@ const setColumnsAsideMove = (k: number) => {
 	columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
 };
 // 菜单高亮点击事件
-const onColumnsAsideMenuClick = (v: Object, k: number) => {
+const onColumnsAsideMenuClick = (v: RouteItem, k: number) => {
 	setColumnsAsideMove(k);
-	let { path, redirect } = v as any;
+	let { path, redirect } = v;
 	if (redirect) router.push(redirect);
 	else router.push(path);
 };
@@ -123,19 +112,19 @@ const onColumnsAsideDown = (k: number) => {
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
 	state.columnsAsideList = filterRoutesFun(routesList.value);
-	const resData: any = setSendChildren(route.path);
+	const resData: MittMenu = setSendChildren(route.path);
 	if (Object.keys(resData).length <= 0) return false;
-	onColumnsAsideDown(resData.item[0].k);
+	onColumnsAsideDown(resData.item?.k);
 	mittBus.emit('setSendColumnsChildren', resData);
 };
 // 传送当前子级数据到菜单中
 const setSendChildren = (path: string) => {
 	const currentPathSplit = path.split('/');
-	let currentData: any = {};
-	state.columnsAsideList.map((v: any, k: number) => {
+	let currentData: MittMenu = { children: [] };
+	state.columnsAsideList.map((v: RouteItem, k: number) => {
 		if (v.path === `/${currentPathSplit[1]}`) {
 			v['k'] = k;
-			currentData['item'] = [{ ...v }];
+			currentData['item'] = { ...v };
 			currentData['children'] = [{ ...v }];
 			if (v.children) currentData['children'] = v.children;
 		}
@@ -143,10 +132,10 @@ const setSendChildren = (path: string) => {
 	return currentData;
 };
 // 路由过滤递归函数
-const filterRoutesFun = (arr: Array<string>) => {
+const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 	return arr
-		.filter((item: any) => !item.meta.isHide)
-		.map((item: any) => {
+		.filter((item: T) => !item.meta?.isHide)
+		.map((item: T) => {
 			item = Object.assign({}, item);
 			if (item.children) item.children = filterRoutesFun(item.children);
 			return item;
@@ -157,11 +146,11 @@ const setColumnsMenuHighlight = (path: string) => {
 	state.routeSplit = path.split('/');
 	state.routeSplit.shift();
 	const routeFirst = `/${state.routeSplit[0]}`;
-	const currentSplitRoute = state.columnsAsideList.find((v: any) => v.path === routeFirst);
+	const currentSplitRoute = state.columnsAsideList.find((v: RouteItem) => v.path === routeFirst);
 	if (!currentSplitRoute) return false;
 	// 延迟拿值，防止取不到
 	setTimeout(() => {
-		onColumnsAsideDown((<any>currentSplitRoute).k);
+		onColumnsAsideDown(currentSplitRoute.k);
 	}, 0);
 };
 // 页面加载时

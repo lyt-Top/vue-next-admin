@@ -15,11 +15,6 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
-// 定义接口来定义对象的类型
-interface IndexState {
-	menuList: object[];
-}
-
 // 引入组件
 const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
 const User = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue'));
@@ -32,8 +27,8 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { routesList } = storeToRefs(stores);
 const route = useRoute();
-const state = reactive<IndexState>({
-	menuList: [],
+const state = reactive({
+	menuList: [] as RouteItems,
 });
 
 // 设置 logo 显示/隐藏
@@ -58,17 +53,17 @@ const setFilterRoutes = () => {
 	}
 };
 // 设置了分割菜单时，删除底下 children
-const delClassicChildren = (arr: Array<object>) => {
-	arr.map((v: any) => {
+const delClassicChildren = <T extends ChilType>(arr: T[]): T[] => {
+	arr.map((v: T) => {
 		if (v.children) delete v.children;
 	});
 	return arr;
 };
 // 路由过滤递归函数
-const filterRoutesFun = (arr: Array<string>) => {
+const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 	return arr
-		.filter((item: any) => !item.meta.isHide)
-		.map((item: any) => {
+		.filter((item: T) => !item.meta?.isHide)
+		.map((item: T) => {
 			item = Object.assign({}, item);
 			if (item.children) item.children = filterRoutesFun(item.children);
 			return item;
@@ -77,11 +72,11 @@ const filterRoutesFun = (arr: Array<string>) => {
 // 传送当前子级数据到菜单中
 const setSendClassicChildren = (path: string) => {
 	const currentPathSplit = path.split('/');
-	let currentData: any = {};
-	filterRoutesFun(routesList.value).map((v, k) => {
+	let currentData: MittMenu = { children: [] };
+	filterRoutesFun(routesList.value).map((v: RouteItem, k: number) => {
 		if (v.path === `/${currentPathSplit[1]}`) {
 			v['k'] = k;
-			currentData['item'] = [{ ...v }];
+			currentData['item'] = { ...v };
 			currentData['children'] = [{ ...v }];
 			if (v.children) currentData['children'] = v.children;
 		}

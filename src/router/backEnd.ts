@@ -11,18 +11,18 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useMenuApi } from '/@/api/menu/index';
 
-const menuApi = useMenuApi();
-
-const layouModules: any = import.meta.glob('../layout/routerView/*.{vue,tsx}');
-const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
-
 // 后端控制路由
+
+// 引入 api 请求接口
+const menuApi = useMenuApi();
 
 /**
  * 获取目录下的 .vue、.tsx 全部文件
  * @method import.meta.glob
  * @link 参考：https://cn.vitejs.dev/guide/features.html#json
  */
+const layouModules: any = import.meta.glob('../layout/routerView/*.{vue,tsx}');
+const viewsModules: any = import.meta.glob('../views/**/*.{vue,tsx}');
 const dynamicViewsModules: Record<string, Function> = Object.assign({}, { ...layouModules }, { ...viewsModules });
 
 /**
@@ -109,9 +109,9 @@ export function getBackEndControlRoutes() {
 	const { userInfos } = storeToRefs(stores);
 	const auth = userInfos.value.roles[0];
 	// 管理员 admin
-	if (auth === 'admin') return menuApi.getMenuAdmin();
+	if (auth === 'admin') return menuApi.getAdminMenu();
 	// 其它用户 test
-	else return menuApi.getMenuTest();
+	else return menuApi.getTestMenu();
 }
 
 /**

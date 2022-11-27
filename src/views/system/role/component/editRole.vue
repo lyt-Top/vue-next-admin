@@ -60,31 +60,8 @@
 <script setup lang="ts" name="systemEditRole">
 import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface MenuDataTree {
-	id: number;
-	label: string;
-	children?: MenuDataTree[];
-}
-interface DialogRow {
-	roleName: string;
-	roleSign: string;
-	sort: number;
-	status: boolean;
-	describe: string;
-}
-interface RoleState {
-	isShowDialog: boolean;
-	ruleForm: DialogRow;
-	menuData: Array<MenuDataTree>;
-	menuProps: {
-		children: string;
-		label: string;
-	};
-}
-
 // 定义变量内容
-const state = reactive<RoleState>({
+const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		roleName: '', // 角色名称
@@ -93,7 +70,7 @@ const state = reactive<RoleState>({
 		status: true, // 角色状态
 		describe: '', // 角色描述
 	},
-	menuData: [],
+	menuData: [] as TreeType[],
 	menuProps: {
 		children: 'children',
 		label: 'label',
@@ -101,7 +78,7 @@ const state = reactive<RoleState>({
 });
 
 // 打开弹窗
-const openDialog = (row: DialogRow) => {
+const openDialog = (row: RowRoleType) => {
 	state.ruleForm = row;
 	state.isShowDialog = true;
 	getMenuData();

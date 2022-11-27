@@ -97,17 +97,6 @@ import { reactive, ref, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import * as echarts from 'echarts';
 
-// 定义接口来定义对象的类型
-interface WorkflowDrawerNodeState {
-	node: { [key: string]: any };
-	nodeRules: any;
-	form: any;
-	tabsActive: string;
-	loading: {
-		extend: boolean;
-	};
-}
-
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['submit', 'close']);
 

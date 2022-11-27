@@ -224,7 +224,7 @@ const state = reactive({
 	skyList,
 	dBtnList,
 	chartData4List,
-	myCharts: [],
+	myCharts: [] as EmptyArrayType,
 });
 
 // 初始化中间图表1
@@ -286,7 +286,7 @@ const initChartsCenterOne = () => {
 		],
 	};
 	myChart.setOption(option);
-	(<any>state.myCharts).push(myChart);
+	state.myCharts.push(myChart);
 };
 // 初始化近7天产品追溯扫码统计
 const initChartsSevenDays = () => {
@@ -331,7 +331,7 @@ const initChartsSevenDays = () => {
 		],
 	};
 	myChart.setOption(option);
-	(<any>state.myCharts).push(myChart);
+	state.myCharts.push(myChart);
 };
 // 初始化近30天预警总数
 const initChartsWarning = () => {
@@ -366,7 +366,7 @@ const initChartsWarning = () => {
 		],
 	};
 	myChart.setOption(option);
-	(<any>state.myCharts).push(myChart);
+	state.myCharts.push(myChart);
 };
 // 初始化当前设备监测
 const initChartsMonitor = () => {
@@ -406,7 +406,7 @@ const initChartsMonitor = () => {
 		],
 	};
 	myChart.setOption(option);
-	(<any>state.myCharts).push(myChart);
+	state.myCharts.push(myChart);
 };
 // 初始化近7天投入品记录
 const initChartsInvestment = () => {
@@ -436,13 +436,13 @@ const initChartsInvestment = () => {
 		],
 	};
 	myChart.setOption(option);
-	(<any>state.myCharts).push(myChart);
+	state.myCharts.push(myChart);
 };
 // 批量设置 echarts resize
 const initEchartsResizeFun = () => {
 	nextTick(() => {
 		for (let i = 0; i < state.myCharts.length; i++) {
-			(<any>state.myCharts[i]).resize();
+			state.myCharts[i].resize();
 		}
 	});
 };

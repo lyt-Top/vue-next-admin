@@ -26,14 +26,14 @@ declare interface RequestOldRoutesState {
 }
 
 // TagsView 路由列表
-declare interface TagsViewRoutesState {
-	tagsViewRoutes: string[];
+declare interface TagsViewRoutesState<T = any> {
+	tagsViewRoutes: T[];
 	isTagsViewCurrenFull: Boolean;
 }
 
 // 路由列表
-declare interface RoutesListState {
-	routesList: string[];
+declare interface RoutesListState<T = any> {
+	routesList: T[];
 	isColumnsMenuHover: Boolean;
 	isColumnsNavHover: Boolean;
 }

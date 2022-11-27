@@ -16,6 +16,7 @@
 // https://www.wangeditor.com/v5/for-frame.html#vue3
 import '@wangeditor/editor/dist/css/style.css';
 import { reactive, shallowRef, watch, onBeforeUnmount } from 'vue';
+import { IDomEditor } from '@wangeditor/editor';
 import { Toolbar, Editor } from '@wangeditor/editor-for-vue';
 
 // 定义父组件传过来的值
@@ -60,11 +61,11 @@ const state = reactive({
 });
 
 // 编辑器回调函数
-const handleCreated = (editor: any) => {
+const handleCreated = (editor: IDomEditor) => {
 	editorRef.value = editor;
 };
 // 编辑器内容改变时
-const handleChange = (editor: any) => {
+const handleChange = (editor: IDomEditor) => {
 	emit('update:getHtml', editor.getHtml());
 	emit('update:getText', editor.getText());
 };

@@ -66,47 +66,20 @@
 <script setup lang="ts" name="systemEditDic">
 import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface RuleFormList {
-	id: number;
-	label: string;
-	value: string;
-}
-interface RuleFormState {
-	dicName: string;
-	fieldName: string;
-	status: boolean;
-	list: RuleFormList[];
-	describe: string;
-	fieldNameList: Array<any>;
-}
-interface DicState {
-	isShowDialog: boolean;
-	ruleForm: RuleFormState;
-}
-
 // 定义变量内容
-const state = reactive<DicState>({
+const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		dicName: '', // 字典名称
 		fieldName: '', // 字段名
 		status: true, // 字典状态
-		list: [
-			// 子集字段 + 属性值
-			{
-				id: Math.random(),
-				label: '',
-				value: '',
-			},
-		],
+		list: [] as ListType[], // 子集字段 + 属性值
 		describe: '', // 字典描述
-		fieldNameList: [], // 字段名: [{子集字段 + 属性值}]
 	},
 });
 
 // 打开弹窗
-const openDialog = (row: RuleFormState) => {
+const openDialog = (row: RowDicType) => {
 	if (row.fieldName === 'SYS_UERINFO') {
 		row.list = [
 			{ id: Math.random(), label: 'sex', value: '1' },

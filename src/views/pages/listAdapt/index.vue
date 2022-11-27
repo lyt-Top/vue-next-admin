@@ -56,31 +56,9 @@ import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { filterList } from './mock';
 
-// 定义接口来定义对象的类型
-interface ListAdaptRow {
-	img: string;
-	title: string;
-	evaluate: string;
-	collection: string;
-	price: string;
-	monSales: string;
-	id: number;
-}
-interface TableDataState {
-	tableData: {
-		data: Array<ListAdaptRow>;
-		total: number;
-		loading: boolean;
-		param: {
-			pageNum: number;
-			pageSize: number;
-		};
-	};
-}
-
 // 定义变量内容
 const router = useRouter();
-const state = reactive<TableDataState>({
+const state = reactive({
 	tableData: {
 		data: filterList,
 		total: 99,
@@ -93,7 +71,7 @@ const state = reactive<TableDataState>({
 });
 
 // 当前列表项点击
-const onTableItemClick = (v: ListAdaptRow) => {
+const onTableItemClick = (v: FilterListType) => {
 	router.push({
 		path: '/pages/filteringDetails',
 		query: { id: v.id },

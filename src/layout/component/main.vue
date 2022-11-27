@@ -21,7 +21,7 @@ const LayoutParentView = defineAsyncComponent(() => import('/@/layout/routerView
 const LayoutFooter = defineAsyncComponent(() => import('/@/layout/footer/index.vue'));
 
 // 定义变量内容
-const layoutMainScrollbarRef = ref('');
+const layoutMainScrollbarRef = ref();
 const route = useRoute();
 const storesTagsViewRoutes = useTagsViewRoutes();
 const storesThemeConfig = useThemeConfig();

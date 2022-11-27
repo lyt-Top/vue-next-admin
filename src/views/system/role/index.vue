@@ -61,28 +61,6 @@
 import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
-// 定义接口来定义对象的类型
-interface TableData {
-	roleName: string;
-	roleSign: string;
-	describe: string;
-	sort: number;
-	status: boolean;
-	createTime: string;
-}
-interface TableDataState {
-	tableData: {
-		data: Array<TableData>;
-		total: number;
-		loading: boolean;
-		param: {
-			search: string;
-			pageNum: number;
-			pageSize: number;
-		};
-	};
-}
-
 // 引入组件
 const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
 const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
@@ -90,7 +68,7 @@ const EditRole = defineAsyncComponent(() => import('/@/views/system/role/compone
 // 定义变量内容
 const addRoleRef = ref();
 const editRoleRef = ref();
-const state = reactive<TableDataState>({
+const state = reactive<SysRoleState>({
 	tableData: {
 		data: [],
 		total: 0,
@@ -104,7 +82,7 @@ const state = reactive<TableDataState>({
 });
 // 初始化表格数据
 const initTableData = () => {
-	const data: Array<TableData> = [];
+	const data = [];
 	for (let i = 0; i < 20; i++) {
 		data.push({
 			roleName: i === 0 ? '超级管理员' : '普通用户',
@@ -127,7 +105,7 @@ const onOpenEditRole = (row: Object) => {
 	editRoleRef.value.openDialog(row);
 };
 // 删除角色
-const onRowDel = (row: any) => {
+const onRowDel = (row: RowRoleType) => {
 	ElMessageBox.confirm(`此操作将永久删除角色名称：“${row.roleName}”，是否继续?`, '提示', {
 		confirmButtonText: '确认',
 		cancelButtonText: '取消',

@@ -58,26 +58,6 @@
 import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
-// 定义接口来定义对象的类型
-interface TableDataRow {
-	dicName: string;
-	fieldName: string;
-	describe: string;
-	status: boolean;
-	createTime: string;
-}
-interface TableDataState {
-	tableData: {
-		data: Array<TableDataRow>;
-		total: number;
-		loading: boolean;
-		param: {
-			pageNum: number;
-			pageSize: number;
-		};
-	};
-}
-
 // 引入组件
 const AddDic = defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue'));
 const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue'));
@@ -85,7 +65,7 @@ const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component
 // 定义变量内容
 const addDicRef = ref();
 const editDicRef = ref();
-const state = reactive<TableDataState>({
+const state = reactive<SysDicState>({
 	tableData: {
 		data: [],
 		total: 0,
@@ -99,7 +79,7 @@ const state = reactive<TableDataState>({
 
 // 初始化表格数据
 const initTableData = () => {
-	const data: Array<TableDataRow> = [];
+	const data = [];
 	for (let i = 0; i < 2; i++) {
 		data.push({
 			dicName: i === 0 ? '角色标识' : '用户性别',
@@ -107,6 +87,7 @@ const initTableData = () => {
 			describe: i === 0 ? '这是角色字典' : '这是用户性别字典',
 			status: true,
 			createTime: new Date().toLocaleString(),
+			list: [],
 		});
 	}
 	state.tableData.data = data;
@@ -117,11 +98,11 @@ const onOpenAddDic = () => {
 	addDicRef.value.openDialog();
 };
 // 打开修改字典弹窗
-const onOpenEditDic = (row: TableDataRow) => {
+const onOpenEditDic = (row: RowDicType) => {
 	editDicRef.value.openDialog(row);
 };
 // 删除字典
-const onRowDel = (row: TableDataRow) => {
+const onRowDel = (row: RowDicType) => {
 	ElMessageBox.confirm(`此操作将永久删除字典名称：“${row.dicName}”，是否继续?`, '提示', {
 		confirmButtonText: '确认',
 		cancelButtonText: '取消',

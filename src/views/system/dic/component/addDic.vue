@@ -73,16 +73,8 @@ const state = reactive({
 		dicName: '', // 字典名称
 		fieldName: '', // 字段名
 		status: true, // 字典状态
-		list: [
-			// 子集字段 + 属性值
-			{
-				id: Math.random(),
-				label: '',
-				value: '',
-			},
-		],
+		list: [] as ListType[], // 子集字段 + 属性值
 		describe: '', // 字典描述
-		fieldNameList: [], // 字段名: [{子集字段 + 属性值}]
 	},
 });
 

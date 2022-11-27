@@ -96,15 +96,6 @@ import { formatDate } from '/@/utils/formatTime';
 import { NextLoading } from '/@/utils/loading';
 import { echartsMapList, echartsMapData, echartsMapImgs } from './mock/demo1';
 
-// 定义接口来定义对象的类型
-interface Demo1State {
-	echartsMapList: any;
-	echartsMapData: any;
-	echartsMapImgs: any;
-	time: any;
-	myCharts: any[];
-}
-
 // 定义变量内容
 const visualizingDemo1 = ref();
 const visualizingContentLeftTop = ref();
@@ -113,7 +104,7 @@ const visualizingContentCenterTop = ref();
 const visualizingContentCenterBottom = ref();
 const visualizingContentRightTop = ref();
 const visualizingContentRightBottom = ref();
-const state = reactive<Demo1State>({
+const state = reactive({
 	echartsMapList,
 	echartsMapData,
 	echartsMapImgs,
@@ -121,7 +112,7 @@ const state = reactive<Demo1State>({
 		txt: '',
 		fun: 0,
 	},
-	myCharts: [],
+	myCharts: [] as EmptyArrayType,
 });
 
 // 初始化时间

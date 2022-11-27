@@ -12,15 +12,6 @@
 <script setup lang="ts" name="pagesWorkflowDrawer">
 import { defineAsyncComponent, reactive, ref, nextTick } from 'vue';
 
-// 定义接口来定义对象的类型
-interface WorkflowDrawerState {
-	isOpen: boolean;
-	nodeData: {
-		type: string;
-	};
-	jsplumbConn: any;
-}
-
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['label', 'node']);
 
@@ -40,7 +31,7 @@ const state = reactive<WorkflowDrawerState>({
 });
 
 // 打开抽屉
-const open = (item: any, conn: any) => {
+const open = (item: WorkflowDrawerLabelType, conn: EmptyObjectType) => {
 	state.isOpen = true;
 	state.jsplumbConn = conn;
 	state.nodeData = item;
@@ -56,7 +47,7 @@ const close = () => {
 	state.isOpen = false;
 };
 // 线 label 内容改变时
-const onLineChange = (label: any) => {
+const onLineChange = (label: string) => {
 	state.jsplumbConn.label = label;
 	emit('label', state.jsplumbConn);
 };

@@ -84,9 +84,9 @@ const onCurrentContextmenuClick = (contextMenuClickId: number) => {
 	emit('currentContextmenuClick', Object.assign({}, { contextMenuClickId }, state.item));
 };
 // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
-const openContextmenu = (item: any) => {
+const openContextmenu = (item: RouteItem) => {
 	state.item = item;
-	item.meta.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
+	item.meta?.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
 	closeContextmenu();
 	setTimeout(() => {
 		state.isShow = true;

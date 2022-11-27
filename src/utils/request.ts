@@ -1,20 +1,20 @@
-import axios from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import { Session } from '/@/utils/storage';
 
 // 配置新建一个 axios 实例
-const service = axios.create({
-	baseURL: import.meta.env.VITE_API_URL as any,
+const service: AxiosInstance = axios.create({
+	baseURL: import.meta.env.VITE_API_URL,
 	timeout: 50000,
 	headers: { 'Content-Type': 'application/json' },
 });
 
 // 添加请求拦截器
 service.interceptors.request.use(
-	(config) => {
+	(config: AxiosRequestConfig) => {
 		// 在发送请求之前做些什么 token
 		if (Session.get('token')) {
-			(<any>config.headers)['Authorization'] = `${Session.get('token')}`;
+			config.headers!['Authorization'] = `${Session.get('token')}`;
 		}
 		return config;
 	},

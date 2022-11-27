@@ -8,18 +8,10 @@ import request from '/@/utils/request';
 export function useLoginApi() {
 	return {
 		signIn: (params: object) => {
-			return request({
-				url: '/user/signIn',
-				method: 'post',
-				data: params,
-			});
+			return request.post('/user/signIn', params);
 		},
 		signOut: (params: object) => {
-			return request({
-				url: '/user/signOut',
-				method: 'post',
-				data: params,
-			});
+			return request.post('/user/signOut', params);
 		},
 	};
 }

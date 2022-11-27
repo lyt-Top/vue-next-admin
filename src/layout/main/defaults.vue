@@ -23,8 +23,8 @@ const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/head
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));
 
 // 定义变量内容
-const layoutScrollbarRef = ref<any>('');
-const layoutMainRef = ref<any>('');
+const layoutScrollbarRef = ref<RefType>('');
+const layoutMainRef = ref<InstanceType<typeof LayoutMain>>();
 const route = useRoute();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -34,7 +34,7 @@ const updateScrollbar = () => {
 	// 更新父级 scrollbar
 	layoutScrollbarRef.value.update();
 	// 更新子级 scrollbar
-	layoutMainRef.value.layoutMainScrollbarRef.update();
+	layoutMainRef.value!.layoutMainScrollbarRef.update();
 };
 // 重置滚动条高度，由于组件是异步引入的
 const initScrollBarHeight = () => {
@@ -42,7 +42,7 @@ const initScrollBarHeight = () => {
 		setTimeout(() => {
 			updateScrollbar();
 			layoutScrollbarRef.value.wrapRef.scrollTop = 0;
-			layoutMainRef.value.layoutMainScrollbarRef.wrapRef.scrollTop = 0;
+			layoutMainRef.value!.layoutMainScrollbarRef.wrapRef.scrollTop = 0;
 		}, 500);
 	});
 };

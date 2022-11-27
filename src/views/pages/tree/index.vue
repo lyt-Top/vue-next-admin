@@ -34,43 +34,22 @@
 import { reactive, onBeforeMount, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
-// 定义接口来定义对象的类型
-interface TreeDataState {
-	id: number;
-	label: string;
-	label1: string;
-	label2: string;
-	isShow: boolean;
-	children?: TreeDataState[];
-}
-interface TreeSate {
-	treeCheckAll: boolean;
-	treeLoading: boolean;
-	treeTableData: TreeDataState[];
-	treeDefaultProps: {
-		children: string;
-		label: string;
-	};
-	treeSelArr: TreeDataState[];
-	treeLength: number;
-}
-
 // 定义变量内容
 const treeTableRef = ref();
-const state = reactive<TreeSate>({
+const state = reactive({
 	treeCheckAll: false,
 	treeLoading: false,
-	treeTableData: [],
+	treeTableData: [] as RowTreeType[],
 	treeDefaultProps: {
 		children: 'children',
 		label: 'label',
 	},
-	treeSelArr: [],
+	treeSelArr: [] as RowTreeType[],
 	treeLength: 0,
 });
 
 // 初始化树的长度
-const initTreeLengh = (arr: TreeDataState[]) => {
+const initTreeLengh = (arr: RowTreeType[]) => {
 	let count = 0;
 	arr.map((item) => {
 		if (item.children) {

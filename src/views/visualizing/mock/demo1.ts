@@ -1,5 +1,5 @@
 // 地图模拟数据
-export const echartsMapList: Array<object> = [
+export const echartsMapList = [
 	{ name: '深圳市人民政府', value: '100' },
 	{ name: '莲花山公园', value: '100' },
 	{ name: '世界之窗', value: '100' },
@@ -17,7 +17,7 @@ export const echartsMapData: object = {
 };
 
 // 地图图片显示
-export const echartsMapImgs: Array<object> = [
+export const echartsMapImgs = [
 	{
 		url: 'https://img1.baidu.com/it/u=2425496005,2401702709&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=500',
 		name: '深圳市人民政府',

@@ -59,14 +59,14 @@ const state = reactive({
 
 // 父级传过来的坐标 x,y 值
 const dropdowns = computed(() => {
-	return <any>props.dropdown;
+	return props.dropdown;
 });
 // 当前项菜单点击
 const onCurrentClick = (contextMenuClickId: number) => {
 	emit('current', Object.assign({}, { contextMenuClickId }, state.item), state.conn);
 };
 // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
-const openContextmenu = (item: any, conn = {}) => {
+const openContextmenu = (item: WorkflowDrawerLabelType, conn = {}) => {
 	state.item = item;
 	state.conn = conn;
 	closeContextmenu();

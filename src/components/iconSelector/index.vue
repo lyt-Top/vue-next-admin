@@ -158,16 +158,16 @@ const initModeValueEcho = () => {
 };
 // 处理 icon type 类型为 all 时，类型 ali、ele、awe 回显问题
 const initFontIconTypeEcho = () => {
-	if ((<any>props.modelValue)?.indexOf('iconfont') > -1) onIconChange('ali');
-	else if ((<any>props.modelValue)?.indexOf('ele-') > -1) onIconChange('ele');
-	else if ((<any>props.modelValue)?.indexOf('fa') > -1) onIconChange('awe');
+	if (props.modelValue!.indexOf('iconfont') > -1) onIconChange('ali');
+	else if (props.modelValue!.indexOf('ele-') > -1) onIconChange('ele');
+	else if (props.modelValue!.indexOf('fa') > -1) onIconChange('awe');
 	else onIconChange('ali');
 };
 // 图标搜索及图标数据显示
 const fontIconSheetsFilterList = computed(() => {
 	if (!state.fontIconSearch) return state.fontIconSheetsList;
 	let search = state.fontIconSearch.trim().toLowerCase();
-	return state.fontIconSheetsList.filter((item: any) => {
+	return state.fontIconSheetsList.filter((item: string) => {
 		if (item.toLowerCase().indexOf(search) !== -1) return item;
 	});
 });
@@ -213,7 +213,7 @@ const onIconChange = (type: string) => {
 	initFontIconData(type);
 };
 // 获取当前点击的 icon 图标
-const onColClick = (v: any) => {
+const onColClick = (v: string) => {
 	state.fontIconPlaceholder = v;
 	state.fontIconPrefix = v;
 	emit('get', state.fontIconPrefix);

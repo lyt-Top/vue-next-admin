@@ -32,14 +32,6 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useRoutesList } from '/@/stores/routesList';
 
-// 定义接口来定义对象的类型
-interface BreadcrumbState {
-	breadcrumbList: Array<any>;
-	routeSplit: Array<string>;
-	routeSplitFirst: string;
-	routeSplitIndex: number;
-}
-
 // 定义变量内容
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
@@ -62,7 +54,7 @@ const isShowBreadcrumb = computed(() => {
 	else return isBreadcrumb ? true : false;
 });
 // 面包屑点击时
-const onBreadcrumbClick = (v: any) => {
+const onBreadcrumbClick = (v: RouteItem) => {
 	const { redirect, path } = v;
 	if (redirect) router.push(redirect);
 	else router.push(path);
@@ -78,9 +70,9 @@ const setLocalThemeConfig = () => {
 	Local.set('themeConfig', themeConfig.value);
 };
 // 处理面包屑数据
-const getBreadcrumbList = (arr: Array<string>) => {
-	arr.forEach((item: any) => {
-		state.routeSplit.forEach((v: any, k: number, arrs: any) => {
+const getBreadcrumbList = (arr: RouteItems) => {
+	arr.forEach((item: RouteItem) => {
+		state.routeSplit.forEach((v: string, k: number, arrs: string[]) => {
 			if (state.routeSplitFirst === item.path) {
 				state.routeSplitFirst += `/${arrs[state.routeSplitIndex]}`;
 				state.breadcrumbList.push(item);
@@ -100,7 +92,8 @@ const initRouteSplit = (path: string) => {
 	state.routeSplitIndex = 1;
 	getBreadcrumbList(routesList.value);
 	if (route.name === 'home' || (route.name === 'notFound' && state.breadcrumbList.length > 1)) state.breadcrumbList.shift();
-	if (state.breadcrumbList.length > 0) state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setTagsViewNameI18n(route);
+	if (state.breadcrumbList.length > 0)
+		state.breadcrumbList[state.breadcrumbList.length - 1].meta.tagsViewName = other.setTagsViewNameI18n(<RouteToFrom>route);
 };
 // 页面加载时
 onMounted(() => {

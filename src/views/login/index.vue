@@ -206,6 +206,7 @@ onMounted(() => {
 					letter-spacing: 3px;
 					animation: logoAnimation 0.3s ease;
 					animation-delay: 0.3s;
+					color: var(--el-text-color-primary);
 				}
 				.login-right-warp-main-form {
 					flex: 1;

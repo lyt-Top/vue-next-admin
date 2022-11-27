@@ -32,10 +32,10 @@
 
 <script setup lang="ts" name="navMenuVertical">
 import { defineAsyncComponent, reactive, computed, onMounted, watch } from 'vue';
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import { verifyUrl } from '/@/utils/toolsValidate';
+import other from '/@/utils/other';
 
 // 引入组件
 const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
@@ -44,7 +44,7 @@ const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue
 const props = defineProps({
 	// 菜单列表
 	menuList: {
-		type: Array,
+		type: Array<RouteRecordRaw>,
 		default: () => [],
 	},
 });
@@ -53,7 +53,6 @@ const props = defineProps({
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
-const router = useRouter();
 const state = reactive({
 	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 	defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
@@ -62,25 +61,22 @@ const state = reactive({
 
 // 获取父级菜单数据
 const menuLists = computed(() => {
-	return <any>props.menuList;
+	return <RouteItems>props.menuList;
 });
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
 });
 // 菜单高亮（详情时，父级高亮）
-const setParentHighlight = (currentRoute: any) => {
+const setParentHighlight = (currentRoute: RouteToFrom) => {
 	const { path, meta } = currentRoute;
-	const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
-	if (pathSplit.length >= 4 && meta.isHide) return pathSplit.splice(0, 3).join('/');
+	const pathSplit = meta?.isDynamic ? meta.isDynamicPath!.split('/') : path!.split('/');
+	if (pathSplit.length >= 4 && meta?.isHide) return pathSplit.splice(0, 3).join('/');
 	else return path;
 };
 // 打开外部链接
-const onALinkClick = (val: any) => {
-	const { origin, pathname } = window.location;
-	router.push(val.path);
-	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
-	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+const onALinkClick = (val: RouteItem) => {
+	other.handleOpenLink(val);
 };
 // 页面加载时
 onMounted(() => {

@@ -34,19 +34,6 @@ import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
-// 定义接口来定义对象的类型
-interface SearchState {
-	isShowSearch: boolean;
-	menuQuery: string;
-	tagsViewList: object[];
-}
-interface Restaurant {
-	path: string;
-	meta: {
-		title: string;
-	};
-}
-
 // 定义变量内容
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
@@ -80,26 +67,26 @@ const menuSearch = (queryString: string, cb: Function) => {
 	cb(results);
 };
 // 菜单搜索过滤
-const createFilter: any = (queryString: string) => {
-	return (restaurant: Restaurant) => {
+const createFilter = (queryString: string) => {
+	return (restaurant: RouteItem) => {
 		return (
 			restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-			restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-			t(restaurant.meta.title).indexOf(queryString.toLowerCase()) > -1
+			restaurant.meta!.title!.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
+			t(restaurant.meta!.title!).indexOf(queryString.toLowerCase()) > -1
 		);
 	};
 };
 // 初始化菜单数据
 const initTageView = () => {
 	if (state.tagsViewList.length > 0) return false;
-	tagsViewRoutes.value.map((v: any) => {
-		if (!v.meta.isHide) state.tagsViewList.push({ ...v });
+	tagsViewRoutes.value.map((v: RouteItem) => {
+		if (!v.meta?.isHide) state.tagsViewList.push({ ...v });
 	});
 };
 // 当前菜单选中时
-const onHandleSelect = (item: any) => {
+const onHandleSelect = (item: RouteItem) => {
 	let { path, redirect } = item;
-	if (item.meta.isLink && !item.meta.isIframe) window.open(item.meta.isLink);
+	if (item.meta?.isLink && !item.meta?.isIframe) window.open(item.meta?.isLink);
 	else if (redirect) router.push(redirect);
 	else router.push(path);
 	closeSearch();

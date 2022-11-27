@@ -36,7 +36,7 @@ const userAuth = ref('');
 
 // 初始化用户权限
 const initUserAuth = () => {
-	userAuth.value = (<any>userInfos).value.roles[0];
+	userAuth.value = userInfos.value.roles[0];
 };
 // 用户权限改变时
 const onRadioChange = async () => {

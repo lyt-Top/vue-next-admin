@@ -199,7 +199,7 @@ const onLanguageChange = (lang: string) => {
 };
 // 初始化组件大小/i18n
 const initI18nOrSize = (value: string, attr: string) => {
-	(<any>state)[attr] = Local.get('themeConfig')[value];
+	state[attr] = Local.get('themeConfig')[value];
 };
 // 页面加载时
 onMounted(() => {

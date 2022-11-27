@@ -188,13 +188,6 @@ import { reactive, computed } from 'vue';
 import { formatAxis } from '/@/utils/formatTime';
 import { newsInfoList, recommendList } from './mock';
 
-// 定义接口来定义对象的类型
-interface PersonalState {
-	newsInfoList: any;
-	recommendList: any;
-	personalForm: any;
-}
-
 // 定义变量内容
 const state = reactive<PersonalState>({
 	newsInfoList,

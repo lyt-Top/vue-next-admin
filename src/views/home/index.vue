@@ -72,13 +72,6 @@ import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
-let global: any = {
-	homeChartOne: null,
-	homeChartTwo: null,
-	homeCharThree: null,
-	dispose: [null, '', undefined],
-};
-
 // 定义变量内容
 const homeLineRef = ref();
 const homePieRef = ref();
@@ -88,6 +81,12 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 const state = reactive({
+	global: {
+		homeChartOne: null,
+		homeChartTwo: null,
+		homeCharThree: null,
+		dispose: [null, '', undefined],
+	} as any,
 	homeOne: [
 		{
 			num1: '125,12',
@@ -182,7 +181,7 @@ const state = reactive({
 			iconColor: '#FBD4A0',
 		},
 	],
-	myCharts: [],
+	myCharts: [] as EmptyArrayType,
 	charts: {
 		theme: '',
 		bgColor: '',
@@ -192,8 +191,8 @@ const state = reactive({
 
 // 折线图
 const initLineChart = () => {
-	if (!global.dispose.some((b: any) => b === global.homeChartOne)) global.homeChartOne.dispose();
-	global.homeChartOne = <any>echarts.init(homeLineRef.value, state.charts.theme);
+	if (!state.global.dispose.some((b: any) => b === state.global.homeChartOne)) state.global.homeChartOne.dispose();
+	state.global.homeChartOne = echarts.init(homeLineRef.value, state.charts.theme);
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
@@ -269,13 +268,13 @@ const initLineChart = () => {
 			},
 		],
 	};
-	(<any>global.homeChartOne).setOption(option);
-	(<any>state.myCharts).push(global.homeChartOne);
+	state.global.homeChartOne.setOption(option);
+	state.myCharts.push(state.global.homeChartOne);
 };
 // 饼图
 const initPieChart = () => {
-	if (!global.dispose.some((b: any) => b === global.homeChartTwo)) global.homeChartTwo.dispose();
-	global.homeChartTwo = <any>echarts.init(homePieRef.value, state.charts.theme);
+	if (!state.global.dispose.some((b: any) => b === state.global.homeChartTwo)) state.global.homeChartTwo.dispose();
+	state.global.homeChartTwo = echarts.init(homePieRef.value, state.charts.theme);
 	var getname = ['房屋及结构物', '专用设备', '通用设备', '文物和陈列品', '图书、档案'];
 	var getvalue = [34.2, 38.87, 17.88, 9.05, 2.05];
 	var data = [];
@@ -354,13 +353,13 @@ const initPieChart = () => {
 			},
 		],
 	};
-	(<any>global.homeChartTwo).setOption(option);
-	(<any>state.myCharts).push(global.homeChartTwo);
+	state.global.homeChartTwo.setOption(option);
+	state.myCharts.push(state.global.homeChartTwo);
 };
 // 柱状图
 const initBarChart = () => {
-	if (!global.dispose.some((b: any) => b === global.homeCharThree)) global.homeCharThree.dispose();
-	global.homeCharThree = <any>echarts.init(homeBarRef.value, state.charts.theme);
+	if (!state.global.dispose.some((b: any) => b === state.global.homeCharThree)) state.global.homeCharThree.dispose();
+	state.global.homeCharThree = echarts.init(homeBarRef.value, state.charts.theme);
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
@@ -485,15 +484,15 @@ const initBarChart = () => {
 			},
 		],
 	};
-	(<any>global.homeCharThree).setOption(option);
-	(<any>state.myCharts).push(global.homeCharThree);
+	state.global.homeCharThree.setOption(option);
+	state.myCharts.push(state.global.homeCharThree);
 };
 // 批量设置 echarts resize
 const initEchartsResizeFun = () => {
 	nextTick(() => {
 		for (let i = 0; i < state.myCharts.length; i++) {
 			setTimeout(() => {
-				(<any>state.myCharts[i]).resize();
+				state.myCharts[i].resize();
 			}, i * 1000);
 		}
 	});
@@ -587,7 +586,7 @@ $homeNavLengh: 8;
 				animation-name: error-num;
 				animation-duration: 0.5s;
 				animation-fill-mode: forwards;
-				animation-delay: calc($i/10) + s;
+				animation-delay: calc($i/4) + s;
 			}
 		}
 	}

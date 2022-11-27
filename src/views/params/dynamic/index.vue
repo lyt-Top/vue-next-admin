@@ -42,7 +42,7 @@ import { ElMessage } from 'element-plus';
 
 // 定义变量内容
 const router = useRouter();
-const state = reactive({
+const state = reactive<ParamsState>({
 	value: '',
 	tagsViewName: '',
 	tagsViewNameIsI18n: false,

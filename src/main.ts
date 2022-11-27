@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import pinia from '/@/stores/index';
 import App from './App.vue';
 import router from './router';
-import { directive } from '/@/utils/directive';
+import { directive } from '/@/directive/index';
 import { i18n } from '/@/i18n/index';
 import other from '/@/utils/other';
 

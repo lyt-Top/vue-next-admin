@@ -26,30 +26,24 @@
 
 <script setup lang="ts" name="navMenuSubItem">
 import { computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { verifyUrl } from '/@/utils/toolsValidate';
+import { RouteRecordRaw } from 'vue-router';
+import other from '/@/utils/other';
 
 // 定义父组件传过来的值
 const props = defineProps({
 	// 菜单列表
 	chil: {
-		type: Array,
+		type: Array<RouteRecordRaw>,
 		default: () => [],
 	},
 });
 
-// 定义变量内容
-const router = useRouter();
-
 // 获取父级菜单数据
 const chils = computed(() => {
-	return <any>props.chil;
+	return <RouteItems>props.chil;
 });
 // 打开外部链接
-const onALinkClick = (val: any) => {
-	const { origin, pathname } = window.location;
-	router.push(val.path);
-	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
-	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+const onALinkClick = (val: RouteItem) => {
+	other.handleOpenLink(val);
 };
 </script>

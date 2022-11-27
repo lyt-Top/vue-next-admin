@@ -13,14 +13,14 @@ import 'echarts/extension/bmap/bmap';
 import { echartsMapList, echartsMapData } from './mock';
 
 // 定义变量内容
-const state: any = reactive({
-	echartsMap: null,
+const state = reactive({
+	echartsMap: '' as unknown,
 	echartsMapList,
 	echartsMapData,
 });
 
 // echartsMap 将坐标信息和对应物理量的值合在一起
-const convertData = (data: any) => {
+const convertData = (data: EmptyObjectType[]) => {
 	let res = [];
 	for (let i = 0; i < data.length; i++) {
 		let geoCoord = state.echartsMapData[data[i].name];

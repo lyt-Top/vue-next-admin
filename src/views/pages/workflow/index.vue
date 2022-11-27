@@ -79,44 +79,6 @@ import commonFunction from '/@/utils/commonFunction';
 import { leftNavList } from './js/mock';
 import { jsplumbDefaults, jsplumbMakeSource, jsplumbMakeTarget, jsplumbConnect } from './js/config';
 
-// 定义接口来定义对象的类型
-interface NodeListState {
-	id: string | number;
-	nodeId: string | undefined;
-	class: HTMLElement | string;
-	left: number | string;
-	top: number | string;
-	icon: string;
-	name: string;
-}
-interface LineListState {
-	sourceId: string;
-	targetId: string;
-	label: string;
-}
-interface XyState {
-	x: string | number;
-	y: string | number;
-}
-interface WorkflowState {
-	workflowRightRef: HTMLDivElement | null;
-	leftNavRefs: any[];
-	leftNavList: any[];
-	dropdownNode: XyState;
-	dropdownLine: XyState;
-	isShow: boolean;
-	jsPlumb: any;
-	jsPlumbNodeIndex: null | number;
-	jsplumbDefaults: any;
-	jsplumbMakeSource: any;
-	jsplumbMakeTarget: any;
-	jsplumbConnect: any;
-	jsplumbData: {
-		nodeList: Array<NodeListState>;
-		lineList: Array<LineListState>;
-	};
-}
-
 // 引入组件
 const Tool = defineAsyncComponent(() => import('./component/tool/index.vue'));
 const Contextmenu = defineAsyncComponent(() => import('./component/contextmenu/index.vue'));
@@ -133,7 +95,7 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
 const state = reactive<WorkflowState>({
-	workflowRightRef: null as HTMLDivElement | null,
+	workflowRightRef: null,
 	leftNavRefs: [],
 	leftNavList: [],
 	dropdownNode: { x: '', y: '' },

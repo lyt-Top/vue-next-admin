@@ -91,43 +91,14 @@
 <script setup lang="ts" name="systemEditUser">
 import { reactive, onMounted } from 'vue';
 
-// 定义接口来定义对象的类型
-interface DeptData {
-	deptName: string;
-	createTime: string;
-	status: boolean;
-	sort: number | string;
-	describe: string;
-	id: number;
-	children?: DeptData[];
-}
-interface RuleFormRow {
-	userName: string;
-	userNickname: string;
-	roleSign: string;
-	department: any;
-	phone: string;
-	email: string;
-	sex: string;
-	password: string;
-	overdueTime: string;
-	status: boolean;
-	describe: string;
-}
-interface UserState {
-	isShowDialog: boolean;
-	ruleForm: RuleFormRow;
-	deptData: Array<DeptData>;
-}
-
 // 定义变量内容
-const state = reactive<UserState>({
+const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		userName: '', // 账户名称
 		userNickname: '', // 用户昵称
 		roleSign: '', // 关联角色
-		department: [], // 部门
+		department: [] as string[], // 部门
 		phone: '', // 手机号
 		email: '', // 邮箱
 		sex: '', // 性别
@@ -136,11 +107,11 @@ const state = reactive<UserState>({
 		status: true, // 用户状态
 		describe: '', // 用户描述
 	},
-	deptData: [], // 部门数据
+	deptData: [] as DeptTreeType[], // 部门数据
 });
 
 // 打开弹窗
-const openDialog = (row: RuleFormRow) => {
+const openDialog = (row: RowUserType) => {
 	state.ruleForm = row;
 	state.isShowDialog = true;
 };

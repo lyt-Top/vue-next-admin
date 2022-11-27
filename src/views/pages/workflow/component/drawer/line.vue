@@ -27,16 +27,11 @@
 <script setup lang="ts" name="pagesWorkflowDrawerLine">
 import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface WorkflowDrawerLineState {
-	line: any;
-}
-
 // 定义子组件向父组件传值/事件
 const emit = defineEmits(['change', 'close']);
 
 // 定义变量内容
-const state = reactive<WorkflowDrawerLineState>({
+const state = reactive<EmptyObjectType>({
 	line: {},
 });
 

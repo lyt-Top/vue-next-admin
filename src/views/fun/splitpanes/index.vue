@@ -7,7 +7,7 @@
 				:closable="false"
 				class="mb15"
 			></el-alert>
-			<splitpanes class="default-theme" @resize="state.paneSize = $event[0].size" style="height: 500px">
+			<splitpanes class="default-theme" @resize="paneSize = $event[0].size" style="height: 500px">
 				<pane :size="32"> 1 </pane>
 				<pane :size="36">
 					<splitpanes class="default-theme" :horizontal="true">
@@ -22,14 +22,12 @@
 </template>
 
 <script setup lang="ts" name="funSplitpanes">
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import { Splitpanes, Pane } from 'splitpanes';
 import 'splitpanes/dist/splitpanes.css';
 
 // 定义变量内容
-const state = reactive({
-	paneSize: 50,
-});
+const paneSize = ref(50);
 </script>
 
 <style scoped lang="scss">

@@ -55,7 +55,7 @@ const state = reactive({
 
 // 赋值回显
 const initForm = () => {
-	state.form = <any>props.data;
+	state.form = props.data as TableRulesOneProps;
 };
 // 页面加载时
 onMounted(() => {

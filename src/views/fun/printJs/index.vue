@@ -16,20 +16,18 @@
 </template>
 
 <script setup lang="ts" name="funPrintJs">
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import printJs from 'print-js';
 
 // 定义变量内容
-const state = reactive({
-	printRef: null as null | HTMLDivElement,
-});
+const printRef = ref();
 
 // 打印点击
 const onPrintJs = () => {
 	printJs({
-		printable: state.printRef,
+		printable: printRef.value,
 		type: 'html',
-		css: ['//at.alicdn.com/t/font_2298093_o73r8wjdhlg.css', '//unpkg.com/element-plus/dist/index.css'],
+		css: ['//at.alicdn.com/t/font_2298093_y6u00apwst.css', '//unpkg.com/element-plus/dist/index.css'],
 		scanStyles: false,
 		style: `@media print{.mb15{margin-bottom:15px;}.el-button--small i.iconfont{font-size: 12px !important;margin-right: 5px;}}`,
 	});

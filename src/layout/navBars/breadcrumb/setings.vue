@@ -271,7 +271,7 @@
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourWartermarkText') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-input v-model="getThemeConfig.wartermarkText" size="default" style="width: 90px" @input="onWartermarkTextInput($event)"></el-input>
+						<el-input v-model="getThemeConfig.wartermarkText" size="default" style="width: 90px" @input="onWartermarkTextInput"></el-input>
 					</div>
 				</div>
 
@@ -424,7 +424,7 @@ import { ElMessage } from 'element-plus';
 import { useI18n } from 'vue-i18n';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import { getLightColor, getDarkColor } from '/@/utils/theme';
+import { useChangeColor } from '/@/utils/theme';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
 import Watermark from '/@/utils/wartermark';
@@ -437,6 +437,7 @@ const { locale } = useI18n();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
+const { getLightColor, getDarkColor } = useChangeColor();
 const state = reactive({
 	isMobile: false,
 });
@@ -459,9 +460,9 @@ const onColorPickerChange = () => {
 };
 // 2、菜单 / 顶栏
 const onBgColorPickerChange = (bg: string) => {
-	document.documentElement.style.setProperty(`--next-bg-${bg}`, (<any>getThemeConfig.value)[bg]);
+	document.documentElement.style.setProperty(`--next-bg-${bg}`, themeConfig.value[bg]);
 	if (bg === 'menuBar') {
-		document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, <any>getLightColor(getThemeConfig.value.menuBar, 0.05));
+		document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, getLightColor(getThemeConfig.value.menuBar, 0.05));
 	}
 	onTopBarGradualChange();
 	onMenuBarGradualChange();
@@ -541,7 +542,7 @@ const onAddFilterChange = (attr: string) => {
 	}
 	const cssAttr =
 		attr === 'grayscale' ? `grayscale(${getThemeConfig.value.isGrayscale ? 1 : 0})` : `invert(${getThemeConfig.value.isInvert ? '80%' : '0%'})`;
-	const appEle: any = document.body;
+	const appEle = document.body;
 	appEle.setAttribute('style', `filter: ${cssAttr}`);
 	setLocalThemeConfig();
 };
@@ -557,7 +558,7 @@ const onWartermarkChange = () => {
 	setLocalThemeConfig();
 };
 // 4、界面显示 --> 水印文案
-const onWartermarkTextInput = (val: any) => {
+const onWartermarkTextInput = (val: string) => {
 	getThemeConfig.value.wartermarkText = verifyAndSpace(val);
 	if (getThemeConfig.value.wartermarkText === '') return false;
 	if (getThemeConfig.value.isWartermark) Watermark.set(getThemeConfig.value.wartermarkText);
@@ -634,7 +635,7 @@ onMounted(() => {
 		if (!Local.get('frequency')) initLayoutChangeFun();
 		Local.set('frequency', 1);
 		// 监听窗口大小改变，非默认布局，设置成默认布局（适配移动端）
-		mittBus.on('layoutMobileResize', (res: any) => {
+		mittBus.on('layoutMobileResize', (res: LayoutMobileResize) => {
 			getThemeConfig.value.layout = res.layout;
 			getThemeConfig.value.isDrawer = false;
 			initLayoutChangeFun();

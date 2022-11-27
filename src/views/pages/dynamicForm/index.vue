@@ -96,13 +96,13 @@
 		</el-card>
 		<el-row class="flex mt15">
 			<div class="flex-margin">
-				<el-button size="default" @click="onResetForm">
+				<el-button size="default" @click="onResetForm(formRulesOneRef)">
 					<el-icon>
 						<ele-RefreshRight />
 					</el-icon>
 					重置表单
 				</el-button>
-				<el-button size="default" type="primary" @click="onSubmitForm">
+				<el-button size="default" type="primary" @click="onSubmitForm(formRulesOneRef)">
 					<SvgIcon name="iconfont icon-shuxing" />
 					验证表单
 				</el-button>
@@ -114,39 +114,12 @@
 <script setup lang="ts" name="pagesDynamicForm">
 import { reactive, ref } from 'vue';
 import { ElMessage } from 'element-plus';
+import type { FormInstance } from 'element-plus';
 import { formData } from './mock';
 
-// 定义接口来定义对象的类型
-interface FormDataOptions {
-	label: string;
-	value: string;
-}
-interface FormDataState {
-	label: string;
-	prop: string;
-	placeholder: string;
-	clearable: boolean;
-	disabled: boolean;
-	required: boolean;
-	type: string;
-	i18n: boolean;
-	i18nText: string;
-	isShow: boolean;
-	xs: number;
-	sm: number;
-	md: number;
-	lg: number;
-	xl: number;
-	options?: FormDataOptions[];
-}
-interface DynamicFormState {
-	formData: FormDataState[];
-	form: any;
-}
-
 // 定义变量内容
-const formRulesOneRef = ref();
-const state = reactive<DynamicFormState>({
+const formRulesOneRef = ref<FormInstance>();
+const state = reactive({
 	formData,
 	form: {
 		name: '',
@@ -177,8 +150,9 @@ const onDelRow = (k: number) => {
 	state.form.list.splice(k, 1);
 };
 // 表单验证
-const onSubmitForm = () => {
-	formRulesOneRef.value.validate((valid: boolean) => {
+const onSubmitForm = (formEl: FormInstance | undefined) => {
+	if (!formEl) return;
+	formEl.validate((valid: boolean) => {
 		if (valid) {
 			ElMessage.success('验证成功');
 		} else {
@@ -187,7 +161,8 @@ const onSubmitForm = () => {
 	});
 };
 // 重置表单
-const onResetForm = () => {
-	formRulesOneRef.value.resetFields();
+const onResetForm = (formEl: FormInstance | undefined) => {
+	if (!formEl) return;
+	formEl.resetFields();
 };
 </script>

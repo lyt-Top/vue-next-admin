@@ -55,28 +55,6 @@
 import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
-// 定义接口来定义对象的类型
-interface TableDataRow {
-	deptName: string;
-	createTime: string;
-	status: boolean;
-	sort: number;
-	describe: string;
-	id: number;
-	children?: TableDataRow[];
-}
-interface TableDataState {
-	tableData: {
-		data: Array<TableDataRow>;
-		total: number;
-		loading: boolean;
-		param: {
-			pageNum: number;
-			pageSize: number;
-		};
-	};
-}
-
 // 引入组件
 const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
 const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
@@ -84,7 +62,7 @@ const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/compone
 // 定义变量内容
 const addDeptRef = ref();
 const editDeptRef = ref();
-const state = reactive<TableDataState>({
+const state = reactive<SysDeptState>({
 	tableData: {
 		data: [],
 		total: 0,
@@ -131,11 +109,11 @@ const onOpenAddDept = () => {
 	addDeptRef.value.openDialog();
 };
 // 打开编辑菜单弹窗
-const onOpenEditDept = (row: TableDataRow) => {
+const onOpenEditDept = (row: DeptTreeType) => {
 	editDeptRef.value.openDialog(row);
 };
 // 删除当前行
-const onTabelRowDel = (row: TableDataRow) => {
+const onTabelRowDel = (row: DeptTreeType) => {
 	ElMessageBox.confirm(`此操作将永久删除部门：${row.deptName}, 是否继续?`, '提示', {
 		confirmButtonText: '删除',
 		cancelButtonText: '取消',

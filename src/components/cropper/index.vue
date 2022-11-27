@@ -41,11 +41,11 @@ const state = reactive({
 	isShowDialog: false,
 	cropperImg: '',
 	cropperImgBase64: '',
-	cropper: null,
+	cropper: '' as RefType,
 });
 
 // 打开弹窗
-const openDialog = (imgs: any) => {
+const openDialog = (imgs: string) => {
 	state.cropperImg = imgs;
 	state.isShowDialog = true;
 	nextTick(() => {
@@ -66,8 +66,8 @@ const onSubmit = () => {
 };
 // 初始化cropperjs图片裁剪
 const initCropper = () => {
-	const letImg: any = document.querySelector('.cropper-warp-left-img');
-	(<any>state.cropper) = new Cropper(letImg, {
+	const letImg = <HTMLImageElement>document.querySelector('.cropper-warp-left-img');
+	state.cropper = new Cropper(letImg, {
 		viewMode: 1,
 		dragMode: 'none',
 		initialAspectRatio: 1,
@@ -77,7 +77,7 @@ const initCropper = () => {
 		autoCropArea: 0.6,
 		zoomOnWheel: false,
 		crop: () => {
-			state.cropperImgBase64 = (<any>state.cropper).getCroppedCanvas().toDataURL('image/jpeg');
+			state.cropperImgBase64 = state.cropper.getCroppedCanvas().toDataURL('image/jpeg');
 		},
 	});
 };

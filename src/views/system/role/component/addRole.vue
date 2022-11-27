@@ -53,30 +53,8 @@
 <script setup lang="ts" name="systemAddRole">
 import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface MenuDataTree {
-	id: number;
-	label: string;
-	children?: MenuDataTree[];
-}
-interface RoleState {
-	isShowDialog: boolean;
-	ruleForm: {
-		roleName: string;
-		roleSign: string;
-		sort: number;
-		status: boolean;
-		describe: string;
-	};
-	menuData: Array<MenuDataTree>;
-	menuProps: {
-		children: string;
-		label: string;
-	};
-}
-
 // 定义变量内容
-const state = reactive<RoleState>({
+const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		roleName: '', // 角色名称
@@ -85,7 +63,7 @@ const state = reactive<RoleState>({
 		status: true, // 角色状态
 		describe: '', // 角色描述
 	},
-	menuData: [],
+	menuData: [] as TreeType[],
 	menuProps: {
 		children: 'children',
 		label: 'label',

@@ -1,6 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
 
 /**
+ * 建议：路由 path 路径与文件夹名称相同，找文件可浏览器地址找，方便定位文件位置
+ *
  * 路由meta对象参数说明
  * meta: {
  *      title:          菜单栏及 tagsView 栏、菜单搜索名称（国际化）
@@ -13,6 +15,20 @@ import { RouteRecordRaw } from 'vue-router';
  *      icon：          菜单、tagsView 图标，阿里：加 `iconfont xxx`，fontawesome：加 `fa xxx`
  * }
  */
+
+// 扩展 RouteMeta 接口
+declare module 'vue-router' {
+	interface RouteMeta {
+		title?: string;
+		isLink?: string;
+		isHide?: boolean;
+		isKeepAlive?: boolean;
+		isAffix?: boolean;
+		isIframe?: boolean;
+		roles?: string[];
+		icon?: string;
+	}
+}
 
 /**
  * 定义动态路由

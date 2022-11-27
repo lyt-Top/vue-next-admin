@@ -84,12 +84,13 @@
 	</div>
 </template>
 
-<script setup lang="ts" name="">
+<script setup lang="ts" name="pagesFiltering">
 import { ref, reactive, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { filtering, filterList } from './mock';
 
-const dlRefs: any = ref([]);
+// 定义变量内容
+const dlRefs = ref<RefType[]>([]);
 const router = useRouter();
 const state = reactive({
 	filtering,
@@ -121,12 +122,12 @@ const initBtnToggle = () => {
 	});
 };
 // 过滤当前选中的数据
-const onSelItem = (val: any, v: any) => {
-	val.children.map((v: any) => (v.active = false));
+const onSelItem = (val: FilteringRowType, v: FilteringChilType) => {
+	val.children.map((v: FilteringChilType) => (v.active = false));
 	v.active = true;
 	let arr = [];
-	state.filtering.map((item: any) => {
-		item.children.map((chil: any) => {
+	state.filtering.map((item: FilteringRowType) => {
+		item.children.map((chil: FilteringChilType) => {
 			if (chil.active) {
 				arr.push({
 					...item,
@@ -141,7 +142,7 @@ const onSelItem = (val: any, v: any) => {
 	}, 500);
 };
 // 当前列表项点击
-const onTableItemClick = (v: any) => {
+const onTableItemClick = (v: FilterListType) => {
 	if (v.id === 1) {
 		router.push({
 			path: '/pages/filtering/details',

@@ -6,11 +6,11 @@
 			<div
 				class="layout-lock-screen-date"
 				ref="layoutLockScreenDateRef"
-				@mousedown="onDown"
-				@mousemove="onMove"
+				@mousedown="onDownPc"
+				@mousemove="onMovePc"
 				@mouseup="onEnd"
-				@touchstart.stop="onDown"
-				@touchmove.stop="onMove"
+				@touchstart.stop="onDownApp"
+				@touchmove.stop="onMoveApp"
 				@touchend.stop="onEnd"
 			>
 				<div class="layout-lock-screen-date-box">
@@ -66,37 +66,18 @@ import { Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
-// 定义接口来定义对象的类型
-interface LockScreenState {
-	transparency: number;
-	downClientY: number;
-	moveDifference: number;
-	isShowLoockLogin: boolean;
-	isFlags: boolean;
-	querySelectorEl: HTMLElement | string;
-	time: {
-		hm: string;
-		s: string;
-		mdq: string;
-	};
-	setIntervalTime: number;
-	isShowLockScreen: boolean;
-	isShowLockScreenIntervalTime: number;
-	lockScreenPassword: string;
-}
-
 // 定义变量内容
-const layoutLockScreenDateRef = ref();
+const layoutLockScreenDateRef = ref<HtmlType>();
 const layoutLockScreenInputRef = ref();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
-const state = reactive<LockScreenState>({
+const state = reactive({
 	transparency: 1,
 	downClientY: 0,
 	moveDifference: 0,
 	isShowLoockLogin: false,
 	isFlags: false,
-	querySelectorEl: '',
+	querySelectorEl: '' as HtmlType,
 	time: {
 		hm: '',
 		s: '',
@@ -108,21 +89,31 @@ const state = reactive<LockScreenState>({
 	lockScreenPassword: '',
 });
 
-// 鼠标按下
-const onDown = (down: any) => {
+// 鼠标按下 pc
+const onDownPc = (down: MouseEvent) => {
 	state.isFlags = true;
-	state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
+	state.downClientY = down.clientY;
 };
-// 鼠标移动
-const onMove = (move: any) => {
+// 鼠标按下 app
+const onDownApp = (down: TouchEvent) => {
+	state.isFlags = true;
+	state.downClientY = down.touches[0].clientY;
+};
+// 鼠标移动 pc
+const onMovePc = (move: MouseEvent) => {
+	state.moveDifference = move.clientY - state.downClientY;
+	onMove();
+};
+// 鼠标移动 app
+const onMoveApp = (move: TouchEvent) => {
+	state.moveDifference = move.touches[0].clientY - state.downClientY;
+	onMove();
+};
+// 鼠标移动事件
+const onMove = () => {
 	if (state.isFlags) {
 		const el = <HTMLElement>state.querySelectorEl;
 		const opacitys = (state.transparency -= 1 / 200);
-		if (move.touches) {
-			state.moveDifference = move.touches[0].clientY - state.downClientY;
-		} else {
-			state.moveDifference = move.clientY - state.downClientY;
-		}
 		if (state.moveDifference >= 0) return false;
 		el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
 		if (state.moveDifference < -400) {

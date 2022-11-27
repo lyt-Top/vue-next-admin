@@ -37,12 +37,12 @@
 </template>
 
 <script setup lang="ts" name="funCountup">
-import { reactive, onMounted, nextTick } from 'vue';
+import { reactive, onMounted, nextTick, ref } from 'vue';
 import { CountUp } from 'countup.js';
 
 // 定义变量内容
+const topCardItemRefs = ref<RefType[]>([]);
 const state = reactive({
-	topCardItemRefs: null as any,
 	topCardItemList: [
 		{
 			title: '今日访问人数',
@@ -86,7 +86,7 @@ const state = reactive({
 // 初始化数字滚动
 const initNumCountUp = () => {
 	nextTick(() => {
-		state.topCardItemRefs.forEach((v: HTMLDivElement) => {
+		topCardItemRefs.value.forEach((v: HTMLDivElement) => {
 			new CountUp(v.querySelector('.countup-card-item-title-num') as HTMLDivElement, Math.random() * 10000).start();
 			new CountUp(v.querySelector('.countup-card-item-tip-num') as HTMLDivElement, Math.random() * 1000).start();
 		});

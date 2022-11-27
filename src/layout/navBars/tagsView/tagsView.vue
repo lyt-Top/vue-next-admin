@@ -61,42 +61,11 @@ import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 
-// 定义接口来定义对象的类型
-interface TagsViewState {
-	routeActive: string;
-	routePath: string | unknown;
-	dropdown: {
-		x: string | number;
-		y: string | number;
-	};
-	sortable: any;
-	tagsRefsIndex: number;
-	tagsViewList: any[];
-	tagsViewRoutesList: any[];
-}
-interface RouteParams {
-	path: string;
-	url: string;
-	query: object;
-	params: object;
-}
-interface CurrentContextmenu {
-	meta: {
-		isDynamic: boolean;
-	};
-	params: any;
-	query: any;
-	path: string;
-	contextMenuClickId: string | number;
-	commonUrl: string;
-	isFnClick: boolean;
-}
-
 // 引入组件
 const Contextmenu = defineAsyncComponent(() => import('/@/layout/navBars/tagsView/contextmenu.vue'));
 
 // 定义变量内容
-const tagsRefs = ref<any[]>([]);
+const tagsRefs = ref<RefType>([]);
 const scrollbarRef = ref();
 const contextmenuRef = ref();
 const tagsUlRef = ref();
@@ -128,12 +97,12 @@ const getThemeConfig = computed(() => {
 });
 // 设置 自定义 tagsView 名称、 自定义 tagsView 名称国际化
 const setTagsViewNameI18n = computed(() => {
-	return (v: any) => {
+	return (v: RouteItem) => {
 		return other.setTagsViewNameI18n(v);
 	};
 });
 // 设置 tagsView 高亮
-const isActive = (v: RouteParams) => {
+const isActive = (v: RouteItem) => {
 	if (getThemeConfig.value.isShareTagsView) {
 		return v.path === state.routePath;
 	} else {
@@ -164,36 +133,36 @@ const initTagsView = async () => {
 	if (Session.get('tagsViewList') && getThemeConfig.value.isCacheTagsView) {
 		state.tagsViewList = await Session.get('tagsViewList');
 	} else {
-		await state.tagsViewRoutesList.map((v: any) => {
-			if (v.meta.isAffix && !v.meta.isHide) {
+		await state.tagsViewRoutesList.map((v: RouteItem) => {
+			if (v.meta?.isAffix && !v.meta.isHide) {
 				v.url = setTagsViewHighlight(v);
 				state.tagsViewList.push({ ...v });
 				storesKeepALiveNames.addCachedView(v);
 			}
 		});
-		await addTagsView(route.path, route);
+		await addTagsView(route.path, <RouteToFrom>route);
 	}
 	// 初始化当前元素(li)的下标
 	getTagsRefsIndex(getThemeConfig.value.isShareTagsView ? state.routePath : state.routeActive);
 };
 // 处理可开启多标签详情，单标签详情（动态路由（xxx/:id/:name"），普通路由处理）
-const solveAddTagsView = async (path: string, to?: any) => {
-	let isDynamicPath = to.meta.isDynamic ? to.meta.isDynamicPath : path;
+const solveAddTagsView = async (path: string, to?: RouteToFrom) => {
+	let isDynamicPath = to?.meta?.isDynamic ? to.meta.isDynamicPath : path;
 	let current = state.tagsViewList.filter(
-		(v: any) =>
+		(v: RouteItem) =>
 			v.path === isDynamicPath &&
 			isObjectValueEqual(
-				to.meta.isDynamic ? (v.params ? v.params : null) : v.query ? v.query : null,
-				to.meta.isDynamic ? (to?.params ? to?.params : null) : to?.query ? to?.query : null
+				to?.meta?.isDynamic ? (v.params ? v.params : null) : v.query ? v.query : null,
+				to?.meta?.isDynamic ? (to?.params ? to?.params : null) : to?.query ? to?.query : null
 			)
 	);
 	if (current.length <= 0) {
 		// 防止：Avoid app logic that relies on enumerating keys on a component instance. The keys will be empty in production mode to avoid performance overhead.
-		let findItem = state.tagsViewRoutesList.find((v: any) => v.path === isDynamicPath);
+		let findItem = state.tagsViewRoutesList.find((v: RouteItem) => v.path === isDynamicPath);
 		if (!findItem) return false;
 		if (findItem.meta.isAffix) return false;
 		if (findItem.meta.isLink && !findItem.meta.isIframe) return false;
-		to.meta.isDynamic ? (findItem.params = to.params) : (findItem.query = to.query);
+		to?.meta?.isDynamic ? (findItem.params = to.params) : (findItem.query = to?.query);
 		findItem.url = setTagsViewHighlight(findItem);
 		state.tagsViewList.push({ ...findItem });
 		await storesKeepALiveNames.addCachedView(findItem);
@@ -201,52 +170,52 @@ const solveAddTagsView = async (path: string, to?: any) => {
 	}
 };
 // 处理单标签时，第二次的值未覆盖第一次的 tagsViewList 值（Session Storage）
-const singleAddTagsView = (path: string, to?: any) => {
-	let isDynamicPath = to.meta.isDynamic ? to.meta.isDynamicPath : path;
+const singleAddTagsView = (path: string, to?: RouteToFrom) => {
+	let isDynamicPath = to?.meta?.isDynamic ? to.meta.isDynamicPath : path;
 	state.tagsViewList.forEach((v) => {
 		if (
 			v.path === isDynamicPath &&
 			!isObjectValueEqual(
-				to.meta.isDynamic ? (v.params ? v.params : null) : v.query ? v.query : null,
-				to.meta.isDynamic ? (to?.params ? to?.params : null) : to?.query ? to?.query : null
+				to?.meta?.isDynamic ? (v.params ? v.params : null) : v.query ? v.query : null,
+				to?.meta?.isDynamic ? (to?.params ? to?.params : null) : to?.query ? to?.query : null
 			)
 		) {
-			to.meta.isDynamic ? (v.params = to.params) : (v.query = to.query);
+			to?.meta?.isDynamic ? (v.params = to.params) : (v.query = to?.query);
 			v.url = setTagsViewHighlight(v);
 			addBrowserSetSession(state.tagsViewList);
 		}
 	});
 };
 // 1、添加 tagsView：未设置隐藏（isHide）也添加到在 tagsView 中（可开启多标签详情，单标签详情）
-const addTagsView = (path: string, to?: any) => {
+const addTagsView = (path: string, to?: RouteToFrom) => {
 	// 防止拿取不到路由信息
 	nextTick(async () => {
 		// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-		let item: any = '';
-		if (to && to.meta.isDynamic) {
+		let item: RouteItem;
+		if (to?.meta?.isDynamic) {
 			// 动态路由（xxx/:id/:name"）：参数不同，开启多个 tagsview
 			if (!getThemeConfig.value.isShareTagsView) await solveAddTagsView(path, to);
 			else await singleAddTagsView(path, to);
-			if (state.tagsViewList.some((v: any) => v.path === to.meta.isDynamicPath)) {
+			if (state.tagsViewList.some((v: RouteItem) => v.path === to?.meta?.isDynamicPath)) {
 				// 防止首次进入界面时(登录进入) tagsViewList 不存浏览器中
 				addBrowserSetSession(state.tagsViewList);
 				return false;
 			}
-			item = state.tagsViewRoutesList.find((v: any) => v.path === to.meta.isDynamicPath);
+			item = state.tagsViewRoutesList.find((v: RouteItem) => v.path === to?.meta?.isDynamicPath);
 		} else {
 			// 普通路由：参数不同，开启多个 tagsview
 			if (!getThemeConfig.value.isShareTagsView) await solveAddTagsView(path, to);
 			else await singleAddTagsView(path, to);
-			if (state.tagsViewList.some((v: any) => v.path === path)) {
+			if (state.tagsViewList.some((v: RouteItem) => v.path === path)) {
 				// 防止首次进入界面时(登录进入) tagsViewList 不存浏览器中
 				addBrowserSetSession(state.tagsViewList);
 				return false;
 			}
-			item = state.tagsViewRoutesList.find((v: any) => v.path === path);
+			item = state.tagsViewRoutesList.find((v: RouteItem) => v.path === path);
 		}
 		if (!item) return false;
-		if (item.meta.isLink && !item.meta.isIframe) return false;
-		if (to && to.meta.isDynamic) item.params = to?.params ? to?.params : route.params;
+		if (item?.meta?.isLink && !item.meta.isIframe) return false;
+		if (to?.meta?.isDynamic) item.params = to?.params ? to?.params : route.params;
 		else item.query = to?.query ? to?.query : route.query;
 		item.url = setTagsViewHighlight(item);
 		await storesKeepALiveNames.addCachedView(item);
@@ -257,8 +226,8 @@ const addTagsView = (path: string, to?: any) => {
 // 2、刷新当前 tagsView：
 const refreshCurrentTagsView = async (fullPath: string) => {
 	const decodeURIPath = decodeURI(fullPath);
-	let item: any = {};
-	state.tagsViewList.forEach((v: any) => {
+	let item: RouteToFrom = {};
+	state.tagsViewList.forEach((v: RouteItem) => {
 		v.transUrl = transUrlParams(v);
 		if (v.transUrl) {
 			if (v.transUrl === transUrlParams(v)) item = v;
@@ -269,12 +238,12 @@ const refreshCurrentTagsView = async (fullPath: string) => {
 	if (!item) return false;
 	await storesKeepALiveNames.delCachedView(item);
 	mittBus.emit('onTagsViewRefreshRouterView', fullPath);
-	if (item.meta.isKeepAlive) storesKeepALiveNames.addCachedView(item);
+	if (item.meta?.isKeepAlive) storesKeepALiveNames.addCachedView(item);
 };
 // 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
 const closeCurrentTagsView = (path: string) => {
-	state.tagsViewList.map((v: any, k: number, arr: any) => {
-		if (!v.meta.isAffix) {
+	state.tagsViewList.map((v: RouteItem, k: number, arr: RouteItems) => {
+		if (!v.meta?.isAffix) {
 			if (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path) {
 				storesKeepALiveNames.delCachedView(v);
 				state.tagsViewList.splice(k, 1);
@@ -312,14 +281,14 @@ const closeCurrentTagsView = (path: string) => {
 const closeOtherTagsView = (path: string) => {
 	if (Session.get('tagsViewList')) {
 		state.tagsViewList = [];
-		Session.get('tagsViewList').map((v: any) => {
-			if (v.meta.isAffix && !v.meta.isHide) {
+		Session.get('tagsViewList').map((v: RouteItem) => {
+			if (v.meta?.isAffix && !v.meta.isHide) {
 				v.url = setTagsViewHighlight(v);
 				storesKeepALiveNames.delOthersCachedViews(v);
 				state.tagsViewList.push({ ...v });
 			}
 		});
-		addTagsView(path, route);
+		addTagsView(path, <RouteToFrom>route);
 		addBrowserSetSession(state.tagsViewList);
 	}
 };
@@ -328,8 +297,8 @@ const closeAllTagsView = () => {
 	if (Session.get('tagsViewList')) {
 		storesKeepALiveNames.delAllCachedViews();
 		state.tagsViewList = [];
-		Session.get('tagsViewList').map((v: any) => {
-			if (v.meta.isAffix && !v.meta.isHide) {
+		Session.get('tagsViewList').map((v: RouteItem) => {
+			if (v.meta?.isAffix && !v.meta.isHide) {
 				v.url = setTagsViewHighlight(v);
 				state.tagsViewList.push({ ...v });
 				router.push({ path: state.tagsViewList[state.tagsViewList.length - 1].path });
@@ -340,7 +309,7 @@ const closeAllTagsView = () => {
 };
 // 6、开启当前页面全屏
 const openCurrenFullscreen = async (path: string) => {
-	const item = state.tagsViewList.find((v: any) => (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path));
+	const item = state.tagsViewList.find((v: RouteItem) => (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path));
 	if (item.meta.isDynamic) await router.push({ name: item.name, params: item.params });
 	else await router.push({ name: item.name, query: item.query });
 	stores.setCurrenFullscreen(true);
@@ -348,9 +317,9 @@ const openCurrenFullscreen = async (path: string) => {
 // 当前项右键菜单点击，拿 `当前点击的路由路径` 对比 `tagsView 路由数组`，取当前点击项的详细路由信息
 // 防止 tagsView 非当前页演示时，操作异常
 // https://gitee.com/lyt-top/vue-next-admin/issues/I61VS9
-const getCurrentRouteItem = (item: any) => {
-	let resItem: any = {};
-	state.tagsViewList.forEach((v: any) => {
+const getCurrentRouteItem = (item: RouteItem): any => {
+	let resItem: RouteToFrom = {};
+	state.tagsViewList.forEach((v: RouteItem) => {
 		v.transUrl = transUrlParams(v);
 		if (v.transUrl) {
 			// 动态路由、普通路由带参数
@@ -364,7 +333,7 @@ const getCurrentRouteItem = (item: any) => {
 	else return resItem;
 };
 // 当前项右键菜单点击
-const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
+const onCurrentContextmenuClick = async (item: RouteItem) => {
 	item.commonUrl = transUrlParams(item);
 	if (!getCurrentRouteItem(item)) return ElMessage({ type: 'warning', message: '请正确输入路径及完整参数（query、params）' });
 	const { path, name, params, query, meta, url } = getCurrentRouteItem(item);
@@ -396,37 +365,37 @@ const onCurrentContextmenuClick = async (item: CurrentContextmenu) => {
 	}
 };
 // 右键点击时：传 x,y 坐标值到子组件中（props）
-const onContextmenu = (v: any, e: any) => {
+const onContextmenu = (v: RouteItem, e: MouseEvent) => {
 	const { clientX, clientY } = e;
 	state.dropdown.x = clientX;
 	state.dropdown.y = clientY;
 	contextmenuRef.value.openContextmenu(v);
 };
 // 鼠标按下时，判断是鼠标中键就关闭当前 tasgview
-const onMousedownMenu = (v: any, e: any) => {
-	if (!v.meta.isAffix && e.which === 2) {
+const onMousedownMenu = (v: RouteItem, e: MouseEvent) => {
+	if (!v.meta?.isAffix && e.button === 1) {
 		const item = Object.assign({}, { contextMenuClickId: 1, ...v });
 		onCurrentContextmenuClick(item);
 	}
 };
 // 当前的 tagsView 项点击时
-const onTagsClick = (v: any, k: number) => {
+const onTagsClick = (v: RouteItem, k: number) => {
 	state.tagsRefsIndex = k;
 	router.push(v);
 };
 // 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题，感谢 @ZzZz-RIPPER、@dejavuuuuu
 // https://gitee.com/lyt-top/vue-next-admin/issues/I5K3YO
 // https://gitee.com/lyt-top/vue-next-admin/issues/I61VS9
-const transUrlParams = (v: any) => {
+const transUrlParams = (v: RouteItem) => {
 	let params = v.query && Object.keys(v.query).length > 0 ? v.query : v.params;
 	if (!params) return '';
 	let path = '';
 	for (let [key, value] of Object.entries(params)) {
-		if (v.meta.isDynamic) path += `/${value}`;
+		if (v.meta?.isDynamic) path += `/${value}`;
 		else path += `&${key}=${value}`;
 	}
 	// 判断是否是动态路由（xxx/:id/:name"）isDynamic
-	if (v.meta.isDynamic) {
+	if (v.meta?.isDynamic) {
 		/**
 		 *
 		 * isFnClick 用于判断是通过方法调用，还是直接右键菜单点击（此处只针对动态路由）
@@ -442,7 +411,7 @@ const transUrlParams = (v: any) => {
 	}
 };
 // 处理 tagsView 高亮（多标签详情时使用，单标签详情未使用）
-const setTagsViewHighlight = (v: any) => {
+const setTagsViewHighlight = (v: RouteToFrom) => {
 	let params = v.query && Object.keys(v.query).length > 0 ? v.query : v.params;
 	if (!params || Object.keys(params).length <= 0) return v.path;
 	let path = '';
@@ -450,10 +419,10 @@ const setTagsViewHighlight = (v: any) => {
 		path += params[i];
 	}
 	// 判断是否是动态路由（xxx/:id/:name"）
-	return `${v.meta.isDynamic ? v.meta.isDynamicPath : v.path}-${path}`;
+	return `${v.meta?.isDynamic ? v.meta.isDynamicPath : v.path}-${path}`;
 };
 // 鼠标滚轮滚动
-const onHandleScroll = (e: any) => {
+const onHandleScroll = (e: WheelEventType) => {
 	scrollbarRef.value.$refs.wrapRef.scrollLeft += e.wheelDelta / 4;
 };
 // tagsView 横向滚动
@@ -467,9 +436,9 @@ const tagsViewmoveToCurrentTag = () => {
 		// 当前 ul 下 li 元素总长度
 		let liLength = tagsRefs.value.length;
 		// 最前 li
-		let liFirst: any = tagsRefs.value[0];
+		let liFirst = tagsRefs.value[0];
 		// 最后 li
-		let liLast: any = tagsRefs.value[tagsRefs.value.length - 1];
+		let liLast = tagsRefs.value[tagsRefs.value.length - 1];
 		// 当前滚动条的值
 		let scrollRefs = scrollbarRef.value.$refs.wrapRef;
 		// 当前滚动条滚动宽度
@@ -479,13 +448,13 @@ const tagsViewmoveToCurrentTag = () => {
 		// 当前滚动条偏移距离
 		let scrollL = scrollRefs.scrollLeft;
 		// 上一个 tags li dom
-		let liPrevTag: any = tagsRefs.value[state.tagsRefsIndex - 1];
+		let liPrevTag = tagsRefs.value[state.tagsRefsIndex - 1];
 		// 下一个 tags li dom
-		let liNextTag: any = tagsRefs.value[state.tagsRefsIndex + 1];
+		let liNextTag = tagsRefs.value[state.tagsRefsIndex + 1];
 		// 上一个 tags li dom 的偏移距离
-		let beforePrevL: any = '';
+		let beforePrevL = 0;
 		// 下一个 tags li dom 的偏移距离
-		let afterNextL: any = '';
+		let afterNextL = 0;
 		if (liDom === liFirst) {
 			// 头部
 			scrollRefs.scrollLeft = 0;
@@ -513,7 +482,7 @@ const getTagsRefsIndex = (path: string | unknown) => {
 	nextTick(async () => {
 		// await 使用该写法，防止拿取不到 tagsViewList 列表数据不完整
 		let tagsViewList = await state.tagsViewList;
-		state.tagsRefsIndex = tagsViewList.findIndex((v: any) => {
+		state.tagsRefsIndex = tagsViewList.findIndex((v: RouteItem) => {
 			if (getThemeConfig.value.isShareTagsView) {
 				return v.path === path;
 			} else {
@@ -534,9 +503,9 @@ const initSortable = async () => {
 		dataIdAttr: 'data-url',
 		disabled: getThemeConfig.value.isSortableTagsView ? false : true,
 		onEnd: () => {
-			const sortEndList: any = [];
-			state.sortable.toArray().map((val: any) => {
-				state.tagsViewList.map((v: any) => {
+			const sortEndList: RouteItem[] = [];
+			state.sortable.toArray().map((val: string) => {
+				state.tagsViewList.map((v: RouteItem) => {
 					if (v.url === val) sortEndList.push({ ...v });
 				});
 			});
@@ -556,7 +525,7 @@ onBeforeMount(() => {
 	// 拖动问题，https://gitee.com/lyt-top/vue-next-admin/issues/I3ZRRI
 	window.addEventListener('resize', onSortableResize);
 	// 监听非本页面调用 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
-	mittBus.on('onCurrentContextmenuClick', (data: CurrentContextmenu) => {
+	mittBus.on('onCurrentContextmenuClick', (data: RouteItem) => {
 		// 通过方法点击关闭 tagsView
 		data.isFnClick = true;
 		onCurrentContextmenuClick(data);
@@ -570,8 +539,8 @@ onBeforeMount(() => {
 		if (getThemeConfig.value.isShareTagsView) {
 			router.push('/home');
 			state.tagsViewList = [];
-			state.tagsViewRoutesList.map((v: any) => {
-				if (v.meta.isAffix && !v.meta.isHide) {
+			state.tagsViewRoutesList.map((v: RouteItem) => {
+				if (v.meta?.isAffix && !v.meta.isHide) {
 					v.url = setTagsViewHighlight(v);
 					state.tagsViewList.push({ ...v });
 				}
@@ -604,7 +573,7 @@ onMounted(() => {
 onBeforeRouteUpdate(async (to) => {
 	state.routeActive = setTagsViewHighlight(to);
 	state.routePath = to.meta.isDynamic ? to.meta.isDynamicPath : to.path;
-	await addTagsView(to.path, to);
+	await addTagsView(to.path, <RouteToFrom>to);
 	getTagsRefsIndex(getThemeConfig.value.isShareTagsView ? state.routePath : state.routeActive);
 });
 // 监听路由的变化，动态赋值给 tagsView

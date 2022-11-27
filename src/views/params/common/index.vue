@@ -41,7 +41,7 @@ import { useRouter } from 'vue-router';
 
 // 定义变量内容
 const router = useRouter();
-const state = reactive({
+const state = reactive<ParamsState>({
 	value: '',
 	tagsViewName: '',
 	tagsViewNameIsI18n: false,
@@ -53,7 +53,7 @@ const state = reactive({
  * 传不同的 tagsViewName 值
  */
 const onGoDetailsClick = () => {
-	const params: any = { id: state.value };
+	const params: EmptyObjectType = { id: state.value };
 	if (state.tagsViewName) params.tagsViewName = state.tagsViewName;
 	router.push({
 		path: '/params/common/details',

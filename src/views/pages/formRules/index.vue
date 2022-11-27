@@ -41,7 +41,7 @@ const state = reactive({
 });
 
 // 表单组件验证
-const formRulesValidate = (pageRef: any, sonRef: string) => {
+const formRulesValidate = (pageRef: RefType, sonRef: string) => {
 	return new Promise((resolve) => {
 		pageRef.value.$refs[sonRef].validate((valid: boolean) => {
 			if (valid) resolve(valid);

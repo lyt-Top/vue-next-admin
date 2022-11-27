@@ -182,14 +182,14 @@ const state = reactive({
 		},
 		btnPower: '', // 菜单类型为按钮时，权限标识
 	},
-	menuData: [], // 上级菜单数据
+	menuData: [] as RouteItems, // 上级菜单数据
 });
 
 // 获取 pinia 中的路由
-const getMenuData = (routes: any) => {
-	const arr: any = [];
-	routes.map((val: any) => {
-		val['title'] = i18n.global.t(val.meta.title);
+const getMenuData = (routes: RouteItems) => {
+	const arr: RouteItems = [];
+	routes.map((val: RouteItem) => {
+		val['title'] = i18n.global.t(val.meta?.title as string);
 		val['id'] = Math.random();
 		arr.push({ ...val });
 		if (val.children) getMenuData(val.children);

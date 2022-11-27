@@ -49,20 +49,20 @@ const route = useRoute();
 
 // 处理 list 列表，当打开时，才进行加载
 const setIframeList = computed(() => {
-	return (<any>props.list).filter((v: any) => v.meta.isIframeOpen);
+	return (<RouteItems>props.list).filter((v: RouteItem) => v.meta?.isIframeOpen);
 });
 // 获取 iframe 当前路由 path
 const getRoutePath = computed(() => {
 	return route.path;
 });
 // 关闭 iframe loading
-const closeIframeLoading = (val: string, item: any) => {
+const closeIframeLoading = (val: string, item: RouteItem) => {
 	nextTick(() => {
 		if (!iframeRef.value) return false;
-		iframeRef.value.forEach((v: any) => {
+		iframeRef.value.forEach((v: HTMLElement) => {
 			if (v.dataset.url === val) {
 				v.onload = () => {
-					if (item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+					if (item.meta?.isIframeOpen && item.meta.loading) item.meta.loading = false;
 				};
 			}
 		});
