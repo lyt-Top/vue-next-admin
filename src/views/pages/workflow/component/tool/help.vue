@@ -13,28 +13,24 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+<script setup lang="ts" name="pagesWorkflowToolHelp">
+import { ref } from 'vue';
 
-export default defineComponent({
-	name: 'pagesWorkflowToolHelp',
-	setup() {
-		const state = reactive({
-			isShow: false,
-		});
-		// 打开弹窗
-		const open = () => {
-			state.isShow = true;
-		};
-		// 关闭弹窗
-		const close = () => {
-			state.isShow = false;
-		};
-		return {
-			open,
-			close,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const isShow = ref(false);
+
+// 打开弹窗
+const open = () => {
+	isShow.value = true;
+};
+// 关闭弹窗
+const close = () => {
+	isShow.value = false;
+};
+
+// 暴露变量
+defineExpose({
+	open,
+	close,
 });
 </script>

@@ -3,10 +3,10 @@
 		<el-card
 			shadow="hover"
 			class="filtering-list br-top-no"
-			v-loading="tableData.loading"
+			v-loading="state.tableData.loading"
 			element-loading-text="加载中..."
 			element-loading-background="rgba(255, 255, 255, 0.1)"
-			:class="{ 'min-h-360': tableData.data.length <= 0 }"
+			:class="{ 'min-h-360': state.tableData.data.length <= 0 }"
 		>
 			<div
 				v-for="(val, key) in filtering"
@@ -29,9 +29,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex-warp mt15 mb15" v-if="tableData.data.length > 0">
+			<div class="flex-warp mt15 mb15" v-if="state.tableData.data.length > 0">
 				<el-row :gutter="15">
-					<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb15" v-for="(v, k) in tableData.data" :key="k" @click="onTableItemClick(v)">
+					<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb15" v-for="(v, k) in state.tableData.data" :key="k" @click="onTableItemClick(v)">
 						<div class="flex-warp-item">
 							<div class="flex-warp-item-box">
 								<div class="item-img">
@@ -66,17 +66,17 @@
 					<div class="no-txt">暂无数据</div>
 				</div>
 			</div>
-			<template v-if="tableData.data.length > 0">
+			<template v-if="state.tableData.data.length > 0">
 				<el-pagination
 					style="text-align: right"
 					background
 					@size-change="onHandleSizeChange"
 					@current-change="onHandleCurrentChange"
 					:page-sizes="[10, 20, 30]"
-					:current-page="tableData.param.pageNum"
-					:page-size="tableData.param.pageSize"
+					:current-page="state.tableData.param.pageNum"
+					:page-size="state.tableData.param.pageSize"
 					layout="total, sizes, prev, pager, next, jumper"
-					:total="tableData.total"
+					:total="state.tableData.total"
 				>
 				</el-pagination>
 			</template>
@@ -84,96 +84,85 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { ref, toRefs, reactive, onMounted, nextTick, defineComponent } from 'vue';
+<script setup lang="ts" name="pagesFiltering">
+import { ref, reactive, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { filtering, filterList } from './mock';
 
-export default defineComponent({
-	name: 'pagesFiltering',
-	setup() {
-		const dlRefs: any = ref([]);
-		const router = useRouter();
-		const state = reactive({
-			filtering,
-			tableData: {
-				data: filterList,
-				total: 99,
-				loading: false,
-				param: {
-					pageNum: 1,
-					pageSize: 10,
-				},
-			},
-		});
-		// 页面加载时
-		onMounted(() => {
-			initBtnToggle();
-			window.onresize = () => {
-				initBtnToggle();
-			};
-		});
-		// 初始化 `收起、展开` 按钮
-		const initBtnToggle = () => {
-			nextTick(() => {
-				const els = dlRefs.value;
-				els.map((v: any, k: number) => {
-					v.scrollHeight < v.lastChild.scrollHeight ? (state.filtering[k].isShowMore = true) : (state.filtering[k].isShowMore = false);
-				});
-			});
-		};
-		// 过滤当前选中的数据
-		const onSelItem = (val: any, v: any) => {
-			val.children.map((v: any) => (v.active = false));
-			v.active = true;
-			let arr = [];
-			state.filtering.map((item: any) => {
-				item.children.map((chil: any) => {
-					if (chil.active) {
-						arr.push({
-							...item,
-							children: [{ ...chil }],
-						});
-					}
-				});
-			});
-			state.tableData.loading = true;
-			setTimeout(() => {
-				state.tableData.loading = false;
-			}, 500);
-		};
-		// 当前列表项点击
-		const onTableItemClick = (v: any) => {
-			if (v.id === 1) {
-				router.push({
-					path: '/pages/filtering/details',
-					query: { id: v.id },
-				});
-			} else {
-				router.push({
-					path: '/pages/filtering/details1',
-					query: { id: v.id },
-				});
-			}
-		};
-		// 分页点击
-		const onHandleSizeChange = (val: number) => {
-			state.tableData.param.pageSize = val;
-		};
-		// 分页点击
-		const onHandleCurrentChange = (val: number) => {
-			state.tableData.param.pageNum = val;
-		};
-		return {
-			dlRefs,
-			onSelItem,
-			onTableItemClick,
-			onHandleSizeChange,
-			onHandleCurrentChange,
-			...toRefs(state),
-		};
+// 定义变量内容
+const dlRefs = ref<RefType[]>([]);
+const router = useRouter();
+const state = reactive({
+	filtering,
+	tableData: {
+		data: filterList,
+		total: 99,
+		loading: false,
+		param: {
+			pageNum: 1,
+			pageSize: 10,
+		},
 	},
 });
+
+// 页面加载时
+onMounted(() => {
+	initBtnToggle();
+	window.onresize = () => {
+		initBtnToggle();
+	};
+});
+// 初始化 `收起、展开` 按钮
+const initBtnToggle = () => {
+	nextTick(() => {
+		const els = dlRefs.value;
+		els.map((v: any, k: number) => {
+			v.scrollHeight < v.lastChild.scrollHeight ? (state.filtering[k].isShowMore = true) : (state.filtering[k].isShowMore = false);
+		});
+	});
+};
+// 过滤当前选中的数据
+const onSelItem = (val: FilteringRowType, v: FilteringChilType) => {
+	val.children.map((v: FilteringChilType) => (v.active = false));
+	v.active = true;
+	let arr = [];
+	state.filtering.map((item: FilteringRowType) => {
+		item.children.map((chil: FilteringChilType) => {
+			if (chil.active) {
+				arr.push({
+					...item,
+					children: [{ ...chil }],
+				});
+			}
+		});
+	});
+	state.tableData.loading = true;
+	setTimeout(() => {
+		state.tableData.loading = false;
+	}, 500);
+};
+// 当前列表项点击
+const onTableItemClick = (v: FilterListType) => {
+	if (v.id === 1) {
+		router.push({
+			path: '/pages/filtering/details',
+			query: { id: v.id },
+		});
+	} else {
+		router.push({
+			path: '/pages/filtering/details1',
+			query: { id: v.id },
+		});
+	}
+};
+// 分页点击
+const onHandleSizeChange = (val: number) => {
+	state.tableData.param.pageSize = val;
+};
+// 分页点击
+const onHandleCurrentChange = (val: number) => {
+	state.tableData.param.pageNum = val;
+};
 </script>
 
 <style scoped lang="scss">

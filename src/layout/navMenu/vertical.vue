@@ -1,9 +1,9 @@
 <template>
 	<el-menu
 		router
-		:default-active="defaultActive"
+		:default-active="state.defaultActive"
 		background-color="transparent"
-		:collapse="isCollapse"
+		:collapse="state.isCollapse"
 		:unique-opened="getThemeConfig.isUniqueOpened"
 		:collapse-transition="false"
 	>
@@ -30,83 +30,73 @@
 	</el-menu>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, toRefs, reactive, computed, defineComponent, onMounted, watch } from 'vue';
-import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
+<script setup lang="ts" name="navMenuVertical">
+import { defineAsyncComponent, reactive, computed, onMounted, watch } from 'vue';
+import { useRoute, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import { verifyUrl } from '/@/utils/toolsValidate';
+import other from '/@/utils/other';
 
-export default defineComponent({
-	name: 'navMenuVertical',
-	components: {
-		SubItem: defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue')),
-	},
-	props: {
-		menuList: {
-			type: Array,
-			default: () => [],
-		},
-	},
-	setup(props) {
-		const storesThemeConfig = useThemeConfig();
-		const { themeConfig } = storeToRefs(storesThemeConfig);
-		const route = useRoute();
-		const router = useRouter();
-		const state = reactive({
-			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-			defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
-			isCollapse: false,
-		});
-		// 获取父级菜单数据
-		const menuLists = computed(() => {
-			return <any>props.menuList;
-		});
-		// 获取布局配置信息
-		const getThemeConfig = computed(() => {
-			return themeConfig.value;
-		});
-		// 菜单高亮（详情时，父级高亮）
-		const setParentHighlight = (currentRoute: any) => {
-			const { path, meta } = currentRoute;
-			const pathSplit = meta.isDynamic ? meta.isDynamicPath.split('/') : path.split('/');
-			if (pathSplit.length >= 4 && meta.isHide) return pathSplit.splice(0, 3).join('/');
-			else return path;
-		};
-		// 打开外部链接
-		const onALinkClick = (val: any) => {
-			const { origin, pathname } = window.location;
-			router.push(val.path);
-			if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
-			else window.open(`${origin}${pathname}#${val.meta.isLink}`);
-		};
-		// 设置菜单的收起/展开
-		watch(
-			themeConfig.value,
-			() => {
-				document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = themeConfig.value.isCollapse);
-			},
-			{
-				immediate: true,
-			}
-		);
-		// 页面加载时
-		onMounted(() => {
-			state.defaultActive = setParentHighlight(route);
-		});
-		// 路由更新时
-		onBeforeRouteUpdate((to) => {
-			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-			state.defaultActive = setParentHighlight(to);
-			const clientWidth = document.body.clientWidth;
-			if (clientWidth < 1000) themeConfig.value.isCollapse = false;
-		});
-		return {
-			menuLists,
-			getThemeConfig,
-			onALinkClick,
-			...toRefs(state),
-		};
+// 引入组件
+const SubItem = defineAsyncComponent(() => import('/@/layout/navMenu/subItem.vue'));
+
+// 定义父组件传过来的值
+const props = defineProps({
+	// 菜单列表
+	menuList: {
+		type: Array<RouteRecordRaw>,
+		default: () => [],
 	},
 });
+
+// 定义变量内容
+const storesThemeConfig = useThemeConfig();
+const { themeConfig } = storeToRefs(storesThemeConfig);
+const route = useRoute();
+const state = reactive({
+	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+	defaultActive: route.meta.isDynamic ? route.meta.isDynamicPath : route.path,
+	isCollapse: false,
+});
+
+// 获取父级菜单数据
+const menuLists = computed(() => {
+	return <RouteItems>props.menuList;
+});
+// 获取布局配置信息
+const getThemeConfig = computed(() => {
+	return themeConfig.value;
+});
+// 菜单高亮（详情时，父级高亮）
+const setParentHighlight = (currentRoute: RouteToFrom) => {
+	const { path, meta } = currentRoute;
+	const pathSplit = meta?.isDynamic ? meta.isDynamicPath!.split('/') : path!.split('/');
+	if (pathSplit.length >= 4 && meta?.isHide) return pathSplit.splice(0, 3).join('/');
+	else return path;
+};
+// 打开外部链接
+const onALinkClick = (val: RouteItem) => {
+	other.handleOpenLink(val);
+};
+// 页面加载时
+onMounted(() => {
+	state.defaultActive = setParentHighlight(route);
+});
+// 路由更新时
+onBeforeRouteUpdate((to) => {
+	// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+	state.defaultActive = setParentHighlight(to);
+	const clientWidth = document.body.clientWidth;
+	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
+});
+// 设置菜单的收起/展开
+watch(
+	themeConfig.value,
+	() => {
+		document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = themeConfig.value.isCollapse);
+	},
+	{
+		immediate: true,
+	}
+);
 </script>

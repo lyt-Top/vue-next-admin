@@ -8,10 +8,6 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'pagesFilteringDetails1',
-});
+<script setup lang="ts" name="pagesFilteringDetails1">
+// 此处需有内容（注释也得），否则缓存将失败
 </script>

@@ -18,15 +18,15 @@
 								</div>
 							</template>
 						</el-alert>
-						<el-input v-model="tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15" style="width: 400px"></el-input>
-						<el-input v-model="value" placeholder="请输入路由参数id值" clearable style="width: 400px"></el-input>
+						<el-input v-model="state.tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15" style="width: 400px"></el-input>
+						<el-input v-model="state.value" placeholder="请输入路由参数id值" clearable style="width: 400px"></el-input>
 						<el-button type="primary" size="default" class="mt15" @click="onGoDetailsClick">
 							<SvgIcon name="iconfont icon-dongtai" />
 							动态路由传参
 						</el-button>
 						<el-button type="primary" size="default" class="mt15" @click="onChangeI18n">
 							<SvgIcon name="iconfont icon-fuhao-zhongwen" />
-							{{ tagsViewNameIsI18n ? '普通的演示' : '国际化演示' }}
+							{{ state.tagsViewNameIsI18n ? '普通的演示' : '国际化演示' }}
 						</el-button>
 					</template>
 				</el-result>
@@ -35,52 +35,45 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs, reactive } from 'vue';
+<script setup lang="ts" name="paramsDynamic">
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 
-export default defineComponent({
-	name: 'paramsDynamic',
-	setup() {
-		const state = reactive({
-			value: '',
-			tagsViewName: '',
-			tagsViewNameIsI18n: false,
-		});
-		const router = useRouter();
-		// 跳转到详情
-		const onGoDetailsClick = () => {
-			if (!state.tagsViewName) return ElMessage.warning('动态路由tagsViewName为必填，因为路由配置了');
-			if (!state.value) return ElMessage.warning('路由参数id值为必填');
-			// name 值为路由中的 name
-			router.push({
-				name: 'paramsDynamicDetails',
-				params: {
-					t: 'vue-next-admin',
-					id: state.value,
-					tagsViewName: state.tagsViewName,
-				},
-			});
-			state.value = '';
-		};
-		const onChangeI18n = () => {
-			state.tagsViewNameIsI18n = !state.tagsViewNameIsI18n;
-			if (state.tagsViewNameIsI18n) {
-				state.tagsViewName = JSON.stringify({
-					'zh-cn': '我是动态路由',
-					en: 'Im dynamic routing',
-					'zh-tw': '我是動態路由',
-				});
-			} else {
-				state.tagsViewName = '我是动态路由测试tagsViewName(非国际化)';
-			}
-		};
-		return {
-			onGoDetailsClick,
-			onChangeI18n,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const router = useRouter();
+const state = reactive<ParamsState>({
+	value: '',
+	tagsViewName: '',
+	tagsViewNameIsI18n: false,
 });
+
+// 跳转到详情
+const onGoDetailsClick = () => {
+	if (!state.tagsViewName) return ElMessage.warning('动态路由tagsViewName为必填，因为路由配置了');
+	if (!state.value) return ElMessage.warning('路由参数id值为必填');
+	// name 值为路由中的 name
+	router.push({
+		name: 'paramsDynamicDetails',
+		params: {
+			t: 'vue-next-admin',
+			id: state.value,
+			tagsViewName: state.tagsViewName,
+		},
+	});
+	state.value = '';
+};
+// 模拟测试内容
+const onChangeI18n = () => {
+	state.tagsViewNameIsI18n = !state.tagsViewNameIsI18n;
+	if (state.tagsViewNameIsI18n) {
+		state.tagsViewName = JSON.stringify({
+			'zh-cn': '我是动态路由',
+			en: 'Im dynamic routing',
+			'zh-tw': '我是動態路由',
+		});
+	} else {
+		state.tagsViewName = '我是动态路由测试tagsViewName(非国际化)';
+	}
+};
 </script>

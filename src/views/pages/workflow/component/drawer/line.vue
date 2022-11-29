@@ -1,14 +1,14 @@
 <template>
 	<div class="pt15 pr15 pb15 pl15">
-		<el-form :model="line" size="default" label-width="50px">
+		<el-form :model="state.line" size="default" label-width="50px">
 			<el-form-item label="来往">
-				<el-input v-model="line.contact" placeholder="来往" clearable disabled></el-input>
+				<el-input v-model="state.line.contact" placeholder="来往" clearable disabled></el-input>
 			</el-form-item>
 			<el-form-item label="类型">
-				<el-input v-model="line.type" placeholder="类型" clearable disabled></el-input>
+				<el-input v-model="state.line.type" placeholder="类型" clearable disabled></el-input>
 			</el-form-item>
 			<el-form-item label="label">
-				<el-input v-model="line.label" placeholder="请输入label内容" clearable></el-input>
+				<el-input v-model="state.line.label" placeholder="请输入label内容" clearable></el-input>
 			</el-form-item>
 			<el-form-item>
 				<el-button @click="onLineTextReset">
@@ -24,39 +24,33 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue';
+<script setup lang="ts" name="pagesWorkflowDrawerLine">
+import { reactive } from 'vue';
 
-// 定义接口来定义对象的类型
-interface WorkflowDrawerLineState {
-	line: any;
-}
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['change', 'close']);
 
-export default defineComponent({
-	name: 'pagesWorkflowDrawerLine',
-	setup(props, { emit }) {
-		const state = reactive<WorkflowDrawerLineState>({
-			line: {},
-		});
-		// 获取父组件数据
-		const getParentData = (data: object) => {
-			state.line = data;
-		};
-		// 重置
-		const onLineTextReset = () => {
-			state.line.label = '';
-		};
-		// 保存
-		const onLineTextChange = () => {
-			emit('change', state.line.label);
-			emit('close');
-		};
-		return {
-			getParentData,
-			onLineTextReset,
-			onLineTextChange,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const state = reactive<EmptyObjectType>({
+	line: {},
+});
+
+// 获取父组件数据
+const getParentData = (data: object) => {
+	state.line = data;
+};
+// 重置
+const onLineTextReset = () => {
+	state.line.label = '';
+};
+// 保存
+const onLineTextChange = () => {
+	emit('change', state.line.label);
+	emit('close');
+};
+
+// 暴露变量
+defineExpose({
+	getParentData,
 });
 </script>

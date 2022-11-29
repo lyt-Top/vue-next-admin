@@ -5,11 +5,11 @@ const setWatermark = (str: string) => {
 	const can = document.createElement('canvas');
 	can.width = 200;
 	can.height = 130;
-	const cans: any = can.getContext('2d');
+	const cans = <CanvasRenderingContext2D>can.getContext('2d');
 	cans.rotate((-20 * Math.PI) / 180);
 	cans.font = '12px Vedana';
 	cans.fillStyle = 'rgba(200, 200, 200, 0.30)';
-	cans.textBaseline = 'Middle';
+	cans.textBaseline = 'middle';
 	cans.fillText(str, can.width / 10, can.height / 2);
 	const div = document.createElement('div');
 	div.id = id;

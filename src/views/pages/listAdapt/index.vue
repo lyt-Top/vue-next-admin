@@ -1,9 +1,9 @@
 <template>
 	<div class="list-adapt-container layout-pd">
 		<el-card shadow="hover" header="列表自适应演示(改变窗口查看效果)">
-			<div class="flex-warp" v-if="tableData.data.length > 0">
+			<div class="flex-warp" v-if="state.tableData.data.length > 0">
 				<el-row :gutter="15">
-					<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb15" v-for="(v, k) in tableData.data" :key="k" @click="onTableItemClick(v)">
+					<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb15" v-for="(v, k) in state.tableData.data" :key="k" @click="onTableItemClick(v)">
 						<div class="flex-warp-item">
 							<div class="flex-warp-item-box">
 								<div class="item-img">
@@ -33,17 +33,17 @@
 				</el-row>
 			</div>
 			<el-empty v-else description="暂无数据"></el-empty>
-			<template v-if="tableData.data.length > 0">
+			<template v-if="state.tableData.data.length > 0">
 				<el-pagination
 					style="text-align: right"
 					background
 					@size-change="onHandleSizeChange"
 					@current-change="onHandleCurrentChange"
 					:page-sizes="[10, 20, 30]"
-					:current-page="tableData.param.pageNum"
-					:page-size="tableData.param.pageSize"
+					:current-page="state.tableData.param.pageNum"
+					:page-size="state.tableData.param.pageSize"
 					layout="total, sizes, prev, pager, next, jumper"
-					:total="tableData.total"
+					:total="state.tableData.total"
 				>
 				</el-pagination>
 			</template>
@@ -51,71 +51,40 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script setup lang="ts" name="pagesListAdapt">
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { filterList } from './mock';
 
-// 定义接口来定义对象的类型
-interface ListAdaptRow {
-	img: string;
-	title: string;
-	evaluate: string;
-	collection: string;
-	price: string;
-	monSales: string;
-	id: number;
-}
-interface TableDataState {
+// 定义变量内容
+const router = useRouter();
+const state = reactive({
 	tableData: {
-		data: Array<ListAdaptRow>;
-		total: number;
-		loading: boolean;
+		data: filterList,
+		total: 99,
+		loading: false,
 		param: {
-			pageNum: number;
-			pageSize: number;
-		};
-	};
-}
-
-export default defineComponent({
-	name: 'pagesListAdapt',
-	setup() {
-		const router = useRouter();
-		const state = reactive<TableDataState>({
-			tableData: {
-				data: filterList,
-				total: 99,
-				loading: false,
-				param: {
-					pageNum: 1,
-					pageSize: 10,
-				},
-			},
-		});
-		// 当前列表项点击
-		const onTableItemClick = (v: ListAdaptRow) => {
-			router.push({
-				path: '/pages/filteringDetails',
-				query: { id: v.id },
-			});
-		};
-		// 分页点击
-		const onHandleSizeChange = (val: number) => {
-			state.tableData.param.pageSize = val;
-		};
-		// 分页点击
-		const onHandleCurrentChange = (val: number) => {
-			state.tableData.param.pageNum = val;
-		};
-		return {
-			onTableItemClick,
-			onHandleSizeChange,
-			onHandleCurrentChange,
-			...toRefs(state),
-		};
+			pageNum: 1,
+			pageSize: 10,
+		},
 	},
 });
+
+// 当前列表项点击
+const onTableItemClick = (v: FilterListType) => {
+	router.push({
+		path: '/pages/filteringDetails',
+		query: { id: v.id },
+	});
+};
+// 分页点击
+const onHandleSizeChange = (val: number) => {
+	state.tableData.param.pageSize = val;
+};
+// 分页点击
+const onHandleCurrentChange = (val: number) => {
+	state.tableData.param.pageNum = val;
+};
 </script>
 
 <style scoped lang="scss">

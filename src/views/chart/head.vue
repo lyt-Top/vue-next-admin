@@ -2,7 +2,7 @@
 	<div class="big-data-up mb15">
 		<div class="up-left">
 			<i class="el-icon-time mr5"></i>
-			<span>{{ time.txt }}</span>
+			<span>{{ state.time.txt }}</span>
 		</div>
 		<div class="up-center">
 			<span>智慧农业系统平台</span>
@@ -10,38 +10,32 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { reactive, toRefs, onBeforeMount, onUnmounted, defineComponent } from 'vue';
+<script setup lang="ts" name="chartHead">
+import { reactive, onBeforeMount, onUnmounted } from 'vue';
 import { formatDate } from '/@/utils/formatTime';
 
-export default defineComponent({
-	name: 'chartHead',
-	setup() {
-		const state = reactive({
-			time: {
-				txt: '',
-				fun: 0,
-			},
-		});
-		// 初始化时间
-		const initTime = () => {
-			state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
-			state.time.fun = window.setInterval(() => {
-				state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
-			}, 1000);
-		};
-		// 页面加载前
-		onBeforeMount(() => {
-			initTime();
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			window.clearInterval(state.time.fun);
-		});
-		return {
-			...toRefs(state),
-		};
+// 定义变量内容
+const state = reactive({
+	time: {
+		txt: '',
+		fun: 0,
 	},
+});
+
+// 初始化时间
+const initTime = () => {
+	state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+	state.time.fun = window.setInterval(() => {
+		state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ');
+	}, 1000);
+};
+// 页面加载前
+onBeforeMount(() => {
+	initTime();
+});
+// 页面卸载时
+onUnmounted(() => {
+	window.clearInterval(state.time.fun);
 });
 </script>
 

@@ -22,42 +22,31 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, onMounted, defineComponent, ref } from 'vue';
+<script setup lang="ts" name="funQrcode">
+import { onMounted, ref } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 
-export default defineComponent({
-	name: 'funQrcode',
-	setup() {
-		const qrcodeRef = ref();
-		const state = reactive({
-			qrcode: '',
-		});
-		// 初始化生成二维码
-		const initQrcode = () => {
-			new QRCode(qrcodeRef.value, {
-				text: `https://lyt-top.gitee.io/vue-next-admin-preview/#/login?t=${new Date().getTime()}`,
-				width: 125,
-				height: 125,
-				colorDark: '#000000',
-				colorLight: '#ffffff',
-			});
-		};
-		// 重新生成
-		const onInitQrcode = () => {
-			qrcodeRef.value.innerHTML = '';
-			initQrcode();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initQrcode();
-		});
-		return {
-			qrcodeRef,
-			onInitQrcode,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const qrcodeRef = ref();
+
+// 初始化生成二维码
+const initQrcode = () => {
+	new QRCode(qrcodeRef.value, {
+		text: `https://lyt-top.gitee.io/vue-next-admin-preview/#/login?t=${new Date().getTime()}`,
+		width: 125,
+		height: 125,
+		colorDark: '#000000',
+		colorLight: '#ffffff',
+	});
+};
+// 重新生成
+const onInitQrcode = () => {
+	qrcodeRef.value.innerHTML = '';
+	initQrcode();
+};
+// 页面加载时
+onMounted(() => {
+	initQrcode();
 });
 </script>
 

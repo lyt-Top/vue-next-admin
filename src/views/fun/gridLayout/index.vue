@@ -8,7 +8,7 @@
 				class="mb15"
 			></el-alert>
 			<grid-layout
-				v-model:layout="layouts"
+				v-model:layout="state.layouts"
 				:col-num="12"
 				:row-height="30"
 				:is-draggable="true"
@@ -18,7 +18,7 @@
 				:margin="[10, 10]"
 				:use-css-transforms="true"
 			>
-				<grid-item v-for="item in layouts" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
+				<grid-item v-for="item in state.layouts" :x="item.x" :y="item.y" :w="item.w" :h="item.h" :i="item.i" :key="item.i">
 					<div class="w100 h100 flex">
 						<span class="flex-margin font14">{{ item.i }}</span>
 					</div>
@@ -28,27 +28,20 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script setup lang="ts" name="funGridLayout">
+import { reactive } from 'vue';
 
-export default defineComponent({
-	name: 'FunGridLayout',
-	setup() {
-		const state = reactive({
-			layouts: [
-				{ x: 0, y: 0, w: 2, h: 2, i: '0' },
-				{ x: 2, y: 0, w: 2, h: 4, i: '1' },
-				{ x: 4, y: 0, w: 2, h: 5, i: '2' },
-				{ x: 6, y: 0, w: 2, h: 3, i: '3' },
-				{ x: 8, y: 0, w: 2, h: 3, i: '4' },
-				{ x: 10, y: 0, w: 2, h: 3, i: '5' },
-				{ x: 0, y: 5, w: 2, h: 5, i: '6' },
-			],
-		});
-		return {
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const state = reactive({
+	layouts: [
+		{ x: 0, y: 0, w: 2, h: 2, i: '0' },
+		{ x: 2, y: 0, w: 2, h: 4, i: '1' },
+		{ x: 4, y: 0, w: 2, h: 5, i: '2' },
+		{ x: 6, y: 0, w: 2, h: 3, i: '3' },
+		{ x: 8, y: 0, w: 2, h: 3, i: '4' },
+		{ x: 10, y: 0, w: 2, h: 3, i: '5' },
+		{ x: 0, y: 5, w: 2, h: 5, i: '6' },
+	],
 });
 </script>
 

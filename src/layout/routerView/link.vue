@@ -3,7 +3,7 @@
 		<div class="layout-padding-auto layout-padding-view">
 			<div class="layout-link-warp">
 				<i class="layout-link-icon iconfont icon-xingqiu"></i>
-				<div class="layout-link-msg">页面 "{{ $t(currentRouteMeta.title) }}" 已在新窗口中打开</div>
+				<div class="layout-link-msg">页面 "{{ $t(state.title) }}" 已在新窗口中打开</div>
 				<el-button class="mt30" round size="default" @click="onGotoFullPage">
 					<i class="iconfont icon-lianjie"></i>
 					<span>立即前往体验</span>
@@ -13,55 +13,35 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent, toRefs, reactive, watch } from 'vue';
-import { useRoute, RouteMeta } from 'vue-router';
+<script setup lang="ts" name="layoutLinkView">
+import { reactive, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import { verifyUrl } from '/@/utils/toolsValidate';
 
-// 定义接口来定义对象的类型
-interface LinkViewState {
-	currentRouteMeta: {
-		isLink: string;
-		title: string;
-	};
-}
-interface LinkViewRouteMeta extends RouteMeta {
-	isLink: string;
-	title: string;
-}
-
-export default defineComponent({
-	name: 'layoutLinkView',
-	setup() {
-		const route = useRoute();
-		const state = reactive<LinkViewState>({
-			currentRouteMeta: {
-				isLink: '',
-				title: '',
-			},
-		});
-		// 立即前往
-		const onGotoFullPage = () => {
-			const { origin, pathname } = window.location;
-			if (verifyUrl(state.currentRouteMeta.isLink)) window.open(state.currentRouteMeta.isLink);
-			else window.open(`${origin}${pathname}#${state.currentRouteMeta.isLink}`);
-		};
-		// 监听路由的变化，设置内容
-		watch(
-			() => route.path,
-			() => {
-				state.currentRouteMeta = <LinkViewRouteMeta>route.meta;
-			},
-			{
-				immediate: true,
-			}
-		);
-		return {
-			onGotoFullPage,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const route = useRoute();
+const state = reactive<LinkViewState>({
+	title: '',
+	isLink: '',
 });
+
+// 立即前往
+const onGotoFullPage = () => {
+	const { origin, pathname } = window.location;
+	if (verifyUrl(<string>state.isLink)) window.open(state.isLink);
+	else window.open(`${origin}${pathname}#${state.isLink}`);
+};
+// 监听路由的变化，设置内容
+watch(
+	() => route.path,
+	() => {
+		state.title = <string>route.meta.title;
+		state.isLink = <string>route.meta.isLink;
+	},
+	{
+		immediate: true,
+	}
+);
 </script>
 
 <style scoped lang="scss">

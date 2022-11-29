@@ -2,7 +2,7 @@
  * 消息通知
  * @returns 返回模拟数据
  */
-export const newsInfoList: Array<object> = [
+export const newsInfoList = [
 	{
 		title: '[发布] 2021年02月28日发布基于 vue3.x + vite v1.0.0 版本',
 		date: '02/28',
@@ -34,7 +34,7 @@ export const newsInfoList: Array<object> = [
  * 营销推荐
  * @returns 返回模拟数据
  */
-export const recommendList: Array<object> = [
+export const recommendList = [
 	{
 		title: '优惠券',
 		msg: '现金券、折扣券、营销必备',

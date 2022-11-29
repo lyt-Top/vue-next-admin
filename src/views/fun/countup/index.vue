@@ -8,7 +8,7 @@
 				class="mb15"
 			></el-alert>
 			<el-row :gutter="20">
-				<el-col :sm="6" class="mb15" v-for="(v, k) in topCardItemList" :key="k">
+				<el-col :sm="6" class="mb15" v-for="(v, k) in state.topCardItemList" :key="k">
 					<div class="countup-card-item countup-card-item-box" :style="{ background: `var(${v.color})` }">
 						<div class="countup-card-item-flex" ref="topCardItemRefs">
 							<div class="countup-card-item-title pb3">{{ v.title }}</div>
@@ -36,76 +36,69 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { reactive, toRefs, onMounted, nextTick, defineComponent } from 'vue';
+<script setup lang="ts" name="funCountup">
+import { reactive, onMounted, nextTick, ref } from 'vue';
 import { CountUp } from 'countup.js';
 
-export default defineComponent({
-	name: 'funCountup',
-	setup() {
-		const state = reactive({
-			topCardItemRefs: null as any,
-			topCardItemList: [
-				{
-					title: '今日访问人数',
-					titleNum: '123',
-					tip: '在场人数',
-					tipNum: '911',
-					color: '--el-color-primary',
-					iconColor: '#ffcb47',
-					icon: 'iconfont icon-jinridaiban',
-				},
-				{
-					title: '实验室总数',
-					titleNum: '123',
-					tip: '使用中',
-					tipNum: '611',
-					color: '--el-color-success',
-					iconColor: '#70cf41',
-					icon: 'iconfont icon-AIshiyanshi',
-				},
-				{
-					title: '申请人数（月）',
-					titleNum: '123',
-					tip: '通过人数',
-					tipNum: '911',
-					color: '--el-color-warning',
-					iconColor: '#dfae64',
-					icon: 'iconfont icon-shenqingkaiban',
-				},
-				{
-					title: '销售情况',
-					titleNum: '123',
-					tip: '销售数',
-					tipNum: '911',
-					color: '--el-color-danger',
-					iconColor: '#e56565',
-					icon: 'iconfont icon-ditu',
-				},
-			],
+// 定义变量内容
+const topCardItemRefs = ref<RefType[]>([]);
+const state = reactive({
+	topCardItemList: [
+		{
+			title: '今日访问人数',
+			titleNum: '123',
+			tip: '在场人数',
+			tipNum: '911',
+			color: '--el-color-primary',
+			iconColor: '#ffcb47',
+			icon: 'iconfont icon-jinridaiban',
+		},
+		{
+			title: '实验室总数',
+			titleNum: '123',
+			tip: '使用中',
+			tipNum: '611',
+			color: '--el-color-success',
+			iconColor: '#70cf41',
+			icon: 'iconfont icon-AIshiyanshi',
+		},
+		{
+			title: '申请人数（月）',
+			titleNum: '123',
+			tip: '通过人数',
+			tipNum: '911',
+			color: '--el-color-warning',
+			iconColor: '#dfae64',
+			icon: 'iconfont icon-shenqingkaiban',
+		},
+		{
+			title: '销售情况',
+			titleNum: '123',
+			tip: '销售数',
+			tipNum: '911',
+			color: '--el-color-danger',
+			iconColor: '#e56565',
+			icon: 'iconfont icon-ditu',
+		},
+	],
+});
+
+// 初始化数字滚动
+const initNumCountUp = () => {
+	nextTick(() => {
+		topCardItemRefs.value.forEach((v: HTMLDivElement) => {
+			new CountUp(v.querySelector('.countup-card-item-title-num') as HTMLDivElement, Math.random() * 10000).start();
+			new CountUp(v.querySelector('.countup-card-item-tip-num') as HTMLDivElement, Math.random() * 1000).start();
 		});
-		// 初始化数字滚动
-		const initNumCountUp = () => {
-			nextTick(() => {
-				state.topCardItemRefs.forEach((v: HTMLDivElement) => {
-					new CountUp(v.querySelector('.countup-card-item-title-num') as HTMLDivElement, Math.random() * 10000).start();
-					new CountUp(v.querySelector('.countup-card-item-tip-num') as HTMLDivElement, Math.random() * 1000).start();
-				});
-			});
-		};
-		// 重置/刷新数值
-		const refreshCurrent = () => {
-			initNumCountUp();
-		};
-		// 页面加载时
-		onMounted(() => {
-			initNumCountUp();
-		});
-		return {
-			refreshCurrent,
-			...toRefs(state),
-		};
-	},
+	});
+};
+// 重置/刷新数值
+const refreshCurrent = () => {
+	initNumCountUp();
+};
+// 页面加载时
+onMounted(() => {
+	initNumCountUp();
 });
 </script>
 

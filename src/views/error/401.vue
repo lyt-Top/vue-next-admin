@@ -22,25 +22,16 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts" name="noPower">
 import { Session } from '/@/utils/storage';
 
-export default defineComponent({
-	name: '401',
-	setup() {
-		const onSetAuth = () => {
-			// https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
-			// 清除缓存/token等
-			Session.clear();
-			// 使用 reload 时，不需要调用 resetRoute() 重置路由
-			window.location.reload();
-		};
-		return {
-			onSetAuth,
-		};
-	},
-});
+const onSetAuth = () => {
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I5C3JS
+	// 清除缓存/token等
+	Session.clear();
+	// 使用 reload 时，不需要调用 resetRoute() 重置路由
+	window.location.reload();
+};
 </script>
 
 <style scoped lang="scss">

@@ -18,15 +18,15 @@
 								</div>
 							</template>
 						</el-alert>
-						<el-input v-model="tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15" style="width: 400px"></el-input>
-						<el-input v-model="value" placeholder="请输入路由参数 id 值" clearable style="width: 400px"></el-input>
+						<el-input v-model="state.tagsViewName" placeholder="请输入tagsView 名称" clearable class="mb15" style="width: 400px"></el-input>
+						<el-input v-model="state.value" placeholder="请输入路由参数 id 值" clearable style="width: 400px"></el-input>
 						<el-button type="primary" size="default" class="mt15" @click="onGoDetailsClick">
 							<SvgIcon name="iconfont icon-putong" />
 							普通路由传参
 						</el-button>
 						<el-button type="primary" size="default" class="mt15" @click="onChangeI18n">
 							<SvgIcon name="iconfont icon-fuhao-zhongwen" />
-							{{ tagsViewNameIsI18n ? '普通的演示' : '国际化演示' }}
+							{{ state.tagsViewNameIsI18n ? '普通的演示' : '国际化演示' }}
 						</el-button>
 					</template>
 				</el-result>
@@ -35,50 +35,43 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script setup lang="ts" name="paramsCommon">
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 
-export default defineComponent({
-	name: 'paramsCommon',
-	setup() {
-		const state = reactive({
-			value: '',
-			tagsViewName: '',
-			tagsViewNameIsI18n: false,
-		});
-		const router = useRouter();
-		// 跳转到详情
-		/**
-		 * 设置 tagsView 名称：
-		 * 传不同的 tagsViewName 值
-		 */
-		const onGoDetailsClick = () => {
-			const params: any = { id: state.value };
-			if (state.tagsViewName) params.tagsViewName = state.tagsViewName;
-			router.push({
-				path: '/params/common/details',
-				query: params,
-			});
-			state.value = '';
-		};
-		const onChangeI18n = () => {
-			state.tagsViewNameIsI18n = !state.tagsViewNameIsI18n;
-			if (state.tagsViewNameIsI18n) {
-				state.tagsViewName = JSON.stringify({
-					'zh-cn': '测试用',
-					en: 'test page',
-					'zh-tw': '測試用',
-				});
-			} else {
-				state.tagsViewName = '我是普通路由测试tagsViewName(非国际化)';
-			}
-		};
-		return {
-			onGoDetailsClick,
-			onChangeI18n,
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const router = useRouter();
+const state = reactive<ParamsState>({
+	value: '',
+	tagsViewName: '',
+	tagsViewNameIsI18n: false,
 });
+
+// 跳转到详情
+/**
+ * 设置 tagsView 名称：
+ * 传不同的 tagsViewName 值
+ */
+const onGoDetailsClick = () => {
+	const params: EmptyObjectType = { id: state.value };
+	if (state.tagsViewName) params.tagsViewName = state.tagsViewName;
+	router.push({
+		path: '/params/common/details',
+		query: params,
+	});
+	state.value = '';
+};
+// 模拟测试内容
+const onChangeI18n = () => {
+	state.tagsViewNameIsI18n = !state.tagsViewNameIsI18n;
+	if (state.tagsViewNameIsI18n) {
+		state.tagsViewName = JSON.stringify({
+			'zh-cn': '测试用',
+			en: 'test page',
+			'zh-tw': '測試用',
+		});
+	} else {
+		state.tagsViewName = '我是普通路由测试tagsViewName(非国际化)';
+	}
+};
 </script>

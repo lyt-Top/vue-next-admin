@@ -52,7 +52,7 @@
 					</template>
 					<div class="personal-info-box">
 						<ul class="personal-info-ul">
-							<li v-for="(v, k) in newsInfoList" :key="k" class="personal-info-li">
+							<li v-for="(v, k) in state.newsInfoList" :key="k" class="personal-info-li">
 								<a :href="v.link" target="_block" class="personal-info-li-title">{{ v.title }}</a>
 							</li>
 						</ul>
@@ -64,7 +64,7 @@
 			<el-col :span="24">
 				<el-card shadow="hover" class="mt15" header="营销推荐">
 					<el-row :gutter="15" class="personal-recommend-row">
-						<el-col :sm="6" v-for="(v, k) in recommendList" :key="k" class="personal-recommend-col">
+						<el-col :sm="6" v-for="(v, k) in state.recommendList" :key="k" class="personal-recommend-col">
 							<div class="personal-recommend" :style="{ 'background-color': v.bg }">
 								<SvgIcon :name="v.icon" :size="70" :style="{ color: v.iconColor }" />
 								<div class="personal-recommend-auto">
@@ -81,26 +81,26 @@
 			<el-col :span="24">
 				<el-card shadow="hover" class="mt15 personal-edit" header="更新信息">
 					<div class="personal-edit-title">基本信息</div>
-					<el-form :model="personalForm" size="default" label-width="40px" class="mt35 mb35">
+					<el-form :model="state.personalForm" size="default" label-width="40px" class="mt35 mb35">
 						<el-row :gutter="35">
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="昵称">
-									<el-input v-model="personalForm.name" placeholder="请输入昵称" clearable></el-input>
+									<el-input v-model="state.personalForm.name" placeholder="请输入昵称" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="邮箱">
-									<el-input v-model="personalForm.email" placeholder="请输入邮箱" clearable></el-input>
+									<el-input v-model="state.personalForm.email" placeholder="请输入邮箱" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="签名">
-									<el-input v-model="personalForm.autograph" placeholder="请输入签名" clearable></el-input>
+									<el-input v-model="state.personalForm.autograph" placeholder="请输入签名" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="职业">
-									<el-select v-model="personalForm.occupation" placeholder="请选择职业" clearable class="w100">
+									<el-select v-model="state.personalForm.occupation" placeholder="请选择职业" clearable class="w100">
 										<el-option label="计算机 / 互联网 / 通信" value="1"></el-option>
 										<el-option label="生产 / 工艺 / 制造" value="2"></el-option>
 										<el-option label="医疗 / 护理 / 制药" value="3"></el-option>
@@ -109,12 +109,12 @@
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="手机">
-									<el-input v-model="personalForm.phone" placeholder="请输入手机" clearable></el-input>
+									<el-input v-model="state.personalForm.phone" placeholder="请输入手机" clearable></el-input>
 								</el-form-item>
 							</el-col>
 							<el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4" class="mb20">
 								<el-form-item label="性别">
-									<el-select v-model="personalForm.sex" placeholder="请选择性别" clearable class="w100">
+									<el-select v-model="state.personalForm.sex" placeholder="请选择性别" clearable class="w100">
 										<el-option label="男" value="1"></el-option>
 										<el-option label="女" value="2"></el-option>
 									</el-select>
@@ -183,43 +183,28 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, computed, defineComponent } from 'vue';
+<script setup lang="ts" name="personal">
+import { reactive, computed } from 'vue';
 import { formatAxis } from '/@/utils/formatTime';
 import { newsInfoList, recommendList } from './mock';
 
-// 定义接口来定义对象的类型
-interface PersonalState {
-	newsInfoList: any;
-	recommendList: any;
-	personalForm: any;
-}
-
-export default defineComponent({
-	name: 'personal',
-	setup() {
-		const state = reactive<PersonalState>({
-			newsInfoList,
-			recommendList,
-			personalForm: {
-				name: '',
-				email: '',
-				autograph: '',
-				occupation: '',
-				phone: '',
-				sex: '',
-			},
-		});
-
-		// 当前时间提示语
-		const currentTime = computed(() => {
-			return formatAxis(new Date());
-		});
-		return {
-			currentTime,
-			...toRefs(state),
-		};
+// 定义变量内容
+const state = reactive<PersonalState>({
+	newsInfoList,
+	recommendList,
+	personalForm: {
+		name: '',
+		email: '',
+		autograph: '',
+		occupation: '',
+		phone: '',
+		sex: '',
 	},
+});
+
+// 当前时间提示语
+const currentTime = computed(() => {
+	return formatAxis(new Date());
 });
 </script>
 

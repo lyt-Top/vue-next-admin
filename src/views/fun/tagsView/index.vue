@@ -62,50 +62,38 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineAsyncComponent, reactive, toRefs, defineComponent } from 'vue';
+<script setup lang="ts" name="funTagsView">
+import { defineAsyncComponent } from 'vue';
 import { useRoute } from 'vue-router';
 import mittBus from '/@/utils/mitt';
 
-export default defineComponent({
-	name: 'funTagsView',
-	components: {
-		NoticeBar: defineAsyncComponent(() => import('/@/components/noticeBar/index.vue')),
-	},
-	setup() {
-		const route = useRoute();
-		const state = reactive({});
-		// 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
-		// 1、刷新当前 tagsView
-		const refreshCurrentTagsView = () => {
-			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 0, ...route }));
-		};
-		// 2、关闭当前 tagsView
-		const closeCurrentTagsView = () => {
-			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 1, ...route }));
-		};
-		// 3、关闭其它 tagsView
-		const closeOtherTagsView = () => {
-			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 2, ...route }));
-		};
-		// 4、关闭全部 tagsView
-		const closeAllTagsView = () => {
-			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 3, ...route }));
-		};
-		// 5、开启当前页面全屏
-		const openCurrenFullscreen = () => {
-			mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 4, ...route }));
-		};
-		return {
-			refreshCurrentTagsView,
-			closeCurrentTagsView,
-			closeOtherTagsView,
-			closeAllTagsView,
-			openCurrenFullscreen,
-			...toRefs(state),
-		};
-	},
-});
+// 引入组件
+const NoticeBar = defineAsyncComponent(() => import('/@/components/noticeBar/index.vue'));
+
+// 定义变量内容
+const route = useRoute();
+
+// 0 刷新当前，1 关闭当前，2 关闭其它，3 关闭全部 4 当前页全屏
+// 1、刷新当前 tagsView
+const refreshCurrentTagsView = () => {
+	mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 0, ...route }));
+};
+// 2、关闭当前 tagsView
+const closeCurrentTagsView = () => {
+	mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 1, ...route }));
+};
+// 3、关闭其它 tagsView
+const closeOtherTagsView = () => {
+	mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 2, ...route }));
+};
+// 4、关闭全部 tagsView
+const closeAllTagsView = () => {
+	mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 3, ...route }));
+};
+// 5、开启当前页面全屏
+const openCurrenFullscreen = () => {
+	mittBus.emit('onCurrentContextmenuClick', Object.assign({}, { contextMenuClickId: 4, ...route }));
+};
 </script>
 
 <style scoped lang="scss">

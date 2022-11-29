@@ -17,21 +17,14 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts" name="limitsBackEndEndPage">
 import { useRouter } from 'vue-router';
 
-export default defineComponent({
-	name: 'limitsBackEndEndPage',
-	setup() {
-		const router = useRouter();
-		// 立即前往前端控制路由
-		const onGoToFrontEndPage = () => {
-			router.push('/limits/frontEnd/page');
-		};
-		return {
-			onGoToFrontEndPage,
-		};
-	},
-});
+// 定义变量内容
+const router = useRouter();
+
+// 立即前往前端控制路由
+const onGoToFrontEndPage = () => {
+	router.push('/limits/frontEnd/page');
+};
 </script>

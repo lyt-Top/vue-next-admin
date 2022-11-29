@@ -1,7 +1,7 @@
 <template>
 	<div class="drag-container layout-pd">
 		<el-card shadow="hover" header="拖动指令效果（v-drag）作用于 Dialog 对话框">
-			<el-button type="primary" @click="dialogVisible = true" size="default">
+			<el-button type="primary" @click="state.dialogVisible = true" size="default">
 				<el-icon>
 					<ele-Pointer />
 				</el-icon>
@@ -22,34 +22,27 @@
 			</div>
 		</el-card>
 
-		<el-dialog v-model="dialogVisible" width="769px">
+		<el-dialog v-model="state.dialogVisible" width="769px">
 			<template #header>
 				<div v-drag="['.drag-container .el-dialog', '.drag-container .el-dialog__header']">拖动指令效果（v-drag）</div>
 			</template>
 			<p>鼠标放标题头进行 Dialog 对话框拖动</p>
 			<template #footer>
 				<span class="dialog-footer">
-					<el-button @click="dialogVisible = false" size="default">取 消</el-button>
-					<el-button type="primary" @click="dialogVisible = false" size="default">确 定</el-button>
+					<el-button @click="state.dialogVisible = false" size="default">取 消</el-button>
+					<el-button type="primary" @click="state.dialogVisible = false" size="default">确 定</el-button>
 				</span>
 			</template>
 		</el-dialog>
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
+<script setup lang="ts" name="pagesDrag">
+import { reactive } from 'vue';
 
-export default defineComponent({
-	name: 'pagesDrag',
-	setup() {
-		const state = reactive({
-			dialogVisible: false,
-		});
-		return {
-			...toRefs(state),
-		};
-	},
+// 定义变量内容
+const state = reactive({
+	dialogVisible: false,
 });
 </script>
 

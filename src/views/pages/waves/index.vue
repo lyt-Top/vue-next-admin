@@ -73,18 +73,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'pagesWaves',
-	setup() {
-		const state = reactive({});
-		return {
-			...toRefs(state),
-		};
-	},
-});
+<script setup lang="ts" name="pagesWaves">
+// 此处需有内容（注释也得），否则缓存将失败
 </script>
 
 <style scoped lang="scss">

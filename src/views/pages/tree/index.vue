@@ -1,16 +1,16 @@
 <template>
 	<div class="tree-container layout-pd">
 		<el-card shadow="hover" header="element plus Tree 树形控件改成表格">
-			<div v-loading="treeLoading">
+			<div v-loading="state.treeLoading">
 				<div class="tree-head">
-					<div class="tree-head-check"><el-checkbox v-model="treeCheckAll" @change="onCheckAllChange"></el-checkbox></div>
+					<div class="tree-head-check"><el-checkbox v-model="state.treeCheckAll" @change="onCheckAllChange"></el-checkbox></div>
 					<div class="tree-head-one">商品 ID</div>
 					<div style="flex: 1; display: flex">
 						<div class="tree-head-two">商品名称</div>
 						<div class="tree-head-three">描述</div>
 					</div>
 				</div>
-				<el-tree :data="treeTableData" show-checkbox node-key="id" ref="treeTableRef" :props="treeDefaultProps" @check="onCheckTree">
+				<el-tree :data="state.treeTableData" show-checkbox node-key="id" ref="treeTableRef" :props="state.treeDefaultProps" @check="onCheckTree">
 					<template #default="{ node, data }">
 						<span class="tree-custom-node">
 							<span style="flex: 1">{{ node.label }}</span>
@@ -30,175 +30,143 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, onBeforeMount, defineComponent, ref } from 'vue';
+<script setup lang="ts" name="pagesTree">
+import { reactive, onBeforeMount, ref } from 'vue';
 import { ElMessage } from 'element-plus';
 
-// 定义接口来定义对象的类型
-interface TreeDataState {
-	id: number;
-	label: string;
-	label1: string;
-	label2: string;
-	isShow: boolean;
-	children?: TreeDataState[];
-}
-interface TreeSate {
-	treeCheckAll: boolean;
-	treeLoading: boolean;
-	treeTableData: TreeDataState[];
+// 定义变量内容
+const treeTableRef = ref();
+const state = reactive({
+	treeCheckAll: false,
+	treeLoading: false,
+	treeTableData: [] as RowTreeType[],
 	treeDefaultProps: {
-		children: string;
-		label: string;
-	};
-	treeSelArr: TreeDataState[];
-	treeLength: number;
-}
-
-export default defineComponent({
-	name: 'pagesTree',
-	setup() {
-		const treeTableRef = ref();
-		const state = reactive<TreeSate>({
-			treeCheckAll: false,
-			treeLoading: false,
-			treeTableData: [],
-			treeDefaultProps: {
-				children: 'children',
-				label: 'label',
-			},
-			treeSelArr: [],
-			treeLength: 0,
-		});
-		// 初始化树的长度
-		const initTreeLengh = (arr: TreeDataState[]) => {
-			let count = 0;
-			arr.map((item) => {
-				if (item.children) {
-					count += item.children.length;
-				}
-			});
-			state.treeLength = count + arr.length;
-		};
-		// 全选改变时
-		const onCheckAllChange = () => {
-			if (state.treeCheckAll) {
-				treeTableRef.value.setCheckedNodes(state.treeTableData);
-			} else {
-				treeTableRef.value.setCheckedKeys([]);
-			}
-		};
-		// 节点选中状态发生变化时的回调
-		const onCheckTree = () => {
-			state.treeSelArr = [];
-			state.treeSelArr = treeTableRef.value.getCheckedNodes();
-			state.treeSelArr.length == state.treeLength ? (state.treeCheckAll = true) : (state.treeCheckAll = false);
-		};
-		// 选择元素按钮
-		const onSelect = () => {
-			let treeArr = treeTableRef.value.getCheckedNodes();
-			if (treeArr.length <= 0) {
-				ElMessage.warning('请选择元素');
-				return;
-			} else {
-				// console.log(treeTableRef.value.getCheckedNodes());
-			}
-		};
-		// 初始化树模拟数据
-		const getTreeData = () => {
-			state.treeTableData = [
-				{
-					id: 1,
-					label: '12987121',
-					label1: '好滋好味鸡蛋仔',
-					label2: '荷兰优质淡奶，奶香浓而不腻',
-					isShow: true,
-					children: [
-						{
-							id: 11,
-							label: '一级 1-1',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-						{
-							id: 12,
-							label: '一级 1-2',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-					],
-				},
-				{
-					id: 2,
-					label: '12987122',
-					label1: '好滋好味鸡蛋仔',
-					label2: '荷兰优质淡奶，奶香浓而不腻',
-					isShow: true,
-					children: [
-						{
-							id: 21,
-							label: '二级 2-1',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-						{
-							id: 22,
-							label: '二级 2-2',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-					],
-				},
-				{
-					id: 3,
-					label: '12987123',
-					label1: '好滋好味鸡蛋仔',
-					label2: '荷兰优质淡奶，奶香浓而不腻',
-					isShow: true,
-					children: [
-						{
-							id: 31,
-							label: '二级 3-1',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-						{
-							id: 32,
-							label: '二级 3-2',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-						{
-							id: 33,
-							label: '二级 3-3',
-							label1: '好滋好味鸡蛋仔',
-							label2: '荷兰优质淡奶，奶香浓而不腻',
-							isShow: false,
-						},
-					],
-				},
-			];
-			initTreeLengh(state.treeTableData);
-		};
-		// 页面加载前
-		onBeforeMount(() => {
-			getTreeData();
-		});
-		return {
-			treeTableRef,
-			getTreeData,
-			onCheckAllChange,
-			onCheckTree,
-			onSelect,
-			...toRefs(state),
-		};
+		children: 'children',
+		label: 'label',
 	},
+	treeSelArr: [] as RowTreeType[],
+	treeLength: 0,
+});
+
+// 初始化树的长度
+const initTreeLengh = (arr: RowTreeType[]) => {
+	let count = 0;
+	arr.map((item) => {
+		if (item.children) {
+			count += item.children.length;
+		}
+	});
+	state.treeLength = count + arr.length;
+};
+// 全选改变时
+const onCheckAllChange = () => {
+	if (state.treeCheckAll) {
+		treeTableRef.value.setCheckedNodes(state.treeTableData);
+	} else {
+		treeTableRef.value.setCheckedKeys([]);
+	}
+};
+// 节点选中状态发生变化时的回调
+const onCheckTree = () => {
+	state.treeSelArr = [];
+	state.treeSelArr = treeTableRef.value.getCheckedNodes();
+	state.treeSelArr.length == state.treeLength ? (state.treeCheckAll = true) : (state.treeCheckAll = false);
+};
+// 选择元素按钮
+const onSelect = () => {
+	let treeArr = treeTableRef.value.getCheckedNodes();
+	if (treeArr.length <= 0) {
+		ElMessage.warning('请选择元素');
+		return;
+	} else {
+		// console.log(treeTableRef.value.getCheckedNodes());
+	}
+};
+// 初始化树模拟数据
+const getTreeData = () => {
+	state.treeTableData = [
+		{
+			id: 1,
+			label: '12987121',
+			label1: '好滋好味鸡蛋仔',
+			label2: '荷兰优质淡奶，奶香浓而不腻',
+			isShow: true,
+			children: [
+				{
+					id: 11,
+					label: '一级 1-1',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+				{
+					id: 12,
+					label: '一级 1-2',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+			],
+		},
+		{
+			id: 2,
+			label: '12987122',
+			label1: '好滋好味鸡蛋仔',
+			label2: '荷兰优质淡奶，奶香浓而不腻',
+			isShow: true,
+			children: [
+				{
+					id: 21,
+					label: '二级 2-1',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+				{
+					id: 22,
+					label: '二级 2-2',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+			],
+		},
+		{
+			id: 3,
+			label: '12987123',
+			label1: '好滋好味鸡蛋仔',
+			label2: '荷兰优质淡奶，奶香浓而不腻',
+			isShow: true,
+			children: [
+				{
+					id: 31,
+					label: '二级 3-1',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+				{
+					id: 32,
+					label: '二级 3-2',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+				{
+					id: 33,
+					label: '二级 3-3',
+					label1: '好滋好味鸡蛋仔',
+					label2: '荷兰优质淡奶，奶香浓而不腻',
+					isShow: false,
+				},
+			],
+		},
+	];
+	initTreeLengh(state.treeTableData);
+};
+// 页面加载前
+onBeforeMount(() => {
+	getTreeData();
 });
 </script>
 

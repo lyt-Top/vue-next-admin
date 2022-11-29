@@ -4,7 +4,7 @@
 		<div class="big-data-up">
 			<div class="up-left">
 				<SvgIcon name="ele-Timer" class="mr5" />
-				<span>{{ time.txt }}</span>
+				<span>{{ state.time.txt }}</span>
 			</div>
 			<div class="up-center">
 				<span>智慧农业系统平台</span>
@@ -12,12 +12,12 @@
 			<div class="up-right">
 				<el-dropdown size="small">
 					<span class="el-dropdown-link">
-						{{ dropdownActive }}
+						{{ state.dropdownActive }}
 						<SvgIcon name="ele-ArrowDown" class="el-icon--right" />
 					</span>
 					<template #dropdown>
 						<el-dropdown-menu>
-							<el-dropdown-item v-for="(v, k) in dropdownList" :key="k">{{ v.label }} </el-dropdown-item>
+							<el-dropdown-item v-for="(v, k) in state.dropdownList" :key="k">{{ v.label }} </el-dropdown-item>
 						</el-dropdown-menu>
 					</template>
 				</el-dropdown>
@@ -59,7 +59,7 @@
 								</div>
 							</div>
 							<div class="sky-dd">
-								<div class="sky-dl" v-for="(v, k) in skyList" :key="k" :class="{ 'sky-dl-first': k === 1 }">
+								<div class="sky-dl" v-for="(v, k) in state.skyList" :key="k" :class="{ 'sky-dl-first': k === 1 }">
 									<div>{{ v.v1 }}</div>
 									<div v-if="v.type === 'title'">{{ v.v2 }}</div>
 									<div v-else>
@@ -103,7 +103,7 @@
 								</div>
 							</div>
 							<div class="d-btn">
-								<div class="d-btn-item" v-for="(v, k) in dBtnList" :key="k" :class="{ 'd-btn-active': dBtnActive === k }">
+								<div class="d-btn-item" v-for="(v, k) in state.dBtnList" :key="k" :class="{ 'd-btn-active': state.dBtnActive === k }">
 									<SvgIcon name="ele-Money" class="d-btn-item-left" />
 									<div class="d-btn-item-center">
 										<div>{{ v.v1 }}</div>
@@ -128,7 +128,7 @@
 				<div class="big-data-down-center-one">
 					<div class="big-data-down-center-one-content" ref="rightChartData5">
 						<div ref="the3DEarth"></div>
-						<div :class="v.topLevelClass" v-for="(v, k) in earth3DBtnList" :key="k">
+						<div :class="v.topLevelClass" v-for="(v, k) in state.earth3DBtnList" :key="k">
 							<div class="circle" v-for="i in 4" :key="i"></div>
 							<div class="text-box">
 								<SvgIcon :name="v.icon" :size="22" />
@@ -145,8 +145,8 @@
 						</div>
 						<div class="flex-content">
 							<div class="flex-content-left">
-								<div class="monitor-item" v-for="(v, k) in chartData4List" :key="k">
-									<div class="monitor-wave" :class="{ 'monitor-active': k === chartData4Index }">
+								<div class="monitor-item" v-for="(v, k) in state.chartData4List" :key="k">
+									<div class="monitor-wave" :class="{ 'monitor-active': k === state.chartData4Index }">
 										<div class="monitor-z-index">
 											<div class="monitor-item-label">{{ v.label }}</div>
 										</div>
@@ -228,8 +228,8 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { toRefs, reactive, onMounted, onUnmounted, defineComponent, ref } from 'vue';
+<script setup lang="ts" name="visualizingLinkDemo2">
+import { reactive, onMounted, onUnmounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts-gl';
 import { formatDate } from '/@/utils/formatTime';
@@ -238,563 +238,551 @@ import { dropdownList, skyList, dBtnList, earth3DBtnList, chartData4List } from 
 import worldImg from './images/world.jpg';
 import bathymetryImg from './images/bathymetry.jpg';
 
-export default defineComponent({
-	name: 'visualizingLinkDemo2',
-	setup() {
-		const rightChartData1 = ref();
-		const rightChartData2 = ref();
-		const rightChartData3 = ref();
-		const rightChartData4 = ref();
-		const rightChartData5 = ref();
-		const rightChartData6 = ref();
-		const state = reactive({
-			time: {
-				txt: '',
-				fun: 0,
-			},
-			dropdownList,
-			dropdownActive: '请选择',
-			skyList,
-			dBtnList,
-			chartData4Index: 0,
-			dBtnActive: 0,
-			earth3DBtnList,
-			chartData4List,
-			myCharts: [],
-			the3DEarth: null as HTMLDivElement | null,
-		});
-		// 初始化时间
-		const initTime = () => {
-			state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ ZZZ');
-			state.time.fun = window.setInterval(() => {
-				state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ ZZZ');
-			}, 1000);
-		};
-		// 近30天预警总数
-		const initRightChartData1 = () => {
-			const myChart = echarts.init(rightChartData1.value);
-			const option = {
-				tooltip: {
-					trigger: 'item',
-				},
-				series: [
-					{
-						name: '面积模式',
-						type: 'pie',
-						radius: [10, 60],
-						center: ['50%', '50%'],
-						roseType: 'area',
-						itemStyle: {
-							borderRadius: 5,
-						},
-						data: [
-							{ name: '天气预警', value: 100 },
-							{ name: '病虫害预警', value: 50 },
-							{ name: '任务预警', value: 130 },
-							{ name: '监测设备预警', value: 62 },
-						],
-						label: {
-							color: '#c0d1f2',
-						},
-					},
-				],
-			};
-			myChart.setOption(option);
-			state.myCharts.push(myChart);
-		};
-		// 当前设备监测
-		const initRightChartData4 = () => {
-			const myChart = echarts.init(rightChartData4.value);
-			const option = {
-				grid: {
-					top: 10,
-					right: 10,
-					bottom: 20,
-					left: 30,
-				},
-				tooltip: {
-					trigger: 'axis',
-				},
-				xAxis: {
-					type: 'category',
-					boundaryGap: false,
-					data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-					axisLine: {
-						lineStyle: {
-							color: 'rgba(22, 207, 208, 0.1)',
-							width: 1,
-						},
-					},
-					axisTick: {
-						show: false,
-					},
-					axisLabel: {
-						interval: 0,
-						color: '#c0d1f2',
-						textStyle: {
-							fontSize: 10,
-						},
-					},
-				},
-				yAxis: [
-					{
-						type: 'value',
-						axisLabel: {
-							color: '#c0d1f2',
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								color: 'rgba(22, 207, 208, 0.3)',
-							},
-						},
-						splitArea: {
-							show: true,
-							areaStyle: {
-								color: 'rgba(22, 207, 208, 0.02)',
-							},
-						},
-						nameTextStyle: {
-							color: '#16cfd0',
-						},
-					},
-				],
-				series: [
-					{
-						name: '温度',
-						type: 'line',
-						smooth: true,
-						lineStyle: {
-							width: 0,
-						},
-						areaStyle: {
-							opacity: 0.8,
-							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-								{
-									offset: 0,
-									color: 'rgba(128, 255, 165)',
-								},
-								{
-									offset: 1,
-									color: 'rgba(1, 191, 236)',
-								},
-							]),
-						},
-						emphasis: {
-							focus: 'series',
-						},
-						data: [140, 232, 101, 264, 90, 70],
-					},
-				],
-			};
-			myChart.setOption(option);
-			state.myCharts.push(myChart);
-		};
-		// 近7天产品追溯扫码统计
-		const initRightChartData3 = () => {
-			const myChart = echarts.init(rightChartData3.value);
-			const option = {
-				grid: {
-					top: 10,
-					right: 0,
-					bottom: 20,
-					left: 30,
-				},
-				tooltip: {
-					trigger: 'axis',
-				},
-				xAxis: {
-					data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-					axisLine: {
-						lineStyle: {
-							color: 'rgba(22, 207, 208, 0.1)',
-							width: 1,
-						},
-					},
-					axisTick: {
-						show: false,
-					},
-					axisLabel: {
-						color: '#c0d1f2',
-					},
-				},
-				yAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: true,
-							lineStyle: {
-								color: 'rgba(22, 207, 208, 0.1)',
-							},
-						},
-						axisLabel: {
-							color: '#c0d1f2',
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								color: 'rgba(22, 207, 208, 0.3)',
-							},
-						},
-						splitArea: {
-							show: true,
-							areaStyle: {
-								color: 'rgba(22, 207, 208, 0.02)',
-							},
-						},
-						nameTextStyle: {
-							color: '#16cfd0',
-						},
-					},
-				],
-				series: [
-					{
-						name: '预购队列',
-						type: 'line',
-						data: [200, 85, 112, 275, 305, 415],
-						itemStyle: {
-							color: '#16cfd0',
-						},
-					},
-					{
-						name: '最新成交价',
-						type: 'line',
-						data: [50, 85, 22, 155, 170, 25],
-						itemStyle: {
-							color: '#febb50',
-						},
-					},
-				],
-			};
-			myChart.setOption(option);
-			state.myCharts.push(myChart);
-		};
-		// 当前任务统计
-		const initRightChartData6 = () => {
-			const myChart = echarts.init(rightChartData6.value);
-			const option = {
-				tooltip: {
-					trigger: 'axis',
-					axisPointer: {
-						type: 'shadow',
-					},
-				},
-				grid: {
-					top: 20,
-					right: 50,
-					bottom: 0,
-					left: 80,
-				},
-				xAxis: [
-					{
-						splitLine: {
-							show: false,
-						},
-						type: 'value',
-						show: false,
-					},
-				],
-				yAxis: [
-					{
-						splitLine: {
-							show: false,
-						},
-						axisLine: {
-							//y轴
-							show: false,
-						},
-						type: 'category',
-						axisTick: {
-							show: false,
-						},
-						inverse: true,
-						data: ['施肥任务完成率', '施药任务完成率', '农事任务完成率'],
-						axisLabel: {
-							color: '#A7D6F4',
-							fontSize: 12,
-						},
-					},
-				],
-				series: [
-					{
-						name: '标准化',
-						type: 'bar',
-						barWidth: 10, // 柱子宽度
-						label: {
-							show: true,
-							position: 'right', // 位置
-							color: '#A7D6F4',
-							fontSize: 12,
-							distance: 15, // 距离
-							formatter: '{c}%', // 这里是数据展示的时候显示的数据
-						}, // 柱子上方的数值
-						itemStyle: {
-							barBorderRadius: [0, 20, 20, 0], // 圆角（左上、右上、右下、左下）
-
-							color: new echarts.graphic.LinearGradient(
-								1,
-								0,
-								0,
-								0,
-								[
-									{
-										offset: 0,
-										color: '#51C5FD',
-									},
-									{
-										offset: 1,
-										color: '#005BB1',
-									},
-								],
-								false
-							), // 渐变
-						},
-						data: [75, 100, 60],
-					},
-				],
-			};
-			myChart.setOption(option);
-			state.myCharts.push(myChart);
-		};
-		// 近7天投入品记录
-		const initRightChartData2 = () => {
-			const myChart = echarts.init(rightChartData2.value);
-			const option = {
-				grid: {
-					top: 10,
-					right: 0,
-					bottom: 20,
-					left: 30,
-				},
-				tooltip: {
-					trigger: 'axis',
-					axisPointer: {
-						type: 'shadow',
-					},
-				},
-				xAxis: {
-					data: ['1月', '2月', '3月', '4月', '5月', '6月'],
-					axisLine: {
-						lineStyle: {
-							color: 'rgba(22, 207, 208, 0.5)',
-							width: 1,
-						},
-					},
-					axisTick: {
-						show: false,
-					},
-					axisLabel: {
-						color: '#c0d1f2',
-					},
-				},
-				yAxis: [
-					{
-						type: 'value',
-						axisLine: {
-							show: true,
-							lineStyle: {
-								color: 'rgba(22, 207, 208, 0.1)',
-							},
-						},
-						axisLabel: {
-							color: '#c0d1f2',
-						},
-						splitLine: {
-							show: true,
-							lineStyle: {
-								color: 'rgba(22, 207, 208, 0.3)',
-							},
-						},
-						splitArea: {
-							show: true,
-							areaStyle: {
-								color: 'rgba(22, 207, 208, 0.02)',
-							},
-						},
-						nameTextStyle: {
-							color: '#16cfd0',
-						},
-					},
-					{
-						type: 'value',
-						position: 'right',
-						axisLine: {
-							show: false,
-						},
-						axisLabel: {
-							show: true,
-							formatter: '{value}%',
-							textStyle: {
-								color: '#16cfd0',
-							},
-						},
-						splitLine: {
-							show: false,
-						},
-						axisTick: {
-							show: false,
-						},
-						splitArea: {
-							show: true,
-							areaStyle: {
-								color: 'rgba(22, 207, 208, 0.02)',
-							},
-						},
-						nameTextStyle: {
-							color: '#16cfd0',
-						},
-					},
-				],
-				series: [
-					{
-						name: '销售水量',
-						type: 'line',
-						yAxisIndex: 1,
-						smooth: true,
-						showAllSymbol: true,
-						symbol: 'circle',
-						itemStyle: {
-							color: '#058cff',
-						},
-						lineStyle: {
-							color: '#058cff',
-						},
-						areaStyle: {
-							color: 'rgba(5,140,255, 0.2)',
-						},
-						data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8],
-					},
-					{
-						name: '主营业务',
-						type: 'bar',
-						barWidth: 15,
-						itemStyle: {
-							normal: {
-								color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-									{
-										offset: 0,
-										color: '#00FFE3',
-									},
-									{
-										offset: 1,
-										color: '#4693EC',
-									},
-								]),
-							},
-						},
-						data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8],
-					},
-				],
-			};
-			myChart.setOption(option);
-			state.myCharts.push(myChart);
-		};
-		// 3DEarth 地图
-		const init3DEarth = (globeRadius) => {
-			let el = state.the3DEarth!;
-			el.style.height = `${rightChartData5.value.offsetHeight}px`;
-			const myChart = echarts.init(el);
-			const option = {
-				globe: {
-					baseTexture: worldImg,
-					heightTexture: bathymetryImg,
-					shading: 'realistic',
-					light: {
-						ambient: {
-							intensity: 0.4,
-						},
-						main: {
-							intensity: 0.4,
-						},
-					},
-					viewControl: {
-						autoRotate: true,
-					},
-					postEffect: {
-						enable: true,
-						bloom: {
-							enable: true,
-						},
-					},
-					globeRadius,
-				},
-				series: {
-					type: 'lines3D',
-					coordinateSystem: 'globe',
-					blendMode: 'lighter',
-					lineStyle: {
-						width: 1,
-						color: 'rgb(50, 50, 150)',
-						opacity: 0.1,
-					},
-					data: [],
-				},
-			};
-			// 随机模拟攻击线
-			let rodamData = function () {
-				let longitude = 105.18;
-				let longitude2 = Math.random() * 360 - 180;
-				let latitude = 37.51;
-				let latitude2 = Math.random() * 180 - 90;
-				return {
-					coords: [
-						[longitude2, latitude2],
-						[longitude, latitude],
-					],
-					value: (Math.random() * 3000).toFixed(2),
-				};
-			};
-			for (let i = 0; i < 150; i++) {
-				option.series.data = option.series.data.concat(rodamData());
-			}
-			myChart.setOption(option);
-		};
-		// 监听地球大小变化
-		const initAddEventListener3DEarth = () => {
-			let w = document.body.clientWidth;
-			let globeRadius = 0;
-			if (w >= 1920) globeRadius = 100;
-			else if (w > 1200 && w < 1920) globeRadius = 70;
-			else if (w > 992 && w < 1200) globeRadius = 60;
-			else if (w > 768 && w < 992) globeRadius = 40;
-			else if (w < 768) globeRadius = 20;
-			init3DEarth(globeRadius);
-		};
-		// 批量设置 echarts resize
-		const initEchartsResize = () => {
-			initAddEventListener3DEarth();
-			window.addEventListener('resize', () => {
-				for (let i = 0; i < state.myCharts.length; i++) {
-					state.myCharts[i].resize();
-				}
-				initAddEventListener3DEarth();
-			});
-		};
-		// 页面加载时
-		onMounted(async () => {
-			NextLoading.done();
-			initTime();
-			await initRightChartData1();
-			await initRightChartData4();
-			await initRightChartData3();
-			await initRightChartData2();
-			await initRightChartData6();
-			await initEchartsResize();
-		});
-		// 页面卸载时
-		onUnmounted(() => {
-			window.clearInterval(state.time.fun);
-		});
-		return {
-			rightChartData1,
-			rightChartData2,
-			rightChartData3,
-			rightChartData4,
-			rightChartData5,
-			rightChartData6,
-			...toRefs(state),
-		};
+// 定义变量内容
+const rightChartData1 = ref();
+const rightChartData2 = ref();
+const rightChartData3 = ref();
+const rightChartData4 = ref();
+const rightChartData5 = ref();
+const rightChartData6 = ref();
+const state = reactive<Demo2State>({
+	time: {
+		txt: '',
+		fun: 0,
 	},
+	dropdownList,
+	dropdownActive: '请选择',
+	skyList,
+	dBtnList,
+	chartData4Index: 0,
+	dBtnActive: 0,
+	earth3DBtnList,
+	chartData4List,
+	myCharts: [],
+	the3DEarth: null,
+});
+
+// 初始化时间
+const initTime = () => {
+	state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ ZZZ');
+	state.time.fun = window.setInterval(() => {
+		state.time.txt = formatDate(new Date(), 'YYYY-mm-dd HH:MM:SS WWW QQQQ ZZZ');
+	}, 1000);
+};
+// 近30天预警总数
+const initRightChartData1 = () => {
+	const myChart = echarts.init(rightChartData1.value);
+	const option = {
+		tooltip: {
+			trigger: 'item',
+		},
+		series: [
+			{
+				name: '面积模式',
+				type: 'pie',
+				radius: [10, 60],
+				center: ['50%', '50%'],
+				roseType: 'area',
+				itemStyle: {
+					borderRadius: 5,
+				},
+				data: [
+					{ name: '天气预警', value: 100 },
+					{ name: '病虫害预警', value: 50 },
+					{ name: '任务预警', value: 130 },
+					{ name: '监测设备预警', value: 62 },
+				],
+				label: {
+					color: '#c0d1f2',
+				},
+			},
+		],
+	};
+	myChart.setOption(option);
+	state.myCharts.push(myChart);
+};
+// 当前设备监测
+const initRightChartData4 = () => {
+	const myChart = echarts.init(rightChartData4.value);
+	const option = {
+		grid: {
+			top: 10,
+			right: 10,
+			bottom: 20,
+			left: 30,
+		},
+		tooltip: {
+			trigger: 'axis',
+		},
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+			axisLine: {
+				lineStyle: {
+					color: 'rgba(22, 207, 208, 0.1)',
+					width: 1,
+				},
+			},
+			axisTick: {
+				show: false,
+			},
+			axisLabel: {
+				interval: 0,
+				color: '#c0d1f2',
+				textStyle: {
+					fontSize: 10,
+				},
+			},
+		},
+		yAxis: [
+			{
+				type: 'value',
+				axisLabel: {
+					color: '#c0d1f2',
+				},
+				splitLine: {
+					show: true,
+					lineStyle: {
+						color: 'rgba(22, 207, 208, 0.3)',
+					},
+				},
+				splitArea: {
+					show: true,
+					areaStyle: {
+						color: 'rgba(22, 207, 208, 0.02)',
+					},
+				},
+				nameTextStyle: {
+					color: '#16cfd0',
+				},
+			},
+		],
+		series: [
+			{
+				name: '温度',
+				type: 'line',
+				smooth: true,
+				lineStyle: {
+					width: 0,
+				},
+				areaStyle: {
+					opacity: 0.8,
+					color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+						{
+							offset: 0,
+							color: 'rgba(128, 255, 165)',
+						},
+						{
+							offset: 1,
+							color: 'rgba(1, 191, 236)',
+						},
+					]),
+				},
+				emphasis: {
+					focus: 'series',
+				},
+				data: [140, 232, 101, 264, 90, 70],
+			},
+		],
+	};
+	myChart.setOption(option);
+	state.myCharts.push(myChart);
+};
+// 近7天产品追溯扫码统计
+const initRightChartData3 = () => {
+	const myChart = echarts.init(rightChartData3.value);
+	const option = {
+		grid: {
+			top: 10,
+			right: 0,
+			bottom: 20,
+			left: 30,
+		},
+		tooltip: {
+			trigger: 'axis',
+		},
+		xAxis: {
+			data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+			axisLine: {
+				lineStyle: {
+					color: 'rgba(22, 207, 208, 0.1)',
+					width: 1,
+				},
+			},
+			axisTick: {
+				show: false,
+			},
+			axisLabel: {
+				color: '#c0d1f2',
+			},
+		},
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true,
+					lineStyle: {
+						color: 'rgba(22, 207, 208, 0.1)',
+					},
+				},
+				axisLabel: {
+					color: '#c0d1f2',
+				},
+				splitLine: {
+					show: true,
+					lineStyle: {
+						color: 'rgba(22, 207, 208, 0.3)',
+					},
+				},
+				splitArea: {
+					show: true,
+					areaStyle: {
+						color: 'rgba(22, 207, 208, 0.02)',
+					},
+				},
+				nameTextStyle: {
+					color: '#16cfd0',
+				},
+			},
+		],
+		series: [
+			{
+				name: '预购队列',
+				type: 'line',
+				data: [200, 85, 112, 275, 305, 415],
+				itemStyle: {
+					color: '#16cfd0',
+				},
+			},
+			{
+				name: '最新成交价',
+				type: 'line',
+				data: [50, 85, 22, 155, 170, 25],
+				itemStyle: {
+					color: '#febb50',
+				},
+			},
+		],
+	};
+	myChart.setOption(option);
+	state.myCharts.push(myChart);
+};
+// 当前任务统计
+const initRightChartData6 = () => {
+	const myChart = echarts.init(rightChartData6.value);
+	const option = {
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow',
+			},
+		},
+		grid: {
+			top: 20,
+			right: 50,
+			bottom: 0,
+			left: 80,
+		},
+		xAxis: [
+			{
+				splitLine: {
+					show: false,
+				},
+				type: 'value',
+				show: false,
+			},
+		],
+		yAxis: [
+			{
+				splitLine: {
+					show: false,
+				},
+				axisLine: {
+					//y轴
+					show: false,
+				},
+				type: 'category',
+				axisTick: {
+					show: false,
+				},
+				inverse: true,
+				data: ['施肥任务完成率', '施药任务完成率', '农事任务完成率'],
+				axisLabel: {
+					color: '#A7D6F4',
+					fontSize: 12,
+				},
+			},
+		],
+		series: [
+			{
+				name: '标准化',
+				type: 'bar',
+				barWidth: 10, // 柱子宽度
+				label: {
+					show: true,
+					position: 'right', // 位置
+					color: '#A7D6F4',
+					fontSize: 12,
+					distance: 15, // 距离
+					formatter: '{c}%', // 这里是数据展示的时候显示的数据
+				}, // 柱子上方的数值
+				itemStyle: {
+					barBorderRadius: [0, 20, 20, 0], // 圆角（左上、右上、右下、左下）
+
+					color: new echarts.graphic.LinearGradient(
+						1,
+						0,
+						0,
+						0,
+						[
+							{
+								offset: 0,
+								color: '#51C5FD',
+							},
+							{
+								offset: 1,
+								color: '#005BB1',
+							},
+						],
+						false
+					), // 渐变
+				},
+				data: [75, 100, 60],
+			},
+		],
+	};
+	myChart.setOption(option);
+	state.myCharts.push(myChart);
+};
+// 近7天投入品记录
+const initRightChartData2 = () => {
+	const myChart = echarts.init(rightChartData2.value);
+	const option = {
+		grid: {
+			top: 10,
+			right: 0,
+			bottom: 20,
+			left: 30,
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'shadow',
+			},
+		},
+		xAxis: {
+			data: ['1月', '2月', '3月', '4月', '5月', '6月'],
+			axisLine: {
+				lineStyle: {
+					color: 'rgba(22, 207, 208, 0.5)',
+					width: 1,
+				},
+			},
+			axisTick: {
+				show: false,
+			},
+			axisLabel: {
+				color: '#c0d1f2',
+			},
+		},
+		yAxis: [
+			{
+				type: 'value',
+				axisLine: {
+					show: true,
+					lineStyle: {
+						color: 'rgba(22, 207, 208, 0.1)',
+					},
+				},
+				axisLabel: {
+					color: '#c0d1f2',
+				},
+				splitLine: {
+					show: true,
+					lineStyle: {
+						color: 'rgba(22, 207, 208, 0.3)',
+					},
+				},
+				splitArea: {
+					show: true,
+					areaStyle: {
+						color: 'rgba(22, 207, 208, 0.02)',
+					},
+				},
+				nameTextStyle: {
+					color: '#16cfd0',
+				},
+			},
+			{
+				type: 'value',
+				position: 'right',
+				axisLine: {
+					show: false,
+				},
+				axisLabel: {
+					show: true,
+					formatter: '{value}%',
+					textStyle: {
+						color: '#16cfd0',
+					},
+				},
+				splitLine: {
+					show: false,
+				},
+				axisTick: {
+					show: false,
+				},
+				splitArea: {
+					show: true,
+					areaStyle: {
+						color: 'rgba(22, 207, 208, 0.02)',
+					},
+				},
+				nameTextStyle: {
+					color: '#16cfd0',
+				},
+			},
+		],
+		series: [
+			{
+				name: '销售水量',
+				type: 'line',
+				yAxisIndex: 1,
+				smooth: true,
+				showAllSymbol: true,
+				symbol: 'circle',
+				itemStyle: {
+					color: '#058cff',
+				},
+				lineStyle: {
+					color: '#058cff',
+				},
+				areaStyle: {
+					color: 'rgba(5,140,255, 0.2)',
+				},
+				data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8],
+			},
+			{
+				name: '主营业务',
+				type: 'bar',
+				barWidth: 15,
+				itemStyle: {
+					normal: {
+						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+							{
+								offset: 0,
+								color: '#00FFE3',
+							},
+							{
+								offset: 1,
+								color: '#4693EC',
+							},
+						]),
+					},
+				},
+				data: [4.2, 3.8, 4.8, 3.5, 2.9, 2.8],
+			},
+		],
+	};
+	myChart.setOption(option);
+	state.myCharts.push(myChart);
+};
+// 3DEarth 地图
+const init3DEarth = (globeRadius: any) => {
+	let el = state.the3DEarth!;
+	el.style.height = `${rightChartData5.value.offsetHeight}px`;
+	const myChart = echarts.init(el);
+	const option = {
+		globe: {
+			baseTexture: worldImg,
+			heightTexture: bathymetryImg,
+			shading: 'realistic',
+			light: {
+				ambient: {
+					intensity: 0.4,
+				},
+				main: {
+					intensity: 0.4,
+				},
+			},
+			viewControl: {
+				autoRotate: true,
+			},
+			postEffect: {
+				enable: true,
+				bloom: {
+					enable: true,
+				},
+			},
+			globeRadius,
+		},
+		series: {
+			type: 'lines3D',
+			coordinateSystem: 'globe',
+			blendMode: 'lighter',
+			lineStyle: {
+				width: 1,
+				color: 'rgb(50, 50, 150)',
+				opacity: 0.1,
+			},
+			data: [],
+		},
+	};
+	// 随机模拟攻击线
+	let rodamData: any = function () {
+		let longitude = 105.18;
+		let longitude2 = Math.random() * 360 - 180;
+		let latitude = 37.51;
+		let latitude2 = Math.random() * 180 - 90;
+		return {
+			coords: [
+				[longitude2, latitude2],
+				[longitude, latitude],
+			],
+			value: (Math.random() * 3000).toFixed(2),
+		};
+	};
+	for (let i = 0; i < 150; i++) {
+		option.series.data = option.series.data.concat(rodamData());
+	}
+	myChart.setOption(option);
+};
+// 监听地球大小变化
+const initAddEventListener3DEarth = () => {
+	let w = document.body.clientWidth;
+	let globeRadius = 0;
+	if (w >= 1920) globeRadius = 100;
+	else if (w > 1200 && w < 1920) globeRadius = 70;
+	else if (w > 992 && w < 1200) globeRadius = 60;
+	else if (w > 768 && w < 992) globeRadius = 40;
+	else if (w < 768) globeRadius = 20;
+	init3DEarth(globeRadius);
+};
+// 批量设置 echarts resize
+const initEchartsResize = () => {
+	initAddEventListener3DEarth();
+	window.addEventListener('resize', () => {
+		for (let i = 0; i < state.myCharts.length; i++) {
+			state.myCharts[i].resize();
+		}
+		initAddEventListener3DEarth();
+	});
+};
+// 页面加载时
+onMounted(async () => {
+	NextLoading.done();
+	initTime();
+	await initRightChartData1();
+	await initRightChartData4();
+	await initRightChartData3();
+	await initRightChartData2();
+	await initRightChartData6();
+	await initEchartsResize();
+});
+// 页面卸载时
+onUnmounted(() => {
+	window.clearInterval(state.time.fun);
 });
 </script>
 

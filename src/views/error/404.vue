@@ -22,22 +22,15 @@
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts" name="notFound">
 import { useRouter } from 'vue-router';
 
-export default defineComponent({
-	name: '404',
-	setup() {
-		const router = useRouter();
-		const onGoHome = () => {
-			router.push('/');
-		};
-		return {
-			onGoHome,
-		};
-	},
-});
+// 定义变量内容
+const router = useRouter();
+
+const onGoHome = () => {
+	router.push('/');
+};
 </script>
 
 <style scoped lang="scss">

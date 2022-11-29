@@ -2,6 +2,20 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.4.0
+
+`2022.11.29`
+
+⚡⚡⚡ 此版为破坏性更新，应群友建议 `script lang="ts"` 改 `script lang="ts" setup 语法糖`。
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 表格封装演示，路径：`组件封装 -> 表格封装演示`
+- 🎉 新增 master 分支 script lang="ts" 改成 script lang="ts" setup 语法糖，将同步基础分支
+- 🐞 修复 [v2.3.0 版本报错问题处理](https://gitee.com/lyt-top/vue-next-admin/issues/I623RP)
+- 🐞 修复 [el-backtop 滚动高度不触发（固定了 header）](https://gitee.com/lyt-top/vue-next-admin/issues/I63N0D)，感谢[@dejavuuuuu](https://gitee.com/zc19951010)
+- 🎯 优化 完善 ts 类型，删除根目录 `plugins.d.ts、shim.d.ts、source.d.ts`，移入到 `/src/types/global.d.ts`
+- 🎯 优化 代码 `watch` 移动到 `生命周期钩子` 最后，文字注释等
+
 ## 2.3.0
 
 `2022.11.16`

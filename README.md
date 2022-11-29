@@ -22,7 +22,7 @@
 
 #### 🌈 介绍
 
-基于 vue3.x + CompositionAPI + typescript + vite + element plus + vue-router-next + next.vuex，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
+基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
 
 #### ⛱️ 线上预览
 
@@ -43,7 +43,7 @@
 
 | Edge      | Firefox      | Chrome      | Safari      |
 | --------- | ------------ | ----------- | ----------- |
-| Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 64 | Safari ≥ 12 |
+| Edge ≥ 79 | Firefox ≥ 78 | Chrome ≥ 72 | Safari ≥ 12 |
 
 > 由于 Vue3 不再支持 IE11，故而 ElementPlus 也不支持 IE11 及之前版本。
 
@@ -74,12 +74,12 @@ cnpm run build
 
 #### 💯 学习交流加 QQ 群
 
-- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！微信群由于只有 `7天有效` 就不放这里了。
-- 群号码：
-  1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
-  2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
-  3 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">795345435</a>
-  4 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">736626228</a>
+> 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！微信群由于只有 `7天有效` 就不放这里了。
+
+- 1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
+- 2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
+- 3 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">795345435</a>
+- 4 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">736626228</a>
 
   <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
   	<img src="https://img-blog.csdnimg.cn/35e00f12a3fe4820892ec630ca72f15f.png" width="220" height="220" alt="vue-next-admin 讨论群1" title="vue-next-admin 讨论群1"/>
@@ -113,7 +113,7 @@ cnpm run build
 - <a href="https://github.com/ElemeFE/element" target="_blank">element-ui</a>
 - <a href="https://github.com/element-plus/element-plus" target="_blank">element-plus</a>
 - <a href="https://github.com/vuejs/vue-router-next" target="_blank">vue-router-next</a>
-- <a href="https://github.com/vuejs/vuex" target="_blank">vuex</a>
+- <a href="https://github.com/vuejs/pinia" target="_blank">pinia</a>
 - <a href="https://github.com/apache/echarts" target="_blank">echarts</a>
 - <a href="https://github.com/axios/axios" target="_blank">axios</a>
 - <a href="https://github.com/zenorocha/clipboard.js" target="_blank">clipboard</a>
@@ -132,6 +132,7 @@ cnpm run build
 - <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
 - <a href="https://github.com/jsplumb/jsplumb" target="_blank">jsplumb</a>
+- <a href="https://github.com/hxj9102/table2excel" target="_blank">js-table2excel</a>
 
 #### 💕 特别感谢
 
