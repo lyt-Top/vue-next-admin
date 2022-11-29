@@ -284,3 +284,39 @@ declare type WorkflowDrawerState<T = any> = {
 	};
 	jsplumbConn: T;
 };
+
+/**
+ * views make
+ */
+// tableDemo
+declare type TableDemoPageType = {
+	pageNum: number;
+	pageSize: number;
+};
+
+declare type TableHeaderType = {
+	key: string;
+	width: string;
+	title: string;
+	type: string | number;
+	colWidth: string;
+	width?: string | number;
+	height?: string | number;
+	isCheck: boolean;
+};
+
+declare type TableDemoState = {
+	tableData: {
+		data: EmptyObjectType[];
+		header: TableHeaderType[];
+		param: EmptyObjectType;
+		config: {
+			total: number;
+			loading: boolean;
+			isBorder: boolean;
+			isSelection: boolean;
+			isSerialNo: boolean;
+			isOperate: boolean;
+		};
+	};
+};

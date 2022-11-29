@@ -937,6 +937,21 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							icon: 'fa fa-thumbs-o-up',
 						},
 					},
+					{
+						path: '/make/tableDemo',
+						name: 'makeTableDemo',
+						component: () => import('/@/views/make/tableDemo/index.vue'),
+						meta: {
+							title: 'message.router.makeTableDemo',
+							isLink: '',
+							isHide: false,
+							isKeepAlive: true,
+							isAffix: false,
+							isIframe: false,
+							roles: ['admin', 'common'],
+							icon: 'iconfont icon-shuju',
+						},
+					},
 				],
 			},
 			{

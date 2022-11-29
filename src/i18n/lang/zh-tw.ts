@@ -59,6 +59,7 @@ export default {
 		makeSelector: '圖標選擇器',
 		makeNoticeBar: '滾動通知欄',
 		makeSvgDemo: 'svgIcon 演示',
+		makeTableDemo: '表格封裝演示',
 		paramsIndex: '路由參數',
 		paramsCommon: '普通路由',
 		paramsDynamic: '動態路由',

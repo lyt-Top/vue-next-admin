@@ -132,6 +132,7 @@ cnpm run build
 - <a href="https://github.com/jbaysolutions/vue-grid-layout" target="_blank">vue-grid-layout</a>
 - <a href="https://github.com/antoniandre/splitpanes" target="_blank">splitpanes</a>
 - <a href="https://github.com/jsplumb/jsplumb" target="_blank">jsplumb</a>
+- <a href="https://github.com/hxj9102/table2excel" target="_blank">js-table2excel</a>
 
 #### 💕 特别感谢
 

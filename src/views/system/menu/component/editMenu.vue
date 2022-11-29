@@ -190,7 +190,6 @@ const getMenuData = (routes: RouteItems) => {
 	const arr: RouteItems = [];
 	routes.map((val: RouteItem) => {
 		val['title'] = i18n.global.t(val.meta?.title as string);
-		val['id'] = Math.random();
 		arr.push({ ...val });
 		if (val.children) getMenuData(val.children);
 	});

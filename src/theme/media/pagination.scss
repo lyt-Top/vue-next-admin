@@ -7,9 +7,9 @@
 	.el-pagination__jump {
 		display: none !important;
 	}
-}
-
-// 默认居中对齐
-.el-pagination {
-	text-align: center !important;
+	// 默认居中对齐
+	.el-pagination,
+	.table-footer {
+		justify-content: center !important;
+	}
 }

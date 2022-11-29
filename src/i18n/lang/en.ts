@@ -59,6 +59,7 @@ export default {
 		makeSelector: 'Icon selector',
 		makeNoticeBar: 'notification bar',
 		makeSvgDemo: 'Svgicon demo',
+		makeTableDemo: 'table demo',
 		paramsIndex: 'Routing parameters',
 		paramsCommon: 'General routing',
 		paramsDynamic: 'Dynamic routing',

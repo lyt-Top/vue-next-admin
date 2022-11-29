@@ -67,6 +67,11 @@ const setCollapseStyle = computed(() => {
 		}
 	}
 });
+// 设置显示/隐藏 logo
+const setShowLogo = computed(() => {
+	let { layout, isShowLogo } = themeConfig.value;
+	return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
+});
 // 关闭移动端蒙版
 const closeLayoutAsideMobileMode = () => {
 	const el = document.querySelector('.layout-aside-mobile-mode');
@@ -78,11 +83,6 @@ const closeLayoutAsideMobileMode = () => {
 	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
 	document.body.setAttribute('class', '');
 };
-// 设置显示/隐藏 logo
-const setShowLogo = computed(() => {
-	let { layout, isShowLogo } = themeConfig.value;
-	return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
-});
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
 	if (themeConfig.value.layout === 'columns') return false;

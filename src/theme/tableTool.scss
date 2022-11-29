@@ -1,0 +1,25 @@
+.table-tool-popper {
+	padding: 0 !important;
+	.tool-box {
+		display: flex;
+		border-bottom: 1px solid var(--el-border-color-lighter);
+		box-sizing: border-box;
+		color: var(--el-text-color-primary);
+		height: 40px;
+		align-items: center;
+	}
+	.tool-item {
+		display: flex;
+		box-sizing: border-box;
+		color: var(--el-text-color-primary);
+		height: 35px;
+		align-items: center;
+		padding: var(--el-popover-padding);
+		&:hover {
+			background: var(--el-fill-color-lighter);
+		}
+		i {
+			opacity: 0.7;
+		}
+	}
+}
