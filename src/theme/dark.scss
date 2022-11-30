@@ -58,6 +58,7 @@
 	--el-fill-color-light: var(--next-color-hover-rgba) !important;
 	--el-bg-color-overlay: var(--el-color-primary-light-9) !important;
 	--el-mask-color: rgb(42 42 42 / 80%);
+	--el-fill-color-lighter: var(--next-color-hover-rgba) !important;
 
 	// button
 	.el-button {
@@ -166,6 +167,12 @@
 	.el-pagination.is-background .btn-prev,
 	.el-pagination.is-background .el-pager li {
 		background-color: var(--next-bg-color);
+	}
+	/*深色模式时分页高亮问题*/
+	.el-pagination.is-background .btn-next.is-active,
+	.el-pagination.is-background .btn-prev.is-active,
+	.el-pagination.is-background .el-pager li.is-active {
+		color: var(--next-color-white) !important;
 	}
 
 	// radio

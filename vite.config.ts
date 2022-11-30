@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue';
 import { resolve } from 'path';
 import { defineConfig, loadEnv, ConfigEnv } from 'vite';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 
 const pathResolve = (dir: string): any => {
 	return resolve(__dirname, '.', dir);
@@ -13,7 +14,7 @@ const alias: Record<string, string> = {
 const viteConfig = defineConfig((mode: ConfigEnv) => {
 	const env = loadEnv(mode.mode, process.cwd());
 	return {
-		plugins: [vue()],
+		plugins: [vue(), vueSetupExtend()],
 		root: process.cwd(),
 		resolve: { alias },
 		base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
@@ -48,6 +49,9 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 			},
 		},
 		css: { preprocessorOptions: { css: { charset: false } } },
+		define: {
+			__VERSION__: JSON.stringify(process.env.npm_package_version),
+		},
 	};
 });
 

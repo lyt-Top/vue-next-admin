@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { ThemeConfigStates, ThemeConfigState } from './interface';
 
 /**
  * 布局配置
@@ -10,7 +9,7 @@ import { ThemeConfigStates, ThemeConfigState } from './interface';
  * 2、或者点击布局配置最底部 `一键恢复默认` 按钮即可看到效果
  */
 export const useThemeConfig = defineStore('themeConfig', {
-	state: (): ThemeConfigStates => ({
+	state: (): ThemeConfigState => ({
 		themeConfig: {
 			// 是否开启布局配置抽屉
 			isDrawer: false,
@@ -92,11 +91,11 @@ export const useThemeConfig = defineStore('themeConfig', {
 			// 是否开启 Footer 底部版权信息
 			isFooter: true,
 			// 是否开启灰色模式
-			isGrayscale: false,
+			isGrayscale: true,
 			// 是否开启色弱模式
 			isInvert: false,
 			// 是否开启水印
-			isWartermark: true,
+			isWartermark: false,
 			// 水印文案
 			wartermarkText: 'vue-next-admin',
 
@@ -144,7 +143,7 @@ export const useThemeConfig = defineStore('themeConfig', {
 	}),
 	actions: {
 		setThemeConfig(data: ThemeConfigState) {
-			this.themeConfig = data;
+			this.themeConfig = data.themeConfig;
 		},
 	},
 });

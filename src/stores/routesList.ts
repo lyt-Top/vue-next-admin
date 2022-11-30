@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { RoutesListState } from './interface';
 
 /**
  * 路由列表

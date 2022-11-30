@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { RequestOldRoutesState } from './interface';
 
 /**
  * 后端返回原始路由(未处理时)

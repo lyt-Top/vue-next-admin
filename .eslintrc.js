@@ -13,19 +13,31 @@ module.exports = {
 	},
 	extends: ['plugin:vue/vue3-essential', 'plugin:vue/essential', 'eslint:recommended'],
 	plugins: ['vue', '@typescript-eslint'],
+	overrides: [
+		{
+			files: ['*.ts', '*.tsx', '*.vue'],
+			rules: {
+				'no-undef': 'off',
+			},
+		},
+	],
 	rules: {
 		// http://eslint.cn/docs/rules/
 		// https://eslint.vuejs.org/rules/
-		'@type-eslint/ban-ts-ignore': 'off',
-		'@type-eslint/explicit-function-return-type': 'off',
-		'@type-eslint/no-explicit-any': 'off',
-		'@type-eslint/no-var-requires': 'off',
-		'@type-eslint/no-empty-function': 'off',
-		'@type-eslint/no-use-before-define': 'off',
-		'@type-eslint/ban-ts-comment': 'off',
-		'@type-eslint/ban-types': 'off',
-		'@type-eslint/no-non-null-assertion': 'off',
-		'@type-eslint/explicit-module-boundary-types': 'off',
+		// https://typescript-eslint.io/rules/no-unused-vars/
+		'@typescript-eslint/ban-ts-ignore': 'off',
+		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-explicit-any': 'off',
+		'@typescript-eslint/no-var-requires': 'off',
+		'@typescript-eslint/no-empty-function': 'off',
+		'@typescript-eslint/no-use-before-define': 'off',
+		'@typescript-eslint/ban-ts-comment': 'off',
+		'@typescript-eslint/ban-types': 'off',
+		'@typescript-eslint/no-non-null-assertion': 'off',
+		'@typescript-eslint/explicit-module-boundary-types': 'off',
+		'@typescript-eslint/no-redeclare': 'error',
+		'@typescript-eslint/no-non-null-asserted-optional-chain': 'off',
+		'@typescript-eslint/no-unused-vars': [2],
 		'vue/custom-event-name-casing': 'off',
 		'vue/attributes-order': 'off',
 		'vue/one-component-per-file': 'off',
@@ -59,5 +71,6 @@ module.exports = {
 		'no-v-model-argument': 'off',
 		'no-case-declarations': 'off',
 		'no-console': 'error',
+		'no-redeclare': 'off',
 	},
 };

@@ -35,10 +35,10 @@ export const NextLoading = {
 	done: (time: number = 0) => {
 		nextTick(() => {
 			setTimeout(() => {
-			window.nextLoading = false;
-			const el = <HTMLElement>document.querySelector('.loading-next');
-			el?.parentNode?.removeChild(el);
-			});
-		}, time);
+				window.nextLoading = false;
+				const el = <HTMLElement>document.querySelector('.loading-next');
+				el?.parentNode?.removeChild(el);
+			}, time);
+		});
 	},
 };

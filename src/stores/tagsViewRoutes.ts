@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { TagsViewRoutesState } from './interface';
 import { Session } from '/@/utils/storage';
 
 /**
