@@ -50,7 +50,6 @@
 		"eslint-plugin-vue": "^9.8.0",
 		"prettier": "^2.8.0",
 		"sass": "^1.56.1",
-		"sass-loader": "^13.2.0",
 		"typescript": "^4.9.3",
 		"vite": "^3.2.4",
 		"vite-plugin-vue-setup-extend": "^0.4.0",
@@ -65,8 +64,8 @@
 		"url": "https://gitee.com/lyt-top/vue-next-admin/issues"
 	},
 	"engines": {
-		"node": ">=12.0.0",
-		"npm": ">= 6.0.0"
+		"node": ">=14.0.0",
+		"npm": ">= 7.0.0"
 	},
 	"keywords": [
 		"vue",

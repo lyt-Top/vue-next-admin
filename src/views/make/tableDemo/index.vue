@@ -100,7 +100,6 @@ const onTablePageChange = (page: TableDemoPageType) => {
 const onSortHeader = (data: TableHeaderType[]) => {
 	state.tableData.header = data;
 };
-
 // 页面加载时
 onMounted(() => {
 	getTableData();
