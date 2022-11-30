@@ -28,6 +28,7 @@ import { useRouter } from 'vue-router';
 // 定义变量内容
 const router = useRouter();
 
+// 返回首页
 const onGoHome = () => {
 	router.push('/');
 };
