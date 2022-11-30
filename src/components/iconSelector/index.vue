@@ -71,7 +71,7 @@
 <script setup lang="ts" name="iconSelector">
 import { ref, reactive, onMounted, nextTick, computed, watch } from 'vue';
 import initIconfont from '/@/utils/getStyleSheets';
-import '/@/theme/iconSelector';
+import '/@/theme/iconSelector.scss';
 
 // 定义父组件传过来的值
 const props = defineProps({
