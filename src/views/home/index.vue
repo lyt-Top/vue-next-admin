@@ -66,7 +66,7 @@
 </template>
 
 <script setup lang="ts" name="home">
-import { reactive, onMounted, ref, watch, nextTick, onActivated } from 'vue';
+import { reactive, onMounted, ref, watch, nextTick, onActivated, markRaw } from 'vue';
 import * as echarts from 'echarts';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
@@ -192,7 +192,7 @@ const state = reactive({
 // 折线图
 const initLineChart = () => {
 	if (!state.global.dispose.some((b: any) => b === state.global.homeChartOne)) state.global.homeChartOne.dispose();
-	state.global.homeChartOne = echarts.init(homeLineRef.value, state.charts.theme);
+	state.global.homeChartOne = markRaw(echarts.init(homeLineRef.value, state.charts.theme));
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {
@@ -274,7 +274,7 @@ const initLineChart = () => {
 // 饼图
 const initPieChart = () => {
 	if (!state.global.dispose.some((b: any) => b === state.global.homeChartTwo)) state.global.homeChartTwo.dispose();
-	state.global.homeChartTwo = echarts.init(homePieRef.value, state.charts.theme);
+	state.global.homeChartTwo = markRaw(echarts.init(homePieRef.value, state.charts.theme));
 	var getname = ['房屋及结构物', '专用设备', '通用设备', '文物和陈列品', '图书、档案'];
 	var getvalue = [34.2, 38.87, 17.88, 9.05, 2.05];
 	var data = [];
@@ -359,7 +359,7 @@ const initPieChart = () => {
 // 柱状图
 const initBarChart = () => {
 	if (!state.global.dispose.some((b: any) => b === state.global.homeCharThree)) state.global.homeCharThree.dispose();
-	state.global.homeCharThree = echarts.init(homeBarRef.value, state.charts.theme);
+	state.global.homeCharThree = markRaw(echarts.init(homeBarRef.value, state.charts.theme));
 	const option = {
 		backgroundColor: state.charts.bgColor,
 		title: {

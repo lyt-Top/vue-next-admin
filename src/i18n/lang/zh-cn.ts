@@ -180,4 +180,12 @@ export default {
 		copyTextSuccess: '复制成功！',
 		copyTextError: '复制失败！',
 	},
+	upgrade: {
+		title: '新版本升级',
+		msg: '新版本来啦，马上更新尝鲜吧！不用担心，更新很快的哦！',
+		desc: '提示：更新会还原默认配置',
+		btnOne: '残忍拒绝',
+		btnTwo: '马上更新',
+		btnTwoLoading: '更新中',
+	},
 };

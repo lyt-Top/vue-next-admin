@@ -2,6 +2,13 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.4.1
+
+`2022.11.30`
+
+- 🎉 新增 版本升级提示
+- 🐞 修复 [先打开 F12 再登录进去，然后改变浏览器大小 js 报错](https://gitee.com/lyt-top/vue-next-admin/issues/I63ZZT)，感谢[@Quber](https://gitee.com/quber)
+
 ## 2.4.0
 
 `2022.11.29`
