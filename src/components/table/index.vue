@@ -21,7 +21,7 @@
 				:label="item.title"
 			>
 				<template v-slot="scope">
-					<template v-if="item.key === 'image'">
+					<template v-if="item.type === 'image'">
 						<img :src="scope.row[item.key]" :width="item.width" :height="item.height" />
 					</template>
 					<template v-else>
