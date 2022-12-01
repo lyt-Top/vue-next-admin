@@ -5,21 +5,22 @@ import { formatDate } from '/@/utils/formatTime';
 
 export default function () {
 	const { toClipboard } = useClipboard();
-	//百分比格式化
+
+	// 百分比格式化
 	const percentFormat = (row, column, cellValue) => {
 		return cellValue ? `${cellValue}%` : '-';
 	};
-	//列表日期时间格式化
+	// 列表日期时间格式化
 	const dateFormatYMD = (row, column, cellValue) => {
 		if (!cellValue) return '-';
 		return formatDate(new Date(cellValue), 'YYYY-mm-dd');
 	};
-	//列表日期时间格式化
+	// 列表日期时间格式化
 	const dateFormatYMDHMS = (row, column, cellValue) => {
 		if (!cellValue) return '-';
 		return formatDate(new Date(cellValue), 'YYYY-mm-dd HH:MM:SS');
 	};
-	//列表日期时间格式化
+	// 列表日期时间格式化
 	const dateFormatHMS = (row, column, cellValue) => {
 		if (!cellValue) return '-';
 		let time = 0;
@@ -39,14 +40,14 @@ export default function () {
 	const copyText = (text) => {
 		return new Promise((resolve, reject) => {
 			try {
-				//复制
+				// 复制
 				toClipboard(text);
-				//下面可以设置复制成功的提示框等操作
-				ElMessage.success('复制成功！');
+				// 下面可以设置复制成功的提示框等操作
+				ElMessage.success('复制成功!');
 				resolve(text);
 			} catch (e) {
-				//复制失败
-				ElMessage.error('复制失败！');
+				// 复制失败
+				ElMessage.error('复制失败!');
 				reject(e);
 			}
 		});

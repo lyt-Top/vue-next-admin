@@ -11,7 +11,9 @@
 <script setup name="loginScan">
 import QRCode from 'qrcodejs2-fixes';
 
+// 定义变量内容
 const qrcodeRef = ref(null);
+
 // 初始化生成二维码
 const initQrcode = () => {
 	nextTick(() => {

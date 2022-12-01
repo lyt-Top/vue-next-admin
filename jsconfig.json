@@ -4,17 +4,18 @@
 		"module": "esnext",
 		"lib": ["esnext", "dom", "dom.iterable", "scripthost"],
 		"jsx": "preserve",
+		"isolatedModules": true,
+		"strict": true,
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
+		"moduleResolution": "node",
 		"baseUrl": ".",
 		"types": ["vite/client"],
 		"paths": {
 			"/@/*": ["src/*"]
-		},
-		"moduleResolution": "node",
-		"strict": true
+		}
 	}
 }

@@ -6,9 +6,9 @@
 			</div>
 			<template #dropdown>
 				<el-dropdown-menu>
-					<el-dropdown-item command="medium" :disabled="state.disabledSize === 'large'">大型</el-dropdown-item>
-					<el-dropdown-item command="small" :disabled="state.disabledSize === 'default'">默认</el-dropdown-item>
-					<el-dropdown-item command="mini" :disabled="state.disabledSize === 'small'">小型</el-dropdown-item>
+					<el-dropdown-item command="large" :disabled="state.disabledSize === 'large'">大型</el-dropdown-item>
+					<el-dropdown-item command="default" :disabled="state.disabledSize === 'default'">默认</el-dropdown-item>
+					<el-dropdown-item command="small" :disabled="state.disabledSize === 'small'">小型</el-dropdown-item>
 				</el-dropdown-menu>
 			</template>
 		</el-dropdown>
@@ -66,15 +66,17 @@
 <script setup name="layoutBreadcrumbUser">
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
-import { Session, Local } from '/@/utils/storage';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
+import { Session, Local } from '/@/utils/storage';
 
+// 引入组件
 const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
 const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
 
+// 定义变量内容
 const router = useRouter();
 const stores = useUserInfo();
 const storesThemeConfig = useThemeConfig();
@@ -83,9 +85,9 @@ const { themeConfig } = storeToRefs(storesThemeConfig);
 const searchRef = ref();
 const state = reactive({
 	isScreenfull: false,
-	isShowUserNewsPopover: false,
-	disabledSize: '',
+	disabledSize: 'large',
 });
+
 // 设置分割样式
 const layoutUserFlexNum = computed(() => {
 	let num = '';
@@ -163,7 +165,6 @@ const onComponentSizeChange = (size) => {
 	initI18nOrSize('globalComponentSize', 'disabledSize');
 	window.location.reload();
 };
-
 // 初始化组件大小/i18n
 const initI18nOrSize = (value, attr) => {
 	state[attr] = Local.get('themeConfig')[value];

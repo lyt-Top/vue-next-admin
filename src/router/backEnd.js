@@ -1,5 +1,5 @@
 import { storeToRefs } from 'pinia';
-import pinia from '../stores/index';
+import pinia from '/@/stores/index';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useRequestOldRoutes } from '/@/stores/requestOldRoutes';
 import { Session } from '/@/utils/storage';
@@ -10,18 +10,18 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useMenuApi } from '/@/api/menu/index';
 
-const menuApi = useMenuApi();
-
-const layouModules = import.meta.glob('../layout/routerView/*.{vue,tsx}');
-const viewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
-
 // 后端控制路由
+
+// 引入 api 请求接口
+const menuApi = useMenuApi();
 
 /**
  * 获取目录下的 .vue、.tsx 全部文件
  * @method import.meta.glob
  * @link 参考：https://cn.vitejs.dev/guide/features.html#json
  */
+const layouModules = import.meta.glob('../layout/routerView/*.{vue,tsx}');
+const viewsModules = import.meta.glob('../views/**/*.{vue,tsx}');
 const dynamicViewsModules = Object.assign({}, { ...layouModules }, { ...viewsModules });
 
 /**
@@ -30,9 +30,8 @@ const dynamicViewsModules = Object.assign({}, { ...layouModules }, { ...viewsMod
  * @method useUserInfo().setUserInfos() 触发初始化用户信息 pinia
  * @method useRequestOldRoutes().setRequestOldRoutes() 存储接口原始路由（未处理component），根据需求选择使用
  * @method setAddRoute 添加动态路由
- * @method setFilterMenuAndCacheTagsViewRoutes 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+ * @method setFilterMenuAndCacheTagsViewRoutes 设置路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
  */
-
 export async function initBackEndControlRoutes() {
 	// 界面 loading 动画开始执行
 	if (window.nextLoading === undefined) NextLoading.start();
@@ -49,12 +48,12 @@ export async function initBackEndControlRoutes() {
 	dynamicRoutes[0].children = await backEndComponent(res.data);
 	// 添加动态路由
 	await setAddRoute();
-	// 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+	// 设置路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
 	await setFilterMenuAndCacheTagsViewRoutes();
 }
 
 /**
- * 设置路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+ * 设置路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
  * @description 用于左侧菜单、横向菜单的显示
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */
@@ -109,9 +108,9 @@ export function getBackEndControlRoutes() {
 	const { userInfos } = storeToRefs(stores);
 	const auth = userInfos.value.roles[0];
 	// 管理员 admin
-	if (auth === 'admin') return menuApi.getMenuAdmin();
+	if (auth === 'admin') return menuApi.getAdminMenu();
 	// 其它用户 test
-	else return menuApi.getMenuTest();
+	else return menuApi.getTestMenu();
 }
 
 /**

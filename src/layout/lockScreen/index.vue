@@ -1,16 +1,16 @@
 <template>
-	<div v-show="isShowLockScreen">
+	<div v-show="state.isShowLockScreen">
 		<div class="layout-lock-screen-mask"></div>
 		<div class="layout-lock-screen-img" :class="{ 'layout-lock-screen-filter': state.isShowLoockLogin }"></div>
 		<div class="layout-lock-screen">
 			<div
 				class="layout-lock-screen-date"
 				ref="layoutLockScreenDateRef"
-				@mousedown="onDown"
-				@mousemove="onMove"
+				@mousedown="onDownPc"
+				@mousemove="onMovePc"
 				@mouseup="onEnd"
-				@touchstart.stop="onDown"
-				@touchmove.stop="onMove"
+				@touchstart.stop="onDownApp"
+				@touchmove.stop="onMoveApp"
 				@touchend.stop="onEnd"
 			>
 				<div class="layout-lock-screen-date-box">
@@ -60,14 +60,16 @@
 </template>
 
 <script setup name="layoutLockScreen">
-import { storeToRefs } from 'pinia';
-import { useThemeConfig } from '/@/stores/themeConfig';
 import { formatDate } from '/@/utils/formatTime';
 import { Local } from '/@/utils/storage';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '/@/stores/themeConfig';
 
+// 定义变量内容
+const layoutLockScreenDateRef = ref();
+const layoutLockScreenInputRef = ref();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
-const layoutLockScreenInputRef = ref();
 const state = reactive({
 	transparency: 1,
 	downClientY: 0,
@@ -85,21 +87,32 @@ const state = reactive({
 	isShowLockScreenIntervalTime: 0,
 	lockScreenPassword: '',
 });
-// 鼠标按下
-const onDown = (down) => {
+
+// 鼠标按下 pc
+const onDownPc = (down) => {
 	state.isFlags = true;
-	state.downClientY = down.touches ? down.touches[0].clientY : down.clientY;
+	state.downClientY = down.clientY;
 };
-// 鼠标移动
-const onMove = (move) => {
+// 鼠标按下 app
+const onDownApp = (down) => {
+	state.isFlags = true;
+	state.downClientY = down.touches[0].clientY;
+};
+// 鼠标移动 pc
+const onMovePc = (move) => {
+	state.moveDifference = move.clientY - state.downClientY;
+	onMove();
+};
+// 鼠标移动 app
+const onMoveApp = (move) => {
+	state.moveDifference = move.touches[0].clientY - state.downClientY;
+	onMove();
+};
+// 鼠标移动事件
+const onMove = () => {
 	if (state.isFlags) {
 		const el = state.querySelectorEl;
 		const opacitys = (state.transparency -= 1 / 200);
-		if (move.touches) {
-			state.moveDifference = move.touches[0].clientY - state.downClientY;
-		} else {
-			state.moveDifference = move.clientY - state.downClientY;
-		}
 		if (state.moveDifference >= 0) return false;
 		el.setAttribute('style', `top:${state.moveDifference}px;cursor:pointer;opacity:${opacitys};`);
 		if (state.moveDifference < -400) {

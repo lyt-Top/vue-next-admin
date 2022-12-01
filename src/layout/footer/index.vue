@@ -2,12 +2,14 @@
 	<div class="layout-footer pb15">
 		<div class="layout-footer-warp">
 			<div>vue-next-admin，Made by lyt with ❤️</div>
-			<div class="mt5">版权所有：深圳市xxx软件科技有限公司</div>
+			<div class="mt5">深圳市 xxx 公司版权所有</div>
 		</div>
 	</div>
 </template>
 
-<script setup name="layoutFooter"></script>
+<script setup name="layoutFooter">
+// 此处需有内容（注释也得），否则缓存将失败
+</script>
 
 <style scoped lang="scss">
 .layout-footer {

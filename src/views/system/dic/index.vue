@@ -57,9 +57,11 @@
 <script setup name="systemDic">
 import { ElMessageBox, ElMessage } from 'element-plus';
 
+// 引入组件
 const AddDic = defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue'));
 const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue'));
 
+// 定义变量内容
 const addDicRef = ref();
 const editDicRef = ref();
 const state = reactive({
@@ -73,6 +75,7 @@ const state = reactive({
 		},
 	},
 });
+
 // 初始化表格数据
 const initTableData = () => {
 	const data = [];
@@ -83,6 +86,7 @@ const initTableData = () => {
 			describe: i === 0 ? '这是角色字典' : '这是用户性别字典',
 			status: true,
 			createTime: new Date().toLocaleString(),
+			list: [],
 		});
 	}
 	state.tableData.data = data;

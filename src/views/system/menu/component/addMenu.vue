@@ -65,7 +65,7 @@
 									v-model="state.ruleForm.meta.isLink"
 									placeholder="外链/内嵌时链接地址（http:xxx.com）"
 									clearable
-									:disabled="state.ruleForm.isLink === '' || !state.ruleForm.isLink"
+									:disabled="!state.ruleForm.isLink"
 								>
 								</el-input>
 							</el-form-item>
@@ -148,9 +148,12 @@
 <script setup name="systemAddMenu">
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
-import IconSelector from '/@/components/iconSelector/index.vue';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 
+// 引入组件
+const IconSelector = defineAsyncComponent(() => import('/@/components/iconSelector/index.vue'));
+
+// 定义变量内容
 const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
 const state = reactive({
@@ -173,17 +176,18 @@ const state = reactive({
 			isAffix: false, // 是否固定
 			isLink: '', // 外链/内嵌时链接地址（http:xxx.com），开启外链条件，`1、isLink: 链接地址不为空`
 			isIframe: false, // 是否内嵌，开启条件，`1、isIframe:true 2、isLink：链接地址不为空`
+			roles: '', // 权限标识，取角色管理
 		},
 		btnPower: '', // 菜单类型为按钮时，权限标识
 	},
 	menuData: [], // 上级菜单数据
 });
-// 获取 vuex 中的路由
+
+// 获取 pinia 中的路由
 const getMenuData = (routes) => {
 	const arr = [];
 	routes.map((val) => {
-		val['title'] = val.meta.title;
-		val['id'] = Math.random();
+		val['title'] = val.meta?.title;
 		arr.push({ ...val });
 		if (val.children) getMenuData(val.children);
 	});
@@ -199,11 +203,8 @@ const closeDialog = () => {
 };
 // 是否内嵌下拉改变
 const onSelectIframeChange = () => {
-	if (state.ruleForm.meta.isIframe) {
-		state.ruleForm.isLink = true;
-	} else {
-		state.ruleForm.isLink = '';
-	}
+	if (state.ruleForm.meta.isIframe) state.ruleForm.isLink = true;
+	else state.ruleForm.isLink = false;
 };
 // 取消
 const onCancel = () => {

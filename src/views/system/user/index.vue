@@ -17,7 +17,7 @@
 				</el-button>
 			</div>
 			<el-table :data="state.tableData.data" style="width: 100%">
-				<el-table-column type="index" label="序号" width="50" />
+				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="userName" label="账户名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="userNickname" label="用户昵称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="关联角色" show-overflow-tooltip></el-table-column>
@@ -61,9 +61,11 @@
 <script setup name="systemUser">
 import { ElMessageBox, ElMessage } from 'element-plus';
 
+// 引入组件
 const AddUer = defineAsyncComponent(() => import('/@/views/system/user/component/addUser.vue'));
 const EditUser = defineAsyncComponent(() => import('/@/views/system/user/component/editUser.vue'));
 
+// 定义变量内容
 const addUserRef = ref();
 const editUserRef = ref();
 const state = reactive({
@@ -77,6 +79,7 @@ const state = reactive({
 		},
 	},
 });
+
 // 初始化表格数据
 const initTableData = () => {
 	const data = [];
@@ -132,3 +135,17 @@ onMounted(() => {
 	initTableData();
 });
 </script>
+
+<style scoped lang="scss">
+.system-user-container {
+	:deep(.el-card__body) {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		overflow: auto;
+		.el-table {
+			flex: 1;
+		}
+	}
+}
+</style>

@@ -18,6 +18,7 @@ export const useUserInfo = defineStore('userInfo', {
 	}),
 	actions: {
 		async setUserInfos() {
+			// 存储用户信息到浏览器缓存
 			if (Session.get('userInfo')) {
 				this.userInfos = Session.get('userInfo');
 			} else {
@@ -62,8 +63,6 @@ export const useUserInfo = defineStore('userInfo', {
 						roles: defaultRoles,
 						authBtnList: defaultAuthBtnList,
 					};
-					// 存储用户信息到浏览器缓存
-					Session.set('userInfo', userInfos);
 					resolve(userInfos);
 				}, 0);
 			});

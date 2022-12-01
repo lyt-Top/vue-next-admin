@@ -56,6 +56,9 @@ const viteConfig = defineConfig((mode) => {
 			},
 		},
 		css: { preprocessorOptions: { css: { charset: false } } },
+		define: {
+			__VERSION__: JSON.stringify(process.env.npm_package_version),
+		},
 	};
 });
 

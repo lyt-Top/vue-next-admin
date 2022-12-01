@@ -4,6 +4,7 @@
 		<LockScreen v-if="themeConfig.isLockScreen" />
 		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
 		<CloseFull v-if="!themeConfig.isLockScreen" />
+		<Upgrade v-if="getVersion" />
 	</el-config-provider>
 </template>
 
@@ -17,15 +18,27 @@ import { Local, Session } from '/@/utils/storage';
 import setIntroduction from '/@/utils/setIconfont';
 import mittBus from './utils/mitt';
 
+// 引入组件
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
 const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
 const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
+const Upgrade = defineAsyncComponent(() => import('/@/layout/upgrade/index.vue'));
 
+// 定义变量内容
 const setingsRef = ref();
 const route = useRoute();
 const stores = useTagsViewRoutes();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
+
+// 获取版本号
+const getVersion = computed(() => {
+	let isVersion = false;
+	if (route.path !== '/login') {
+		if ((Local.get('version') && Local.get('version') !== __VERSION__) || !Local.get('version')) isVersion = true;
+	}
+	return isVersion;
+});
 // 获取全局组件大小
 const getGlobalComponentSize = computed(() => {
 	return other.globalComponentSize();
@@ -46,7 +59,7 @@ onMounted(() => {
 		});
 		// 获取缓存中的布局配置
 		if (Local.get('themeConfig')) {
-			storesThemeConfig.setThemeConfig(Local.get('themeConfig'));
+			storesThemeConfig.setThemeConfig({ themeConfig: Local.get('themeConfig') });
 			document.documentElement.style.cssText = Local.get('themeConfigStyle');
 		}
 		// 获取缓存中的全屏配置

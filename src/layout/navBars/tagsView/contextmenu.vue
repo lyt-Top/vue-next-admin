@@ -30,6 +30,7 @@
 </template>
 
 <script setup name="layoutTagsViewContextmenu">
+// 定义父组件传过来的值
 const props = defineProps({
 	dropdown: {
 		type: Object,
@@ -41,7 +42,11 @@ const props = defineProps({
 		},
 	},
 });
+
+// 定义子组件向父组件传值/事件
 const emit = defineEmits(['currentContextmenuClick']);
+
+// 定义变量内容
 const state = reactive({
 	isShow: false,
 	dropdownList: [
@@ -54,6 +59,7 @@ const state = reactive({
 	item: {},
 	arrowLeft: 10,
 });
+
 // 父级传过来的坐标 x,y 值
 const dropdowns = computed(() => {
 	// 117 为 `Dropdown 下拉菜单` 的宽度
@@ -73,7 +79,7 @@ const onCurrentContextmenuClick = (contextMenuClickId) => {
 // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
 const openContextmenu = (item) => {
 	state.item = item;
-	item.meta.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
+	item.meta?.isAffix ? (state.dropdownList[1].affix = true) : (state.dropdownList[1].affix = false);
 	closeContextmenu();
 	setTimeout(() => {
 		state.isShow = true;

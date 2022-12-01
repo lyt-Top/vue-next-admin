@@ -7,7 +7,7 @@
 			@click="onThemeConfigChange"
 		/>
 		<el-breadcrumb class="layout-navbars-breadcrumb-hide">
-			<transition-group name="breadcrumb" mode="out-in">
+			<transition-group name="breadcrumb">
 				<el-breadcrumb-item v-for="(v, k) in state.breadcrumbList" :key="!v.meta.tagsViewName ? v.meta.title : v.meta.tagsViewName">
 					<span v-if="k === state.breadcrumbList.length - 1" class="layout-navbars-breadcrumb-span">
 						<SvgIcon :name="v.meta.icon" class="layout-navbars-breadcrumb-iconfont" v-if="themeConfig.isBreadcrumbIcon" />
@@ -30,8 +30,8 @@ import other from '/@/utils/other';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useRoutesList } from '/@/stores/routesList';
-Local;
 
+// 定义变量内容
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -44,6 +44,7 @@ const state = reactive({
 	routeSplitFirst: '',
 	routeSplitIndex: 1,
 });
+
 // 动态设置经典、横向布局不显示
 const isShowBreadcrumb = computed(() => {
 	initRouteSplit(route.path);
@@ -111,7 +112,6 @@ onBeforeRouteUpdate((to) => {
 	.layout-navbars-breadcrumb-icon {
 		cursor: pointer;
 		font-size: 18px;
-		margin-right: 15px;
 		color: var(--next-bg-topBarColor);
 		height: 100%;
 		width: 40px;

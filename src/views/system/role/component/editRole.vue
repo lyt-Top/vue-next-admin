@@ -58,6 +58,7 @@
 </template>
 
 <script setup name="systemEditRole">
+// 定义变量内容
 const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
@@ -73,6 +74,7 @@ const state = reactive({
 		label: 'label',
 	},
 });
+
 // 打开弹窗
 const openDialog = (row) => {
 	state.ruleForm = row;

@@ -54,6 +54,7 @@ import { Session } from '/@/utils/storage';
 import { formatAxis } from '/@/utils/formatTime';
 import { NextLoading } from '/@/utils/loading';
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const route = useRoute();
@@ -69,6 +70,7 @@ const state = reactive({
 		signIn: false,
 	},
 });
+
 // 时间获取
 const currentTime = computed(() => {
 	return formatAxis(new Date());

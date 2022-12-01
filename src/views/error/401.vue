@@ -22,7 +22,7 @@
 	</div>
 </template>
 
-<script setup name="401">
+<script setup name="noPower">
 import { Session } from '/@/utils/storage';
 
 // 重新授权

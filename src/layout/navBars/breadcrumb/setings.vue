@@ -413,7 +413,7 @@
 import { ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import { getLightColor, getDarkColor } from '/@/utils/theme';
+import { useChangeColor } from '/@/utils/theme';
 import { verifyAndSpace } from '/@/utils/toolsValidate';
 import { Local } from '/@/utils/storage';
 import Watermark from '/@/utils/wartermark';
@@ -421,12 +421,15 @@ import commonFunction from '/@/utils/commonFunction';
 import other from '/@/utils/other';
 import mittBus from '/@/utils/mitt';
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
+const { getLightColor, getDarkColor } = useChangeColor();
 const state = reactive({
 	isMobile: false,
 });
+
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
@@ -445,7 +448,7 @@ const onColorPickerChange = () => {
 };
 // 2、菜单 / 顶栏
 const onBgColorPickerChange = (bg) => {
-	document.documentElement.style.setProperty(`--next-bg-${bg}`, getThemeConfig.value[bg]);
+	document.documentElement.style.setProperty(`--next-bg-${bg}`, themeConfig.value[bg]);
 	if (bg === 'menuBar') {
 		document.documentElement.style.setProperty(`--next-bg-menuBar-light-1`, getLightColor(getThemeConfig.value.menuBar, 0.05));
 	}
@@ -552,6 +555,7 @@ const onWartermarkTextInput = (val) => {
 // 5、布局切换
 const onSetLayout = (layout) => {
 	Local.set('oldLayout', layout);
+	if (getThemeConfig.value.layout === layout) return false;
 	if (layout === 'transverse') getThemeConfig.value.isCollapse = false;
 	getThemeConfig.value.layout = layout;
 	getThemeConfig.value.isDrawer = false;
@@ -566,7 +570,7 @@ const initLayoutChangeFun = () => {
 	onBgColorPickerChange('columnsMenuBar');
 	onBgColorPickerChange('columnsMenuBarColor');
 };
-// 关闭弹窗时，初始化变量。变量用于处理 layoutScrollbarRef.value.update()
+// 关闭弹窗时，初始化变量。变量用于处理 layoutScrollbarRef.value.update() 更新滚动条高度
 const onDrawerClose = () => {
 	getThemeConfig.value.isFixedHeaderChange = false;
 	getThemeConfig.value.isShowLogoChange = false;
@@ -603,6 +607,8 @@ const onCopyConfigClick = () => {
 const onResetConfigClick = () => {
 	Local.clear();
 	window.location.reload();
+	// @ts-ignore
+	Local.set('version', __VERSION__);
 };
 // 初始化菜单样式等
 const initSetStyle = () => {
@@ -732,7 +738,7 @@ defineExpose({
 						line-height: 1;
 						letter-spacing: 2px;
 						white-space: nowrap;
-						color: var(--el-color-primary-light-4);
+						color: var(--el-color-primary-light-5);
 						text-align: center;
 						transform: rotate(30deg);
 						left: -1px;

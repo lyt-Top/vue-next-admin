@@ -21,6 +21,7 @@
 </template>
 
 <script setup name="layoutBreadcrumbUserNews">
+// 定义变量内容
 const state = reactive({
 	newsList: [
 		{
@@ -35,6 +36,7 @@ const state = reactive({
 		},
 	],
 });
+
 // 全部已读点击
 const onAllReadClick = () => {
 	state.newsList = [];
@@ -73,9 +75,9 @@ const onGoToGiteeClick = () => {
 				padding-bottom: 12px;
 			}
 			.content-box-msg {
+				color: var(--el-text-color-secondary);
 				margin-top: 5px;
 				margin-bottom: 5px;
-				color: var(--el-text-color-secondary);
 			}
 			.content-box-time {
 				color: var(--el-text-color-secondary);

@@ -25,25 +25,23 @@
 </template>
 
 <script setup name="navMenuSubItem">
-import { useRouter } from 'vue-router';
-import { verifyUrl } from '/@/utils/toolsValidate';
+import other from '/@/utils/other';
 
+// 定义父组件传过来的值
 const props = defineProps({
+	// 菜单列表
 	chil: {
 		type: Array,
 		default: () => [],
 	},
 });
-const router = useRouter();
+
 // 获取父级菜单数据
 const chils = computed(() => {
 	return props.chil;
 });
 // 打开外部链接
 const onALinkClick = (val) => {
-	const { origin, pathname } = window.location;
-	router.push(val.path);
-	if (verifyUrl(val.meta.isLink)) window.open(val.meta.isLink);
-	else window.open(`${origin}${pathname}#${val.meta.isLink}`);
+	other.handleOpenLink(val);
 };
 </script>

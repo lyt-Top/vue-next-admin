@@ -50,16 +50,19 @@ import logoMini from '/@/assets/logo-mini.svg';
 import loginMain from '/@/assets/login-main.svg';
 import loginBg from '/@/assets/login-bg.svg';
 
+// 引入组件
 const Account = defineAsyncComponent(() => import('/@/views/login/component/account.vue'));
 const Mobile = defineAsyncComponent(() => import('/@/views/login/component/mobile.vue'));
 const Scan = defineAsyncComponent(() => import('/@/views/login/component/scan.vue'));
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	tabsActiveName: 'account',
 	isScan: false,
 });
+
 // 获取布局配置信息
 const getThemeConfig = computed(() => {
 	return themeConfig.value;
@@ -202,6 +205,7 @@ onMounted(() => {
 					letter-spacing: 3px;
 					animation: logoAnimation 0.3s ease;
 					animation-delay: 0.3s;
+					color: var(--el-text-color-primary);
 				}
 				.login-right-warp-main-form {
 					flex: 1;

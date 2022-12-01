@@ -1,14 +1,14 @@
 <template>
-	<component :is="layouts[themeConfig.layout]"></component>
+	<component :is="layouts[themeConfig.layout]" />
 </template>
 
 <script setup name="layout">
-import { defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const layouts = {
 	defaults: defineAsyncComponent(() => import('/@/layout/main/defaults.vue')),
 	classic: defineAsyncComponent(() => import('/@/layout/main/classic.vue')),
@@ -16,8 +16,10 @@ const layouts = {
 	columns: defineAsyncComponent(() => import('/@/layout/main/columns.vue')),
 };
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
+
 // 窗口大小改变时(适配移动端)
 const onLayoutResize = () => {
 	if (!Local.get('oldLayout')) Local.set('oldLayout', themeConfig.value.layout);

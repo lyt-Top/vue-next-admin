@@ -32,6 +32,7 @@
 </template>
 
 <script setup name="loginMobile">
+// 定义变量内容
 const state = reactive({
 	ruleForm: {
 		userName: '',

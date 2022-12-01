@@ -67,7 +67,8 @@
 	</div>
 </template>
 
-<script setup name="logsystemEditDeptin">
+<script setup name="systemEditDept">
+// 定义变量内容
 const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
@@ -82,6 +83,7 @@ const state = reactive({
 	},
 	deptData: [], // 部门数据
 });
+
 // 打开弹窗
 const openDialog = (row) => {
 	row.deptLevel = ['vueNextAdmin'];
@@ -109,7 +111,7 @@ const initTableData = () => {
 		deptName: 'vueNextAdmin',
 		createTime: new Date().toLocaleString(),
 		status: true,
-		sort: Number.parseInt(Math.random()),
+		sort: Math.random(),
 		describe: '顶级部门',
 		id: Math.random(),
 		children: [
@@ -117,7 +119,7 @@ const initTableData = () => {
 				deptName: 'IT外包服务',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '总部',
 				id: Math.random(),
 			},
@@ -125,7 +127,7 @@ const initTableData = () => {
 				deptName: '资本控股',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '分部',
 				id: Math.random(),
 			},

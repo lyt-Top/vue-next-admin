@@ -46,7 +46,7 @@
 				</el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="small" text type="primary" @click="onOpenAddMenu(scope.row)">新增</el-button>
+						<el-button size="small" text type="primary" @click="onOpenAddMenu">新增</el-button>
 						<el-button size="small" text type="primary" @click="onOpenEditMenu(scope.row)">修改</el-button>
 						<el-button size="small" text type="primary" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
@@ -59,17 +59,20 @@
 </template>
 
 <script setup name="systemMenu">
+import { ElMessageBox, ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
-import { ElMessageBox, ElMessage } from 'element-plus';
 
+// 引入组件
 const AddMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/addMenu.vue'));
 const EditMenu = defineAsyncComponent(() => import('/@/views/system/menu/component/editMenu.vue'));
 
-const addMenuRef = ref();
-const editMenuRef = ref();
+// 定义变量内容
 const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
+const addMenuRef = ref();
+const editMenuRef = ref();
+
 // 获取 pinia 中的路由
 const menuTableData = computed(() => {
 	return routesList.value;

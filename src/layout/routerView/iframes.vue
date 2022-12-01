@@ -20,26 +20,33 @@
 	</div>
 </template>
 
-<script setup name="layoutIfameView">
+<script setup name="layoutIframeView">
+// 定义父组件传过来的值
 const props = defineProps({
+	// 刷新 iframe
 	refreshKey: {
 		type: String,
 		default: () => '',
 	},
+	// 过渡动画 name
 	name: {
 		type: String,
 		default: () => 'slide-right',
 	},
+	// iframe 列表
 	list: {
 		type: Array,
 		default: () => [],
 	},
 });
+
+// 定义变量内容
 const iframeRef = ref();
 const route = useRoute();
+
 // 处理 list 列表，当打开时，才进行加载
 const setIframeList = computed(() => {
-	return props.list.filter((v) => v.meta.isIframeOpen);
+	return props.list.filter((v) => v.meta?.isIframeOpen);
 });
 // 获取 iframe 当前路由 path
 const getRoutePath = computed(() => {
@@ -52,7 +59,7 @@ const closeIframeLoading = (val, item) => {
 		iframeRef.value.forEach((v) => {
 			if (v.dataset.url === val) {
 				v.onload = () => {
-					if (item.meta.isIframeOpen && item.meta.loading) item.meta.loading = false;
+					if (item.meta?.isIframeOpen && item.meta.loading) item.meta.loading = false;
 				};
 			}
 		});

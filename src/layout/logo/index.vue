@@ -9,12 +9,14 @@
 </template>
 
 <script setup name="layoutLogo">
-import logoMini from '/@/assets/logo-mini.svg';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import logoMini from '/@/assets/logo-mini.svg';
 
+// 定义变量内容
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
+
 // 设置 logo 的显示。classic 经典布局默认显示 logo
 const setShowLogo = computed(() => {
 	let { isCollapse, layout } = themeConfig.value;

@@ -20,8 +20,10 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { Session } from '/@/utils/storage';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const Iframes = defineAsyncComponent(() => import('/@/layout/routerView/iframes.vue'));
 
+// 定义变量内容
 const route = useRoute();
 const router = useRouter();
 const storesKeepAliveNames = useKeepALiveNames();
@@ -34,6 +36,7 @@ const state = reactive({
 	keepAliveNameList: [],
 	iframeList: [],
 });
+
 // 设置主界面切换动画
 const setTransitionName = computed(() => {
 	return themeConfig.value.animation;
@@ -69,7 +72,8 @@ onBeforeMount(() => {
 			state.keepAliveNameList = keepAliveNames.value;
 		});
 	});
-}); // 页面加载时
+});
+// 页面加载时
 onMounted(() => {
 	getIframeListRoutes();
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I58U75
@@ -82,7 +86,7 @@ onMounted(() => {
 });
 // 页面卸载时
 onUnmounted(() => {
-	mittBus.off('onTagsViewRefreshRouterView');
+	mittBus.off('onTagsViewRefreshRouterView', () => {});
 });
 // 监听路由变化，防止 tagsView 多标签时，切换动画消失
 // https://toscode.gitee.com/lyt-top/vue-next-admin/pulls/38/files

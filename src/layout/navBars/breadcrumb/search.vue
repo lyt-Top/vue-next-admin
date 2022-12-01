@@ -31,6 +31,7 @@
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
+// 定义变量内容
 const storesTagsViewRoutes = useTagsViewRoutes();
 const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
 const layoutMenuAutocompleteRef = ref();
@@ -40,6 +41,7 @@ const state = reactive({
 	menuQuery: '',
 	tagsViewList: [],
 });
+
 // 搜索弹窗打开
 const openSearch = () => {
 	state.menuQuery = '';
@@ -74,13 +76,13 @@ const createFilter = (queryString) => {
 const initTageView = () => {
 	if (state.tagsViewList.length > 0) return false;
 	tagsViewRoutes.value.map((v) => {
-		if (!v.meta.isHide) state.tagsViewList.push({ ...v });
+		if (!v.meta?.isHide) state.tagsViewList.push({ ...v });
 	});
 };
 // 当前菜单选中时
 const onHandleSelect = (item) => {
 	let { path, redirect } = item;
-	if (item.meta.isLink && !item.meta.isIframe) window.open(item.meta.isLink);
+	if (item.meta?.isLink && !item.meta?.isIframe) window.open(item.meta?.isLink);
 	else if (redirect) router.push(redirect);
 	else router.push(path);
 	closeSearch();
@@ -94,6 +96,7 @@ defineExpose({
 
 <style scoped lang="scss">
 .layout-search-dialog {
+	position: relative;
 	:deep(.el-dialog) {
 		.el-dialog__header,
 		.el-dialog__body {

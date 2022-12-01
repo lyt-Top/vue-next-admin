@@ -1,11 +1,13 @@
-import { nextTick } from 'vue';
+import { nextTick, defineAsyncComponent } from 'vue';
 import * as svg from '@element-plus/icons-vue';
 import router from '/@/router/index';
 import pinia from '../stores/index';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';
-import SvgIcon from '/@/components/svgIcon/index.vue';
+
+// 引入组件
+const SvgIcon = defineAsyncComponent(() => import('/@/components/svgIcon/index.vue'));
 
 /**
  * 导出全局注册 element plus svg 图标
@@ -151,6 +153,17 @@ export function handleEmpty(list) {
 }
 
 /**
+ * 打开外部链接
+ * @param val 当前点击项菜单
+ */
+export function handleOpenLink(val) {
+	const { origin, pathname } = window.location;
+	router.push(val.path);
+	if (verifyUrl(val.meta?.isLink)) window.open(val.meta?.isLink);
+	else window.open(`${origin}${pathname}#${val.meta?.isLink}`);
+}
+
+/**
  * 统一批量导出
  * @method elSvg 导出全局注册 element plus svg 图标
  * @method useTitle 设置浏览器标题国际化
@@ -160,6 +173,7 @@ export function handleEmpty(list) {
  * @method deepClone 对象深克隆
  * @method isMobile 判断是否是移动端
  * @method handleEmpty 判断数组对象中所有属性是否为空，为空则删除当前行对象
+ * @method handleOpenLink 打开外部链接
  */
 const other = {
 	elSvg: (app) => {
@@ -185,6 +199,9 @@ const other = {
 	},
 	handleEmpty: (list) => {
 		return handleEmpty(list);
+	},
+	handleOpenLink: (val) => {
+		handleOpenLink(val);
 	},
 };
 

@@ -51,6 +51,7 @@
 </template>
 
 <script setup name="systemAddRole">
+// 定义变量内容
 const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
@@ -66,6 +67,7 @@ const state = reactive({
 		label: 'label',
 	},
 });
+
 // 打开弹窗
 const openDialog = () => {
 	state.isShowDialog = true;

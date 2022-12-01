@@ -10,6 +10,7 @@
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 
+// 定义变量内容
 const stores = useTagsViewRoutes();
 const { isTagsViewCurrenFull } = storeToRefs(stores);
 
@@ -29,7 +30,6 @@ const onCloseFullscreen = () => {
 		width: 60px;
 		height: 60px;
 		border-radius: 100%;
-		position: relative;
 		cursor: pointer;
 		background: rgba(0, 0, 0, 0.1);
 		transition: all 0.3s ease;
@@ -41,12 +41,12 @@ const onCloseFullscreen = () => {
 			color: #333333;
 			transition: all 0.3s ease;
 		}
-		&:hover {
+	}
+	&:hover {
+		transition: all 0.3s ease;
+		:deep(i) {
+			color: var(--el-color-primary);
 			transition: all 0.3s ease;
-			:deep(i) {
-				color: var(--el-color-primary);
-				transition: all 0.3s ease;
-			}
 		}
 	}
 }

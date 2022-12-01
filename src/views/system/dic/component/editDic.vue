@@ -11,7 +11,7 @@
 					</el-col>
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字段名">
-							<el-input v-model="state.ruleForm.fieldName" placeholder="请输入字段名，拼接 state.ruleForm.list" clearable></el-input>
+							<el-input v-model="state.ruleForm.fieldName" placeholder="请输入字段名，拼接 ruleForm.list" clearable></el-input>
 						</el-form-item>
 					</el-col>
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
@@ -64,24 +64,18 @@
 </template>
 
 <script setup name="systemEditDic">
+// 定义变量内容
 const state = reactive({
 	isShowDialog: false,
 	ruleForm: {
 		dicName: '', // 字典名称
 		fieldName: '', // 字段名
 		status: true, // 字典状态
-		list: [
-			// 子集字段 + 属性值
-			{
-				id: Math.random(),
-				label: '',
-				value: '',
-			},
-		],
+		list: [], // 子集字段 + 属性值
 		describe: '', // 字典描述
-		fieldNameList: [], // 字段名: [{子集字段 + 属性值}]
 	},
 });
+
 // 打开弹窗
 const openDialog = (row) => {
 	if (row.fieldName === 'SYS_UERINFO') {

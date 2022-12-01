@@ -1,7 +1,7 @@
 import { storeToRefs } from 'pinia';
 import { formatTwoStageRoutes, formatFlatteningRoutes, router } from '/@/router/index';
 import { dynamicRoutes, notFoundAndNoPower } from '/@/router/route';
-import pinia from '../stores/index';
+import pinia from '/@/stores/index';
 import { Session } from '/@/utils/storage';
 import { useUserInfo } from '/@/stores/userInfo';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
@@ -15,7 +15,7 @@ import { NextLoading } from '/@/utils/loading';
  * @method  NextLoading 界面 loading 动画开始执行
  * @method useUserInfo(pinia).setUserInfos() 触发初始化用户信息 pinia
  * @method setAddRoute 添加动态路由
- * @method setFilterMenuAndCacheTagsViewRoutes 设置递归过滤有权限的路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+ * @method setFilterMenuAndCacheTagsViewRoutes 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
  */
 export async function initFrontEndControlRoutes() {
 	// 界面 loading 动画开始执行
@@ -27,7 +27,7 @@ export async function initFrontEndControlRoutes() {
 	await useUserInfo(pinia).setUserInfos();
 	// 添加动态路由
 	await setAddRoute();
-	// 设置递归过滤有权限的路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+	// 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
 	await setFilterMenuAndCacheTagsViewRoutes();
 }
 
@@ -107,7 +107,7 @@ export function setCacheTagsViewRoutes() {
 }
 
 /**
- * 设置递归过滤有权限的路由到 vuex routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
+ * 设置递归过滤有权限的路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
  * @description 用于左侧菜单、横向菜单的显示
  * @description 用于 tagsView、菜单搜索中：未过滤隐藏的(isHide)
  */

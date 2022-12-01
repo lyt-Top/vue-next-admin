@@ -15,16 +15,19 @@
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
+// 引入组件
 const LayoutAside = defineAsyncComponent(() => import('/@/layout/component/aside.vue'));
 const LayoutHeader = defineAsyncComponent(() => import('/@/layout/component/header.vue'));
 const LayoutMain = defineAsyncComponent(() => import('/@/layout/component/main.vue'));
 const ColumnsAside = defineAsyncComponent(() => import('/@/layout/component/columnsAside.vue'));
 
+// 定义变量内容
 const layoutScrollbarRef = ref('');
-const layoutMainRef = ref('');
+const layoutMainRef = ref();
 const route = useRoute();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
+
 // 重置滚动条高度
 const updateScrollbar = () => {
 	// 更新父级 scrollbar
@@ -37,11 +40,15 @@ const initScrollBarHeight = () => {
 	nextTick(() => {
 		setTimeout(() => {
 			updateScrollbar();
-			layoutScrollbarRef.value.wrap$.scrollTop = 0;
-			layoutMainRef.value.layoutMainScrollbarRef.wrap$.scrollTop = 0;
+			layoutScrollbarRef.value.wrapRef.scrollTop = 0;
+			layoutMainRef.value.layoutMainScrollbarRef.wrapRef.scrollTop = 0;
 		}, 500);
 	});
 };
+// 页面加载时
+onMounted(() => {
+	initScrollBarHeight();
+});
 // 监听路由的变化，切换界面时，滚动条置顶
 watch(
 	() => route.path,
@@ -59,8 +66,4 @@ watch(
 		deep: true,
 	}
 );
-// 页面加载时
-onMounted(() => {
-	initScrollBarHeight();
-});
 </script>

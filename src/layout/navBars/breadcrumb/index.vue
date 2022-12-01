@@ -13,11 +13,13 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
 const User = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue'));
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Horizontal = defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue'));
 
+// 定义变量内容
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
@@ -26,6 +28,7 @@ const route = useRoute();
 const state = reactive({
 	menuList: [],
 });
+
 // 设置 logo 显示/隐藏
 const setIsShowLogo = computed(() => {
 	let { isShowLogo, layout } = themeConfig.value;
@@ -57,7 +60,7 @@ const delClassicChildren = (arr) => {
 // 路由过滤递归函数
 const filterRoutesFun = (arr) => {
 	return arr
-		.filter((item) => !item.meta.isHide)
+		.filter((item) => !item.meta?.isHide)
 		.map((item) => {
 			item = Object.assign({}, item);
 			if (item.children) item.children = filterRoutesFun(item.children);
@@ -67,11 +70,11 @@ const filterRoutesFun = (arr) => {
 // 传送当前子级数据到菜单中
 const setSendClassicChildren = (path) => {
 	const currentPathSplit = path.split('/');
-	let currentData = {};
+	let currentData = { children: [] };
 	filterRoutesFun(routesList.value).map((v, k) => {
 		if (v.path === `/${currentPathSplit[1]}`) {
 			v['k'] = k;
-			currentData['item'] = [{ ...v }];
+			currentData['item'] = { ...v };
 			currentData['children'] = [{ ...v }];
 			if (v.children) currentData['children'] = v.children;
 		}

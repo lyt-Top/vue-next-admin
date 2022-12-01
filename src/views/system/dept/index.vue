@@ -54,9 +54,11 @@
 <script setup name="systemDept">
 import { ElMessageBox, ElMessage } from 'element-plus';
 
+// 引入组件
 const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
 const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
 
+// 定义变量内容
 const addDeptRef = ref();
 const editDeptRef = ref();
 const state = reactive({
@@ -70,13 +72,14 @@ const state = reactive({
 		},
 	},
 });
+
 // 初始化表格数据
 const initTableData = () => {
 	state.tableData.data.push({
 		deptName: 'vueNextAdmin',
 		createTime: new Date().toLocaleString(),
 		status: true,
-		sort: Number.parseInt(Math.random()),
+		sort: Math.random(),
 		describe: '顶级部门',
 		id: Math.random(),
 		children: [
@@ -84,7 +87,7 @@ const initTableData = () => {
 				deptName: 'IT外包服务',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '总部',
 				id: Math.random(),
 			},
@@ -92,7 +95,7 @@ const initTableData = () => {
 				deptName: '资本控股',
 				createTime: new Date().toLocaleString(),
 				status: true,
-				sort: Number.parseInt(Math.random()),
+				sort: Math.random(),
 				describe: '分部',
 				id: Math.random(),
 			},

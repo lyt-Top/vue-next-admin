@@ -17,9 +17,11 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import mittBus from '/@/utils/mitt';
 
+// 引入组件
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Vertical = defineAsyncComponent(() => import('/@/layout/navMenu/vertical.vue'));
 
+// 定义变量内容
 const layoutAsideScrollbarRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
@@ -29,8 +31,9 @@ const { themeConfig } = storeToRefs(storesThemeConfig);
 const { isTagsViewCurrenFull } = storeToRefs(storesTagsViewRoutes);
 const state = reactive({
 	menuList: [],
-	clientWidth: '',
+	clientWidth: 0,
 });
+
 // 设置菜单展开/收起时的宽度
 const setCollapseStyle = computed(() => {
 	const { layout, isCollapse, menuBar } = themeConfig.value;
@@ -63,19 +66,22 @@ const setCollapseStyle = computed(() => {
 		}
 	}
 });
-// 关闭移动端蒙版
-const closeLayoutAsideMobileMode = () => {
-	const el = document.querySelector('.layout-aside-mobile-mode');
-	el && el.parentNode?.removeChild(el);
-	const clientWidth = document.body.clientWidth;
-	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
-	document.body.setAttribute('class', '');
-};
 // 设置显示/隐藏 logo
 const setShowLogo = computed(() => {
 	let { layout, isShowLogo } = themeConfig.value;
 	return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
 });
+// 关闭移动端蒙版
+const closeLayoutAsideMobileMode = () => {
+	const el = document.querySelector('.layout-aside-mobile-mode');
+	el?.setAttribute('style', 'animation: error-img-two 0.3s');
+	setTimeout(() => {
+		el?.parentNode?.removeChild(el);
+	}, 300);
+	const clientWidth = document.body.clientWidth;
+	if (clientWidth < 1000) themeConfig.value.isCollapse = false;
+	document.body.setAttribute('class', '');
+};
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
 	if (themeConfig.value.layout === 'columns') return false;
@@ -84,7 +90,7 @@ const setFilterRoutes = () => {
 // 路由过滤递归函数
 const filterRoutesFun = (arr) => {
 	return arr
-		.filter((item) => !item.meta.isHide)
+		.filter((item) => !item.meta?.isHide)
 		.map((item) => {
 			item = Object.assign({}, item);
 			if (item.children) item.children = filterRoutesFun(item.children);
@@ -102,24 +108,6 @@ const onAsideEnterLeave = (bool) => {
 	if (!bool) mittBus.emit('restoreDefault');
 	stores.setColumnsMenuHover(bool);
 };
-// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-watch(themeConfig.value, (val) => {
-	if (val.isShowLogoChange !== val.isShowLogo) {
-		if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
-	}
-});
-// 监听vuex值的变化，动态赋值给菜单中
-watch(
-	pinia.state,
-	(val) => {
-		let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
-		if (layout === 'classic' && isClassicSplitMenu) return false;
-		setFilterRoutes();
-	},
-	{
-		deep: true,
-	}
-);
 // 页面加载前
 onBeforeMount(() => {
 	initMenuFixed(document.body.clientWidth);
@@ -144,4 +132,22 @@ onBeforeMount(() => {
 		closeLayoutAsideMobileMode();
 	});
 });
+// 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
+watch(themeConfig.value, (val) => {
+	if (val.isShowLogoChange !== val.isShowLogo) {
+		if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
+	}
+});
+// 监听 pinia 值的变化，动态赋值给菜单中
+watch(
+	pinia.state,
+	(val) => {
+		let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
+		if (layout === 'classic' && isClassicSplitMenu) return false;
+		setFilterRoutes();
+	},
+	{
+		deep: true,
+	}
+);
 </script>

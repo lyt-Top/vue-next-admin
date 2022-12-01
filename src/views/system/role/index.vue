@@ -2,7 +2,7 @@
 	<div class="system-role-container layout-padding">
 		<div class="system-role-padding layout-padding-auto layout-padding-view">
 			<div class="system-user-search mb15">
-				<el-input size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
+				<el-input v-model="state.tableData.param.search" size="default" placeholder="请输入角色名称" style="max-width: 180px"> </el-input>
 				<el-button size="default" type="primary" class="ml10">
 					<el-icon>
 						<ele-Search />
@@ -17,7 +17,7 @@
 				</el-button>
 			</div>
 			<el-table :data="state.tableData.data" style="width: 100%">
-				<el-table-column type="index" label="序号" width="50" />
+				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="roleName" label="角色名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="角色标识" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="sort" label="排序" show-overflow-tooltip></el-table-column>
@@ -51,18 +51,20 @@
 				:total="state.tableData.total"
 			>
 			</el-pagination>
-			<AddRole ref="addRoleRef" />
-			<EditRole ref="editRoleRef" />
 		</div>
+		<AddRole ref="addRoleRef" />
+		<EditRole ref="editRoleRef" />
 	</div>
 </template>
 
 <script setup name="systemRole">
 import { ElMessageBox, ElMessage } from 'element-plus';
 
+// 引入组件
 const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
 const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
 
+// 定义变量内容
 const addRoleRef = ref();
 const editRoleRef = ref();
 const state = reactive({
@@ -71,19 +73,17 @@ const state = reactive({
 		total: 0,
 		loading: false,
 		param: {
+			search: '',
 			pageNum: 1,
 			pageSize: 10,
 		},
 	},
-	formInline: {
-		user: '',
-		region: '',
-	},
 });
+
 // 初始化表格数据
 const initTableData = () => {
 	const data = [];
-	for (let i = 0; i < 2; i++) {
+	for (let i = 0; i < 20; i++) {
 		data.push({
 			roleName: i === 0 ? '超级管理员' : '普通用户',
 			roleSign: i === 0 ? 'admin' : 'common',

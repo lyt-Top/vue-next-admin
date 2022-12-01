@@ -52,6 +52,7 @@ import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
+// 定义变量内容
 const columnsAsideOffsetTopRefs = ref([]);
 const columnsAsideActiveRef = ref();
 const stores = useRoutesList();
@@ -69,6 +70,7 @@ const state = reactive({
 	difference: 0,
 	routeSplit: [],
 });
+
 // 设置菜单高亮位置移动
 const setColumnsAsideMove = (k) => {
 	state.liIndex = k;
@@ -111,17 +113,17 @@ const setFilterRoutes = () => {
 	state.columnsAsideList = filterRoutesFun(routesList.value);
 	const resData = setSendChildren(route.path);
 	if (Object.keys(resData).length <= 0) return false;
-	onColumnsAsideDown(resData.item[0].k);
+	onColumnsAsideDown(resData.item?.k);
 	mittBus.emit('setSendColumnsChildren', resData);
 };
 // 传送当前子级数据到菜单中
 const setSendChildren = (path) => {
 	const currentPathSplit = path.split('/');
-	let currentData = {};
+	let currentData = { children: [] };
 	state.columnsAsideList.map((v, k) => {
 		if (v.path === `/${currentPathSplit[1]}`) {
 			v['k'] = k;
-			currentData['item'] = [{ ...v }];
+			currentData['item'] = { ...v };
 			currentData['children'] = [{ ...v }];
 			if (v.children) currentData['children'] = v.children;
 		}
@@ -131,7 +133,7 @@ const setSendChildren = (path) => {
 // 路由过滤递归函数
 const filterRoutesFun = (arr) => {
 	return arr
-		.filter((item) => !item.meta.isHide)
+		.filter((item) => !item.meta?.isHide)
 		.map((item) => {
 			item = Object.assign({}, item);
 			if (item.children) item.children = filterRoutesFun(item.children);
@@ -150,24 +152,6 @@ const setColumnsMenuHighlight = (path) => {
 		onColumnsAsideDown(currentSplitRoute.k);
 	}, 0);
 };
-// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
-watch(
-	pinia.state,
-	(val) => {
-		val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-		if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
-			state.liHoverIndex = null;
-			mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
-		} else {
-			state.liHoverIndex = state.liOldIndex;
-			if (!state.liOldPath) return false;
-			mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
-		}
-	},
-	{
-		deep: true,
-	}
-);
 // 页面加载时
 onMounted(() => {
 	setFilterRoutes();
@@ -186,6 +170,24 @@ onBeforeRouteUpdate((to) => {
 	setColumnsMenuHighlight(to.path);
 	mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
 });
+// 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
+watch(
+	pinia.state,
+	(val) => {
+		val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
+		if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
+			state.liHoverIndex = null;
+			mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
+		} else {
+			state.liHoverIndex = state.liOldIndex;
+			if (!state.liOldPath) return false;
+			mittBus.emit('setSendColumnsChildren', setSendChildren(state.liOldPath));
+		}
+	},
+	{
+		deep: true,
+	}
+);
 </script>
 
 <style scoped lang="scss">
