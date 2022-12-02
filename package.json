@@ -1,31 +1,30 @@
 {
 	"name": "vue-next-admin-mould",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"scripts": {
 		"dev": "vite",
 		"build": "vite build"
 	},
 	"dependencies": {
-		"vue": "^3.2.37",
-		"vue-router": "^4.0.16",
-		"pinia": "^2.0.14"
+		"vue": "^3.2.45",
+		"vue-router": "^4.1.6",
+		"pinia": "^2.0.27"
 	},
 	"devDependencies": {
-		"@types/node": "^17.0.42",
-		"@typescript-eslint/eslint-plugin": "^4.28.5",
-		"@typescript-eslint/parser": "^4.28.5",
-		"@vitejs/plugin-vue": "^2.3.3",
-		"@vue/compiler-sfc": "^3.2.37",
-		"@vue/eslint-config-prettier": "^6.0.0",
-		"@vue/eslint-config-typescript": "^7.0.0",
-		"eslint": "^7.32.0",
-		"eslint-plugin-prettier": "^3.4.0",
-		"eslint-plugin-vue": "^7.15.0",
-		"prettier": "^2.6.2",
-		"sass": "^1.52.3",
-		"sass-loader": "^13.0.0",
-		"typescript": "~4.7.3",
-		"vite": "^2.9.12"
+		"@types/node": "^18.11.10",
+		"@typescript-eslint/eslint-plugin": "^5.45.0",
+		"@typescript-eslint/parser": "^5.45.0",
+		"@vitejs/plugin-vue": "^3.2.0",
+		"@vue/compiler-sfc": "^3.2.45",
+		"@vue/eslint-config-prettier": "^7.0.0",
+		"@vue/eslint-config-typescript": "^11.0.2",
+		"eslint": "^8.28.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-vue": "^9.8.0",
+		"prettier": "^2.8.0",
+		"sass": "^1.56.1",
+		"typescript": "~4.9.3",
+		"vite": "^3.2.4"
 	},
 	"browserslist": [
 		"> 1%",
