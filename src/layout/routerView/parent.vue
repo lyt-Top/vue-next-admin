@@ -82,7 +82,10 @@ onMounted(() => {
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I59RXK
 	nextTick(() => {
 		setTimeout(() => {
-			if (themeConfig.value.isCacheTagsView) cachedViews.value = Session.get('tagsViewList')?.map((item: RouteItem) => item.name);
+            if (themeConfig.value.isCacheTagsView) {
+                let tagsViewArr:RouteItem[] = Session.get('tagsViewList') || []
+                cachedViews.value = tagsViewArr.filter((item) => item.meta.isKeepAlive).map((item) => item.name)
+            }
 		}, 0);
 	});
 });
