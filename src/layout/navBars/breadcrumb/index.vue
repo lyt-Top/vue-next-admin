@@ -70,8 +70,8 @@ export default {
 	display: flex;
 	align-items: center;
 	padding-right: 15px;
-	background: var(--bg-topBar);
 	overflow: hidden;
-	border-bottom: 1px solid #f1f2f3;
+	background: var(--prev-bg-topBar);
+	border-bottom: 1px solid var(--prev-border-color-lighter);
 }
 </style>

@@ -155,11 +155,11 @@ export default {
 .layout-columns-aside {
 	width: 70px;
 	height: 100%;
-	background: var(--bg-columnsMenuBar);
+	background: var(--prev-bg-columnsMenuBar);
 	ul {
 		position: relative;
 		li {
-			color: var(--bg-columnsMenuBarColor);
+			color: var(--prev-bg-columnsMenuBarColor);
 			width: 100%;
 			height: 50px;
 			text-align: center;
@@ -191,16 +191,16 @@ export default {
 			}
 			a {
 				text-decoration: none;
-				color: var(--bg-columnsMenuBarColor);
+				color: var(--prev-bg-columnsMenuBarColor);
 			}
 		}
 		.layout-columns-active {
-			color: #ffffff;
+			color: var(--prev-color-text-white);
 			transition: 0.3s ease-in-out;
 		}
 		.columns-round {
-			background: var(--color-primary);
-			color: #ffffff;
+			background: var(--prev-color-primary);
+			color: var(--prev-color-text-white);
 			position: absolute;
 			left: 50%;
 			top: 2px;

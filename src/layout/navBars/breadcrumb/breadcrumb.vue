@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { Local } from '@/utils/storage.js';
 export default {
 	name: 'layoutBreadcrumb',
 	data() {
@@ -59,6 +60,12 @@ export default {
 		// breadcrumb icon 点击菜单展开与收起
 		onThemeConfigChange() {
 			this.$store.state.themeConfig.themeConfig.isCollapse = !this.$store.state.themeConfig.themeConfig.isCollapse;
+			this.setLocalThemeConfig();
+		},
+		// 存储布局配置
+		setLocalThemeConfig() {
+			Local.remove('themeConfigPrev');
+			Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
 		},
 		// 递归设置 breadcrumb
 		getBreadcrumbList(arr) {
@@ -114,19 +121,19 @@ export default {
 		cursor: pointer;
 		font-size: 18px;
 		margin-right: 15px;
-		color: var(--bg-topBarColor);
+		color: var(--prev-bg-topBarColor);
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
 	}
 	.layout-navbars-breadcrumb-span {
 		opacity: 0.7;
-		color: var(--bg-topBarColor);
+		color: var(--prev-bg-topBarColor);
 	}
 	.layout-navbars-breadcrumb-iconfont {
 		font-size: 14px;
 		margin-right: 5px;
-	}
-	& ::v-deep .el-breadcrumb__separator {
-		opacity: 0.7;
-		color: var(--bg-topBarColor);
 	}
 }
 </style>

@@ -381,7 +381,7 @@ export default {
 			margin-bottom: 0 !important;
 		}
 		.tools-warp-form-msg {
-			color: #666666;
+			color: var(--prev-color-text-regular);
 			font-size: 14px;
 			.tools-warp-form-msg-red {
 				color: red;

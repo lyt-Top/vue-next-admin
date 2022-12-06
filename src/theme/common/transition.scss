@@ -86,3 +86,17 @@
 		opacity: 1;
 	}
 }
+
+/* 左右左 link.vue
+------------------------------- */
+@keyframes toRight {
+	0% {
+		left: -5px;
+	}
+	50% {
+		left: 100%;
+	}
+	100% {
+		left: -5px;
+	}
+}

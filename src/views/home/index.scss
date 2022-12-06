@@ -36,7 +36,7 @@
 				font-size: 13px;
 				display: flex;
 				.right-label {
-					color: gray;
+					color: var(--prev-color-text-regular);
 					width: 40px;
 				}
 				.right-value {
@@ -55,11 +55,11 @@
 				.info-item {
 					display: flex;
 					font-size: 13px;
-					color: gray;
+					color: var(--prev-color-text-regular);
 					height: 28px;
 					line-height: 28px;
 					&:hover {
-						color: var(--color-primary);
+						color: var(--prev-color-primary);
 						cursor: pointer;
 					}
 					.info-item-left {
@@ -81,7 +81,7 @@
 		.home-recommend {
 			position: relative;
 			height: 100px;
-			color: #ffffff;
+			color: var(--prev-color-text-white);
 			border-radius: 4px;
 			overflow: hidden;
 			cursor: pointer;
@@ -129,7 +129,7 @@
 	.home-charts {
 		height: 282.6px;
 		.home-charts-item {
-			background-color: #f5f5f5;
+			background-color: var(--prev-bg-main-color);
 			padding: 19px 15px;
 			border-radius: 2px;
 			display: flex;

@@ -186,7 +186,6 @@ export function adminUser(router, to, next) {
 			store.dispatch('routesList/setRoutesList', setFilterMenuFun(res.data, store.state.userInfos.userInfos.roles));
 			dynamicRoutes[0].children = res.data;
 			const awaitRoute = await dynamicRouter(dynamicRoutes);
-			console.log(awaitRoute);
 			[...awaitRoute, { path: '*', redirect: '/404' }].forEach((route) => {
 				router.addRoute({ ...route });
 			});

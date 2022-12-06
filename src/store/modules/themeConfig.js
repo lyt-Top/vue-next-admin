@@ -10,6 +10,33 @@ const themeConfigModule = {
 			isDrawer: false,
 
 			/**
+			 * 全局主题
+			 */
+			// 默认 primary 主题颜色
+			primary: '#409eff',
+			// 是否开启深色模式
+			isIsDark: false,
+
+			/**
+			 * 菜单 / 顶栏
+			 * 请注意：
+			 * 需要同时修改 `/@/theme/common/var.scss` 对应的值，
+			 * 不提供像 vue-next-admin 一样的实现
+			 */
+			// 默认顶栏导航背景颜色
+			topBar: '#ffffff',
+			// 默认顶栏导航字体颜色
+			topBarColor: '#606266',
+			// 默认菜单导航背景颜色
+			menuBar: '#545c64',
+			// 默认菜单导航字体颜色
+			menuBarColor: '#eaeaea',
+			// 默认分栏菜单背景颜色
+			columnsMenuBar: '#545c64',
+			// 默认分栏菜单字体颜色
+			columnsMenuBarColor: '#e6e6e6',
+
+			/**
 			 * 界面设置
 			 */
 			// 是否开启菜单水平折叠效果

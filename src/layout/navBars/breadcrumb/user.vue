@@ -240,13 +240,13 @@ export default {
 	&-icon {
 		padding: 0 10px;
 		cursor: pointer;
-		color: var(--bg-topBarColor);
+		color: var(--prev-bg-topBarColor);
 		height: 50px;
 		line-height: 50px;
 		display: flex;
 		align-items: center;
 		&:hover {
-			background: rgba(0, 0, 0, 0.04);
+			background: var(--prev-color-hover);
 			i {
 				display: inline-block;
 				animation: logoAnimation 0.3s ease-in-out;
@@ -254,7 +254,7 @@ export default {
 		}
 	}
 	& ::v-deep .el-dropdown {
-		color: var(--bg-topBarColor);
+		color: var(--prev-bg-topBarColor);
 	}
 	& ::v-deep .el-badge {
 		height: 40px;

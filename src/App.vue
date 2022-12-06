@@ -2,20 +2,33 @@
 	<div id="app">
 		<router-view />
 		<Setings ref="setingsRef" />
+		<Upgrade v-if="getVersion" />
 	</div>
 </template>
 
 <script>
+import config from '/package.json';
 import setIntroduction from '@/utils/setIconfont.js';
 import { Local } from '@/utils/storage.js';
 import Setings from '@/layout/navBars/breadcrumb/setings.vue';
+import Upgrade from '@/layout/upgrade/index.vue';
 export default {
 	name: 'App',
-	components: { Setings },
+	components: { Setings, Upgrade },
 	mounted() {
 		this.initSetIconfont();
 		this.openSetingsDrawer();
 		this.getLayoutThemeConfig();
+	},
+	computed: {
+		// 获取版本号
+		getVersion() {
+			let isVersion = false;
+			if (this.$route.path !== '/login') {
+				if ((Local.get('version') && Local.get('version') !== config.version) || !Local.get('version')) isVersion = true;
+			}
+			return isVersion;
+		},
 	},
 	methods: {
 		// 设置初始化，防止刷新时恢复默认

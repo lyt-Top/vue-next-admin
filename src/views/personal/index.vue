@@ -24,5 +24,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.personal  {}
+.personal {
+}
 </style>

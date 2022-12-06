@@ -64,7 +64,7 @@
 							</div>
 						</el-form-item>
 						<el-form-item style="margin: 40px 0px 0">
-							<el-button type="primary" class="login-submit" @click="submitForm" :loading="submit.loading">
+							<el-button type="primary" round class="login-submit" @click="submitForm" :loading="submit.loading">
 								<span>{{ $t('message.login.btnText') }}</span>
 							</el-button>
 						</el-form-item>
@@ -161,8 +161,8 @@ export default {
 					userName: this.ruleForm.userName === 'admin' ? 'admin' : 'test',
 					photo:
 						this.ruleForm.userName === 'admin'
-							? 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1813762643,1914315241&fm=26&gp=0.jpg'
-							: 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=317673774,2961727727&fm=26&gp=0.jpg',
+							? 'https://img0.baidu.com/it/u=1833472230,3849481738&fm=253&fmt=auto?w=200&h=200'
+							: 'https://img2.baidu.com/it/u=2187913762,2708298335&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200',
 					time: new Date().getTime(),
 					roles: defaultRoles,
 					authBtnList: defaultAuthBtnList,
@@ -215,16 +215,16 @@ export default {
 			width: 491px;
 			padding: 20px;
 			font-size: 16px;
-			color: #fff;
+			color: var(--prev-color-text-white);
 			position: relative;
-			background-color: rgba(64, 158, 255, 0.8);
+			background-color: var(--prev-color-primary);
 			display: flex;
 			flex-direction: column;
 			border-top-left-radius: 4px;
 			border-bottom-left-radius: 4px;
 			.login-time {
 				width: 100%;
-				color: #fff;
+				color: var(--prev-color-text-white);
 				opacity: 0.9;
 				font-size: 14px;
 				overflow: hidden;
@@ -242,13 +242,13 @@ export default {
 					margin-bottom: 15px;
 				}
 				.title {
-					color: #fff;
+					color: var(--prev-color-text-white);
 					font-weight: 300;
 					letter-spacing: 2px;
 					font-size: 16px;
 				}
 				.msg {
-					color: #fff;
+					color: var(--prev-color-text-white);
 					font-size: 13px;
 					margin-top: 35px;
 					.msg-author {
@@ -270,14 +270,14 @@ export default {
 			position: relative;
 			align-items: center;
 			display: flex;
-			background-color: rgba(255, 255, 255, 1);
+			background-color: var(--prev-bg-white);
 			border-top-right-radius: 4px;
 			border-bottom-right-radius: 4px;
 			.login-main {
 				margin: 0 auto;
 				width: 70%;
 				.login-title {
-					color: #333;
+					color: var(--prev-color-text-primary);
 					margin-bottom: 40px;
 					font-weight: 500;
 					font-size: 22px;
@@ -287,7 +287,7 @@ export default {
 				.login-form {
 					margin: 10px 0;
 					i {
-						color: #333;
+						color: var(--prev-color-text-primary);
 					}
 					.el-form-item {
 						margin-bottom: 20px !important;
@@ -301,8 +301,8 @@ export default {
 								margin-top: 2px;
 								width: 100px;
 								height: 38px;
-								border: 1px solid #dcdfe6;
-								color: #333;
+								border: 1px solid var(--prev-border-color-base);
+								color: var(--prev-color-text-primary);
 								font-size: 14px;
 								font-weight: 700;
 								letter-spacing: 5px;
@@ -313,16 +313,14 @@ export default {
 								transition: all ease 0.2s;
 								border-radius: 4px;
 								&:hover {
-									border-color: #c0c4cc;
+									border-color: var(--prev-border-color-hover);
 									transition: all ease 0.2s;
 								}
 							}
 						}
 						.login-submit {
 							width: 100%;
-							height: 45px;
 							letter-spacing: 2px;
-							font-weight: 300;
 						}
 					}
 				}
@@ -331,12 +329,12 @@ export default {
 					width: 100%;
 					text-align: left;
 					a {
-						color: #999;
+						color: var(--prev-color-text-secondary);
 						font-size: 12px;
 						margin: 0 8px;
 						text-decoration: none;
 						&:hover {
-							color: #1e9fff;
+							color: var(--prev-color-primary);
 							text-decoration: underline;
 						}
 					}

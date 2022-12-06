@@ -112,7 +112,7 @@
 			</el-col>
 		</el-row>
 
-		<!-- v-charts -->
+		<!-- 履约超时预警 -->
 		<el-row :gutter="15">
 			<el-col :md="24" :lg="16" :xl="16" class="home-lg">
 				<el-card shadow="hover">
@@ -165,6 +165,16 @@ export default {
 			newsInfoList,
 			userInfo: {},
 			dailyMessage: {},
+			charts: {
+				theme: '',
+				bgColor: '',
+			},
+			global: {
+				homeChartOne: null,
+				homeChartTwo: null,
+				homeCharThree: null,
+				dispose: [null, '', undefined],
+			},
 		};
 	},
 	created() {
@@ -203,8 +213,10 @@ export default {
 		},
 		// 库存作业
 		initHomeStock() {
-			const myChart = echarts.init(this.$refs.homeStockRef);
+			if (!this.global.dispose.some((b) => b === this.global.homeChartOne)) this.global.homeChartOne.dispose();
+			this.global.homeChartOne = echarts.init(this.$refs.homeStockRef, this.charts.theme);
 			const option = {
+				backgroundColor: this.charts.bgColor,
 				grid: {
 					top: 50,
 					right: 20,
@@ -237,15 +249,17 @@ export default {
 					},
 				],
 			};
-			myChart.setOption(option);
+			this.global.homeChartOne.setOption(option);
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				this.global.homeChartOne.resize();
 			});
 		},
 		// 履约情况
 		initHomeLaboratory() {
-			const myChart = echarts.init(this.$refs.homeLaboratoryRef);
+			if (!this.global.dispose.some((b) => b === this.global.homeChartTwo)) this.global.homeChartTwo.dispose();
+			this.global.homeChartTwo = echarts.init(this.$refs.homeLaboratoryRef, this.charts.theme);
 			const option = {
+				backgroundColor: this.charts.bgColor,
 				grid: {
 					top: 50,
 					right: 20,
@@ -281,15 +295,17 @@ export default {
 					},
 				],
 			};
-			myChart.setOption(option);
+			this.global.homeChartTwo.setOption(option);
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				this.global.homeChartTwo.resize();
 			});
 		},
 		// 缺货监控
 		initHomeOvertime() {
-			const myChart = echarts.init(this.$refs.homeOvertimeRef);
+			if (!this.global.dispose.some((b) => b === this.global.homeCharThree)) this.global.homeCharThree.dispose();
+			this.global.homeCharThree = echarts.init(this.$refs.homeOvertimeRef, this.charts.theme);
 			const option = {
+				backgroundColor: this.charts.bgColor,
 				grid: {
 					top: 50,
 					right: 20,
@@ -335,9 +351,9 @@ export default {
 					},
 				],
 			};
-			myChart.setOption(option);
+			this.global.homeCharThree.setOption(option);
 			window.addEventListener('resize', () => {
-				myChart.resize();
+				this.global.homeCharThree.resize();
 			});
 		},
 		// 随机语录
@@ -357,6 +373,28 @@ export default {
 		// 跳转到 gitee
 		onOpenGitee() {
 			window.open('https://gitee.com/lyt-top/vue-next-admin');
+		},
+	},
+	watch: {
+		// 监听 vuex 数据变化
+		'$store.state.themeConfig.themeConfig.isIsDark': {
+			handler(isIsDark) {
+				this.$nextTick(() => {
+					this.charts.theme = isIsDark ? 'dark' : '';
+					this.charts.bgColor = isIsDark ? 'transparent' : '';
+					setTimeout(() => {
+						this.initHomeStock();
+					}, 500);
+					setTimeout(() => {
+						this.initHomeLaboratory();
+					}, 700);
+					setTimeout(() => {
+						this.initHomeOvertime();
+					}, 1000);
+				});
+			},
+			deep: true,
+			immediate: true,
 		},
 	},
 };

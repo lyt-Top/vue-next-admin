@@ -55,9 +55,7 @@ export default {
 				return (
 					restaurant.path.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
 					restaurant.meta.title.toLowerCase().indexOf(queryString.toLowerCase()) > -1 ||
-					this.$t(restaurant.meta.title)
-						.toLowerCase()
-						.indexOf(queryString.toLowerCase()) > -1
+					this.$t(restaurant.meta.title).toLowerCase().indexOf(queryString.toLowerCase()) > -1
 				);
 			};
 		},

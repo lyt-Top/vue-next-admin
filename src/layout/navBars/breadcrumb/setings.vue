@@ -9,24 +9,39 @@
 			@close="onDrawerClose"
 		>
 			<el-scrollbar class="layout-breadcrumb-seting-bar">
+				<!-- 全局主题 -->
+				<el-divider content-position="left">{{ $t('message.layout.oneTitle') }}</el-divider>
+				<div class="layout-breadcrumb-seting-bar-flex">
+					<div class="layout-breadcrumb-seting-bar-flex-label">primary</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-color-picker v-model="getThemeConfig.primary" size="small" @change="onColorPickerChange"> </el-color-picker>
+					</div>
+				</div>
+				<div class="layout-breadcrumb-seting-bar-flex mt15">
+					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsDark') }}</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-switch v-model="getThemeConfig.isIsDark" :width="35" @change="onAddDarkChange"></el-switch>
+					</div>
+				</div>
+
 				<!-- 界面设置 -->
 				<el-divider content-position="left">{{ $t('message.layout.threeTitle') }}</el-divider>
 				<div class="layout-breadcrumb-seting-bar-flex">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsCollapse') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isCollapse" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isCollapse" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsUniqueOpened') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isUniqueOpened" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isUniqueOpened" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.threeIsFixedHeader') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isFixedHeader" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isFixedHeader" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 
@@ -35,7 +50,7 @@
 				<div class="layout-breadcrumb-seting-bar-flex">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsShowLogo') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isShowLogo" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isShowLogo" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div
@@ -47,6 +62,7 @@
 						<el-switch
 							v-model="getThemeConfig.isBreadcrumb"
 							:disabled="getThemeConfig.layout === 'classic' || getThemeConfig.layout === 'transverse'"
+							:width="35"
 							@change="setLocalThemeConfig"
 						></el-switch>
 					</div>
@@ -54,43 +70,43 @@
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsBreadcrumbIcon') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isBreadcrumbIcon" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isBreadcrumbIcon" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsTagsview') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isTagsview" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isTagsview" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsTagsviewIcon') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isTagsviewIcon" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isTagsviewIcon" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsCacheTagsView') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isCacheTagsView" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isCacheTagsView" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsFooter') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isFooter" @change="setLocalThemeConfig"></el-switch>
+						<el-switch v-model="getThemeConfig.isFooter" :width="35" @change="setLocalThemeConfig"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsGrayscale') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isGrayscale" @change="onAddFilterChange('grayscale')"></el-switch>
+						<el-switch v-model="getThemeConfig.isGrayscale" :width="35" @change="onAddFilterChange('grayscale')"></el-switch>
 					</div>
 				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt15">
 					<div class="layout-breadcrumb-seting-bar-flex-label">{{ $t('message.layout.fourIsInvert') }}</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
-						<el-switch v-model="getThemeConfig.isInvert" @change="onAddFilterChange('invert')"></el-switch>
+						<el-switch v-model="getThemeConfig.isInvert" :width="35" @change="onAddFilterChange('invert')"></el-switch>
 					</div>
 				</div>
 
@@ -224,14 +240,10 @@
 <script>
 import ClipboardJS from 'clipboard';
 import { Local } from '@/utils/storage.js';
+import { useChangeColor } from '@/utils/theme.js';
+import config from '/package.json';
 export default {
 	name: 'layoutBreadcrumbSeting',
-	data() {
-		return {
-			isCollapse: false,
-			layout: 'defaults',
-		};
-	},
 	computed: {
 		// 获取布局配置信息
 		getThemeConfig() {
@@ -255,13 +267,37 @@ export default {
 		this.initLayoutConfig();
 	},
 	methods: {
+		// 全局主题
+		onColorPickerChange() {
+			if (!this.getThemeConfig.primary) return;
+			// 颜色加深
+			document.documentElement.style.setProperty('--prev-color-primary', this.getThemeConfig.primary);
+			// 颜色变浅
+			for (let i = 1; i <= 9; i++) {
+				document.documentElement.style.setProperty(
+					`--prev-color-primary-light-${i}`,
+					`${useChangeColor().getLightColor(this.getThemeConfig.primary, i / 10)}`
+				);
+			}
+			this.setLocalThemeConfig();
+		},
+		// 深色模式
+		onAddDarkChange() {
+			const body = document.documentElement;
+			if (this.getThemeConfig.isIsDark) body.setAttribute('data-theme', 'dark');
+			else body.setAttribute('data-theme', '');
+		},
 		// 初始化：刷新页面时，设置了值，直接取缓存中的值进行初始化
 		initLayoutConfig() {
 			window.addEventListener('load', () => {
+				// 默认样式
+				this.onColorPickerChange();
 				// 灰色模式
 				if (this.$store.state.themeConfig.themeConfig.isGrayscale) this.onAddFilterChange('grayscale');
 				// 色弱模式
 				if (this.$store.state.themeConfig.themeConfig.isInvert) this.onAddFilterChange('invert');
+				// 深色模式
+				if (this.$store.state.themeConfig.themeConfig.isIsDark) this.onAddDarkChange();
 				// 语言国际化
 				if (Local.get('themeConfigPrev')) this.$i18n.locale = Local.get('themeConfigPrev').globalI18n;
 			});
@@ -333,7 +369,7 @@ export default {
 		},
 		// 菜单 / 顶栏背景等
 		onBgColorPickerChange(bg, rgb) {
-			document.documentElement.style.setProperty(`--bg-${bg}`, rgb);
+			document.documentElement.style.setProperty(`--prev-bg-${bg}`, rgb);
 			this.setLocalThemeConfigStyle();
 		},
 		// 一键复制配置
@@ -355,6 +391,7 @@ export default {
 		onResetConfigClick() {
 			Local.clear();
 			window.location.reload();
+			Local.set('version', config.version);
 		},
 	},
 };
@@ -372,7 +409,7 @@ export default {
 		align-items: center;
 		&-label {
 			flex: 1;
-			color: #666666;
+			color: var(--prev-color-text-primary);
 		}
 	}
 	.layout-drawer-content-flex {
@@ -391,16 +428,16 @@ export default {
 			.el-container {
 				height: 100%;
 				.el-aside-dark {
-					background-color: #b3c0d1;
+					background-color: var(--prev-color-seting-header);
 				}
 				.el-aside {
-					background-color: #d3dce6;
+					background-color: var(--prev-color-seting-aside);
 				}
 				.el-header {
-					background-color: #b3c0d1;
+					background-color: var(--prev-color-seting-header);
 				}
 				.el-main {
-					background-color: #e9eef3;
+					background-color: var(--prev-color-seting-main);
 				}
 			}
 			.el-circular {
@@ -411,7 +448,7 @@ export default {
 			}
 			.drawer-layout-active {
 				border: 1px solid;
-				border-color: var(--color-primary);
+				border-color: var(--prev-color-primary);
 			}
 			.layout-tips-warp,
 			.layout-tips-warp-active {
@@ -421,7 +458,7 @@ export default {
 				top: 50%;
 				transform: translate(-50%, -50%);
 				border: 1px solid;
-				border-color: #8cc5ff;
+				border-color: var(--prev-color-primary-light-5);
 				border-radius: 100%;
 				padding: 4px;
 				.layout-tips-box {
@@ -430,7 +467,7 @@ export default {
 					height: 30px;
 					z-index: 9;
 					border: 1px solid;
-					border-color: #8cc5ff;
+					border-color: var(--prev-color-primary-light-5);
 					border-radius: 100%;
 					.layout-tips-txt {
 						transition: inherit;
@@ -440,11 +477,11 @@ export default {
 						line-height: 1;
 						letter-spacing: 2px;
 						white-space: nowrap;
-						color: #8cc5ff;
+						color: var(--prev-color-primary-light-5);
 						text-align: center;
 						transform: rotate(30deg);
 						left: -1px;
-						background-color: #e9eef3;
+						background-color: var(--prev-color-seting-main);
 						width: 32px;
 						height: 17px;
 						line-height: 17px;
@@ -453,13 +490,13 @@ export default {
 			}
 			.layout-tips-warp-active {
 				border: 1px solid;
-				border-color: var(--color-primary);
+				border-color: var(--prev-color-primary);
 				.layout-tips-box {
 					border: 1px solid;
-					border-color: var(--color-primary);
+					border-color: var(--prev-color-primary);
 					.layout-tips-txt {
-						color: var(--color-primary) !important;
-						background-color: #e9eef3 !important;
+						color: var(--prev-color-primary) !important;
+						background-color: var(--prev-color-seting-main) !important;
 					}
 				}
 			}
@@ -467,18 +504,18 @@ export default {
 				.el-circular {
 					transition: all 0.3s ease-in-out;
 					border: 1px solid;
-					border-color: var(--color-primary);
+					border-color: var(--prev-color-primary);
 				}
 				.layout-tips-warp {
 					transition: all 0.3s ease-in-out;
-					border-color: var(--color-primary);
+					border-color: var(--prev-color-primary);
 					.layout-tips-box {
 						transition: inherit;
-						border-color: var(--color-primary);
+						border-color: var(--prev-color-primary);
 						.layout-tips-txt {
 							transition: inherit;
-							color: var(--color-primary) !important;
-							background-color: #e9eef3 !important;
+							color: var(--prev-color-primary) !important;
+							background-color: var(--prev-color-seting-main) !important;
 						}
 					}
 				}

@@ -40,7 +40,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	box-shadow: rgb(0 21 41 / 2%) 0px 1px 4px;
-	color: var(--color-primary);
+	color: var(--prev-color-primary);
 	font-size: 16px;
 	cursor: pointer;
 	animation: logoAnimation 0.3s ease-in-out;

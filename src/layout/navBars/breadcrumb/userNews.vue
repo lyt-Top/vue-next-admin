@@ -61,14 +61,14 @@ export default {
 .layout-navbars-breadcrumb-user-news {
 	.head-box {
 		display: flex;
-		border-bottom: 1px solid #ebeef5;
+		border-bottom: 1px solid var(--prev-border-color-lighter);
 		box-sizing: border-box;
-		color: #333333;
+		color: var(--prev-color-text-primary);
 		justify-content: space-between;
 		height: 35px;
 		align-items: center;
 		.head-box-btn {
-			color: var(--color-primary);
+			color: var(--prev-color-primary);
 			font-size: 13px;
 			cursor: pointer;
 			opacity: 0.8;
@@ -85,12 +85,12 @@ export default {
 				padding-bottom: 12px;
 			}
 			.content-box-msg {
-				color: #999999;
+				color: var(--prev-color-text-secondary);
 				margin-top: 5px;
 				margin-bottom: 5px;
 			}
 			.content-box-time {
-				color: #999999;
+				color: var(--prev-color-text-secondary);
 			}
 		}
 		.content-box-empty {
@@ -107,14 +107,14 @@ export default {
 	}
 	.foot-box {
 		height: 35px;
-		color: var(--color-primary);
+		color: var(--prev-color-primary);
 		font-size: 13px;
 		cursor: pointer;
 		opacity: 0.8;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		border-top: 1px solid #ebeef5;
+		border-top: 1px solid var(--prev-border-color-lighter);
 		&:hover {
 			opacity: 1;
 		}

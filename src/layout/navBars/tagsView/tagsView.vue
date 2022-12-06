@@ -298,8 +298,8 @@ export default {
 <style scoped lang="scss">
 .layout-navbars-tagsview {
 	flex: 1;
-	background-color: #ffffff;
-	border-bottom: 1px solid #f1f2f3;
+	background-color: var(--prev-bg-white);
+	border-bottom: 1px solid var(--prev-border-color-lighter);
 	& ::v-deep .is-vertical {
 		display: none !important;
 	}
@@ -312,7 +312,7 @@ export default {
 		display: flex;
 		align-items: center;
 		white-space: nowrap;
-		color: #606266;
+		color: var(--prev-color-text-regular);
 		font-size: 12px;
 		padding: 0 15px;
 		&-li {
@@ -320,7 +320,7 @@ export default {
 			line-height: 26px;
 			display: flex;
 			align-items: center;
-			border: 1px solid #ebeef5;
+			border: 1px solid var(--prev-border-color-lighter);
 			padding: 0 12px 0 15px;
 			margin-right: 5px;
 			border-radius: 2px;
@@ -336,7 +336,7 @@ export default {
 				right: 0;
 				bottom: 0;
 				left: 0;
-				background: var(--color-primary);
+				background: var(--prev-color-primary);
 				z-index: -1;
 				opacity: 0;
 				transform: scale3d(0.7, 1, 1);
@@ -344,7 +344,7 @@ export default {
 				transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 			}
 			&:hover {
-				color: #ffffff;
+				color: var(--prev-color-text-white);
 				transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
 				border-color: transparent;
 				&::before {
@@ -353,7 +353,7 @@ export default {
 					border-radius: 2px;
 				}
 				.is-tagsview-icon {
-					color: #ffffff;
+					color: var(--prev-color-text-white);
 					transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
 				}
 			}
@@ -361,7 +361,7 @@ export default {
 				position: relative;
 				left: -5px;
 				top: 1px;
-				color: #ffffff;
+				color: var(--prev-color-text-white);
 			}
 			&-icon {
 				border-radius: 100%;
@@ -373,12 +373,12 @@ export default {
 				top: 1px;
 			}
 			.is-tagsview-icon {
-				color: #606266;
+				color: var(--prev-color-text-regular);
 				transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
 			}
 		}
 		.is-active {
-			color: #ffffff;
+			color: var(--prev-color-text-white);
 			transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 1);
 			border-color: transparent;
 			&::before {

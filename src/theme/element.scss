@@ -1,5 +1,3 @@
-@import 'mixins/function.scss';
-
 /* 防止页面切换时，滚动条高度不变的问题（滚动条高度非滚动条滚动高度）
 ------------------------------- */
 .el-scrollbar {
@@ -46,27 +44,10 @@
 	margin-right: 5px;
 }
 
-/* Drawer 抽屉
-------------------------------- */
-.el-drawer__header {
-	margin-bottom: 0 !important;
-	padding: 14px 15px !important;
-	border-bottom: 1px solid #ebeef5;
-	color: #333333 !important;
-}
-.el-drawer__body {
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-}
-
 /* Dialog 对话框
 ------------------------------- */
-.el-dialog__headerbtn:focus .el-dialog__close,
-.el-dialog__headerbtn:hover .el-dialog__close {
-	color: set-color(primary);
-}
-.el-overlay {
+.el-overlay,
+.el-dialog__wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -81,35 +62,6 @@
 	max-height: calc(90vh - 111px) !important;
 	overflow-y: auto;
 	overflow-x: hidden;
-}
-
-/* Divider 分割线
-------------------------------- */
-.el-divider {
-	background-color: rgba(0, 0, 0, 0.06) !important;
-}
-
-/* Card 卡片
-------------------------------- */
-.el-card__header {
-	padding: 15px 20px;
-}
-
-/* Message 消息提示
-------------------------------- */
-.el-message {
-	min-width: auto !important;
-	box-sizing: border-box !important;
-	border-width: 1px !important;
-	border-style: solid !important;
-	border-color: #ebeef5 !important;
-	box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
-	background-color: #fff !important;
-	border-radius: 3px !important;
-	border: 1px solid #ebeef5 !important;
-	.el-message__icon {
-		font-size: 1.4em !important;
-	}
 }
 
 /* Alert 警告
@@ -157,15 +109,15 @@
 .el-submenu__title {
 	height: 50px !important;
 	line-height: 50px !important;
-	color: var(--bg-menuBarColor) !important;
+	color: var(--prev-bg-menuBarColor) !important;
 	transition: none !important;
 }
 // horizontal 水平方向时
 .el-menu--horizontal > .el-menu-item.is-active,
 .el-menu--horizontal > .el-submenu.is-active .el-submenu__title {
 	border-bottom: 3px solid !important;
-	border-bottom-color: set-color(primary) !important;
-	color: set-color(primary) !important;
+	border-bottom-color: var(--prev-color-primary) !important;
+	color: var(--prev-color-primary) !important;
 }
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus,
 .el-menu--horizontal .el-menu-item:not(.is-disabled):hover,
@@ -173,7 +125,7 @@
 .el-menu--horizontal > .el-submenu:hover .el-submenu__title,
 .el-menu--horizontal .el-menu .el-menu-item.is-active,
 .el-menu--horizontal .el-menu .el-submenu.is-active > .el-submenu__title {
-	color: set-color(primary) !important;
+	color: var(--prev-color-primary) !important;
 }
 .el-menu.el-menu--horizontal {
 	border-bottom: none !important;
@@ -197,19 +149,19 @@
 // 默认 hover 时
 .el-menu-item:hover,
 .el-submenu__title:hover {
-	color: set-color(primary) !important;
+	color: var(--prev-color-primary) !important;
 	background-color: transparent !important;
 	i {
-		color: set-color(primary) !important;
+		color: var(--prev-color-primary) !important;
 	}
 }
 // 高亮时
 .el-menu-item.is-active {
-	color: set-color(primary) !important;
+	color: var(--prev-color-primary) !important;
 }
 .el-active-extend {
 	color: #ffffff !important;
-	background-color: set-color(primary) !important;
+	background-color: var(--prev-color-primary) !important;
 	i {
 		color: #ffffff !important;
 	}
@@ -227,7 +179,7 @@
 }
 // 菜单收起时鼠标经过背景颜色/字体颜色
 .el-menu--vertical {
-	background: var(--bg-menuBar) !important;
+	background: var(--prev-bg-menuBar) !important;
 }
 .el-menu--horizontal {
 	.el-menu {
@@ -258,14 +210,6 @@
 // 去掉离开浏览器时，菜单的默认高亮
 .el-menu-item:focus {
 	background-color: transparent !important;
-}
-
-/* Breadcrumb 面包屑
-------------------------------- */
-.el-breadcrumb__inner a,
-.el-breadcrumb__inner.is-link {
-	font-weight: normal;
-	color: var(--bg-topBarColor);
 }
 
 /* Alert 警告

@@ -134,6 +134,7 @@ export default {
 		fourIsFooter: 'Open footer',
 		fourIsGrayscale: 'Grey model',
 		fourIsInvert: 'Color weak mode',
+		fourIsDark: 'Dark Mode',
 		fourIsWartermark: 'Turn on watermark',
 		fourWartermarkText: 'Watermark copy',
 		fiveTitle: 'Other settings',
@@ -151,5 +152,13 @@ export default {
 		resetText: 'restore default',
 		copyTextSuccess: 'Copy succeeded!',
 		copyTextError: 'Copy failed!',
+	},
+	upgrade: {
+		title: 'New version',
+		msg: 'The new version is available, please update it now! Dont worry, the update is fast!',
+		desc: 'Prompt: Update will restore the default configuration',
+		btnOne: 'Cruel refusal',
+		btnTwo: 'Update now',
+		btnTwoLoading: 'Updating',
 	},
 };

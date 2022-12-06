@@ -134,6 +134,7 @@ export default {
 		fourIsFooter: '開啟 Footer',
 		fourIsGrayscale: '灰色模式',
 		fourIsInvert: '色弱模式',
+		fourIsDark: '深色模式',
 		fourIsWartermark: '開啟浮水印',
 		fourWartermarkText: '浮水印文案',
 		fiveTitle: '其它設定',
@@ -151,5 +152,13 @@ export default {
 		resetText: '一鍵恢復默認',
 		copyTextSuccess: '複製成功！',
 		copyTextError: '複製失敗！',
+	},
+	upgrade: {
+		title: '新版本陞級',
+		msg: '新版本來啦，馬上更新嘗鮮吧！ 不用擔心，更新很快的哦！',
+		desc: '提示：更新會還原默認配寘',
+		btnOne: '殘忍拒絕',
+		btnTwo: '馬上更新',
+		btnTwoLoading: '更新中',
 	},
 };
