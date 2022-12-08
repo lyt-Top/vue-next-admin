@@ -1,13 +1,4 @@
-<!--
- * @Author: '490912587@qq.com' '490912587@qq.com'
- * @Date: 2022-11-17 09:19:20
- * @LastEditors: '490912587@qq.com' '490912587@qq.com'
- * @LastEditTime: 2022-11-24 11:21:25
- * @FilePath: \backend\README.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-
-# vue-next-admin-Ts
+# vue-next-admin-nest
 
 #### 🌈 介绍
 
@@ -72,15 +63,19 @@ $ npm run build
 ![输入图片说明](doc/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221124112526.png)
 ![输入图片说明](doc/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221124112739.png)
 #### 💯 联系我们
-
 QQ 群：478153238
 
 联系作者 QQ：1844045442
+
+联系方式：15071076841（微信同号）
 
 微信公众号：量子互联网络科技
 
 微信摸鱼小游戏：梦幻农庄
 
+说明：接受企业/个人软硬件定制开发
+
+![微信二维码](doc/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20221208092411.jpg)
 
 #### 💕 赞赏记录
 
@@ -90,7 +85,6 @@ QQ 群：478153238
 #### 💌 赞助
 
 您的支持就是我们前进的动力
-
 <img 
 width="300px"
 height="300px"
