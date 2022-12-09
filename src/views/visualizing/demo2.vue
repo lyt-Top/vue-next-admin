@@ -127,7 +127,7 @@
 			<div class="big-data-down-center">
 				<div class="big-data-down-center-one">
 					<div class="big-data-down-center-one-content" ref="rightChartData5">
-						<div ref="the3DEarth"></div>
+						<div id="3DEarth"></div>
 						<div :class="v.topLevelClass" v-for="(v, k) in state.earth3DBtnList" :key="k">
 							<div class="circle" v-for="i in 4" :key="i"></div>
 							<div class="text-box">
@@ -259,7 +259,6 @@ const state = reactive<Demo2State>({
 	earth3DBtnList,
 	chartData4List,
 	myCharts: [],
-	the3DEarth: null,
 });
 
 // 初始化时间
@@ -690,7 +689,7 @@ const initRightChartData2 = () => {
 };
 // 3DEarth 地图
 const init3DEarth = (globeRadius: any) => {
-	let el = state.the3DEarth!;
+	let el = <HTMLElement>document.getElementById('3DEarth');
 	el.style.height = `${rightChartData5.value.offsetHeight}px`;
 	const myChart = echarts.init(el);
 	const option = {

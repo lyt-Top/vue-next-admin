@@ -15,8 +15,8 @@
 						<span class="tree-custom-node">
 							<span style="flex: 1">{{ node.label }}</span>
 							<span v-if="data.isShow" style="flex: 1; display: flex">
-								<span type="text" size="default" style="flex: 1">{{ data.label1 }}</span>
-								<span type="text" size="default" style="flex: 1">{{ data.label2 }}</span>
+								<span style="flex: 1">{{ data.label1 }}</span>
+								<span style="flex: 1">{{ data.label2 }}</span>
 							</span>
 						</span>
 					</template>

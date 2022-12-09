@@ -100,37 +100,41 @@ const onSignIn = async () => {
 	Cookies.set('userName', state.ruleForm.userName);
 	if (!themeConfig.value.isRequestRoutes) {
 		// 前端控制路由，2、请注意执行顺序
-		await initFrontEndControlRoutes();
-		signInSuccess();
+		const isNoPower = await initFrontEndControlRoutes();
+		signInSuccess(isNoPower);
 	} else {
 		// 模拟后端控制路由，isRequestRoutes 为 true，则开启后端控制路由
 		// 添加完动态路由，再进行 router 跳转，否则可能报错 No match found for location with path "/"
-		await initBackEndControlRoutes();
+		const isNoPower = await initBackEndControlRoutes();
 		// 执行完 initBackEndControlRoutes，再执行 signInSuccess
-		signInSuccess();
+		signInSuccess(isNoPower);
 	}
 };
 // 登录成功后的跳转
-const signInSuccess = () => {
-	// 初始化登录成功时间问候语
-	let currentTimeInfo = currentTime.value;
-	// 登录成功，跳到转首页
-	// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
-	if (route.query?.redirect) {
-		router.push({
-			path: <string>route.query?.redirect,
-			query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
-		});
+const signInSuccess = (isNoPower: boolean | undefined) => {
+	if (isNoPower) {
+		ElMessage.warning('抱歉，您没有登录权限');
+		Session.clear();
 	} else {
-		router.push('/');
+		// 初始化登录成功时间问候语
+		let currentTimeInfo = currentTime.value;
+		// 登录成功，跳到转首页
+		// 如果是复制粘贴的路径，非首页/登录页，那么登录成功后重定向到对应的路径中
+		if (route.query?.redirect) {
+			router.push({
+				path: <string>route.query?.redirect,
+				query: Object.keys(<string>route.query?.params).length > 0 ? JSON.parse(<string>route.query?.params) : '',
+			});
+		} else {
+			router.push('/');
+		}
+		// 登录成功提示
+		const signInText = t('message.signInText');
+		ElMessage.success(`${currentTimeInfo}，${signInText}`);
+		// 添加 loading，防止第一次进入界面时出现短暂空白
+		NextLoading.start();
 	}
-	// 登录成功提示
-	// 关闭 loading
-	state.loading.signIn = true;
-	const signInText = t('message.signInText');
-	ElMessage.success(`${currentTimeInfo}，${signInText}`);
-	// 添加 loading，防止第一次进入界面时出现短暂空白
-	NextLoading.start();
+	state.loading.signIn = false;
 };
 </script>
 

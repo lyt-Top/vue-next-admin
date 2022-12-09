@@ -119,11 +119,6 @@ const props = defineProps({
 		type: Array<EmptyObjectType>,
 		default: () => [],
 	},
-	// 搜索参数
-	param: {
-		type: Object,
-		default: () => {},
-	},
 	// 配置项
 	config: {
 		type: Object,
@@ -161,7 +156,7 @@ const setHeader = computed(() => {
 	return props.header.filter((v) => v.isCheck);
 });
 // tool 列显示全选改变时
-const onCheckAllChange = (val: boolean) => {
+const onCheckAllChange = <T>(val: T) => {
 	if (val) props.header.forEach((v) => (v.isCheck = true));
 	else props.header.forEach((v) => (v.isCheck = false));
 	state.checkListIndeterminate = false;

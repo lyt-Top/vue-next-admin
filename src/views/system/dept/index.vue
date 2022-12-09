@@ -9,7 +9,7 @@
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="default" type="success" class="ml10" @click="onOpenAddDept">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddDept('add')">
 					<el-icon>
 						<ele-FolderAdd />
 					</el-icon>
@@ -18,6 +18,7 @@
 			</div>
 			<el-table
 				:data="state.tableData.data"
+				v-loading="state.tableData.loading"
 				style="width: 100%"
 				row-key="id"
 				default-expand-all
@@ -39,15 +40,14 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" show-overflow-tooltip width="140">
 					<template #default="scope">
-						<el-button size="small" text type="primary" @click="onOpenAddDept">新增</el-button>
-						<el-button size="small" text type="primary" @click="onOpenEditDept(scope.row)">修改</el-button>
+						<el-button size="small" text type="primary" @click="onOpenAddDept('add')">新增</el-button>
+						<el-button size="small" text type="primary" @click="onOpenEditDept('edit', scope.row)">修改</el-button>
 						<el-button size="small" text type="primary" @click="onTabelRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
 			</el-table>
 		</el-card>
-		<AddDept ref="addDeptRef" />
-		<EditDept ref="editDeptRef" />
+		<DeptDialog ref="deptDialogRef" @refresh="getTableData()" />
 	</div>
 </template>
 
@@ -56,12 +56,10 @@ import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 引入组件
-const AddDept = defineAsyncComponent(() => import('/@/views/system/dept/component/addDept.vue'));
-const EditDept = defineAsyncComponent(() => import('/@/views/system/dept/component/editDept.vue'));
+const DeptDialog = defineAsyncComponent(() => import('/@/views/system/dept/dialog.vue'));
 
 // 定义变量内容
-const addDeptRef = ref();
-const editDeptRef = ref();
+const deptDialogRef = ref();
 const state = reactive<SysDeptState>({
 	tableData: {
 		data: [],
@@ -75,7 +73,9 @@ const state = reactive<SysDeptState>({
 });
 
 // 初始化表格数据
-const initTableData = () => {
+const getTableData = () => {
+	state.tableData.loading = true;
+	state.tableData.data = [];
 	state.tableData.data.push({
 		deptName: 'vueNextAdmin',
 		createTime: new Date().toLocaleString(),
@@ -103,14 +103,17 @@ const initTableData = () => {
 		],
 	});
 	state.tableData.total = state.tableData.data.length;
+	setTimeout(() => {
+		state.tableData.loading = false;
+	}, 500);
 };
 // 打开新增菜单弹窗
-const onOpenAddDept = () => {
-	addDeptRef.value.openDialog();
+const onOpenAddDept = (type: string) => {
+	deptDialogRef.value.openDialog(type);
 };
 // 打开编辑菜单弹窗
-const onOpenEditDept = (row: DeptTreeType) => {
-	editDeptRef.value.openDialog(row);
+const onOpenEditDept = (type: string, row: DeptTreeType) => {
+	deptDialogRef.value.openDialog(type, row);
 };
 // 删除当前行
 const onTabelRowDel = (row: DeptTreeType) => {
@@ -120,12 +123,13 @@ const onTabelRowDel = (row: DeptTreeType) => {
 		type: 'warning',
 	})
 		.then(() => {
+			getTableData();
 			ElMessage.success('删除成功');
 		})
 		.catch(() => {});
 };
 // 页面加载时
 onMounted(() => {
-	initTableData();
+	getTableData();
 });
 </script>

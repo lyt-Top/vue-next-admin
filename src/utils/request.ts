@@ -9,10 +9,10 @@ const service: AxiosInstance = axios.create({
 	timeout: 50000,
 	headers: { 'Content-Type': 'application/json' },
 	paramsSerializer: {
-		serialize: function (params) {
-			return qs.stringify(params, {allowDots: true});
-		}
-	}
+		serialize(params) {
+			return qs.stringify(params, { allowDots: true });
+		},
+	},
 });
 
 // 添加请求拦截器

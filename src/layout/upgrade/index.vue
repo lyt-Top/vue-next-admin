@@ -16,6 +16,11 @@
 			</div>
 			<div class="upgrade-content">
 				{{ getThemeConfig.globalTitle }} {{ $t('message.upgrade.msg') }}
+				<div class="mt5">
+					<el-link type="primary" class="font12" href="https://gitee.com/lyt-top/vue-next-admin/blob/master/CHANGELOG.md" target="_black">
+						CHANGELOG.md
+					</el-link>
+				</div>
 				<div class="upgrade-content-desc mt5">{{ $t('message.upgrade.desc') }}</div>
 			</div>
 			<div class="upgrade-btn">
@@ -38,7 +43,7 @@ const { t } = useI18n();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
-	isUpgrade: true,
+	isUpgrade: false,
 	// @ts-ignore
 	version: __VERSION__,
 	isLoading: false,
@@ -63,8 +68,15 @@ const onUpgrade = () => {
 		Local.set('version', state.version);
 	}, 2000);
 };
+// 延迟显示，防止刷新时界面显示太快
+const delayShow = () => {
+	setTimeout(() => {
+		state.isUpgrade = true;
+	}, 2000);
+};
 // 页面加载时
 onMounted(() => {
+	delayShow();
 	setTimeout(() => {
 		state.btnTxt = t('message.upgrade.btnTwo');
 	}, 200);
@@ -90,7 +102,7 @@ onMounted(() => {
 			&::after {
 				content: '';
 				position: absolute;
-				background-color: var(--el-color-primary);
+				background-color: var(--el-color-primary-light-1);
 				width: 130%;
 				height: 130px;
 				border-bottom-left-radius: 100%;
@@ -105,7 +117,8 @@ onMounted(() => {
 					letter-spacing: 3px;
 				}
 				.upgrade-title-warp-version {
-					background-color: var(--next-color-white);
+					color: var(--next-color-white);
+					background-color: var(--el-color-primary-light-4);
 					font-size: 12px;
 					position: absolute;
 					display: flex;

@@ -88,4 +88,14 @@ watch(
 		deep: true,
 	}
 );
+// 监听双向绑定值改变，用于回显
+watch(
+	() => props.getHtml,
+	(val) => {
+		state.editorVal = val;
+	},
+	{
+		deep: true,
+	}
+);
 </script>

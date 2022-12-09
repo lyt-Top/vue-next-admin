@@ -2,6 +2,22 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.4.2
+
+`2022.12.09`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 国际化自动导入文件功能，只需在 `/src/i18n/pages` 下新建文件夹定义即可
+- 🎉 新增 `/make/tableDemo` 中 [搜索框展开，收缩功能，高级筛选组件 有计划做吗](https://gitee.com/lyt-top/vue-next-admin/issues/I6511L)
+- 🐞 修复 [!40 开启 TagsView 缓存后，刷新后所有的路由都变成组件缓存了](https://gitee.com/lyt-top/vue-next-admin/pulls/40)，感谢[@mrjimin](https://gitee.com/mrjimin)
+- 🐞 修复 [!41 修复 get 请求传递嵌套对象或数组时无法正常编码问题](https://gitee.com/lyt-top/vue-next-admin/pulls/41)，感谢[@随心](https://gitee.com/jiangqiang1996)
+- 🐞 修复 组件 wangEditor 回显值的问题
+- 🐞 修复 `/fun/echartsMap`（地理坐标/地图）、`visualizingDemo2`（数据可视化演示 2） 演示报错问题
+- 🎯 优化 版本升级提示
+- 🎯 优化 无权限登录时增加提示信息，[BUG：因前端加载路由(initFrontEndControlRoutes)中当前用户角色为一个陌生角色, 导致 router.beforeEach 会死循环 浏览器崩溃](https://gitee.com/lyt-top/vue-next-admin/issues/I64HVO)，感谢[@canroc](https://gitee.com/canroc)、[@随心](https://gitee.com/jiangqiang1996)
+- 🌈 重构 `/views/system` 新增修改组件合并。[可以把新增修改组件合并成一个吧](https://gitee.com/lyt-top/vue-next-admin/issues/I64WES)
+- 🌈 重构 图标选择器，[图标选择器没办法筛选，只能筛选 ali 的](https://gitee.com/lyt-top/vue-next-admin/issues/I64HZD)，感谢[@随心](https://gitee.com/jiangqiang1996)
+
 ## 2.4.1
 
 `2022.11.30`

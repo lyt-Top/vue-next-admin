@@ -1,7 +1,7 @@
 <template>
-	<div class="system-add-menu-container">
-		<el-dialog title="新增菜单" v-model="state.isShowDialog" width="769px">
-			<el-form :model="state.ruleForm" size="default" label-width="80px">
+	<div class="system-menu-dialog-container">
+		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
+			<el-form ref="menuDialogFormRef" :model="state.ruleForm" size="default" label-width="80px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
 						<el-form-item label="上级菜单">
@@ -51,7 +51,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="菜单图标">
-								<IconSelector placeholder="请输入菜单图标" v-model="state.ruleForm.meta.icon" type="all" />
+								<IconSelector placeholder="请输入菜单图标" v-model="state.ruleForm.meta.icon" />
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -138,28 +138,31 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="onCancel" size="default">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">{{ state.dialog.submitTxt }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
 	</div>
 </template>
 
-<script setup lang="ts" name="systemAddMenu">
-import { defineAsyncComponent, reactive, onMounted } from 'vue';
+<script setup lang="ts" name="systemMenuDialog">
+import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { i18n } from '/@/i18n/index';
 // import { setBackEndControlRefreshRoutes } from "/@/router/backEnd";
 
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['refresh']);
+
 // 引入组件
 const IconSelector = defineAsyncComponent(() => import('/@/components/iconSelector/index.vue'));
 
 // 定义变量内容
+const menuDialogFormRef = ref();
 const stores = useRoutesList();
 const { routesList } = storeToRefs(stores);
 const state = reactive({
-	isShowDialog: false,
 	// 参数请参考 `/src/router/route.ts` 中的 `dynamicRoutes` 路由菜单格式
 	ruleForm: {
 		menuSuperior: [], // 上级菜单
@@ -183,6 +186,12 @@ const state = reactive({
 		btnPower: '', // 菜单类型为按钮时，权限标识
 	},
 	menuData: [] as RouteItems, // 上级菜单数据
+	dialog: {
+		isShowDialog: false,
+		type: '',
+		title: '',
+		submitTxt: '',
+	},
 });
 
 // 获取 pinia 中的路由
@@ -196,12 +205,32 @@ const getMenuData = (routes: RouteItems) => {
 	return arr;
 };
 // 打开弹窗
-const openDialog = () => {
-	state.isShowDialog = true;
+const openDialog = (type: string, row?: any) => {
+	if (type === 'edit') {
+		// 模拟数据，实际请走接口
+		row.menuType = 'menu';
+		row.menuSort = Math.random();
+		row.component = `${row.component} `
+			.match(/\'(.+)\'/g)
+			?.join('')
+			.replace(/\'/g, '');
+		state.ruleForm = row;
+		state.dialog.title = '修改菜单';
+		state.dialog.submitTxt = '修 改';
+	} else {
+		state.dialog.title = '新增菜单';
+		state.dialog.submitTxt = '新 增';
+		// 清空表单，此项需加表单验证才能使用
+		// nextTick(() => {
+		// 	menuDialogFormRef.value.resetFields();
+		// });
+	}
+	state.dialog.type = type;
+	state.dialog.isShowDialog = true;
 };
 // 关闭弹窗
 const closeDialog = () => {
-	state.isShowDialog = false;
+	state.dialog.isShowDialog = false;
 };
 // 是否内嵌下拉改变
 const onSelectIframeChange = () => {
@@ -212,9 +241,11 @@ const onSelectIframeChange = () => {
 const onCancel = () => {
 	closeDialog();
 };
-// 新增
+// 提交
 const onSubmit = () => {
 	closeDialog(); // 关闭弹窗
+	emit('refresh');
+	// if (state.dialog.type === 'add') { }
 	// setBackEndControlRefreshRoutes() // 刷新菜单，未进行后端接口测试
 };
 // 页面加载时

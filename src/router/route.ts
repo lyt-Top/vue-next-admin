@@ -856,7 +856,7 @@ export const dynamicRoutes: Array<RouteRecordRaw> = [
 							isAffix: false,
 							isIframe: false,
 							roles: ['admin'],
-							icon: 'iconfont icon-diannao',
+							icon: 'iconfont icon-wenducanshu-05',
 						},
 					},
 					{

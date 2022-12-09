@@ -1,8 +1,8 @@
 <template>
-	<div class="system-add-dic-container">
-		<el-dialog title="新增字典" v-model="state.isShowDialog" width="769px">
+	<div class="system-dic-dialog-container">
+		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
 			<el-alert title="半成品，交互过于复杂，请自行扩展！" type="warning" :closable="false" class="mb20"> </el-alert>
-			<el-form :model="state.ruleForm" size="default" label-width="90px">
+			<el-form ref="dicDialogFormRef" :model="state.ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="字典名称">
@@ -56,19 +56,22 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="onCancel" size="default">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">{{ state.dialog.submitTxt }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
 	</div>
 </template>
 
-<script setup lang="ts" name="systemAddDic">
-import { reactive } from 'vue';
+<script setup lang="ts" name="systemDicDialog">
+import { reactive, ref } from 'vue';
+
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['refresh']);
 
 // 定义变量内容
+const dicDialogFormRef = ref();
 const state = reactive({
-	isShowDialog: false,
 	ruleForm: {
 		dicName: '', // 字典名称
 		fieldName: '', // 字段名
@@ -76,23 +79,56 @@ const state = reactive({
 		list: [] as ListType[], // 子集字段 + 属性值
 		describe: '', // 字典描述
 	},
+	dialog: {
+		isShowDialog: false,
+		type: '',
+		title: '',
+		submitTxt: '',
+	},
 });
 
 // 打开弹窗
-const openDialog = () => {
-	state.isShowDialog = true;
+const openDialog = (type: string, row: RowDicType) => {
+	if (type === 'edit') {
+		if (row.fieldName === 'SYS_UERINFO') {
+			row.list = [
+				{ id: Math.random(), label: 'sex', value: '1' },
+				{ id: Math.random(), label: 'sex', value: '0' },
+			];
+		} else {
+			row.list = [
+				{ id: Math.random(), label: 'role', value: 'admin' },
+				{ id: Math.random(), label: 'role', value: 'common' },
+				{ id: Math.random(), label: 'roleName', value: '超级管理员' },
+				{ id: Math.random(), label: 'roleName', value: '普通用户' },
+			];
+		}
+		state.ruleForm = row;
+		state.dialog.title = '修改字典';
+		state.dialog.submitTxt = '修 改';
+	} else {
+		state.dialog.title = '新增字典';
+		state.dialog.submitTxt = '新 增';
+		// 清空表单，此项需加表单验证才能使用
+		// nextTick(() => {
+		// 	dicDialogFormRef.value.resetFields();
+		// });
+	}
+	state.dialog.isShowDialog = true;
 };
 // 关闭弹窗
 const closeDialog = () => {
-	state.isShowDialog = false;
+	state.dialog.isShowDialog = false;
 };
 // 取消
 const onCancel = () => {
 	closeDialog();
 };
-// 新增
+// 提交
 const onSubmit = () => {
 	closeDialog();
+	emit('refresh');
+	// if (state.dialog.type === 'add') { }
 };
 // 新增行
 const onAddRow = () => {

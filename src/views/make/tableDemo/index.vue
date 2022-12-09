@@ -1,15 +1,7 @@
 <template>
 	<div class="table-demo-container layout-padding">
 		<div class="table-demo-padding layout-padding-view layout-padding-auto">
-			<div class="system-user-search mb15">
-				<el-input v-model="state.tableData.param.search" size="default" placeholder="请输入核酸采样点名称" style="max-width: 180px" />
-				<el-button size="default" type="primary" class="ml10" @click="onSearch">
-					<el-icon>
-						<ele-Search />
-					</el-icon>
-					查询
-				</el-button>
-			</div>
+			<TableSearch :search="state.tableData.search" @search="onSearch" />
 			<Table
 				ref="tableRef"
 				v-bind="state.tableData"
@@ -28,6 +20,7 @@ import { ElMessage } from 'element-plus';
 
 // 引入组件
 const Table = defineAsyncComponent(() => import('/@/components/table/index.vue'));
+const TableSearch = defineAsyncComponent(() => import('/@/views/make/tableDemo/search.vue'));
 
 // 定义变量内容
 const tableRef = ref<RefType>();
@@ -44,10 +37,6 @@ const state = reactive<TableDemoState>({
 			{ key: 'isSupport', colWidth: '', title: '是否支持24小时核酸检测', type: 'text', isCheck: true },
 			{ key: 'image', colWidth: '', width: '70', height: '40', title: '图片描述', type: 'image', isCheck: true },
 		],
-		// 搜索参数（可选）
-		param: {
-			search: '',
-		},
 		// 配置项（必传）
 		config: {
 			total: 0, // 列表总数
@@ -56,6 +45,31 @@ const state = reactive<TableDemoState>({
 			isSerialNo: true, // 是否显示表格序号
 			isSelection: true, // 是否显示表格多选
 			isOperate: true, // 是否显示表格操作栏
+		},
+		// 搜索表单，动态生成（传空数组时，将不显示搜索，注意格式）
+		search: [
+			{ label: '采样点名称', prop: 'name', placeholder: '请输入应检尽检核酸采样点名称', required: true, type: 'input' },
+			{ label: '详细地址', prop: 'address', placeholder: '请输入详细地址', required: false, type: 'input' },
+			{ label: '联系电话', prop: 'phone', placeholder: '请输入采样点联系电话', required: false, type: 'input' },
+			{ label: '开放时间', prop: 'time', placeholder: '请选择', required: false, type: 'date' },
+			{
+				label: '支持24小时',
+				prop: 'isSupport',
+				placeholder: '请选择',
+				required: false,
+				type: 'select',
+				options: [
+					{ label: '是', value: 1 },
+					{ label: '否', value: 0 },
+				],
+			},
+			{ label: '图片描述', prop: 'image', placeholder: '请输入图片描述', required: false, type: 'input' },
+			{ label: '核酸机构', prop: 'mechanism', placeholder: '请输入核酸机构', required: false, type: 'input' },
+		],
+		// 搜索参数（不用传，用于分页、搜索时传给后台的值，`getTableData` 中使用）
+		param: {
+			pageNum: 1,
+			pageSize: 10,
 		},
 	},
 });
@@ -81,8 +95,9 @@ const getTableData = () => {
 		state.tableData.config.loading = false;
 	}, 500);
 };
-// 搜索
-const onSearch = () => {
+// 搜索点击时表单回调
+const onSearch = (data: EmptyObjectType) => {
+	state.tableData.param = Object.assign({}, state.tableData.param, { ...data });
 	tableRef.value.pageReset();
 };
 // 删除当前项回调

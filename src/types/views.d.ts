@@ -43,7 +43,6 @@ declare type Demo2State<T = any> = {
 	earth3DBtnList: T[];
 	chartData4List: T[];
 	myCharts: T[];
-	the3DEarth: HTMLDivElement | null;
 };
 
 /**
@@ -305,11 +304,19 @@ declare type TableHeaderType = {
 	isCheck: boolean;
 };
 
+declare type TableSearchType = {
+	label: string;
+	prop: string;
+	placeholder: string;
+	required: boolean;
+	type: string;
+	options?: SelectOptionType[];
+};
+
 declare type TableDemoState = {
 	tableData: {
 		data: EmptyObjectType[];
 		header: TableHeaderType[];
-		param: EmptyObjectType;
 		config: {
 			total: number;
 			loading: boolean;
@@ -318,5 +325,7 @@ declare type TableDemoState = {
 			isSerialNo: boolean;
 			isOperate: boolean;
 		};
+		search: TableSearchType[];
+		param: EmptyObjectType;
 	};
 };

@@ -1,18 +1,19 @@
 <template>
 	<div class="layout-padding">
 		<div class="layout-padding-auto layout-padding-view">
-			<div ref="echartsMap" style="height: 100%"></div>
+			<div ref="echartsMapRef" style="height: 100%"></div>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts" name="funEchartsMap">
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import { echartsMapList, echartsMapData } from './mock';
 
 // 定义变量内容
+const echartsMapRef = ref<RefType>('');
 const state = reactive({
 	echartsMap: '' as unknown,
 	echartsMapList,
@@ -35,7 +36,7 @@ const convertData = (data: EmptyObjectType[]) => {
 };
 // 初始化 echartsMap
 const initEchartsMap = () => {
-	const myChart = echarts.init(<HTMLElement>state.echartsMap);
+	const myChart = echarts.init(echartsMapRef.value);
 	const option = {
 		tooltip: {
 			trigger: 'item',

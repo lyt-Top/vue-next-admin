@@ -36,6 +36,13 @@ const state = reactive({
 	modelIcon: '',
 	tableData: [
 		{
+			a1: 'v-model',
+			a2: '双向绑定值',
+			a3: 'string',
+			a4: '',
+			a5: '',
+		},
+		{
 			a1: 'prepend',
 			a2: '输入框前置内容，只能字体图标',
 			a3: 'string',
@@ -62,13 +69,6 @@ const state = reactive({
 			a3: 'string',
 			a4: '',
 			a5: '请选择图标',
-		},
-		{
-			a1: 'type',
-			a2: 'icon 图标类型',
-			a3: 'string',
-			a4: 'ali / ele / awe / all',
-			a5: 'ele',
 		},
 		{
 			a1: 'disabled',

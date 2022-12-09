@@ -2,53 +2,53 @@ import { createI18n } from 'vue-i18n';
 import pinia from '/@/stores/index';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
-import zhcnLocale from 'element-plus/lib/locale/lang/zh-cn';
-import enLocale from 'element-plus/lib/locale/lang/en';
-import zhtwLocale from 'element-plus/lib/locale/lang/zh-tw';
-
-import nextZhcn from '/@/i18n/lang/zh-cn';
-import nextEn from '/@/i18n/lang/en';
-import nextZhtw from '/@/i18n/lang/zh-tw';
-
-import pagesLoginZhcn from '/@/i18n/pages/login/zh-cn';
-import pagesLoginEn from '/@/i18n/pages/login/en';
-import pagesLoginZhtw from '/@/i18n/pages/login/zh-tw';
-import pagesFormI18nZhcn from '/@/i18n/pages/formI18n/zh-cn';
-import pagesFormI18nEn from '/@/i18n/pages/formI18n/en';
-import pagesFormI18nZhtw from '/@/i18n/pages/formI18n/zh-tw';
 
 // 定义语言国际化内容
+
 /**
  * 说明：
- * /src/i18n/lang 下的 ts 为框架的国际化内容
- * /src/i18n/pages 下的 ts 为各界面的国际化内容
+ * 须在 pages 下新建文件夹（建议 `要国际化界面目录` 与 `i18 目录` 相同，方便查找），
+ * 注意国际化定义的字段，不要与原有的定义字段相同。
+ * 1、/src/i18n/lang 下的 ts 为框架的国际化内容
+ * 2、/src/i18n/pages 下的 ts 为各界面的国际化内容
  */
-const messages = {
-	[zhcnLocale.name]: {
-		...zhcnLocale,
-		message: {
-			...nextZhcn,
-			...pagesLoginZhcn,
-			...pagesFormI18nZhcn,
-		},
-	},
-	[enLocale.name]: {
-		...enLocale,
-		message: {
-			...nextEn,
-			...pagesLoginEn,
-			...pagesFormI18nEn,
-		},
-	},
-	[zhtwLocale.name]: {
-		...zhtwLocale,
-		message: {
-			...nextZhtw,
-			...pagesLoginZhtw,
-			...pagesFormI18nZhtw,
-		},
-	},
-};
+
+// element plus 自带国际化
+import enLocale from 'element-plus/lib/locale/lang/en';
+import zhcnLocale from 'element-plus/lib/locale/lang/zh-cn';
+import zhtwLocale from 'element-plus/lib/locale/lang/zh-tw';
+
+// 定义变量内容
+const messages = {};
+const element = { en: enLocale, 'zh-cn': zhcnLocale, 'zh-tw': zhtwLocale };
+const itemize = { en: [], 'zh-cn': [], 'zh-tw': [] };
+const modules: Record<string, any> = import.meta.glob('./**/*.ts', { eager: true });
+
+// 对自动引入的 modules 进行分类 en、zh-cn、zh-tw
+// https://vitejs.cn/vite3-cn/guide/features.html#glob-import
+for (const path in modules) {
+	const key = path.match(/(\S+)\/(\S+).ts/);
+	if (itemize[key![2]]) itemize[key![2]].push(modules[path].default);
+	else itemize[key![2]] = modules[path];
+}
+
+// 合并数组对象（非标准数组对象，数组中对象的每项 key、value 都不同）
+function mergeArrObj<T>(list: T, key: string) {
+	let obj = {};
+	list[key].forEach((i: EmptyObjectType) => {
+		obj = Object.assign({}, obj, i);
+	});
+	return obj;
+}
+
+// 处理最终格式
+for (const key in itemize) {
+	messages[key] = {
+		name: key,
+		el: element[key].el,
+		message: mergeArrObj(itemize, key),
+	};
+}
 
 // 读取 pinia 默认语言
 const stores = useThemeConfig(pinia);
