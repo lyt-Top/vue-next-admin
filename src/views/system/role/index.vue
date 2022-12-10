@@ -9,14 +9,14 @@
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="default" type="success" class="ml10" @click="onOpenAddRole">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddRole('add')">
 					<el-icon>
 						<ele-FolderAdd />
 					</el-icon>
 					新增角色
 				</el-button>
 			</div>
-			<el-table :data="state.tableData.data" style="width: 100%">
+			<el-table :data="state.tableData.data" v-loading="state.tableData.loading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="60" />
 				<el-table-column prop="roleName" label="角色名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="roleSign" label="角色标识" show-overflow-tooltip></el-table-column>
@@ -31,7 +31,7 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" text type="primary" @click="onOpenEditRole(scope.row)"
+						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" text type="primary" @click="onOpenEditRole('edit', scope.row)"
 							>修改</el-button
 						>
 						<el-button :disabled="scope.row.roleName === '超级管理员'" size="small" text type="primary" @click="onRowDel(scope.row)">删除</el-button>
@@ -52,8 +52,7 @@
 			>
 			</el-pagination>
 		</div>
-		<AddRole ref="addRoleRef" />
-		<EditRole ref="editRoleRef" />
+		<RoleDialog ref="roleDialogRef" @refresh="getTableData()" />
 	</div>
 </template>
 
@@ -62,12 +61,10 @@ import { defineAsyncComponent, reactive, onMounted, ref } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 引入组件
-const AddRole = defineAsyncComponent(() => import('/@/views/system/role/component/addRole.vue'));
-const EditRole = defineAsyncComponent(() => import('/@/views/system/role/component/editRole.vue'));
+const RoleDialog = defineAsyncComponent(() => import('/@/views/system/role/dialog.vue'));
 
 // 定义变量内容
-const addRoleRef = ref();
-const editRoleRef = ref();
+const roleDialogRef = ref();
 const state = reactive<SysRoleState>({
 	tableData: {
 		data: [],
@@ -81,7 +78,8 @@ const state = reactive<SysRoleState>({
 	},
 });
 // 初始化表格数据
-const initTableData = () => {
+const getTableData = () => {
+	state.tableData.loading = true;
 	const data = [];
 	for (let i = 0; i < 20; i++) {
 		data.push({
@@ -95,14 +93,17 @@ const initTableData = () => {
 	}
 	state.tableData.data = data;
 	state.tableData.total = state.tableData.data.length;
+	setTimeout(() => {
+		state.tableData.loading = false;
+	}, 500);
 };
 // 打开新增角色弹窗
-const onOpenAddRole = () => {
-	addRoleRef.value.openDialog();
+const onOpenAddRole = (type: string) => {
+	roleDialogRef.value.openDialog(type);
 };
 // 打开修改角色弹窗
-const onOpenEditRole = (row: Object) => {
-	editRoleRef.value.openDialog(row);
+const onOpenEditRole = (type: string, row: Object) => {
+	roleDialogRef.value.openDialog(type, row);
 };
 // 删除角色
 const onRowDel = (row: RowRoleType) => {
@@ -112,6 +113,7 @@ const onRowDel = (row: RowRoleType) => {
 		type: 'warning',
 	})
 		.then(() => {
+			getTableData();
 			ElMessage.success('删除成功');
 		})
 		.catch(() => {});
@@ -119,14 +121,16 @@ const onRowDel = (row: RowRoleType) => {
 // 分页改变
 const onHandleSizeChange = (val: number) => {
 	state.tableData.param.pageSize = val;
+	getTableData();
 };
 // 分页改变
 const onHandleCurrentChange = (val: number) => {
 	state.tableData.param.pageNum = val;
+	getTableData();
 };
 // 页面加载时
 onMounted(() => {
-	initTableData();
+	getTableData();
 });
 </script>
 

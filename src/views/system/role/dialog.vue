@@ -1,7 +1,7 @@
 <template>
-	<div class="system-add-role-container">
-		<el-dialog title="新增角色" v-model="state.isShowDialog" width="769px">
-			<el-form :model="state.ruleForm" size="default" label-width="90px">
+	<div class="system-role-dialog-container">
+		<el-dialog :title="state.dialog.title" v-model="state.dialog.isShowDialog" width="769px">
+			<el-form ref="roleDialogFormRef" :model="state.ruleForm" size="default" label-width="90px">
 				<el-row :gutter="35">
 					<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 						<el-form-item label="角色名称">
@@ -43,19 +43,22 @@
 			<template #footer>
 				<span class="dialog-footer">
 					<el-button @click="onCancel" size="default">取 消</el-button>
-					<el-button type="primary" @click="onSubmit" size="default">新 增</el-button>
+					<el-button type="primary" @click="onSubmit" size="default">{{ state.dialog.submitTxt }}</el-button>
 				</span>
 			</template>
 		</el-dialog>
 	</div>
 </template>
 
-<script setup lang="ts" name="systemAddRole">
-import { reactive } from 'vue';
+<script setup lang="ts" name="systemRoleDialog">
+import { reactive, ref } from 'vue';
+
+// 定义子组件向父组件传值/事件
+const emit = defineEmits(['refresh']);
 
 // 定义变量内容
+const roleDialogFormRef = ref();
 const state = reactive({
-	isShowDialog: false,
 	ruleForm: {
 		roleName: '', // 角色名称
 		roleSign: '', // 角色标识
@@ -68,24 +71,44 @@ const state = reactive({
 		children: 'children',
 		label: 'label',
 	},
+	dialog: {
+		isShowDialog: false,
+		type: '',
+		title: '',
+		submitTxt: '',
+	},
 });
 
 // 打开弹窗
-const openDialog = () => {
-	state.isShowDialog = true;
+const openDialog = (type: string, row: RowRoleType) => {
+	if (type === 'edit') {
+		state.ruleForm = row;
+		state.dialog.title = '修改角色';
+		state.dialog.submitTxt = '修 改';
+	} else {
+		state.dialog.title = '新增角色';
+		state.dialog.submitTxt = '新 增';
+		// 清空表单，此项需加表单验证才能使用
+		// nextTick(() => {
+		// 	roleDialogFormRef.value.resetFields();
+		// });
+	}
+	state.dialog.isShowDialog = true;
 	getMenuData();
 };
 // 关闭弹窗
 const closeDialog = () => {
-	state.isShowDialog = false;
+	state.dialog.isShowDialog = false;
 };
 // 取消
 const onCancel = () => {
 	closeDialog();
 };
-// 新增
+// 提交
 const onSubmit = () => {
 	closeDialog();
+	emit('refresh');
+	// if (state.dialog.type === 'add') { }
 };
 // 获取菜单结构数据
 const getMenuData = () => {
@@ -202,7 +225,7 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
-.system-add-role-container {
+.system-role-dialog-container {
 	.menu-data-tree {
 		width: 100%;
 		border: 1px solid var(--el-border-color);
