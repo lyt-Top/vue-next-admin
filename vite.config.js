@@ -29,6 +29,7 @@ const viteConfig = defineConfig((mode) => {
 			host: '0.0.0.0',
 			port: env.VITE_PORT,
 			open: env.VITE_OPEN,
+			hmr: true,
 			proxy: {
 				'/gitee': {
 					target: 'https://gitee.com',
@@ -40,7 +41,6 @@ const viteConfig = defineConfig((mode) => {
 		},
 		build: {
 			outDir: 'dist',
-			sourcemap: false,
 			chunkSizeWarningLimit: 1500,
 			rollupOptions: {
 				output: {

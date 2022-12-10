@@ -9,14 +9,14 @@
 					</el-icon>
 					查询
 				</el-button>
-				<el-button size="default" type="success" class="ml10" @click="onOpenAddDic">
+				<el-button size="default" type="success" class="ml10" @click="onOpenAddDic('add')">
 					<el-icon>
 						<ele-FolderAdd />
 					</el-icon>
 					新增字典
 				</el-button>
 			</div>
-			<el-table :data="state.tableData.data" style="width: 100%">
+			<el-table :data="state.tableData.data" v-loading="state.tableData.loading" style="width: 100%">
 				<el-table-column type="index" label="序号" width="50" />
 				<el-table-column prop="dicName" label="字典名称" show-overflow-tooltip></el-table-column>
 				<el-table-column prop="fieldName" label="字段名" show-overflow-tooltip></el-table-column>
@@ -30,7 +30,7 @@
 				<el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
 				<el-table-column label="操作" width="100">
 					<template #default="scope">
-						<el-button size="small" text type="primary" @click="onOpenEditDic(scope.row)">修改</el-button>
+						<el-button size="small" text type="primary" @click="onOpenEditDic('edit', scope.row)">修改</el-button>
 						<el-button size="small" text type="primary" @click="onRowDel(scope.row)">删除</el-button>
 					</template>
 				</el-table-column>
@@ -49,8 +49,7 @@
 			>
 			</el-pagination>
 		</el-card>
-		<AddDic ref="addDicRef" />
-		<EditDic ref="editDicRef" />
+		<DicDialog ref="dicDialogRef" @refresh="getTableData()" />
 	</div>
 </template>
 
@@ -58,12 +57,10 @@
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 引入组件
-const AddDic = defineAsyncComponent(() => import('/@/views/system/dic/component/addDic.vue'));
-const EditDic = defineAsyncComponent(() => import('/@/views/system/dic/component/editDic.vue'));
+const DicDialog = defineAsyncComponent(() => import('/@/views/system/dic/dialog.vue'));
 
 // 定义变量内容
-const addDicRef = ref();
-const editDicRef = ref();
+const dicDialogRef = ref();
 const state = reactive({
 	tableData: {
 		data: [],
@@ -77,7 +74,8 @@ const state = reactive({
 });
 
 // 初始化表格数据
-const initTableData = () => {
+const getTableData = () => {
+	state.tableData.loading = true;
 	const data = [];
 	for (let i = 0; i < 2; i++) {
 		data.push({
@@ -91,14 +89,17 @@ const initTableData = () => {
 	}
 	state.tableData.data = data;
 	state.tableData.total = state.tableData.data.length;
+	setTimeout(() => {
+		state.tableData.loading = false;
+	}, 500);
 };
 // 打开新增字典弹窗
-const onOpenAddDic = () => {
-	addDicRef.value.openDialog();
+const onOpenAddDic = (type) => {
+	dicDialogRef.value.openDialog(type);
 };
 // 打开修改字典弹窗
-const onOpenEditDic = (row) => {
-	editDicRef.value.openDialog(row);
+const onOpenEditDic = (type, row) => {
+	dicDialogRef.value.openDialog(type, row);
 };
 // 删除字典
 const onRowDel = (row) => {
@@ -108,6 +109,7 @@ const onRowDel = (row) => {
 		type: 'warning',
 	})
 		.then(() => {
+			getTableData();
 			ElMessage.success('删除成功');
 		})
 		.catch(() => {});
@@ -115,13 +117,15 @@ const onRowDel = (row) => {
 // 分页改变
 const onHandleSizeChange = (val) => {
 	state.tableData.param.pageSize = val;
+	getTableData();
 };
 // 分页改变
 const onHandleCurrentChange = (val) => {
 	state.tableData.param.pageNum = val;
+	getTableData();
 };
 // 页面加载时
 onMounted(() => {
-	initTableData();
+	getTableData();
 });
 </script>

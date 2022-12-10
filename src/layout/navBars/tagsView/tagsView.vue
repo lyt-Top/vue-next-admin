@@ -241,7 +241,7 @@ const refreshCurrentTagsView = async (fullPath) => {
 };
 // 3、关闭当前 tagsView：如果是设置了固定的（isAffix），不可以关闭
 const closeCurrentTagsView = (path) => {
-	state.tagsViewList.map((v, k, arrs) => {
+	state.tagsViewList.map((v, k, arr) => {
 		if (!v.meta?.isAffix) {
 			if (getThemeConfig.value.isShareTagsView ? v.path === path : v.url === path) {
 				storesKeepALiveNames.delCachedView(v);

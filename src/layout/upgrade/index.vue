@@ -16,6 +16,11 @@
 			</div>
 			<div class="upgrade-content">
 				{{ getThemeConfig.globalTitle }} 新版本来啦，马上更新尝鲜吧！不用担心，更新很快的哦！
+				<div class="mt5">
+					<el-link type="primary" class="font12" href="https://gitee.com/lyt-top/vue-next-admin/blob/master/CHANGELOG.md" target="_black">
+						CHANGELOG.md
+					</el-link>
+				</div>
 				<div class="upgrade-content-desc mt5">提示：更新会还原默认配置</div>
 			</div>
 			<div class="upgrade-btn">
@@ -35,7 +40,7 @@ import { Local } from '/@/utils/storage';
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
-	isUpgrade: true,
+	isUpgrade: false,
 	version: __VERSION__,
 	isLoading: false,
 	btnTxt: '',
@@ -59,8 +64,15 @@ const onUpgrade = () => {
 		Local.set('version', state.version);
 	}, 2000);
 };
+// 延迟显示，防止刷新时界面显示太快
+const delayShow = () => {
+	setTimeout(() => {
+		state.isUpgrade = true;
+	}, 2000);
+};
 // 页面加载时
 onMounted(() => {
+	delayShow();
 	setTimeout(() => {
 		state.btnTxt = '马上更新';
 	}, 200);
@@ -86,7 +98,7 @@ onMounted(() => {
 			&::after {
 				content: '';
 				position: absolute;
-				background-color: var(--el-color-primary);
+				background-color: var(--el-color-primary-light-1);
 				width: 130%;
 				height: 130px;
 				border-bottom-left-radius: 100%;
@@ -101,7 +113,8 @@ onMounted(() => {
 					letter-spacing: 3px;
 				}
 				.upgrade-title-warp-version {
-					background-color: var(--next-color-white);
+					color: var(--next-color-white);
+					background-color: var(--el-color-primary-light-4);
 					font-size: 12px;
 					position: absolute;
 					display: flex;
