@@ -12,7 +12,7 @@
 						<el-scrollbar>
 							<div
 								ref="leftNavRefs"
-								v-for="val in leftNavList"
+								v-for="val in state.leftNavList"
 								:key="val.id"
 								:style="{ height: val.isOpen ? 'auto' : '50px', overflow: 'hidden' }"
 								class="workflow-left-id"
@@ -86,6 +86,8 @@ const Drawer = defineAsyncComponent(() => import('./component/drawer/index.vue')
 const Help = defineAsyncComponent(() => import('./component/tool/help.vue'));
 
 // 定义变量内容
+const leftNavRefs = ref([]);
+const workflowRightRef = ref();
 const contextmenuNodeRef = ref();
 const contextmenuLineRef = ref();
 const drawerRef = ref();
@@ -95,8 +97,6 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { copyText } = commonFunction();
 const state = reactive<WorkflowState>({
-	workflowRightRef: null,
-	leftNavRefs: [],
 	leftNavList: [],
 	dropdownNode: { x: '', y: '' },
 	dropdownLine: { x: '', y: '' },
@@ -151,7 +151,7 @@ const initLeftNavList = () => {
 };
 // 左侧导航-初始化拖动
 const initSortable = () => {
-	state.leftNavRefs.forEach((v) => {
+	leftNavRefs.forEach((v) => {
 		Sortable.create(v as HTMLDivElement, {
 			group: {
 				name: 'vue-next-admin-1',
@@ -165,7 +165,7 @@ const initSortable = () => {
 			onEnd: function (evt: any) {
 				const { name, icon, id } = evt.clone.dataset;
 				const { layerX, layerY, clientX, clientY } = evt.originalEvent;
-				const el = state.workflowRightRef!;
+				const el = workflowRightRef.value!;
 				const { x, y, width, height } = el.getBoundingClientRect();
 				if (clientX < x || clientX > width + x || clientY < y || y > y + height) {
 					ElMessage.warning('请把节点拖入到画布中');
