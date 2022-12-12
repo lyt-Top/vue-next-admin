@@ -1,6 +1,6 @@
 {
 	"name": "vue-next-admin-template",
-	"version": "2.4.2",
+	"version": "2.4.21",
 	"description": "vue3 vite next admin template",
 	"author": "lyt_20201208",
 	"license": "MIT",
@@ -27,7 +27,7 @@
 		"vue-router": "^4.1.6"
 	},
 	"devDependencies": {
-		"@types/node": "^18.11.12",
+		"@types/node": "^18.11.13",
 		"@types/nprogress": "^0.2.0",
 		"@typescript-eslint/eslint-plugin": "^5.46.0",
 		"@typescript-eslint/parser": "^5.46.0",

@@ -52,6 +52,17 @@
 						<el-color-picker v-model="getThemeConfig.menuBarColor" size="default" @change="onBgColorPickerChange('menuBarColor')"> </el-color-picker>
 					</div>
 				</div>
+				<div class="layout-breadcrumb-seting-bar-flex">
+					<div class="layout-breadcrumb-seting-bar-flex-label">菜单高亮背景色</div>
+					<div class="layout-breadcrumb-seting-bar-flex-value">
+						<el-color-picker
+							v-model="getThemeConfig.menuBarActiveColor"
+							size="default"
+							show-alpha
+							@change="onBgColorPickerChange('menuBarActiveColor')"
+						/>
+					</div>
+				</div>
 				<div class="layout-breadcrumb-seting-bar-flex mt14">
 					<div class="layout-breadcrumb-seting-bar-flex-label">菜单背景渐变</div>
 					<div class="layout-breadcrumb-seting-bar-flex-value">
@@ -566,6 +577,7 @@ const onSetLayout = (layout: string) => {
 const initLayoutChangeFun = () => {
 	onBgColorPickerChange('menuBar');
 	onBgColorPickerChange('menuBarColor');
+	onBgColorPickerChange('menuBarActiveColor');
 	onBgColorPickerChange('topBar');
 	onBgColorPickerChange('topBarColor');
 	onBgColorPickerChange('columnsMenuBar');

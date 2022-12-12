@@ -242,8 +242,6 @@ declare type XyState = {
 };
 
 declare type WorkflowState<T = any> = {
-	workflowRightRef: HTMLDivElement | null;
-	leftNavRefs: HTMLElement[];
 	leftNavList: T[];
 	dropdownNode: XyState;
 	dropdownLine: XyState;
