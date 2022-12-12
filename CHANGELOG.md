@@ -2,6 +2,16 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.4.21
+
+`2022.12.12`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 菜单背景高亮颜色可自定义，通过 `布局配置 -> 菜单设置 -> 菜单高亮背景色` 进行设置
+- 🐞 修复 `分栏布局` 二级导航菜单内容多时，无法滚动问题，感谢群友@静雨轩主人
+- 🐞 修复 [!42 修复 工作流无法添加新节点问题](https://gitee.com/lyt-top/vue-next-admin/pulls/42)，感谢[@beta](https://gitee.com/beta_dz)
+- 🎯 优化 `/make/tableDemo` 表头很多时，无法滚动问题，感谢群友@糊涂涂涂
+
 ## 2.4.2
 
 `2022.12.09`

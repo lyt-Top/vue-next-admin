@@ -137,6 +137,7 @@ export default {
 		twoIsTopBarColorGradual: '頂欄背景漸變',
 		twoMenuBar: '選單背景',
 		twoMenuBarColor: '選單默認字體顏色',
+		twoMenuBarActiveColor: '選單高亮背景色',
 		twoIsMenuBarColorGradual: '選單背景漸變',
 		twoColumnsMenuBar: '分欄選單背景',
 		twoColumnsMenuBarColor: '分欄選單默認字體顏色',

@@ -137,6 +137,7 @@ export default {
 		twoIsTopBarColorGradual: 'Top bar gradient',
 		twoMenuBar: 'Menu background',
 		twoMenuBarColor: 'Menu default font color',
+		twoMenuBarActiveColor: 'Menu Highlight Color',
 		twoIsMenuBarColorGradual: 'Menu gradient',
 		twoColumnsMenuBar: 'Column menu background',
 		twoColumnsMenuBarColor: 'Default font color bar menu',

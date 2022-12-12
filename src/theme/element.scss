@@ -68,7 +68,7 @@
 ------------------------------- */
 // 鼠标 hover 时颜色
 .el-menu-hover-bg-color {
-	background-color: var(--next-color-menu-hover) !important;
+	background-color: var(--next-bg-menuBarActiveColor) !important;
 }
 // 默认样式修改
 .el-menu {
@@ -106,6 +106,9 @@
 .el-menu-item.is-active,
 .el-sub-menu.is-active .el-sub-menu__title,
 .el-sub-menu:not(.is-opened):hover .el-sub-menu__title {
+	@extend .el-menu-hover-bg-color;
+}
+.el-menu-item:hover {
 	@extend .el-menu-hover-bg-color;
 }
 .el-sub-menu.is-active.is-opened .el-sub-menu__title {
@@ -278,6 +281,10 @@
 /*用于界面高度自适应（main.vue），区分 scrollbar__view，防止其它使用 scrollbar 的地方出现滚动条消失*/
 .layout-container-view .el-scrollbar__view {
 	height: 100%;
+}
+/*防止分栏布局二级菜单很多时，滚动条消失问题*/
+.layout-columns-warp .layout-aside .el-scrollbar__view {
+	height: unset !important;
 }
 
 /* Pagination 分页

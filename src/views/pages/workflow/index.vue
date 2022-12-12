@@ -151,7 +151,7 @@ const initLeftNavList = () => {
 };
 // 左侧导航-初始化拖动
 const initSortable = () => {
-	leftNavRefs.forEach((v) => {
+	leftNavRefs.value.forEach((v) => {
 		Sortable.create(v as HTMLDivElement, {
 			group: {
 				name: 'vue-next-admin-1',
