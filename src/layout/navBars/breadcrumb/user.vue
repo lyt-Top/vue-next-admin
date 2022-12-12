@@ -67,7 +67,6 @@
 
 <script>
 import screenfull from 'screenfull';
-import { resetRouter } from '@/router/index.js';
 import { Session, Local } from '@/utils/storage.js';
 import UserNews from '@/layout/navBars/breadcrumb/userNews.vue';
 import Search from '@/layout/navBars/breadcrumb/search.vue';
@@ -201,13 +200,10 @@ export default {
 						},
 					})
 						.then(() => {
-							Session.clear(); // 清除缓存/token等
-							this.$store.dispatch('routesList/setRoutesList', []); // 清空 vuex 路由列表缓存
-							resetRouter(); // 删除/重置路由
-							this.$router.push('/login');
-							setTimeout(() => {
-								this.$message.success(this.$t('message.user.logOutSuccess'));
-							}, 300);
+							// 清除缓存/token等
+							Session.clear();
+							// 使用 reload 时，不需要调用 resetRoute() 重置路由
+							window.location.reload();
 						})
 						.catch(() => {});
 				}, 150);

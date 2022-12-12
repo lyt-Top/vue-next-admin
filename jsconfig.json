@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"allowJs": true,
+		"lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+		"jsx": "preserve",
+		"baseUrl": ".",
+		"paths": {
+			"/@/*": ["src/*"]
+		}
+	}
+}

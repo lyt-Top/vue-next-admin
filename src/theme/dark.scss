@@ -61,9 +61,11 @@
 	}
 
 	// switch
-	.el-switch__core {
-		border-color: var(--prev-border-color-base) !important;
-		background-color: var(--prev-border-color-base) !important;
+	.el-switch:not(.is-checked) {
+		.el-switch__core {
+			border-color: var(--prev-border-color-base) !important;
+			background-color: var(--prev-border-color-base) !important;
+		}
 	}
 
 	// TimePicker

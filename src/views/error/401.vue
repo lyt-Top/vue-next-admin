@@ -22,16 +22,15 @@
 
 <script>
 import { Session } from '@/utils/storage';
-import { resetRouter } from '@/router';
 export default {
 	name: 'noAuth',
 	methods: {
 		// 重新授权
 		onSetAuth() {
+			// 清除缓存/token等
 			Session.clear();
-			this.$store.commit('setMenuData', {});
-			resetRouter(); // 重置路由
-			this.$router.push('/login');
+			// 使用 reload 时，不需要调用 resetRoute() 重置路由
+			window.location.reload();
 		},
 	},
 };

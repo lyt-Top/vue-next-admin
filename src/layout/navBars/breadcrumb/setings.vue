@@ -286,6 +286,7 @@ export default {
 			const body = document.documentElement;
 			if (this.getThemeConfig.isIsDark) body.setAttribute('data-theme', 'dark');
 			else body.setAttribute('data-theme', '');
+			this.setLocalThemeConfig();
 		},
 		// 初始化：刷新页面时，设置了值，直接取缓存中的值进行初始化
 		initLayoutConfig() {

@@ -64,7 +64,7 @@
 							</div>
 						</el-form-item>
 						<el-form-item style="margin: 40px 0px 0">
-							<el-button type="primary" round class="login-submit" @click="submitForm" :loading="submit.loading">
+							<el-button type="primary" class="login-submit" @click="submitForm" :loading="submit.loading">
 								<span>{{ $t('message.login.btnText') }}</span>
 							</el-button>
 						</el-form-item>
@@ -174,7 +174,7 @@ export default {
 				// 存储用户信息到vuex
 				this.$store.dispatch('userInfos/setUserInfos', userInfos);
 				PrevLoading.start();
-				window.location.href = `${window.location.origin}${window.location.pathname}`;
+				this.$router.push('/');
 				setTimeout(() => {
 					this.$message.success(`${this.currentTime}，${this.$t('message.login.signInText')}`);
 				}, 300);
