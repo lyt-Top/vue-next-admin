@@ -25,7 +25,7 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 		server: {
 			host: '0.0.0.0',
 			port: env.VITE_PORT as unknown as number,
-			open: env.VITE_OPEN,
+			open: env.VITE_OPEN === 'true',
 			hmr: true,
 			proxy: {
 				'/gitee': {
