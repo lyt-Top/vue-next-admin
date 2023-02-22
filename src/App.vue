@@ -3,6 +3,7 @@
 		<router-view />
 		<Setings ref="setingsRef" />
 		<Upgrade v-if="getVersion" />
+		<Sponsors />
 	</div>
 </template>
 
@@ -12,9 +13,10 @@ import setIntroduction from '@/utils/setIconfont.js';
 import { Local } from '@/utils/storage.js';
 import Setings from '@/layout/navBars/breadcrumb/setings.vue';
 import Upgrade from '@/layout/upgrade/index.vue';
+import Sponsors from '@/layout/sponsors/index.vue';
 export default {
 	name: 'App',
-	components: { Setings, Upgrade },
+	components: { Setings, Upgrade, Sponsors },
 	mounted() {
 		this.initSetIconfont();
 		this.openSetingsDrawer();

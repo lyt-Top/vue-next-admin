@@ -2,6 +2,15 @@
 
 🎉🎉🔥 `vue-prev-admin` 基于 vue2.x + webpack + element ui，适配手机、平板、pc 的后台开源免费模板库（vue3.x 请切换 master 分支）
 
+## 1.2.2
+
+`2023.02.23`
+
+🚩🚩🚩 感谢 [驰骋工作流引擎-表单引擎-低代码开发平台](http://www.ccflow.org/) 赞助商的赞助。驰骋公司为社会提供流程引擎+表单引擎+低代码开发平台一体的开源软件解决方案，欢迎广大开发者前去体验！
+
+- 🎉 新增 赞助商组件（`/src/layout/sponsors`），[项目目录结构查看](https://lyt-top.gitee.io/vue-next-admin-doc-preview/config/)
+- 🎯 优化 `/src/utils/storage` 下 `key` 编写成 `${__NEXT_NAME__}:${key}`，防止部署多套系统到同一域名不同目录时，变量共用的问题（`__NEXT_NAME__`为 `package.json` 中的 `name`）
+
 ## 1.2.1
 
 `2022.12.12`

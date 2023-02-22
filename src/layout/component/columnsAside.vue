@@ -66,6 +66,7 @@ export default {
 	methods: {
 		// 设置菜单高亮位置移动
 		setColumnsAsideMove(k) {
+			if (k === undefined) return false;
 			const els = this.$refs.columnsAsideOffsetTopRefs;
 			this.liIndex = k;
 			this.$refs.columnsAsideActiveRef.style.top = `${els[k].offsetTop + this.difference}px`;
@@ -194,7 +195,8 @@ export default {
 				color: var(--prev-bg-columnsMenuBarColor);
 			}
 		}
-		.layout-columns-active {
+		.layout-columns-active,
+		.layout-columns-active a {
 			color: var(--prev-color-text-white);
 			transition: 0.3s ease-in-out;
 		}
