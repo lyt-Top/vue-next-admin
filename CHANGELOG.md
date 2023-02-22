@@ -1,6 +1,14 @@
 # <a href="https://gitee.com/lyt-top/vue-next-admin" target="_blank">vue-next-admin-template（不带国际化） 更新日志</a>
 
-🎉🎉🔥 `vue-next-admin-template` 基于 （vue-next-admin-v2.4.21 版本） vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
+🎉🎉🔥 `vue-next-admin-template` 基于 （vue-next-admin-v2.4.3 版本） vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
+
+## 2.4.3
+
+`2023.02.22`
+
+🚩🚩🚩 感谢 [驰骋工作流引擎-表单引擎-低代码开发平台](http://www.ccflow.org/) 赞助商的赞助。驰骋公司为社会提供流程引擎+表单引擎+低代码开发平台一体的开源软件解决方案，欢迎广大开发者前去体验！
+
+- 🎉 同步 master 分支 v2.4.3 版本内容，具体查看 [master CHANGELOG.md](https://gitee.com/lyt-top/vue-next-admin/blob/master/CHANGELOG.md)
 
 ## 2.4.21
 
