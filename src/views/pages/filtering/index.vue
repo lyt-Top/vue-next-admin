@@ -8,21 +8,12 @@
 			element-loading-background="rgba(255, 255, 255, 0.1)"
 			:class="{ 'min-h-360': state.tableData.data.length <= 0 }"
 		>
-			<div
-				v-for="(val, key) in filtering"
-				:key="key"
-				:ref="
-					(el) => {
-						if (el) dlRefs[key] = el;
-					}
-				"
-				class="filtering-list-flex"
-			>
+			<div v-for="(val, key) in state.filtering" :key="key" ref="dlRefs" class="filtering-list-flex">
 				<div class="filtering-list-title">{{ val.title }}</div>
 				<div class="filtering-list-item" :style="{ height: val.isMore ? 'auto' : '50px' }">
-					<span class="span" :class="v.active ? 'dd-active' : ''" v-for="(v, k) in val.children" :key="k" @click="onSelItem(val, v)">{{
-						v.label
-					}}</span>
+					<span class="span" :class="v.active ? 'dd-active' : ''" v-for="(v, k) in val.children" :key="k" @click="onSelItem(val, v)">
+						{{ v.label }}
+					</span>
 					<div class="dd-more" v-if="val.isShowMore" @click="val.isMore = !val.isMore">
 						<span>{{ val.isMore ? '收起' : '展开' }}</span>
 						<i :class="val.isMore ? 'el-icon-arrow-down' : 'el-icon-arrow-right'"></i>
