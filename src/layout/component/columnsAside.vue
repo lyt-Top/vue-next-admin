@@ -73,6 +73,7 @@ const state = reactive({
 
 // 设置菜单高亮位置移动
 const setColumnsAsideMove = (k) => {
+	if (k === undefined) return false;
 	state.liIndex = k;
 	columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
 };
@@ -197,7 +198,8 @@ watch(
 	background: var(--next-bg-columnsMenuBar);
 	ul {
 		position: relative;
-		.layout-columns-active {
+		.layout-columns-active,
+		.layout-columns-active a {
 			color: var(--next-bg-columnsMenuBarColor) !important;
 			transition: 0.3s ease-in-out;
 		}

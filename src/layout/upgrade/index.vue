@@ -41,7 +41,7 @@ const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const state = reactive({
 	isUpgrade: false,
-	version: __VERSION__,
+	version: __NEXT_VERSION__,
 	isLoading: false,
 	btnTxt: '',
 });

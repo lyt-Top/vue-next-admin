@@ -1,10 +1,11 @@
 <template>
 	<el-config-provider :size="getGlobalComponentSize" :locale="zhCn">
-		<router-view v-show="themeConfig.lockScreenTime > 1" />
+		<router-view v-show="setLockScreen" />
 		<LockScreen v-if="themeConfig.isLockScreen" />
-		<Setings ref="setingsRef" v-show="themeConfig.lockScreenTime > 1" />
+		<Setings ref="setingsRef" v-show="setLockScreen" />
 		<CloseFull v-if="!themeConfig.isLockScreen" />
 		<Upgrade v-if="getVersion" />
+		<Sponsors />
 	</el-config-provider>
 </template>
 
@@ -23,6 +24,7 @@ const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index
 const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
 const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
 const Upgrade = defineAsyncComponent(() => import('/@/layout/upgrade/index.vue'));
+const Sponsors = defineAsyncComponent(() => import('/@/layout/sponsors/index.vue'));
 
 // 定义变量内容
 const setingsRef = ref();
@@ -31,11 +33,17 @@ const stores = useTagsViewRoutes();
 const storesThemeConfig = useThemeConfig();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 
+// 设置锁屏时组件显示隐藏
+const setLockScreen = computed(() => {
+	// 防止锁屏后，刷新出现不相关界面
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I6AF8P
+	return themeConfig.value.isLockScreen ? themeConfig.value.lockScreenTime > 1 : themeConfig.value.lockScreenTime >= 0;
+});
 // 获取版本号
 const getVersion = computed(() => {
 	let isVersion = false;
 	if (route.path !== '/login') {
-		if ((Local.get('version') && Local.get('version') !== __VERSION__) || !Local.get('version')) isVersion = true;
+		if ((Local.get('version') && Local.get('version') !== __NEXT_VERSION__) || !Local.get('version')) isVersion = true;
 	}
 	return isVersion;
 });
