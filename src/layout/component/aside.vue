@@ -107,7 +107,8 @@ const onAsideEnterLeave = (bool: Boolean) => {
 	let { layout } = themeConfig.value;
 	if (layout !== 'columns') return false;
 	if (!bool) mittBus.emit('restoreDefault');
-	stores.setColumnsMenuHover(bool);
+	// 开启 `分栏菜单鼠标悬停预加载` 才设置，防止 columnsAside.vue 监听 pinia.state
+	if (themeConfig.value.isColumnsMenuHoverPreload) stores.setColumnsMenuHover(bool);
 };
 // 页面加载前
 onBeforeMount(() => {
@@ -118,6 +119,7 @@ onBeforeMount(() => {
 	mittBus.on('setSendColumnsChildren', (res: MittMenu) => {
 		state.menuList = res.children;
 	});
+	// 开启经典布局分割菜单时，设置菜单数据
 	mittBus.on('setSendClassicChildren', (res: MittMenu) => {
 		let { layout, isClassicSplitMenu } = themeConfig.value;
 		if (layout === 'classic' && isClassicSplitMenu) {
@@ -125,9 +127,11 @@ onBeforeMount(() => {
 			state.menuList = res.children;
 		}
 	});
+	// 开启经典布局分割菜单时，重新处理菜单数据
 	mittBus.on('getBreadcrumbIndexSetFilterRoutes', () => {
 		setFilterRoutes();
 	});
+	// 监听窗口大小改变时(适配移动端)
 	mittBus.on('layoutMobileResize', (res: LayoutMobileResize) => {
 		initMenuFixed(res.clientWidth);
 		closeLayoutAsideMobileMode();
