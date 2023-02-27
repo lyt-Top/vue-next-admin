@@ -5,7 +5,7 @@
 				<li
 					v-for="(v, k) in state.columnsAsideList"
 					:key="k"
-					@click="onColumnsAsideMenuClick(v, k)"
+					@click="onColumnsAsideMenuClick(v)"
 					@mouseenter="onColumnsAsideMenuMouseenter(v, k)"
 					:ref="
 						(el) => {
@@ -78,11 +78,14 @@ const setColumnsAsideMove = (k) => {
 	columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
 };
 // 菜单高亮点击事件
-const onColumnsAsideMenuClick = (v, k) => {
-	setColumnsAsideMove(k);
+const onColumnsAsideMenuClick = (v) => {
 	let { path, redirect } = v;
 	if (redirect) router.push(redirect);
 	else router.push(path);
+	// 一个路由设置自动收起菜单
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
+	if (!v.children) themeConfig.value.isCollapse = true;
+	else if (v.children.length > 1) themeConfig.value.isCollapse = false;
 };
 // 鼠标移入时，显示当前的子级菜单
 const onColumnsAsideMenuMouseenter = (v, k) => {
@@ -97,6 +100,7 @@ const onColumnsAsideMenuMouseenter = (v, k) => {
 };
 // 鼠标移走时，显示原来的子级菜单
 const onColumnsAsideMenuMouseleave = async () => {
+	if (!themeConfig.value.isColumnsMenuHoverPreload) return false;
 	await stores.setColumnsNavHover(false);
 	// 添加延时器，防止拿到的 store.state.routesList 值不是最新的
 	setTimeout(() => {
@@ -115,6 +119,9 @@ const setFilterRoutes = () => {
 	const resData = setSendChildren(route.path);
 	if (Object.keys(resData).length <= 0) return false;
 	onColumnsAsideDown(resData.item?.k);
+	// 刷新时，初始化一个路由设置自动收起菜单
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
+	resData.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false);
 	mittBus.emit('setSendColumnsChildren', resData);
 };
 // 传送当前子级数据到菜单中
