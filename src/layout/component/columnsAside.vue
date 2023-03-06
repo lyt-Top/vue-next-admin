@@ -5,7 +5,7 @@
 				<li
 					v-for="(v, k) in columnsAsideList"
 					:key="k"
-					@click="onColumnsAsideMenuClick(v, k)"
+					@click="onColumnsAsideMenuClick(v)"
 					ref="columnsAsideOffsetTopRefs"
 					:class="{ 'layout-columns-active': liIndex === k }"
 					:title="$t(v.meta.title)"
@@ -72,11 +72,14 @@ export default {
 			this.$refs.columnsAsideActiveRef.style.top = `${els[k].offsetTop + this.difference}px`;
 		},
 		// 菜单高亮点击事件
-		onColumnsAsideMenuClick(v, k) {
-			this.setColumnsAsideMove(k);
+		onColumnsAsideMenuClick(v) {
 			let { path, redirect } = v;
 			if (redirect) this.$router.push(redirect);
 			else this.$router.push(path);
+			// 一个路由设置自动收起菜单
+			// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
+			if (!v.children || v.children.length <= 1) this.$store.state.themeConfig.themeConfig.isCollapse = true;
+			else if (v.children.length > 1) this.$store.state.themeConfig.themeConfig.isCollapse = false;
 		},
 		// 设置高亮动态位置
 		onColumnsAsideDown(k) {
@@ -91,6 +94,11 @@ export default {
 			const resData = this.setSendChildren(this.$route.path);
 			if (Object.keys(resData).length <= 0) return false;
 			this.onColumnsAsideDown(resData.item[0].k);
+			// 刷新时，初始化一个路由设置自动收起菜单
+			// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
+			resData.children.length <= 1
+				? (this.$store.state.themeConfig.themeConfig.isCollapse = true)
+				: (this.$store.state.themeConfig.themeConfig.isCollapse = false);
 			this.bus.$emit('setSendColumnsChildren', resData);
 		},
 		// 传送当前子级数据到菜单中
