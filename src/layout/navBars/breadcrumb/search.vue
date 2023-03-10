@@ -103,6 +103,7 @@ defineExpose({
 			display: none;
 		}
 		.el-dialog__footer {
+			width: 100%;
 			position: absolute;
 			left: 50%;
 			transform: translateX(-50%);

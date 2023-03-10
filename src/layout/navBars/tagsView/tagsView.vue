@@ -55,6 +55,7 @@ import pinia from '/@/stores/index';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useKeepALiveNames } from '/@/stores/keepAliveNames';
+import { useRoutesList } from '/@/stores/routesList';
 import { Session } from '/@/utils/storage';
 import { isObjectValueEqual } from '/@/utils/arrayOperation';
 import other from '/@/utils/other';
@@ -71,8 +72,10 @@ const tagsUlRef = ref();
 const stores = useTagsViewRoutes();
 const storesThemeConfig = useThemeConfig();
 const storesTagsViewRoutes = useTagsViewRoutes();
+const storesRoutesList = useRoutesList();
 const { themeConfig } = storeToRefs(storesThemeConfig);
 const { tagsViewRoutes } = storeToRefs(storesTagsViewRoutes);
+const { routesList } = storeToRefs(storesRoutesList);
 const storesKeepALiveNames = useKeepALiveNames();
 const route = useRoute();
 const router = useRouter();
@@ -381,6 +384,11 @@ const onMousedownMenu = (v, e) => {
 const onTagsClick = (v, k) => {
 	state.tagsRefsIndex = k;
 	router.push(v);
+	// 分栏布局时，收起/展开菜单
+	if (getThemeConfig.value.layout === 'columns') {
+		const item = routesList.value.find((r) => r.path.indexOf(`/${v.path.split('/')[1]}`) > -1);
+		!item.children ? (getThemeConfig.value.isCollapse = true) : (getThemeConfig.value.isCollapse = false);
+	}
 };
 // 处理 url，地址栏链接有参数时，tagsview 右键菜单刷新功能失效问题，感谢 @ZzZz-RIPPER、@dejavuuuuu
 // https://gitee.com/lyt-top/vue-next-admin/issues/I5K3YO

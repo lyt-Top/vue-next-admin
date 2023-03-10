@@ -26,7 +26,7 @@
 	<img src="./src/assets/ccflowRightNextAdmin.png" width="50%" height="70px">
 </a>
 
-#### 🌈 介绍 基础版 js（不带国际化，基于 vue-next-admin-template V2.4.3 版，setup 语法糖）
+#### 🌈 介绍 基础版 js（不带国际化，基于 vue-next-admin-template V2.4.31 版，setup 语法糖）
 
 基于 vue3.x + CompositionAPI setup 语法糖 + typescript + vite + element plus + vue-router-next + pinia 技术，适配手机、平板、pc 的后台开源免费模板，希望减少工作量，帮助大家实现快速开发。
 
@@ -34,6 +34,7 @@
 
 - vue3.x 版本预览（vue-next-admin）<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
 - vue2.x 版本预览（vue-prev-admin）<a href="https://lyt-top.gitee.io/vue-prev-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-prev-admin-preview/#/login</a>
+- vue3.x + uni-app 商城 H5（vue-next-admin-shop）<a href="https://lyt-top.gitee.io/vue-next-admin-shop-preview" target="_blank">https://lyt-top.gitee.io/vue-next-admin-shop-preview</a>
 
 #### 💒 代码仓库
 
@@ -85,25 +86,11 @@ cnpm run build
 
 #### 💯 学习交流加 QQ 群
 
-- 若加群了没同意（一般秒过），那就是群满了（500 人群），请换一个群试试。群会定期清理半年（6 个月）未发言的群友，资源有限，请谅解。建议勿加多群，可能会误伤！微信群由于只有 `7天有效` 就不放这里了。
+> 1 - 4 交流群已满，请加 vue-next-admin 交流群 5
 
-- 1 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">665452019</a>
-- 2 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">766356862</a>
-- 3 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">795345435</a>
-- 4 群：<a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">736626228</a>
+群号：556254895
 
-  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi">
-  	<img src="https://img-blog.csdnimg.cn/35e00f12a3fe4820892ec630ca72f15f.png" width="220" height="220" alt="vue-next-admin 讨论群1" title="vue-next-admin 讨论群1"/>
-  </a>
-  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=zVfy3gNy7pNWVK3kMduDzwU369PZg2fw&jump_from=webapi">
-  	<img src="https://img-blog.csdnimg.cn/5f1b548abd9f434eb41edde31d1c1fa9.png" width="220" height="220" alt="vue-next-admin 讨论群2" title="vue-next-admin 讨论群2"/>
-  </a>
-  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=02EWb5P2JkP-8iwzaDadgFdxA0HSHPpn&jump_from=webapi">
-  	<img src="https://img-blog.csdnimg.cn/70c8a012dd304246bddeac2184c4ab3a.png" width="220" height="220" alt="vue-next-admin 讨论群3" title="vue-next-admin 讨论群3"/>
-  </a>
-  <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=0gTFO04WwkeZZ6R4lju6gucbeXHK-wNd&jump_from=webapi">
-  	<img src="https://img-blog.csdnimg.cn/e5c9704eed1342bc9d9e74b37203402d.png" width="220" height="220" alt="vue-next-admin 讨论群4" title="vue-next-admin 讨论群4"/>
-  </a>
+其它交流群请查看文档首页 [vueNextAdmin 解疑问](https://lyt-top.gitee.io/vue-next-admin-doc-preview/)
 
 #### 💒 集成后端
 
