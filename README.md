@@ -34,6 +34,7 @@
 
 - vue3.x 版本预览（vue-next-admin）<a href="https://lyt-top.gitee.io/vue-next-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-next-admin-preview/#/login</a>
 - vue2.x 版本预览（vue-prev-admin）<a href="https://lyt-top.gitee.io/vue-prev-admin-preview/#/login" target="_blank">https://lyt-top.gitee.io/vue-prev-admin-preview/#/login</a>
+- vue3.x + uni-app 商城 H5（vue-next-admin-shop）<a href="https://lyt-top.gitee.io/vue-next-admin-shop-preview" target="_blank">https://lyt-top.gitee.io/vue-next-admin-shop-preview</a>
 
 #### 💒 代码仓库
 
@@ -82,7 +83,7 @@ cnpm run build
 
 #### 💯 学习交流加 QQ 群
 
-> 1 - 4 交流群已满，请加 vue-next-admin交流群5
+> 1 - 4 交流群已满，请加 vue-next-admin 交流群 5
 
 群号：556254895
 

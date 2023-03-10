@@ -148,12 +148,12 @@
 		background: var(--next-bg-topBar);
 		.el-menu-item,
 		.el-sub-menu {
-			height: 50px !important;
-			line-height: 50px !important;
+			height: 48px !important;
+			line-height: 48px !important;
 			color: var(--next-bg-topBarColor);
 			.el-sub-menu__title {
-				height: 50px !important;
-				line-height: 50px !important;
+				height: 48px !important;
+				line-height: 48px !important;
 				color: var(--next-bg-topBarColor);
 			}
 			.el-popper.is-pure.is-light {
@@ -180,7 +180,7 @@
 	width: 100% !important;
 	.el-menu-item,
 	.el-sub-menu__title {
-		height: 50px !important;
+		height: 48px !important;
 		color: var(--next-bg-topBarColor);
 	}
 	.el-menu-item:not(.is-active):hover,

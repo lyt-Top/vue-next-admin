@@ -494,14 +494,16 @@ const onColumnsMenuBarGradualChange = () => {
 };
 // 2、菜单 / 顶栏 --> 背景渐变函数
 const setGraduaFun = (el: string, bool: boolean, color: string) => {
-	setTimeout(() => {
-		let els = document.querySelector(el);
-		if (!els) return false;
-		document.documentElement.style.setProperty('--el-menu-bg-color', document.documentElement.style.getPropertyValue('--next-bg-menuBar'));
-		if (bool) els.setAttribute('style', `background:linear-gradient(to bottom left , ${color}, ${getLightColor(color, 0.6)}) !important;`);
-		else els.setAttribute('style', ``);
-		setLocalThemeConfig();
-	}, 200);
+	nextTick(() => {
+		setTimeout(() => {
+			let els = document.querySelector(el);
+			if (!els) return false;
+			document.documentElement.style.setProperty('--el-menu-bg-color', document.documentElement.style.getPropertyValue('--next-bg-menuBar'));
+			if (bool) els.setAttribute('style', `background:linear-gradient(to bottom , ${color}, ${getLightColor(color, 0.5)})`);
+			else els.setAttribute('style', ``);
+			setLocalThemeConfig();
+		}, 300);
+	});
 };
 // 2、分栏设置 ->
 const onColumnsMenuHoverPreloadChange = () => {

@@ -56,7 +56,7 @@
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
 							<el-form-item label="组件路径">
-								<el-input v-model="state.ruleForm.component" placeholder="组件路径" clearable></el-input>
+								<el-input v-model="state.ruleForm.componentAlias" placeholder="组件路径" clearable></el-input>
 							</el-form-item>
 						</el-col>
 						<el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
@@ -169,6 +169,7 @@ const state = reactive({
 		menuType: 'menu', // 菜单类型
 		name: '', // 路由名称
 		component: '', // 组件路径
+		componentAlias: '', // 组件路径别名
 		isLink: false, // 是否外链
 		menuSort: 0, // 菜单排序
 		path: '', // 路由路径
@@ -209,12 +210,8 @@ const openDialog = (type: string, row?: any) => {
 	if (type === 'edit') {
 		// 模拟数据，实际请走接口
 		row.menuType = 'menu';
-		row.menuSort = Math.random();
-		row.component = `${row.component} `
-			.match(/\'(.+)\'/g)
-			?.join('')
-			.replace(/\'/g, '');
-		state.ruleForm = row;
+		row.menuSort = Math.floor(Math.random() * 100);
+		state.ruleForm = JSON.parse(JSON.stringify(row));
 		state.dialog.title = '修改菜单';
 		state.dialog.submitTxt = '修 改';
 	} else {

@@ -1,37 +1,35 @@
 <template>
 	<div class="el-menu-horizontal-warp">
-		<el-scrollbar @wheel.native.prevent="onElMenuHorizontalScroll" ref="elMenuHorizontalScrollRef">
-			<el-menu router :default-active="state.defaultActive" :ellipsis="false" background-color="transparent" mode="horizontal">
-				<template v-for="val in menuLists">
-					<el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
-						<template #title>
+		<el-menu router :default-active="state.defaultActive" background-color="transparent" mode="horizontal">
+			<template v-for="val in menuLists">
+				<el-sub-menu :index="val.path" v-if="val.children && val.children.length > 0" :key="val.path">
+					<template #title>
+						<SvgIcon :name="val.meta.icon" />
+						<span>{{ $t(val.meta.title) }}</span>
+					</template>
+					<SubItem :chil="val.children" />
+				</el-sub-menu>
+				<template v-else>
+					<el-menu-item :index="val.path" :key="val.path">
+						<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
 							<SvgIcon :name="val.meta.icon" />
-							<span>{{ $t(val.meta.title) }}</span>
+							{{ $t(val.meta.title) }}
 						</template>
-						<SubItem :chil="val.children" />
-					</el-sub-menu>
-					<template v-else>
-						<el-menu-item :index="val.path" :key="val.path">
-							<template #title v-if="!val.meta.isLink || (val.meta.isLink && val.meta.isIframe)">
+						<template #title v-else>
+							<a class="w100" @click.prevent="onALinkClick(val)">
 								<SvgIcon :name="val.meta.icon" />
 								{{ $t(val.meta.title) }}
-							</template>
-							<template #title v-else>
-								<a class="w100" @click.prevent="onALinkClick(val)">
-									<SvgIcon :name="val.meta.icon" />
-									{{ $t(val.meta.title) }}
-								</a>
-							</template>
-						</el-menu-item>
-					</template>
+							</a>
+						</template>
+					</el-menu-item>
 				</template>
-			</el-menu>
-		</el-scrollbar>
+			</template>
+		</el-menu>
 	</div>
 </template>
 
 <script setup lang="ts" name="navMenuHorizontal">
-import { defineAsyncComponent, reactive, computed, onMounted, nextTick, onBeforeMount, ref } from 'vue';
+import { defineAsyncComponent, reactive, computed, onBeforeMount } from 'vue';
 import { useRoute, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
@@ -52,7 +50,6 @@ const props = defineProps({
 });
 
 // 定义变量内容
-const elMenuHorizontalScrollRef = ref();
 const stores = useRoutesList();
 const storesThemeConfig = useThemeConfig();
 const { routesList } = storeToRefs(stores);
@@ -66,19 +63,6 @@ const state = reactive({
 const menuLists = computed(() => {
 	return <RouteItems>props.menuList;
 });
-// 设置横向滚动条可以鼠标滚轮滚动
-const onElMenuHorizontalScroll = (e: WheelEventType) => {
-	const eventDelta = e.wheelDelta || -e.deltaY * 40;
-	elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft = elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft + eventDelta / 4;
-};
-// 初始化数据，页面刷新时，滚动条滚动到对应位置
-const initElMenuOffsetLeft = () => {
-	nextTick(() => {
-		let els = <HTMLElement>document.querySelector('.el-menu.el-menu--horizontal li.is-active');
-		if (!els) return false;
-		elMenuHorizontalScrollRef.value.$refs.wrapRef.scrollLeft = els.offsetLeft;
-	});
-};
 // 路由过滤递归函数
 const filterRoutesFun = <T extends RouteItem>(arr: T[]): T[] => {
 	return arr
@@ -121,10 +105,6 @@ const onALinkClick = (val: RouteItem) => {
 // 页面加载前
 onBeforeMount(() => {
 	setCurrentRouterHighlight(route);
-});
-// 页面加载时
-onMounted(() => {
-	initElMenuOffsetLeft();
 });
 // 路由更新时
 onBeforeRouteUpdate((to) => {
