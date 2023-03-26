@@ -12,7 +12,6 @@
 <script setup lang="ts" name="layoutAside">
 import { defineAsyncComponent, reactive, computed, watch, onBeforeMount, ref } from 'vue';
 import { storeToRefs } from 'pinia';
-import pinia from '/@/stores/index';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
@@ -56,8 +55,8 @@ const setCollapseStyle = computed(() => {
 			return [asideBrColor, 'layout-aside-mobile', 'layout-aside-mobile-close'];
 		}
 	} else {
-		if (layout === 'columns') {
-			// 分栏布局，菜单收起时宽度给 1px
+		if (layout === 'columns' || layout === 'classic') {
+			// 分栏布局、经典布局，菜单收起时宽度给 1px，防止切换动画消失
 			if (isCollapse) return [asideBrColor, 'layout-aside-pc-1'];
 			else return [asideBrColor, 'layout-aside-pc-220'];
 		} else {
@@ -123,6 +122,8 @@ onBeforeMount(() => {
 	mittBus.on('setSendClassicChildren', (res: MittMenu) => {
 		let { layout, isClassicSplitMenu } = themeConfig.value;
 		if (layout === 'classic' && isClassicSplitMenu) {
+			// 经典布局分割菜单只要一项子级时，收起左侧导航菜单
+			res.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false);
 			state.menuList = [];
 			state.menuList = res.children;
 		}
@@ -138,21 +139,14 @@ onBeforeMount(() => {
 	});
 });
 // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
-watch(themeConfig.value, (val) => {
-	if (val.isShowLogoChange !== val.isShowLogo) {
-		if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
-	}
-});
-// 监听 pinia 值的变化，动态赋值给菜单中
 watch(
-	pinia.state,
-	(val) => {
-		let { layout, isClassicSplitMenu } = val.themeConfig.themeConfig;
+	() => [themeConfig.value.isShowLogoChange, themeConfig.value.isShowLogo, themeConfig.value.layout, themeConfig.value.isClassicSplitMenu],
+	([isShowLogoChange, isShowLogo, layout, isClassicSplitMenu]) => {
+		if (isShowLogoChange !== isShowLogo) {
+			if (layoutAsideScrollbarRef.value) layoutAsideScrollbarRef.value.update();
+		}
 		if (layout === 'classic' && isClassicSplitMenu) return false;
 		setFilterRoutes();
-	},
-	{
-		deep: true,
 	}
 );
 </script>

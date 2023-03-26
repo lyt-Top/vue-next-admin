@@ -91,9 +91,9 @@ onBeforeRouteUpdate((to) => {
 });
 // 设置菜单的收起/展开
 watch(
-	themeConfig.value,
-	() => {
-		document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = themeConfig.value.isCollapse);
+	() => themeConfig.value.isCollapse,
+	(isCollapse) => {
+		document.body.clientWidth <= 1000 ? (state.isCollapse = false) : (state.isCollapse = isCollapse);
 	},
 	{
 		immediate: true,

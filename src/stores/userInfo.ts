@@ -63,6 +63,7 @@ export const useUserInfo = defineStore('userInfo', {
 						roles: defaultRoles,
 						authBtnList: defaultAuthBtnList,
 					};
+					Session.set('userInfo', userInfos);
 					resolve(userInfos);
 				}, 0);
 			});

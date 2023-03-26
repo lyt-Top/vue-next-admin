@@ -226,6 +226,9 @@ const onHandleCurrentChange = (val: number) => {
 			flex-wrap: wrap;
 			align-content: flex-start;
 			margin: 0 -5px;
+			.el-row {
+				width: 101%;
+			}
 			.flex-warp-item {
 				padding: 5px;
 				width: 100%;

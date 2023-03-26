@@ -52,7 +52,6 @@ import { useRoute, useRouter, onBeforeRouteUpdate } from 'vue-router';
 import Sortable from 'sortablejs';
 import { ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
-import pinia from '/@/stores/index';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { useKeepALiveNames } from '/@/stores/keepAliveNames';
@@ -586,9 +585,9 @@ onBeforeRouteUpdate(async (to) => {
 });
 // 监听路由的变化，动态赋值给 tagsView
 watch(
-	pinia.state,
+	() => tagsViewRoutes.value,
 	(val) => {
-		if (val.tagsViewRoutes.tagsViewRoutes.length === state.tagsViewRoutesList.length) return false;
+		if (val.length === state.tagsViewRoutesList.length) return false;
 		getTagsViewRoutes();
 	},
 	{

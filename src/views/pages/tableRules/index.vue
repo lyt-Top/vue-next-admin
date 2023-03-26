@@ -2,7 +2,7 @@
 	<div class="layout-pd">
 		<el-card shadow="hover" header="表单表格验证">
 			<el-form ref="tableRulesRef" :model="state.tableData" size="default">
-				<el-table :data="state.tableData.data" border class="module-table-uncollected">
+				<el-table ref="tableRef" :data="state.tableData.data" border class="module-table-uncollected" max-height="200">
 					<el-table-column
 						v-for="(item, index) in state.tableData.header"
 						:key="index"
@@ -55,12 +55,13 @@
 </template>
 
 <script setup lang="ts" name="pagesTableRules">
-import { reactive, ref } from 'vue';
+import { reactive, ref, nextTick } from 'vue';
 import { ElMessage } from 'element-plus';
 import type { FormInstance } from 'element-plus';
 
 // 定义变量内容
 const tableRulesRef = ref<FormInstance>();
+const tableRef = ref();
 const state = reactive<TableRulesState>({
 	tableData: {
 		data: [],
@@ -102,6 +103,10 @@ const onAddRow = () => {
 		a6: '',
 		a7: '',
 		a8: '',
+	});
+	tableRef.value.doLayout();
+	nextTick(() => {
+		tableRef.value.setScrollTop(1000000);
 	});
 };
 </script>
