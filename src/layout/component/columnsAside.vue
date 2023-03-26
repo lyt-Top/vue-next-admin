@@ -48,7 +48,6 @@
 import { reactive, ref, onMounted, nextTick, watch, onUnmounted } from 'vue';
 import { useRoute, useRouter, onBeforeRouteUpdate, RouteRecordRaw } from 'vue-router';
 import { storeToRefs } from 'pinia';
-import pinia from '/@/stores/index';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
@@ -79,10 +78,23 @@ const setColumnsAsideMove = (k: number) => {
 	columnsAsideActiveRef.value.style.top = `${columnsAsideOffsetTopRefs.value[k].offsetTop + state.difference}px`;
 };
 // 菜单高亮点击事件
-const onColumnsAsideMenuClick = (v: RouteItem, k: number) => {
+const onColumnsAsideMenuClick = (v: RouteItem) => {
 	let { path, redirect } = v;
-	if (redirect) router.push(redirect);
-	else router.push(path);
+	if (redirect) {
+		onColumnsAsideDown(v.k);
+		if (route.path.startsWith(redirect)) mittBus.emit('setSendColumnsChildren', setSendChildren(redirect));
+		else router.push(redirect);
+	} else {
+		if (!v.children) {
+			router.push(path);
+		} else {
+			// 显示子级菜单
+			const resData: MittMenu = setSendChildren(path);
+			if (Object.keys(resData).length <= 0) return false;
+			onColumnsAsideDown(resData.item?.k);
+			mittBus.emit('setSendColumnsChildren', resData);
+		}
+	}
 	// 一个路由设置自动收起菜单
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
 	if (!v.children) themeConfig.value.isCollapse = true;
@@ -123,7 +135,10 @@ const setFilterRoutes = () => {
 	// 刷新时，初始化一个路由设置自动收起菜单
 	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
 	resData.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false);
-	mittBus.emit('setSendColumnsChildren', resData);
+	// 延迟 500 毫秒更新，防止 aside.vue 组件 setSendColumnsChildren 还没有注册
+	setTimeout(() => {
+		mittBus.emit('setSendColumnsChildren', resData);
+	}, 500);
 };
 // 传送当前子级数据到菜单中
 const setSendChildren = (path: string) => {
@@ -181,10 +196,10 @@ onBeforeRouteUpdate((to) => {
 });
 // 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
 watch(
-	pinia.state,
-	(val) => {
-		val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
-		if (!val.routesList.isColumnsMenuHover && !val.routesList.isColumnsNavHover) {
+	[() => themeConfig.value.columnsAsideStyle, isColumnsMenuHover, isColumnsNavHover],
+	() => {
+		themeConfig.value.columnsAsideStyle === 'columnsRound' ? (state.difference = 3) : (state.difference = 0);
+		if (!isColumnsMenuHover.value && !isColumnsNavHover.value) {
 			state.liHoverIndex = null;
 			mittBus.emit('setSendColumnsChildren', setSendChildren(route.path));
 		} else {

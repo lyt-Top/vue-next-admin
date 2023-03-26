@@ -213,7 +213,7 @@ onUnmounted(() => {
 }
 .layout-lock-screen-img {
 	@extend .layout-lock-screen-fixed;
-	background-image: url('https://img-blog.csdnimg.cn/afa9c317667f47d5bea34b85af45979e.png#pic_center');
+	background-image: url('https://i.hd-r.cn/e4a19d84364f185266666765ac21a5db.jpg');
 	background-size: 100% 100%;
 	z-index: 9999991;
 }

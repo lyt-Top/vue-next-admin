@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="https://img-blog.csdnimg.cn/9efd5420327a46b7bd6d93524a97229d.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAbHl0LXRvcA==,size_14,color_FFFFFF,t_70,g_se,x_16">
+	<img src="https://i.hd-r.cn/6ce52e5724fae609444b5b48bdc4accb.png">
 	<p align="center">
 		<a href="https://v3.vuejs.org/" target="_blank">
 			<img src="https://img.shields.io/badge/vue.js-vue3.x-green" alt="vue">
@@ -94,6 +94,7 @@ cnpm run build
 
 #### 💒 集成后端
 
+- <a target="_blank" href="https://gitee.com/zuohuaijun/Admin.NET">@zuohuaijun Admin.NET</a>
 - <a target="_blank" href="https://github.com/PandaGoAdmin/PandaX">@熊猫 PandaGoAdmin</a>
 - <a target="_blank" href="https://toscode.gitee.com/GionConnection/gopro_free">@甜蜜蜜 GoPro 平台</a>
 - <a target="_blank" href="https://gitee.com/GionConnection/niupi-free">@甜蜜蜜 NiuPi 平台</a>
@@ -122,6 +123,10 @@ cnpm run build
 - <a href="https://github.com/microsoft/TypeScript" target="_blank">typescript</a>
 - <a href="https://github.com/vitejs/vite" target="_blank">vite</a>
 - <a href="https://pinia.vuejs.org/" target="_blank">pinia</a>
+- <a href="https://github.com/js-cookie/js-cookie" target="_blank">js-cookie</a>
+- <a href="https://github.com/mmf-fe/vite-plugin-cdn-import" target="_blank">vite-plugin-cdn-import</a>
+- <a href="https://github.com/vbenjs/vite-plugin-compression" target="_blank">vite-plugin-compression</a>
+- <a href="https://github.com/chenxch/vite-plugin-vue-setup-extend-plus" target="_blank">vite-plugin-vue-setup-extend-plus</a>
 
 #### 💕 特别感谢
 

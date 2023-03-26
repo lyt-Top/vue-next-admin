@@ -141,6 +141,8 @@ body,
 	.layout-aside-pc-1 {
 		width: 1px !important;
 		transition: width 0.3s ease;
+		position: relative;
+		left: -1px;
 	}
 	// 手机端左侧导航样式
 	.layout-aside-mobile {
