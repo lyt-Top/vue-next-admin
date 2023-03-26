@@ -52,6 +52,7 @@
 </template>
 
 <script setup name="systemDept">
+import { defineAsyncComponent, ref, reactive, onMounted } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 
 // 引入组件

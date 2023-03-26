@@ -10,6 +10,8 @@
 </template>
 
 <script setup name="app">
+import { defineAsyncComponent, computed, ref, onBeforeMount, onMounted, onUnmounted, nextTick, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';

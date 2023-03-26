@@ -6,6 +6,7 @@
 </template>
 
 <script setup name="layoutNavBars">
+import { defineAsyncComponent, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 

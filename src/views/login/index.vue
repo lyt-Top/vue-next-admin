@@ -43,6 +43,7 @@
 </template>
 
 <script setup name="loginIndex">
+import { defineAsyncComponent, onMounted, reactive, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { NextLoading } from '/@/utils/loading';

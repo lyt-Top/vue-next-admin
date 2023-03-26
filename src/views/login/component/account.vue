@@ -44,6 +44,8 @@
 </template>
 
 <script setup name="loginAccount">
+import { reactive, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import { ElMessage } from 'element-plus';
 import Cookies from 'js-cookie';
 import { storeToRefs } from 'pinia';

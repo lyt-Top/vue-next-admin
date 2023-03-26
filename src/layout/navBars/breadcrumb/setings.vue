@@ -421,6 +421,7 @@
 </template>
 
 <script setup name="layoutBreadcrumbSeting">
+import { nextTick, onUnmounted, onMounted, computed, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';

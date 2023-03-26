@@ -32,6 +32,7 @@
 </template>
 
 <script setup name="layoutUpgrade">
+import { reactive, computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';

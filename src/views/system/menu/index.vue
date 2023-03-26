@@ -64,6 +64,7 @@
 </template>
 
 <script setup name="systemMenu">
+import { defineAsyncComponent, ref, onMounted, reactive } from 'vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';

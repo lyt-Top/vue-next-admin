@@ -66,6 +66,7 @@
 </template>
 
 <script setup name="home">
+import { reactive, onMounted, ref, watch, nextTick, onActivated, markRaw } from 'vue';
 import * as echarts from 'echarts';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';

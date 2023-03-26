@@ -3,6 +3,7 @@
 </template>
 
 <script setup name="layout">
+import { onBeforeMount, onUnmounted, defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 import { Local } from '/@/utils/storage';

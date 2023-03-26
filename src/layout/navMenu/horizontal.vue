@@ -29,7 +29,8 @@
 </template>
 
 <script setup name="navMenuHorizontal">
-import { onBeforeRouteUpdate } from 'vue-router';
+import { defineAsyncComponent, reactive, computed, onBeforeMount } from 'vue';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useRoutesList } from '/@/stores/routesList';
 import { useThemeConfig } from '/@/stores/themeConfig';

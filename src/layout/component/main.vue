@@ -14,6 +14,8 @@
 </template>
 
 <script setup name="layoutMain">
+import { defineAsyncComponent, onMounted, computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useTagsViewRoutes } from '/@/stores/tagsViewRoutes';
 import { useThemeConfig } from '/@/stores/themeConfig';

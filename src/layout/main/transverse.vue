@@ -6,6 +6,8 @@
 </template>
 
 <script setup name="layoutTransverse">
+import { defineAsyncComponent, ref, watch, nextTick, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '/@/stores/themeConfig';
 
@@ -45,9 +47,11 @@ watch(
 );
 // 监听 themeConfig 配置文件的变化，更新菜单 el-scrollbar 的高度
 watch(
-	themeConfig,
+	() => themeConfig.value.isTagsview,
 	() => {
-		updateScrollbar();
+		nextTick(() => {
+			updateScrollbar();
+		});
 	},
 	{
 		deep: true,

@@ -21,6 +21,9 @@
 </template>
 
 <script setup name="layoutIframeView">
+import { computed, watch, ref, nextTick } from 'vue';
+import { useRoute } from 'vue-router';
+
 // 定义父组件传过来的值
 const props = defineProps({
 	// 刷新 iframe

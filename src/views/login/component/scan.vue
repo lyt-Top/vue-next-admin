@@ -9,6 +9,7 @@
 </template>
 
 <script setup name="loginScan">
+import { ref, onMounted, nextTick } from 'vue';
 import QRCode from 'qrcodejs2-fixes';
 
 // 定义变量内容

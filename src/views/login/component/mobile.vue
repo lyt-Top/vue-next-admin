@@ -32,6 +32,8 @@
 </template>
 
 <script setup name="loginMobile">
+import { reactive } from 'vue';
+
 // 定义变量内容
 const state = reactive({
 	ruleForm: {

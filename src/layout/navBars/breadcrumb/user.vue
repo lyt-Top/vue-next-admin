@@ -64,6 +64,8 @@
 </template>
 
 <script setup name="layoutBreadcrumbUser">
+import { defineAsyncComponent, ref, computed, reactive, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import screenfull from 'screenfull';
 import { storeToRefs } from 'pinia';

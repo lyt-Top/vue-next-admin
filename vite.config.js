@@ -1,8 +1,9 @@
 import vue from '@vitejs/plugin-vue';
-import AutoImport from 'unplugin-auto-import/vite';
-import vueSetupExtend from 'vite-plugin-vue-setup-extend';
 import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
+import vueSetupExtend from 'vite-plugin-vue-setup-extend-plus';
+import viteCompression from 'vite-plugin-compression';
+import { buildConfig } from './src/utils/build';
 
 const pathResolve = (dir) => {
 	return resolve(__dirname, '.', dir);
@@ -15,16 +16,13 @@ const alias = {
 const viteConfig = defineConfig((mode) => {
 	const env = loadEnv(mode.mode, process.cwd());
 	return {
-		plugins: [
-			vue(),
-			vueSetupExtend(),
-			AutoImport({
-				imports: ['vue', 'vue-router'],
-			}),
-		],
+		plugins: [vue(), vueSetupExtend(), viteCompression(), JSON.parse(env.VITE_OPEN_CDN) ? buildConfig.cdn() : null],
 		root: process.cwd(),
 		resolve: { alias },
 		base: mode.command === 'serve' ? './' : env.VITE_PUBLIC_PATH,
+		optimizeDeps: {
+			exclude: ['vue-demi'],
+		},
 		server: {
 			host: '0.0.0.0',
 			port: env.VITE_PORT,
@@ -44,15 +42,16 @@ const viteConfig = defineConfig((mode) => {
 			chunkSizeWarningLimit: 1500,
 			rollupOptions: {
 				output: {
-					entryFileNames: `assets/[name].[hash].js`,
-					chunkFileNames: `assets/[name].[hash].js`,
-					assetFileNames: `assets/[name].[hash].[ext]`,
-					compact: true,
-					manualChunks: {
-						vue: ['vue', 'vue-router', 'pinia'],
-						echarts: ['echarts'],
+					chunkFileNames: 'assets/js/[name]-[hash].js',
+					entryFileNames: 'assets/js/[name]-[hash].js',
+					assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
+					manualChunks(id) {
+						if (id.includes('node_modules')) {
+							return id.toString().split('node_modules/')[1].split('/')[0].toString();
+						}
 					},
 				},
+				external: JSON.parse(env.VITE_OPEN_CDN) ? buildConfig.external : [],
 			},
 		},
 		css: { preprocessorOptions: { css: { charset: false } } },
