@@ -1,16 +1,21 @@
 <template>
 	<div class="layout-logo" v-if="setShowLogo" @click="onThemeConfigChange">
-		<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/vue2/logo-mini.svg" class="layout-logo-medium-img" />
+		<img :src="logo" class="layout-logo-medium-img" />
 		<span>{{ getThemeConfig.globalTitle }}</span>
 	</div>
 	<div class="layout-logo-size" v-else @click="onThemeConfigChange">
-		<img src="https://gitee.com/lyt-top/vue-next-admin-images/raw/master/vue2/logo-mini.svg" class="layout-logo-size-img" />
+		<img :src="logo" class="layout-logo-size-img" />
 	</div>
 </template>
 
 <script>
 export default {
 	name: 'layoutLogo',
+	data() {
+		return {
+			logo: require('@/assets/logo-mini.svg'),
+		};
+	},
 	computed: {
 		// 获取布局配置信息
 		getThemeConfig() {
