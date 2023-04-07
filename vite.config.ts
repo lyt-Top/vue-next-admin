@@ -49,11 +49,11 @@ const viteConfig = defineConfig((mode: ConfigEnv) => {
 					assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
 					manualChunks(id) {
 						if (id.includes('node_modules')) {
-							return id.toString().split('node_modules/')[1].split('/')[0].toString();
+							return id.toString().match(/\/node_modules\/(?!.pnpm)(?<moduleName>[^\/]*)\//)?.groups.moduleName ?? 'vender';
 						}
 					},
 				},
-				external: JSON.parse(env.VITE_OPEN_CDN) ? buildConfig.external : [],
+				...(JSON.parse(env.VITE_OPEN_CDN) ? {external:  buildConfig.external} : {}),
 			},
 		},
 		css: { preprocessorOptions: { css: { charset: false } } },
