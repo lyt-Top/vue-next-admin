@@ -27,6 +27,7 @@ import { onMounted, ref } from 'vue';
 import Cookies from 'js-cookie';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
+import { Session } from '/@/utils/storage';
 import { frontEndsResetRoute, setAddRoute, setFilterMenuAndCacheTagsViewRoutes } from '/@/router/frontEnd';
 
 // 定义变量内容
@@ -40,6 +41,9 @@ const initUserAuth = () => {
 };
 // 用户权限改变时
 const onRadioChange = async () => {
+	// 清空之前缓存的 userInfo，防止不请求接口。
+	// stores/userInfo.ts
+	Session.remove('userInfo');
 	// 模拟数据
 	frontEndsResetRoute();
 	Cookies.set('userName', userAuth.value);

@@ -22,7 +22,7 @@ export const useUserInfo = defineStore('userInfo', {
 			if (Session.get('userInfo')) {
 				this.userInfos = Session.get('userInfo');
 			} else {
-				const userInfos: any = await this.getApiUserInfo();
+				const userInfos = <UserInfos>await this.getApiUserInfo();
 				this.userInfos = userInfos;
 			}
 		},

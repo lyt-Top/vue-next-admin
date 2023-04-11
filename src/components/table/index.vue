@@ -22,7 +22,14 @@
 			>
 				<template v-slot="scope">
 					<template v-if="item.type === 'image'">
-						<img :src="scope.row[item.key]" :width="item.width" :height="item.height" />
+						<el-image
+							:style="{ width: `${item.width}px`, height: `${item.height}px` }"
+							:src="scope.row[item.key]"
+							:zoom-rate="1.2"
+							:preview-src-list="[scope.row[item.key]]"
+							preview-teleported
+							fit="cover"
+						/>
 					</template>
 					<template v-else>
 						{{ scope.row[item.key] }}
@@ -56,6 +63,7 @@
 			>
 			</el-pagination>
 			<div class="table-footer-tool">
+				<SvgIcon name="iconfont icon-dayin" :size="19" title="打印" @click="onPrintTable" />
 				<SvgIcon name="iconfont icon-yunxiazai_o" :size="22" title="导出" @click="onImportTable" />
 				<SvgIcon name="iconfont icon-shuaxin" :size="22" title="刷新" @click="onRefreshTable" />
 				<el-popover
@@ -103,6 +111,7 @@
 <script setup lang="ts" name="netxTable">
 import { reactive, computed, nextTick, ref } from 'vue';
 import { ElMessage } from 'element-plus';
+import printJs from 'print-js';
 import table2excel from 'js-table2excel';
 import Sortable from 'sortablejs';
 import { storeToRefs } from 'pinia';
@@ -125,6 +134,11 @@ const props = defineProps({
 	config: {
 		type: Object,
 		default: () => {},
+	},
+	// 打印标题
+	printName: {
+		type: String,
+		default: () => '',
 	},
 });
 
@@ -193,6 +207,37 @@ const pageReset = () => {
 	state.page.pageSize = 10;
 	emit('pageChange', state.page);
 };
+// 打印
+const onPrintTable = () => {
+	// https://printjs.crabbly.com/#documentation
+	// 自定义打印
+	let tableTh = '';
+	let tableTrTd = '';
+	let tableTd: any = {};
+	// 表头
+	props.header.forEach((v) => {
+		tableTh += `<th class="table-th">${v.title}</th>`;
+	});
+	// 表格内容
+	props.data.forEach((val, key) => {
+		if (!tableTd[key]) tableTd[key] = [];
+		props.header.forEach((v) => {
+			if (v.type === 'text') {
+				tableTd[key].push(`<td class="table-th table-center">${val[v.key]}</td>`);
+			} else if (v.type === 'image') {
+				tableTd[key].push(`<td class="table-th table-center"><img src="${val[v.key]}" style="width:${v.width}px;height:${v.height}px;"/></td>`);
+			}
+		});
+		tableTrTd += `<tr>${tableTd[key].join('')}</tr>`;
+	});
+	// 打印
+	printJs({
+		printable: `<div style=display:flex;flex-direction:column;text-align:center><h3>${props.printName}</h3></div><table border=1 cellspacing=0><tr>${tableTh}${tableTrTd}</table>`,
+		type: 'raw-html',
+		css: ['//at.alicdn.com/t/c/font_2298093_rnp72ifj3ba.css', '//unpkg.com/element-plus/dist/index.css'],
+		style: `@media print{.mb15{margin-bottom:15px;}.el-button--small i.iconfont{font-size: 12px !important;margin-right: 5px;}}; .table-th{word-break: break-all;white-space: pre-wrap;}.table-center{text-align: center;}`,
+	});
+};
 // 导出
 const onImportTable = () => {
 	if (state.selectlist.length <= 0) return ElMessage.warning('请先选择要导出的数据');
@@ -211,7 +256,7 @@ const onSetTable = () => {
 			animation: 150,
 			onEnd: () => {
 				const headerList: EmptyObjectType[] = [];
-				sortable.toArray().forEach((val) => {
+				sortable.toArray().forEach((val: string) => {
 					props.header.forEach((v) => {
 						if (v.key === val) headerList.push({ ...v });
 					});
