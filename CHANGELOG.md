@@ -2,6 +2,19 @@
 
 🎉🎉🔥 `vue-next-admin` 基于 vue3.x 、Typescript、vite、Element plus 等，适配手机、平板、pc 的后台开源免费模板库（vue2.x 请切换 vue-prev-admin 分支）
 
+## 2.4.33
+
+`2023.04.11`
+
+- 🌟 更新 依赖更新最新版本
+- 🎉 新增 `/make/tableDemo` 中添加打印、图片预览功能
+- 🐞 修复 菜单收起时（isCollapse），图标不居中问题
+- 🐞 修复 演示 `权限管理 -> 前端控制 -> 页面权限` 切换不生效，感谢群友@傲世盛唐
+- 🐞 修复 `"typescript": "5.x"` 中 `tsconfig.json`，`compilerOptions.suppressImplicitAnyIndexErrors` 弃用问题 [TypeScript/issues/51909](https://github.com/microsoft/TypeScript/issues/51909)、[suppressImplicitAnyIndexErrors](https://www.typescriptlang.org/tsconfig#suppressImplicitAnyIndexErrors)
+- 🎨 合并 [!47cdn 打包支持 pnpm，消除无 external 的报错](https://gitee.com/lyt-top/vue-next-admin/commit/8de54a844bb54468d0bdccca158bf9bcb449f270)，感谢[@yujiacheng](https://gitee.com/YujiaCheng1996)
+- 🎯 优化 `layout/navBars/breadcrumb` 文件夹名称改成 `layout/navBars/topBar` 更易理解（`可全局替换`），感谢群友@傲世盛唐
+- 🎯 优化 `layout/navBars/topBar/user.vue` 组件，`UserNews` 点击消息图标触发范围，改用 [element plus Popover 气泡卡片 虚拟触发方式](https://element-plus.org/zh-CN/component/popover.html#%E8%99%9A%E6%8B%9F%E8%A7%A6%E5%8F%91)，防止点击消息通知背景色时不触发 `Popover` 弹出框
+
 ## 2.4.32
 
 💔💔💔 图片不显示问题（README.md、演示中使用的图片，[vue-next-admin-images](https://gitee.com/lyt-top/vue-next-admin-images)），通过网站 [https://www.hd-r.cn/](https://www.hd-r.cn/) 转在线链接，如若侵权请联系作者 qq：1105290566
@@ -150,7 +163,7 @@
 - 🎯 优化 图标选择器 icon type 类型为 all 时，类型 ali、ele、awe 回显问题
 - 🎯 优化 去掉开发环境 i18n 控制台警告，页面代码：[i18n/index.ts](https://gitee.com/lyt-top/vue-next-admin/blob/master/src/i18n/index.ts)
 - 🎯 优化 `NextLoading.start()` 方法，防止第一次进入界面时出现短暂空白
-- 🎯 优化 地址栏有参数退出登录，再次登录不跳之前界面问题 `src/layout/navBars/breadcrumb/user.vue`
+- 🎯 优化 地址栏有参数退出登录，再次登录不跳之前界面问题 `src/layout/navBars/topBar/user.vue`
 - 🎯 优化 `SvgIcon` 组件，防止 `开启 Tagsview 图标` 时，`tagsView 右键菜单关闭` 报错问题，工作流不可连线、全屏时关闭按钮消失问题
 - 🎯 优化 [如果 url 中有中文等特殊字符，第一次切换该 tab 时 keep-alive 失效#I55JS7](https://gitee.com/lyt-top/vue-next-admin/issues/I55JS7),感谢[yuyong1566](https://gitee.com/yuyong1566)
 - 🎯 优化 [wangEditor](https://www.wangeditor.com/) 更新到 v5，[vue3 版本线上示例中 wangeditor 富文本编辑器 demo 实例,无法换行#I5565B](https://gitee.com/lyt-top/vue-next-admin/issues/I5565B)，感谢@[jenchih](https://gitee.com/jenchih)

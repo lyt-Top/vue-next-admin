@@ -126,7 +126,7 @@ const initTime = () => {
 const convertData = (data: any) => {
 	let res = [];
 	for (let i = 0; i < data.length; i++) {
-		let geoCoord = state.echartsMapData[data[i].name];
+		let geoCoord = (<any>state.echartsMapData)[data[i].name];
 		if (geoCoord) {
 			res.push({
 				name: data[i].name,
@@ -250,16 +250,16 @@ const initEchartsMap = () => {
 	// BMAP_SATELLITE_MAP：卫星地图 （没有坐标， 绿绿的一片的卫星地图）
 	// BMAP_HYBRID_MAP：混合地图 （既有坐标，也是绿绿的一片的卫星地图）
 	// eslint-disable-next-line no-undef
-	map.setMapType(BMAP_SATELLITE_MAP);
+	map.setMapType(window.BMAP_SATELLITE_MAP);
 	// eslint-disable-next-line no-undef
-	let bdary = new BMap.Boundary();
+	let bdary = new window.BMap.Boundary();
 	// 获取行政区域
 	bdary.get('深圳', function (rs: any) {
 		// 行政区域的点有多少个
 		let count = rs.boundaries.length;
 		for (let i = 0; i < count; i++) {
 			// eslint-disable-next-line no-undef
-			let ply = new BMap.Polygon(rs.boundaries[i], {
+			let ply = new window.BMap.Polygon(rs.boundaries[i], {
 				// 设置多边形边线线粗
 				strokeWeight: 4,
 				// 设置多边形边线透明度0-1
@@ -280,7 +280,7 @@ const initEchartsMap = () => {
 		// 初始化地图，设置中心点坐标和地图级别
 		// new BMap.Point('深圳市', 11)
 		// eslint-disable-next-line no-undef
-		map.centerAndZoom(new BMap.Point(114.064524, 22.549225), 11);
+		map.centerAndZoom(new window.BMap.Point(114.064524, 22.549225), 11);
 	});
 };
 // 产业概况

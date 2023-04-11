@@ -71,6 +71,8 @@ const state = reactive<TableDemoState>({
 			pageNum: 1,
 			pageSize: 10,
 		},
+		// 打印标题
+		printName: 'vueNextAdmin 表格打印演示',
 	},
 });
 

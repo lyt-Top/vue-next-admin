@@ -67,8 +67,7 @@
 
 		/* Advanced Options */
 		"skipLibCheck": true /* Skip type checking of declaration files. */,
-		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
-		"suppressImplicitAnyIndexErrors": true
+		"forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
 	},
 	"include": ["src/**/*.ts", "src/**/*.vue", "src/**/*.tsx", "src/**/*.d.ts"], // **Represents any directory, and * represents any file. Indicates that all files in the src directory will be compiled
 	"exclude": ["node_modules", "dist"] // Indicates the file directory that does not need to be compiled

@@ -27,6 +27,8 @@ declare module '*.vue' {
 /* eslint-disable */
 declare interface Window {
 	nextLoading: boolean;
+	BMAP_SATELLITE_MAP: any;
+	BMap: any;
 }
 
 // 声明路由当前项类型
