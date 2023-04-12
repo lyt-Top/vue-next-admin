@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Breadcrumb from '@/layout/navBars/breadcrumb/breadcrumb.vue';
-import User from '@/layout/navBars/breadcrumb/user.vue';
+import Breadcrumb from '@/layout/navBars/topBar/breadcrumb.vue';
+import User from '@/layout/navBars/topBar/user.vue';
 import Logo from '@/layout/logo/index.vue';
 import Horizontal from '@/layout/navMenu/horizontal.vue';
 export default {

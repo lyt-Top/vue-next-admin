@@ -87,18 +87,22 @@ export default {
 				this.setColumnsAsideMove(k);
 			});
 		},
-		// 设置/过滤路由（非静态路由/是否显示在菜单中）
-		setFilterRoutes() {
-			if (this.$store.state.routesList.routesList.length <= 0) return false;
-			this.columnsAsideList = this.filterRoutesFun(this.$store.state.routesList.routesList);
-			const resData = this.setSendChildren(this.$route.path);
-			if (Object.keys(resData).length <= 0) return false;
-			this.onColumnsAsideDown(resData.item[0].k);
-			// 刷新时，初始化一个路由设置自动收起菜单
+		// 设置只有一个路由时设置自动收起菜单
+		// https://gitee.com/lyt-top/vue-next-admin/issues/I6UW2I
+		setMenuAutoCollaps(path) {
+			const resData = this.setSendChildren(path);
 			// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
 			resData.children.length <= 1
 				? (this.$store.state.themeConfig.themeConfig.isCollapse = true)
 				: (this.$store.state.themeConfig.themeConfig.isCollapse = false);
+			return resData;
+		},
+		// 设置/过滤路由（非静态路由/是否显示在菜单中）
+		setFilterRoutes() {
+			if (this.$store.state.routesList.routesList.length <= 0) return false;
+			this.columnsAsideList = this.filterRoutesFun(this.$store.state.routesList.routesList);
+			const resData = this.setMenuAutoCollaps(this.$route.path);
+			this.onColumnsAsideDown(resData.item[0].k);
 			this.bus.$emit('setSendColumnsChildren', resData);
 		},
 		// 传送当前子级数据到菜单中
@@ -151,8 +155,9 @@ export default {
 		// 监听路由的变化
 		$route: {
 			handler(to) {
+				const resData = this.setMenuAutoCollaps(to.path);
 				this.setColumnsMenuHighlight(to.path);
-				this.bus.$emit('setSendColumnsChildren', this.setSendChildren(to.path));
+				this.bus.$emit('setSendColumnsChildren', resData);
 			},
 			deep: true,
 		},

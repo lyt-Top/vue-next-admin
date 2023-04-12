@@ -29,9 +29,9 @@
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" :title="$t('message.user.title3')"></i>
 		</div>
-		<div class="layout-navbars-breadcrumb-user-icon">
+		<div class="layout-navbars-breadcrumb-user-icon" @click.stop="isShowUserNewsPopover = !isShowUserNewsPopover">
 			<el-popover placement="bottom" trigger="click" v-model="isShowUserNewsPopover" :width="300" popper-class="el-popover-pupop-user-news">
-				<el-badge :is-dot="true" @click.stop="isShowUserNewsPopover = !isShowUserNewsPopover" slot="reference">
+				<el-badge :is-dot="true" slot="reference">
 					<i class="el-icon-bell" :title="$t('message.user.title4')"></i>
 				</el-badge>
 				<transition name="el-zoom-in-top">
@@ -68,8 +68,8 @@
 <script>
 import screenfull from 'screenfull';
 import { Session, Local } from '@/utils/storage.js';
-import UserNews from '@/layout/navBars/breadcrumb/userNews.vue';
-import Search from '@/layout/navBars/breadcrumb/search.vue';
+import UserNews from '@/layout/navBars/topBar/userNews.vue';
+import Search from '@/layout/navBars/topBar/search.vue';
 export default {
 	name: 'layoutBreadcrumbUser',
 	components: { UserNews, Search },

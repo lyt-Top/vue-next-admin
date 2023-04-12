@@ -11,7 +11,7 @@
 import config from '/package.json';
 import setIntroduction from '@/utils/setIconfont.js';
 import { Local } from '@/utils/storage.js';
-import Setings from '@/layout/navBars/breadcrumb/setings.vue';
+import Setings from '@/layout/navBars/topBar/setings.vue';
 import Upgrade from '@/layout/upgrade/index.vue';
 import Sponsors from '@/layout/sponsors/index.vue';
 export default {

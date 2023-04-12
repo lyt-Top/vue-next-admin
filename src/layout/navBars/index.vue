@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import BreadcrumbIndex from '@/layout/navBars/breadcrumb/index.vue';
+import BreadcrumbIndex from '@/layout/navBars/topBar/index.vue';
 import TagsView from '@/layout/navBars/tagsView/tagsView.vue';
 export default {
 	name: 'layoutNavBars',
