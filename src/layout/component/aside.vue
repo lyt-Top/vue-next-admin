@@ -152,4 +152,11 @@ watch(
 		deep: true,
 	}
 );
+// 监听用户权限切换，用于演示 `权限管理 -> 前端控制 -> 页面权限` 权限切换不生效
+watch(
+	() => routesList.value,
+	() => {
+		setFilterRoutes();
+	}
+);
 </script>

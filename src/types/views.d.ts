@@ -325,5 +325,6 @@ declare type TableDemoState = {
 		};
 		search: TableSearchType[];
 		param: EmptyObjectType;
+		printName: string;
 	};
 };

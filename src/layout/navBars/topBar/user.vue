@@ -20,20 +20,25 @@
 		<div class="layout-navbars-breadcrumb-user-icon" @click="onLayoutSetingClick">
 			<i class="icon-skin iconfont" title="布局配置"></i>
 		</div>
-		<div class="layout-navbars-breadcrumb-user-icon">
-			<el-popover placement="bottom" trigger="click" transition="el-zoom-in-top" :width="300" :persistent="false">
-				<template #reference>
-					<el-badge :is-dot="true">
-						<el-icon title="消息">
-							<ele-Bell />
-						</el-icon>
-					</el-badge>
-				</template>
-				<template #default>
-					<UserNews />
-				</template>
-			</el-popover>
+		<div class="layout-navbars-breadcrumb-user-icon" ref="userNewsBadgeRef" v-click-outside="onUserNewsClick">
+			<el-badge :is-dot="true">
+				<el-icon title="消息">
+					<ele-Bell />
+				</el-icon>
+			</el-badge>
 		</div>
+		<el-popover
+			ref="userNewsRef"
+			:virtual-ref="userNewsBadgeRef"
+			placement="bottom"
+			trigger="click"
+			transition="el-zoom-in-top"
+			virtual-triggering
+			:width="300"
+			:persistent="false"
+		>
+			<UserNews />
+		</el-popover>
 		<div class="layout-navbars-breadcrumb-user-icon mr10" @click="onScreenfullClick">
 			<i
 				class="iconfont"
@@ -64,9 +69,9 @@
 </template>
 
 <script setup lang="ts" name="layoutBreadcrumbUser">
-import { defineAsyncComponent, ref, computed, reactive, onMounted } from 'vue';
+import { defineAsyncComponent, ref, unref, computed, reactive, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { ElMessageBox, ElMessage } from 'element-plus';
+import { ElMessageBox, ElMessage, ClickOutside as vClickOutside } from 'element-plus';
 import screenfull from 'screenfull';
 import { storeToRefs } from 'pinia';
 import { useUserInfo } from '/@/stores/userInfo';
@@ -75,10 +80,12 @@ import mittBus from '/@/utils/mitt';
 import { Session, Local } from '/@/utils/storage';
 
 // 引入组件
-const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/userNews.vue'));
-const Search = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/search.vue'));
+const UserNews = defineAsyncComponent(() => import('/@/layout/navBars/topBar/userNews.vue'));
+const Search = defineAsyncComponent(() => import('/@/layout/navBars/topBar/search.vue'));
 
 // 定义变量内容
+const userNewsRef = ref();
+const userNewsBadgeRef = ref();
 const router = useRouter();
 const stores = useUserInfo();
 const storesThemeConfig = useThemeConfig();
@@ -110,6 +117,10 @@ const onScreenfullClick = () => {
 		if (screenfull.isFullscreen) state.isScreenfull = true;
 		else state.isScreenfull = false;
 	});
+};
+// 消息通知点击时
+const onUserNewsClick = () => {
+	unref(userNewsRef).popperRef?.delayHide?.();
 };
 // 布局配置 icon 点击时
 const onLayoutSetingClick = () => {
@@ -169,7 +180,7 @@ const onComponentSizeChange = (size: string) => {
 };
 // 初始化组件大小/i18n
 const initI18nOrSize = (value: string, attr: string) => {
-	state[attr] = Local.get('themeConfig')[value];
+	(<any>state)[attr] = Local.get('themeConfig')[value];
 };
 // 页面加载时
 onMounted(() => {

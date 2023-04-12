@@ -16,8 +16,8 @@ import { useThemeConfig } from '/@/stores/themeConfig';
 import mittBus from '/@/utils/mitt';
 
 // 引入组件
-const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/breadcrumb.vue'));
-const User = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/user.vue'));
+const Breadcrumb = defineAsyncComponent(() => import('/@/layout/navBars/topBar/breadcrumb.vue'));
+const User = defineAsyncComponent(() => import('/@/layout/navBars/topBar/user.vue'));
 const Logo = defineAsyncComponent(() => import('/@/layout/logo/index.vue'));
 const Horizontal = defineAsyncComponent(() => import('/@/layout/navMenu/horizontal.vue'));
 

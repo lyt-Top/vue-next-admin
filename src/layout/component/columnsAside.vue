@@ -126,15 +126,19 @@ const onColumnsAsideDown = (k: number) => {
 		setColumnsAsideMove(k);
 	});
 };
+// 设置只有一个路由时设置自动收起菜单
+// https://gitee.com/lyt-top/vue-next-admin/issues/I6UW2I
+const setMenuAutoCollaps = (path: string) => {
+	const resData: MittMenu = setSendChildren(path);
+	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
+	resData.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false);
+	return resData;
+};
 // 设置/过滤路由（非静态路由/是否显示在菜单中）
 const setFilterRoutes = () => {
 	state.columnsAsideList = filterRoutesFun(routesList.value);
-	const resData: MittMenu = setSendChildren(route.path);
-	if (Object.keys(resData).length <= 0) return false;
+	const resData: MittMenu = setMenuAutoCollaps(route.path);
 	onColumnsAsideDown(resData.item?.k);
-	// 刷新时，初始化一个路由设置自动收起菜单
-	// https://gitee.com/lyt-top/vue-next-admin/issues/I6HW7H
-	resData.children.length <= 1 ? (themeConfig.value.isCollapse = true) : (themeConfig.value.isCollapse = false);
 	// 延迟 500 毫秒更新，防止 aside.vue 组件 setSendColumnsChildren 还没有注册
 	setTimeout(() => {
 		mittBus.emit('setSendColumnsChildren', resData);
@@ -191,8 +195,9 @@ onUnmounted(() => {
 });
 // 路由更新时
 onBeforeRouteUpdate((to) => {
+	const resData = setMenuAutoCollaps(to.path);
 	setColumnsMenuHighlight(to.path);
-	mittBus.emit('setSendColumnsChildren', setSendChildren(to.path));
+	mittBus.emit('setSendColumnsChildren', resData);
 });
 // 监听布局配置信息的变化，动态增加菜单高亮位置移动像素
 watch(

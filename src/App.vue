@@ -23,8 +23,8 @@ import setIntroduction from '/@/utils/setIconfont';
 
 // 引入组件
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'));
-const Setings = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/setings.vue'));
-const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/breadcrumb/closeFull.vue'));
+const Setings = defineAsyncComponent(() => import('/@/layout/navBars/topBar/setings.vue'));
+const CloseFull = defineAsyncComponent(() => import('/@/layout/navBars/topBar/closeFull.vue'));
 const Upgrade = defineAsyncComponent(() => import('/@/layout/upgrade/index.vue'));
 const Sponsors = defineAsyncComponent(() => import('/@/layout/sponsors/index.vue'));
 
