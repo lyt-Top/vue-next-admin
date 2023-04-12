@@ -188,6 +188,18 @@
 		color: var(--next-bg-topBarColor);
 	}
 }
+// 菜单收起时，图标不居中问题
+.el-menu--collapse {
+	.el-menu-item .iconfont,
+	.el-sub-menu .iconfont,
+	.el-menu-item .fa,
+	.el-sub-menu .fa {
+		margin-right: 0 !important;
+	}
+	.el-sub-menu__title {
+		padding-right: 0 !important;
+	}
+}
 
 /* Tabs 标签页
 ------------------------------- */

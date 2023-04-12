@@ -52,7 +52,7 @@ export async function initBackEndControlRoutes() {
 	// 添加动态路由
 	await setAddRoute();
 	// 设置路由到 pinia routesList 中（已处理成多级嵌套路由）及缓存多级嵌套数组处理后的一维数组
-	await setFilterMenuAndCacheTagsViewRoutes();
+	setFilterMenuAndCacheTagsViewRoutes();
 }
 
 /**
