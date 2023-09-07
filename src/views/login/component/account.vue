@@ -1,5 +1,5 @@
 <template>
-	<el-form size="large" class="login-content-form">
+	<el-form size="large" class="login-content-form" @keydown.enter="onSignIn">
 		<el-form-item class="login-animation1">
 			<el-input text placeholder="用户名 admin 或不输均为 common" v-model="state.ruleForm.userName" clearable autocomplete="off">
 				<template #prefix>
